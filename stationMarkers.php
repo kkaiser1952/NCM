@@ -122,7 +122,9 @@
 	    	if (strpos($callsign,'/')) {$callsign = substr($callsign,0,strpos($callsign,'/'));}
 	    	if (strpos($callsign,'-')) {$callsign = substr($callsign,0,strpos($callsign,'-'));}  	
 	    	    
-	    if(strpos("$callsignX", "$callsign") !== false) { $dup = $dup+45; }
+	    if(strpos("$callsignX", "$callsign") !== false) { 
+    	    $dup = $dup+45; 
+        } else {$dup = 0;}
 	    	
 			// Missing argument 2 for What3words\Geocoder\Geocoder::convertTo3wa(), called in /var/www/html/stationMarkers.php on line 118 and defined in /var/www/html/Geocoder.php on line 45
 			
