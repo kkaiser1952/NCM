@@ -1,0 +1,68 @@
+#locationSelect{
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+	width:250px;
+	visibility:hidden;
+}
+#resetBTN {
+	float: right;
+}
+#panel {
+	width: 1000px;
+	clear: bold;
+}
+#map{
+	border: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 95%;
+	height: 800px;
+}
+#mrkrCntl {
+
+	
+}
+#banner {
+	height: 100px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border: 3px double #a30303;
+	width: 1000px;
+}
+#header {
+	background-color: #b2d9ef;
+	margin-left: 5px;
+	margin-right: 5px;
+	border: 3px double black;
+	padding-left: 5px;
+	width: 1000px;
+}
+
+
+#markerlist {
+    height: 400px;
+    margin: 10px 5px 0 10px;
+    overflow: auto;
+}
+#wrapper {
+	position: relative;
+}
+#mapbottom {
+	position: absolute;
+	bottom: 5px;
+	z-index: 99;
+	width: 40%;
+}
+#koords {
+	font-size: 12pt;
+	float: right;
+
+	color: black;
+	font-weight: bold;
+}
+#flags {
+	float: left;
+	font-size: 14pt;
+	font-weight: bold;
+}
