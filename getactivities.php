@@ -66,9 +66,10 @@ if ( $q <> 0 ){
 	//	include "headerDefinitions.php";
 		
 	$headerAll = '
-		<table class="sortable" id="thisNet">
+		<table id="thisNet">
 		<thead id="thead" style="text-align: center;" >			
 		<tr>            	
+		    <th title="Row No." class="besticky c0" > &#35 </th>
 			<th title="Role" class="besticky c1">	Role </th>
 			<th title="Mode" class="besticky DfltMode cent c2" id="dfltmode" 
 			    oncontextmenu="setDfltMode();return false;"> Mode </th>
@@ -122,7 +123,7 @@ if ( $q <> 0 ){
 		</tr>
 		</thead>
 	
-		<tbody id="netBody">
+		<tbody class="sortable" id="netBody">
 		
 		'; // END OF headerAll 
 		
@@ -175,7 +176,8 @@ if ( $q <> 0 ){
 	        					band, w3w,
 	        					home, ipaddress, cat, section,
 	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
-	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout
+	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
+	        					row_number
 	        				   
 					FROM  NetLog 
 					WHERE netID = $q

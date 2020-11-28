@@ -5,8 +5,8 @@
  Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
  document various net operations such as weather emergencies, club meetings, bike ride support and any other 
  logging and/or reporting intensive communications support and management needs. 
- Various reports can be created including mapping stations locations and other DHS/FEMA needs. Including
- the ICS-214 and ICS-309 reports and access to others.
+ A variety of reports can be created including mapping stations locations and other DHS/FEMA needs. Including
+ the ICS-214 and ICS-309 reports and access to many others.
  
  No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
  
@@ -119,6 +119,9 @@
 	 
 <style>
 	/* Use this space for experimental CSS */   
+	.ui-sortable-helper {
+        display: table;
+    }
 </style>
 
 </head>
@@ -542,8 +545,8 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	
-	<!-- This JS is used to create a CSV file from a table, it might work for the reports -->
-<!--	<script src="js/table2csv.min.js"></script> -->
+	
+	
 	
 <!-- My javascript -->	
 	<script src="js/NetManager.js"></script> 	<!-- NCM Primary Javascrip 2018-1-18 -->
@@ -554,6 +557,15 @@
 	<script src="js/grid.js"></script>
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
+	
+    <script>
+        $("#netBody").sortable({
+          cursor: 'row-resize',
+          placeholder: 'ui-state-highlight',
+          opacity: '0.55',
+          items: '.ui-sortable-handle'
+        }).disableSelection();    
+    </script>
 	
 <!--	<script src="js/serviceworkers.js"></script> -->
 <!-- End My javascript -->

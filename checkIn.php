@@ -82,8 +82,17 @@ $mBand  = $parts[7];                // the multiple bands indicator 1 = Yes, 0 o
         
             $netcall   = $result1[netcall];     $pb         = $result1[pb];
             $activity2 = $result1[activity];    $subNetOfID = $result1[subNetOfID];
-            $frequency = $result1[frequency];
+            $frequency = $result1[frequency];   $max_row_num = $result[max_row_num];
     		
+    		
+    $stmt2 = $stmt1 = $db_found->prepare(
+             "SELECT MAX(row_number) AS max_row_num
+                FROM NetLog
+               WHERE netID = '$netID' 
+             ");
+        $stmt2->execute();
+        $result2=$stmt2->fetch();
+            $max_row_num = $result2[max_row_num];
 
 /* This query pulls the last time this callsign logged on */
 
@@ -251,14 +260,16 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	
 	$tt = '';   // Added for the 'Add Stations Table Project' 
 	
+	$max_row_num = ($max_row_num + 1);
+	
 	
 	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, grid, tactical, email, latitude, longitude, 
 							    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, 
-							    district, firstLogIn, pb, tt, home, phone, cat, section, traffic ) 
+							    district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number ) 
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$district\",
-				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\" )"; 
+				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \" )"; 
 	
 	$db_found->exec($sql);
 	
@@ -273,10 +284,11 @@ if ($Lname == "") {$Lname = "$Lname2";}
 			
                     $db_found->exec($sql);
 			  	
-		echo ('	<table class="sortable" id="thisNet">
+		echo ('	<table id="thisNet">
 					<thead id="thead" style="text-align: center;">			
 					<tr>            	
-						<th title="Role"   >									Role	 				</th>
+					    <th title="Row No." class="c0" > &#35 </th>
+						<th title="Role"   >	Role	</th>
 						<th title="Mode" class="DfltMode cent" id="dfltmode">Mode				</th>
 						
 						<th title="Status" > 							 	Status	 			</th>  
@@ -318,7 +330,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 					</tr>
 					</thead>
 				
-					<tbody id="netBody"> 
+					<tbody class="sortable" id="netBody"> 
 		  
 		');  //ends the echo of the thead creation
 	                                	
@@ -327,7 +339,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
 							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
 							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section
+							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number
 					  FROM  NetLog
                      WHERE netID = $netID
                      ORDER BY case 

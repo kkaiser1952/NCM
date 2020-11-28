@@ -5,9 +5,10 @@
 	// Toggling of columns is done using cookieManagement.js and it various parts
 		
 echo '
-	<table class="sortable" id="thisNet">
+	<table id="thisNet">
 		<thead id="thead" style="text-align: center;">			
 		<tr>            	
+		    <th title="Row No." class="" > &#35 </th>
 			<th title="Role"   > 							 	Role	 				</th>
 			<th title="Mode"   > 							 	Mode	 				</th>
 			<th title="Status" > 							 	Status	 				</th>  
@@ -42,8 +43,9 @@ echo '
 		</tr>
 		</thead>
 	
-		<tbody id="netBody">
+		<tbody class="sortable" id="netBody">
 		<tr>
+		    <td          class="cent"> $row[row_number] </td>
 	    	<td      	 class="netcontrol cent" id="netcontrol:$row[recordID]">   $row[netcontrol] </td> 
 	    	<td $brbCols class="mode cent" 		 id="Mode:$row[recordID]">         $row[Mode]       </td>	    
 			<td $brbCols class="role cent" 		 id="active:$row[recordID]">       $row[active] 	</td>    

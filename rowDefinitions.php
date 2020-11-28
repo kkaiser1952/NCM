@@ -14,6 +14,8 @@
 //echo (` <div id="genComments" class="editGComms" onclick="empty('genComments');" title="Click to add...">$Gcomment</div> `);
 	
 echo ("
+        <td class=\"cent c0 \" >$row[row_number] </td>
+        
     	<td $brbCols class=\"editable editable_selectNC cent c1 \" 
     	    id=\"netcontrol:$row[recordID]\"  data-role=\"$row[netcontrol]\"> 
     	    $row[netcontrol]

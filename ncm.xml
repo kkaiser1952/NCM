@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.7.9
+- https://www.phpmyadmin.net
+-
+- Host: localhost
+- Generation Time: Nov 25, 2020 at 06:36 PM
+- Server version: 5.5.59-0+deb8u1
+- PHP Version: 5.6.33-0+deb8u1
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="ncm" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="events">
+                CREATE TABLE `events` (
+                  `dttm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                  `description` longtext COLLATE utf8_unicode_ci,
+                  `location` text COLLATE utf8_unicode_ci,
+                  `contact` text COLLATE utf8_unicode_ci,
+                  `callsign` varchar(7) COLLATE utf8_unicode_ci NOT NULL,
+                  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+                  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                  `start` datetime DEFAULT NULL,
+                  `end` datetime DEFAULT NULL,
+                  `domain` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+                  `docType` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+                  `deletedBY` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+                  `deletedON` datetime DEFAULT NULL,
+                  `netkind` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+                  `eventDate` text COLLATE utf8_unicode_ci NOT NULL,
+                  `subdomain` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `idx_start` (`start`),
+                  KEY `idx_end` (`end`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=490 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            </pma:table>
+            <pma:table name="HPD">
+                CREATE TABLE `HPD` (
+                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `county` varchar(255) DEFAULT NULL,
+                  `state` varchar(255) DEFAULT NULL,
+                  `District` tinytext,
+                  PRIMARY KEY (`ID`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=406 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="NetKind">
+                CREATE TABLE `NetKind` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `call` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `org` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `orgType` varchar(20) NOT NULL,
+                  `dflt_kind` int(11) DEFAULT NULL,
+                  `kindofnet` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `dflt_freq` int(11) DEFAULT NULL,
+                  `freq` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `contact_call` varchar(12) NOT NULL,
+                  `contact_name` varchar(100) NOT NULL,
+                  `contact_email` varchar(50) NOT NULL,
+                  `org_web` varchar(100) NOT NULL,
+                  `comments` varchar(500) NOT NULL,
+                  `row1` varchar(500) NOT NULL,
+                  `row2` varchar(500) NOT NULL,
+                  `row3` varchar(500) NOT NULL,
+                  `row4` varchar(500) NOT NULL,
+                  `row5` varchar(500) NOT NULL,
+                  `row6` varchar(500) NOT NULL,
+                  `box4` varchar(100) NOT NULL,
+                  `box5` varchar(100) NOT NULL,
+                  `columnViews` varchar(75) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="NetLog">
+                CREATE TABLE `NetLog` (
+                  `row_number` int(3) NOT NULL DEFAULT '1',
+                  `recordID` int(11) NOT NULL AUTO_INCREMENT,
+                  `netID` int(6) NOT NULL,
+                  `subNetOfID` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
+                  `timeout` datetime DEFAULT NULL,
+                  `ID` int(4) unsigned zerofill NOT NULL DEFAULT '0000',
+                  `callsign` varchar(15) CHARACTER SET latin1 NOT NULL DEFAULT '',
+                  `Fname` varchar(25) CHARACTER SET latin1 NOT NULL DEFAULT '',
+                  `grid` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+                  `traffic` varchar(15) CHARACTER SET latin1 DEFAULT '',
+                  `tactical` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+                  `logdate` datetime NOT NULL COMMENT 'Check-in Date &amp; Time',
+                  `activity` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '',
+                  `latitude` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+                  `longitude` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+                  `email` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+                  `Lname` varchar(25) CHARACTER SET latin1 DEFAULT NULL,
+                  `netcontrol` varchar(3) CHARACTER SET latin1 DEFAULT NULL,
+                  `active` varchar(7) COLLATE utf8_unicode_ci DEFAULT '',
+                  `frequency` varchar(50) CHARACTER SET latin1 DEFAULT '146.790, 107.2',
+                  `comments` varchar(3000) CHARACTER SET latin1 NOT NULL DEFAULT '',
+                  `creds` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+                  `timeonduty` int(8) DEFAULT '0',
+                  `netcall` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+                  `status` int(1) NOT NULL DEFAULT '0',
+                  `Mode` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+                  `logclosedtime` datetime DEFAULT NULL,
+                  `county` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                  `state` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+                  `district` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+                  `firstLogIn` int(1) DEFAULT NULL,
+                  `tt` int(2) unsigned zerofill DEFAULT NULL,
+                  `pb` int(1) NOT NULL,
+                  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+                  `dttm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'When row was created',
+                  `ipaddress` varchar(20) CHARACTER SET utf8 NOT NULL,
+                  `band` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+                  `w3w` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                  `home` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                  `cat` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Custom',
+                  `section` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Section',
+                  PRIMARY KEY (`recordID`),
+                  KEY `callsign` (`callsign`),
+                  KEY `netID` (`netID`,`callsign`),
+                  KEY `id_netID` (`netID`,`ID`) USING BTREE
+                ) ENGINE=MyISAM AUTO_INCREMENT=49941 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Amateur Radio Net Check-in Log';
+            </pma:table>
+            <pma:table name="poi">
+                CREATE TABLE `poi` (
+                  `id` int(5) NOT NULL AUTO_INCREMENT,
+                  `netID` int(6) DEFAULT NULL,
+                  `class` varchar(100) NOT NULL,
+                  `Type` varchar(25) NOT NULL,
+                  `name` varchar(100) NOT NULL,
+                  `county` varchar(100) NOT NULL,
+                  `address` varchar(100) NOT NULL,
+                  `city` varchar(100) NOT NULL,
+                  `latitude` double NOT NULL,
+                  `longitude` double NOT NULL,
+                  `grid` varchar(12) DEFAULT NULL,
+                  `altitude` int(4) NOT NULL COMMENT 'Altitude in Feet',
+                  `tactical` varchar(20) NOT NULL,
+                  `callsign` varchar(50) NOT NULL,
+                  `DGID` int(2) unsigned zerofill NOT NULL DEFAULT '00',
+                  `mode` varchar(25) NOT NULL DEFAULT 'Digital',
+                  `Notes` varchar(100) NOT NULL COMMENT 'Notes/Contact',
+                  `latlng` point DEFAULT NULL COMMENT 'Spatial Point',
+                  UNIQUE KEY `primary index` (`id`) USING BTREE
+                ) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
+            </pma:table>
+            <pma:table name="TimeLog">
+                CREATE TABLE `TimeLog` (
+                  `uniqueID` int(11) NOT NULL AUTO_INCREMENT,
+                  `recordID` int(10) NOT NULL,
+                  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                  `ID` int(4) NOT NULL,
+                  `netID` int(6) NOT NULL,
+                  `callsign` varchar(10) NOT NULL DEFAULT '',
+                  `comment` varchar(3000) CHARACTER SET latin1 DEFAULT NULL,
+                  `ipaddress` varchar(20) DEFAULT NULL,
+                  PRIMARY KEY (`uniqueID`),
+                  KEY `netID` (`netID`),
+                  KEY `recordID` (`recordID`),
+                  KEY `netID_2` (`netID`,`callsign`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=66342 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+</pma_xml_export>
