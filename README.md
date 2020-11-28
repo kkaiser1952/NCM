@@ -2,7 +2,10 @@
 <p>
 NCM IS NOT A QSO LOGGER
 
-The Net Control Manager (NCM) program was designed to make Amateur Radio Net check-ins, management of net resources and net reporting easier and more efficient than using pen and paper.
+Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
+ document various net operations such as weather emergencies, club meetings, bike ride support and any other 
+ logging and/or reporting intensive communications support and management needs. 
+ A variety reports can be created including mapping station locations and other DHS/FEMA needs. Including
+ the ICS-214 and ICS-309 reports and access to many others.
 
-The NCM is designed to make ARES, RACES and other EM net logging and reporting as easy and intuitive as possible. Its many features are aimed squarely at these ideas.
-NCM was also designed to be easily usable by the Net Control Operator (NCO) alone, however someone else keeping log while you control the net is always a good idea.
+For support, news and updates, join https://groups.io/g/NCM
