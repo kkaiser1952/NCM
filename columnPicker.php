@@ -170,6 +170,18 @@ $(document).ready(function() {
 		width: 80%;
 	}
 	
+	.saveascookie {
+    	font-size: 24pt;
+    	font-weight: bold;
+    	background: none !important;
+        color: blue;
+        border-radius: 15px;
+        border: 2px solid #999;
+        padding: 8px !important;
+        font: inherit;
+        cursor: pointer;
+	}
+	
 </style>
 	
 </head>
@@ -233,7 +245,12 @@ $(document).ready(function() {
     	
     	
 		<div class="column" >
-	
+    		<!--
+    		<label class="container">Row Number (0)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(0)" value="0" class="0">
+				<span class="checkmark"></span>
+			</label>
+	-->
 <!--			<label class="container red">Role (required)
 				<input type="checkbox" name="intrests[]"  disabled="disabled"  onclick="window.opener.toggleCol(1)" value="1" class="1" checked="checked">
 				<span class="checkmark"></span>
@@ -367,7 +384,7 @@ $(document).ready(function() {
 	
 		
 	<div class="myButtons">
-		<input type="submit" value="Save as Cookie"> 
+		<input class="saveascookie" type="submit" value="Save as Cookie"> 
 
 		<input type="button" onclick="javascript:window.close()" value="Close" style="float:right; padding-left: 20px;">
         <br><br>

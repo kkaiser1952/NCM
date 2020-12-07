@@ -122,6 +122,16 @@
 	.ui-sortable-helper {
         display: table;
     }
+    
+    table tr:not(#thead) {
+        counter-increment: rowNumber;      
+    }
+    
+    table tr:not(#thead) td:first-child::before {
+    content: counter(rowNumber)" - ";
+    min-width: 1em;
+    margin-right: 0.5em;
+}
 </style>
 
 </head>
@@ -422,14 +432,14 @@
     <!-- Edited and saved to DB by CellEditFunctions.js and SaveGenComm.php -->
     <!-- A general pupose entry point for text, it's put into the time line table -->
     <!-- This is activated by a jquery on function in netManager.js at about line 391 -->
-    <div class="besticky">
+    
 	<div id="forcb1" class="hidden">
-		<div id="genComments" class="editGComms"></div>
+		<div id="genComments" class=" editGComms"></div>
 <!--		<div id="genComments" class="editGComms" onclick="empty('genComments'); "> </div> -->
 	</div>   <!-- End ID: forcb1 -->
-	 </div> <!-- End of besticky -->
+	  <!-- End of besticky -->
 	
-	<div id="admin" class="admin">   
+	<div id="admin" class=" admin">   
 		<div id="csnm" class="hidden">
 
 	    <div id="primeNav" class="flashit">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
@@ -546,6 +556,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	
 	
+	<!-- Bootstrap & Core Scripts -->
+	<!--
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
+    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	-->
+	
 	
 	
 <!-- My javascript -->	
@@ -559,17 +576,22 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
+        /*
         $("#netBody").sortable({
           cursor: 'row-resize',
           placeholder: 'ui-state-highlight',
           opacity: '0.55',
           items: '.ui-sortable-handle'
         }).disableSelection();    
+        */
     </script>
 	
 <!--	<script src="js/serviceworkers.js"></script> -->
 <!-- End My javascript -->
-	
+<script type="text/javascript">
+  //$('#thisNet').find("tbody").sortable();
+  $('#netBody').sortable();
+</script>
 	
 <script>	  
     
