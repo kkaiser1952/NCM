@@ -119,19 +119,84 @@
 	 
 <style>
 	/* Use this space for experimental CSS */   
-	.ui-sortable-helper {
-        display: table;
+   
+   
+body {
+    counter-reset: rowCounter;
+}
+   
+   /* stuff from netManager.css */
+   
+table.sortable2 thead tr::before {
+    content: "";
+    display: table-cell;
+}
+
+/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
+/* This and the definiton below it */
+
+table.sortable2 tbody tr:not(.nocounter)::before {
+    content: counter(rowCounter);
+    counter-increment: rowCounter -1;
+    display: table-cell;
+    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
+}
+
+table.sortable2 tbody tr.nocounter::before {
+	content:'';
+}
+
+
+/* ********************* end timeline css *****************/
+/* If you want to change the timeline lists to count backward */
+table.sortable tbody {
+    counter-reset: rowCounter;
+}
+
+table.sortable thead tr::before {
+    content: "";
+    display: table-cell;
+}
+
+/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
+/* This and the definiton below it */
+table.sortable tbody tr:not(.nocounter)::before {
+    content: counter(rowCounter);
+    counter-increment: rowCounter;
+    display: table-cell;
+    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
+}
+
+table.sortable tbody tr.nocounter::before {
+	content:'';
+}
+
+
+/* new stuff */
+
+
+
+table.sortable tbody {
+    counter-reset: row_Number;   
+    }
+
+    table tr:not(#thead) {
+        counter-increment: row_Number;      /* Increment the row_Number counter by 1 (the default) */
     }
     
-    table tr:not(#thead) {
-        counter-increment: rowNumber;      
-    }
     
     table tr:not(#thead) td:first-child::before {
-    content: counter(rowNumber)" - ";
+    content: counter(row_Number)"";
     min-width: 1em;
     margin-right: 0.5em;
-}
+    } 
+    
+
+    table#ourfreqs tr {
+        content: '';
+    }
+
+
 </style>
 
 </head>
@@ -176,7 +241,8 @@
     <div id="rightCorner">    
     <div id="upperRightCorner" class="upperRightCorner"> </div> <!-- Filled by buildUpperRightCorner.php -->
        <div id="theMenu" class="theMenu">
-	       <table id='ourfreqs'> <!-- This is a bad name for this id, fix it someday -->
+	       <table id="ourfreqs"> <!-- This is a bad name for this id, fix it someday -->
+	       <tbody class="noCounter">
 		     <tr class="trFREQS">
 		       <td class="nobg2" > <!-- The CSS: .nobg2 makes it 4 columns -->
 
@@ -255,6 +321,7 @@
 				       
 		       </td> <!-- End div-nobg2 -->
 		     </tr> <!-- This closes the only row in the ID: ourfreqs table -->
+	       </tbody>
 	       </table> <!-- End table-ourfreqs -->
        </div> <!-- End id theMenu -->
     </div> <!-- End id rightCorner -->
@@ -576,22 +643,16 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
-        /*
         $("#netBody").sortable({
-          cursor: 'row-resize',
-          placeholder: 'ui-state-highlight',
-          opacity: '0.55',
-          items: '.ui-sortable-handle'
-        }).disableSelection();    
-        */
+        cursor: 'row-resize',
+        placeholder: 'ui-state-highlight',
+        opacity: '0.55',
+        items: '> tr'
+        });
     </script>
 	
 <!--	<script src="js/serviceworkers.js"></script> -->
 <!-- End My javascript -->
-<script type="text/javascript">
-  //$('#thisNet').find("tbody").sortable();
-  $('#netBody').sortable();
-</script>
 	
 <script>	  
     
