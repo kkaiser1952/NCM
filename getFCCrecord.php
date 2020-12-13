@@ -8,7 +8,7 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 				 ,state
 				 ,CONCAT_WS(' ', address1, city, state, zip)
 			 FROM fcc_amateur.en
-			WHERE callsign = '$cs1' 
+			WHERE callsign = '$csbase' 
 			ORDER BY fccid DESC 
 			LIMIT 0,1 ");					
 		
@@ -40,9 +40,12 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 				$gridd 	   = gridsquare($latitude, $longitude);
 				$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";  
 				
-				$home      = "$latitude,$longitude,$grid,$county,$state";
+				$home      = "$latitude,$longitude,$grid,$county,$state";			
 				
 				$comments 	= "First Log In";  // adding state to this works
+				
+         include "insertToStations.php";  // added 2020-12-12 to update the stations table
+           
 				
 		} else { // Do this if nothing is returned in otherwords there is no record in the FCC DB
 				$comments 	= "No FCC Record";
@@ -52,6 +55,3 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 		//echo("<br>$Lname, $Fname, $state2, $address, $latitude, $latitude, $county, $state, $grid");
 		//        Cox,    Donald, AR,     17480 Hwy 79 Kingsland AR 71652, -92.2940372, -92.2940372, Cleveland , AR, JA0A
 ?>
-
-
-

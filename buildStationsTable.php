@@ -18,7 +18,7 @@ $fccsql = ("
            
            /* If the callsign has a slash return everything left of the slash, otherwise return callsign */
            IF( nl.callsign LIKE '%/%', SUBSTRING_INDEX(nl.callsign,'/',1), nl.callsign ),
-           
+           nl.tactical,
            nl.Fname AS Fname,  nl.Lname AS Lname,
            nl.email AS email,  nl.phone AS phone,  nl.creds AS creds,
            
@@ -38,11 +38,11 @@ $fccsql = ("
       FROM NetLog  nl,
            fcc_amateur.en fcc
      WHERE IF( nl.callsign LIKE '%/%', SUBSTRING_INDEX(nl.callsign,'/',1), nl.callsign ) = fcc.callsign
-       AND nl.netID > 0
+       AND nl.netID > 0 
        AND nl.ID > 0
        AND nl.logdate > 0
      /*  AND nl.latitude <> '' AND nl.longitude <> '' */
-     /*  AND nl.ID > 2515 AND nl.ID <= 2600 */
+      AND nl.ID > 2515 AND nl.ID <= 2845 
        AND nl.netCall LIKE '%0TX%'
      /*  AND nl.callsign LIKE '%/%' */
      GROUP BY nl.ID
@@ -81,7 +81,7 @@ foreach($db_found->query($marsSQL) as $rowM ) {
 }
 $values = implode(",", $marsInserts);
 
-$Msql = "INSERT INTO stations (ID, callsign, Fname, Lname, latitude, longitude, grid, 
+$Msql = "INSERT INTO stations (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
                               city, county, state, district, zip, email, phone, 
                               creds, lastLogDT, firstLogDt, recordID, fccid, latlng,
                               home) 
@@ -139,7 +139,7 @@ echo "$row[ID] $row[callsign] $row[Fname] $row[Lname] $latitude $longitude $grid
       $row[fccid] <BR><br>";
    
 */                       
-   $inserts[] = "('$row[ID]', '$row[tempCall]', '$row[Fname]', \"$row[Lname]\", '$latitude', '$longitude', '$grid',
+   $inserts[] = "('$row[ID]', '$row[tempCall]', '$row[tactical]', '$row[Fname]', \"$row[Lname]\", '$latitude', '$longitude', '$grid',
                   \"$row[city]\", \"$county\", \"$row[state]\", '$district', '$row[zip]', '$row[email]', '$row[phone]',
                   '$row[creds]', '$row[lastLogDT]', '$row[firstLogDT]', '$row[recordID]', '$row[fccid]', 
                    GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), \"$home\")<br><br>";                 
@@ -151,7 +151,7 @@ echo "$row[ID] $row[callsign] $row[Fname] $row[Lname] $latitude $longitude $grid
 
 $values = implode(",", $inserts);
 
-$sql = "INSERT INTO stations (ID, callsign, Fname, Lname, latitude, longitude, grid, 
+$sql = "INSERT INTO stations (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
                               city, county, state, district, zip, email, phone, 
                               creds, lastLogDT, firstLogDt, recordID, fccid, latlng,
                               home) 

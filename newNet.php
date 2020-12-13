@@ -1,6 +1,9 @@
 <?php
 // This PHP is called by NetManager-p2.js
 
+ini_set('display_errors',1); 
+	error_reporting (E_ALL ^ E_NOTICE);
+
 //date_default_timezone_set("America/Chicago");
 require_once "dbConnectDtls.php";
 require_once "WXdisplay.php";
@@ -33,11 +36,11 @@ $activity	= ltrim($newnetnm) . " " . ltrim($netKind);  //echo "activity= $activi
 /* get the next netID */
 $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 	$stmt->execute();
-	$result = $stmt->fetchColumn();
+	$result = $stmt->fetchColumn(); 
 		$newNetID = $result + '1';
 	
 /* insert the new net into the NetLog.table, this first part gets other information first */
-$stmt2 = $db_found->prepare("SELECT max(recordID) maxID, tt, Fname, Lname,  grid, creds,
+$stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid, creds,
 									email, latitude, longitude, netcall, state, county, district, home
 							   FROM NetLog 
 							  WHERE callsign = '$cs1' 
@@ -45,18 +48,18 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, tt, Fname, Lname,  grid
 	$stmt2->execute();
 	$result = $stmt2->fetch();
 	
-		$maxID = $result[0];
-		$tt    = $result[1];	$latitude  = $result[7];   //echo("tt = $tt");
-		$Fname = $result[2];	$longitude = $result[8];
-		$Lname = $result[3];
+		$maxID = $result[maxID];
+		$id    = $result[id];	    $latitude  = $result[latitude];   //echo("tt = $tt");
+		$Fname = $result[Fname];	$longitude = $result[longitude];
+		$Lname = $result[Lname];
 		$Lname = str_replace("'","\'",$Lname);   // The \ is to escape the apostraphe (')
-		$state = $result[10];
-		$grid  = $result[4]; 	$county	   = $result[11];
-		$creds = $result[5];	$district  = $result[12];
-		$email = $result[6];    $home      = $result[13];	
+		$state = $result[state];
+		$grid  = $result[grid]; 	$county	   = $result[county];
+		$creds = $result[creds];	$district  = $result[district];
+		$email = $result[email];    $home      = $result[home];	
 		    if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
 		
-		$id	   = $result[1];
+		//$id	   = $result[1];
 		$firstLogIn = 0;
 		
 		if (empty($maxID)) {
@@ -86,7 +89,7 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, tt, Fname, Lname,  grid
 	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county,
 		district,pb, tt, firstLogin, home) 
 	
-		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '$tt', '$firstLogIn', '$home' )";
+		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home' )";
 		
 	$db_found->exec($sql);
 	

@@ -28,9 +28,23 @@ if(isset($q)){
 
 // Pull the incoming string apart
 $parts	= explode(":",$q);   
- //echo '<pre>'; print_r($parts); echo '</pre>';
+ //echo '<br><pre>'; print_r($parts); echo '</pre>';
  
  /* 
+    Array
+(
+    [0] => undefined
+    [1] => 3212
+    [2] => W0DLK/H
+    [3] => 
+    [4] => undefined
+    [5] => 0
+    [6] => TE0ST
+    [7] => 0
+    [8] => 
+    [9] => 
+)
+
     Array
 (
     [0] => undefined        station ID
@@ -50,6 +64,8 @@ $id 	= $parts[0];                //echo "id= $id"; // The users ID (13 = WA0TJT)
 $netID 	= $parts[1];                //echo("netid= $netID");   // The net ID we are working with
 $cs0    = strtoupper($parts[2]);    //echo "cs0 = $cs0";
 $cs1    = $cs0;
+$cspart = explode("/", $cs0); 
+$csbase = $cspart[0];
 
 $Tname 	= ucfirst($parts[3]);       // The first or both names of this person depending how it was entered
 $fdcat  = $parts[8];                //echo "fdcat: $fdcat";
@@ -94,18 +110,19 @@ $mBand  = $parts[7];                // the multiple bands indicator 1 = Yes, 0 o
         $result2=$stmt2->fetch();
             $max_row_num = $result2[max_row_num];
 
-/* This query pulls the last time this callsign logged on */
+/* This experimental query pulls the last time this callsign logged on using the stations table */
 
-/* Tested and passed But any updates to it are not yet done 
+/* Tested and passed But any updates to it are not yet done  */
     $stmt2 = $db_found->prepare("
         SELECT id, Fname, Lname, creds, email, latitude, longitude,
-		       grid, county, state, district, home, phone
+		       grid, county, state, district, home, phone, tactical
 	      FROM stations 
-	     WHERE callsign LIKE 'WA0TJT'
+	     WHERE callsign LIKE '%$csbase%'
          LIMIT 0,1
     ");  
-*/
+
 /* This query pulls the last time this callsign logged on */
+/*
 $stmt2 = $db_found->prepare("
 	SELECT recordID, id, Fname, Lname,  grid, creds, email, latitude, longitude, tactical,
 	       SUBSTRING_INDEX(home, ',', -1) as state,
@@ -116,7 +133,7 @@ $stmt2 = $db_found->prepare("
 	 ORDER BY netID DESC 
 	 LIMIT 0,1
     "); 
-
+*/
 	$stmt2->execute();
 	$result = $stmt2->fetch();
 	
@@ -164,32 +181,11 @@ if ("$id" == "") {
 		$stmt->execute();
     	  	$result     = $stmt->fetch();
     	  	$id 	    = $result[unused];   // The ID of this new person
-    	  	//Below code tries to create a meaningful tactical call added 8/3/2017
     	  	
-    	  	// This duplicated below
-    	  	// Commented for the 'Add Stations Table Project' on 2020-09-28
-    	  	/*
-	  		$partsofCS1 = str_split($cs1);
-	  		$first_num  = -1;
-	  		$num_loc    = 0;
-	  			foreach ($partsofCS1 AS $a_char) {
-		  			if (is_numeric($a_char)) {
-			  			$first_num = $num_loc;
-			  			break;
-		  			}
-		  			$num_loc++;
-	  			}
-	  			if ($first_num > -1) {
-		  			$tactical = substr($cs1,$num_loc+1);
-	  			} else {
-		  			$tactical = $cs1;
-	  			}
-            */
 	  	$comments = ""; // WILL BE RESET IN getFCCrecord.php
 
         // This looks to see if the station has a record in the FCC database
         include "getFCCrecord.php";
-        //include "getJSONrecord.php";  NOT WORKING ON 2020-10-05
 		
 			// If this is the first log in for this station add them to the TimeLog table 
 			//if ("$comments" == "First Log In" OR "$comments" == "No FCC Record"){
@@ -200,6 +196,7 @@ if ("$id" == "") {
 			
                     $db_found->exec($sql);
 	        } // End of comments = "First Log In"
+	        
 } // end of id == blank, meaning its a first time log in
 	
 //*******************************************************
@@ -285,7 +282,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
                     $db_found->exec($sql);
 			  	
 		echo ('	<table id="thisNet">
-					<thead id="thead" style="text-align: center;">			
+					<thead id="thead" class="forNums" style="text-align: center;">			
 					<tr>            	
 					    <th title="Row No." class="c0" > &#35 </th>
 						<th title="Role"   >	Role	</th>

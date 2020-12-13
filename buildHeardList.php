@@ -22,6 +22,7 @@ $netID = strip_tags($_POST["q"]);
 		  FROM NetLog
 		 WHERE netID = $netID
 		   AND active NOT LIKE '%Out%'
+		 ORDER BY row_number  
 	");
 	
 	$sql->execute();

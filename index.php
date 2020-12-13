@@ -122,33 +122,36 @@
    
    
 body {
-    counter-reset: rowCounter;
+    counter-reset: sortabletablescope;  /* This is the time log only */
+    counter-reset: netLogCounter;       /* This is the net log only */
 }
    
    /* stuff from netManager.css */
-   
+  /* 
 table.sortable2 thead tr::before {
     content: "";
     display: table-cell;
 }
+*/
 
 /*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
 /* This and the definiton below it */
-
+/*
 table.sortable2 tbody tr:not(.nocounter)::before {
     content: counter(rowCounter);
     counter-increment: rowCounter -1;
     display: table-cell;
-    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
+    vertical-align: middle;  
 }
 
 table.sortable2 tbody tr.nocounter::before {
 	content:'';
 }
-
+*/
 
 /* ********************* end timeline css *****************/
 /* If you want to change the timeline lists to count backward */
+/*
 table.sortable tbody {
     counter-reset: rowCounter;
 }
@@ -157,44 +160,75 @@ table.sortable thead tr::before {
     content: "";
     display: table-cell;
 }
+*/
 
 /*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
 /* This and the definiton below it */
+/*
 table.sortable tbody tr:not(.nocounter)::before {
     content: counter(rowCounter);
     counter-increment: rowCounter;
     display: table-cell;
-    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
+    vertical-align: middle;  
 }
 
 table.sortable tbody tr.nocounter::before {
 	content:'';
 }
-
+*/
 
 /* new stuff */
+/* Other tables */
+/*
+table {
+    counter-reset: otherCounters;
+}
+table td:first-child::before {
+    counter-increment: otherCounters;
+}
+table tr:not(thead) td:first-child::before {
+    content: counter(otherCounters);
+}
+*/
 
+/* netLog */
+table#thisNet {
+    counter-reset: netLogCounter;
+}
 
+table#thisNet td:first-child::before {
+    counter-increment: netLogCounter;
+}
 
-table.sortable tbody {
-    counter-reset: row_Number;   
-    }
+table#thisNet tr:not(thead) td:first-child::before {
+    content: counter(netLogCounter);
+}
+/ end netLog */
 
-    table tr:not(#thead) {
-        counter-increment: row_Number;      /* Increment the row_Number counter by 1 (the default) */
-    }
+/* time line */
+/* If you want to change the timeline lists to count backward */
+/*
+table#pretimeline {
+    counter-reset: timeLineCounter;
+}
+*/
+/*
+table#pretimeline thead tr::before {
+    content: "";
+    display: table-cell;
+}
+
+table#pretimeline td:first-child::before {
+    content: counter(sortabletablescope);
+    counter-increment: sortabletablescope -1;
     
+    display: table-cell;
+    vertical-align: middle;
     
-    table tr:not(#thead) td:first-child::before {
-    content: counter(row_Number)"";
-    min-width: 1em;
-    margin-right: 0.5em;
-    } 
-    
+}
+*/
 
-    table#ourfreqs tr {
-        content: '';
-    }
+
 
 
 </style>

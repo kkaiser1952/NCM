@@ -66,10 +66,10 @@ if ( $q <> 0 ){
 	//	include "headerDefinitions.php";
 		
 	$headerAll = '
-		<table id="thisNet">
-		<thead id="thead" style="text-align: center;" >			
+		<table id="thisNet" >
+		<thead id="thead" class="forNums" style="text-align: center;" >			
 		<tr>            	
-		    <th title="Row No." class="besticky c0" > &#35 </th>
+		    <th title="Row No." class="besticky c0" > &#35 </th> 
 			<th title="Role" class="besticky c1">	Role </th>
 			<th title="Mode" class="besticky DfltMode cent c2" id="dfltmode" 
 			    oncontextmenu="setDfltMode();return false;"> Mode </th>
