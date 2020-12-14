@@ -1,6 +1,7 @@
 ENV_SETUP.php
 
 dbConnectDtls.php
+to-mega-backup.sh
 
 # MacOS
 .DS_Store
