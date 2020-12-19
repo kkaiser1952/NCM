@@ -1,3 +1,24 @@
+body {
+	background:#e0e1e3; 
+	width: 100%;
+	counter-reset: sortabletablescope;  /* This is the time log only */
+    counter-reset: netLogCounter;       /* This is the net log only */
+}
+
+/* netLog */
+table#thisNet {
+  counter-reset: netLogCounter 0;
+}
+
+table#thisNet tbody tr {
+  counter-increment: netLogCounter;
+}
+
+table#thisNet tbody tr td:first-child::before {
+  content: counter(netLogCounter); 
+}
+
+
 .c10, .c11  {
     white-space: nowrap;
 }
@@ -78,9 +99,11 @@ a.delete:hover::after {
 	visibility: visible;
 }
 
+ /*
 #ourfreqs {
-	width: 450px;
+	width: 450px; 
 }
+*/
 
 #rightCorner {   /* Enclosing box */
 	position: absolute;
@@ -693,54 +716,7 @@ input[type="radio"] {
     text-align: center;
 }
 
-/* Time line CSS */
-/*  This is being written in the getTimeLog.php 
-table.sortable2 tbody {
-    counter-reset: sortabletablescope 49;
-}
-*/
 
-table.sortable2 thead tr::before {
-    content: "";
-    display: table-cell;
-}
-
-/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
-/* This and the definiton below it */
-table.sortable2 tbody tr:not(.nocounter)::before {
-    content: counter(sortabletablescope);
-    counter-increment: sortabletablescope -1;
-    display: table-cell;
-    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
-}
-
-table.sortable2 tbody tr.nocounter::before {
-	content:'';
-}
-
-/* ********************* end timeline css *****************/
-/* If you want to change the timeline lists to count backward */
-table.sortable tbody {
-    counter-reset: sortabletablescope;
-}
-
-table.sortable thead tr::before {
-    content: "";
-    display: table-cell;
-}
-
-/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
-/* This and the definiton below it */
-table.sortable tbody tr:not(.nocounter)::before {
-    content: counter(sortabletablescope);
-    counter-increment: sortabletablescope;
-    display: table-cell;
-    vertical-align: middle;  /* 2020-03-08 to put the row number in the verticle middle of the row */
-}
-
-table.sortable tbody tr.nocounter::before {
-	content:'';
-}
 
 /* Sortable tables */
 xtable.sortable thead {
@@ -837,10 +813,6 @@ input:required {
 	top: 35px;
 }
 
-body {
-	background:#e0e1e3; 
-	width: 100%;
-}
 
 #status { 
 	padding:3px; 
@@ -1061,6 +1033,7 @@ thead {
 	border-spacing: 1px;
 	float: right;
 	padding: 5px;
+	width: 450px;
 }
 
 #sfreq {

@@ -62,12 +62,26 @@ function newNet(str) {
 	var newnetnm = $("#GroupInput").val().trim(); //alert('newnetnm= '+newnetnm); // newnetnm= W0KCN
 	
 	var netcall  = $("#GroupInput").val().trim(); // this should be org
+
+    var newnetfreq = $("#FreqInput").val();
+        if (newnetfreq == '' ) {newnetfreq = '144.520MHz'; }
+    
+	var newnetkind = $("#KindInput").val();    //alert('newnetkind= '+newnetkind); // newnetkind= MARS Traffic Net
 	
 	var callsign = $("#callsign").val().trim().toUpperCase(); 
+	    // Test to not allow empty group call or kind of net information 
+    	if (netcall == '' ) {
+        	var netcall = prompt("What should I use as a the net call? ex: NARES ");
+        	    if (netcall == '' ) { netcall = callsign; }
+    	}
+    	if ( newnetkind == '' ) {
+        	var newnetkind = prompt("What should I use as a group name? ex: North ARES");
+        	    if ( newnetkind == '' ) { newnetkind = callsign; }	
+    	}
+		
 	    if (callsign == 'TEST' ) {var callsign = prompt('Please enter your FCC call sign', );}
 	    //alert(callsign); // WA0TJT 
-	var newnetfreq = $("#FreqInput").val();
-	var newnetkind = $("#KindInput").val();    //alert('newnetkind= '+newnetkind); // newnetkind= MARS Traffic Net
+	
 	    if ( newnetkind.includes("MARS" )) {  // Currently not in use but i didn't want to comment it out for testing
     	    setCookie('custom', '50, 51', 5);
     	    custom_setup(); //hides Fname, shows custom and section

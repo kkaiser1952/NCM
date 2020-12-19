@@ -14,6 +14,22 @@ error_reporting( 0 );
     }
 	
 	
+	function time_elapsed_A($secs){
+    $bit = array(
+        'y' => $secs / 31556926 % 12,
+        'w' => $secs / 604800 % 52,
+        'd' => $secs / 86400 % 7,
+        'h' => $secs / 3600 % 24,
+        'm' => $secs / 60 % 60,
+        's' => $secs % 60
+        );
+        
+    foreach($bit as $k => $v)
+        if($v > 0)$ret[] = $v . $k;
+        
+    return join(' ', $ret);
+    }
+	
 	//echo("q: $q tz: $tz"); // when  show all station in DB then q = 0
 	//$q = 1208;
 	
@@ -136,7 +152,7 @@ if ( $q <> 0 ){
 	 	       $isopen = 0; // furture test to see if net is open or closed
 			 
                 // Get the frequency from NetLog
-			  	$stmt = $db_found->prepare("SELECT frequency, MIN(status) as minstat
+			  	$stmt = $db_found->prepare("SELECT frequency, MIN(status) as minstat, MIN(logdate) as startTime, MAX(timeout) as endTime
 			  				 FROM `NetLog` 
 			  				WHERE netID = $q
 			  				  AND frequency <> ''
@@ -148,12 +164,15 @@ if ( $q <> 0 ){
 			  	$result = $stmt->fetch();
 			  	$freq = $result[frequency];
 			  	$isopen = $result[minstat];  // 0 means its open (not closed), 1 means its closed (YES closed)
-			  	
-			  	  /// Good place to add a remark between buttn bar and net table
-			  	  
-			  	  if ($isopen == 1 ) {  // its closed in other words
-        	  	      echo "<span style='color:red; float:left;'>$netcall ==> This Net is Closed, not available for  edit</span>";
-        	  	  } 
+			  	  if ($isopen == 1 ) { // Net is closed 
+                    $nowtime = strtotime($result[endTime]);
+                    $startTime = $result[startTime];
+                    /// Good place to add a remark between buttn bar and net table
+                    echo "<span style='color:red; float:left;'>$netcall ==> This Net is Closed, not available for  edit</span>";
+                  } else if ($isopen == 0 ) { // Net is open
+                    $nowtime = time(); 
+                    $startTime = $result[startTime];
+                  }
 			 
     // This SQL pulls the appropriate records for the net requested
     // This also determines the sort order the rows appear in.
@@ -263,30 +282,21 @@ if ( $q <> 0 ){
 		include "rowDefinitions.php";
 		
 		  	} // End of query run
-		  	
-		  	// Browse a net by number, this puts a note below the button bar, above the table
-		  	// net_by_number() call is in index.php, function in NetManager-p2.js
-	/*	  	if ($isopen == 1 ) {  // its closed in other words
-	  	      echo "<span style='color:red;'>$netcall, $activity, $row[startdate] ==> This Net is Closed, no not edit</span>";
-	  	    } */
-     
-      // Test to see if the net is open based on all stations having a time out 
-      // if all stations have a time out then its closed ... or 0 (zero).
-	// $isopen = 0; // Default is NO, not open
-	  
-	 	//if ($num_rows <> $cnt_status) {$isopen = 1;} // this is YES its open
-	 	//echo $isopen;
 	 	
+	 	//$nowtime = time();
+	 	$runtime = time_elapsed_A($nowtime - strtotime($startTime));
 	 
 	echo ("</tr></tbody>
 		   <tfoot>
 		   <tr>");
 		   // This exception code shows this row in the log only if there is volunteer hours to report 2017-12-21
-		   if ($tottime <> '00:00:00') {
+		   //if ($tottime <> '00:00:00') {
 			   echo "
-		   		<td colspan='12' align='right'>Total Volunteer Hours = $tottime</td>
+			    <td></td>
+			    <td class='runtime' colspan='5' align='left'>Run Time: $runtime </td>
+		   		<td class='tvh' colspan='8' align='right'>Total Volunteer Hours = $tottime</td>
 		   	   ";
-		   }
+		   //}
 		 
 	echo ("</tr>
 		   </tfoot>

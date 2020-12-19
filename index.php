@@ -74,14 +74,16 @@
     <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
     <link rel="manifest" href="favicons/manifest.json">
-    
+<!--    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+ -->   
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!-- End all about favicon images -->
     
-    <!-- The meta tag below sends the user to the help file after 90 minutes of inactivity. -->
-    <meta http-equiv="refresh" content="7200; URL=https://net-control.us/help.php" >
+    <!-- The meta tag below sends the user to the help file after 90+ minutes of inactivity. -->
+    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/help.php" >
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" > 
 
@@ -120,115 +122,37 @@
 <style>
 	/* Use this space for experimental CSS */   
    
-   
-body {
-    counter-reset: sortabletablescope;  /* This is the time log only */
-    counter-reset: netLogCounter;       /* This is the net log only */
-}
-   
-   /* stuff from netManager.css */
-  /* 
-table.sortable2 thead tr::before {
-    content: "";
-    display: table-cell;
-}
-*/
-
-/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
-/* This and the definiton below it */
 /*
-table.sortable2 tbody tr:not(.nocounter)::before {
-    content: counter(rowCounter);
-    counter-increment: rowCounter -1;
-    display: table-cell;
-    vertical-align: middle;  
-}
+#smtitle {
+    width: 55px;
+    padding-left: 10px;
+    padding-top: 5px; 
+} 
 
-table.sortable2 tbody tr.nocounter::before {
-	content:'';
-}
-*/
+#pgtitle2 {
+    width: 450px;
+} */
 
-/* ********************* end timeline css *****************/
-/* If you want to change the timeline lists to count backward */
-/*
-table.sortable tbody {
-    counter-reset: rowCounter;
+/* The left and right here are the final position of the NCM and Net Control Manager titles */
+@keyframes pageOpening {
+  /*    from {left:50%; top:50%;  transform:rotate(0deg);}  
+        to {left:10px; top:5px; transform:rotate(360deg);} */
+        from {left:100%; top:5px; }
+        to {left:20px; top:5px;}
 }
-
-table.sortable thead tr::before {
-    content: "";
-    display: table-cell;
+@keyframes moveRightCorner {
+        from {left:20px; top:5px; }
+        to {right:5px; top:5px;}
 }
-*/
-
-/*https://stackoverflow.com/questions/46571033/how-to-override-table-layout-using-global-css-in-a-multi-table-environment */
-/* This and the definiton below it */
-/*
-table.sortable tbody tr:not(.nocounter)::before {
-    content: counter(rowCounter);
-    counter-increment: rowCounter;
-    display: table-cell;
-    vertical-align: middle;  
+.openingImages {
+    /*
+    position: relative;
+    animation: pageOpening 1.0s ;  */
 }
-
-table.sortable tbody tr.nocounter::before {
-	content:'';
+#ourfreqs {
+  /*  position: relative; 
+    animation: moveRightCorner 1.0s ; */
 }
-*/
-
-/* new stuff */
-/* Other tables */
-/*
-table {
-    counter-reset: otherCounters;
-}
-table td:first-child::before {
-    counter-increment: otherCounters;
-}
-table tr:not(thead) td:first-child::before {
-    content: counter(otherCounters);
-}
-*/
-
-/* netLog */
-table#thisNet {
-    counter-reset: netLogCounter;
-}
-
-table#thisNet td:first-child::before {
-    counter-increment: netLogCounter;
-}
-
-table#thisNet tr:not(thead) td:first-child::before {
-    content: counter(netLogCounter);
-}
-/ end netLog */
-
-/* time line */
-/* If you want to change the timeline lists to count backward */
-/*
-table#pretimeline {
-    counter-reset: timeLineCounter;
-}
-*/
-/*
-table#pretimeline thead tr::before {
-    content: "";
-    display: table-cell;
-}
-
-table#pretimeline td:first-child::before {
-    content: counter(sortabletablescope);
-    counter-increment: sortabletablescope -1;
-    
-    display: table-cell;
-    vertical-align: middle;
-    
-}
-*/
-
-
 
 
 </style>
@@ -236,13 +160,16 @@ table#pretimeline td:first-child::before {
 </head>
 <body>
 
+
+<div class="openingImages">
 <!-- NCM and Net Control Manager images at top of page -->
 <img id="smtitle" src="images/NCM.png" alt="NCM" >
 <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
 
 <span id="version">
-	<a href="#cc" rel="modal:open" id="version2">5.10.21</a> <!-- Years in service . Month . day  of last update -->
+	<a href="#cc" rel="modal:open" id="version2">5.12.15</a> <!-- Years in service . Month . day  of last update -->
 </span> <!-- End of id version -->
+</div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
     <div id="dttm"> <!-- flex container -->
@@ -276,7 +203,7 @@ table#pretimeline td:first-child::before {
     <div id="upperRightCorner" class="upperRightCorner"> </div> <!-- Filled by buildUpperRightCorner.php -->
        <div id="theMenu" class="theMenu">
 	       <table id="ourfreqs"> <!-- This is a bad name for this id, fix it someday -->
-	       <tbody class="noCounter">
+	       <tbody>
 		     <tr class="trFREQS">
 		       <td class="nobg2" > <!-- The CSS: .nobg2 makes it 4 columns -->
 
@@ -320,7 +247,8 @@ table#pretimeline td:first-child::before {
 			<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
 			<a href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
 			<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
-			<a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
+            <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
+			<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
 		  </span> <!-- End of class dropdown-content -->
 	   </span> <!-- End of class dropdown -->
 		
@@ -467,16 +395,19 @@ table#pretimeline td:first-child::before {
 				  ?>    
 			 </select>
 			
-			<div class="last3qs">Complete New Net Creation:</div>
+	<!--		<div class="last3qs">Complete New Net Creation:</div> -->
 				
-						<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
-						    <!-- doalert() & seecopyPB() in NetManager-p2.js -->
-							<input id="pb" type="checkbox" name="pb" class="pb last3qs" onchange="doalert(this); seecopyPB(); " />
-						</label>
-					<br>
-					<!-- newNet() & hideit() in NetManager-p2.js -->
-					<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
-					<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
+				<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
+				    <!-- doalert() & seecopyPB() in NetManager-p2.js -->
+					<input id="pb" type="checkbox" name="pb" class="pb last3qs" onchange="doalert(this); seecopyPB(); " />
+				</label>
+				
+				<div class="last3qs">Complete New Net Creation:</div>
+				
+				<br>
+				<!-- newNet() & hideit() in NetManager-p2.js -->
+				<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
+				<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
 	    
@@ -609,7 +540,7 @@ table#pretimeline td:first-child::before {
 	</div> <!-- End id netchoice -->
 	
 	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2020, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-10-21</span></p>
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-15</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
@@ -677,19 +608,33 @@ table#pretimeline td:first-child::before {
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
+        /*
         $("#netBody").sortable({
         cursor: 'row-resize',
         placeholder: 'ui-state-highlight',
         opacity: '0.55',
-        items: '> tr'
+        items: 'tbody tr'
         });
-    </script>
-	
-<!--	<script src="js/serviceworkers.js"></script> -->
-<!-- End My javascript -->
-	
-<script>	  
-    
+        */
+/*
+       // $("#rightCorner").addClass("hidden");
+        $("#version").addClass("hidden");
+        $("#dttm").addClass("hidden");
+        $(".theBox").addClass("hidden");
+        $(".btn-toolbar").addClass("hidden");
+        $(".weather-place").addClass("hidden");
+
+        
+    setTimeout(function() {
+        $("#smtitle").removeClass("hidden");
+       // $("#rightCorner").removeClass("hidden");
+        $("#version").removeClass("hidden");
+        $("#dttm").removeClass("hidden");
+        $(".theBox").removeClass("hidden");
+        $(".btn-toolbar").removeClass("hidden");
+        $(".weather-place").removeClass("hidden");
+    }, 1000);
+*/
 </script>
 
 </body>
