@@ -177,15 +177,22 @@ if ( $q <> 0 ){
     // This SQL pulls the appropriate records for the net requested
     // This also determines the sort order the rows appear in.
     if ($q <> 0) {   	  	 	  				  
-	        $g_query = "SELECT  recordID, netID, subNetOfID, id, TRIM(callsign) AS callsign, tactical,  
-	        					Fname, grid, traffic, latitude, longitude, netcontrol, 
-	        					activity, Lname, email, active, comments, logdate as startdate,
-	        					creds, DATE_FORMAT(logdate, '%H:%i') as logdate, 
+	        $g_query = "SELECT  recordID, netID, subNetOfID, id, 
+	                            TRIM(callsign) AS callsign, tactical,  
+	        					TRIM(BOTH ' ' FROM Fname) as Fname, 
+	        					grid, traffic, latitude, longitude, netcontrol, 
+	        					activity, 
+	        					TRIM(BOTH ' ' FROM Lname) as Lname, 
+	        					email, active, comments, logdate as startdate,
+	        					TRIM(BOTH ' ' FROM creds) as creds, 
+	        					DATE_FORMAT(logdate, '%H:%i') as logdate, 
 	        					DATE_FORMAT(timeout, '%H:%i') as timeout, 
 	        					sec_to_time(timeonduty) as time, netcall, status, Mode, 
 	        					TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
-	        					county, 
-	        					state, district, firstLogIn, phone, pb, tt, 
+	        					TRIM(BOTH ' ' FROM county) as county, 
+	        					TRIM(BOTH ' ' FROM state) as state, 
+	        					TRIM(BOTH ' ' FROM district) as district, 
+	        					firstLogIn, phone, pb, tt, 
 	        					logdate =
                                 	CASE
                                     	WHEN pb = 1 AND logdate = 0 THEN 1

@@ -154,16 +154,9 @@ echo ("
             id=\"state:$row[recordID]\" >	 
             $row[state] 	  					
         </td>
-     
-     <!--
+        
         <td $brbCols class=\"editable editdist  c19 cent\" 
             id=\"district:$row[recordID]\"> 
-            $row[district]	  					
-        </td> -->   
-        
-        
-         <td $brbCols class=\"editable editdist  c19 cent\" 
-            id=\"district:$row[recordID]\"  sorttable_customkey=\"$row[district] $row[county] $row[state] \" > 
             $row[district]	  					
         </td>
     

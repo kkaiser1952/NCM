@@ -209,7 +209,8 @@ sorttable = {
                  node.getElementsByTagName('input').length;
 
     if (node.getAttribute("sorttable_customkey") != null) {
-      return node.getAttribute("sorttable_customkey");
+      //return node.getAttribute("sorttable_customkey");
+      return node.getAttribute("sorttable_customkey").replace(/^\s+|\s+$/g, '');
     }
     else if (typeof node.textContent != 'undefined' && !hasInputs) {
       return node.textContent.replace(/^\s+|\s+$/g, '');

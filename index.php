@@ -13,7 +13,7 @@
  Extensive help is available by clicking Help in the upper right corner of the primary page.
 
  First written some time in 2015 and in continous enhancment and upgrade since.
- copyright 2015-2020 by: Keith Kaiser, WA0TJT 
+ copyright 2015-2021 by: Keith Kaiser, WA0TJT 
  Written by: Keith Kaiser, WA0TJT, with the help of many others.
  I can be reached at wa0tjt at gmail.com
  
@@ -22,7 +22,7 @@
  How this works (for the most part, sorta, kinda):
  If a net is selected from the dropdown
  1) The list of nets is selected from #select1
- 2) The selected net information is passed to the showActivities() function in showActivities() in NetManager.js
+ 2) The selected net information is passed to the showActivities() function in NetManager.js
  3) If this net is for logging custom contacts, the code is in NetManager.js @ showActivities()
  3a) This extra code change the Name field to a custom field for logging purposes
  4) It runs buildUpperRightCorner.php and getactivities.php to build the page
@@ -74,9 +74,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
     <link rel="manifest" href="favicons/manifest.json">
-<!--    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
- -->   
+  
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -106,8 +104,6 @@
     <!-- =============== All above this should not be editied ====================== -->
     
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
-	<!-- Latest compiled and minified CSS 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -121,19 +117,9 @@
 	 
 <style>
 	/* Use this space for experimental CSS */   
-   
-/*
-#smtitle {
-    width: 55px;
-    padding-left: 10px;
-    padding-top: 5px; 
-} 
-
-#pgtitle2 {
-    width: 450px;
-} */
 
 /* The left and right here are the final position of the NCM and Net Control Manager titles */
+/* These future features work with the very last javascript at the bottom of this page. */
 @keyframes pageOpening {
   /*    from {left:50%; top:50%;  transform:rotate(0deg);}  
         to {left:10px; top:5px; transform:rotate(360deg);} */
@@ -198,7 +184,7 @@
        <!-- Be sure to look at the NetManager.js and ...-p2.js for upperrightcorner and edit as needed -->
        <!-- The three divs work to allow its position in the upper right corner and proper position of -->
        <!-- each of the other divs within rightCorner -->
-       <!-- The upper right corner can now be edited using buildRightCorner.php -->
+       <!-- The upper right corner information can now be edited using buildRightCorner.php -->
     <div id="rightCorner">    
     <div id="upperRightCorner" class="upperRightCorner"> </div> <!-- Filled by buildUpperRightCorner.php -->
        <div id="theMenu" class="theMenu">
@@ -394,8 +380,6 @@
                     }
 				  ?>    
 			 </select>
-			
-	<!--		<div class="last3qs">Complete New Net Creation:</div> -->
 				
 				<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
 				    <!-- doalert() & seecopyPB() in NetManager-p2.js -->
@@ -426,11 +410,7 @@
 	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or, Make a Selection From These Nets</option>
 	        
 	        <option class ="tohide opcolors" value="z" disabled>Open Nets are in green =================//================= Pre-built Nets are in blue</option>
-	      <!--  
-            <option class="tohide pbGreen" value="b" disabled>(Open Nets are in green)</option>
-            
-            <option class="tohide pbBlue" value="c" disabled>(Pre-built Nets  are in blue)</option>
-           --> 
+ 
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
         <?php  require_once "buildOptionsForSelect.php"; ?>
@@ -586,16 +566,6 @@
 	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
-	
-	<!-- Bootstrap & Core Scripts -->
-	<!--
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
-    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	-->
-	
-	
 	
 <!-- My javascript -->	
 	<script src="js/NetManager.js"></script> 	<!-- NCM Primary Javascrip 2018-1-18 -->
