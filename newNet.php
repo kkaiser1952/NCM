@@ -40,11 +40,24 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 		$newNetID = $result + '1';
 	
 /* insert the new net into the NetLog.table, this first part gets other information first */
+/*
 $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid, creds,
 									email, latitude, longitude, netcall, state, county, district, home
 							   FROM NetLog 
 							  WHERE callsign = '$cs1' 
                             ");
+*/
+// Below was added 2020-12-15
+    $stmt2 = $db_found->prepare("
+        SELECT max(recordID) maxID, id, Fname, Lname, creds, email, latitude, longitude,
+		       grid, county, state, district, home, phone, tactical
+	      FROM stations 
+	     WHERE callsign LIKE '$cs1'
+         LIMIT 0,1
+    ");
+
+                            
+                            
 	$stmt2->execute();
 	$result = $stmt2->fetch();
 	
@@ -57,7 +70,8 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 		$grid  = $result[grid]; 	$county	   = $result[county];
 		$creds = $result[creds];	$district  = $result[district];
 		$email = $result[email];    $home      = $result[home];	
-		    if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
+		   // if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
+		    if ( $email == ' ' ) { $email = $testEmail; }
 		
 		//$id	   = $result[1];
 		$firstLogIn = 0;
@@ -87,7 +101,7 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
    }
 
 	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county,
-		district,pb, tt, firstLogin, home) 
+		district, pb, tt, firstLogin, home) 
 	
 		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home' )";
 		

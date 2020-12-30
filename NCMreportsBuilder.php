@@ -7,15 +7,35 @@ $reportKind  = $_GET['reportKind'];	// Week or Month, Callsign, firstLogIn
 $reportType  = $_GET['reportType'];  	// All, Vonly, Donly, Monly, VandD
 $reportYear  = $_GET['reportYear'];    // 2018, 2019, etc 
 $reportMonth = $_GET['reportMonth'];   // 2,3,4, etc 
-$monthAND    = ""; 
+    if ($reportMonth == 13 ) { 
+        $monthAND = "";
+        $yearAND = "";
+        $reportMonth = '01' ;
+        $moFirst = "$reportYear-$reportMonth-01";
+        $reportYear = $reportYear+1;
+        //$reportMonth = '01' ;
+        $next = '01';
+        //$moFirst = "$reportYear-$reportMonth-01";
+        
+        $moLast  = "$reportYear-$next-01";
+    }else {$next = 
+        $reportMonth+1;
+        $monthAND = "AND SUBSTR(logdate, 6, 2) = $reportMonth";
+        //$reportYear = $reportYear;
+        $moFirst = "$reportYear-$reportMonth-01";
+        $moLast  = "$reportYear-$next-01";
+        $yearAND = "AND SUBSTR(logdate, 1, 4) = $reportYear";
+    }
+//$monthAND    = ""; 
 
 //echo("$reportYear");
 
-$moFirst = "$reportYear-$reportMonth-01";
-$next = $reportMonth+1; 
-$moLast  = "$reportYear-$next-01";
+//$moFirst = "$reportYear-$reportMonth-01";  
+//$next = $reportMonth+1; 
+//$moLast  = "$reportYear-$next-01";
 //echo "$moFirst, $moLast";
 
+/*
 if ($reportMonth) {
     if ($reportMonth == 13) {
            $monthAND = "";
@@ -27,6 +47,7 @@ if ($reportYear == 'All') {
 }else {$yearAND = "AND SUBSTR(logdate, 1, 4) = $reportYear";
     
 }
+*/
 
 //echo("grp: $grp, kind: $reportKind, type: $reportType, year: $reportYear, month: $reportMonth, monthAND: $monthAND, yearAND: $yearAND");
 //    grp: W0KCN, kind: Month, type: All, year: 2018, month: 11, monthAND: AND SUBSTR(logdate, 6, 2) = 11 sq
@@ -59,8 +80,9 @@ echo"<table>
 $sql = "
     SELECT date(t1.logdate) AS logdate, 
 	   t1.netcall, t1.netID, t1.activity,
-	   COALESCE (t1.netID, CONCAT(MONTHNAME(MIN(t1.logdate)),' Total')) AS netID2,
-       COUNT(t1.ID)                      AS logins,
+	   COALESCE (t1.netID, 
+	   CONCAT(MONTHNAME(MIN(t1.logdate)),' Total')) AS netID2,
+       COUNT(t1.ID)                    AS logins,
        SUM(firstLogin)                 AS fstLogins, 
        SUM(timeonduty)                 AS tod,
        COUNT( IF(t1.creds <> '',1,NULL) ) AS creds,
@@ -78,6 +100,7 @@ $sql = "
 ";
  
 //echo("sql: $sql");
+
 $c = 0; // counter
 
 foreach($db_found->query($sql) as $rpt) {
@@ -121,6 +144,7 @@ $sql = "
            callsign, 
            netcall, 
            netID, 
+           
            activity,
            COALESCE (netID,'Month Total')  AS netID,
            COUNT( ID)                      AS logins, 
@@ -135,11 +159,13 @@ $sql = "
        $yearAND
        $monthAND
     GROUP BY
-     YEAR(logdate) ,netID, MONTH, callsign WITH ROLLUP
+     YEAR(logdate) ,netID, MONTH(logdate), callsign WITH ROLLUP
 ";
- 
-//echo("sql: $sql");
 
+//echo("sql: $sql");
+/*
+SELECT date(logdate) AS logdate, CONCAT(Fname,' ',Lname) AS name, callsign, netcall, netID, activity, COALESCE (netID,'Month Total') AS netID, COUNT( ID) AS logins, SUM(firstLogin) AS fstLogins, SUM(timeonduty) AS tod, creds, month(logdate) AS month FROM NetLog WHERE netcall like '%K4EOC%' AND netID <> 0 GROUP BY YEAR(logdate) ,netID, MONTH(logdate), callsign WITH ROLLUP
+*/
 $row = 0; 
 foreach($db_found->query($sql) as $rpt) {
     $row = $row + 1;

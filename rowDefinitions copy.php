@@ -130,7 +130,6 @@ echo ("
         <td $timeline $brbCols $badCols 
             class=\"editable editC c14 \"	
             id=\"comments:$row[recordID]\"
-            oncontextmenu=\"stationTimeLineList('$row[callsign]:$row[netID]');return false;\"
             onClick=\"empty('comments:$row[recordID]');\"> 
                 <div class='$class'> $row[comments] </div>	       
         </td>
@@ -155,16 +154,9 @@ echo ("
             id=\"state:$row[recordID]\" >	 
             $row[state] 	  					
         </td>
-     
-     <!--
+        
         <td $brbCols class=\"editable editdist  c19 cent\" 
             id=\"district:$row[recordID]\"> 
-            $row[district]	  					
-        </td> -->   
-        
-        
-         <td $brbCols class=\"editable editdist  c19 cent\" 
-            id=\"district:$row[recordID]\"  sorttable_customkey=\"$row[district] $row[county] $row[state] \" > 
             $row[district]	  					
         </td>
     

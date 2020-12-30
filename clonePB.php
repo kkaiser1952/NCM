@@ -21,16 +21,20 @@ $sqlS1 = ("
 	SELECT *
 	  FROM NetLog
 	 WHERE pb = 1
-	   AND netID = $oldPB;
+	   AND netID = $oldPB
+	 GROUP BY callsign;    /* This prevents all the dupes except whoever created the new PB net */
 
-	UPDATE ncm.temp_NetLog SET netID = $netID, recordID = '', active = 'Out', status = 0, timeout = 0, 
-		firstLogin = 0, logdate = 0, comments = '', timeonduty = 0, logclosedtime = 0, dttm = NOW(), activity = '$newKind';
+	UPDATE ncm.temp_NetLog 
+	   SET netID = $netID, recordID = '', active = 'Out', status = 0, timeout = 0, 
+		   firstLogin = 0, logdate = 0, comments = '', timeonduty = 0, logclosedtime = 0, 
+		   dttm = NOW(), activity = '$newKind';
 
 	INSERT INTO NetLog
 	SELECT *
 	  FROM ncm.temp_NetLog;
 
 	DROP TABLE ncm.temp_NetLog; 
+ 
 ");
 
 //echo("$sqlS1");

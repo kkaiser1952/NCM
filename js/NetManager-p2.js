@@ -1,4 +1,4 @@
-/* All of this NetManager-p2 (part 2) file was copied from the top of the index.php and move here on 2018-1-15 */
+/* All of this NetManager-p2 (part 2) file was copied from the top of the index.php and moved here on 2018-1-15 */
 
 function whoAreYou() {
     var WRU = prompt("Your Call?");
@@ -32,15 +32,7 @@ $(document).ready(function() {
 });
 
 
-// (cs1.match(/\d/)
-//  if (firstDigit == null && cs1.trim() != "NONHAM" ) {
-
-function newNet(str) {  
-    
-    //alert(testEmail);
-	  
-	  
-	//if ($(.netGroup).text() == '') {alert('itsempty');}  
+function newNet(str) {   
 	  
     // All callsigns require at least one number 
     // The callsign div must have a value
@@ -96,13 +88,14 @@ function newNet(str) {
     var pb = 0;
 		if ( $("#pb").is(':checked')) {var pb = 1}
     //alert('pb= '+pb); //pb= 0
+    
+    
     var satNet = $("#satNet").val();
     var testEmail = $("#testEmail").html();
     // Switched to using simi-colon (;) instead of colon (:) on 2019-10-23, both here and in newNet.php @ $parts
 	var str = callsign+";"+netcall+";"+org+";"+newnetfreq+";"+satNet+";"+newnetkind+";"+pb+";"+testEmail;
 	//alert(str);
-	// WA0TJT;MODES;Missouri Digital Emergency Service;80/40 Meters;0;Weekly Net;0
-	// WA0TJT;WA0TJT;;Multiple Bands;2052;Custom;0
+	// WA0TJT;TE0ST;For Testing Only;444.550Mhz(+) PL100.0Hz;0;Test;1; the 1 means its a PB
 	
 	// Build the upper right corner
 	$("#upperRightCorner").load("buildUpperRightCorner.php?call="+newnetnm); // was netcall
@@ -115,27 +108,28 @@ function newNet(str) {
 		success: function(response) {
 			var newnetID = response.trim(); 		//alert(newnetID);
   			  showActivities(response);
-  			 			
-  			/* ****************************************************************/
-  			/* The var storeselect1 is the new net name */
-  			/* This makes the newly created net show up in the dropdown box */
-  			// insertAfter by jquery ==> find a way
-  			var storeselect1 = $("#select1").html(); //alert(storeselect1);
   			
   			var strBlank  = " ";
   			var activity  = org.trim().concat(strBlank,newnetkind.trim());
   			     
   			var newoption = '<option class="green" value="'+netcall+'" selected>'+netcall+' Net #: '+ newnetID +' --> '+ activity +' for '+new Date()+'</option>';
-
-  			//var newselect = storeselect1 + newoption;
               
                 // insertAfter puts the newest net built in the dropdown and displays it
   				$(newoption).insertAfter("option.newAfterHere");
   				$("#select1").selectpicker("refresh");
+  				
+  				hideCloseButton(pb);
+  				//apprently making the hidding of the close net button with a function (below) and putting
+  				// the call to it here causes enough delay to make it work
 			
 		} // end response
 	}); // end ajax writing of table
-}}  
+}}
+
+function hideCloseButton(pb) {
+    //alert('pb '+pb);
+    if (pb == 1) {$("#closelog").addClass("hidden");}
+}  
 
 
 // https://www.itsolutionstuff.com/post/simple-php-ajax-form-validation-example-from-scratchexample.html 
@@ -160,11 +154,7 @@ function checkIn() {
          //  alert("bands= "+bands+" mBands= "+mBands);
             
 	var id 		= $("#hideme").val();  
-		//alert('id= '+id);
-	//var netID 	= $("#select1").val();  //alert(netID);
-		//if(!netID.match(numbers)) {
-	  		//var netID = $("#idofnet").text().trim(); 
-		//}
+
     var netID = $("#idofnet").text().trim();
   	
 	var cs1   	= $("#cs1").val().toUpperCase().trim(); //alert("cs1: "+cs1);
@@ -315,6 +305,15 @@ function switchClosed() {
 	} else {
 		$("#closelog").html("Net Closed");
 	} 
+	
+	   var ispb = $("#ispb").html(); 
+       var pbStat = $("#pbStat").html();
+       var isopen = $("#isopen").html();
+      // alert('ispb :'+ispb+' pbStat:'+pbStat+'  statis:'+status+'  isopen:'+isopen);
+      // if (ispb == 1 && pbStat == 0 && status != 0 && isopen == 0) {hideCloseButton(ispb)}
+       
+       //3324 --> ispb :undefined pbStat:undefined  statis:0  isopen:undefined  says: Close Net
+       //3325 --> ispb :undefined pbStat:undefined  statis:0  isopen:undefined  says: Close Net
 }
 
 // https://stackoverflow.com/questions/7697936/jquery-show-hide-options-from-one-select-drop-down-when-option-on-other-select
@@ -344,34 +343,7 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
 				
 	    	};
 	});
-//});			
 
-// This controls the refresh rate selection
-/*
- $(document).ready(function () {
-	var interval = 6000000000;
-	var autoRefId = null;
-	
-	$("#refMenu a").click(function(e){
-    	e.preventDefault(); // cancel the link behaviour
-			var selText = $(this).text();  
-				$("#refrate").text(selText);
-				clearInterval(autoRefId);    //https://www.w3schools.com/jsref/met_win_clearinterval.asp
-
-			    interval = $(this).attr('data-sec'); // get the interval in seconds
-					if (interval == 'M') {interval = 60000000;}
-						interval = interval * 1000;
-
-				autoRefId = setInterval(function() {
-	        		// set the automatic refresh for the interval selected above 
-	        		//	alert(refreshThisNet);
-	        		showActivities($("#idofnet").html().trim());  // this is the netID, number 
-	        		//RefreshGenComm();
-	        		//showActivities(document.getElementById("select1").value.trim());
-	        	}, interval);		
-	});
-});
-	*/
 
 /* https://www.tutorialspoint.com/jqueryui/jqueryui_autocomplete */
 /* https://api.jqueryui.com/autocomplete/ */
@@ -533,9 +505,11 @@ function fillaclone() {
 				data: {oldPB:netIDtoclone, newPB:netID, newKind:newKind},
 				success: function() {	
 		//			alert("Out: Clone "+netIDtoclone+" into "+netID+" for "+newKind);
-					refresh();
+					//refresh();
+					
 				} // end success
 			}); // End of ajax
+			showActivities(netID);
 } // End of fillaclone() function
 
 // This function is used to set the Pre-Built column in NetLog, and to display the cloning button on the main page.
@@ -750,12 +724,6 @@ $("#timelinehide").hide();
 			  	}); // End of ajax
 			}); // End netnos.forEach
 	}); // End on(click
-
-/*	$('#refbutton').click(function() {
-		// refreshnet is the netID of the open net
-		var refreshnet=$("#idofnet").html().trim();   //alert("in refresh()= "+refreshnet);
-			showActivities(refreshnet); // showActivities function is in this file		
-	}); */
 	
 function Clear_All_Tactical() {
     if (confirm("This process sets all Tactical Calls to blank.\r\n Are you sure this is what you want to do?\r\nIt can not be undone.")) {
@@ -1003,4 +971,26 @@ function sendGroupEMAIL() {
                 }
             });
         }
+}
+
+function stationTimeLineList(info) {
+    var info = info.split(":");
+	
+	var callsign = info[0];
+	var netID    = info[1];
+	
+	//alert(netID+'  '+callsign); // 3317  WA0TJT
+	
+	var popupWindow = window.open("", "_blank",  strWindowFeatures);
+	
+	
+	$.ajax({
+		type: 'POST',
+		url: 'getStationTimeLine.php',
+		data: {netid:netID, call:callsign},
+		success: function(html) {	
+			popupWindow.document.write(html);		
+		} // end success
+	});
+	
 }

@@ -108,7 +108,7 @@
 		<a href="#columns">Table Columns</a><br>
 		<a href="#grid">Updating Grid, Latitude and/or Longitude</a><br>	 
         <a href="#what3words">What3Words</a><br>
-		<a href="#sorting">About Sorting</a><br>
+		<a href="#misc">About Sorting</a><br>
 		<a href="#reports">Reports</a><br>
 		<a href="#advanced">Advanced Topics</a><br>
 		<a href="#advanced"><b style='color:red'>*</b> Adding General Comments to the Time Log</a><br>
@@ -521,7 +521,9 @@
 <a id="misc"></a>
 <h3>MISCELLANEOUS OPERATIONS</h3>
  
-	   <p><b>Sort Columns</b> - Most columns can be sorted simply by clicking on the column header (name). Click once and it sorts in one direction, click again and it reverses. Any kind of refresh (page or content) returns all columns to their original order.</p>
+	   <p><b>Sort Columns</b> - Most columns can be sorted simply by clicking on the column header (name). Click once and it sorts in one direction, click again and it reverses. Any kind of refresh (page or content) returns all columns to their original order.<br>An exception to this is sorting by District. When you sort by District it also sorts the County and State fields to keep them in alphabetical order as well.</p>
+	   
+	   <p>You can always return to the default sort order by clicking the blue 'Refresh' button.</p>
 	   <p>The <b>default sort</b> is a somewhat complex algorithm that took a while to figure out. Basically its sorted first by the control stations, starting with the primary net control station, followed by the logging station. It seemed logical to keep them at the top. At the same time it seemed logical to move the checked-out stations to the bottom. The exception to this is a control station that has checked-out. I left them with the other control stations in case its status was in question. All others are then sorted by the time of check-in. They are recorded to the second but only displayed to the minute.</p>
 	   
 	   <p><b style="color:red">Close Net</b> - Clicking this button should be the last thing the NCO or logger does at the end of a net. After asking who (enter your call sign) is closeing the net it populates the Time Out fields and calculates the Total Volunteer Hours at the bottom of the table. It does not reset any log out times that may already be indicated. Total Volunteer Hours are calculated to the second from log-in to log-out times. You are automatically taken to the ICS-214 report after closing a net.</p>

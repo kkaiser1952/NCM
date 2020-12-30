@@ -140,11 +140,42 @@
     animation: moveRightCorner 1.0s ; */
 }
 
+.parent {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+/*  border: 5px solid #FFFF00; */
+  padding: 10px;
+}
+
+.centernote {
+/*  background-color: #FFFF00; */
+  width: 100%;
+  height: 200px; 
+  font-size: 14pt;
+}
 
 </style>
 
 </head>
 <body>
+    
+<div class="parent">
+ <div class="centernote">
+<p>
+      Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
+ document various net operations such as weather emergencies, club meetings, bike ride support and any other 
+ logging and/or reporting intensive communications support and management needs. 
+ </p><p>
+ A variety of reports can be created including mapping stations locations and other DHS/FEMA/club needs. Including
+ the ICS-214 and ICS-309 reports and access to many others.
+ </p>
+ </div>
+</div> <!-- End funBox -->
 
 
 <div class="openingImages">
@@ -153,7 +184,7 @@
 <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
 
 <span id="version">
-	<a href="#cc" rel="modal:open" id="version2">5.12.28</a> <!-- Years in service . Month . day  of last update -->
+	<a href="#cc" rel="modal:open" id="version2">5.12.15</a> <!-- Years in service . Month . day  of last update -->
 </span> <!-- End of id version -->
 </div>
 
@@ -285,8 +316,8 @@
 	-->	
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->
-			<button id="newbttn" class="newbttn left-cell" onclick="showit();" title="Click to start a new net">Start a new net</button>	
-			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
+			<button id="newbttn" class="newbttn left-cell" onclick="hideTheCenter(); showit();" title="Click to start a new net">Start a new net</button>	
+			<button id="by_number" style="left:25px;" class="newbttn" onclick="hideTheCenter(); net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
 		</div>
 		
@@ -390,8 +421,8 @@
 				
 				<br>
 				<!-- newNet() & hideit() in NetManager-p2.js -->
-				<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
-				<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
+				<input id="submit" type="submit" value="Submit" onClick="hideTheCenter(); newNet();"  title="Submit The New Net">
+				<input class="" type="button" value="Cancel" onclick="hideTheCenter(); hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
 	    
@@ -451,10 +482,10 @@
 	</div>   <!-- End ID: forcb1 -->
 	  <!-- End of besticky -->
 	
-	<div id="admin" class=" admin ">   
+	<div id="admin" class=" admin">   
 		<div id="csnm" class="hidden">
 
-	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
+	    <div id="primeNav" class="flashit">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
 			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off" > <!-- Removed autocomplete="on" 2018-08-12 -->
@@ -520,7 +551,7 @@
 	</div> <!-- End id netchoice -->
 	
 	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-28</span></p>
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-15</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
@@ -577,14 +608,21 @@
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
 	
+	
+	
+	<script>
+    $( "#select1").on("click", function(){
+        hideTheCenter();
+    })
+    	
+    	
+    function hideTheCenter() {
+        $('.parent').addClass('hidden');
+        $('.centernote').addClass('hidden');
+    }
+    </script>
+	
     <script>
-        
-        /*
-            Check this out if animation is still wanted 
-            https://animate.style/#javascript
-        */
-        
-        
         /*
         $("#netBody").sortable({
         cursor: 'row-resize',

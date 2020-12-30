@@ -444,17 +444,7 @@ function HideTimeLine() {
 function showActivities(str, str2) { 
     var str = str.trim();
 	RefreshGenComm();
-	//alert('in showActivities '+str);
-	//str = 2100;
-    //alert("in showActivities str= "+str+"\nstr2= "+str2);
-	    // str= 1515
-        // str2= W0KCN, Net #: 1515 --&gt; KCNARES Digital Training Net of 2019-09-08 19:45:21
-        // str2= undefined   if the launch came from the favelet
-        
-    //var tz_domain = getCookie("tz_domain"); //alert('@453 '+tz_domain);
-            //if ( tz_domain == 'Local' ) { goLocal(); } else { goUTC(); }
 
-	
 	// This little loop builds the upper right corner information.
 	if (str2) {
     	//alert(str2);  // TE0ST, Net #: 2768 --&gt; TE0ST For Testing Only MARS Traffic Net of 2020-08-28
@@ -473,8 +463,7 @@ function showActivities(str, str2) {
              $('#Fname').prop('type','text');
              $('#custom').prop('type','hidden');  
              $('#section').prop('type','hidden');
-         }
-                  
+         }          
 	}
 	
 	// This is the div to update, it changes depending on whose turn it is
@@ -494,7 +483,6 @@ function showActivities(str, str2) {
 	$("#grad1").addClass("hidden");
 
 	
-	
 	// Show or hide some DIV's depending on value of str 
 	if (str == '0') {  // Added 2016-12-05  won't ever happen again... i hope
     	console.log(str); 
@@ -510,6 +498,7 @@ function showActivities(str, str2) {
 			$("#time").removeClass("hidden");
 			$(".multiselect").removeClass("hidden");
 			$("#primeNav").removeClass("hidden");
+			
 	//		$("#cb1span").removeClass("hidden");
 	} // End of else @382
 	
@@ -580,7 +569,8 @@ function showActivities(str, str2) {
 	            $(".c1, .c2, .c3").hide();
             }
 		            	            		            
-      } // End str == "" @577 the else part (I think)          
+      } // End str == "" @577 the else part (I think)    
+      
       
      //var tz_domain = sessionStorage.getItem("tz_domain"); console.log(tz_domain);
         //if(tz_domain == 'local') { goLocal(); } else { goUTC(); }

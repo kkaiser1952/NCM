@@ -1375,9 +1375,9 @@ prompt {
 
 /* This makes the freeze of the header work. but not too well 	*/
     .besticky {
-        position: -webkit-sticky; 
+        position: -webkit-sticky; /* Safari */
         position: sticky;
-        top: 0px;
+        top: 40px;
     } 
         
     /* remarks is only used for a title of old nets being browsed */

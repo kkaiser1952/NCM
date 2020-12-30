@@ -90,6 +90,7 @@ function buildReport() {
 </script>
 
 <style>
+
 body {
 	 margin: 20px;
 }
@@ -232,9 +233,9 @@ table.sortable thead {
 		<input type="radio" name="reportKind" value="Year" > Rollup by Year 
 		&nbsp;&nbsp;&nbsp;
 		-->
-		
+		<!--
 		<input type="radio" name="reportKind" value="callsign" > Net Attendance by Callsign 
-		&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp; -->
 		<!--
 		<input type="radio" name="reportKind" value="firstLogIn" > First Time Log In's 
 		&nbsp;&nbsp;&nbsp;
@@ -311,6 +312,8 @@ table.sortable thead {
 		<input type="radio" name="reportMonth" value="11"> November
 		&nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportMonth" value="12"> December
+		&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="reportMonth" value="13"> All
 		<br><br>
 
 		<input id='submit' type='submit' value='Submit' onclick="buildReport();"> 

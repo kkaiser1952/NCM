@@ -318,6 +318,7 @@ if ( $q <> 0 ){
 	echo ("<div hidden id='domain'>				$row[netcall]   </div>");
 	echo ("<div hidden id='thenetcallsign'> 	$row[netcall]   </div>");
 	echo ("<div hidden id='isopen' val=$isopen> $isopen</div> <!-- 1 = yes this net is still open -->"); // 1 = yes this net is stillopen 
+	echo ("<div hidden id='ispb'> $row[pb] </div>"); 
 	echo ("<div hidden id='pbStat'>$pbStat</div>"); // has there been at least one check-in to this pre-built net?
 	
 	// The subnetkey if > 0 places the value below the primary net table listing     /$row[frequency]&nbsp;&nbsp;
