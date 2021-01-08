@@ -64,7 +64,10 @@ $id 	= $parts[0];                //echo "id= $id"; // The users ID (13 = WA0TJT)
 $netID 	= $parts[1];                //echo("netid= $netID");   // The net ID we are working with
 $cs0    = strtoupper($parts[2]);    //echo "cs0 = $cs0";
 $cs1    = $cs0;
-$cspart = explode("/", $cs0); 
+//$cspart = explode("/", $cs0); 
+//$cspart = preg_split('/ (/|-) /', $cs1);  // same as explode but for / or - to split. the \ is an escapt mark.
+$cspart = preg_split("/[\/|\-]+/", $cs0); // I THINK THIS WORKS!
+
 $csbase = $cspart[0];
 
 $Tname 	= ucfirst($parts[3]);       // The first or both names of this person depending how it was entered
@@ -341,7 +344,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
                      WHERE netID = $netID
                      ORDER BY case 
 		  				when netcontrol = 'PRM' then 0 
-		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM') then 1
+		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2
 		  				when active 	in('In-Out', 'Out') then 3999

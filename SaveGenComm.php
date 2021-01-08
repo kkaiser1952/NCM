@@ -13,25 +13,22 @@
 		$rawdata = file_get_contents('php://input');
 		
 		
-        //echo("$rawdata");  
-		// 2428=genComments&call=Testing+of+input+to+general+commentsTesting of input to general comments
-		// 2428=genComments&value=still+trying+to+resolve+the+final+issues&from_prompt=wa0tjtstill trying to resolve the final issues&from_prompt
+       // echo("$rawdata");  
+        //3329=genComments&value=looking+for+the+ampler+problem&=wa0tjtWA0TJT: looking for the ampler problem&
+
 		
 		$part    = (explode("=",$rawdata)); 
-		$netID   = $part[0];  //echo("$netID");  // 2428Testing of input to general comments
-		
-		$part1	 = $part[1];  //echo("$part1"); // genComments&call. Testing of input to general comments
-		    
-		$part2   = $part[2];  //echo("part2: $part2");  // Testing+of+input+to+general+comments Testing of ....
-		$part3   = $part[3];  //echo("part3: $part3");
+		$netID   = $part[0];  //echo("$netID");  // returns the netID
+		$part1	 = $part[1];  //echo("$part1"); // returns genComments&value    
+		$part2   = $part[2];  //echo("part2: $part2");  // part2: Test+No.+3+of+amper&WA0TJT: Test No. 3 of amper&	
+		$part3   = $part[3];  //echo("part3: $part3");    // part3: wa0tjtWA0TJT: Test No. 4 of amper&
 		   
         $WRU      = strtoupper($part3);
 		$comment  = str_replace("+"," ",$part2);
 		$comment = encodeURIComponent($comment);   // this escapes things like the ampersand (&) 
 		$comment  = rawurldecode("$WRU: $comment");
-		
-		$comparts = explode("&",$comment);
-        //$comment = $comparts[0];
+		$comment = str_replace("&"," ",$comment);
+		$comment  = rawurldecode("$comment");
 		
 		$ipaddress = getRealIpAddr();
 							

@@ -252,7 +252,7 @@
 				   		<option value="CreateGroup">Create a Group Profile</option> 
 				   <!--	<option value="SelectView" >Select Group Default Columns</option> -->
 				   		<option value="HeardList">Create a Heard List</option>
-				   <!--	<option value="APRStt">Direwolf APRStt Config List</option> -->
+                        <option value="FSQList">Create FSQ Macro List</option>
 				   		<option value="findCall">Report by Call Sign</option>
 				   		<option value="allCalls">List all User Call Signs</option>
 				   		<option value="DisplayHelp">NCM Documentation</option>

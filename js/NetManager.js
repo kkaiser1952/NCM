@@ -714,10 +714,7 @@ function RefreshGenComm() {
 
 				autoRefId = setInterval(function() {
 	        		// set the automatic refresh for the interval selected above 
-	        		//	alert(refreshThisNet);
 	        		showActivities($("#idofnet").html().trim());  // this is the netID, number 
-	        		//RefreshGenComm();
-	        		//showActivities(document.getElementById("select1").value.trim());
 	        	}, interval);		    	 
 	});
 

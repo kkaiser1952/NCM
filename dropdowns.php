@@ -1,7 +1,7 @@
 <?php
 // The following is used in checkin.php and getactivities.php
     
-     $os 	    = array("PRM", "2nd", "3rd", "LSN", "Log", "PIO", "EM", "SEC"); // netcontrol
+     $os 	    = array("PRM", "2nd", "3rd", "LSN", "Log", "PIO", "EM", "SEC", "RELAY"); // netcontrol
      $digimodes = array("Dig","D*","Echo","V&D","FSQ","DMR","Fusion"); // Mode
      $mobilemode= array("Mob","HT"); // Mode
      $statmodes = array("In-Out","Out"); // active

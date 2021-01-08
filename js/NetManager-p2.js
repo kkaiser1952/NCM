@@ -225,11 +225,6 @@ function checkIn() {
  	$('#cs1').focus();
 } // End of checkin function
 
-// Does this function do anything?
-/*
-function ShowGenComm() {
-	var newContent = $("#forcb1 #genComments").html(); //alert(newContent);
-} */
 
 function fillFreqs() {
 	//alert("in fillFreqs()");
@@ -616,6 +611,7 @@ function seecopyPB() {
 	  	
 	  	if (selectedOption == 'SelectView') {alert("Opton comming soon");}
 	  	if (selectedOption == 'HeardList') {heardlist();}
+	  	if (selectedOption == 'FSQList') {buildFSQHeardList();}
 	  	if (selectedOption == 'APRStt') {buildDWtt();}
 	  	if (selectedOption == 'findCall') {CallHistoryForWho();}
 	  	if (selectedOption == 'DisplayHelp') {window.open("help.php");}
@@ -658,6 +654,27 @@ function heardlist() {
 		} // end success
 	});
 	
+}
+
+function buildFSQHeardList() {
+    var netID 	= $("#idofnet").html();
+        if ( typeof netID === 'undefined' || netID === null ) {
+    	    var netID = prompt("Enter a Net Number sign");  //alert(netID);
+		
+            if (netID =="") {alert("Sorry no net number was selected"); return;}
+	    }
+	    
+    var popupWindow = window.open("", "_blank",  strWindowFeatures);
+    
+    $.ajax({
+		type: 'POST',
+		url: 'buildFSQHeardList.php',
+		data: {q: netID.trim()},
+		success: function(html) {	
+			popupWindow.document.write(html);		
+		} // end success
+	});
+    
 }
 
 // ===================================== put here from index.php at the bottom ------------------------------

@@ -997,10 +997,12 @@
     Splitable Field: Yes with two spaces or use the <b>&lt;br&gt;</b> HTML tag<br>
     Required Column: Yes<br>
     Edit Type: click <br>
-    Right Clickable: No<br>
+    Right Clickable: Yes<br>
     DB Variable: comments<br>
 </div>
 <p>Time Line is used to enter any comments or reports made by this station. They are then populated into the TimeLine Log table. Each comment is individually entered into the timeline log for reporting in the ICS reports. Each click in this field clears the previous entry, but it has been saved. Changes to several of the column values are also logged here.
+</p>
+<p>Right clicking in one of the cells will produce a chronological listing of all the entries for this station.
 </p>
 </div> <!-- End TimeLine Log -->
 
@@ -1389,7 +1391,7 @@ Responsive Web Design is about using HTML and CSS to resize, hide, shrink, enlar
 <div class="theend">
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
-Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
+Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
 <div class="classictemplate template" style="display: block;">
 <style type="text/css">

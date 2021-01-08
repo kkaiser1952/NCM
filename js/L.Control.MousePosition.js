@@ -1,3 +1,7 @@
+// On 2020-05-12 I added a call to latLonToGridSquare in the hamgridsquare.js javascript
+// This gave the ability to add gridsquare to the lat / lng window on the map.
+// See lines 32 and 33 the library is called in map2.php and other places
+
 L.Control.MousePosition = L.Control.extend({
   options: {
     position: 'bottomleft',
@@ -23,9 +27,10 @@ L.Control.MousePosition = L.Control.extend({
   },
 
   _onMouseMove: function (e) {
-    var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
+    var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits); //alert(lng);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
-    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng;
+    var mgs = latLonToGridSquare(lat,lng);
+    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng + ' ' + mgs;
     var prefixAndValue = this.options.prefix + ' ' + value;
     this._container.innerHTML = prefixAndValue;
   }

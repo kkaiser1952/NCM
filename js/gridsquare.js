@@ -82,3 +82,5 @@ function gridsquare() {
 		contextmenu.style.visibility = "hidden";
 	} // if (point)
 } // end of gridsquare
+
+alert(gridsquare(39,-94));

@@ -31,6 +31,11 @@
     		$prioritykey = 1;
     		$f = '<font color="black">';
     }
+
+    if ($row[traffic] == 'Pending' | $row[traffic] == 'Priority' | $row[traffic] == 'Routine' | $row[traffic] == 'Welfare' | $row[traffic] == 'Question' | $row[traffic] == 'Announcement' | $row[traffic] == 'Comment' | $row[traffic] == 'Bulletin' ) {
+    	    $important2 = 'bgcolor="#ff9cc2"';
+    		$trafficKey = 1;
+    	}
     if ($row[traffic] == 'Emergency') {
     	//$brbCols = 'bgcolor="red"';
     	$important2 = 'bgcolor="red"';

@@ -18,32 +18,8 @@
 			 
 	$stmt = $db_found->prepare($sql);
 	
-	//	$stmt -> execute();
-	//		$parent = $stmt->fetchColumn(0);
 		$stmt -> execute();
 			$children = $stmt->fetchColumn(1); 
-		
-	//	echo "p= $parent<br>";
-	//	echo "c= $children<br>";
-    /*
-    $sql1 = ("SELECT min(a.logdate) AS minlog, 
-    				 DATE(min(a.logdate)) AS indate, 
-    				 TIME(min(a.logdate)) AS intime, 
-    				 DATE(max(a.timeout)) AS outdate, 
-    				 TIME(max(a.timeout)) AS outtime, 
-    				 a.activity, a.fname, a.lname, 
-    				 a.netcontrol, a.callsign, a.netcall,
-    				 b.kindofnet, b.box4, b.box5, a.subNetOfID,
-    				 a.frequency
-    	       FROM NetLog  as a
-    	       	   ,NetKind as b
-    	       WHERE a.netcall = b.call
-			     AND netID = $q 
-			     AND logdate = (SELECT min(logdate) 
-								  FROM NetLog 
-								  WHERE netID = $q )
-			");
-    */
 			
     $sql1 = ("SELECT min(logdate) AS minlog, 
     				 DATE(min(logdate)) AS indate, 
@@ -62,8 +38,6 @@
 	    $indate = $row[indate]; $outdate = $row[outdate];	$callsign = $row[callsign];
 	    $intime = $row[intime]; $outtime = $row[outtime];	$name = $row[activity];
 	    $parent = $row[subNetOfID]; $freq = $row[frequency]; 
-	    //$home	= $row[home];
-	    //	if ($row[netcontrol] == "PRM") {$netcontrol = "Net Control Operator"; $netopener = $row[callsign];};
     }
     
     
@@ -273,7 +247,9 @@ $(document).ready(function()
 	        			     
 	        		   FROM NetLog 
 	        		  WHERE netID = $q 
-	        		    AND timeout <> 0 AND logdate <> 0
+	        		     
+	        		    AND (timeout <> 0 AND logdate <> 0
+	        		     OR RIGHT(callsign, 2) = '-U')
 	        		  ORDER BY logdate");	
 				foreach($db_found->query($sql) as $row) {
 					$nc = "Operator";

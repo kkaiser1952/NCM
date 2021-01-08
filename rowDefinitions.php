@@ -11,8 +11,6 @@
     	    $numsort = "sorttable_customkey=$tacNO";
 	    }
 	
-//echo (` <div id="genComments" class="editGComms" onclick="empty('genComments');" title="Click to add...">$Gcomment</div> `);
-	
 echo ("
         <td class=\"cent c0 \" >     </td>  <!-- needs $row[row_number] -->
         

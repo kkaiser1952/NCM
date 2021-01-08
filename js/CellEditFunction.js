@@ -2,13 +2,14 @@
 // Added 2018-02-12 -- replaces the same in the NetManager.js &amp; NetManager-p2.js javascripts
 function CellEditFunction( jQuery ) {
     
-         // This tests if the net is closed and then prevents any editing. if open it allows it. The close of the { is second from the bottom of the function.
-         var dothework = $(".closenet").html().trim(); //alert(dothework);  // Net Closed  or  Close Net
-           if ( dothework == "Close Net") {
+ // This tests if the net is closed and then prevents any editing. if open it allows it. The close of the { is second from the bottom of the function.
+ var dothework = $(".closenet").html().trim(); //alert(dothework);  // Net Closed  or  Close Net
+   if ( dothework == "Close Net") {
 	
 		 var netid=$("#idofnet").eq(0).html().trim();
 		 
-		 var submitdata = {}; console.log(submitdata);
+		 var submitdata = {}; 
+		    console.log(submitdata); //alert(submitdata);
 		 var call = '';
 
 		 $(".editGComms").editable("SaveGenComm.php", {		// genComm	   
@@ -16,10 +17,10 @@ function CellEditFunction( jQuery ) {
     	     placeholder: "",
     	     tooltip	: "Click to add...",
     	     style		: "inherit",
-             onsubmit   : function() { submitdata[' '] = prompt('Enter Your Call'); },
+             onsubmit   : function() { submitdata[''] = prompt('Enter Your Call'); },
              submitdata : submitdata, 
              id			: netid
-	 	 }); // End of GComms
+	 	 }); // End of editGComms
 
 		 $(".editTimeOut").editable("save.php", {			// Time Out
     		 indicator 	: "",
@@ -297,7 +298,7 @@ data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","F
 	 		
 	 
 	 	$(".editable_selectNC").editable("save.php", { 		// netcontrol aka role on screen
-	    data    : '{" ":" ","PRM":"PRM","2nd":"2nd","Log":"Log","LSN":"LSN","EM":"EM","PIO":"PIO","SEC":"SEC"}',
+	    data    : '{" ":" ","PRM":"PRM","2nd":"2nd","Log":"Log","LSN":"LSN","EM":"EM","PIO":"PIO","SEC":"SEC","RELAY":"RELAY"}',
 	    type    : "select",
 	     onblur: "submit",
 	    placeholder: "",
@@ -353,5 +354,5 @@ data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","F
 		 style  	: "inherit"
 		 });
 		 */
-	} // End of dothework test
+   } // End of dothework Close Net test
 } // end of CellEdityFunction

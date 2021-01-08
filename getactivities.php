@@ -209,7 +209,7 @@ if ( $q <> 0 ){
 					WHERE netID = $q
 		  			ORDER BY case 
 		  				when netcontrol = 'PRM' then 0 
-		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','SEC') then 1
+		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','SEC','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2
 		  				when active 	in('In-Out', 'Out') then 3999
