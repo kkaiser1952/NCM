@@ -25,6 +25,7 @@ echo ("
         </td>
         
     	<td $important1 $brbCols class=\"editable editable_selectACT  cent c3 status$row[recordID] \" 
+    	    oncontextmenu=\"rightClickACT('$row[recordID]');return false;\"
     	    id=\"active:$row[recordID]\"  data-status=\"$row[active]\"> 
     	    $row[active]
         </td>  

@@ -212,7 +212,7 @@ if ( $q <> 0 ){
 		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','SEC','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2
-		  				when active 	in('In-Out', 'Out') then 3999
+		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
 		  				else logdate  
 		  				end, 
 		  			logdate DESC";   

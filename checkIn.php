@@ -18,6 +18,8 @@ require_once "getJSONrecord.php";
 // Clean up the incoming data which should look like this  :439:aa0ax:::0:TE0ST
 if(isset($_POST['q'])){
     $q = strip_tags(substr($_POST["q"],0, 100));
+   // echo ("$q"); 
+      //  undefined:3377:KA0SXY:Dennis Carpenter:undefined:0:TE0ST:0::
 }
 if(isset($q)){ 
 } 
@@ -228,7 +230,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	   	$timeLogIn	 = $open;
        	break;
       case 1:   // is a pre-build
-      	$statusValue = 'Out';
+      	$statusValue = 'OUT';
       	$timeLogIn	 = 0;
       	break;
       
@@ -347,7 +349,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2
-		  				when active 	in('In-Out', 'Out') then 3999
+		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
 		  				else logdate  
 		  				end,
 		  				logdate DESC

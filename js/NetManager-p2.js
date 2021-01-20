@@ -137,7 +137,7 @@ function hideCloseButton(pb) {
 var binaryops = 0;
 function checkIn() {
     // Dont allow new entries if net is closed.
-    var testCloseStatus = $(".closenet").html(); 
+    var testCloseStatus = $(".closenet").html(); //alert(testCloseStatus);
         if (testCloseStatus == 'Net Closed') {
             alert("Net is Closed, please open again before adding more records by right clicking on 'Net Closed' \n Or better yet, start a new net.");
                 return;
@@ -608,7 +608,7 @@ function seecopyPB() {
 	  	//alert(selectedOption);
 	  	if (selectedOption == 'EditCorner') {alert("Opton comming soon");}
 	  	if (selectedOption == 'CreateGroup') {window.open("https://net-control.us/BuildNewGroup.php");}
-	  	
+	  	if (selectedOption == 'convertToPB') {convertToPB();}
 	  	if (selectedOption == 'SelectView') {alert("Opton comming soon");}
 	  	if (selectedOption == 'HeardList') {heardlist();}
 	  	if (selectedOption == 'FSQList') {buildFSQHeardList();}
@@ -631,6 +631,27 @@ function seecopyPB() {
   })
 //})  // End ready function
 
+function convertToPB() {	
+    if ( typeof netID === 'undefined' || netID === null ) {
+        var netID = prompt("Enter a Net Number to convert.");  //alert(netID);
+    
+        if (netID == "") {
+            alert("Sorry no net number was given"); return; }
+    }
+    
+    var popupWindow = window.open("", "_blank",  smallWindowFeatures);
+	
+	$.ajax({
+		type: 'POST',
+		url: 'convertToPB.php',
+		data: {q: netID.trim()},
+		success: function(resp) {	
+            var diditwork = '<span style="color:blue"><h2>SUCCESS:<br>Net No. '+netID+'<br> Has successfully been converted to a Pre-Build net.</h2></span>';
+            popupWindow.document.write(diditwork);
+		} // end success
+	});
+}
+
 function heardlist() {
 	var netID 	= $("#idofnet").html();
 	
@@ -640,10 +661,7 @@ function heardlist() {
             if (netID =="") {alert("Sorry no net number was selected"); return;}
 	    }
 
-	
 	var popupWindow = window.open("", "_blank",  strWindowFeatures);
-	//var popupWindow = window.open("columnPicker.php?netcall="+netcall, "Columns",  strWindowFeatures);
-	//alert("coming soon "+netID);
 	
 	$.ajax({
 		type: 'POST',
@@ -653,7 +671,6 @@ function heardlist() {
 			popupWindow.document.write(html);		
 		} // end success
 	});
-	
 }
 
 function buildFSQHeardList() {
@@ -681,6 +698,7 @@ function buildFSQHeardList() {
 
 // This is the setup for the popup windows
 var strWindowFeatures = "resizable=yes,scrollbars=yes,status=no,left=20px,top=20px,height=800px,width=600px";
+var smallWindowFeatures = "resizable=yes,scrollbars=yes,status=no,left=20px,top=20px,height=400px,width=600px";
 // Put test scripts here
 // All the script files here were copied to NetManager-p2.js on 2019-01-09
 function buildRightCorner() {
@@ -999,8 +1017,7 @@ function stationTimeLineList(info) {
 	//alert(netID+'  '+callsign); // 3317  WA0TJT
 	
 	var popupWindow = window.open("", "_blank",  strWindowFeatures);
-	
-	
+		
 	$.ajax({
 		type: 'POST',
 		url: 'getStationTimeLine.php',
@@ -1009,5 +1026,21 @@ function stationTimeLineList(info) {
 			popupWindow.document.write(html);		
 		} // end success
 	});
-	
 }
+
+function rightClickACT(recordID) {
+    //alert(recordID+" in rightClickACT()");
+		if(recordID) {
+    		//alert(recordID+" in rightClickACT()");
+			$.ajax({
+				type: 'POST',
+				url: 'rightClickACT.php',
+				data: {q: recordID},
+				success: function(html) {
+					//refresh();
+				}
+			});
+		}
+		var netID = $("#idofnet").html().trim();
+		showActivities( netID );
+};

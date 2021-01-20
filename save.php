@@ -131,12 +131,6 @@
 		// If name conained two names Keith Kaiser for example, this splits off last name and updates Lname in DB
 		elseif ($column == 'Fname' and str_word_count("$value") >= 2) { 
 			//print_r(str_word_count("$value",1)); // Array ( [0] => Bill [1] => Brown ) Bill Brown
-		//	$Fname = str_word_count("$value",1)[0]; //echo("fname= $Fname");
-		//	$Lname = str_word_count("$value",1)[1]; //echo("Lname= $Lname recordid= $recordID");
-		//		$sql = "UPDATE NetLog set Lname = '$Lname' where recordID = $recordID ";
-		//		$db_found->exec($sql);
-		//	$value = "$Fname";
-
 		}
 		
 		// On screen this is Role
@@ -277,50 +271,6 @@
 			$db_found->exec($sql);
 		} // End comments
 		
-		/*
-		elseif ($column == 'w3w' AND $value != '') {
-//echo ("w3w: $value");
-			// First we have to go get some more information about who updated the comment
-			$sql = "SELECT ID, netID, callsign, home
-					  FROM NetLog 
-					WHERE recordID = '$recordID'";
-
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$home  = $row[home];
-			}
-			
-			// If its to reset the home coordinates then do this
-				$Varray = array("@home", "@ home", "@  home", "at home", "gone home,", "headed home", "going home", "home");
-			if (in_array(strtolower("$value"), $Varray)) {
-				$latitude = explode(',', $home)[0]; 
-				$longitude = explode(',', $home)[1];
-				$grid = explode(',', $home)[2];
-				$county = explode(',', $home)[3];
-				$state = explode(',', $home)[4];
-				$value2 = "@home, reset to home coordinates ($home)";
-				
-				//echo ("in Varray");
-				
-			$sql = "UPDATE NetLog 
-					   SET latitude = $latitude, longitude = $longitude, 
-						   grid ='$grid', county = '$county', state = '$state', w3w = ''
-						 WHERE recordID = $recordID";
-		
-				$stmt = $db_found->prepare($sql);
-				$stmt->execute(); 
-				
-			} else { $value2 = $value; }  // End of in_array 
-			
-			// Then we insert the new update into the TimeLog table 
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$value2', '$open', '$ipaddress')";
-		
-			$db_found->exec($sql);
-		} // End w3w
-		*/
 		
 		// This routine is to delete the row if the tactical was changed to DELETE we do this because
 		// sometimes deleting with the X at the end of each row doesn't want to work on small screens.

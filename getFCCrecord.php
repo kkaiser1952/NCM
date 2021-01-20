@@ -3,7 +3,8 @@ require_once "dbConnectDtls.php";
 require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
-	$fccsql = $db_found->prepare("SELECT replace(last,\" \",\"'\") as last
+	$fccsql = $db_found->prepare("
+	       SELECT replace(last,\"'\",\"''\") as last 
 				 ,first
 				 ,state
 				 ,CONCAT_WS(' ', address1, city, state, zip)
@@ -20,8 +21,8 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 		if( !$fccsql->rowCount() < 1 ) {
 			$result = $fccsql->fetch();
 				// Convert first & last name into proper case (first letter uppercase)
-				$Lname 		= ucfirst(strtolower($result[0])); 
-				$Fname 		= ucfirst(strtolower($result[1]));
+				$Lname 		= ucfirst(strtolower($result[last])); 
+				$Fname 		= ucfirst(strtolower($result[first]));
 				$state2	 	= $result[2];
 				$address 	= $result[3];  //echo "$address<br>"; // 73 Summit Avenue NE Swisher IA 52338
 			

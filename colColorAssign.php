@@ -47,7 +47,7 @@
     		$brbKey = 1;
     }
     
-    if ($row[active] == "Out" | $row[active] == 'In-Out') {
+    if ($row[active] == "OUT" | $row[active] == 'In-Out') {
     	$brbCols = 'bgcolor="#cdd3bc"';
     		$logoutKey = 1;
     }

@@ -14,7 +14,7 @@ $cs1   = $_POST['opensign'];
 								  ,status		 = '0'
 		where netID = '$netid' 
 		  and status = 1 
-		  AND active NOT IN ('In-Out','Out','BRB','QSY')
+		  AND active NOT IN ('In-Out','OUT','Out','BRB','QSY')
 		  ");
 		
 		$db_found->exec($sql);

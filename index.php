@@ -231,7 +231,7 @@
 			<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
 			<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
 			<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
-			<a href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
+			<a rel="noopener" href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
 			<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
             <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
 			<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
@@ -248,7 +248,7 @@
 					<!-- bardropdown is in NetManager-p2.js -->
 			   		<select id="bardropdown" class="bardropdown hidden">
 				   		<option value="SelectOne" selected="selected" disabled >Select One</option>
-				   <!--	<option value="EditCorner" >Edit This Corner</option> -->
+                        <option value="convertToPB" >Convert to a Pre-Built (Roll Call) net.</option> -->
 				   		<option value="CreateGroup">Create a Group Profile</option> 
 				   <!--	<option value="SelectView" >Select Group Default Columns</option> -->
 				   		<option value="HeardList">Create a Heard List</option>
@@ -457,7 +457,7 @@
 	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
-			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off" > <!-- Removed autocomplete="on" 2018-08-12 -->
+			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off"> <!-- Removed autocomplete="on" 2018-08-12 -->
 			
 			<!-- Below input is where the hints from cs1 and Fname go before being selected -->
 			<input type="hidden" id="hints">

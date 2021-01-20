@@ -7,7 +7,8 @@
 
     require_once "dbConnectDtls.php";
     
-    $q = $_GET["NetID"];   //$q = 715;
+   
+    $q = intval($_GET["NetID"]);
     
     $sql1 = ("SELECT min(a.logdate) AS minlog, 
     				 DATE(min(a.logdate)) AS indate, 

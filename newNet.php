@@ -87,7 +87,7 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 	   	$timeLogIn	 = $open;  // $open is created in dbConnectDtls.php 
        	break;
       case 1:   // IS a pre-built
-      	$statusValue = 'Out';
+      	$statusValue = 'OUT';
       	$timeLogIn	 = 0;
       	$PBcomment	 = 'Pre-Build Template Net for use at a later date';
       		$sql1 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp) 

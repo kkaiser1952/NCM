@@ -246,7 +246,7 @@ function CellEditFunction( jQuery ) {
  
 	 
 	 	$(".editable_selectACT").editable("save.php", {  	// status
-	    data    : '{"In":"In","Out":"Out","In-Out":"In-Out","Leave?":"Leave?","Moved":"Moved","BRB":"BRB","Enroute":"Enroute","Assigned":"Assigned","MISSING":"MISSING"}',
+	    data    : '{"In":"In","OUT":"OUT","In-Out":"In-Out","Leave?":"Leave?","Moved":"Moved","BRB":"BRB","Enroute":"Enroute","Assigned":"Assigned","MISSING":"MISSING"}',
 	    type    : "select",
 	    placeholder: "",
 	        onblur: 'submit',
@@ -355,4 +355,4 @@ data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","F
 		 });
 		 */
    } // End of dothework Close Net test
-} // end of CellEdityFunction
+} // end of CellEditFunction

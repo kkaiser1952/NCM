@@ -16,7 +16,7 @@
     require_once "GridSquare.php";
     
     
-    $q = $_GET["NetID"]; 
+    $q = intval($_GET["NetID"]); 
    // $q = 2896;
 	
 	
@@ -452,13 +452,13 @@ function circleKoords(e) {
             // i is the number of rings, depending how many have been requested the delta between bears
             // will be adjusted from 15 degrees at the 2nd circle to 5 degrees at the furthest.
             if ( i === 0  ) { //alert(numberofrings);
-                for (j=0; j < 360; j+=15) {
+                for (j=0; j < 360; j+=20) {
                     // j in the icon definition is the degrees 
                     var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
                     var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
                     var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
                         marker0.addTo(map);
-                            angle3 = angle3 + 15;
+                            angle3 = angle3 + 20;
                 }
             }   else if ( i === 5 ) {
                     for (j=0; j < 360; j+=10) {
@@ -469,6 +469,15 @@ function circleKoords(e) {
                         marker0.addTo(map);
                             angle3 = angle3 + 10;
                 }         
+            }   else if ( i === 2 ) {
+                    for (j=0; j < 360; j+=10) {
+                    // j in the icon definition is the degrees 
+                    var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
+                    var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
+                    var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
+                        marker0.addTo(map);
+                            angle3 = angle3 + 10;
+                }
             }   else if ( i === numberofrings-1 ) {
                     for (j=0; j < 360; j+=5) {
                     // j in the icon definition is the degrees 
