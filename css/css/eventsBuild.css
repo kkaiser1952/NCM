@@ -1,0 +1,148 @@
+html {
+	width: 90%;
+	padding-left: 15pt;
+}
+
+#inFormNo {
+	border: 2px solid black;
+	width: 55%; 
+	float: left;
+	margin-right: 10px;
+}
+#inFormNoLabel {
+	width: 55%;
+	float: left;
+	margin-right: 10px;
+}
+
+#inApprovedNameLabel, #inRepliedNameLabel {
+	width: 50%;
+}
+#inApprovedName, #inRepliedName {
+	margin-right: 10px;
+	float: left; 
+	width:50%;
+}
+
+#inApprovedSig, #inRepliedSig {
+	width: 50%;
+	float: left; 
+	width: 22%;
+}
+
+#inApprovedTitle, #inRepliedTitle {
+	margin-left: 10px;
+}
+
+#inApprovedSig, #inRepliedSig {
+	width:22%;
+}
+
+
+#inRepliedDate {
+	margin-left: 10px;
+}
+
+#inFinalDate {
+	width: 33%;
+	float: left;
+}
+#inFinalDateLabel {
+	width:33%;
+}
+
+b {
+	color: red;
+}
+
+#KCNARESinfo a {
+	color: green;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20;  /* once said 12px 20px but that caused issue with date picker.. change 2016-12-18 */
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#domain {
+	background-color: #caf7e0;
+}
+
+input {
+	width: 100%;
+	border-radius: 15px;
+}
+
+label {
+	color: blue;
+	font-size: larger;
+}
+
+#eventLocation {
+	float: right;
+	width: 100%;
+}
+
+
+#banner {
+	border-radius: 15px;
+	text-align: center;
+    border: 3px solid green;
+    color: green;
+}
+
+#theEvent {
+	border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+	width:100%;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    border-radius: 15px;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+textarea {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	width: 100%;
+}
+
+
+#subby {
+	font-weight: bold;
+}
+
+#whatitis {
+	font-size: 16pt;
+}
+
+#qs {
+	font-weight: bold;
+}
+
+#subj {
+	color: blue;
+
+}
+
+#edit {
+	float: right;
+}
+
+/* these are used in the Help & Keys modal */
