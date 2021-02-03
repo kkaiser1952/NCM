@@ -140,42 +140,57 @@
     animation: moveRightCorner 1.0s ; */
 }
 
-.parent {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  position: absolute;
-  left: 50%;
-  top: 65%;
-  transform: translate(-50%, -50%);
-/*  border: 5px solid #FFFF00; */
-  padding: 10px;
-}
 
-.centernote {
-/*  background-color: #FFFF00; */
-  width: 100%;
-  height: 200px; 
-  font-size: 14pt;
+/* check these */
+/* https://auralinna.blog/post/2017/how-to-make-a-css-speech-bubble-with-borders-and-drop-shadow/ */
+/* Speech bubble below */
+/* https://www.sitepoint.com/pure-css3-speech-bubbles/ */
+p.TipBubbles {
+      position: relative;
+      color: blue;
+      font-size: larger;
+      left: 20px;
+      width: 300px; 
+  /*     display:inline-block; */
+      
+      height: 30px;       /* size up and down */
+      text-align: center;
+      line-height: 30px;  /* same as height */
+      background-color: yellow;
+      border: 8px solid #999;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-shadow: 2px 2px 4px #888;
+      -moz-box-shadow: 2px 2px 4px #888;
+      box-shadow: 2px 2px 4px #888;
 }
+p.TipBubbles:before {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 30px;
+      top: 30px;            /* Same as height in TipBubbles */
+      border: 25px solid;
+      border-color: #999 transparent transparent #999;
+}
+p.TipBubbles:after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 38px;
+      top: 30px;            /* Same as height in TipBubbles */
+      border: 15px solid;
+      border-color: yellow transparent transparent yellow;
+}
+.initiallyHidden { display: none; }
 
 </style>
 
 </head>
 <body>
-    
-<div class="parent">
- <div class="centernote">
-<p>
-      Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
- document various net operations such as weather emergencies, club meetings, bike ride support and any other 
- logging and/or reporting intensive communications support and management needs. 
- </p><p>
- A variety of reports can be created including mapping stations locations and other DHS/FEMA/club needs. Including
- the ICS-214 and ICS-309 reports and access to many others.
- </p>
- </div>
-</div> <!-- End funBox -->
 
 
 <div class="openingImages">
@@ -184,11 +199,12 @@
 <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
 
 <span id="version">
-	<a href="#cc" rel="modal:open" id="version2">5.12.15</a> <!-- Years in service . Month . day  of last update -->
+	<a href="#cc" rel="modal:open" id="version2">5.12.28</a> <!-- Years in service . Month . day  of last update -->
 </span> <!-- End of id version -->
 </div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
+	<p class="TipBubbles initiallyHidden" style="width: 200px;">Choose Your Time Zone</p>
     <div id="dttm"> <!-- flex container -->
         <div id="dttm1">
             <input type="radio" name="tz" id="theLocal" value="theLocal" onclick="goLocal()">
@@ -201,6 +217,7 @@
     	</div>  <!-- Friday, August 24, 2018 1:55:13 PM  -->
     </div> <!-- end flex container -->
 		 
+    <p class="TipBubbles initiallyHidden">Weather Report for your IP Address</p>
 	<div class = "weather-place">
 		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" >
 		<a href="https://www.weather.gov" target="_blank" rel="noopener">
@@ -226,6 +243,7 @@
 
                    <!-- Selections available below the table -->
                    <!-- Open the preamble for the current net -->
+                   <button class="tipsbutton" title="Tips Button">Tips!</button>
 			       <a id="preambledev" onclick="openPreamblePopup();" title="Click for the preamble">Preamble &nbsp;||&nbsp;</a>
 			       					   
 			       <!-- Open the agenda and announcements for the current net -->
@@ -262,7 +280,7 @@
 			<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
 			<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
 			<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
-			<a href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
+			<a rel="noopener" href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
 			<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
             <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
 			<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
@@ -279,11 +297,11 @@
 					<!-- bardropdown is in NetManager-p2.js -->
 			   		<select id="bardropdown" class="bardropdown hidden">
 				   		<option value="SelectOne" selected="selected" disabled >Select One</option>
-				   <!--	<option value="EditCorner" >Edit This Corner</option> -->
+                        <option value="convertToPB" >Convert to a Pre-Built (Roll Call) net.</option> -->
 				   		<option value="CreateGroup">Create a Group Profile</option> 
 				   <!--	<option value="SelectView" >Select Group Default Columns</option> -->
 				   		<option value="HeardList">Create a Heard List</option>
-				   <!--	<option value="APRStt">Direwolf APRStt Config List</option> -->
+                        <option value="FSQList">Create FSQ Macro List</option>
 				   		<option value="findCall">Report by Call Sign</option>
 				   		<option value="allCalls">List all User Call Signs</option>
 				   		<option value="DisplayHelp">NCM Documentation</option>
@@ -306,6 +324,7 @@
     </div> <!-- End id rightCorner -->
 	      
 	<div id="org" class="hidden"></div> <!-- is this in use? -->
+	<p class="TipBubbles initiallyHidden" style="color:blue; left:100px; bottom:20px;">Create a net Or just look at a net</p> 
     <div id="netchoice">
 	<div id="netdata">
 		<!-- Use the span below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
@@ -314,10 +333,13 @@
 		<br><br>
 		</span> 
 	-->	
+
+	    </p>
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->
-			<button id="newbttn" class="newbttn left-cell" onclick="hideTheCenter(); showit();" title="Click to start a new net">Start a new net</button>	
-			<button id="by_number" style="left:25px;" class="newbttn" onclick="hideTheCenter(); net_by_number();" title="Net by the Number">Browse a Net by Number</button>
+			<button id="newbttn" class="newbttn left-cell" onclick="showit();" title="Click to start a new net">Start a new net</button>	
+        
+			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
 		</div>
 		
@@ -421,19 +443,21 @@
 				
 				<br>
 				<!-- newNet() & hideit() in NetManager-p2.js -->
-				<input id="submit" type="submit" value="Submit" onClick="hideTheCenter(); newNet();"  title="Submit The New Net">
-				<input class="" type="button" value="Cancel" onclick="hideTheCenter(); hideit();" title="Cancel">
+				<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
+				<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
 	    
 	    <div id="remarks" class="remarks hidden"></div>
     <!-- Building the upper right corner is triggered by: showActivities() in NetManager.js -->
+    <p class="TipBubbles initiallyHidden" style="color:blue; left: 250px;">Dropdown of the last 10 days nets</p>
 	<div class="btn-toolbar" >
     	
 		<div class="form-group" id="form-group-1" title="form-group" >
     		
     		<!-- switchClosed() in NetManager-p2.js -->
     		<!-- The tohide class is used by net_by_num() -->
+    		
     		<label for="select1">Or make a selection from this dropdown</label>
         	<select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
 	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
@@ -461,7 +485,7 @@
 		    <ul id="refMenu" class="dropdown-menu">
 		      <li><a href="#" data-sec="M" >Manual</a></li>
 		      <li class="divider"></li>
-		      <li><a href="#" data-sec="5" >5s</a></li>
+		      <li><a href="#" data-sec="10" >5s</a></li>
 		      <li><a href="#" data-sec="10">10s</a></li>
 		      <li><a href="#" data-sec="30">30s</a></li>
 		      <li><a href="#" data-sec="60">60s</a></li>
@@ -482,13 +506,13 @@
 	</div>   <!-- End ID: forcb1 -->
 	  <!-- End of besticky -->
 	
-	<div id="admin" class=" admin">   
+	<div id="admin" class=" admin ">   
 		<div id="csnm" class="hidden">
 
-	    <div id="primeNav" class="flashit">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
+	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
-			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off" > <!-- Removed autocomplete="on" 2018-08-12 -->
+			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off"> <!-- Removed autocomplete="on" 2018-08-12 -->
 			
 			<!-- Below input is where the hints from cs1 and Fname go before being selected -->
 			<input type="hidden" id="hints">
@@ -551,7 +575,7 @@
 	</div> <!-- End id netchoice -->
 	
 	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-15</span></p>
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-28</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
@@ -608,21 +632,20 @@
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
 	
-	
-	
-	<script>
-    $( "#select1").on("click", function(){
-        hideTheCenter();
-    })
-    	
-    	
-    function hideTheCenter() {
-        $('.parent').addClass('hidden');
-        $('.centernote').addClass('hidden');
-    }
-    </script>
-	
     <script>
+        
+        $(document).ready(function(){
+          $(".tipsbutton").click(function(){
+            $(".TipBubbles").toggle();
+          });
+        });
+        
+        /*
+            Check this out if animation is still wanted 
+            https://animate.style/#javascript
+        */
+        
+        
         /*
         $("#netBody").sortable({
         cursor: 'row-resize',

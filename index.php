@@ -430,7 +430,7 @@
 		    <ul id="refMenu" class="dropdown-menu">
 		      <li><a href="#" data-sec="M" >Manual</a></li>
 		      <li class="divider"></li>
-		      <li><a href="#" data-sec="5" >5s</a></li>
+		      <li><a href="#" data-sec="10" >5s</a></li>
 		      <li><a href="#" data-sec="10">10s</a></li>
 		      <li><a href="#" data-sec="30">30s</a></li>
 		      <li><a href="#" data-sec="60">60s</a></li>

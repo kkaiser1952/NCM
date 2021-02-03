@@ -6,6 +6,7 @@ flot-master
 plotting_examples.php
 indexAnimate.php
 editStationsTable.php
+updateStationsTable.php
 stickyTest.php
 ADIFtoMySQL.php
 ADIFreadLog.php

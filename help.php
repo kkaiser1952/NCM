@@ -256,12 +256,12 @@
 	<a id="assumptions"></a>
 	<h3>Assumptions:</h3>
 	
-	<p>For any new net created the following columns are filled by values that come from one of two places. Some values are picked up based on the last log-in of the listed station. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the previous log-in.
+	<p>For any new net created most columns are filled by values that come from one of two places. Some values are picked up based on the last log-in of the listed station. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table.
 	<ul>
-		<li>Currently all times are based on universal time (UTC or GMT). You are able to select the local time zone for display purposes.</li>
-		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always default to the stations home address.</li>
+		<li>All times are stored as universal time (UTC or GMT). You are able to select the local time zone for display purposes.</li>
+		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always default to the stations home address. </li>
 <!--		<li>County, State and District: will always default to the last edited value on the last net they logged into.</li> -->
-		<li>Call sign, First and Last Name, phone number, email address, and Credentials are all stored from one net to the other. When changed they will be retained for future nets.</li>
+		<li>Call sign, First and Last Name, phone number, email address, and Credentials are all stored for the open net only. When changed they will NOT be retained for future nets.</li>
 		<li></li>
 	</ul>
 </div> <!-- End of assumptions -->
@@ -272,10 +272,10 @@
 	<h3>Recent Changes:</h3>
 	
 	    <header>
-    	    <p>October 2020<br></p>
-    	    <p>You may now select UTC or your Local time zone </p>
+    	    <p>January 2021</p>
+    	    <p>Right click functionality on the Status column added to speed up change to 'In' or 'OUT'. </p>
     	    <p><a href="#misc">Export to a CSV file</a></p>
-    	    <p><a href="#mars">Enhanced MARS Net Support </a></p>
+    	    <p>Right click functionality added to 'Time Line Comments' column to display station activity for this net.</p>
 	    </header>
 	    <p>
 	    </p>
@@ -298,6 +298,7 @@
 		 <div class="nofirstletter">
     		 
     		 <div class="redimportant">
+                <p> If you are monitoring the net, set your refresh to a "Timed" number of seconds.</p>
             	<p> If you are net control and NOT keeping the log, set your refresh to 5 seconds.</p>
             	<p> If you are taking the log but NOT net control leave the default (Manual).</p>
             	<p> If you are both leave the default (Refresh or Manual).</p>
@@ -310,16 +311,16 @@
 		<p>If your group is not yet in the dropdown list when creating a new net, choose the hamburger menu in the upper right corner and select 'Create a new Group' from the dropdown. You can build your new group here. Be sure to refresh the page before trying to open a new net using your new group.</p>
 		<p>For smaller screens learn to use the Windows commands 'Control +' and 'Control -' or Mac commands 'Command +' and 'Command -' to fit the content to your monitor.</p>
 		
-		<p>Nets marked with "Net Closed" can not be edited. Contact me if you need to make a change. </p>
+		<p>Nets marked with "Net Closed" can not be edited. You must re-open it first.  </p>
 		<p>To enter a line break (carridge return) to the 'Comments' field put <b>&lt;br&gt;</b> or simply space twice where you want the break. Then continue to type. Do not use the return on your keyboard. All simple HTML markups are available to use.</p>
-		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM</b> and put both the first name and last name (if you have it) into the 'Name' box. The system will make an appropriate entry.</p>
+		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.</p>
 		
-		<p>Late Check-Ins (after log is closed). The best thing to do is enter them as an 'In-Out' in the 'Status' column. This will assign a one-minute value to TOD but more importantly it will allow your log to close properly.</p>
+		<p>Late Check-Ins (after log is closed). The best thing to do is enter them as an 'In-Out' in the 'Status' column. This will assign a one-minute value to TOD. But more importantly it will allow your log to close properly.</p>
 		<p>Duplicate calls are not allowed and will be ignored by the system. However if you have chosen 'Multiple Bands' or '80/40 Meters' as  your frequency while building the net, they will be allowed. Its hoped you will indicate which band they checked in from using the 'Band' column.</p>
 		
 		<p style="font-weight: bold;">Have fun!</p>
 		
-		<p>If you have an idea how to improve Net Control, please send them to <a href="mailto:wa0tjt@gmail.com?Subject=Net-Control-Program" target="_top"> Keith Kaiser</a> my eMail address is wa0tjt@gmail.com</p>
+		<p>If you have an idea how to improve Net Control Manager, please send them to <a href="mailto:wa0tjt@gmail.com?Subject=Net-Control-Program" target="_top"> Keith Kaiser</a> my eMail address is wa0tjt@gmail.com</p>
 		
 </div> <!-- End helpfulhints -->
 	
@@ -678,7 +679,7 @@
             Splitable Field: No<br>
             Required Column: Yes<br>
             Edit Type: Dropdown<br>
-            Right Clickable: No<br>
+            Right Clickable: Yes<br>
             DB Variable: active<br>
         </div>
 		<h4>Status is an indicator of the stations immediate availability</h4>
@@ -688,6 +689,10 @@
 		   	<li> <b>IN-OUT</b> - Station is checking in and immediately checking out. One minute is recorded in TOD.</li>
 		   	<li> <b>BRB</b> - Be Right Back, out for a short time, i.e. a bio-break.</li>
 		   	<li> <b style="color:red">MSSING</b> - This person failed to respond to the last roll call</li>
+		   	<li> <b>Enroute</b> - This operator is on their way to a location.</li>
+		   	<li> <b>Assigned</b> - The station is assigned to something, NCS decide.</li>
+		   	<li> <b>Moved</b> - The station has moved to another frequency or net, NCS decide.</li>
+		   	<li> <b>Leave?</b> - Want to leave the net? Ask permission by selecting this value.</li>
 		   </ul>
 	</div>
 	<div>

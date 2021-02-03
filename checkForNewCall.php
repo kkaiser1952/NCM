@@ -74,7 +74,8 @@ $sql1 = "SELECT count(*) FROM NetLog WHERE callsign = '$thiscall' ";
 				 ,CONCAT_WS(' ', address1, city, state, zip) as fulladdress
 			 FROM fcc_amateur.en
 			WHERE callsign = '$thiscall' 
-			ORDER BY fccid DESC 
+			AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$thiscall')
+		/*	ORDER BY fccid DESC */
 			LIMIT 0,1 ");				
 		
 		$fccsql->execute();

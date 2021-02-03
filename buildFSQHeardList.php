@@ -21,10 +21,11 @@ $netID = intval($_POST["q"]);
 	               netcontrol
 	          FROM NetLog
 	          WHERE netID = $netID
+	            
 	          
               ORDER BY (CASE 
                             WHEN netcontrol = 'RELAY' THEN 0
-                		    WHEN netcontrol = 'PRM'   THEN 1
+                		    WHEN netcontrol = 'PRM'   THEN 100
                 		    WHEN netcontrol = '2ND'   THEN 2
                 		    WHEN netcontrol = 'Log'   THEN 3
                 		    WHEN netcontrol = 'LSN'   THEN 4

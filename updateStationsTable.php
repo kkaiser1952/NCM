@@ -7,17 +7,24 @@
     require_once "geocode.php";  
     require_once "GridSquare.php";
     
+    $netID = 3470;
+    
+/* This program updates the following fields in the stations table */
+/* fccid Fname, Lname, county, state, grid, latitude, longitude, emial, creds, home, latlng */
+
 /* Select records with possible issues */
 $sql = ("
 SELECT  fcc.fccid
-       ,ncm.recordID
-       ,ncm.callsign
-       ,SUBSTRING_INDEX(ncm.callsign, IF(LOCATE('/', ncm.callsign), '/', '-'), 1) AS b4Delim
+	   ,log.netID
+       ,log.ID
+       ,log.callsign
        ,ncm.home
        
+       ,SUBSTRING_INDEX(log.callsign, IF(LOCATE('/', log.callsign), '/', '-'), 1) AS b4Delim
+       
        ,    CASE
-            	WHEN ncm.Fname IS NULL OR ncm.Fname = ' ' OR ncm.Fname <> fcc.first THEN fcc.first
-                ELSE ncm.Fname
+            	WHEN ncm.Fname IS NULL OR ncm.Fname = ' ' THEN fcc.first
+            	WHEN ncm.Fname <> fcc.first THEN ncm.Fname
             END as Fname
        ,    CASE
             	WHEN ncm.Lname IS NULL OR ncm.Lname = ' ' OR ncm.Lname <> fcc.last THEN fcc.last
@@ -27,22 +34,32 @@ SELECT  fcc.fccid
             	WHEN ncm.state IS NULL OR ncm.state = ' ' OR ncm.state <> fcc.state THEN fcc.state
                 ELSE ncm.state
             END as state
+       ,    CASE
+            	WHEN (ncm.email IS NULL OR ncm.email = ' ' OR ncm.email <> log.email) 
+                 AND log.email <> ' ' THEN log.email
+            END as email
+       ,    CASE
+            	WHEN (ncm.creds IS NULL OR ncm.creds = ' ' OR ncm.creds <> log.creds) 
+                 AND log.creds <> ' ' THEN log.creds
+            END as creds
+            
+     
                         
        ,CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) as fulladdress
    FROM fcc_amateur.en fcc
        ,ncm.stations ncm 
-  WHERE fcc.callsign = substring_index(ncm.callsign, '/', 1)
-    AND fcc.fccid = (SELECT MAX(fcc.fccid) FROM fcc_amateur.en fcc WHERE fcc.callsign = ncm.callsign)
-    AND (ncm.Fname = '' OR ncm.Lname = '' OR ncm.county = '' OR ncm.state = '' OR ncm.latitude = '' OR ncm.home = '' 
-         OR ncm.state <> fcc.state)
-    
-    AND LEFT(ncm.callsign, 1) IN('A','K','N','W')
-    AND LEFT(ncm.callsign, 3) NOT IN('AAA','AAR','NON','AFA')
-    AND ncm.tactical NOT LIKE '%BAD%';
+       ,ncm.NetLog log
+  WHERE log.netId = $netID
+    AND fcc.callsign = substring_index(log.callsign, '/', 1)
+    AND fcc.fccid = (SELECT MAX(fcc.fccid) FROM fcc_amateur.en fcc WHERE fcc.callsign = log.callsign)
+    AND (ncm.Fname = '' OR ncm.Lname = '' OR ncm.county = '' OR ncm.state = '' OR ncm.latitude = '' OR ncm.home = '' OR ncm.state <> fcc.state)
+    AND LEFT(log.callsign, 1) IN('A','K','N','W')
+    AND LEFT(log.callsign, 3) NOT IN('AAA','AAR','NON','AFA')
+    AND ncm.tactical NOT LIKE '%BAD%'
+    GROUP BY log.callsign
 ");
 
-
-$fixrequests = '<h2>Fixes to the following records were made:</h2><br>';
+$fixrequests = "<h2>Fixes to the following records in net #".$netID." were made:</h2><br>";
 $query = '';
 $address = '';
 foreach($db_found->query($sql) as $row) {
@@ -59,13 +76,22 @@ foreach($db_found->query($sql) as $row) {
 		$gridd 	   = gridsquare($latitude, $longitude);
 		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
 		
-    $fixrequests .= "$row[recordID],  $row[callsign],  $row[Fname],  $row[Lname],   $address,  $county, $row[state]  <br>";
+    $fixrequests .= "$row[recordID], $row[callsign], $row[Fname], $row[Lname], $address, $county, $row[state]<br>";
 		
-    $query .= "UPDATE stations SET fccid = '$row[fccid]', Fname = '$row[Fname]', Lname = '$row[Lname]',
-                      county = '$county', state = '$row[state]', grid = '$grid',
-                      latitude = '$latitude', longitude = '$longitude', 
-                      home = CONCAT(latitude,',',longitude,',',grid,',',county,',',state)
-                WHERE recordID = '$row[recordID]' AND callsign = '$row[b4Delim]' ; ";
+    $query .= "UPDATE stations SET  
+                    fccid     = '$row[fccid]', 
+                    Fname     = TRIM('$row[Fname]'), 
+                    Lname     = TRIM('$row[Lname]'),
+                    county    = TRIM('$county'), 
+                    state     = TRIM('$row[state]'),
+                    grid      = TRIM('$grid'),
+                    latitude  = '$latitude', 
+                    longitude = '$longitude', 
+                    email     = TRIM('$row[email]'),
+                    creds     = TRIM('$row[creds]'),
+                    home      = CONCAT('$latitude',',','$longitude',',','$grid',',','$county',',','$row[state]'),
+                    latlng    = GeomFromText(CONCAT('POINT (', '$latitude', ' ', '$longitude', ')'))
+                WHERE ID = '$row[ID]' AND callsign = '$row[b4Delim]' ; ";
 }
 
 /* Run the UPDATE Query */

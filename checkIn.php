@@ -118,11 +118,14 @@ $mBand  = $parts[7];                // the multiple bands indicator 1 = Yes, 0 o
 /* This experimental query pulls the last time this callsign logged on using the stations table */
 
 /* Tested and passed But any updates to it are not yet done  */
+//echo "$csbase";
     $stmt2 = $db_found->prepare("
         SELECT id, Fname, Lname, creds, email, latitude, longitude,
 		       grid, county, state, district, home, phone, tactical
 	      FROM stations 
-	     WHERE callsign LIKE '%$csbase%'
+	 /*    WHERE callsign LIKE '%$csbase%' this Causes the wrong callsign to be taken sometimes */
+	     WHERE callsign = '$csbase'
+	       AND active_call = 'y'
          LIMIT 0,1
     ");  
 
@@ -144,11 +147,13 @@ $stmt2 = $db_found->prepare("
 	
 	$recordID 	= $result[recordID];   
 	$id         = $result[id];  
-	$Fname 	  	= $result[Fname];	   $Lname    = $result[Lname];  
+	$Fname 	  	= ucwords(strtolower($result[Fname]));
+	$Lname      = ucwords(strtolower($result[Lname]));  
 	$grid  		= $result[grid];	   $creds 	 = $result[creds];
 	$email 		= $result[email];	   $latitude = $result[latitude];
 	$longitude 	= $result[longitude];  $tactical = $result[tactical];
-	$county    	= $result[county];	   $state 	 = $result[state];
+	$county    	= ucwords(strtolower($result[county]));	   
+	$state 	    = $result[state];
 	$district 	= $result[district];   $tt		 = $result[tt]; 
 	$home       = $result[home];       $phone    = $result[phone];
 	$comments  	= "";	        

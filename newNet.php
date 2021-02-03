@@ -62,12 +62,15 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 	$result = $stmt2->fetch();
 	
 		$maxID = $result[maxID];
-		$id    = $result[id];	    $latitude  = $result[latitude];   //echo("tt = $tt");
-		$Fname = $result[Fname];	$longitude = $result[longitude];
+		$id    = $result[id];	    
+		$latitude  = $result[latitude];   //echo("tt = $tt");	
+		$longitude = $result[longitude];
+		$Fname = ucwords(strtolower($result[Fname]));	
+		$Lname = ucwords(strtolower($result[Lname]));
 		$Lname = $result[Lname];
 		$Lname = str_replace("'","\'",$Lname);   // The \ is to escape the apostraphe (')
 		$state = $result[state];
-		$grid  = $result[grid]; 	$county	   = $result[county];
+		$grid  = $result[grid]; 	$county	   = ucwords(strtolower($result[county]));
 		$creds = $result[creds];	$district  = $result[district];
 		$email = $result[email];    $home      = $result[home];	
 		   // if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
