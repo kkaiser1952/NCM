@@ -7,7 +7,7 @@
     require_once "geocode.php";  
     require_once "GridSquare.php";
     
-    $netID = 3470;
+    $netID = 3584;
     
 /* This program updates the following fields in the stations table */
 /* fccid Fname, Lname, county, state, grid, latitude, longitude, emial, creds, home, latlng */
@@ -23,12 +23,16 @@ SELECT  fcc.fccid
        ,SUBSTRING_INDEX(log.callsign, IF(LOCATE('/', log.callsign), '/', '-'), 1) AS b4Delim
        
        ,    CASE
-            	WHEN ncm.Fname IS NULL OR ncm.Fname = ' ' THEN fcc.first
-            	WHEN ncm.Fname <> fcc.first THEN ncm.Fname
+            	WHEN (ncm.Fname IS NULL OR ncm.Fname = ' ') AND log.Fname <> ' ' THEN log.Fname 
+            	WHEN (log.Fname = '' or log.Fname IS NULL) THEN fcc.first 
+            	WHEN log.Fname <> ncm.Fname THEN log.Fname
+                ELSE fcc.first
             END as Fname
        ,    CASE
-            	WHEN ncm.Lname IS NULL OR ncm.Lname = ' ' OR ncm.Lname <> fcc.last THEN fcc.last
-                ELSE ncm.Lname
+                WHEN (ncm.Lname IS NULL OR ncm.Lname = ' ') AND log.Lname <> ' ' THEN log.Lname 
+            	WHEN (log.Lname = '' or log.Lname IS NULL) THEN fcc.last 
+            	WHEN log.Lname <> ncm.Lname THEN log.Lname
+                ELSE fcc.last
             END as Lname
        ,    CASE
             	WHEN ncm.state IS NULL OR ncm.state = ' ' OR ncm.state <> fcc.state THEN fcc.state
@@ -42,13 +46,11 @@ SELECT  fcc.fccid
             	WHEN (ncm.creds IS NULL OR ncm.creds = ' ' OR ncm.creds <> log.creds) 
                  AND log.creds <> ' ' THEN log.creds
             END as creds
-            
-     
                         
-       ,CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) as fulladdress
-   FROM fcc_amateur.en fcc
-       ,ncm.stations ncm 
-       ,ncm.NetLog log
+       ,    CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) as fulladdress
+   FROM fcc_amateur.en  fcc
+       ,ncm.stations    ncm 
+       ,ncm.NetLog      log
   WHERE log.netId = $netID
     AND fcc.callsign = substring_index(log.callsign, '/', 1)
     AND fcc.fccid = (SELECT MAX(fcc.fccid) FROM fcc_amateur.en fcc WHERE fcc.callsign = log.callsign)

@@ -115,12 +115,14 @@ SELECT count(a.callsign) as logCount
       ,SUM(IF(YEAR(a.logdate) = '2018', 1,0)) as y2018
       ,SUM(IF(YEAR(a.logdate) = '2019', 1,0)) as y2019 
       ,SUM(IF(YEAR(a.logdate) = '2020', 1,0)) as y2020 
+      ,SUM(IF(YEAR(a.logdate) = '2021', 1,0)) as y2021
       
       ,SUM(IF(YEAR(a.logdate) = '2016', a.timeonduty,0)) as h2016
 	  ,SUM(IF(YEAR(a.logdate) = '2017', a.timeonduty,0)) as h2017
       ,SUM(IF(YEAR(a.logdate) = '2018', a.timeonduty,0)) as h2018
       ,SUM(IF(YEAR(a.logdate) = '2019', a.timeonduty,0)) as h2019 
       ,SUM(IF(YEAR(a.logdate) = '2020', a.timeonduty,0)) as h2020
+      ,SUM(IF(YEAR(a.logdate) = '2021', a.timeonduty,0)) as h2021
       
    FROM ncm.NetLog a
   WHERE a.callsign = '$call'
@@ -153,11 +155,12 @@ SELECT count(a.callsign) as logCount
 		$tt			= $result[tt];			     $recordID	= $result[recordID];	
 		$y2016		= $result[y2016];		     $y2017		= $result[y2017];  	
 		$y2018		= $result[y2018];		     $y2019		= $result[y2019];
-		$y2020		= $result[y2020];
+		$y2020		= $result[y2020];            $y2021		= $result[y2021];
 		
 		$h2016		= $result[h2016];		     $h2017		= $result[h2017];  	
 		$h2018		= $result[h2018];		     $h2019		= $result[h2019];
 		$callsign	= $result[callsign];         $h2020		= $result[h2020];
+		                                         $h2021		= $result[h2021];
 		
 		// Start what3word stuff
 		// ======================================
@@ -262,13 +265,16 @@ foreach ( $result["webPages"]["value"] as $data)
 		$h2018		= secondsToDHMS($h2018);
 		$h2019		= secondsToDHMS($h2019);
 		$h2020		= secondsToDHMS($h2020);
+		$h2021		= secondsToDHMS($h2021);
 		
-		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020);
+		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020,$y2021);
 		$yearTotals		 = array_sum($yearTotalsArray);
 		
 		// Is there a headshot for this person?
 		if (file_exists("headshots/$id.JPG")) {
 			$headshot = "$id.JPG";
+        }else if (file_exists("headshots/$id.png")) {
+            $headshot = "$id.png";
 		}else {$headshot = 'gen.png';}
 		
 		echo ("<!DOCTYPE html>
@@ -417,7 +423,7 @@ foreach ( $result["webPages"]["value"] as $data)
 				     <a href='mailto:$email?Subject='NCM'target='_top'>$email</a>
 				</p>
 				<p class='item2'>
-				    <img src='headshots/$headshot' >
+				    <img src='headshots/$headshot'>
 				</p> 
 				<p class='item3' style='color:red'>$callsign
 				    Class: $hamclass
@@ -467,6 +473,7 @@ foreach ( $result["webPages"]["value"] as $data)
 			  	<tr><td> 2018 </td> <td> $y2018 </td> <td> $h2018 </td></tr>
 			  	<tr><td> 2019 </td> <td> $y2019 </td> <td> $h2019 </td></tr>
 			  	<tr><td> 2020 </td> <td> $y2020 </td> <td> $h2020 </td></tr>
+			  	<tr><td> 2021 </td> <td> $y2021 </td> <td> $h2021 </td></tr>
 			  	
 			  	<tr><td> Total </td> <td> $yearTotals </td> <td> $yearHours </td></tr>
 			  	

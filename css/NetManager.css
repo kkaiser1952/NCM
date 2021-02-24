@@ -730,6 +730,7 @@ xtable.sortable thead {
 	text-transform:uppercase;
 }
 
+/* Inputs on button bar */
 #cs1 {
 	text-transform:uppercase;
 	font-family: 'Allerta', sans-serif; font-weight: 400; 
@@ -739,6 +740,30 @@ xtable.sortable thead {
 	border: 2px solid brown;
 	border-radius: 4px;
 	font-size:13pt;
+}
+
+#Fname {
+	text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 5px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+}
+
+/* next to Name on button bar */
+#TrfkSwitch {
+    text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 10px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+	width: 15px;
 }
 
 #custom {
@@ -762,18 +787,8 @@ xtable.sortable thead {
 	border-radius: 4px;
 	font-size:13pt;
 }
+/* end of inputs on button bar */
 
-
-#Fname {
-	text-transform: capitalize;
-	background: #ede8ad;
-	float: left;
-	position: relative;
-	left: 5px;
-	border: 2px solid brown;
-	border-radius: 4px;
-	font-size:13pt;
-}
 
 input:focus {
     background-color: yellow;

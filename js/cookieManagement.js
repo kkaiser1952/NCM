@@ -97,7 +97,7 @@ function testCookies(nc) {
     // This test was added because the MARS groups don't want to see the county and state.
     if ( $("#activity").html().includes("MARS")) {
         var arrayDefault = ["1","2","3","4","6","7","12","13","14","50"]; 
-    } else {var arrayDefault = ["1","2","3","4","6","7","12","13","14","17","18"];}
+    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14","17","18"];}
 		
     // This sets us up to add the email and phone columns automatically if its a meeting or event
     if ( $("#activity").html().includes("Meeting") || $("#activity").html().includes("Event") ) {
@@ -159,7 +159,7 @@ function showCol(sh) {
             } else if (sh === '9'  ) { $(".c9").show();     // Tactical
     	    } else if (sh === '10' ) { $(".c10").show();    // Phone Number
     	    } else if (sh === '11' ) { $(".c11").show();    // eMail Address
-    	    } else if (sh === '15' ) { $(".c15").show();    // Crendentials
+    	    } else if (sh === '15' ) { $(".c15").show();    // Credentials
     	    } else if (sh === '16' ) { $(".c16").show();    // Time On Duty
     	    } else if (sh === '17' ) { $(".c17").show();    // County
     	    } else if (sh === '18' ) { $(".c18").show();    // State

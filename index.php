@@ -48,6 +48,7 @@
 <head>
     <meta charset = "UTF-8" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -56,7 +57,7 @@
 
   gtag('config', 'UA-167869985-1');
 </script>
-
+-->
     
     <title>Amateur Radio Net Control Manager</title>
     <!-- Below is all about favicon images https://www.favicon-generator.org -->
@@ -114,34 +115,11 @@
     
     <!-- All the @media stuff -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
+    <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 	 
 <style>
 	/* Use this space for experimental CSS */   
-
-/* The left and right here are the final position of the NCM and Net Control Manager titles */
-/* These future features work with the very last javascript at the bottom of this page. */
-@keyframes pageOpening {
-  /*    from {left:50%; top:50%;  transform:rotate(0deg);}  
-        to {left:10px; top:5px; transform:rotate(360deg);} */
-        from {left:100%; top:5px; }
-        to {left:20px; top:5px;}
-}
-@keyframes moveRightCorner {
-        from {left:20px; top:5px; }
-        to {right:5px; top:5px;}
-}
-.openingImages {
-    /*
-    position: relative;
-    animation: pageOpening 1.0s ;  */
-}
-#ourfreqs {
-  /*  position: relative; 
-    animation: moveRightCorner 1.0s ; */
-}
-
-
-</style>
+	</style>
 
 </head>
 <body>
@@ -153,11 +131,12 @@
 <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
 
 <span id="version">
-	<a href="#cc" rel="modal:open" id="version2">5.12.28</a> <!-- Years in service . Month . day  of last update -->
+	<a href="#cc" rel="modal:open" id="version2">6.02.21</a> <!-- Years in service . Month . day  of last update -->
 </span> <!-- End of id version -->
 </div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
+	<p class="tb1 TipBubbles initiallyHidden" style="width: 200px; margin-bottom: 40px;">Choose Your Time Zone</p>
     <div id="dttm"> <!-- flex container -->
         <div id="dttm1">
             <input type="radio" name="tz" id="theLocal" value="theLocal" onclick="goLocal()">
@@ -170,6 +149,7 @@
     	</div>  <!-- Friday, August 24, 2018 1:55:13 PM  -->
     </div> <!-- end flex container -->
 		 
+    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 400px;  margin-bottom: 30px;">Clickable Weather Report based on your IP Address</p>
 	<div class = "weather-place">
 		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" >
 		<a href="https://www.weather.gov" target="_blank" rel="noopener">
@@ -195,6 +175,8 @@
 
                    <!-- Selections available below the table -->
                    <!-- Open the preamble for the current net -->
+                   
+                   <button class="tbb" title="Tips Button">T</button>
 			       <a id="preambledev" onclick="openPreamblePopup();" title="Click for the preamble">Preamble &nbsp;||&nbsp;</a>
 			       					   
 			       <!-- Open the agenda and announcements for the current net -->
@@ -278,14 +260,16 @@
     <div id="netchoice">
 	<div id="netdata">
 		<!-- Use the span below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
-	<!--	
-		<span class="newstuff"> Effective 3/1/2020 all times will be in UTC, report issues to <a href="mailto:wa0tjt@gmail.com?subject=NCM">WA0TJT</a>
-		<br><br>
+	<span style="color:red; font-size: large;">	
+		Reminder: The default to enter a call is now three tabs... tab tab tab or STOP at the last box<br> and enter T,R,W,P,E,Q,A, or C for the Traffic column in the small, last box. See <a href="https://net-control.us/help.php#checkins" target="_blank">Check-in</a> for details.
 		</span> 
-	-->	
+	
+
+	    </p>
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->
 			<button id="newbttn" class="newbttn left-cell" onclick="showit();" title="Click to start a new net">Start a new net</button>	
+        
 			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
 		</div>
@@ -397,17 +381,21 @@
 	    
 	    <div id="remarks" class="remarks hidden"></div>
     <!-- Building the upper right corner is triggered by: showActivities() in NetManager.js -->
+    <p class="tb2 TipBubbles initiallyHidden" style="width: 400px; left: 200px; margin-bottom: -40px;">
+        Dropdown of nets and/or current net being displayed.</p>
+    <p class="tb2 TipBubbles initiallyHidden" style="width: 300px; left: 775px; margin-bottom: 40px;">Immediate and Timed Data Refresh</p>
 	<div class="btn-toolbar" >
     	
 		<div class="form-group" id="form-group-1" title="form-group" >
     		
     		<!-- switchClosed() in NetManager-p2.js -->
     		<!-- The tohide class is used by net_by_num() -->
-    		<label for="select1">Or make a selection from this dropdown</label>
+    		
+    	<!--	<label for="select1">Or make a selection from this dropdown</label>  -->
         	<select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
 	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
 	        	
-	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or, Make a Selection From These Nets</option>
+	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or Select From Past 10 Days Nets</option>
 	        
 	        <option class ="tohide opcolors" value="z" disabled>Open Nets are in green =================//================= Pre-built Nets are in blue</option>
  
@@ -446,25 +434,31 @@
     <!-- This is activated by a jquery on function in netManager.js at about line 391 -->
     
 	<div id="forcb1" class="hidden">
+    	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">Hover/Click here to add General Comments</p>
 		<div id="genComments" class=" editGComms"></div>
 <!--		<div id="genComments" class="editGComms" onclick="empty('genComments'); "> </div> -->
 	</div>   <!-- End ID: forcb1 -->
 	  <!-- End of besticky -->
-	
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:300px; left: 50px; margin-bottom: -40px;">Enter Callsign or name displays hints</p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:150px; left: 455px; margin-bottom: -40px;">Traffic Short Cut</p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:250px; left: 655px; margin-bottom: -40px;">Select Columns for display</p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:350px; left: 950px; margin-bottom: 40px;">Button Bar with Time Line and Net Status buttons</p>
 	<div id="admin" class=" admin ">   
 		<div id="csnm" class="hidden">
 
 	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
-			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off"> <!-- Removed autocomplete="on" 2018-08-12 -->
+			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off" tabindex=1 > <!-- Removed autocomplete="on" 2018-08-12 -->
 			
 			<!-- Below input is where the hints from cs1 and Fname go before being selected -->
 			<input type="hidden" id="hints">
 			
 			<!-- Input first name add readonly to prevent editing -->
 			<!-- autocomplet="on" removed from below on 2018-08-12 -->
-			<input id="Fname" type="text" placeholder="Name" onblur="checkIn();" autocomplete="off">
+			<input id="Fname" type="text" placeholder="Name" onblur="" autocomplete="off" tabindex=2>
+			
+			<input id="TrfkSwitch" type="text" onblur="checkIn(); this.value='' " autocomplete="off" tabindex=3 >
 			
 			<!-- Some attributes of the below field are controled in NetManager.js -->
 			<input id="custom" class="hidden brdrGreen" type="text" placeholder="" autocomplete="off" onblur="checkIn();" >
@@ -520,7 +514,7 @@
 	</div> <!-- End id netchoice -->
 	
 	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-28</span></p>
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-02-21</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
@@ -578,8 +572,7 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
-        
-        /*
+            /*
             Check this out if animation is still wanted 
             https://animate.style/#javascript
         */

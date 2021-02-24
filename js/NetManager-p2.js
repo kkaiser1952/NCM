@@ -162,6 +162,15 @@ function checkIn() {
 	var fdsec   = $("#section").val().toUpperCase().trim(); // Custom Section
 	   //alert(" fdcat: "+fdcat);
 	var Fname	= $("#Fname").val();
+	
+	// TrfkSwitch is the short cut to enter a traffic type while checing in this station 
+	//var TSvalue = '';
+	var TrfkSwitch = $("#TrfkSwitch").val();    //alert(TrfkSwitch);
+	var posValues = "TRWPEQACtrwpeqac ";   // valid values for the traffic short cut field
+	        if (posValues.includes( TrfkSwitch ) ) {
+    	        var TSvalue = TrfkSwitch.toUpperCase(); 
+    	    }else { var TSvalue = ""; } 
+	    
 	var therest	= $("#hidestuff").val(); 
 	
 	var netcall	= $("#domain").html().replace(/\s+/g, '').toUpperCase(); //added: 2016-12-08
@@ -189,8 +198,10 @@ function checkIn() {
 			  } 
 	  } // End if @195
   	} // End else @191
+  	
+  //	alert(TSvalue);
 
-	var str =     id+":"+netID+":"+cs1+":"+Fname+":"+therest+":"+binaryops+":"+netcall.toUpperCase()+":"+mBands+":"+fdcat+":"+fdsec; 
+	var str =     id+":"+netID+":"+cs1+":"+Fname+":"+therest+":"+binaryops+":"+netcall.toUpperCase()+":"+mBands+":"+fdcat+":"+fdsec+":"+TSvalue; 
 	//alert("str= "+str); // str= undefined:1679:N0RL:David:undefined:0:TE0ST:1
   
 	// Decloratoin for these variables       
@@ -306,9 +317,14 @@ function switchClosed() {
        var isopen = $("#isopen").html();
       // alert('ispb :'+ispb+' pbStat:'+pbStat+'  statis:'+status+'  isopen:'+isopen);
       // if (ispb == 1 && pbStat == 0 && status != 0 && isopen == 0) {hideCloseButton(ispb)}
-       
-       //3324 --> ispb :undefined pbStat:undefined  statis:0  isopen:undefined  says: Close Net
-       //3325 --> ispb :undefined pbStat:undefined  statis:0  isopen:undefined  says: Close Net
+      
+    /*    $(".tb2")removeClass("initiallyHidden");
+        $(".tb1")addClass("initiallyHidden");
+    */   
+  /*    // switch the tips button to 
+        $("#tb").removeClass("tipsbutton");
+        $("#tb").addClass("tipsbutton2");
+        */
 }
 
 // https://stackoverflow.com/questions/7697936/jquery-show-hide-options-from-one-select-drop-down-when-option-on-other-select
@@ -1044,3 +1060,14 @@ function rightClickACT(recordID) {
 		var netID = $("#idofnet").html().trim();
 		showActivities( netID );
 };
+
+// This controls the where and when of the tib bubbles at <button class="tbb" in index.php
+$(document).ready(function(){
+    $(".tbb").click(function(){
+        if ($("#refbutton").hasClass("hidden") ) {
+            $(".tb1").toggle();
+        }else {
+            $(".tb2").toggle();
+        }
+    });
+}); 

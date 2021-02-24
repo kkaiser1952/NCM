@@ -1,5 +1,7 @@
 <?php
 	
+	// Used by help.php
+	
 function convertSecToTime($sec)
 {
     $date1 = new DateTime("@0");
@@ -45,6 +47,7 @@ $sql = "SELECT  COUNT( callsign )                	AS callsigns
                ,COUNT( DISTINCT county )            AS countyCnt
                ,COUNT( DISTINCT state )             AS stateCnt
                ,COUNT( DISTINCT callsign)           AS cscount
+               ,COUNT( DISTINCT netcall)			AS netcall
 	   	  FROM NetLog
 	   	 WHERE netID <> 0 
 	   	   AND activity NOT LIKE '%TEST%'
@@ -69,6 +72,8 @@ $sql = "SELECT  COUNT( callsign )                	AS callsigns
 		$stateCnt	= $stmt->fetchColumn(7);
 		$stmt -> execute();
 		$cscount    = $stmt->fetchColumn(8);
+		$stmt -> execute();
+		$netcall    = $stmt->fetchColumn(9);
 
         $volHours = convertSecToTime( $tod);	
 		

@@ -32,7 +32,7 @@
     		$f = '<font color="black">';
     }
 
-    if ($row[traffic] == 'Pending' | $row[traffic] == 'Priority' | $row[traffic] == 'Routine' | $row[traffic] == 'Welfare' | $row[traffic] == 'Question' | $row[traffic] == 'Announcement' | $row[traffic] == 'Comment' | $row[traffic] == 'Bulletin' ) {
+    if ($row[traffic] == 'Pending' | $row[traffic] == 'Priority' | $row[traffic] == 'Routine' | $row[traffic] == 'Welfare' | $row[traffic] == 'Question' | $row[traffic] == 'Announcement' | $row[traffic] == 'Comment' | $row[traffic] == 'Bulletin' | $row[traffic] == 'Traffic' ) {
     	    $important2 = 'bgcolor="#ff9cc2"';
     		$trafficKey = 1;
     	}

@@ -79,9 +79,9 @@ $netID = intval($_POST["q"]);
 	$relaystation = '';
 	
 	foreach($db_found->query($sql) as $row) {
-    	if ("$row[relay]" <> '' ) { $relaystation = "$row[callsign];"; }
+    	if ("$row[relay]" <> '' ) { $relaystation = "$row[callsign]"; }
     	$fsqList .= "allcall NCS calling $row[callsign] $row[callsign] <br>
-    	             $relaystation allcall NCS calling $row[callsign] $row[callsign] <br> <br>
+    	             $relaystation;allcall NCS calling $row[callsign] $row[callsign] <br> <br>
     	            ";
 	} // end foreach
 	
@@ -90,13 +90,13 @@ $netID = intval($_POST["q"]);
 	 
 	 echo "============= Finals and closing ============<br>
 	       allcall NCS calling late and missed stations <br>
-	       $relaystation allcall NCS calling late and missed stations <br><br>
+	       $relaystation;allcall NCS calling late and missed stations <br><br>
 	       allcall final call for late and missed stations <br>
-	       $relaystation allcall final call for late and missed stations<br><br>
+	       $relaystation;allcall final call for late and missed stations<br><br>
 	       allcall no stations heard for late and missed <br>
-	       $relaystation allcall no stations heard for late and missed<br><br>
+	       $relaystation;allcall no stations heard for late and missed<br><br>
 	       allcall $row[netcall] net now closed. <br>
-	       $relaystation allcall $row[netcall] net now closed. 73
+	       $relaystation;allcall $row[netcall] net now closed. 73
 	       ";
 	       
      echo "<br><br>============= Calling Macros ============<br>";

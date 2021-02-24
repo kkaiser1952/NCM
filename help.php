@@ -26,6 +26,7 @@
     <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/help.css" />
     <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 
 <style>
 	/* see help.css and print.css */
@@ -45,6 +46,8 @@
 		width: 80%; /* Set the width of the positioned div */
 		color: darkred;
 	}
+	
+	
 	
 </style>
 	
@@ -75,8 +78,8 @@
 		</div>
 		<div>
 			<?php
-				echo "As of Today: -->   $orgCnt Groups, $cscount Unique Stations, $netCnt Nets, $records Logins,
-					 <br> $volHours of Volunteer Time<br>Across: $stateCnt states, $countyCnt counties and $gridCnt grid squares.";
+				echo "As of Today: -->   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Logins,
+					 <br> $volHours of Volunteer Time<br>Across: 3 Countries, $stateCnt states, $countyCnt counties and $gridCnt grid squares.";
 			?>
 		</div>
 		<div>
@@ -106,6 +109,7 @@
 		<a href="#misc">Misc. Operations</a><br>
 		<a href="#colors">Meaning of the Display Colors</a><br>
 		<a href="#columns">Table Columns</a><br>
+		<a href="#checkins">Check-in</a><br> 
 		<a href="#grid">Updating Grid, Latitude and/or Longitude</a><br>	 
         <a href="#what3words">What3Words</a><br>
 		<a href="#misc">About Sorting</a><br>
@@ -256,7 +260,7 @@
 	<a id="assumptions"></a>
 	<h3>Assumptions:</h3>
 	
-	<p>For any new net created most columns are filled by values that come from one of two places. Some values are picked up based on the last log-in of the listed station. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table.
+	<p>For any new net created most columns are filled by values that come from one of two places. Most values are picked up from the 'stations' table. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table.
 	<ul>
 		<li>All times are stored as universal time (UTC or GMT). You are able to select the local time zone for display purposes.</li>
 		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always default to the stations home address. </li>
@@ -272,6 +276,10 @@
 	<h3>Recent Changes:</h3>
 	
 	    <header>
+    	    <p>February 2021 </p>
+    	    <p>Short Cut after the name field for entering check-ins with traffic:<br>This does require an extra tab after an entry without traffic. TAB TAB TAB to enter a call.</p>
+    	    <p> This little box helps the logger keep his/her hands on the keyboard while taking check-ins. Your options for entry are T,R,W,P,E,Q,A or C, they represent the action values of the Traffic column. R --> Routine, W --> Welfare, P --> Priority, E --> Emergency, Q --> Question, A --> Announcement, C --> Comment. <br> By entering one of these in that little box the Traffic column for that station will automatically be updated to reflect the value. Be sure to use the dropdown in Traffic to indicate 'Sent' after the traffic is passed.
+    	    </p>
     	    <p>January 2021</p>
     	    <p>Right click functionality on the Status column added to speed up change to 'In' or 'OUT'. </p>
     	    <p><a href="#misc">Export to a CSV file</a></p>
@@ -306,7 +314,7 @@
   
     	</div>
     	
-    	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">tab tab (double tab)</b> after entering a call sign only.</p>
+    	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">TAB TAB TAB (triple tab)</b> after entering a call sign only.</p>
 		
 		<p>If your group is not yet in the dropdown list when creating a new net, choose the hamburger menu in the upper right corner and select 'Create a new Group' from the dropdown. You can build your new group here. Be sure to refresh the page before trying to open a new net using your new group.</p>
 		<p>For smaller screens learn to use the Windows commands 'Control +' and 'Control -' or Mac commands 'Command +' and 'Command -' to fit the content to your monitor.</p>
@@ -450,13 +458,17 @@
 <h3>Upper Right Corner</h3>
 
     <div class="flexcontainer">
-    	<div style="width: 40%;">		
-    	    <img src="screenshots/upper-right-corner.png" alt="upperRightCorner" width="400"/>
+    	<div style="width: 40%;">	
+        	<b style="color:blue;">Default:	</b>
+        	<img src="screenshots/upperRightCorner-default.png" alt="upperRightCorner-default" width="" height="" >
+        	<b style="color:blue;">Open Net:</b>
+    	    <img src="screenshots/upper-right-corner.png" alt="upperRightCorner" width="400" style="vertical-align:middle">
     	</div>
     		  <div style="padding-left: 20px;"> 
     			  <p>This information panel in the upper corner contains repeater and simplex frequencies and other information relevant to the group of the net that is currently open. By clicking the hamburger menu icon (three bars) an option menu will be displayed. Choose what part of this menu you want to change, create a new group, or display this document.</p> 
     			  <p>The <b style='color:red;'>New</b> is used to edit or create Preamble, Agendas and Closing documents.</p>
     			  <p>Each of the Preamble, Agendas and Closing documents can be individually edited from there individual displays.</p>
+    			  <p>Notice the small green button, left of the Preamble. Click this to display positioned tips to help navigate the page.</p>
     			  <p>See the section on <a href="#reports"> reports</a> below for information about the reports menu.</p>
     		  </div> <!-- end style -->
     </div> <!-- end class flexcontainer -->
@@ -466,7 +478,11 @@
 
 <div class="checkins">
 <a id="checkins"></a>
-<h3>ENTERING CHECK-INS</h3>
+<h3>ENTERING CHECK-INs  <button style="left:50px;" class="tipsbutton" title="Tips Button"> Tips!</button><br>
+    (Button Bar) </h3>
+
+
+<p class=" HelpBubbles initiallyHidden" style="">Short Cut Entry for Traffic</p>
 
 <img src="screenshots/purpleBanner.png" alt="purpleBanner" width="1100"  />
 <br>
@@ -474,13 +490,27 @@
 
 	
 	<p>The background color of this menu bar will change from <b style="color:#c992d3">purple</b> to <b style="color:red">red</b> over the course of 10 minutes. Use this as a visual reminder to do a station identification.</p>
-	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">tab tab (double tab)</b> after entering a call sign only.</p>
+	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">TAB TAB TAB (triple tab)</b> after entering a call sign only.</p>
 	
 	<p>1) Type the call sign  (or any portion of it) and wait for the hints to reveal the correct station. Then single click on that station. It will populate the call, the name and other fields into the appropriate locations then you MUST click <b style="color:green">Check In</b>.</p>
 	
 	
-	<p style="font-weight: bold;">2) Perhaps the best way is to enter the call sign then tab twice. The system will automatically enter the names, and additional information. If it can't find it in our DB already it will go to the <b style="color:#aa7941;">FCC</b> data base and pull the needed information. If the call sign can not be found in the <b style="color:#aa7941;">FCC</b> DB a comment is entered and both the call sign and comment will be highlighted in color.
+	<p style="font-weight: bold;">2) Perhaps the best way is to enter the call sign then tab three times. The system will automatically enter the names, and additional information. If it can't find it in our DB already it will go to the <b style="color:#aa7941;">FCC</b> data base and pull the needed information. If the call sign can not be found in the <b style="color:#aa7941;">FCC</b> DB a comment is entered and both the call sign and comment will be highlighted in color.
 	</p>
+	
+	 <p>As a short cut to entering check-ins with traffic a new smaller input field (box) has been added to the button banner, after the name field.<br><br>This does require an extra tab after an entry without traffic. TAB TAB TAB to enter a call.</p>
+    	    <p> This little box helps the logger keep his/her hands on the keyboard while taking check-ins. Your options for entry are T,R,W,P,E,Q,A or C, they represent the action values of the Traffic column. </p>
+    	    
+    	    <div style="width: 500px">
+    	    <ul style="column-count: 2; column-gap: 20px; ">
+        	    <li>R --> Routine</li>   <li>W --> Welfare</li>       <li>P --> Priority</li>  
+        	    <li>E --> Emergency</li> <li>T --> Traffic <li>
+        	    <li>Q --> Question</li>  <li>A --> Announcement</li>  <li>C --> Comment</li>
+    	    </ul>
+    	    </div>
+    	    
+            <p>By entering one of these in that little box the Traffic column for that station will automatically be updated to reflect the value. Be sure to use the dropdown in Traffic to indicate 'Sent' after the traffic is passed.
+    	    </p>
 	<p>The <b style="color:red">'Refresh|Timed'</b> button is used to set the automatic refresh time for the data on the page. Clicking the 'Timed' half gives you a dropdown of choices. Manual is the default, you have to click it each time you want a refresh. The rest should be understandable as is, every 5 seconds, etc.<br><b> Suggested Usage:</b>
 		 
 	<div class="redimportant">
@@ -606,15 +636,7 @@
     Right Clickable: No<br>
     DB Variable: netcontrol<br>
 </div>
-<!--
-<ul style="list-style-type:none;">
-    <li>Editable: Yes</li>
-    <li>Splitable Field: No</li>
-    <li>Required Column: Yes</li>
-    <li>Edit Type: Dropdown</li>
-    <li>Right Clickable: No</li>
-    <li>DB Variable: netcontrol</li>
-</ul> -->
+
 <h4>Role has the following dropdown options</h4>
 	 
 	<p><b>blank</b> - This is the default indicating no specific role for this station</p>
@@ -679,7 +701,7 @@
             Splitable Field: No<br>
             Required Column: Yes<br>
             Edit Type: Dropdown<br>
-            Right Clickable: Yes<br>
+            Right Clickable: Yes A right click changes any value to 'In' and any 'In' to 'Out'<br>
             DB Variable: active<br>
         </div>
 		<h4>Status is an indicator of the stations immediate availability</h4>
@@ -713,7 +735,7 @@
             Editable: Yes<br>
             Splitable Field: No<br>
             Required Column: Yes<br>
-            Edit Type: Dropdown<br>
+            Edit Type: Dropdown & Short Cut from the button bar<br>
             Right Clickable: No<br>
             DB Variable: traffic<br>
         </div>
@@ -734,12 +756,14 @@
 			<li><b>Resolved</b> - Waiting is over</li>
 			<li><b>Sent</b></li>
 		  </ul>	
-		 
-			 Use Routine if in doubt. Blank indicates no traffic, change choice to 'Sent' after traffic has been sent.
+		 <p>
+			 Use Routine if in doubt. Blank indicates no traffic, change choice to 'Sent' after traffic has been sent.</p>
+        <p>As a short cut to entering check-ins with traffic a new smaller input field (box) has been added to the button banner, after the name field.<br><br>This does require an extra tab after an entry without traffic. TAB TAB TAB to enter a call.</p>
+    	    <p> This little box helps the logger keep his/her hands on the keyboard while taking check-ins. Your options for entry are T,R,W,P,E,Q,A or C, they represent the action values of the Traffic column. R --> Routine, W --> Welfare, P --> Priority, E --> Emergency, Q --> Question, A --> Announcement, C --> Comment. <br> By entering one of these in that little box the Traffic column for that station will automatically be updated to reflect the value. Be sure to use the dropdown in Traffic to indicate 'Sent' after the traffic is passed.
+    	    </p>
 	</div>
 	<div>
-		<br><br><br><br>
-		<img src="screenshots/Traffic.png" alt="griddisplay"   />
+		<img src="screenshots/Traffic.png" alt="traffic"   />
 	</div>
 </div>
 <br>
@@ -1396,7 +1420,7 @@ Responsive Web Design is about using HTML and CSS to resize, hide, shrink, enlar
 <div class="theend">
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
-Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
+Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
 <div class="classictemplate template" style="display: block;">
 <style type="text/css">
@@ -1447,6 +1471,9 @@ Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV)
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
+
+<script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+
 <script>
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
@@ -1464,6 +1491,12 @@ function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+        
+        $(document).ready(function(){
+          $(".tipsbutton").click(function(){
+            $(".HelpBubbles").toggle();
+          });
+        });
 </script> <!-- The scrollFunction to move to the top of the page -->
 
 </body>

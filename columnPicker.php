@@ -303,7 +303,7 @@ $(document).ready(function() {
 				<span class="checkmark"></span>
 			</label>
 	
-			<label class="container">Crendentials (15)
+			<label class="container">Credentials (15)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(15)" value="15" class="15">
 				<span class="checkmark"></span>
 			</label>

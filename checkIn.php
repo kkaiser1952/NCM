@@ -19,13 +19,14 @@ require_once "getJSONrecord.php";
 if(isset($_POST['q'])){
     $q = strip_tags(substr($_POST["q"],0, 100));
    // echo ("$q"); 
-      //  undefined:3377:KA0SXY:Dennis Carpenter:undefined:0:TE0ST:0::
+      //  undefined:3551:W0DLK:DEBORAH KAISER:undefined:0:TE0ST:0:::A
+      
 }
 if(isset($q)){ 
 } 
 
 //echo "$q";  
-//undefined:2034:K0KEX:Rick:undefined:0:NR0AD:1:4A
+//undefined:3517:AC0YK:Michael Hartmann:undefined:0:TE0ST:0:::Q
             
 
 // Pull the incoming string apart
@@ -45,6 +46,7 @@ $parts	= explode(":",$q);
     [7] => 0
     [8] => 
     [9] => 
+    [10]=> A
 )
 
     Array
@@ -59,6 +61,7 @@ $parts	= explode(":",$q);
     [7] => 1                multi-band indicator 1 = yes, 0 or null = no
     [8] => 2F               cat custom category
     [9] => MO               section custom section (not in use)
+    [10] => A               shortcut letter of traffic column
 ) */
 
 
@@ -76,6 +79,9 @@ $Tname 	= ucfirst($parts[3]);       // The first or both names of this person de
 $fdcat  = $parts[8];                //echo "fdcat: $fdcat";
 $fdsec  = $parts[9];
 $mBand  = $parts[7];                // the multiple bands indicator 1 = Yes, 0 or NULL = No
+$tfksrt = $parts[10];               // the shortcut of the traffic column 
+    
+
 // If mBand = 1 (Yes) then its going to be OK to have duplicate callsigns check in, presumably for each band
 
 	if (str_word_count("$Tname") >= 2){
@@ -221,7 +227,20 @@ if ($cs1 == "NONHAM") {
 }
 
 $traffic = " ";
+$logtraffic = " ";
 if (trim($fdcat) == "") {$traffic = " ";} else {$traffic = "Routine";}
+
+//echo "$tfksrt";
+
+if (trim($tfksrt) == "") {$traffic = " ";} 
+    else if(trim($tfksrt) == "R") {$traffic = "Routine";        $logtraffic = "with Routine Traffic"; }
+    else if(trim($tfksrt) == "W") {$traffic = "Welfare";        $logtraffic = "with Welfare Traffic"; }
+    else if(trim($tfksrt) == "P") {$traffic = "Priority";       $logtraffic = "with Priority Traffic"; }
+    else if(trim($tfksrt) == "E") {$traffic = "Emergency";      $logtraffic = "with Emergency Traffic"; }
+    else if(trim($tfksrt) == "Q") {$traffic = "Question";       $logtraffic = "with a Question"; }
+    else if(trim($tfksrt) == "A") {$traffic = "Announcement";   $logtraffic = "with an Announcement"; } 
+    else if(trim($tfksrt) == "C") {$traffic = "Comment";        $logtraffic = "with a Comment"; }
+    else if(trim($tfksrt) == "T") {$traffic = "Traffic";        $logtraffic = "with unknown Traffic"; }
 	    
 if ($Fname == "") {$Fname = "$Fname2";}
 if ($Lname == "") {$Lname = "$Lname2";}
@@ -287,7 +306,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	
 	$sql = "INSERT INTO TimeLog 
 						(recordID, 		ID, 	netID, 	  callsign, comment, 	 timestamp) 
-				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments', '$open')";
+				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments $logtraffic', '$open')";
 			
                     $db_found->exec($sql);
 			  	

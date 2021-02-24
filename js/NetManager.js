@@ -481,6 +481,13 @@ function showActivities(str, str2) {
 	// class by these names.
 	$(".makeaselection").addClass("hidden");
 	$("#grad1").addClass("hidden");
+	
+	
+	// Change which bubbles are shown based on if a net is shown or not
+	$("#tb").removeClass("tipsbutton");
+    $("#tb").addClass("tipsbutton2");
+   
+
 
 	
 	// Show or hide some DIV's depending on value of str 

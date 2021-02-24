@@ -257,7 +257,7 @@ function CellEditFunction( jQuery ) {
 	 	});
 	 	
 	 	$(".editable_selectTFC").editable("save.php", { 	// traffic
-	    data: '{"":"","Routine":"Routine","Welfare":"Welfare","Priority":"Priority","Emergency":"Emergency","Question":"Question","Announcement":"Announcement","Bulletin":"Bulletin","Comment":"Comment","Pending":"Pending","Resolved":"Resolved","Sent":"Sent"}',
+	    data: '{"":"","Traffic":"Traffic","Routine":"Routine","Welfare":"Welfare","Priority":"Priority","Emergency":"Emergency","Question":"Question","Announcement":"Announcement","Bulletin":"Bulletin","Comment":"Comment","Pending":"Pending","Resolved":"Resolved","Sent":"Sent"}',
 	    type    : "select",
 	    placeholder: "",
 	     onblur: "submit",
