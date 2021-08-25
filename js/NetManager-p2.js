@@ -51,6 +51,8 @@ function newNet(str) {
 	$("#form-group-1").show();
 	$("#timer").removeClass("hidden");
 	
+	
+	
 	var newnetnm = $("#GroupInput").val().trim(); //alert('newnetnm= '+newnetnm); // newnetnm= W0KCN
 	
 	var netcall  = $("#GroupInput").val().trim(); // this should be org
@@ -89,13 +91,20 @@ function newNet(str) {
 		if ( $("#pb").is(':checked')) {var pb = 1}
     //alert('pb= '+pb); //pb= 0
     
-    
+    var testnet = 'n';
+        if ( $("#testnet").is(':checked')) {var testnet = 'y'}
+
+       // alert('testnet: '+testnet);
+     
     var satNet = $("#satNet").val();
     var testEmail = $("#testEmail").html();
     // Switched to using simi-colon (;) instead of colon (:) on 2019-10-23, both here and in newNet.php @ $parts
-	var str = callsign+";"+netcall+";"+org+";"+newnetfreq+";"+satNet+";"+newnetkind+";"+pb+";"+testEmail;
+	var str = callsign+":"+netcall+":"+org+":"+newnetfreq+":"+satNet+":"+newnetkind+":"+pb+":"+testEmail+":"+testnet;
 	//alert(str);
-	// WA0TJT;TE0ST;For Testing Only;444.550Mhz(+) PL100.0Hz;0;Test;1; the 1 means its a PB
+	// WA0TJT:TE0ST:For Testing Only:444.550Mhz(+) PL100.0Hz:0:Test:0::y
+	// W0GPS;W0KCN;KCNARES;146.790MHz, PL107.2Hz;0;Weekly 2 Meter Voice;0;;y
+	
+	
 	
 	// Build the upper right corner
 	$("#upperRightCorner").load("buildUpperRightCorner.php?call="+newnetnm); // was netcall
@@ -171,7 +180,8 @@ function checkIn() {
     	        var TSvalue = TrfkSwitch.toUpperCase(); 
     	    }else { var TSvalue = ""; } 
 	    
-	var therest	= $("#hidestuff").val(); 
+	var ispb	= $("#ispb").html(); //alert("ispb= "+ispb);
+	//var therest = $pbspot;
 	
 	var netcall	= $("#domain").html().replace(/\s+/g, '').toUpperCase(); //added: 2016-12-08
 	var mode		= $("#dfltmode").val();  //alert("mode= "+mode);	
@@ -201,7 +211,7 @@ function checkIn() {
   	
   //	alert(TSvalue);
 
-	var str =     id+":"+netID+":"+cs1+":"+Fname+":"+therest+":"+binaryops+":"+netcall.toUpperCase()+":"+mBands+":"+fdcat+":"+fdsec+":"+TSvalue; 
+	var str =     id+":"+netID+":"+cs1+":"+Fname+":"+ispb+":"+binaryops+":"+netcall.toUpperCase()+":"+mBands+":"+fdcat+":"+fdsec+":"+TSvalue; 
 	//alert("str= "+str); // str= undefined:1679:N0RL:David:undefined:0:TE0ST:1
   
 	// Decloratoin for these variables       
@@ -358,24 +368,24 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
 
 /* https://www.tutorialspoint.com/jqueryui/jqueryui_autocomplete */
 /* https://api.jqueryui.com/autocomplete/ */
-$(document).ready(function () {
+//$(document).ready(function () {
+    
+    //var nc = $( "#thenetcallsign" ).text(); 
+    //alert('In it now'+ nc);
 	
-	//$("#Fname").attr("readonly", true);
-	
+	/*
 	$( "#cs1" ).autocomplete({
 		autoFocus: true,
-		minLength: 2,
+		minLength: 3,
 		source: "gethint.php",
-	/*	focus: function( event, ui ) {
-                  $( "#cs1" ).val( ui.item.label );
-                     return false;
-               }, */
+
         select: function( event, ui ) {
 	        	// This if undes the readonly on the Fname input field below
 	        	if ( ui.item.label == 'NONHAM' ) {$('#Fname').prop('readonly', false);}
                   $( "#cs1" ).val( ui.item.label ); 
                   $( "#hints" ).val( ui.item.value );
                   $( "#Fname" ).val( ui.item.desc );
+                 // var nc = $( "#thenetcallsign" ).html();
                   	 //return false;
                   	
                  }
@@ -386,7 +396,41 @@ $(document).ready(function () {
                .append( "<a>" + item.label + " --->  " + item.desc + "</a>" )
                .appendTo( ul );
             };
-});
+     */       
+            
+    // test version of above code to include a new parameter for the gethint.php, 
+    // gethint.php here is called gethintSuspects.php    
+    
+    var nc = $("#thenetcallsign").text();
+    
+        $("#cs1").autocomplete({
+            autoFocus: true,
+            minLength: 3,
+            source: "gethintSuspects.php",
+            extraParams: {
+              nc: nc
+            },
+            select: function(event, ui) {
+              // This if undes the readonly on the Fname input field below
+              if (ui.item.label == 'NONHAM') {
+                $('#Fname').prop('readonly', false);
+              }
+              $("#cs1").val(ui.item.label);
+              $("#hints").val(ui.item.value);
+              $("#Fname").val(ui.item.desc);
+              var nc = $("#thenetcallsign").html();
+              //return false;
+            }
+          })
+          .data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>")
+              .append("<a>" + item.label + " --->  " + item.desc + "</a>")
+              .appendTo(ul);
+          };
+        
+    
+                   
+//});
 
 $(document).ready(function () {
 	// if the value of isopen is 1 then the net is still open
@@ -547,10 +591,11 @@ function doalert(checkboxElem) {
 	var strWindowFeatures = "resizable=yes,scrollbars=yes,status=no,left=20px,top=20px,height=800px,width=600px";
 		
 function openPreamblePopup() {
-   // alert("in the js");
+   // alert("in the openPreamblePopup js");
 	//var thisdomain = getDomain(); // alert("domain in openPreamble= "+thisdomain); //KCNARES  Weekly 2 Meter Voice Net
 	  // domain in openPreamble= Johnson County ARES  Weekly 2 Meter Voice Net
-	var thisdomain = $('#domain').html().trim();
+    //var netid = $("#select1").val(); alert(netid);
+	var thisdomain = $('#domain').html().trim();  //alert(thisdomain);
 	var thisactivity = $('#activity').html().trim();
 	//alert(thisactivity);
 	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
@@ -635,6 +680,7 @@ function seecopyPB() {
 	  	if (selectedOption == 'DisplayKCARES') {window.open("http://www.kcnorthares.org/policys-procedures/");}
 	  	if (selectedOption == 'DisplayARES') {window.open("http://www.arrl.org/files/file/ARESFieldResourcesManual.pdf");}
 	  	if (selectedOption == 'ARESManual') {window.open("http://www.arrl.org/files/file/Public%20Service/ARES/ARESmanual2015.pdf");}
+	  	if (selectedOption == 'ARESELetter') {window.open("http://www.arrl.org/ares-el");}
 	  	if (selectedOption == 'ARESTaskBook') {window.open("http://www.arrl.org/files/file/Public%20Service/ARES/ARRL-ARES-FILLABLE-TRAINING-TASK-BOOK-V2_1_1.pdf");}
 	  	if (selectedOption == 'ARESPlan') {window.open("http://www.arrl.org/ares-plan");}
 	  	if (selectedOption == 'ARESGroup') {window.open("http://www.arrl.org/ares-group-id-request-form");}
@@ -709,6 +755,30 @@ function buildFSQHeardList() {
 	});
     
 }
+
+
+function buildCallHistoryByNetCall() {
+    //var netcall 	= $("#idofnet").html();
+    var netcall = '';
+        if ( typeof netcall === 'undefined' || netcall === null || netcall == '' ) {
+    	    var netcall = prompt("Enter a Net call sign i.e. MODES, MESN, KCNARES");  //alert(netcall);
+		
+            if (netcall =="") {alert("Sorry no net was selected"); return;}
+	    }
+	    
+    var popupWindow = window.open("", "_blank",  strWindowFeatures);
+    
+    $.ajax({
+		type: 'POST',
+		url: 'getCallsHistoryByNetCall.php',
+		data: {netcall: netcall.trim()},
+		success: function(html) {	
+			popupWindow.document.write(html);		
+		} // end success
+	});
+    
+}
+
 
 // ===================================== put here from index.php at the bottom ------------------------------
 
@@ -1061,13 +1131,24 @@ function rightClickACT(recordID) {
 		showActivities( netID );
 };
 
-// This controls the where and when of the tib bubbles at <button class="tbb" in index.php
+// This controls the where and when of the tip bubbles at <button class="tbb" in index.php
 $(document).ready(function(){
     $(".tbb").click(function(){
         if ($("#refbutton").hasClass("hidden") ) {
             $(".tb1").toggle();
         }else {
             $(".tb2").toggle();
+            
         }
     });
+    /*
+    $(".tbb2").click(function(){
+        if ($("#refbutton").hasClass("hidden") ) {
+            $(".tb1").toggle();
+        }else {
+            $(".tb2").toggle();
+            
+        }
+    });
+    */
 }); 

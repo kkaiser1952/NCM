@@ -85,7 +85,7 @@
     			   		END as classColor
     			    ,CONCAT(latitude, ',', longitude) as koords 
     			    ,CONCAT(Fname, ' ', Lname) AS name 
-    			    ,CONCAT('<b>',callsign,'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
+    			    ,CONCAT('<b>',UPPER(callsign),'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
     			    latitude, longitude
     		   FROM NetLog  		   			   
     		  WHERE netID = $q
@@ -102,7 +102,7 @@
     		 ");
     		  
 		$rowno              = 0;
-		$fitBounds          = '[';  // opening [ bracket for the array
+		$fitBounds          = "[";  // opening [ bracket for the array
 
 		$stationMarkers     = "";
 		
@@ -130,14 +130,16 @@
 			
         // The if validates there are coordinates to work with
 		if ($logrow[koords]) {
+    		//$cr = getCrossRoads( $logrow[latitude], $logrow[longitude] );
             $w3w = $api->convertTo3wa($logrow[latitude], $logrow[longitude])[words]; 
     		  //echo($api->convertTo3wa(51.520847, -0.195521));
-    		  $div1 = "<div>$rowno<br>$logrow[mrkrfill]<br>$w3w</div>";
+    		  $div1 = "<div class='cc'>$rowno<br>$logrow[mrkrfill]<br><a href='https://what3words.com/$w3w?maptype=osm' target='_blank'>///$w3w</a></div>";
     		  $div2 = "<div class='cc'>Show Cross Roads</div>";
-    		  $div3 = "<a class='cc' href='#' onclick=\"jeoquery.getGeoNames('findNearestIntersectionOSM',{lat: $logrow[latitude], lng: $logrow[longitude] }, dbg); return false;\">Cross Roads</a>";
+    		  //$div3 = "<a class='cc' href='#' onclick=\"jeoquery.getGeoNames('findNearestIntersectionOSM',{lat: $logrow[latitude], lng: $logrow[longitude] }, dbg); return false;\">Cross Roads</a>";
     		  
-    		  $div4 = "<div class='cc' onclick='getCrossRoads( $logrow[latitude], $logrow[longitude] )';>
-    		  Show Cross Roads</div>";
+    		//  $div4 = "<div class='cc' >$cr</div>";
+    		  
+    		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a></div>";
     		  
     		  //echo ("$dup --> $callsign ");
     		  
@@ -151,11 +153,11 @@
 			                 
 				icon: new L.{$logrow[iconColor]}({number: '$rowno' }),
 				title:`marker_$rowno` }).addTo(fg).bindPopup(`
-				$div1<br>
-                $div2
+				$div1<br><br>
+				$div5<br><br>
                 `).openPopup();
 				
-				$(`$callsign`._icon).addClass(`$logrow[classColor]`); 
+				$(`$callsign`._icon).addClass(`$logrow[classColor]`);
                 stationMarkers.push($callsign);
 				";
 				
@@ -174,9 +176,9 @@
 		
     }; // End of foreach for check-in calls 
     
-        $fitBounds  = substr($fitBounds, 0, -1)."]";            // echo ("$fitBounds");
+        $fitBounds  = substr($fitBounds, 0, -1)."]";                //echo ("$fitBounds");
         $stationMarkers = substr($stationMarkers, 0, -1).";\n";     //echo ("$stationMarkers<br><br>");
-        $callsignList = substr($callsignList, 0, -1)."";    //echo ("$callsignList");  // list of the callsigns who checked-in
+        $callsignList = substr($callsignList, 0, -1)."";            //echo ("$callsignList");  // list of the callsigns who checked-in
         //$callsList = substr($callsignList, 0, -1)."";	
         $callsList = substr($callsList, 0, -1).");\n";	    
         

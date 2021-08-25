@@ -36,17 +36,14 @@
 		$value  = rawurldecode($value);  //echo("value= $value<br>");  //Bill Smith Array ( [0] => Value ) Bill Smith	W
 		$value  = trim($value," ");
 		
-		//echo("$column  $value<br>");  // w3w headed home
-		
 		$ipaddress = getRealIpAddr();
 		
-		//echo("col= $column val= $value recID= $recordID<br>");  // col= w3w val= home recID= 49315 
-		
-		// Edit to fix the timeout value and the timeonduty values 
 		$moretogo = 0;
 		
+	
 		// ALLOW UPDATE TO THESE FIELDS BUT TEST tactical for DELETE don't update for that 
-		if ($column == "county" | $column == "state" | $column == "grid" | 
+		if ($column == "county"     | $column == "state"     | $column == "grid" | 
+		    $column == "latitude"   | $column == "longitude" | $column == "district" |
 		    $column == "tactical" AND $value <> "DELETE" | 
 		    $column == "cat" | $column == "section" ) {
     		
@@ -64,17 +61,25 @@
 				$cs1   = $row[callsign];
 			}
 			
+			$delta = "$column Change";
+    			if($column == "grid")           {$delta = 'LOC&#916:Grid: '.$value.' This also changed LAT/LON values';} 
+    			else if($column == "state")     {$delta = 'LOC&#916:State: '.$value;}
+    			else if($column == "county")    {$delta = 'LOC&#916:County: '.$value;} 
+    			else if($column == "district")  {$delta = 'LOC&#916:District: '.$value;}
+    			else if($column == "latitude")  {$delta = 'LOC&#916:LAT: '.$value.' This also changed the grid value';}
+    			else if($column == "longitude") {$delta = 'LOC&#916:LON: '.$value.' This also changed the grid value';}
+	
+			
     		$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$column Change: $value', '$open', '$ipaddress')";
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$delta', '$open', '$ipaddress')";
 		
 			$db_found->exec($sql); 
 			
 			if ($column == "TRFK-FOR") {$column = "cat";} // change name back to cat for the rest
-		}
-    		
-				
+		} // End of multi-column
+		
+		
 		if ($column == "active" ) {
-    //    if (strpos($column, 'active')) {
 			$sql = "SELECT ID, netID, callsign from NetLog 
 					WHERE recordID = '$recordID'";
 
@@ -89,12 +94,12 @@
 					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Status change: $value', '$open', '$ipaddress')";
 		
 			$db_found->exec($sql);
-		} // end elseif column = active
+		} // end column = active
 		
 		
 		// Update the timeout value when the active(status) setting is changed
 		// Adding the subtraction of timeonduty to the timeonduty value in the SQL below accompanied NOT resetting the timeonduty to zero after someone checks back into the net after being checked out. This allows us to add the previous TOD to the current TOD repetedly, making it much more accurate.
-		if ($column == "active" AND ($value == "Out" OR $value == "BRB" OR $value == "QSY" OR $value == "In-Out")) {
+		if ($column == "active" AND ($value == "OUT" OR $value == "Out" OR $value == "BRB" OR $value == "QSY" OR $value == "In-Out")) {
 			$to  = now(CONST_USER_TIMEZONE,CONST_SERVER_TIMEZONE,CONST_SERVER_DATEFORMAT); 
 				if ($value == "In-Out") {
 					//$to ->modify("+01 minutes");
@@ -194,9 +199,6 @@
 			} // end elseif column = traffic
 			
 			// Then we insert the new update into the TimeLog table
-			
-			//$value = mysql_real_escape_string($db_found, $value);
-			 
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
 					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Traffic set to: $value', '$open', '$ipaddress')";
 		
@@ -243,6 +245,7 @@
 			}
 			
 			// If its to reset the home coordinates then do this
+			    $delta = 'LOC&#916;';
 			    $Varray = array("@home", "@ home", "@  home", "at home", "gone home,", "headed home", "going home", "home");
             if (in_array(strtolower("$value"), $Varray)) {
     			$latitude = explode(',', $home)[0]; 
@@ -250,7 +253,7 @@
     			$grid = explode(',', $home)[2];
     			$county = explode(',', $home)[3];
     			$state = explode(',', $home)[4];
-    			$value2 = "@home, reset to home coordinates ($home)";
+    			$value2 = "$delta:COM:@home, reset to home coordinates ($home)";
 				
 				//echo ("in Varray");
     			

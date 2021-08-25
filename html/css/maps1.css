@@ -1,0 +1,260 @@
+html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+		/*	width: 600px; */
+		    width: 90%;
+			height: 600px; 
+			position: absolute;
+			
+		}
+		#stations {
+			position: absolute;
+			top:70px;
+			left: 10px;
+			border: 2px solid green;
+			background-color: white;
+			
+			z-index: 1900  ;  /* Must be over 400 to be visible */
+		}
+		#activity {
+			text-align: center;
+			color: red;
+			font-weight: bold;
+			font-size: 24pt;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			border: 2px solid green;
+			
+			background: transparent;
+			padding-right: 10px;
+			z-index: 1900  ;
+		}
+		
+		.leaflet-control {
+    		position: absolute;
+    		z-index: 1900  ;
+    		right: 10px;
+		}
+	/*	.leaflet-control-mouseposition {
+    		z-index: 900;
+		} */
+		
+		.leaflet-control-w3w-locationText {
+    		position: fixed;
+    		position: absolute;
+    		font-size: 18pt;
+    		top: 70px;
+    		right: 10px; 
+    		border: 3px solid #8AC007;
+		    z-index: 400  ;
+		    text-decoration: none;
+		    background-color: white;
+		}
+		
+		.marker_info {
+			position: fixed;
+			position: absolute;
+		    width: 16%;
+		    bottom: 30px;
+		    right: 10px;
+		    border: 3px solid #8AC007;
+		    z-index: 400  ;
+		    text-decoration: none;
+		    background: transparent;
+		  /*  background-color: white; */
+		}
+		.marker_info ul {
+			list-style: none;
+		}
+		.marker_info li {
+			font-size: 14pt;
+			font-weight: bold;
+			padding:5px;
+		}
+		
+		body { 
+			padding: 0; 
+			margin: 0; 
+			} 
+		#map { 
+			height: 100%; 
+			width: 100vw; 
+			}
+		.rowno {
+			text-decoration: none;
+		}
+		.rowno:hover {
+			text-decoration: underline;
+		}
+		#basemaps-wrapper {
+			position: absolute;
+			top: 270px;
+			right: 10px;
+			z-index: 400  ;
+			background: white;
+			padding: 10px;
+		}
+		#basemaps {
+			margin-bottom: 5px;
+		}
+		#hideLedgend {
+			padding: 3px;
+			float: right;
+			color: #a49d9d;
+		}
+		#hideshowinstructions {
+			position: absolute;
+			left: 10px;
+			bottom: 3px;
+			text-align: center;
+			color: #a49d9d;
+		}
+		
+		.geocoder-control-input {
+    		visibility:hidden; /* I don't like this control so I hide here instead of deleting it */
+		}
+		
+		.dist-marker {
+            margin-left: -8px  ;
+            font-size: 16px;
+            font-style:  italic;
+            font-weight: bolder;
+            line-height: 14pt;
+            border: 2px solid #777;
+            border-radius: 10px;
+            text-align: center;
+           
+            padding: 0 3px;
+        }
+		
+		.dist-marker-blue {
+			  margin-left: -8px  ;
+			  font-size: 16px;
+			  font-style:  italic;
+			  font-weight: bolder;
+			  line-height: 14pt;
+			  border: 2px solid #777;
+			  border-radius: 10px;
+			  text-align: center;
+			  padding: 0 3px;
+			  color: blue;
+			}
+			.dist-marker-red {
+			  margin-left: -8px  ;
+			  font-size: 16px;
+			  font-style:  italic;
+			  font-weight: bolder;
+			  line-height: 14pt;
+			  border: 2px solid #777;
+			  border-radius: 10px;
+			  text-align: center;
+			  padding: 0 3px;
+			  color: red;
+			}
+			.dist-marker-green{
+			  margin-left: -8px  ;
+			  font-size: 16px;
+			  font-style:  italic;
+			  font-weight: bolder;
+			  line-height: 14pt;
+			  border: 2px solid #777;
+			  border-radius: 10px;
+			  text-align: center;
+			  padding: 0 3px;
+			  color: green;
+			}
+			.dist-marker-yellow{
+			  margin-left: -8px  ;
+			  font-size: 16px;
+			  font-style:  italic;
+			  font-weight: bolder;
+			  line-height: 14pt;
+			  border: 2px solid #777;
+			  border-radius: 10px;
+			  text-align: center;
+			  padding: 0 3px;
+			  color: yellow;
+			}
+			.dist-marker-purple {
+			  margin-left: -8px  ;
+			  font-size: 16px;
+			  font-style:  italic;
+			  font-weight: bolder;
+			  line-height: 14pt;
+			  border: 2px solid #777;
+			  border-radius: 10px;
+			  text-align: center;
+			  padding: 0 3px;
+			  color: purple;
+			}
+        .deg-marger {
+            font-size: 8px;
+            font-weight: bolder;
+            color: #800202;
+        }        
+        
+        .leaflet-control-layers-toggle:after{ 
+            position: absolute;
+            content:"Markers"; 
+            color:#000 ;
+            z-index: 400  ;
+        }
+        .leaflet-control-layers-toggle{ 
+            position: absolute;
+            width:auto;
+            background-position:3px 50% ;
+            padding:3px;
+            padding-left:36px;
+            text-decoration:none;
+            line-height:36px;
+            top: 150px;
+            z-index: 400  ;
+        }
+        .markerimages {
+            text-align: center;
+        }
+        
+        .leaflet-bar {
+            top: 200px;
+        }
+        
+        .leaflet-control-scale-line {
+            top: 300px;
+        }
+        
+  
+        .leaflet-verticalcenter {
+            position: absolute;
+            z-index: 1000  ;
+            pointer-events: none;
+            top: 50%; /* possible because the placeholder's parent is the map */
+            transform: translateY(-50%); /* using the CSS3 Transform technique */
+            padding-top: 10px;
+        }
+        
+        .leaflet-verticalcenter .leaflet-control {
+            margin-bottom: 10px;
+        }
+        
+        .leaflet-touch .leaflet-bar a {
+        /*  width: 35px; */
+          background-color: blue;
+          color: white;
+        }
+        
+        .eocmarker, .hosmarker, .polmarker, .rptmarker, .firemarker, .skymarker, .objmarker, .biggreenmarker {
+            font-weight: bold;
+            font-size: 12pt;
+        } 
+
+		
+		
+	/* Media control only below here */	
+@media only screen and (max-width: 736px) { 
+    .activity, .marker_info, #basemaps-wrapper, #stations {
+        display: none  ;
+    }
+}

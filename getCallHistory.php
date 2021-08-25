@@ -28,7 +28,7 @@ function secondsToDHMS($seconds) {
     $sql = "
         SELECT  callsign, grid, creds, email, tactical, district, id, county, state, home,
                 CONCAT(Fname,' ',Lname) as name
-          FROM NetLog
+          FROM stations  /* changed from NetLog to stations on 2021-08-09 */
    /*      WHERE recordID = $recordID  commented out on 2019-12-21 */
           WHERE callsign = '$call'
          ";
@@ -450,7 +450,7 @@ foreach ( $result["webPages"]["value"] as $data)
 				
 				<span> aprs.fi Map: $fiAddr </span>
 				
-				<span>what3words: $what3words <br>
+				<span>what3words: ///$what3words <br>
 				    W3W Map: $w3wmap
 				</span>
 

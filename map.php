@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 
-<!-- IDEA: Create ability to draw lines from one marker to all other markers show bearing and distance.
-    http://embed.plnkr.co/2XSeS1/
--->
-
-
-<!-- Primary maping program, also uses poimarkers.php and stationmarkers.php -->
+<!-- Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
 
 <?php
 	
@@ -17,9 +12,8 @@
     
     
     $q = intval($_GET["NetID"]); 
-   // $q = 2896;
-	
-	
+    //$q = 3818; 
+    
 	// An attempt to find the corners of the given points so the POIs can be inhibited outside that range 
 	// These values would work in conjunction with the poiMarkers.php to write the where clause to limit output
 	$sql = (" SELECT MIN(latitude)  as minLat,
@@ -28,13 +22,13 @@
 	                 MAX(longitude) as maxLng
 	            FROM NetLog
 	           WHERE netID = $q      
-	      ");
+	      ");  
 	   foreach($db_found->query($sql) as $rowCorners) {
     	   $minLat = $rowCorners[minLat]-0.25;
     	   $maxLat = $rowCorners[maxLat]+0.25;
     	   $minLng = $rowCorners[minLng]+0.25;
     	   $maxLng = $rowCorners[maxLng]-0.25;
-    	  // $poly2 = " $maxLng $maxLat , $minLng $maxLat , $minLng $minLat , $maxLng $minLat , $maxLng $maxLat ";
+
     	   $poly = " $maxLat $maxLng  , $maxLat $minLng  , $minLat $minLng  , $minLat $maxLng  , $maxLat $maxLng  ";
 	   };	  
 	   	   
@@ -46,7 +40,7 @@
     
 	// This var is used in the SQL in poiMarkers.php to limit the markers to those in the area of stationMarkers  
 	// Some day when MySQL is updated to at least 5.6, change MBRContains to ST_Containes
-    $whereClause = "WHERE MBRContains(GeomFromText('POLYGON(( $poly ))'),latlng)";
+    $whereClause = "WHERE MBRContains(GeomFromText('POLYGON(( $poly ))'),latlng)";  //echo "whereClause= $whereClause";
     //$whereClause = "WHERE ST_CONTAINS(GeomFromText('POLYGON(( $poly ))'), GeomFromText('POINT(latlng))')";
     
     //   echo "<br>$whereClause"; 
@@ -54,7 +48,8 @@
     	       
 	// Gets all the stations logged into the net
 	require_once "stationMarkers.php";
-    require_once "poiMarkers.php";      
+    require_once "poiMarkers.php";    
+    require_once "objMarkers.php";  
     
 ?>
 
@@ -130,17 +125,66 @@
     <!-- See https://stackoverflow.com/questions/61860963/how-to-enlarge-a-leaflet-polygon-box-by-5 -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
+    
+    <!-- Check https://dotscrapbook.wordpress.com/2014/11/28/simple-numbered-markers-with-leaflet-js/ to make cusbom markers -->
+    
+    <script src="js/circleKoords.js"></script>
+    
 
 	<style>
 		/* All CSS is in css/maps.css */
-		.cc {
+		.cc {  /* used for the comment */
+		    display: inline-block;
+		/*    text-transform: lowercase; */
     		font-weight: bold;
     		color: red;
+    		font-size: larger;
+		}
+		.cc:first-letter {
+    		text-transform: uppercase;
+		}
+		
+		.bb {
+    		font-weight: bold;
+    		color: blue;
+    		font-size: larger;
 		}
 		
 		element.style  {
     		width: 60px !important;
         }
+        
+        .gg {
+            font-weight: bold;
+            color: green;
+            font-size: larger;
+        }
+        
+        .xx {
+            font-wight: bold;
+            font-size: x-large;
+        }
+        
+        .objmarker {
+            color: green;
+            font-size: x-large;
+        }
+        
+        .number-icon {
+            background-image: url("images/number-marker-icon.png");
+            text-align:center;
+            color:White;    
+        }
+        
+        .leaflet-control {
+            background: transparent;
+            border: solid black;
+        }
+        
+        .leaflet-control-zoom {
+           
+        }
+        
 		
 	</style>
 	
@@ -168,12 +212,13 @@
     
  // If you click on the 'Show Cross Rodads' in a popup
  // Not yet implemented
+ /*
 $(document).ready(function() {
     $('#map').on('click', '.cc', function() {
         $(".cc").html('Coming Soon');
         alert('This feature is coming soon ');
     });
-}); 
+});   */
     
     var stationMarkers = [];
     var fg = new L.featureGroup();
@@ -184,6 +229,9 @@ $(document).ready(function() {
     echo ("$poiMarkers");       // The Points of Interest Markers
     echo ("$POIMarkerList");    // The poi Markers list
     echo ("$callsList");        // echo "$callsList";
+ //check   
+    echo ("$objMarkers");       // All the objects by individual callsigns      
+    echo ("$OBJMarkerList");    // The obj Markers list
 ?>
 
 // Define a PoiIcon class
@@ -193,14 +241,24 @@ var PoiIconClass = L.Icon.extend({
     }
 });
 
-// Create five icons from the above PoiIconClass class
+// Define a ObjIcon class
+var ObjIconClass = L.Icon.extend({
+    options: {
+        iconSize: [32, 37]
+    }
+});
+
+// Create some icons from the above PoiIconClass class and one from ObjIconClass
 var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
     eocicon = new PoiIconClass({iconUrl: 'images/markers/eoc.png'}),
     policeicon = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
     skywarnicon = new PoiIconClass({iconUrl: 'images/markers/skywarn.png'}),
     fireicon = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
     repeatericon = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
-    blueFlagicon = new PoiIconClass({iconUrl: 'images/markers/blue_50_flag.png'});
+    blueFlagicon = new PoiIconClass({iconUrl: 'images/markers/blue_50_flag.png'}),  // used as corners of the bounds
+    
+    objicon = new ObjIconClass({iconURL: 'images/markers/marker00.png'}),          // the 00 marker
+    greenFlagicon = new ObjIconClass({iconUrl: 'images/markers/green_50_flag.png'});  // used as corners of the bounds
 
 var Stations = L.layerGroup([<?php echo "$callsignList"?>]);
 
@@ -213,19 +271,23 @@ var Stations = L.layerGroup([<?php echo "$callsignList"?>]);
 // Define the layers for the map
 var Streets = L.esri.basemapLayer('Streets').addTo(map),
     Imagery = L.esri.basemapLayer('Imagery').addTo(map),
+    Topo    = L.esri.basemapLayer('Topographic').addTo(map),
     NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
 var baseMaps = { "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                  "<span style='color: blue; font-weight: bold;'>NatGeo": NatGeo,
-                 "<span style='color: blue; font-weight: bold;'>Streets": Streets                 
+                 "<span style='color: blue; font-weight: bold;'>Topo": Topo,
+                 "<span style='color: blue; font-weight: bold;'>Streets": Streets               
                };
       
 // The overlay markers to show by default                 
 Stations.addTo(map);
+OBJMarkerList.addTo(map);
 
-// Temp markers to mark the corners of the viewable map, uncomment to use
+// Blue flag markers to mark the corners of the viewable map, uncomment to use
 	<?php echo "$cornerMarkers";  ?>	
 
-var bounds = L.latLngBounds(<?php echo "$fitBounds" ?>); 
+// The fitBounds data comes from stationMarkers.php
+var bounds = L.latLngBounds(<?php echo "$fitBounds"; ?>); 
 var middle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
 var padit  = bounds.pad(.075);   // add a little bit to the corner bounding box
 var sw = padit.getSouthWest();   // get the SouthWest most point
@@ -235,7 +297,11 @@ var se = padit.getSouthEast();
 
 var redmarkername = "images/markers/red_50_flag.png";
 var bluemarkername = "images/markers/blue_50_flag.png";
+// these two are used by the objects, if there are any
+var greenmarkername = "images/markers/green_50_flag.png";
+var manInTheMiddle_50 = "images/markers/manInTheMiddle_50.png";
 
+    // ================== Station Marker Corners =======================
     // These are the corner markers of the extended bounds of the stations
     var mk1 = new L.marker(new L.latLng( sw ),{
         icon: L.icon({iconUrl: bluemarkername , iconSize: [32,36] }),
@@ -263,11 +329,68 @@ var bluemarkername = "images/markers/blue_50_flag.png";
     
     // Definition of the 5 markers above, corners plus middle    
     var CornerList = L.layerGroup([mk1, mk2, mk3, mk4, mk5]);
+    // ================== End Station Marker Corners =======================
+    
+    //====================================================================== 
 
-// From poiMarkers.php
-//var listfrompioMarkers = '<?php echo "$classList"; ?>'; 
-//var classList = listfrompioMarkers.split(",");
-var classList = '<?php echo "$classList CornerL"; ?>'.split(','); //alert(classList); // EOCL,FireL,HospitalL,RepeaterL,SheriffL,SkyWarnL,
+    // ===================== Object Marker Corners =========================
+    
+    // These are from objMarkers.php
+     var objbounds = L.latLngBounds(<?php echo "$objBounds"; ?>);  
+     // console.log(JSON.stringify(objbounds)); // {"_southWest":{"lat":39.197539,"lng":-94.605019},"_northEast":{"lat":39.202903,"lng":-94.601471}}
+    
+
+    // Test if there were any objects created in this net, this function is at the bottom of this code.
+    if(isEmpty(objbounds)) {console.log('There are no objects in this net')} else { console.log('Net has objects'); 
+
+        var Omiddle = objbounds.getCenter();  // console.log('MitM: '+middle); //LatLng(-93.20448, 38.902475)
+        var Opadit  = objbounds.pad(.015);    // add a little bit to the corner bounding box
+        var Osw = Opadit.getSouthWest();      // get the SouthWest most point
+        var Onw = Opadit.getNorthWest();
+        var One = Opadit.getNorthEast();
+        var Ose = Opadit.getSouthEast();
+   
+        // These are the corner markers of the extended bounds of the objects
+        var ob1 = new L.marker(new L.latLng( Osw ),{
+            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+           text: 'Click here to add mileage circles', callback: circleKoords}],
+            icon: L.icon({iconUrl: greenmarkername , iconSize: [32,36] }),
+            title:'ob1'}).addTo(map).bindPopup('OBJ: OB1<br>The Objects SW Corner<br>'+Osw).openPopup();
+        
+        var ob2 = new L.marker(new L.latLng( Onw ),{
+            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+           text: 'Click here to add mileage circles', callback: circleKoords}],
+           icon: L.icon({iconUrl: greenmarkername , iconSize: [32,36] }),
+           title:'ob2'}).addTo(map).bindPopup('OBJ: OB2<br>The Objects NW Corner<br>'+Onw).openPopup();
+        
+        var ob3 = new L.marker(new L.latLng( One ),{
+            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+           text: 'Click here to add mileage circles', callback: circleKoords}],
+           icon: L.icon({iconUrl: greenmarkername , iconSize: [32,36] }),
+           title:'ob3'}).addTo(map).bindPopup('OBJ: OB3<br>The Objects NE Corner<br>'+One).openPopup();
+        
+        var ob4 = new L.marker(new L.latLng( Ose ),{
+           contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+           text: 'Click here to add mileage circles', callback: circleKoords}],
+           icon: L.icon({iconUrl: greenmarkername , iconSize: [32,36] }),
+           title:'ob4'}).addTo(map).bindPopup('OBJ: OB4<br>The Objects SE Corner<br>'+Ose).openPopup();
+    	
+        // Add the temp center marker to the map here in the javascript code allows it to use the current map view,
+        // When its earlier in the stack, it centers on our house becaue that is the default map location
+        var ob5 = new L.marker(new L.latLng( Omiddle ),{
+            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+            text: 'Click here to add mileage circles', callback: circleKoords}],   
+            icon: L.icon({iconUrl: manInTheMiddle_50 , iconSize: [32, 36] }),     
+            title:'ob5'}).addTo(map).bindPopup('OBJ: OB5<br>The Objects Center Marker<br>'+middle).openPopup();
+        
+        // Definition of the 5 markers above, corners plus middle    
+        var ObjCornerList = L.layerGroup([ob1, ob2, ob3, ob4, ob5]);
+
+      // ================== End of Object Marker Corners =======================
+    } // End of test for object in this net
+
+var classList = '<?php echo "$classList CornerL, ObjectL"; ?>'.split(','); //alert(classList); // EOCL,FireL,HospitalL,RepeaterL,SheriffL,SkyWarnL,
+   console.log('classList= '+classList);
 
 let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
@@ -278,7 +401,7 @@ for (x of classList) {
 
     if (x == 'EOCL') {
         let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
-        y = {...y, ...EOC};
+        y = {...y, ...EOC};     
         
     }else if (x == 'FireL') {
         let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
@@ -298,17 +421,22 @@ for (x of classList) {
         
     }else if (x == 'SkyWarnL') {
         let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
-        y = {...y, ...SkyWarn};
+        y = {...y, ...SkyWarn};           
+         
+    }else if (x == 'ObjectL') {
+        let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
+        y = {...y, ...Objects}; 
+        
     }else if (x == ' CornerL') {
-        let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>":
-            CornerList};
+        let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
         y = {...y, ...Corners};
-    }}; 
+    }
+}; // End of for loop
     
 // Here we add the station object with the merged y objects from above
-var overlayMaps = {...y };  //alert(JSON.stringify(overlayMaps));
+var overlayMaps = {...y }; 
 
-//console.log(overlayMaps);
+//console.log(overlayMaps); 
 
 // Set the center point of the map based on the coordinates
 map.fitBounds(<?php echo "$fitBounds" ?>, {
@@ -349,176 +477,20 @@ L.grid().addTo(map);
 // Add the lat/lon mouse position 
 L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
 
- // https://github.com/ppete2/Leaflet.PolylineMeasure
+        // https://github.com/ppete2/Leaflet.PolylineMeasure
         // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
         // Show imperial or metric distances. Values: 'metres', 'landmiles', 'nauticalmiles'
-    L.control.polylineMeasure ({position:'topright', unit:'landmiles', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo (map);
-     
-      // Same as above but does NOT includes a mi for miles box or other measures
-  //  L.control.scale ({maxWidth:240, metric:false, imperial:true, position: 'bottomleft'}).addTo (map);
-   //         L.control.polylineMeasure ({position:'topright', unit:'landmiles', showBearings:false, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: false}).addTo (map);
-
-// To use the getCenter() of latLngBounds you need to set a var = to it, then define it in another var
-//var bounds = L.latLngBounds(<?php echo "$cntPoints" ?>); 
-//var middle = bounds.getCenter();
-//var sw = bounds.getSouthWest();       
-//var E  = bounds.getEast();  
-//var tBBS = bounds.toBBoxString();
-//alert('tBBS: '+tBBS);                   // 38.8183241,-95.433417,39.5697989,-94.259896
-//alert('E: '+E);                         // 39.5697989
-//alert('sw: '+sw);                       // LatLng(-95.433417, 38.818324)
-//alert('middle: '+middle);               // LatLng(-94.846656, 39.194062)
-//alert('Map middle: '+map.getCenter());  // LatLng(39.194424, -94.846656)
-
-
-var circfeqcnt = 0; // Sets a variable to count how many times the circleKoords() function is called
-function circleKoords(e) {
-   circfeqcnt = circfeqcnt + 1; //alert(circfeqcnt);
-    
-   if (circfeqcnt <= 1) { var circolor  = 'blue';  }
-   else if (circfeqcnt == 2) { var circolor  = 'red'; }
-   else if (circfeqcnt == 3) { var circolor  = 'green'; }
-   else if (circfeqcnt == 4) { var circolor  = 'yellow'; }
-   else if (circfeqcnt > 4) { var circolor  = 'purple'; }
-   
-   var myJSON = JSON.stringify(e.latlng); 
-   //alert("myJSON "+myJSON); 
-   
-   var LatLng = e.latlng;
-   var lat = e.latlng["lat"]; 
-   var lng = e.latlng["lng"]; 
-   
-   var i; var j;
-   var r = 1609.34;  // in meters = 1 mile, 4,828.03 meters in 3 miles
-   
-   //https://jsfiddle.net/3u09g2mf/2/   
-   //https://gis.stackexchange.com/questions/240169/leaflet-onclick-add-remove-circles
-   var group1 = L.featureGroup(); // Allows us to group the circles for easy removal
-   
-   var circleOptions = {
-       color: circolor,
-       fillOpacity: 0.005 ,
-       fillColor: '#69e'
-   }  
-   
-   var milesbetween = 0; 
-   var numberofrings = 0;  
-   
-   
-   // This routine sets a default number of miles between circles and the number of circles
-   // Based on the number of circles selected and marker that was clicked it calculates 
-   // the distance to the furthest corner and returns an appropriate number of circles
-   // to draw to reach it, auto magically.
-   // Variable mbc is the default number of miles between circles.
-   // Variable nor is the calculated number of cirles. Based on the furthest corner from the clicked marker.
-   var mbc = 5; // Overall default for miles between circles
-      
-      // Calculate distance from clicked marker to each of the corner markers
-   var nor = Math.max( LatLng.distanceTo( se ), LatLng.distanceTo( ne ), 
-                       LatLng.distanceTo( nw ), LatLng.distanceTo( sw ))/1609.34;
-            // Set the new calculated distance between markers, 5 is the default mbc
-        if (nor >= 50) {mbc = 25;}
-        else if (nor <= 10) {mbc = 2;}
-        else {mbc = 5;}
-      
-   var milesbetween = prompt("How many miles between circles?", mbc);
-   		if (milesbetween <= 0) {milesbetween = 1;} 
-   		//if (milesbetween > 0 && milesbetween <= 10) {milesbetween = 2;}
-   		
-   var nor = nor/milesbetween;
-   
-   var numberofrings = prompt("How many circles do you want to see?", Math.round(nor));
-   		if (numberofrings <= 0) {numberofrings = 5;}	
-   		
-    
-   angle1 = 90;  // mileage boxes going East
-   angle2 = 270; // mileage boxes going West
-   angle3 = 0;   // degree markers
-   
-     
-   // The actual circles are created here at the var Cname =
-   for (i=0 ; i < numberofrings; i++ ) {
-         var Cname = 'circle'+i; 
-            r = (r * i) + r; 
-            r = r*milesbetween; //alert(Cname r);
-         var Cname = L.circle([lat, lng], r, circleOptions);
-            Cname.addTo(group1); 
-          map.addLayer(group1);
-         //90° from top
-                  // angle1, angle2 puts the mileage markers on the lines p_c1 and p_c2
-         angle1 = angle1 + 10;
-         angle2 = angle2 + 10;
-         
-            // i is the number of rings, depending how many have been requested the delta between bears
-            // will be adjusted from 15 degrees at the 2nd circle to 5 degrees at the furthest.
-            if ( i === 0  ) { //alert(numberofrings);
-                for (j=0; j < 360; j+=20) {
-                    // j in the icon definition is the degrees 
-                    var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
-                    var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
-                    var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
-                        marker0.addTo(map);
-                            angle3 = angle3 + 20;
-                }
-            }   else if ( i === 5 ) {
-                    for (j=0; j < 360; j+=10) {
-                    // j in the icon definition is the degrees 
-                    var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
-                    var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
-                    var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
-                        marker0.addTo(map);
-                            angle3 = angle3 + 10;
-                }         
-            }   else if ( i === 2 ) {
-                    for (j=0; j < 360; j+=10) {
-                    // j in the icon definition is the degrees 
-                    var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
-                    var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
-                    var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
-                        marker0.addTo(map);
-                            angle3 = angle3 + 10;
-                }
-            }   else if ( i === numberofrings-1 ) {
-                    for (j=0; j < 360; j+=5) {
-                    // j in the icon definition is the degrees 
-                    var p_c0 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle3,r);
-                    var icon = L.divIcon({ className: 'deg-marger', html: j , iconSize: [40,null] });
-                    var marker0 = L.marker(p_c0, { title: 'degrees', icon: icon});
-                        marker0.addTo(map);
-                            angle3 = angle3 + 5;
-                } // End for loop         
-            } // end of else if
         
-         var p_c1 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle1,r);
-         var p_c2 = L.GeometryUtil.destination(L.latLng([lat, lng]),angle2,r);
-         //var inMiles = (toFixed(0)/1609.34)*.5;
-         var inMiles = Math.round(r.toFixed(0)/1609.34);
-         var inKM = Math.round(r.toFixed(0)/1000);
-         // Put mile markers on the circles
-         
-         var icon = L.divIcon({ className: 'dist-marker-'+circolor, html: inMiles+' Mi <br> '+inKM+' Km', iconSize: [60, null] });
-         
-         var marker = L.marker(p_c1, { title: inMiles+'Miles', icon: icon});
-         var marker2 = L.marker(p_c2, { title: inMiles+'Miles', icon: icon});
-      
-         //$(".dist-marker").css("color", circolor);
-         marker.addTo(map);
-         marker2.addTo(map);
-         //$(".dist-marker").css("color", circolor);
-         
-        // reset r so r calculation above works for each 1 mile step 
-        r = 1609.34;     
-    }
-    
-    // This part allows us to delete the circles by simply clicking anywhere in the circles.
-    group1.on('click', function() {
-        if(map.hasLayer(group1)) {map.removeLayer(group1);}
-    });
-} // end circleKoords function
+    L.control.polylineMeasure ({position:'topright', unit:'landmiles', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo (map);
+
+
 
 
 // Change the position of the Zoom Control to a newly created placeholder.
 map.zoomControl.setPosition('topright');
+
+
+L.control.scale().addTo(map);
 
 // You can also put other controls in the same placeholder.
 //L.control.scale({position: 'verticalcenterright'}).addTo(map);
@@ -538,6 +510,21 @@ map.zoomControl.setPosition('topright');
 	    $("a").click(function(){
 	        markerFunction($(this)[0].id);
 	    });
+	    
+	    
+	    function isEmpty(obj) {
+    	    for(var key in obj) {
+        	    if(obj.hasOwnProperty(key))
+        	        return false;
+    	    }
+    	        return true;
+	    }
+	    
+	    var lastLayer = null;
+          map.on('contextmenu.show',(e)=>{
+            console.log(e);
+            lastLayer = e.relatedTarget; 
+        });
 	    
 
 </script>

@@ -8,21 +8,23 @@ ini_set('display_errors',1);
 require_once "dbConnectDtls.php";
 require_once "WXdisplay.php";
 require_once "wx.php";
-require_once "getFCCrecord.php";/* added 2019-11-24 */
+//require_once "getFCCrecord.php";/* added 2019-11-24 */
 
 $q = strip_tags(substr($_POST["q"],0, 100)); 
 
+//echo ("$q");
+
 // // WA0TJT;MODES;Missouri Digital Emergency Service;80/40 Meters;0;Weekly Net;0
+// // W0GPS;W0KCN;KCNARES;146.790MHz, PL107.2Hz;0;Weekly 2 Meter Voice;0;;y
 
 //$q = strip_tags(substr("WA0TJT:W0KCN: KCNARES :146.790MHz, T 107.2Hz:0:Weekly 2 Meter Voice Net:0",0,100));
 //$q = strip_tags(substr("WA0BC;TE0ST;TE0ST For Testing Only;444.550Mhz(+) PL100.0Hz;0;Test;0"));
 
-//echo("$q");     //   0        1.      2.         3.        4.          5             6
-                // WA0BC  : TE0ST : TE0ST For Testing Only ; 444.550Mhz(+)PL100.0Hz ; Test,01660
-				// WA0TJT : W0KCN : KCNARES :146.790MHz, T 107.2Hz:0 : Weekly 2 Meter Voice Net:0
-			    // WA0̷TJT : W0KCN : KCNARES :146.790MHz, T 107.2Hz:0 : Weekly 2 Meter Voice:0
+//echo("$q");    //   0        1.      2.           3.            4.          5             6 7  8
+                // W0GPS  ;W0KCN. ;KCNARES ;146.790MHz, PL107.2Hz ;0 ; Weekly 2 Meter Voice; 0; ; y
+  // echo("$q");            
 			    
-$parts		= explode(";",$q);
+$parts		= explode(":",$q);
 $cs1 		= strtoupper($parts[0]);  // The NCS call sign
 $netcall	= strtoupper($parts[1]);  // Call sign of the new net
 $newnetnm	= $parts[2];  	// The org of the new net
@@ -31,38 +33,35 @@ $subNetOfID = $parts[4];	// The submet (if any) of the new net
 $netKind	= $parts[5];	// The kind of net (DMR, weekly 2meter...)
 $pb			= $parts[6];	// The Pre-Built Net Indicator (1 for yes, 0 for no)
 $testEmail  = $parts[7];    // The email that created this net
+$testnet    = $parts[8];    // If 'y' this is a test net    
+//echo ("tn= $testnet");
 $activity	= ltrim($newnetnm) . " " . ltrim($netKind);  //echo "activity= $activity";
 
-/* get the next netID */
+$pbspot = '';
+if ($pb == 1){$pbspot = 'PB';}
+
+/* get the next netID from NetLog */
 $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 	$stmt->execute();
 	$result = $stmt->fetchColumn(); 
 		$newNetID = $result + '1';
 	
-/* insert the new net into the NetLog.table, this first part gets other information first */
-/*
-$stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid, creds,
-									email, latitude, longitude, netcall, state, county, district, home
-							   FROM NetLog 
-							  WHERE callsign = '$cs1' 
-                            ");
-*/
+        
 // Below was added 2020-12-15
     $stmt2 = $db_found->prepare("
-        SELECT max(recordID) maxID, id, Fname, Lname, creds, email, latitude, longitude,
+        SELECT MAX(recordID) AS maxID, MAX(id) as newid, id, Fname, Lname, creds, email, latitude, longitude,
 		       grid, county, state, district, home, phone, tactical
 	      FROM stations 
-	     WHERE callsign LIKE '$cs1'
+	     WHERE callsign = '$cs1'
          LIMIT 0,1
-    ");
-
-                            
+    ");                      
                             
 	$stmt2->execute();
 	$result = $stmt2->fetch();
 	
 		$maxID = $result[maxID];
 		$id    = $result[id];	    
+		$newid = $result[newid]; // get it if i need it for a new callsign
 		$latitude  = $result[latitude];   //echo("tt = $tt");	
 		$longitude = $result[longitude];
 		$Fname = ucwords(strtolower($result[Fname]));	
@@ -79,9 +78,21 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 		//$id	   = $result[1];
 		$firstLogIn = 0;
 		
-		if (empty($maxID)) {
+		$from = '';
+		//if (empty($maxID)) {
+        if (is_null($maxID)) {
     		include "getFCCrecord.php";
+    		
+    		$stmt = $db_found->prepare("SELECT MAX(ID)+1 AS newid 
+                                  FROM stations 
+                                 LIMIT 0,1");
+                $stmt->execute();
+                $result = $stmt->fetch();
+        		    $id = $result[newid];
+                    $from = 'FCC';
 		}
+		
+		//include "insertToStations.php";  // added 2020-12-12 to update the stations table
 		
 	// 0 means it is NoT a pre-build, 1 means it is a pre-built
 	switch ($pb) {
@@ -104,9 +115,9 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
    }
 
 	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county,
-		district, pb, tt, firstLogin, home) 
+		district, pb, tt, firstLogin, home, testnet) 
 	
-		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home' )";
+		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home', '$testnet' )";
 		
 	$db_found->exec($sql);
 	
@@ -117,7 +128,7 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 	
 	$ipaddress = getRealIpAddr(); 
 	
-	$comment = "$Fname $Lname Opened the net from $ipaddress on $frequency by: $testEmail";
+	$comment = "$Fname $Lname Opened the $pbspot net from $ipaddress on $frequency by: $testEmail";
 		if ($subNetOfID > 0) {
 			$comment = "$comment. Opened as a subnet of #$subNetOfID.";
 		}
@@ -127,8 +138,8 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 		
 			$db_found->exec($sql1);
 			
-	$sql1 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp) 
-		VALUES ('$maxID', '$id', '$newNetID', 'WEATHER', '$wxNOW',   '$open')";
+	$sql1 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress)
+		VALUES ('$maxID', '0', '$newNetID', 'WEATHER', '$wxNOW',   '$open', '$ipaddress')";
 			$db_found->exec($sql1);
 	
 	/* This puts any satellite net number into its parent */
@@ -141,6 +152,11 @@ $stmt2 = $db_found->prepare("SELECT max(recordID) maxID, id, Fname, Lname,  grid
 		
 		$newList = $curr_sub_nets ."+". $newNetID;
 	}
+	
+	/* Removed 2021-08-21 no longer needed
+	if ("$from" == "FCC"){
+	    include "insertToStations.php";  // added 2020-12-12 to update the stations table
+	}*/
 	
 	/* push this back to the page */
 	echo $newNetID;

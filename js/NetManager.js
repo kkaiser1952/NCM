@@ -20,8 +20,12 @@ var $idofnet		= $("#idofnet");
 var $select1		= $("#select1");
 var $isopen			= $("#isopen");
 
-function mapWhat3Words(w3w) {
-    window.open("https://map.what3words.com/"+w3w);
+function mapWhat3Words(w3w) {  
+    if (w3w == '') {alert('No entry or click the blue refresh button first to see this location.');}
+    else {
+        var w3w = w3w.substring(0, w3w.indexOf("<")); //alert(w3w);
+        window.open("https://map.what3words.com/"+w3w);
+    }
 }
 
 // This function is called by right clicking on the gridsquare, it opens a map in APRS.fi showing the gridsquare
@@ -60,6 +64,7 @@ function setDfltMode() {
     */
 }
 
+// This function is called when the 'Report by Call Sign' is selected from the hamburger menu
 function CallHistoryForWho() {
     var str = prompt("Enter a call sign");
 		
@@ -86,10 +91,8 @@ function CallHistoryForWho() {
 				alert('Last Query Failed, try again.');
 			}
 		});
-      //  alert("in getCallHistory "+cs);
-    
+      //  alert("in getCallHistory "+cs);  
 	} // end of else
-
 }
 
 
@@ -97,33 +100,30 @@ function CallHistoryForWho() {
 //https://stackoverflow.com/questions/23740548/how-to-pass-variables-and-data-from-php-to-javascript
 // Function name changed from getLastLogin to getCallHistory on 2018-1-17
 function getCallHistory() {
-    
-   // alert("in getcallhistory");
-//	refresh();   // This prevents the popup from having multiple entries in it. There may be a better way but ???
 	
-	$('tr').on('contextmenu', 'td', function(e) { //Get td under tr and invoke on contextmenu
+	//Get the td under tr and invoke on contextmenu
+	$('tr').on('contextmenu', 'td', function(e) { 
     	
+    	//e.preventDefault(); //Prevent defaults'
+    	
+    	// Get the call and clean it up, that was right clicked
 		var idparm = $(this).attr('id');
 		var arparm = idparm.split(":");
 		var id     = arparm[1];
 			id 	   = id.replace(/\s+/g, '');
-		var call   = $(this).html(); //alert(call);
-		var call   = call.replace(/\s+/g, ''); // remove spaces 
-		
-		//alert("call: "+call+"\n"); // call: <fontcolor="black">KA2FNK</font>
+		var call   = $(this).html();            //alert(call);
+		    call   = call.replace(/\s+/g, '');  // remove spaces 
 		
 		    if (call == '' ) {alert("no call");}
 		
 		var vals = [call].map((item) => item.split(/\W+/,1));
-			var call = vals[0];
-			
+			call = vals[0];
 		
-		var thisdomain = getDomain();  //alert("@98 in NetManager.js thisdomain= "+thisdomain); 
+		var thisdomain = getDomain();  //alert("@124 in NetManager.js thisdomain= "+thisdomain); 
 		// By using _blank it allows multiple popups
-	  	var popupWindow = window.open("", call,  strWindowFeatures);
-	  	
-	  	
-	  	//alert("idparm: "+idparm+"\narparm: "+arparm+"\nid: "+id+"\ncall: "+call+"\nthisdomain: "+thisdomain);
+		
+	  	var popupWindow = window.open(" ", call,  strWindowFeatures);
+            
 	  	
 		e.preventDefault(); //Prevent defaults'
 
@@ -131,8 +131,7 @@ function getCallHistory() {
 			type: "GET",
 			url: "getCallHistory.php",  
 			data: {call : call, id : id},
-			success: function(html) {	
-    			    //alert(html);			
+			success: function(html) {
 				popupWindow.document.write(html);
 			},
 			error: function() {
@@ -294,19 +293,28 @@ $(document).ready(function() {
 						$("#actlog").html(response);
 						$("#closelog").html("Net Closed");
 						showActivities(net2close);
-						// the net below opens the ICS-214 report for the current net
+						// the call below opens the ICS-214 report for the current net
 						window.open("https://net-control.us/ics214.php?NetID="+net2close);
-						
-						
-						
-					//	The below code redisplays the current net but does not update the time out values
-					//	showActivities(net2close, interval);
 						
 					} // end response
 				}); // end ajax update of table
 			} // end if (closesign != "") 
 	}); // end closelog click function
 }); // end ready function
+
+function graphtimeline() {
+    // str here is NetID 
+	if ( $('#idofnet').length ) {
+		var str	 = $("#idofnet").html().trim();
+	} else {
+		var str = prompt("Enter a Log number.");
+	}
+		
+	if (str =="") {alert("Sorry no net was selected");}
+	else {
+		window.open("HzTimeline.php?NetID="+str);
+	}
+}
 
 
 function ics214button() {
@@ -586,6 +594,8 @@ function showActivities(str, str2) {
 
 // re-wrote these two function 2018-02-12
 function showHint(str) {
+    // var nc = $( "#thenetcallsign" ).html(); alert('val= '+nc);
+   // alert(str);
 	if (str.length == 0) {
   		$("#txtHint").html(""); // set to empty
   			return;
@@ -617,7 +627,7 @@ function nameHint(str) {
 				$("#txtHint").html(response);
 			},
 			error: function() {
-				alert('Sorry no hings.');
+				alert('Sorry no hints.');
 			}
 		})
 }}

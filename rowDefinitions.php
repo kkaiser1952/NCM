@@ -68,14 +68,17 @@ echo ("
     	    $row[section] 
         </td>
        -->
-    	<td $newCall $brbCols class=\"editable editFnm c7 \"	
-    	    id=\"Fname:$row[recordID]\"> 	 
-    	    $row[Fname] 	  		          
+    	<td $newCall $brbCols class=\"editable editFnm c7 \"
+    	    style=\"text-transform:capitalize\"	
+    	    id=\"Fname:$row[recordID]\"
+    	    onClick=\"empty('Fname:$row[recordID]');\"> 	 
+    	    <div class='$class'> $row[Fname] </div>	  		          
         </td>    
         
         <td $newCall $brbCols class=\"editable editLnm c8 \"	
-            id=\"Lname:$row[recordID]\"style=\'text-transform:capitalize\'> 
-            $row[Lname] 	      
+            id=\"Lname:$row[recordID]\"style=\'text-transform:capitalize\'
+            onClick=\"empty('Lname:$row[recordID]');\"> 
+            <div class='$class'> $row[Lname] </div>	      
         </td>
     
         <td $brbCols $numsort
@@ -98,18 +101,22 @@ echo ("
         </td>
         
         <td $brbCols class=\"editable editGRID c20 \"
+            id=\"grid:$row[recordID]\"
+            style=\"text-transform:uppercase\"
             oncontextmenu=\"MapGridsquare('$row[latitude]:$row[longitude]:$row[callsign]');return false;\"
-            id=\"grid:$row[recordID]\"> 	 
-            $row[grid] 	  						
+            onClick=\"empty('grid:$row[recordID]');\"> 
+            <div class='$class'> $row[grid] </div> 						
         </td>
     		
         <td $brbCols class=\"editable editLAT c21 \"	 
-            id=\"latitude:$row[recordID]\">  
+            id=\"latitude:$row[recordID]\"
+            onClick=\"empty('latitude:$row[recordID]');\"> 
             $row[latitude]   						
         </td>
         
     	<td $brbCols class=\"editable editLON c22 \"	 
-    	    id=\"longitude:$row[recordID]\"> 
+    	    id=\"longitude:$row[recordID]\"
+    	    onClick=\"empty('longitude:$row[recordID]');\"> 
     	    $row[longitude]  						
         </td>
     	
@@ -146,26 +153,33 @@ echo ("
     	
     	<td $brbCols oncontextmenu=\"MapCounty('$row[county]:$row[state]');return false;\" 
     	    class=\"editable editcnty c17 cent \"
-    	    id=\"county:$row[recordID]\"> 
-    	    $row[county]								
+    	    id=\"county:$row[recordID]\"
+    	    style=\"text-transform:capitalize\"
+    	    onClick=\"empty('county:$row[recordID]');\"> 
+            <div class='$class'> $row[county] </div>								
         </td>
         	
         <td $brbCols class=\"editable editstate c18 cent\" 
-            id=\"state:$row[recordID]\" >	 
-            $row[state] 	  					
+            id=\"state:$row[recordID]\"  
+            style=\"text-transform:uppercase\"
+            onClick=\"empty('state:$row[recordID]');\"> 
+            <div class='$class'> $row[state] </div> 	  					
         </td>
      
-     <!--
-        <td $brbCols class=\"editable editdist  c19 cent\" 
-            id=\"district:$row[recordID]\"> 
-            $row[district]	  					
-        </td> -->   
+     
+        <td $brbCols class=\"editable editdist  c59 cent\" 
+            id=\"district:$row[recordID]\"
+            style=\"text-transform:uppercase\"
+            onClick=\"empty('district:$row[recordID]');\">
+            <div class='$class'> $row[district]	</div>			
+        </td>   
         
-        
-         <td $brbCols class=\"editable editdist  c19 cent\" 
+        <!--
+         <td $brbCols class=\"editable editdist  c59 cent\" 
             id=\"district:$row[recordID]\"  sorttable_customkey=\"$row[district] $row[county] $row[state] \" > 
             $row[district]	  					
         </td>
+        -->
     
         <td $brbCols 
             class=\"editable W3W  c24 cent\" 
@@ -173,6 +187,13 @@ echo ("
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
             onClick=\"empty('w3w:$row[recordID]');\">
             <div class='$class'> $row[w3w]	</div> 
+        </td>
+        
+        <td $brbCols 
+            class=\"editable editteam  c30 cent\" 
+            id=\"team:$row[recordID]\" 
+            onClick=\"empty('team:$row[recordID]');\">
+            <div class='$class'> $row[team]	</div> 
         </td>
         
         <!-- Admin Level -->

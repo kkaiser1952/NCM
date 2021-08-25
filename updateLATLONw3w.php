@@ -17,7 +17,15 @@
 // ==============================================================
 // This part gets the w3w that was entered into the column in NCM
 // ==============================================================
-$sql = "SELECT w3w, callsign, netID, ID, recordID
+/*
+    SELECT a.w3w, a.callsign, a.netID, a.ID, a.recordID, a.team,
+	(SELECT b.recordID FROM NetLog b WHERE b.netID = a.netID AND b.team = a.team AND b.recordID <> a.recordID) as rID
+		  FROM NetLog a
+		 WHERE a.recordID =  60749
+    */
+
+
+$sql = "SELECT w3w, callsign, netID, ID, recordID, team
 		  FROM NetLog
 		 WHERE recordID =  $recordID
 	   ";
@@ -43,7 +51,14 @@ $sql = "SELECT w3w, callsign, netID, ID, recordID
         $w3w = trim($w3w);
         $w3w = str_ireplace('/','',$w3w);
         $w3w = str_ireplace($splitarray, ".", $w3w);
-        $w3w = str_ireplace('/','',$w3w);
+        $prt = str_ireplace('/','',$w3w);
+        
+        
+        
+        $pieces = explode(".", $prt);
+            $w3w = join(".", array_slice($pieces, 0, 3));
+            $obj = join(" ", array_slice($pieces, 3));
+        
         
         $CrossRoads = 0;
 	
@@ -142,12 +157,21 @@ if ($CrossRoads) {
 // ====================================
 $sql2 = "UPDATE NetLog 
 		   SET latitude = $lat, longitude = $lng, grid='$grid',  w3w = '$w3w<br>$CrossRoads'
-		 WHERE recordID = $recordID";
+		 WHERE recordID = $recordID
+        ";
 	$stmt2 = $db_found->prepare($sql2);
 	$stmt2 -> execute();
 	
-$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$callsign', 'W3W: $w3w -> Cross Roads: $CrossRoads', '$open', '$ipaddress')";
+if ($obj == '' ) {
+    $delta = 'LOC&#916:W3W:';
+}else { $delta = 'LOC&#916:W3W:OBJ:'; }
+
+$latlng = "$lat,$lng";
+
+
+	
+$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress, latlng) 
+					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress', GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')')) )";
         
        //  echo "<br><br>sql2= $sql3"
    $db_found->exec($sql3);

@@ -45,14 +45,15 @@
     	        <th class='netid'>Net ID</th>
 		    <th class='netid'>ICS<br>214&nbsp;&nbsp;&nbsp;309&nbsp;&nbsp;&nbsp;Map</th>
 		    <th class='netid'>Sub Net Of...</th>
-		    <th>Net Call</th>
+		    <th class='netid'>Net Control Op</th>
+		    <th class='sorttable_alpha'>Net Call</th>
 		    <th class='dates'>Date</th>
 		    <th class='logins'>Logins</th>
 		    <th>Activity</th>
 	    </tr>
 	    <?php
 			$sql1 = ("SELECT COUNT(ID) as logins,
-						/*	 TRIM( netID ) as netID, */
+						     callsign as PRM,
 							 netID,
 							 netcall, 
 							 DATE(logdate) as netDate,
@@ -104,6 +105,7 @@
 			   		<td class='subs'>
 			   			<a href=\"https://net-control.us/ics214.php?NetID=$row[subNetOfID]\" target =\"_blank\">$subnet</a>
 			   		</td>
+			   		<td>$row[PRM]</td>
 			   		<td>$row[netcall]</td>
 			   		<td class='dates'>$row[netDate]</td>
 			   		<td class='logins'>$row[logins]</td>

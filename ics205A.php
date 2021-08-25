@@ -11,7 +11,7 @@
 
     require_once "dbConnectDtls.php";
     
-    $q = intval($_GET["NetID"]);  // $q = 1580;
+    $q = intval($_GET["NetID"]);   //$q = 1580;
     
    // $q = 815;
     
@@ -88,7 +88,7 @@
     <table class="table1">
         <tr>
             <td class="box1" >
-	                <p style="font-weight: bold;">ICS 205A Incident Radio Communications Plan</p>
+	                <p style="font-weight: bold;">ICS 205A Communications List</p>
 	                <br><br>
                     <b>1. Incident Name:</b><?php echo "<br>Log:#$q/$row[activity]";?>
             </td>

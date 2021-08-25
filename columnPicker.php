@@ -371,6 +371,11 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(24)" value="24" class="24">
 				<span class="checkmark"></span>
 			</label> 
+			<label class="container">Team (30)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="30" class="30">
+				<span class="checkmark"></span>
+			</label>
+<!--
 			<label class="container">TRFK-OPS (50) (Custom)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(50)" value="50" class="50">
 				<span class="checkmark"></span>
@@ -379,6 +384,7 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(51)" value="51" class="51">
 				<span class="checkmark"></span>
 			</label>
+-->
 		</div>
 	</div>
 	

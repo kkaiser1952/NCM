@@ -213,6 +213,13 @@ function CellEditFunction( jQuery ) {
 		 } // end call back 
 		 }); // end editLON
 		 
+		 $(".editteam").editable("save.php", {				// team 
+		 indicator 	: "Saving...",
+		 placeholder: "",
+		 tooltip    : "Team name or number Click to edit...",
+		 style  	: "inherit"
+		 });
+		 
 		 $(".editTT").editable("save.php", {				// tt  added here 2018-12-26
 		 indicator 	: "Saving...",
 		 placeholder: "",
@@ -269,7 +276,7 @@ function CellEditFunction( jQuery ) {
 	 	
 	 	// the onedit option. If it returns false, it won't send data.
 	 	$(".editable_selectMode").editable("save.php", {	// Mode 
-data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","FSQ":"FSQ","D*":"D*","Echo":"Echo","DMR":"DMR","Fusion":"Fusion","V&D":"V&D","Online":"Online","Relay":"Relay"}',
+data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","FSQ":"FSQ","D*":"D*","Echo":"Echo","DMR":"DMR","Fusion":"Fusion","Winlink":"Winlink","V&D":"V&D","Online":"Online","Relay":"Relay"}',
 	     type: "select",
 	/*     
     	// This code was to prevent submitting to the server, it purpose was to prevent dupe entries in TimeLog

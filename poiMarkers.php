@@ -4,15 +4,24 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
   //  $whereClause = "WHERE MBRContains(GeomFromText('POLYGON(( $poly ))'),latlng)";
-  //  echo "$whereClause";
+    //echo "$whereClause";
   // WHERE MBRContains(GeomFromText('POLYGON(( -95.029305 39.6697989 , -94.293333 39.6697989 , -94.293333 38.899486 , -95.029305 38.899486 , -95.029305 39.6697989 ))'),latlng)
   // The variable $whereClause is created in map.php
+  /*
+  whereClause= WHERE MBRContains(GeomFromText('POLYGON(( 39.4528965 -94.852876 , 39.4528965 -94.352876 , 38.9528965 -94.352876 , 38.9528965 -94.852876 , 39.4528965 -94.852876 ))'),latlng)
+
+poiMarkers= var W0KCN4 = new L.marker(new L.LatLng(39.3721733,-94.780929),{ rotationAngle: 0, rotationOrigin: 'bottom', opacity: 0.75, contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}], icon: L.icon({iconUrl: `images/markers/eoc.png`, iconSize: [32, 34]}), title:`marker_E1`}).addTo(fg).bindPopup(`W0KCN4
+Northland ARES Platte Co. EOC
+ */
+ 
+ // WHERE MBRContains(GeomFromText('POLYGON(( 41.0399581 -124.38464 , 41.0399581 -119.52596 , 36.6219971 -119.52596 , 36.6219971 -124.38464 , 41.0399581 -124.38464 ))'),latlng)
 			
     $dupCalls = "";	
     $sql = ("SELECT
                 tactical, latitude, COUNT(latitude)
                FROM poi
               $whereClause  
+
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -24,7 +33,7 @@
 			
     $POIMarkerList = "";
     $listofMarkers = "";
-    $classList = "";
+    $classList = "";  // The rest come from the poi table
     
         // This is the list needed for overlaymaps
         $sql = ("SELECT 
@@ -37,6 +46,9 @@
             foreach($db_found->query($sql) as $row) {
                 $classList .= "$row[class],";
             }
+            
+            //$classList .= "$classList,ObjectL,";
+            $classList = "$classList";
     
       // Create the leaflet LayerGroup for each type (class) of marker 
         $sql = ("SELECT 
@@ -73,16 +85,18 @@
         $H = 0;  // Hospitals
 	    $E = 0;  // EOC
 	    $R = 0;  // Repeaters
-	    $P = 0;  // Police / Sheriff
+	    $P = 0;  // Police / Sheriff / CHP
 	    $S = 0;  // SkyWarn
 	    $F = 0;  // Firestations
+	    $A = 0;  // Aviation
+	    $G = 0;  // State / Federal
 	    
 	    $markNO     = ''; // the marker number (might be alpha)
 	    $grid       = '';
 	    $rowno      = 0;
 	    $tactical   = "";
 	    $gs         = "";
-	    $poiBounds  = "";
+	    $poiBounds  = "[";
 	    $poiMarkers = "";
         
         // Pull detail data FROM  poi table
@@ -92,7 +106,8 @@
                        CONCAT(name,'<br>',address,'<br>',city,'<br><b style=\'color:red;\'>',
                        Notes,'</b><br>',latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
                        REPLACE(tactical,'-','') AS tactical, 
-                       callsign
+                       callsign,
+                       CONCAT(class,id) as altTactical
                   FROM  poi 
          $whereClause
                  ORDER BY class 
@@ -100,7 +115,9 @@
      // echo "$sql";                  
     foreach($db_found->query($sql) as $row) {
         $rowno = $rowno + 1;
-        $tactical = "$row[tactical]";
+        $tactical = $row[tactical]; //echo "$tactical";
+           // if ($tactical == "" ) {$tactical = $row[class]$row[id];}
+           if ($row[tactical] === "" ) {$tactical = $row[altTactical];}   //echo "$row[altTactical]";}
         // Calculates the grdsquare
         $gs = gridsquare($row[latitude], $row[longitude]); 
                 
@@ -133,6 +150,26 @@
             case "Fire":     $F = $F+1;  $iconName = "fireicon"; $markNO = "F$F";  
                              $markername = "images/markers/fire.png";   
                              $poimrkr = "firemrkr";  break;
+                      
+            case "Police":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+                             $markername = "images/markers/police.png";    
+                             $poimrkr = "polmrkr";  break;      
+                             
+            case "CHP":      $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+                             $markername = "images/markers/police.png";    
+                             $poimrkr = "polmrkr";  break; 
+                             
+            case "State":    $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+                             $markername = "images/markers/gov.png";    
+                             $poimrkr = "polmrkr";  break;
+                             
+            case "Federal":  $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+                             $markername = "images/markers/gov.png";    
+                             $poimrkr = "polmrkr";  break;
+                             
+            case "Aviation": $A = $A+1;  $iconName = "aviicon"; $markNO = "A$A";  
+                             $markername = "images/markers/aviation.png";    
+                             $poimrkr = "polmrkr";  break;
                              
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";
@@ -143,8 +180,10 @@
         if(id==144) {$dup =50;}
       //  if(strpos("$dupCalls", "$callsign") !== false) { $dup = 45; }
               
+         //if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
+       
          $poiMarkers .= "
-            var $row[tactical] = new L.marker(new L.LatLng($row[latitude],$row[longitude]),{ 
+            var $tactical = new L.marker(new L.LatLng($row[latitude],$row[longitude]),{ 
                         rotationAngle: $dup,
                         rotationOrigin: 'bottom',
                         opacity: 0.75,
@@ -160,12 +199,35 @@
                      
     }; // End of foreach for poi markers
     
+
+    
+    /*
+     var  = new L.marker(new L.LatLng(40.5555,-124.13204),{ 
+                        rotationAngle: 0,
+                        rotationOrigin: 'bottom',
+                        opacity: 0.75,
+                        contextmenu: true, 
+                        contextmenuWidth: 140,
+                        contextmenuItems: [{ text: 'Click here to add mileage circles',
+                            callback: circleKoords}],
+                     
+                        icon: L.icon({iconUrl: `images/markers/aviation.png`, iconSize: [32, 34]}),
+                        title:`marker_A1`}).addTo(fg).bindPopup(`<br>"Rohnerville Air Attack Base"<br>"2330 Airport Rd"<br>"Fortuna, CA 95540"<br><b style='color:red;'>"Cal Fire Fixed Wing Air Attack Base"</b><br>40.5555, -124.13204,  0 Ft.<br>CN70WN`).openPopup();                        
+ 
+                        $(`Aviation`._icon).addClass(`polmrkr`);
+    */
+    
+    
+   // echo "<br><br>poiMarkers= $poiMarkers";
+   
+
+        //echo "POI vars<br><br>";    
     // replace last comma with closed square bracket, or a comma or whatever....       
-        $poiBounds  = substr($poiBounds, 0, -1)."]";            //echo "$poiBounds";       
-        $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n"; //echo ("$POIMarkerList<br><br>");
-        $poiMarkers = substr($poiMarkers, 0, -1).";\n";             //echo ("$poiMarkers<br><br>");
+        $poiBounds  = substr($poiBounds, 0, -1)."]";                    //echo ("poiBounds= <br>$poiBounds<br><br>");       
+        $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
+        $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 //echo ("poiMarkers= <br>$poiMarkers<br><br>");
                
-        $listofMarkers = substr($listofMarkers, 0, -1)."";  //echo ("$listofMarkers<br><br>");       
-        $overlayListNames = substr($overlayListNames, 0, -1).""; //echo ("$overlayListNames<br><br>");  
+        $listofMarkers = substr($listofMarkers, 0, -1)."";              //echo ("listofMarkers= <br>$listofMarkers<br><br>");       
+        $overlayListNames = substr($overlayListNames, 0, -1)."";        //echo ("overlayListNames= <br>$overlayListNames<br><br>");  
 		    
 ?>

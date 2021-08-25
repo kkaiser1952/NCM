@@ -7,7 +7,7 @@
     require_once "geocode.php";  
     require_once "GridSquare.php";
     
-    $netID = 3584;
+    $netID = 3605;
     
 /* This program updates the following fields in the stations table */
 /* fccid Fname, Lname, county, state, grid, latitude, longitude, emial, creds, home, latlng */
@@ -97,7 +97,7 @@ foreach($db_found->query($sql) as $row) {
 }
 
 /* Run the UPDATE Query */
-$db_found->exec($query);
+//$db_found->exec($query);
 
 /* Show what was fixed */
 echo "$fixrequests";

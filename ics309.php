@@ -26,13 +26,16 @@
 	//	echo "p= $parent<br>";
 	//	echo "c= $children<br>";
     
+    
     $sql1 = ("SELECT min(a.logdate) AS minlog, 
     				 DATE(min(a.logdate)) AS indate, 
     				 TIME(min(a.logdate)) AS intime, 
     				 DATE(max(a.timeout)) AS outdate, 
     				 TIME(max(a.timeout)) AS outtime, 
     				 a.activity, a.fname, a.lname, 
-    				 a.netcontrol, a.callsign, a.netcall,
+    				 a.netcontrol, 
+    				 a.callsign, 
+    				 a.netcall,
     				 b.kindofnet, b.box4, b.box5, a.subNetOfID,
     				 a.frequency
     	       FROM NetLog  as a
@@ -43,9 +46,7 @@
 								  FROM NetLog 
 								  WHERE netID = $q )
 			");
-			
-			//echo("$sql1");
-			
+    			
 			
     foreach($db_found->query($sql1) as $row) {
 	    
@@ -117,12 +118,28 @@
 			<tbody>
 				<?php
 	        
-			        $sql = ("SELECT time(TIMESTAMP) as timestamp, ID, callsign, comment
+			     /*   $sql = ("SELECT time(TIMESTAMP) as timestamp, 
+			                        ID, callsign, comment
 			        		   FROM TimeLog 
 			        		  WHERE netID = $q 
+			        		    AND comment <> 'Initial Log In'
+			        		    AND comment NOT LIKE 'this id was deleted'
 			        		  ORDER BY timestamp");
-			
-			  /* 
+			     */   		  
+                    $sql = ("SELECT time(TIMESTAMP) as timestamp, 
+			                        ID, callsign, comment, uniqueID
+			        		   FROM TimeLog 
+			        		  WHERE netID = $q
+			        		    AND comment <> 'Initial  Log In'
+			        		    AND comment NOT LIKE '%this id was deleted%'
+                                AND comment <> 'The log was closed, ICS-214 Created'
+                                AND callsign NOT IN('GENCOMM', 'weather')
+                                AND comment <> 'The log was re-opened'
+                                AND comment NOT LIKE '%Mode set to:%'
+                                AND comment NOT LIKE '%Opened the  net from%'
+			        		  ORDER BY timestamp");
+			/*
+			  
     			  SELECT DISTINCT time(timestamp) as timestamp, band, comment,
 	   TimeLog.callsign
   FROM TimeLog, NetLog
@@ -144,9 +161,9 @@ ORDER by timestamp"); */
 							echo "<tr style=\"height: 17pt\">
 									   <td class=\"box4td1\"  colspan=\"1\">	$row[timestamp]</td>
 									   <td class=\"box4td2\"  colspan=\"1\">	$row[callsign]</td>
-									   <td class=\"box4td3\"  colspan=\"1\"></td>
-									   <td class=\"box4td4\"  colspan=\"1\">	$row[callsign]</td>
-									   <td class=\"box4td5\"  colspan=\"1\"></td>
+									   <td class=\"box4td3\"  colspan=\"1\">UNK</td>
+									   <td class=\"box4td4\"  colspan=\"1\">	NCO</td>
+									   <td class=\"box4td5\"  colspan=\"1\">$row[uniqueID]</td>
 									   <td class=\"box4td6\"  colspan=\"1\">	$row[comment]</td>
 								  </tr>";			
 					}

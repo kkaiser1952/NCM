@@ -127,8 +127,11 @@ if ( $q <> 0 ){
 			
 			<th title="County" class="besticky c17"> County </th> 
 			<th title="State" class="besticky c18"> State	</th>
-			<th title="District" class="besticky c19"> Dist </th>
+			<th title="District" class="besticky c59"> Dist </th>
 			<th title="W3W, Enter a What 3 Words location. " class="besticky c24" oncontextmenu="openW3W();"> W3W </th>
+			
+			<th title="Team" class="besticky c30"> Team </th>
+			
 			    <!-- Admin Level -->
             <th title="recordID" class="besticky c25"> recordID </th>
             <th title="ID" class="besticky c26"> ID </th>
@@ -200,6 +203,7 @@ if ( $q <> 0 ){
                                     end as pbStat,
 	        				/*	logdate as pbStat, */
 	        					band, w3w,
+	        					team,
 	        					home, ipaddress, cat, section,
 	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
 	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,

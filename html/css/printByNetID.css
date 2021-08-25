@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+body {
+			max-width: 7.75in;
+			padding-left: 5px;
+		}
+		.spread {
+			float: right;
+			padding-right: 5px;
+		}
+		
+		h4 {
+			padding-left: 5px;
+		}
+		
+		td {
+			padding: 5px;
+		}
+		
+		.sortable {
+			padding: 3px;
+		}
+		
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
+		
+		th {
+			font-weight: bold;
+		}
+		
+		.thstuff {
+			height: 16pt; 
+			border-style: double double double double;
+			
+		}
+		
+		.thstuff, th {
+			font-size: 14pt;
+			padding: 5px;
+			border-style: double solid double double;
+		}
+		
+		.lastrow {
+			font-weight: bold;
+		}
+		
+		
+		
+		.titlebox {
+			border: 1px solid;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			padding-left: 5px;
+			padding-top: 5px;
+			overflow: hidden;
+		}
+		
+		#topbox1 {
+			position: relative;
+			font-size: 2.5em; 
+			font-weight:900;
+			float: left;
+			padding-left: 10px;
+		}
+		
+		.title {
+			color:#2c742f;
+			font-family: 'Cantora One', sans-serif;
+			font-size: 28pt;
+			text-shadow: 4px 4px 4px #aaa;
+			text-decoration: none;
+			text-shadow: 2px 2px 2px #aaa;
+		}
+		.activity {
+			font-size: 14pt;
+			padding-top: 5pt;
+		}
+		
+		
+		#topbox2 {
+			position: relative;
+			float: right;
+		} 
+		.period {
+			font-weight: bold;
+			font-size: 14pt;
+			padding-top: 5pt;
+			padding-bottom: 5pt;
+		}
+		.fromperiod, .toperiod {
+			font-size: 12pt;
+		}
+		
