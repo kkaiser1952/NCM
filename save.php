@@ -16,6 +16,7 @@
  
 		$rawdata = file_get_contents('php://input');
 	//	echo("$rawdata");  
+    // value=wa0tjt-1&id=aprs_call%3A71477wa0tjt-1
 	// value=Platte&id=county%3A27449Platte	
 	
 		$part = (explode("&",$rawdata));
@@ -44,8 +45,27 @@
 		// ALLOW UPDATE TO THESE FIELDS BUT TEST tactical for DELETE don't update for that 
 		if ($column == "county"     | $column == "state"     | $column == "grid" | 
 		    $column == "latitude"   | $column == "longitude" | $column == "district" |
-		    $column == "tactical" AND $value <> "DELETE" | 
+		    $column == "tactical" AND $value <> "DELETE" | $column == "team" | $column == 'aprs_call' |
 		    $column == "cat" | $column == "section" ) {
+    		    
+            if ($column == 'tactical' AND $value != '') {
+    		$sql = "SELECT ID, netID, callsign, tactical
+			          FROM NetLog 
+					WHERE recordID = '$recordID'";
+
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row[netID];
+				$ID	   = $row[ID];
+				$cs1   = $row[callsign];
+				$tactical  = $row[tactical];
+			}
+			
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Tactical set to: $value', '$open', '$ipaddress')";
+		
+			$db_found->exec($sql);
+
+		    } // end tactical
     		
     		if ($column == "cat") { 
         		$column = "TRFK-FOR"; 
@@ -223,6 +243,48 @@
 		
 			$db_found->exec($sql);
 		} // End of Band elseif
+		
+		elseif ($column == 'aprs_call' AND $value != '') {
+    		$sql = "SELECT ID, netID, callsign, aprs_call
+			          FROM NetLog 
+					WHERE recordID = '$recordID'";
+
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row[netID];
+				$ID	   = $row[ID];
+				$cs1   = $row[callsign];
+				$aprs_call  = $row[aprs_call];
+			//	$value = strtoupper($value);
+			}
+			
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', '$open', '$ipaddress')";
+		
+			$db_found->exec($sql);
+
+		}
+		
+		elseif ($column == 'team' AND $value != '') {
+    		$sql = "SELECT ID, netID, callsign, team
+			          FROM NetLog 
+					WHERE recordID = '$recordID'";
+
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row[netID];
+				$ID	   = $row[ID];
+				$cs1   = $row[callsign];
+				$team  = $row[team];
+			}
+			
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Team set to: $value', '$open', '$ipaddress')";
+		
+			$db_found->exec($sql);
+
+		}
+		
+		
+
 				
 		// Update the TimeLog if comments were added
 		elseif ($column == 'comments' AND $value != '') {

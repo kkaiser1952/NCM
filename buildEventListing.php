@@ -48,8 +48,8 @@
     	else {$thewhere = "WHERE docType LIKE '%agenda%'
         	    AND NOW() <= end
 			    AND deletedON IS NULL
-			    AND (domain LIKE '%$domain%'
-			     OR domain LIKE 'All Groups')
+			    AND domain LIKE '%$domain%'
+			     
     		    AND (subdomain like '%$activity%' OR subdomain = '')
 			 	AND title NOT IN('Closing','Preamble')
 			 	";}
@@ -57,7 +57,6 @@
 	$sql = ("SELECT description, contact, callsign, id, title, location, 
 	                eventDate, dttm,
 					DATE(start) as stdt, 
-				/*	CONCAT(DATE(start),' ',TIME_FORMAT(start, '%H:%i')) as eventDate, */
 					DATE(end) as endt,
 					TIME_FORMAT(start, '%H:%i') as sttm,
                     TIME_FORMAT(end, '%H:%i') as entm,
@@ -66,6 +65,8 @@
 			   $thewhere
 			  ORDER BY start, dttm DESC, id DESC
 			  LIMIT 0,5");	      
+			  
+        //echo "@70 buildEventListing.php sql= $sql";
 			  
 			  //echo("$sql");
 		      

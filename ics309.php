@@ -1,6 +1,8 @@
 <!doctype html>
-
+<!-- This is the ICS-309 report -->
 <?php
+    
+    $q = 4180;
 
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -22,6 +24,8 @@
 	//		$parent = $stmt->fetchColumn(0);
 		$stmt -> execute();
 			$children = $stmt->fetchColumn(1); 
+			
+			echo "$children";
 		
 	//	echo "p= $parent<br>";
 	//	echo "c= $children<br>";

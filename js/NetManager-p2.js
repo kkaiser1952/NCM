@@ -1,5 +1,124 @@
 /* All of this NetManager-p2 (part 2) file was copied from the top of the index.php and moved here on 2018-1-15 */
 
+// This function is used by the latitude & longitude columns from rowDefinitions.php
+function getCrossRoads(lat,lng) {
+
+    //var in = eval('http://www.findu.com/cgi-bin/posit.cgi?call='+aprscall+'&comma=1&time=1&start=24');
+    
+} // end getCrossRoads()
+
+
+
+// This function is used by the aprs_call column from rowDefinitions.php 
+// It is processed in the saveFinduUpdate.php program
+parms = Array();
+function getFindu(parms) {
+    const objName = prompt('Enter an object description'); 
+    parms = parms.split(',');
+    const aprs_call = parms[0];
+    const recordID  = parms[1];
+    const netID = $("#idofnet").text().trim();
+    
+    const idlatPlace = '#latitude:'+recordID.replace(/\s/g, "");
+    const idlonPlace = '#longitude:'+recordID.replace(/\s/g, "");
+
+    console.log("@26 In getFindu Function netID "+netID+" "+aprs_call+"  recordID= "+recordID);
+
+// Contribution by Louis Gamor programer of extrodinary talents from Ghana, Africa
+// https://www.findu.com/cgi-bin/find.cgi?call=wa0tjt-13
+// https://www.findu.com/cgi-bin/posit.cgi?call=wa0tjt-13&comma=1&time=1
+// https://www.findu.com/cgi-bin/rawposit.cgi?call=wa0tjt-13&start=12&length=12&time1
+const fetchDataFromURL = async () => {
+    await fetch("https://shrouded-depths-69856.herokuapp.com/http://www.findu.com/cgi-bin/posit.cgi?call="+aprs_call+"&comma=1&time=1&start=12")
+    .then(async response => {
+        const urlData = await response.text()
+        processDataFromURL(urlData)  
+    })
+    .catch(error => {
+        console.log(error)
+    })
+}
+fetchDataFromURL() 
+
+
+const processDataFromURL = urlData => {
+    if (urlData) {
+        const responseString = removeAllWhiteSpacesFromData(urlData)
+        const bodyContent = getContentOfURLDataFromHTMLBodyTag(responseString)
+        const coordinatesArray = convertCoordinatesStringToArrayOfCoordinates(bodyContent)
+        const lastStationLocationUpdate = getMostRecentStationUpdate(coordinatesArray)
+    
+        // TODO : Implement logic using coordinates for last time station updated his location.
+        // last location update data are in this array ${lastStationLocationUpdate}
+        const [ts,lat,lon]  = lastStationLocationUpdate; //array destructuring syntax
+            //console.log('@52 ts= '+ts+'  lat= '+lat+'  lon= '+lon);
+                
+                //const thiscomments = '#comments:'+recordID.replace(/\s/g, "");
+            
+        var str = lat+','+lon+','+recordID+','+netID+','+ts+','+objName;
+            
+            console.log('@57 str= '+str);
+            
+    // ****** Code to put the new location data in the DB ********** 
+                            
+            $.ajax({
+                type: 'POST',
+                url: 'saveFinduUpdate.php',
+                data: {q:str},
+                success: function(response) {
+
+                }, // end response
+                error: function() {
+					alert(lastStationLocationUpdate[1]);
+					/*if (lastStationLocationUpdate[0] == 'Sorry') 
+                        {*/ //$("#thiscomments").text(lastStationLocationUpdate[1]); 
+                    
+                    console.log('@74 0= '+lastStationLocationUpdate[0]+' 1= '+lastStationLocationUpdate[1]);
+				}
+
+            }); // end ajax 
+            
+            //console.log('back from ajax');
+                    
+        console.log('@81 '+lastStationLocationUpdate)   
+        return     
+    } // end if
+
+    console.log(`There was no response to process...`)
+} // end processDataFromURL 
+
+
+const removeAllWhiteSpacesFromData = bodyContent => {
+    return bodyContent.trim().replaceAll('\n','').replaceAll('&nbsp;','')
+}
+
+
+const getContentOfURLDataFromHTMLBodyTag = data => {
+    const startOfBodyTag = `<BODY `.concat(data.replace(/^.*?<BODY(.*?)>.*?$/s,"$1").trim()).concat('>')
+    const endOfBodyTag = `</BODY>`
+    const regularExpressionToGetContentOfBodyTag = new RegExp(`^.*?${startOfBodyTag}(.*?)${endOfBodyTag}.*?$`, "s")
+    const bodyTagContent = data.replace(regularExpressionToGetContentOfBodyTag, "$1")
+    return bodyTagContent
+}
+
+const convertCoordinatesStringToArrayOfCoordinates = coordinatesString => {
+    return coordinatesString.split('<br>')
+}
+
+    
+const getMostRecentStationUpdate = coordinatesArray => {  
+    // if the current date is on top of the list use this one.
+    //return coordinatesArray[0].split(',');
+    // if the current date is on the bottom of the list use this one.
+    return coordinatesArray[coordinatesArray.length - 2].split(',');
+}
+
+} // end getFindu() function
+
+// End of Contribution by Louis Gamor programer of extrodinary talents from Ghana, Africa
+// =============================================
+
+
 function whoAreYou() {
     var WRU = prompt("Your Call?");
 }
@@ -553,11 +672,12 @@ function fillaclone() {
 		var netID = $("#idofnet").text().trim();
 	//	var oldPB = prompt("Enter the log No. to clone.");
 		var newKind = $("#activity").text().trim();
-	//	alert('stand alone= '+netcalltoclone+' val= '+netIDtoclone);
+		var oldCall = $(".cs1").text();
+		console.log('@663 stand alone= '+netcalltoclone+' val= '+netIDtoclone+' oldCall= '+oldCall);
 			$.ajax({
 				type: 'POST',
 				url: 'clonePB.php',
-				data: {oldPB:netIDtoclone, newPB:netID, newKind:newKind},
+				data: {oldPB:netIDtoclone, newPB:netID, newKind:newKind, oldCall:oldCall},
 				success: function() {	
 		//			alert("Out: Clone "+netIDtoclone+" into "+netID+" for "+newKind);
 					//refresh();
@@ -611,8 +731,9 @@ function openPreamblePopup() {
 }
 function openEventPopup() {
 	//var thisdomain = getDomain();  //alert("domain in openPreamble= "+thisdomain); //KCNARES  Weekly 2 Meter Voice Net
-	var thisdomain = $('#domain').html().trim();
+	var thisdomain = $('#domain').html().trim();   // alert(thisdomain);
 	var popupWindow = window.open("", "Events",  strWindowFeatures);
+	    console.log('@616 NM-p2.js thisdomain= '+thisdomain);
 	
 	//alert(thisdomain);
 	

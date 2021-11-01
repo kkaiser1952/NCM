@@ -95,9 +95,10 @@ function testCookies(nc) {
     //var arrayDefault = ["1","2","3","4","6","7","12","13","14","17","18"];
     
     // This test was added because the MARS groups don't want to see the county and state.
+    // Removed 17 & 18 the county and state from the default on 2021-09-14
     if ( $("#activity").html().includes("MARS")) {
         var arrayDefault = ["1","2","3","4","6","7","12","13","14","50"]; 
-    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14","17","18"];}
+    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14"];}
 		
     // This sets us up to add the email and phone columns automatically if its a meeting or event
     if ( $("#activity").html().includes("Meeting") || $("#activity").html().includes("Event") ) {
@@ -139,7 +140,7 @@ function testCookies(nc) {
         // alert("arrayCookies: "+JSON.stringify(arrayCookies));
         		
     // This hides all the extra columns as preperation for showing only the requested ones below
-        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30").hide();
+        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30, .c31").hide();
         $(".c25, .c26, .c27, .c28, .c29").hide(); // Admin Level
         $(" .c50, .c51").hide(); // Custom Level
        
@@ -170,6 +171,7 @@ function showCol(sh) {
             } else if (sh === '23' ) { $(".c23").show();    // Band
             } else if (sh === '24' ) { $(".c24").show();    // W3W
             } else if (sh === '30' ) { $(".c30").show();    // team
+            } else if (sh === '31' ) { $(".c31").show();    // aprs_call
               // Custom
             } else if (sh === '50' ) { $(".c50").show();    // Cat (Custom)
             } else if (sh === '51' ) { $(".c51").show();    // Section (Custom)

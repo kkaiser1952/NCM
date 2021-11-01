@@ -85,7 +85,7 @@ function geocode($address){
     }
 }
 
-//$address = "2310 Aldrich Ave S Apt 110 Minneapolis MN 55405";
+$address = "2310 Aldrich Ave S Apt 110 Minneapolis MN 55405";
 //$address = "6024 N Ames Kansas City MO 64151";
 //$address = '333 RASPBERRY LN MONUMENT CO 80132';
 //$address = '73 Summit Avenue NE Swisher IA 52338';

@@ -362,17 +362,17 @@ $(document).ready(function() {
 				<span class="checkmark"></span>
 			</label> 
 			
-<!--			<label class="container">Show All
-				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(23)" value="22" class="23">
-				<span class="checkmark"></span>
-			</label> -->
-			
 			<label class="container">W3W (24)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(24)" value="24" class="24">
 				<span class="checkmark"></span>
 			</label> 
 			<label class="container">Team (30)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="30" class="30">
+				<span class="checkmark"></span>
+			</label>
+			<!-- added 2021-09-03 -->
+			<label class="container">APRS_CALL (31)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(31)" value="31" class="31">
 				<span class="checkmark"></span>
 			</label>
 <!--

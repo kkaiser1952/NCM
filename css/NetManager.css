@@ -18,8 +18,8 @@ table#thisNet tbody tr td:first-child::before {
   content: counter(netLogCounter); 
 }
 
-
-.c10, .c11  {
+/* No Break prevents overflow to second line */
+.c10, .c11, .c31  {
     white-space: nowrap;
 }
 .btn-toolbar {
@@ -329,6 +329,11 @@ a.delete:hover::after {
 .editCS1 {
 	font-family: 'Allerta', sans-serif;
 	text-transform: uppercase;
+}
+
+.editaprs_call {
+    font-family: 'Allerta', sans-serif;
+	text-transform:uppercase;
 }
 
 #callsign {

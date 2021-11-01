@@ -109,12 +109,14 @@ echo ("
         </td>
     		
         <td $brbCols class=\"editable editLAT c21 \"	 
+            oncontextmenu=\"getCrossRoads('$row[latitude],$row[longitude]');return false;\"
             id=\"latitude:$row[recordID]\"
             onClick=\"empty('latitude:$row[recordID]');\"> 
             $row[latitude]   						
         </td>
         
-    	<td $brbCols class=\"editable editLON c22 \"	 
+    	<td $brbCols class=\"editable editLON c22 \"
+    	    oncontextmenu=\"getCrossRoads('$row[latitude],$row[longitude]');return false;\"
     	    id=\"longitude:$row[recordID]\"
     	    onClick=\"empty('longitude:$row[recordID]');\"> 
     	    $row[longitude]  						
@@ -194,6 +196,18 @@ echo ("
             id=\"team:$row[recordID]\" 
             onClick=\"empty('team:$row[recordID]');\">
             <div class='$class'> $row[team]	</div> 
+        </td>
+        
+        <td $brbCols 
+            class=\"editable editaprs_call  c31 cent\" 
+            id=\"aprs_call:$row[recordID]\" 
+            style=\"text-transform:uppercase\"
+            oncontextmenu=\"getFindu('$row[aprs_call], $row[recordID]');return false; \"
+            onClick=\"empty('aprs_call:$row[recordID]');
+            
+            \">
+            
+            <div class='$class'> $row[aprs_call]	</div> 
         </td>
         
         <!-- Admin Level -->

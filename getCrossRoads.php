@@ -46,5 +46,5 @@ function getCrossRoads($lat, $lng) {
     } // end else	
 };  // End function
 //echo getCrossRoads(39.203, -094.604);
-//getCrossRoads(39.203, -094.604);
+//getCrossRoads(.203, -094.604);
 ?>

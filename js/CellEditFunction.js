@@ -149,7 +149,7 @@ function CellEditFunction( jQuery ) {
 					alert("Update to Lat and Lon failed!, \nInvalid what3words, please re-enter.");
 				} // end error
 			}); // end ajax
-			refresh();
+			//refresh();
 		 } // end call back 
 		 }); // end editLAT
 		 
@@ -169,7 +169,7 @@ function CellEditFunction( jQuery ) {
 					alert('Update to Lat &amp; Lon failed!');
 				} // end error
 			}); // end ajax
-			refresh();
+			//refresh();
 		 } // end call back 
 		 }); // end editLAT
 		 
@@ -189,7 +189,7 @@ function CellEditFunction( jQuery ) {
 					alert('Update to GRID failed!');
 				} // end error
 			}); // end ajax
-			refresh();
+			//refresh();
 		 } // end call back 
 		 }); // end editLAT
 		 
@@ -209,9 +209,16 @@ function CellEditFunction( jQuery ) {
 					alert('Update to GRID failed!');
 				} // end error
 			}); // end ajax
-			refresh();
+			//refresh();
 		 } // end call back 
 		 }); // end editLON
+		 
+		 $(".editaprs_call").editable("save.php", {				// aprs_call 
+		 indicator 	: "Saving...",
+		 placeholder: "",
+		 tooltip    : "APRS Call including SSD  Click to edit...",
+		 style  	: "inherit"
+		 });
 		 
 		 $(".editteam").editable("save.php", {				// team 
 		 indicator 	: "Saving...",
@@ -305,7 +312,7 @@ data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","F
 	 		
 	 
 	 	$(".editable_selectNC").editable("save.php", { 		// netcontrol aka role on screen
-	    data    : '{" ":" ","PRM":"PRM","2nd":"2nd","Log":"Log","LSN":"LSN","EM":"EM","PIO":"PIO","SEC":"SEC","RELAY":"RELAY"}',
+	    data    : '{" ":" ","PRM":"PRM","2nd":"2nd","Log":"Log","LSN":"LSN","EM":"EM","PIO":"PIO","SEC":"SEC","RELAY":"RELAY","CMD":"CMD","TL":"TL"}',
 	    type    : "select",
 	     onblur: "submit",
 	    placeholder: "",
@@ -315,7 +322,7 @@ data    : '{"":"","Voice":"Voice","CW":"CW","Mob":"Mob","HT":"HT","Dig":"Dig","F
 	 	});
 	 	
 	 	$(".editBand").editable("save.php", { 		// Band
-	    data    : '{" ":" ","Rptr 1":"Rptr 1","Rptr 2":"Rptr 2","160m":"160m","80m":"80m","60m":"60m","40m":"40m","30m":"30m","20m":"20m","17m":"17m","15m":"15m","12m":"12m","10m":"10m","6m":"6m","2m":"2m","1,25m":"1.25m","70cm":"70cm","33cm":"33cm","23cm":"23cm","2.4GHz":"2.4GHz"}',
+	    data    : '{" ":" ","Rptr 1":"Rptr 1","Rptr 2":"Rptr 2","160m":"160m","80m":"80m","60m":"60m","40m":"40m","30m":"30m","20m":"20m","17m":"17m","15m":"15m","12m":"12m","10m":"10m","6m":"6m","2m":"2m","1,25m":"1.25m","70cm":"70cm","33cm":"33cm","23cm":"23cm","2.4GHz":"2.4GHz","FRS/GMRS":"FRS/GMRS","CB":"CB"}',
 	    type    : "select",
 	     onblur: "submit",
 	    placeholder: "",

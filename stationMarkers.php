@@ -1,4 +1,9 @@
 <?php
+    // When callsign is selected from a table an underscore (_) is concatenated to the front. This is because 
+    // we are getting check-ins from countries like Kenya whose callsigns start 5Z, Javascript does not 
+    // allow variables with a number as the first character.
+    // This change was made on 2021-09-14
+    
     // This program selects from the DB/NetLog table all the data needed to create the marker points on a map ;
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
@@ -15,11 +20,11 @@
 		//    require_once "GridSquare.php";
 		
     // This gives a list of two or more stations with the same latitude (Deb & Keth) 
-    // If the count is at least 2 then a tilt is pub on the call so its easier to see on the map
+    // If the count is at least 2 then a tilt is put on the marker so its easier to see on the map
 	$dupCalls = "";	
     $sql = ("SELECT
-                GROUP_CONCAT(callsign) AS callsignX, 
-                callsign,
+                GROUP_CONCAT(CONCAT('_',callsign)) AS callsignX, 
+                CONCAT('_',callsign) AS callsign,
                 latitude, 
                 COUNT(latitude) as dupCount
                FROM NetLog
@@ -39,7 +44,7 @@
 	// This creates an object of just the callsigns	seperated by a column
     $callsList          = "";
     $sql = ("SELECT 
-                CONCAT('var callsList = L.layerGroup([', GROUP_CONCAT( REPLACE(callsign,'/','') SEPARATOR ', '), '])') as callsList
+                CONCAT('var callsList = L.layerGroup([', GROUP_CONCAT( REPLACE(CONCAT('_',callsign),'/','') SEPARATOR ', '), '])') as callsList
                 
                FROM NetLog
               WHERE netID = $q  
@@ -55,7 +60,7 @@
     // Pulls the complete list of all station by the netID being requested
     // It also sets up the number to appear on each marker and the color of that marker
     $sql = ("SELECT netID ,ID 
-                    ,REPLACE(callsign,'/','') as callsign     
+                    ,REPLACE(CONCAT('_',callsign),'/','') as callsign     
                     ,grid 
                     ,netcall 
                     ,activity 
@@ -131,9 +136,10 @@
         // The if validates there are coordinates to work with
 		if ($logrow[koords]) {
     		//$cr = getCrossRoads( $logrow[latitude], $logrow[longitude] );
+    		// below api returns array so the [words] returns just the 3 words
             $w3w = $api->convertTo3wa($logrow[latitude], $logrow[longitude])[words]; 
     		  //echo($api->convertTo3wa(51.520847, -0.195521));
-    		  $div1 = "<div class='cc'>$rowno<br>$logrow[mrkrfill]<br><a href='https://what3words.com/$w3w?maptype=osm' target='_blank'>///$w3w</a></div>";
+    		  $div1 = "<div class='cc' style='text-transform:uppercase;'>$rowno<br>$logrow[mrkrfill]<br><a href='https://what3words.com/$w3w?maptype=osm' target='_blank'>///$w3w</a></div>";
     		  $div2 = "<div class='cc'>Show Cross Roads</div>";
     		  //$div3 = "<a class='cc' href='#' onclick=\"jeoquery.getGeoNames('findNearestIntersectionOSM',{lat: $logrow[latitude], lng: $logrow[longitude] }, dbg); return false;\">Cross Roads</a>";
     		  

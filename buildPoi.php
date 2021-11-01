@@ -10,7 +10,7 @@
     // This comes from index.php when the 'editPoi' button is clicked
     // Get the netID of this net from the div idofnet
     
-    $netID = 2667;
+    //$netID = 2667;
     
     
   

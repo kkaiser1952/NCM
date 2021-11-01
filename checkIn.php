@@ -380,6 +380,8 @@ if ($Lname == "") {$Lname = "$Lname2";}
 						<th title="State"    		class="c18"> 	 	State	 				</th>
 						<th title="District" 		class="c59">  	 	Dist	 					</th>
 						<th title="W3W"             class="c24">        W3W                     </th>
+						<th title="Team"             class="c30">        Team                     </th>
+						<th title="APRS Call"         class="c31">        APRS Call                     </th>
 					</tr>
 					</thead>
 				
@@ -392,11 +394,11 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
 							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
 							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number
+							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call
 					  FROM  NetLog
                      WHERE netID = $netID
                      ORDER BY case 
-		  				when netcontrol = 'PRM' then 0 
+		  				when netcontrol in ('PRM','CMD','TL') then 0 
 		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2

@@ -132,6 +132,8 @@ if ( $q <> 0 ){
 			
 			<th title="Team" class="besticky c30"> Team </th>
 			
+			<th title="APRS_CALL" class="besticky c31"> APRS CALL </th>
+			
 			    <!-- Admin Level -->
             <th title="recordID" class="besticky c25"> recordID </th>
             <th title="ID" class="besticky c26"> ID </th>
@@ -203,16 +205,16 @@ if ( $q <> 0 ){
                                     end as pbStat,
 	        				/*	logdate as pbStat, */
 	        					band, w3w,
-	        					team,
+	        					team, aprs_call,
 	        					home, ipaddress, cat, section,
 	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
 	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
-	        					row_number
+	        					row_number, aprs_call
 	        				   
 					FROM  NetLog 
 					WHERE netID = $q
 		  			ORDER BY case 
-		  				when netcontrol = 'PRM' then 0 
+		  				when netcontrol in ('PRM','CMD','TL') then 0 
 		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','SEC','RELAY') then 1
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2

@@ -350,7 +350,7 @@
             </div> 
             <div id="GroupDropdown" >
                 <!-- showGroupCoices() & filterFunctions() at the bottom of index.php -->
-                <input type="text" onfocus="showGroupChoices()" placeholder="Type to filter list.." id="GroupInput" 
+                <input type="text" required onfocus="showGroupChoices()" placeholder="Type to filter list.." id="GroupInput" 
                        class="netGroup"  onkeyup="filterFunction(0);"/>
                 <div class='GroupDropdown-content hidden'>
                     
@@ -598,10 +598,11 @@
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
      <!-- All the quotes go here -->
+<!--
         <h3 class="preQuote">Click anywhere to stop animation</h3>
     	<h2 class="quotes">
         	<p style="font-size: larger ; color:blue;">https://net-control.us</p>
-        	<!-- https://www.developerdrive.com/responsive-image-gallery-flexbox/ -->
+        	<!- - https://www.developerdrive.com/responsive-image-gallery-flexbox/ - ->
         	<div class="image-container">	
            
             <img class="myimg" src="images/mars.png" alt="mars" width="100" height="" >      	 
@@ -626,7 +627,7 @@
         	
         	<img src="images/waefar.png" alt="waefar" width="225" height="" >
         
-        	 <!-- Morse code source:  https://fontmeme.com/morse-code/. -->
+        	 <!- - Morse code source:  https://fontmeme.com/morse-code/. - ->
         	</div>        
         	 <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
         <br> 
@@ -635,7 +636,7 @@
         <br>
             <img src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="100%">
                 
-        </h2>  <!-- End of H2 -->
+        </h2>  <!- - End of H2 - ->
         
         <h2 class="quotes"><b style="color:red">HINT:</b><br> Not Logging the Net: <b style="color:green"> Put yourself in 5sec Refresh Mode...</b><b style="color:blue"> Use The Blue 'Timed' Button</b><br>
              <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%"></h2>
@@ -651,7 +652,7 @@
 				echo "<h2 class='quotes'>
 				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>
 				    <img src='https://fontmeme.com/permalink/210514/469ac0e73fe5e79d55c4c332c794fa07.png' alt='K'></h2>"?>
-
+-->
      <!-- All the quotes end here -->
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	

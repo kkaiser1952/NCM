@@ -219,7 +219,7 @@ function openClosing() {
 }
 						   
 function openAgenda() {
-	var domain = getDomain(); //alert(domain); // PCARG  Weekly 2 Meter Voice Net
+	var domain = getDomain(); alert(domain); // PCARG  Weekly 2 Meter Voice Net
 		document.getElementById("agendadiv").href = "buildEventListing.php?domain="+domain;
 }
 

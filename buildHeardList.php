@@ -32,6 +32,8 @@ $netID = intval($_POST["q"]);
 	
 		 ORDER BY CASE netcontrol
 		    WHEN 'PRM'   THEN 0
+		    WHEN 'CMD'   THEN 0
+		    WHEN 'TL'    THEN 0
 		    WHEN '2nd'   THEN 1
 		    WHEN 'Log'   THEN 2
 		    WHEN 'LSN'   THEN 3

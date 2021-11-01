@@ -3,18 +3,10 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-  //  $whereClause = "WHERE MBRContains(GeomFromText('POLYGON(( $poly ))'),latlng)";
-    //echo "$whereClause";
-  // WHERE MBRContains(GeomFromText('POLYGON(( -95.029305 39.6697989 , -94.293333 39.6697989 , -94.293333 38.899486 , -95.029305 38.899486 , -95.029305 39.6697989 ))'),latlng)
-  // The variable $whereClause is created in map.php
-  /*
-  whereClause= WHERE MBRContains(GeomFromText('POLYGON(( 39.4528965 -94.852876 , 39.4528965 -94.352876 , 38.9528965 -94.352876 , 38.9528965 -94.852876 , 39.4528965 -94.852876 ))'),latlng)
 
-poiMarkers= var W0KCN4 = new L.marker(new L.LatLng(39.3721733,-94.780929),{ rotationAngle: 0, rotationOrigin: 'bottom', opacity: 0.75, contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}], icon: L.icon({iconUrl: `images/markers/eoc.png`, iconSize: [32, 34]}), title:`marker_E1`}).addTo(fg).bindPopup(`W0KCN4
-Northland ARES Platte Co. EOC
- */
- 
- // WHERE MBRContains(GeomFromText('POLYGON(( 41.0399581 -124.38464 , 41.0399581 -119.52596 , 36.6219971 -119.52596 , 36.6219971 -124.38464 , 41.0399581 -124.38464 ))'),latlng)
+            $whereClause = "";
+ //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
+   //$whereClause = "WHERE tactical <> '' ";
 			
     $dupCalls = "";	
     $sql = ("SELECT
@@ -25,6 +17,7 @@ Northland ARES Platte Co. EOC
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
+
         foreach($db_found->query($sql) as $duperow) {
             $dupCalls .= "$duperow[tactical],";
         };
@@ -39,10 +32,12 @@ Northland ARES Platte Co. EOC
         $sql = ("SELECT 
                     GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
+
               $whereClause
                   GROUP BY class
                   ORDER BY class  
                 ");
+    //echo "$sql";
             foreach($db_found->query($sql) as $row) {
                 $classList .= "$row[class],";
             }
@@ -100,7 +95,7 @@ Northland ARES Platte Co. EOC
 	    $poiMarkers = "";
         
         // Pull detail data FROM  poi table
-        $sql = ("SELECT id, class, 
+        $sql = ("SELECT id, LOWER(class) as class, 
                        address, latitude, longitude,
                        CONCAT(latitude,',',longitude) as koords,
                        CONCAT(name,'<br>',address,'<br>',city,'<br><b style=\'color:red;\'>',
@@ -110,6 +105,7 @@ Northland ARES Platte Co. EOC
                        CONCAT(class,id) as altTactical
                   FROM  poi 
          $whereClause
+         
                  ORDER BY class 
                ");              
      // echo "$sql";                  
@@ -127,50 +123,50 @@ Northland ARES Platte Co. EOC
                               
         // Assign variables based on the class                     
         switch ("$row[class]") {
-            case "Hospital": $H = $H+1;  $iconName = "firstaidicon"; $markNO = "H$H";  
+            case "hospital": $H = $H+1;  $iconName = "firstaidicon"; $markNO = "H$H";  
                              $markername = "images/markers/firstaid.png";  
                              $poimrkr = "hosmrkr";  break;
                              
-            case "EOC":      $E = $E+1;  $iconName = "eocicon"; $markNO = "E$E";  
+            case "eoc":      $E = $E+1;  $iconName = "eocicon"; $markNO = "E$E";  
                              $markername = "images/markers/eoc.png";       
                              $poimrkr = "eocmrkr";  break;
                              
-            case "Repeater": $R = $R+1;  $iconName = "repeatericon"; $markNO = "R$R";  
+            case "repeater": $R = $R+1;  $iconName = "repeatericon"; $markNO = "R$R";  
                              $markername = "markers/repeater.png";  
                              $poimrkr = "rptmrkr";  break;
                              
-            case "Sheriff":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "sheriff":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break;
                              
-            case "SkyWarn":  $S = $S+1;  $iconName = "skywarnicon"; $markNO = "S$S";  
+            case "skywarn":  $S = $S+1;  $iconName = "skywarnicon"; $markNO = "S$S";  
                              $markername = "images/markers/skywarn.png";   
                              $poimrkr = "skymrkr";  break;
                              
-            case "Fire":     $F = $F+1;  $iconName = "fireicon"; $markNO = "F$F";  
+            case "fire":     $F = $F+1;  $iconName = "fireicon"; $markNO = "F$F";  
                              $markername = "images/markers/fire.png";   
                              $poimrkr = "firemrkr";  break;
                       
-            case "Police":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
-                             $markername = "images/markers/police.png";    
-                             $poimrkr = "polmrkr";  break;      
-                             
-            case "CHP":      $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "police":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "State":    $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
-                             $markername = "images/markers/gov.png";    
-                             $poimrkr = "polmrkr";  break;
+            case "chp":     $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+                             $markername = "images/markers/police.png";    
+                             $poimrkr = "polmrkr";  break; 
                              
-            case "Federal":  $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "state":   $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
-                             $poimrkr = "polmrkr";  break;
+                             $poimrkr = "govmrkr";  break; 
                              
-            case "Aviation": $A = $A+1;  $iconName = "aviicon"; $markNO = "A$A";  
+            case "federal": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+                             $markername = "images/markers/gov.png";    
+                             $poimrkr = "govmrkr";  break; 
+            
+            case "aviation":$A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    
-                             $poimrkr = "polmrkr";  break;
-                             
+                             $poimrkr = "aviationmrkr";  break;     
+                                                      
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr"; 
@@ -199,23 +195,6 @@ Northland ARES Platte Co. EOC
                      
     }; // End of foreach for poi markers
     
-
-    
-    /*
-     var  = new L.marker(new L.LatLng(40.5555,-124.13204),{ 
-                        rotationAngle: 0,
-                        rotationOrigin: 'bottom',
-                        opacity: 0.75,
-                        contextmenu: true, 
-                        contextmenuWidth: 140,
-                        contextmenuItems: [{ text: 'Click here to add mileage circles',
-                            callback: circleKoords}],
-                     
-                        icon: L.icon({iconUrl: `images/markers/aviation.png`, iconSize: [32, 34]}),
-                        title:`marker_A1`}).addTo(fg).bindPopup(`<br>"Rohnerville Air Attack Base"<br>"2330 Airport Rd"<br>"Fortuna, CA 95540"<br><b style='color:red;'>"Cal Fire Fixed Wing Air Attack Base"</b><br>40.5555, -124.13204,  0 Ft.<br>CN70WN`).openPopup();                        
- 
-                        $(`Aviation`._icon).addClass(`polmrkr`);
-    */
     
     
    // echo "<br><br>poiMarkers= $poiMarkers";

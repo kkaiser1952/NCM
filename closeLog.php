@@ -63,7 +63,7 @@
 	if (($q) <> '0') {
 		$wherestuff = "WHERE netID = '".$q."'
   			order by case 
-  				when netcontrol = 'PRM' then 0 
+  				when netcontrol in('PRM','CMD','TL') then 0 
   				when netcontrol in('2nd','3rd','LSN','Log','PIO','EM') then 1
   				when active = 'Out' then 4000
   				else 2
@@ -126,7 +126,7 @@
 				
 				// Set background row color based on some parameters
 					
-				$os = array("PRM", "2nd", "LSN", "Log", "PIO", "EM"); // removed STB and EOC
+				$os = array("PRM", "2nd", "LSN", "Log", "PIO", "EM", "CMD", "TL"); // removed STB and EOC
 				
 				// #1 Important, traffic turns it red
 				if ($row[traffic] == "Yes" ) {$bgcol = 'bgcolor="#ff9cc2"';}

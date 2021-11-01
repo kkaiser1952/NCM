@@ -9,7 +9,7 @@
     require_once "dbConnectDtls.php";
     
     //$netID = intval( $_GET["NetID"] ); 
-    $netID = 4440;
+    $netID = 4800;
  
 /*   
 st = stations table
@@ -95,6 +95,7 @@ $sql = ("
        AND fcc.fccid <> st.fccid
 ");
 $db_found->exec($sql);
+
 
 /* The district is updated from the HPD table */
 $sql = ("

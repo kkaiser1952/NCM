@@ -235,6 +235,12 @@ $(document).ready(function()
 						break;
 						case "EM": $nc = "Emergency Manager";
 						break;
+						case "CMD": $nc = "Command";
+						break;
+						case "TL": $nc = "Team Lead";
+						break;
+						case "RELAY": $nc = "Relay Station";
+						break;
 						case "   ": $nc = "Operator";
 						break;
 					}
