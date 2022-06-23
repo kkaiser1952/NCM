@@ -117,7 +117,7 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county,
 		district, pb, tt, firstLogin, home, testnet) 
 	
-		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', '$cs1 Opened the net', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home', '$testnet' )";
+		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', 'Opened NCM', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home', '$testnet' )";
 		
 	$db_found->exec($sql);
 	

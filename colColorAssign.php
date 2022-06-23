@@ -1,10 +1,9 @@
 <?php
 	//colColorAssign.php Written: 2019-04-04
-	// This PHP is used in getactivities.php and checkIn.php to assign column colors
+	// This PHP is used in getactivities.php and checkIn.php to assign row colors by column
 
     // These background color assignments are in something of a priority direction
-    // The most important are on the bottom so they don't get over ridden by some less imporant
-    // on the top.
+    // The most important are on the bottom so they don't get over written by some less imporon the top.
     // Sombody missing is primary importnat, followed by any of the control operators
     // Any one who has left the net should also be important to know   			
     
@@ -16,6 +15,7 @@
     	    //$brbCols = 'bgcolor="#fbc1ab"';
     		//$digitalKey = 1;
     } */
+
     
     if (in_array($row[active], $statmodes )) {
     	    $brbCols = 'bgcolor="#cacaca"';
@@ -32,7 +32,7 @@
     		$f = '<font color="black">';
     }
 
-    if ($row[traffic] == 'Pending' | $row[traffic] == 'Priority' | $row[traffic] == 'Routine' | $row[traffic] == 'Welfare' | $row[traffic] == 'Question' | $row[traffic] == 'Announcement' | $row[traffic] == 'Comment' | $row[traffic] == 'Bulletin' | $row[traffic] == 'Traffic' ) {
+    if ($row[traffic] == 'STANDBY' | $row[traffic] == 'Priority' | $row[traffic] == 'Routine' | $row[traffic] == 'Welfare' | $row[traffic] == 'Question' | $row[traffic] == 'Announcement' | $row[traffic] == 'Comment' | $row[traffic] == 'Bulletin' | $row[traffic] == 'Traffic' ) {
     	    $important2 = 'bgcolor="#ff9cc2"';
     		$trafficKey = 1;
     	}
@@ -81,5 +81,10 @@
     if (in_array($row[Mode], $digimodes )) {
     	    $modCols = 'bgcolor="#fbc1ab"';
     		$digitalKey = 1; 
+    }
+    
+    if ($row[delta] == "Y" ) {
+        $cs1Cols = 'bgcolor="#fbac23"';
+        $cs1Key = 1;
     }
 ?>

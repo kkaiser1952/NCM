@@ -11,7 +11,8 @@
     	    $numsort = "sorttable_customkey=$tacNO";
 	    }
 	
-echo ("
+echo (" 
+
         <td class=\"cent c0 \" >     </td>  <!-- needs $row[row_number] -->
         
     	<td $brbCols class=\"editable editable_selectNC cent c1 \" 
@@ -19,6 +20,8 @@ echo ("
     	    $row[netcontrol]
         </td> 
         
+       
+         
     	<td $modCols $brbCols class=\"editable editable_selectMode cent c2 Mode$row[recordID] \" 
     	    id=\"Mode:$row[recordID]\" data-mode=\"$row[Mode]\"> 
     	    $row[Mode]
@@ -29,13 +32,14 @@ echo ("
     	    id=\"active:$row[recordID]\"  data-status=\"$row[active]\"> 
     	    $row[active]
         </td>  
-    	      
-    	<td $important2 $brbCols class=\"editable editable_selectTFC c4 \"       
+        
+        <td $important2 $brbCols class=\"editable editable_selectTFC c4 traffic$row[recordID] \"
+    	    oncontextmenu=\"rightClickTraffic('$row[recordID]');return false;\"   
     	    id=\"traffic:$row[recordID]\"  data-traffic=\"$row[traffic]\">  
     	    $row[traffic]           
         </td>
-    	
-    	<td $brbCols class=\"editable editTT cent c5 TT\" 
+        
+        <td $brbCols class=\"editable editTT cent c5 TT\" 
     	    id=\"tt:$row[recordID]\"
     	    title=\"TT No. $row[tt] no edit\"> 
     	    $row[tt] 
@@ -46,10 +50,30 @@ echo ("
     	    title=\"$row[band] Band \" > 
     	    $row[band]  
         </td>
+
+   
+        <td $timeline $brbCols $badCols 
+            class=\"editable editfacility c33 \"	
+            id=\"facility:$row[recordID]\"      
+            onClick=\"empty('facility:$row[recordID]'); \"> 
+                $row[facility]       
+        </td>
+        
+        <td $brbCols
+            class=\"editable editonSite c34 \"	
+            oncontextmenu=\"rightClickOnSite('$row[recordID]');return false;\"
+            id=\"onsite:$row[recordID]\" data-onsite=\"$row[onsite]\">
+             $row[onSite]	       
+        </td>
     	
-        <td $newCall $brbCols $badCols class=\"editable cs1 $editCS1 c6 \" 
-            oncontextmenu=\"getCallHistory('$row[callsign]');return false;\" 
+    	    	
+        <td $newCall $brbCols $badCols $cs1Cols
+            class=\"editable cs1 $editCS1 c6 \" 
             id=\"callsign:$row[recordID]\"
+            oncontextmenu=\"getCallHistory('$row[callsign]');return false;\" 
+            
+            ondblclick=\"doubleClickCall('$row[recordID]', '$row[callsign]', '$row[netID]');return false;\"
+            
             title=\"Call Sign $row[callsign] no edit\"> 
             $row[callsign]  
         </td>
@@ -75,16 +99,18 @@ echo ("
     	    <div class='$class'> $row[Fname] </div>	  		          
         </td>    
         
-        <td $newCall $brbCols class=\"editable editLnm c8 \"	
-            id=\"Lname:$row[recordID]\"style=\'text-transform:capitalize\'
+        <td $newCall $brbCols class=\" editable editLnm c8 \"	
+            id=\"Lname:$row[recordID]\" style=\"text-transform:capitalize\"
             onClick=\"empty('Lname:$row[recordID]');\"> 
             <div class='$class'> $row[Lname] </div>	      
         </td>
     
+    <!-- Removed style=\"text-transform:uppercase\" on 2021-11-18 by request -->
+    <!-- if you want to add it back, see if you can build it into the group profile or cookies -->
         <td $brbCols $numsort
             class=\"editable editTAC cent c9 \"	
             id=\"tactical:$row[recordID]\"
-            style=\"text-transform:uppercase\"
+            
             onClick=\"empty('tactical:$row[recordID]');\">
             <div class='$class'> $row[tactical] </div> 
         </td>	 
@@ -168,20 +194,27 @@ echo ("
             <div class='$class'> $row[state] </div> 	  					
         </td>
      
-     
-        <td $brbCols class=\"editable editdist  c59 cent\" 
+       
+        <td $brbCols class=\"editable editdist  c59 cent \" 
+            style=\" text-transform:uppercase;\"
             id=\"district:$row[recordID]\"
-            style=\"text-transform:uppercase\"
-            onClick=\"empty('district:$row[recordID]');\">
+            sorttable_customkey=\"$row[district] $row[county] $row[state] \"
+            oncontextmenu=\"rightClickDistrict('$row[recordID], $row[state], $row[county]');return false; \"
+            onClick=\"empty('district:$row[recordID]'); \">
+            
             <div class='$class'> $row[district]	</div>			
         </td>   
         
-        <!--
-         <td $brbCols class=\"editable editdist  c59 cent\" 
-            id=\"district:$row[recordID]\"  sorttable_customkey=\"$row[district] $row[county] $row[state] \" > 
-            $row[district]	  					
+      <!--
+        <td $brbCols class=\"editable editdist  c59 cent\" 
+            style=\"text-transform:uppercase\"
+            id=\"district:$row[recordID]\"  
+            sorttable_customkey=\"$row[district] $row[county] $row[state] \"
+            onClick=\" empty('district:$row[recordID]'); \" > 
+            
+            <div class='$class'> $row[district]	</div>	  					
         </td>
-        -->
+       --> 
     
         <td $brbCols 
             class=\"editable W3W  c24 cent\" 
@@ -189,7 +222,11 @@ echo ("
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
             onClick=\"empty('w3w:$row[recordID]');\">
             <div class='$class'> $row[w3w]	</div> 
-        </td>
+        </td>   
+        <!-- onClick=\"empty('w3w:$row[recordID]'); getW3W('$row[recordID]'); event.preventDefault(); 
+            \"> -->
+        <!-- https://www.formget.com/jquery-dialog-form/ -->
+        
         
         <td $brbCols 
             class=\"editable editteam  c30 cent\" 
@@ -204,10 +241,16 @@ echo ("
             style=\"text-transform:uppercase\"
             oncontextmenu=\"getFindu('$row[aprs_call], $row[recordID]');return false; \"
             onClick=\"empty('aprs_call:$row[recordID]');
-            
             \">
-            
             <div class='$class'> $row[aprs_call]	</div> 
+        </td>
+        
+        <td $brbCols 
+    	    class=\"editable editcntry c32 cent \"
+    	    id=\"country:$row[recordID]\"
+    	    style=\"text-transform:capitalize\"
+    	    onClick=\"empty('country:$row[recordID]');\"> 
+            <div class='$class'> $row[country] </div>								
         </td>
         
         <!-- Admin Level -->

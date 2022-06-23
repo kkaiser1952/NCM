@@ -10,7 +10,7 @@
     $call = $call[0];
     $id   = $_GET['id']; 
     
-   $call = 'WA0TJT';
+   //$call = 'WA0TJT';
     
     $sql = "SELECT a.callsign
     			  ,CONCAT(a.first, ' ', a.middle, ' ', a.last) as name

@@ -15,11 +15,13 @@ function geocode($address){
      
     // get the json response
     $resp_json = file_get_contents($url);
+    
+    //echo "$resp_json<br><br>";
      
     // decode the json
     $resp = json_decode($resp_json, true);
     
-   // var_dump($resp);
+    //var_dump($resp);
    
  
     // response status will be 'OK', if able to geocode given address 
@@ -89,7 +91,12 @@ function geocode($address){
 //$address = "6024 N Ames Kansas City MO 64151";
 //$address = '333 RASPBERRY LN MONUMENT CO 80132';
 //$address = '73 Summit Avenue NE Swisher IA 52338';
+
+
+//$address = '39.503,-93.602';
+//$address = '64154';  zip code works
 //$koords = geocode("$address");
 //echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
+//              44.9597511, -93.289555, Hennepin , MN
 
 ?>

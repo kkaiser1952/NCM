@@ -7,7 +7,8 @@ function convertSecToTime($sec)
     $date1 = new DateTime("@0");
     $date2 = new DateTime("@$sec");
     $interval = date_diff($date1, $date2);
-    $parts = ['years' => 'y', 'months' => 'm', 'days' => 'd', 'hours' => 'h', 'min.' => 'i', 'sec.' => 's'];
+    //$parts = ['years' => 'y', 'months' => 'm', 'days' => 'd', 'hours' => 'h', 'min.' => 'i', 'sec.' => 's'];
+    $parts = ['years' => 'y', 'months' => 'm', 'days' => 'd', 'hours' => 'h'];
     $formatted = [];
     foreach($parts as $i => $part)
     {
