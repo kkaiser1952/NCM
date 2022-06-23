@@ -94,8 +94,6 @@
 			echo("<br>$row[id]");
 			echo("<br><br>");
 		}
-		
-		    echo("<p>buildClosingListing.php</p>");
 ?>
 </body>
 </html>

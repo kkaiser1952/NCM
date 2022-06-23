@@ -110,7 +110,7 @@
 			   			</a>
 			   			</span>
 			   			<span>
-			   			<a href=\"https://net-control.us/map.php?NetID=$row[netID]\" target =\"_blank\"> MAP
+			   			<a href=\"https://net-control.us/map1.php?NetID=$row[netID]\" target =\"_blank\"> MAP
 			   			</a>
 			   			</span>
 			   		</td>
@@ -122,7 +122,6 @@
 		?>
 
     </table>
-    <p>groupScoreCard.php</p>
      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
    
     

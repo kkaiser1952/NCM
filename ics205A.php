@@ -166,6 +166,5 @@
         
     </table>
     </div>
-    <p>ics205A.php</p>
 </body>
 </html>

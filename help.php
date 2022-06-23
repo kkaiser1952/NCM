@@ -29,18 +29,46 @@
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 
 <style>
-    } /* End of media css */
+	/* see help.css and print.css */
+	.boxTZ{
+		width: 80%;
+		position: relative;
+		display: inline-block; /* Make the width of box same as image */
+	}
+	.boxTZ .text{
+		position: absolute;
+		z-index: 999;
+		margin: 0 auto;
+		left: 65;
+	/*	right: 0; */
+		top: 25%; /* Adjust this value to move the positioned div up and down */
+		/*text-align: center;*/
+		width: 80%; /* Set the width of the positioned div */
+		color: darkred;
+	}
+	
+	.topBanner {
+    	width: 960px;
+    	position: relative;
+    	margin:0 auto;
+    	line-height: 1.4em;
+	}
+	
+	
+	
 </style>
 	
-	
+<script>
+	function printfunction() {
+		window.print();
+	}
 
+</script>
     
 </head>
 <body>
 	
 <div id="banner">
-    
-    <img id="smtitle" src="images/NCM.png" alt="NCM" >
 
 	<div class="title">
 		<p>Net	</p>
@@ -57,208 +85,121 @@
 		</div>
 		<div class="topBanner">
 			<?php
-				/*echo "As of Today: -->   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries,
+				echo "As of Today: -->   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Logins,
 					 <br> $volHours of Volunteer Time<br>Across: 4 Countries, $stateCnt states, $countyCnt counties and $gridCnt grid squares.";
-				*/	 
-				echo "As of Today: --><br>   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries,
-					 <br> $volHours of Volunteer Time";
 			?>
 		</div>
-		<div class="printIt">
+		<div>
 			<button style=" color:#4706f8; font-size: larger" onclick="printfunction()">Print this document</button>
 			<br>
-			<script>
-    			var myDate = new Date(document.lastModified).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"}) 
-    			document.write("<b style=''> Updated: " + myDate +"</b>");
-            </script>
+			<script>document.write("<b style='right: 0;'> Updated: " + document.lastModified +"</b>");</script>
 		</div>
 	</div> <!-- end flex-container -->
 </div> <!-- End Banner -->
-<br>
-	 <b style='color:red'>*</b> <a href="#newStuff">Recent updates.</a>
+
 <hr>
 
 <div class="index"> <!-- Changed from div on 2019-10-01 -->
 	<a id="index"></a>
-	<h3>Topic Index</h3>
+	<h3>Index</h3>
 	
 	 <nav class="topics">
 		<a href="#assumptions">Assumptions</a><br>
         <a href="#newStuff">Recent Changes</a><br>
-        <a href="#location"><b style='color:red'>*</b>Station Location Considerations</a><br>
-		
 		<a href="#homepage">Home Page</a><br>
 		<a href="#open">Open an existing Net</a><br>
 		<a href="#start">Start a Net</a><br>
-		
-		<a href="#leftCorner"><b style='color:red'>*</b>Upper Left Corner</a><br>
-		<a href="#rightCorner">Upper Right Corner</a><br>
-		
+		<a href="#rightCorner">Upper right Corner</a><br>
 		<a href="#reports">Create Agenda, Preamble, Closing</a><br>
 		<a href="#checkins">Enter Check-Ins</a><br>
-		
 		<a href="#delete">Delete an Entry</a><br>
 		<a href="#misc">Misc. Operations</a><br>
 		<a href="#colors">Meaning of the Display Colors</a><br>
-		
 		<a href="#columns">Table Columns</a><br>
 		<a href="#checkins">Check-in</a><br> 
-		<a href="#grid">Updating Grid </a><br>
-		
-		<a href="#grid">Updating Latitude and/or Longitude</a><br>	 
+		<a href="#grid">Updating Grid, Latitude and/or Longitude</a><br>	 
         <a href="#what3words">What3Words</a><br>
 		<a href="#misc">About Sorting</a><br>
-		
 		<a href="#reports">Reports</a><br>
 		<a href="#advanced">Advanced Topics</a><br>
-		<a href="#advanced">Adding General Comments</a><br>
-		
+		<a href="#advanced"><b style='color:red'>*</b> Adding General Comments to the Time Log</a><br>
 		<a href="#advanced">Using Sub-nets</a><br>
 		<a href="#TimeLineLog">How The Time Log Works</a><br>
 		<a href="#APRStt">What is <b style="color:#aa7941;">APRStt</b>?</a><br>
 		
-		<a href="#facility"><b style='color:red'>*</b>All About FACILITY Nets</a><br>
 		<a href="#prebuild">Pre-Build nets for Events</a><br>
-		<a href="#Mapping"> Mapping your Net</a><br>
-		
+		<a href="#Mapping"><b style='color:red'>*</b> Mapping your Net</a><br>
 		<a href="#Responsive">Responsive Design</a><br>	 
 		<a href="#mars">MARS Operation</a><br>
-		<a href="#tables"><b style='color:red'>*</b>Data Base & Table Definitions</a><br>
-		
 		<a href="#theend">Copyright, Guarantees and Warranties</a>
-	 </nav> <!-- End topics for topic index -->
-	 <br>
-	 
-	 <h3>Column Index</h3>
-	 
-	 <nav class="topics">
-        <a href="#role">Role</a><br>
-        <a href="#mode">Mode</a><br>
-        <a href="#status">Status</a><br>
-		
-		<a href="#traffic">Traffic</a><br>
-		<a href="#facilitycol"><b style='color:red'>*</b>Facility</a><br>
-		<a href="#onsitecol"><b style='color:red'>*</b>On Site</a><br>
-		
-		<a href="#tt">tt#</a><br>
-		<a href="#band">Band</a><br>
-        <a href="#callsign">Callsign</a><br>
-        
-        <a href="#firstname">First Name</a><br>
-		<a href="#lastname">Last Name</a><br>
-		<a href="#tactical">tactical</a><br>
-		
-		<a href="#phone">Phone</a><br>
-        <a href="#email">eMail</a><br>
-        <a href="#grid">Grid</a><br>
-		
-		<a href="#latitude">Latitude</a><br>
-		<a href="#longitude">Longitude</a><br>	
-		<a href="#timein">Time In</a><br>
-        
-        <a href="#timeout">Time Out</a><br>
-        <a href="#timeline"><b style='color:red'>*</b>Time Line Comments</a><br>
-		<a href="#credentials">Credentials</a><br>
-		
-		<a href="#timeonduty">Time On Duty</a><br>
-		<a href="#county">County</a><br>
-        <a href="#state">State</a><br>
-        
-        <a href="#dist">Dist</a><br>
-		<a href="#w3w"><b style='color:red'>*</b>W3W</a><br>
-		<a href="#team">Team</a><br>
-		
-		<a href="#aprscall"><b style='color:red'>*</b>APRS CALL</a><br>
-		<a href="#country">Country</a><br>
-	 </nav> <!-- End Column index -->
-	 
-	 <br>
-	 <h3>Report Index</h3>
-	 <h4>Under Reports in upper right corner</h4>
-	 
-	 <nav class="topics">
-        <a href="#suspects">The Usual Suspects</a><br>
-        <a href="#groupsInfo">Groups Information</a><br>
-        <a href="#groupsScore">Group Score Card</a><br>
-        
-        <a href="#listNets">List/Find All Nets</a><br>
-        <a href="#netbyNumber">Brouse Net By Number</a><br>
-        <a href="#listPois">List All POI's</a><br>
-        
-        <a href="#mapNet">Map This Net</a><br>
-        <a href="#timeline">Graphic Time Line</a><br>
-        <a href="#ics205a">ICS-205A</a><br>
-        
-        <a href="#ics214">ICS-214</a><br>
-        <a href="#ics309">ICS-309</a><br>
-        <a href="#arrlRadiogram">ARRL Fill & Sign Radiogram</a><br>
-        
-        <a href="#moreICSforms">Additional ICS Forms</a><br>
-        <a href="#meccPlan">MECC Comm Plan</a><br>
-        <a href="#timeZoneMap">World Timezone Map</a><br>
-	 </nav> <!-- End Report Index -->
-	 
-	 <h4>Under hamburger menu in upper right corner</h4>
-	 
-	 <nav class="topics">
-        <a href="#convertPB">Convert to a Pre-Built (Roll Call) net</a><br>
-        <a href="#createGroup">Create a Group Profile</a><br>
-        <a href="#createHeard">Create a Heard List</a><br>
-        
-        <a href="#createFSQ">Create FSQ Macro List</a><br>
-        <a href="#reportByCS">Report by Call Sign</a><br>
-        <a href="#listUsers">List all User Call Signs</a><br>
-        
-        <a href="#NCMdocs">NCM Documentation</a><br>
-        <a href="#deplyManual">KCNARES Deployment Manual</a><br>
-        
-        <a href="#NCMdocs">ARES Resources</a><br>
-        <a href="#ARESe-letter">ARES E-Letter</a><br>
-        
-        <a href="#ARESmanual">Download the ARES Manual(PDF)</a><br>
-        <a href="#ARESfield">Download ARES Field Resources Manual(PDF)</a><br>
-        <a href="#AREStraining">ARES Standardized Training Plan Task Book [Fillable PDF]</a><br>
-        
-        <a href="#ARESplan">ARES Plan</a><br>
-        <a href="#ARESgroup">ARES Group Registration</a><br>
-        <a href="#ARESemcomm">Emergency Communications Training</a><br>
 	 </nav>
-    
+	 <br>
+	 <b style='color:red'>*</b> <a href="#newStuff">Recent updates.</a>
 </div> <!-- End index -->
 	
 <hr>
-<p style="page-break-before: always"></p> 
-
+	
 <div class="Purpose">
     <h2>Purpose:</h2>
 	
 	<p>The Net Control Manager (<span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span>) program was designed to make Amateur Radio Net check-ins, management of net resources and net reporting easier and more efficient than using pen and paper. <b>This is not meant however to be a replacement for pen and paper,</b>  which will always be your best backup should something go wrong.
-	</p>
-	<p> The <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> is designed to make <b style="color:red;">ARES</b>, <b style="color:darkblue;">RACES</b> and other <b style="color:darkred;">EM</b> net logging and reporting as easy and intuitive as possible. But of course works perfectly with your weekly club social net as well. Its many features are aimed squarely at these ideas.
+	</p><p> The <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> is designed to make <b style="color:red;">ARES</b>, <b style="color:darkblue;">RACES</b> and other <b style="color:darkred;">EM</b> net logging and reporting as easy and intuitive as possible. But of course works perfectly with your weekly club social net as well. Its many features are aimed squarely at these ideas.
 	</p>
 	<p><span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> was also designed to be easily usable by the Net Control Operator (<b style="color:green;">NCO</b>) alone, however someone else keeping log while you control the net is always a good idea. I suggest you keep it open on your computer as you call the net. Set the timed refresh to 5 or 10 seconds. If the NCO is also the logger, do NOT set a timed refresh value.
 	</p>
 	<p>Using <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> like any application of this type should be practiced. Go ahead and create a TE0ST net from the drop down. Add stations, delete stations, sort columns, edit fields, do all the things you would do during a real net. Then when you are complete be sure to close your net. This net will stick around for a while so come back and play with it more, re-open the net (right click the <b style="color:red">'Net Closed'</b> button) add some more calls, etc.
 	</p>
 	<!-- -->
-	<div class="classictemplate template" style="display: block;"></div>
+	<div class="classictemplate template" style="display: block;">
+<style type="text/css">
+  #groupsio_embed_signup input {border:1px solid #999; -webkit-appearance:none;}
+  #groupsio_embed_signup label {display:block; font-size:16px; padding-bottom:10px; font-weight:bold;}
+  #groupsio_embed_signup .email {display:block; padding:8px 0; margin:0 4% 10px 0; text-indent:5px; width:58%; min-width:130px;}
+  #groupsio_embed_signup {
+    background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; 
+  }
+  #groupsio_embed_signup .button {
 
+      width:25%; margin:0 0 10px 0; min-width:90px;
+      background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+      background-repeat: repeat-x;
+      border-color: #245580;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 3px;
+      color: #fff;
+      background-color: #337ab7;
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+</style>
 <div id="groupsio_embed_signup">
 <form action="https://groups.io/g/NCM/signup?u=5681121157766229570" method="post" id="groupsio-embedded-subscribe-form" name="groupsio-embedded-subscribe-form" target="_blank">
     <div id="groupsio_embed_signup_scroll">
-      <label for="email" id="templateformtitle2">Subscribe to our group</label>
-      <input type="email" value="" name="email" class="email" id="email3" placeholder="email address" required="">
+      <label for="email" id="templateformtitle">Subscribe to our group</label>
+      <input type="email" value="" name="email" class="email" id="email" placeholder="email address" required="">
     
     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5681121157766229570" tabindex="-1" value=""></div>
-    <div id="templatearchives2"></div>
-    <input type="submit" value="Subscribe" name="subscribe" id="groupsio-embedded-subscribe2" class="button">
-    </div>
+    <div id="templatearchives"></div>
+    <input type="submit" value="Subscribe" name="subscribe" id="groupsio-embedded-subscribe" class="button">
+  </div>
 </form>
-</div> <!-- End groupsio_embed... -->
-</div> <!-- End Purpose -->
+</div>
+</div>
 	
+	
+	<!-- -->
+</div>	<!-- End Purpose -->
+
 <hr>
-<br>
+
 <div class="os">
 <!-- The margin:0 makes these two >h> tags push together -->
 <P style="page-break-before: always">
@@ -278,13 +219,10 @@
 		<u>Usually</u> <br> Firefox
 	</div>
 </div>
-
 <div style="font-size:18pt; font-weight: bold; color:red;">*Turn on popups for <b><span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span></b></div>
 <p>Popups... <b><span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span></b> works best with popups enabled in your browser. Many features require popups to display additional information. There are NO, None, Zero, Zip ads in this application and never will be.</p>
 		
 <p>Cookies... I don't like them. But in some circumstances (which you as a general user may never see) <b><span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span></b> does set a cookie. Even then its voluntary via a button that says <b style="color:red">"Save as Cookie"</b>. If you never see that button, then a cookie will never be set, if you see it then the choice is yours. Despite what you may have heard, cookies are safe, very small text items added to your computer to assist with web pages. If you choose to see only the County and State optional fields that cookie would only have 5 bytes and would look like this (17,18).</p>
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End OS -->
 
 <hr>
@@ -294,7 +232,7 @@
 <div class="twocolrow" style="margin:0; width: 100%;">
   <div class="twocolumn" style="width: 50%;">
 	<b><span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span></b> - Net Control Manager<br>
-	<b style="color:blue;"><abbr title="Net Control Station">NCS</abbr></b> - Net Control Station (PRM)<br>
+	<b style="color:blue;"><abbr title="Net Control Station">NCS</b></abbr> - Net Control Station (PRM)<br>
 	<b style="color:green;">NCO</b> - Net Control Operator<br>
 	<b style="color:#aa7941;">EOC</b> - Emergency Operations Center<br>
 	
@@ -325,12 +263,10 @@
 	<b style="color:#aa7941;">W3W</b> - What3Words
   </div>
 </div>
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- end abbreviations os -->
 
 <hr>
-<!-- <p style="page-break-before: always"></p> -->
+
 <div class="assumptions">
 	<a id="assumptions"></a>
 	<h3>Assumptions:</h3>
@@ -343,50 +279,47 @@
 		<li>Call sign, First and Last Name, phone number, email address, and Credentials are all stored for the open net only. When changed they will NOT be retained for future nets.</li>
 		<li></li>
 	</ul>
-	<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End of assumptions -->
 
- <p style="page-break-before: always"></p>
-<div class="changes">
+ 
+<div class="changes" style="page-break-before: always">
     <a id="newStuff"></a>
 	<h3>Recent Changes:</h3>
 	
 	    <header>
-    	    <h2>2022</h2>
-    	    <a href="#facility">Check out the new facility type net</a><br>
-    	    <p>Be sure to check out <a href="#location">Station Location Considerations</a> for a discussion on the importance and means of knowing the location of each station logging into your nets.
-                </p>
-            <p>New Columns in 2022</p>    
-            <ul class="topics"> <!-- three columns -->
-                <li><a href="#country">Country</li>
-                <li><a href="#facilitycol">Facility</a></li>
-                <li><a href="#onsitecol">On Site</a></li>
-                
-                <li><a href="#team">Team</a></li>
-                <li><a href="#what3words">W3W</a></li>
-                <li><a href="#aprs_call">APRS_CALL</a></li>
-                
-            </ul>
-                
-    	    <p>2022 has seen an expansion of the optional columns with the additon of 'Team', 'W3W' and 'APRS_CALL'. The functionality of all three is still in development especially the last two. One use for the 'Team' column will be to allow sorting of the table based on a team name. Names like Safety, SAG, Rest Stop, for example during a bike ride can help finding a specific call sign easier. 
-    	    </p><p>The new 'W3W' and 'APRS_CALL' columns have at least two uses. The first would be to more easily change a statons location (latitude, longitude, grid). The second is to give NCM the ability to track the movement of a staton over time. Both these scenarios are discussed in the 'Station Location Considerations' discussion a little further below.
-               
-                
-    	    <h2>Individual Activity Log (ICS-214A)</h2>
-    	    <p>This report is displayed as a pop-up modal when you right click in the 'Time Line Comments' column of any row. It is a personal ICS-214 just for that callsign, easily printable or it can be saved as a PDF by your browser. 
-    	    </p><h2>Double (left) Click a callsign</h2>
-    	    <p>Thanks to the people at Buckmaster (HamCall.net) double clicking a DX (international) callsign now updates the stored information about that call in the stations table. At the same time it adds latitude, longitude, first & last name, and other key information to the open log you are on. This is still not 100% because many countries do not publish their current amateur callsign information.
+    	    <p>August 2021 </p>
+    	    <p>A few small changes were made to the display of objects in a map. A link to the What3Words location map and an APRS local activity report hi-light these changes.</p>
+    	    <p>May 2021 </p>
+    	    <p>When creating a test (TE0ST) net please check the box at the top of the new net creation dialog.</p>
+    	    <p>New report in the 'Reports' menu called 'The Usual Suspects' creates a list of all stations over time that have checked into the requested net. You must know the group code or callsign to produce this.
+    	    </p>
+    	    <p>The ICS-309 report has been modified to report only the entries regarding message traffic. Such as W3W object creation or any traffic documentation.
+    	    </p>
+    	    <p>April 2021 </p>
+    	    <p>In response to a debate on the APRS.io email board about the best way to mark the locations of downed telephone poles I've added to mapping a net the ability to do just that. You do not need APRS to do it, all you need is your smart phone and a free app that works offline, no internet needed. </p>
+    	    <p>Using the <a href="https://what3words.com/clip.apples.leap" target="_blank">What3Words</a> app locate the location, call it into your net control station, she/he adds it to the NCM column with a comment suggesting what it is. </p>
+    	    <p>For example an entry might look like this   'spinach.spaceship.scouts Green Door' (no quotes) What happens in NCM is this; the latitude and longitude of the report is added to the time line log each time a new entry is made. The cross roads (preferred by first responders) is displayed, with the grid square and of course the latitude and longitude. Then when you display the net map, all the extra objects are shown, they are clickable with all the details. </p>
+    	    <p> The URL of this map can be given to first responders to use for their attention.<br>
+        	    see <a href="https://net-control.us/map.php?NetID=3818" target="_blank"> https://net-control.us/map.php?NetID=3818</a> for an example.
+    	    </p>
+    	    <br>
+    	    <p>February 2021 </p>
+    	    <p>Short Cut after the name field for entering check-ins with traffic:<br>This does require an extra tab after an entry without traffic. TAB TAB TAB to enter a call.</p>
+    	    <p> This little box helps the logger keep his/her hands on the keyboard while taking check-ins. Your options for entry are T,R,W,P,E,Q,A or C, they represent the action values of the Traffic column. R --> Routine, W --> Welfare, P --> Priority, E --> Emergency, Q --> Question, A --> Announcement, C --> Comment. <br> By entering one of these in that little box the Traffic column for that station will automatically be updated to reflect the value. Be sure to use the dropdown in Traffic to indicate 'Sent' after the traffic is passed.
+    	    </p>
+    	    <p>January 2021</p>
+    	    <p>Right click functionality on the Status column added to speed up change to 'In' or 'OUT'. </p>
+    	    <p><a href="#misc">Export to a CSV file</a></p>
+    	    <p>Right click functionality added to 'Time Line Comments' column to display station activity for this net.</p>
 	    </header>
 	    <p>
 	    </p>
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
+
 	    			
 </div> <!-- End changes -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="helpfulhints">
     <a id="helpfulhints"></a>
 		
@@ -422,94 +355,15 @@
 		
 		<p style="font-weight: bold;">Have fun!</p>
 		
-		<p>If you have an idea how to improve Net Control Manager, please send them to <a href="mailto:wa0tjt@gmail.com?Subject=Net-Control-Program" target="_top"> Keith Kaiser</a> my eMail address is wa0tjt@gmail.com
-		</p>
-<div>
-	<a class="gotoindex" href="#index">Back to the Index</a>	
-</div>	
+		<p>If you have an idea how to improve Net Control Manager, please send them to <a href="mailto:wa0tjt@gmail.com?Subject=Net-Control-Program" target="_top"> Keith Kaiser</a> my eMail address is wa0tjt@gmail.com</p>
+		
 </div> <!-- End helpfulhints -->
 	
-
-<p style="page-break-before: always"></p>
-
-<div class="location">
-    <a id="location"></a>
-		
-		<h3>Station Location Considerations:</h3>
-	 
-		<p>One of my primary goals while developing NCM was to always know where my people are. For this reason, at the start of any net the assumption is that everyone is safe at home. The <a href="#latitude">Latitude</a> and <a href="#longitude">Longitude</a> of each station was geocoded from the FCC Amateur Radio database using the Google API. Other location information, the <a href="#county">county</a>, <a href="#grid">grid square</a> and <a href="#district">district</a> are also derived from Google and other sources based on the latitude and longitude.
-		</p><p>
-        But the real power of NCM is its ability to use several other methods to keep station location relevant to the net in use. It does this by making multiple adjustments to the location based on values input by the logger. If the latitude or longitude is changed, the grid square is automatically adjusted. And if the grid square is changed the latitude and longitude are recalculated to the middle of the new grid square. But the best at-this-moment location information comes from the <a href="#w3w">W3W</a> and <a href="#aprs_call">APRS_CALL</a>  fields because their location is to within a few square feet of actual.
-        </p><p>
-        W3W is a What 3 Words (https://what3words.com) API implementation allowing location logging to within ten square feet.  APRS_CALL uses the FindU.com APRS database as source, accuracy is dependent on the settings within the stations radio beacon information. But generally comparable to W3W.
-        </p><p>
-        Why is all this important? During a weekly social net, location is not of prime concern. But on a deployment for storm spotting, or neighborhood damage assessment, search and rescue missions, earth quakes, fires, floods, and many others they can literally mean life and death. <b style="color:red">The NCS and logger must keep as detailed as possible location information for every operator they have in the field.</b> Not doing so is irresponsibly not doing the job and acting in an unprofessional careless manner for the welfare of your deployed people.
-        </p><p>
-        The best use of W3W looks like this:
-        </p><ol>       
-        <li>The station operator uses the smart phone What 3 Words app to find their location and calls it into the NCS/logger. The W3W app is free for all smart phones, requires no internet or connectivity to work.
-        </li><li>The NCS/logger checks this location using the w3w web site to be sure the three words were received correctly.
-        </li><li>If correct, the three words are entered into the W3W field in NCM.
-        </ol><p>        
-        In this way the most recent location will be available for reporting and mapping.
-        </p><p>
-        The best use of APRS_CALL looks like this:
-        </p>
-        <ol>
-        <li>Station WA0TJT manually beacons his location via APRS, and notifies the NCS/logger he/she has done so.
-        </li><li>The NCS/logger right clicks on the stations call-ssid information in the APRS_CALL field.  Be sure to have the station’s ssid entered into NCM.
-        </ol><p>
-        In both circumstance the information is propagated to the other location fields of NCM. They are interchangeable; you can use either method to report location information and it’s not dependent on how it was done the previous time.
-        </p><p>
-        <b>Time Based Tracking</b>
-        </p><p>
-        Another feature of both methods is the ability to lay down breadcrumbs of each location visited. I call the individual breadcrumbs ‘objects’ they can be displayed on a map showing the changes to location of the station over time.  Be sure to read the help file that discusses each of these for usage.
-        </p><p>
-            <b>How Location Change Mapping Works</b>
-        </p><p>
-        The mapping functionality of NCM has two sources. The first is the NetLog table which has the most current information at all times. The location showing at any given time is the most current location entered. The second is the TimeLog table which keeps track of all the details collected by NCM. When an ‘object’ is created by either the W3W or APRS_CALL method it’s also written to the TimeLog table . This gives the map the ability to show the track of the station over time starting at the first reported location all the way to the last reported location. 
-		</p>		
-</div>
-
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
-	 <!-- End homepage -->
 <hr>
 
-<p style="page-break-before: always"></p>
-<div class="facility">
-<a id="facility"></a>
-<h3>Facility Nets (Needs some beta testing) </h3>
-
-<p style="color:red;">A FACILITY type net will automatically be created as a pre-built.<br>
-    This type of net requires pre-building of the net, and its continued use for furture nets.<br> It also requires that a group profile be created at https://net-control.us/BuildNewGroup.php, be sure to check 'FACILITY' as the kind of group.<br> A comma delimited file of the facilities and locations (latitude & longitude) of each. An example would look like this;</p><p style="color:blue;">
-    groupcall, facility, latitude, longitude<br>
-    KCHEART, Veterans Affairs Medical Center, 39.063357, -94.526271<br>
-    KCHEART, Checkins with no assignment, ,
-    </p><p style="color:red;"> Check with the me if you have additional questions.</p>
-<p>Suppose your organization is tasked with supporting a series of hospitals all over your coverage area. Additionally each hospital is expected to have an appropriate number of volunteers, some need only one some might need six. And maybe the established procedures for your groups monthly net is to log using the hospital name, with only one station responding and maybe giving all call signs for stations in attendance. Including if they are on-site or not.
-</p><p>
-This would be a difficult net for NCM to handle in its basic mode. Hospital names are too long to be a useful tactical call, some volunteers might be at home while others are at the hospital. The at hospital group would need to report the latitude and longitude using W3W or APRS to indicate the location of each station. Keeping in mind that one of NCM’s primary tasks is to have a correct and current location for every station. This alone would make logging a very difficult task.
-</p><p>
-But what if the NCS called net via hospital name, and each station logged is already showing (pre-built) grouped with that hospital? Stations actually at the hospital would only require the logger to check one option and it would show the assignment. Nothing would have to be done to the station at home. Mapping such a net, the later ICS-214 or ICS-309 would show at all times the actual location of the stations checked in.
-</p><p>
-Setting up such a net as a pre-built net would even make logging that much easier because nothing more than a right click on the 'out' turns it to a 'in'. Another column would indicate if the ham is at the station or hospital.<br>
-    Maybe even a right click on the on-site field would do both duties at once. Set the 'Out' to 'In' and change the on-site to 'Yes'.
-</p><p>
-To accomplish all this two columns have been added to the net display. The 'Facility' column to show what hospital and a column called 'On Site' to indicate they are at the hospital. Sorting would keep all the hospital volunteers together on the log organized alphabetically by hospital name. Instead of the NCM default of time checked in.
-</p><p>
-    This is comming soon, send me your comments and ideas.
-</p>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-<hr>
-</div> <!-- End facility -->
-
-<p style="page-break-before: always"></p>
 <div class="homepage">
 	<a id="homepage"></a>
-	<h3 style='margin-bottom: 0;'>Home Page</h3>
-	<h4 style='font-size:10pt; margin-top: 0;'>https://net-control.us</h4>
+	<h3>Home Page</h3>
 	
 <!--	<div class="flexcontainer"> -->
 		<div class="boxTZ" >
@@ -519,39 +373,42 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	<div class="TZdescription" style="padding-left: 20px;">
 	 <p>
 		This is the first page you see when opening Net Control Manager.
-		<br>
+		<br><br>
 		Notice the green T button next to 'Preamble', click it to toggle help bubbles.
-		<br>The version number here is 6.05.03 representing the sixth year of NCM the 5th month, modified on the 03rd.
+		<br><br>The version number here is 6.05.03 representing the sixth year of NCM the 5th month, modified on the 03rd.
 	</p>
-	<p>A net that is already open can be displayed in two ways. The first is to use the dropdown to select your open net, it will be hilight in green or blue depending on what type it is. You can also open any net from the past if you know its net number by clicking on the blue 'Browse a Net by Number' button. To find a net number use 'Reports ==> List/Find all Nets'.
-	</p>
-	</div>
-	</div> <!-- End homepage -->
 
-<p style="page-break-before: always"></p>
-<div class="homepage">
-	<a id="homepage2"></a>
-	<h3 style='margin-bottom: 0;'>A Populated Home Page</h3>
-	<h4 style='font-size:10pt; margin-top: 0;'>https://net-control.us</h4>
+	</div>
+<!--	</div>. --> 
 	
+	<br>
+	<a class="gotoindex" href="#index">Back to the Index</a><br><br>
+	</div> <!-- End homepage -->
+<hr>
+
+<div class="homepage">
+	<a id="homepage"></a>
+	<h3>A Populated Home Page</h3>
+	
+<!--	<div class="flexcontainer"> -->
 		<div class="boxTZ" >
 			<img  src="screenshots/AnOpenNetExample.png" alt="existing" width="800" />
 
 		</div>
 	<div style="padding-left: 20px;">
-	    <p>
+	 <p>
 		A closed net open for viewing. Notice the extra columns like; tactical, credentials and tt#. Several more are available as well, by using the orange 'Show/Hide Columns' button.
-	    </p><p>Notice the "Refresh", "Timed" and "'NetClosed" buttons, the MODES ==> ... Closed under the button bar and that all Time Out values are present.
-		</p><p>The Local timezone is selected and the upper right corner is populated with net information. 
-		</p><p>All groups are encouraged to create a group profile to help with setup for new nets and to populate the upper right corner. Select hamburger menu ==> Select One ==> Create a Group Profile.
-	    </p>
+		<br><br>Notice the "Refresh", "Timed" and "'NetClosed" buttons, the MODES ==> ... Closed under the button bar and that all Time Out values are present.
+		<br><br>The Local timezone is selected and the upper right corner is populated with net information. Create your own by selecting the 'Create a Group Profile' under the hamburger menu next to 'Help'.
+	</p>
+
 	</div>
+<!--	</div> -->
 	
 	<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
+	<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 	</div> <!-- End homepage -->
 <hr>
-<p style="page-break-before: always"></p>
 <div class="openanet">
     <a id="open"></a>
     <h3>HOW TO OPEN AN EXISTING NET</h3>
@@ -574,7 +431,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 </div>
 </div>
 <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End openanet -->
 
 <hr>
@@ -582,8 +439,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <div class="startanet">
 	
 <a id="start"></a>
-<h3 style='margin-bottom: 0;'>START A NET</h3>
-<h4 style='font-size:10pt; margin-top: 0;'>index.php</h4>
+<h3>START A NET</h3>
 
 <div class="flexcontainer">
 	<div style="width: 40%;">
@@ -620,54 +476,21 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	   <p>At this point a new net page should be displayed, listing you as having opened it.</p>
 	</div>
 </div>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End startanet -->
-
-<hr>
-
-<div class="leftCorner">
-<a id="leftCorner"></a>
-<h3 style='margin-bottom: 0;'>Upper Left Corner</h3>
-<h4 style='font-size:10pt; margin-top: 0;'>index.php</h4>
-
-    <div class="flexcontainer">
-    	<div style="width: 40%;">	
-        	<b style="color:blue;">Full Size:	</b>
-        	<img src="screenshots/fullsizeUpperLeftCorner.png" alt="fullSizeUpperLeftCorner-default" width="400">
-        	<br><br><br><br><br><br>
-        	<b style="color:blue;">Half Size:</b><br>
-    	    <img src="screenshots/halfsizeUpperLeftCorner.png" alt="halfSizeupperLeftCorner" width="200" style="vertical-align:middle">
-    	</div>
-    		  <div style="padding-left: 20px;"> 
-    			  <p>This information panel in the upper corner is title, version number, time choice and the <b style='color:red;'>New</b> weather information. 
-        			  <br><br>
-        			  By clicking the NWS logo you may select a more local weather display by providing your callsign in the requested dialog box.
-        			  <br><br>
-        			  All times are stored as universal time (UTC or GMT). You are able to select the local time zone for display purposes only.
-    			  </p> 
-    			  <p><br><br>The smaller corner will only appear when the monitor in use is too small for the larger display. For example on a iPad, iPhone, smart phone or just a smaller screen. See the section on <a href="#Responsive">Responsive Design</a> for more information about this transformation. 
-    			  <br> <br>
-    			  Weather information will still be captured in the Time Line log.
-    			  </p>
-    		  </div> <!-- end style -->
-    </div> <!-- end class flexcontainer -->
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
-</div> <!-- end class leftCorner -->
 
 <hr>
 
 <div class="rightCorner">
 <a id="rightCorner"></a>
-<h3 style='margin-bottom: 0;'>Upper Right Corner</h3>
-<h4 style='font-size:10pt; margin-top: 0;'>index.php</h4>
+<h3>Upper Right Corner</h3>
 
     <div class="flexcontainer">
     	<div style="width: 40%;">	
         	<b style="color:blue;">Default:	</b><br>
-        	<img src="screenshots/upperRightCorner-default.png" alt="upperRightCorner-default" width="400">
-        	<br><br><br><br>
+        	<img src="screenshots/upperRightCorner-default.png" alt="upperRightCorner-default" width="90%">
+        	<br><br>
         	<b style="color:blue;">Open Net:</b><br>
     	    <img src="screenshots/upper-right-corner.png" alt="upperRightCorner" width="400" style="vertical-align:middle">
     	</div>
@@ -679,18 +502,14 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     			  <p>See the section on <a href="#reports"> reports</a> below for information about the reports menu.</p>
     		  </div> <!-- end style -->
     </div> <!-- end class flexcontainer -->
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- end class rightCorner -->
 
 <hr>
 
 <div class="checkins">
 <a id="checkins"></a>
-<h3 style='margin-bottom: 0;'>ENTERING CHECK-INs  <button style="left:50px;" class="tipsbutton" title="Tips Button"> Tips!</button><br>
+<h3>ENTERING CHECK-INs  <button style="left:50px;" class="tipsbutton" title="Tips Button"> Tips!</button><br>
     (Button Bar) </h3>
-
-<h4 style='font-size:10pt; margin-top: 0;'>index.php</h4>
 
 
 <p class=" HelpBubbles initiallyHidden" style="">Short Cut Entry for Traffic</p>
@@ -733,8 +552,6 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 		 
 	<p>When a new station checks into one of the nets for the first time an entry will also be made to the TimeLine Log.
 	</p>
-<br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End checkins -->
 
 <hr>
@@ -782,7 +599,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 
 	 <br><br>
 
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 
 </div> <!-- End misc -->
 
@@ -813,9 +630,9 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 		<li style="color:#156d5f;">BRB, <b>army green - Be Right Back... Any station that is temporarily leaving the net.</b> 
 		<li style="color:grey;">In-Out, <b>Grey - Any station that wishes to only check in then immediately check out again. His Time On Duty will be set to one minute.</b>
         </li>
-        <li>Enroute, <b>No color - Station is headed to a location/assignment.</b>
+        <li style="color:;">Enroute, <b>No color - Station is headed to a location/assignment.</b>
         </li>
-        <li>Assigned, <b>No color - Station is given assignment but not yet enroute.</b>
+        <li style="color:;">Assigned, <b>No color - Station is given assignment but not yet enroute.</b>
         </li>
         
         </ul>
@@ -824,15 +641,10 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 		<li style="color:red;"><b>RED</b> - Any station with pending traffic is shown in red, after the traffic is passed change the dropdown to 'Sent' to indicate the traffic has been passed. The red color highlighting will go away. Be sure to select from the dropdown the appropriate category of traffic (Priority to Routine, &amp; Question).
 		
 	</ul>
-	<p style="font-weight:bold; font-size:14pt">Callsign Cell Colors Based on CHANGES</p>
-		<ul> 
-		<li style="color:orange;"><b>ORANGE</b> - An orange background on the callsign cell is an indication of a location change. The change may have been due to any one of the many ways to change location based on the latitude and longitude.		
-	</ul>
-	
 	<p style="font-weight:bold; font-size:14pt">Row Colors Based on entry ERRORS are shown in Red</p>
 		
 		 <br>
-	<a class="gotoindex" href="#index">Back to the Index</a>
+	<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 	
 </div> <!-- End displays -->
 
@@ -844,8 +656,9 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <h4>All columns can be sorted by clicking on the column header</h4>
 
 <div Class="role"> 
-    <a id="role"></a>
 <h3>ROLE</h3>
+<h4>Role has the following dropdown options</h4>
+
     <div class= "redimportant" style=" padding-right: 40px; padding-bottom: 20px">
         Editable: Yes<br>
         Splitable Field: No<br>
@@ -855,13 +668,12 @@ To accomplish all this two columns have been added to the net display. The 'Faci
         DB Variable: netcontrol<br>
     </div> <!-- End redimportant -->
     
-<div class="flexcontainer" style="column-gap:10px;">
+<div class="flexcontainer">
     <div>
 		<img src="screenshots/Role.png" alt="role"   />
 	</div> <!-- End screenshot -->
 	 
     <ul style="list-style-type:none">
-    <li style="font-weight: bold; color: green; text-decoration: underline; ">Role has the following dropdown options</li>
 	<li><b>blank</b> - This is the default indicating no specific role for this station</li>
    	<li><b>PRM</b> - This designates the primary net control operator</li>
    	<li><b>2nd</b> - The backup net control operator</li>
@@ -870,20 +682,17 @@ To accomplish all this two columns have been added to the net display. The 'Faci
    	<li><b>Log</b> - The person keeping the Log if not the PRM </li>
    	<li><b>EM</b>  - Emergency Manager</li>
    	<li><b>PIO</b> - Public Information Officer</li>
-   	<li><b>RELAY</b> - Relay station during the net</li>
-   	<li><b>CMD, SEC, TL</b> - Use as you think wish</li>
     </ul>
    	
 </div> <!-- End flexcontainer -->
 	
     <br>
-    <a class="gotoindex" href="#index">Back to the Index</a>
+    <a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End Roll -->
 
 <hr>
-   <p style="page-break-before: always"></p>
+   
 <div class="mode">
-    <a id="mode"></a>
 <h3>MODE</h3>
 <h4>The Mode dropdown indicates the type of operation the station has logged in with</h4>
 		
@@ -896,21 +705,19 @@ To accomplish all this two columns have been added to the net display. The 'Faci
         DB Variable: Mode<br>
     </div>  <!-- End redimoortant -->
     
-<div class="flexcontainer" style="column-gap:10px;">    <div>
+<div class="flexcontainer">
+    <div>
 	    <img src="screenshots/Mode.png" alt="mode"   />
     </div>  <!-- End screenshot -->
 
 	  <ul style="list-style-type:none">
 		<li><b>blank</b> - This is the default</li>
-		<li><b>Voice</b>  - Voice</li>
-		<li><b>CW</b>  - Morse Code</li>
 		<li><b>Mob</b>  - Mobile</li>
 		<li><b>HT</b>  - Hand Held device</li>
 	   	<li><b>Dig</b> - This person is using or is the digital station</li>
 	   	<li><b>D*</b>  - D-Star station</li>
 	   	<li><b>Echo</b>  - EchoLink station</li>
 	   	<li><b>FSQ</b>  - FSQ or FSQCall Operation</li>
-	   	<li><b>Winlink</b>  - Winlink or PAT</li>
 	   	<li><b>DMR</b>  - Digital Voice</li>
 	   	<li><b>V&amp;D</b>  - Checked in with both Voice &amp; Digital. Somewhat specialized for nets doing both voice and digital operations, such as a digital training net.</li>
 	  </ul>
@@ -919,7 +726,6 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <hr>
 	
 <div class="status">
-    <a id="status"></a>
 <h3>STATUS</h3>
 <h4>Status is an indicator of the stations immediate availability</h4>
 
@@ -950,15 +756,14 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	   	<li> <b>Leave?</b> - Want to leave the net? Ask permission by selecting this value.</li>
 	   </ul>
 	</div>
-</div><!-- End of flexcontainer div -->
+</div>
 
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End status -->
 
 <hr>
 
 <div class="traffic" style="page-break-before: always">
-    <a id="traffic"></a>
 <h3>TRAFFIC</h3>
 <h4>Traffic Indicates the station has traffic, and what kind</h4>
 
@@ -968,123 +773,48 @@ To accomplish all this two columns have been added to the net display. The 'Faci
             Splitable Field: No<br>
             Required Column: Yes<br>
             Edit Type: Dropdown & Short Cut from the button bar<br>
-            Right Clickable: YES, See below for details.<br>
+            Right Clickable: No<br>
             DB Variable: traffic<br>
         </div>
         <div>
 		    <img src="screenshots/Traffic.png" alt="traffic"   />
         </div>
-   </div> <!-- End of flexcontainer div -->
+   </div>
             
+
 	 <div class="">		
-    	 <p>Use Right Click as a short cut to change the value after an option has been completed. <br>
-        	 Use the column dropdown to make any other change needed.
-    	 </p>
-    	 <table class="traffictable">
-        	 <tr>
-            	 <th>Possible Values</th>
-            	 <th>The Value After A Right Click</th>
-        	 </tr>
-        	 <tr>
-        	     <td>Traffic</td>   <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Routine</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Priority</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Welfare</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Emergency</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>STANDBY</td>    <td>Resolved</td>
-             </tr>
-             <tr>
-                <td>Question</td>    <td>Resolved</td>
-             </tr>
-             <tr>
-                <td>Announcement</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Bulletin</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Comment</td>    <td>Sent</td>
-             </tr>
-             <tr>
-                <td>Resolved</td>    <td>STANDBY</td>
-             </tr>
-             <tr>
-                <td>Sent</td>    <td>STANDBY</td>
-             </tr>
-             <tr>
-                <td>Blank</td>    <td>STANDBY</td>
-             </tr>
-         </table>
+		  <ul style="list-style-type:none; width:20%; padding-right:15px;">
+			<li><b>blank the default for no traffic</b></li>
+			<li><b>Routine</b></li>
+			<li><b>Welfare</b></li>
+			<li><b>Priority</b></li>
+		
+			<li><b style="color:red">Emergency</b></li>
+				
+			<li><b>Question</b></li>
+			<li><b>Announcement</b></li>
+			<li><b>Bulletin</b></li>
+			<li><b>Comment</b></li>
+			<li><b>Pending</b> - Waiting on something from Net Control</li>
+			<li><b>Resolved</b> - Waiting is over</li>
+			<li><b>Sent</b></li>
+		  </ul>	
+ <!--   <div style="width: 75%;">  -->
 		 <p>
 			 Use Routine if in doubt. Blank indicates no traffic, change choice to 'Sent' after traffic has been sent.</p>
-        
         <p>As a short cut to entering check-ins with traffic a new smaller input field (box) has been added to the button banner, after the name field.<br><br>This does require an extra tab after an entry without traffic. TAB TAB TAB to enter a call.</p>
     	    <p> This little box helps the logger keep his/her hands on the keyboard while taking check-ins. Your options for entry are T,R,W,P,E,Q,A or C, they represent the action values of the Traffic column. R --> Routine, W --> Welfare, P --> Priority, E --> Emergency, Q --> Question, A --> Announcement, C --> Comment. <br> By entering one of these in that little box the Traffic column for that station will automatically be updated to reflect the value. Be sure to use the dropdown in Traffic to indicate 'Sent' after the traffic is passed.
     	    </p>
+<!--</div>-->
+	
 </div>
-	</div>
 <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
- <!-- End traffic -->
- 
- <hr>
-
-<div class="facilitycol" style="page-break-before: always"></div>
-    <a id="facilitycol"></a>
-<h3>Facility</h3>
-<div class="redimportant">
-    Editable: Yes<br>
-    Splitable Field: No<br>
-    Required Column: No<br>
-    Edit Type: click <br>
-    Right Clickable: Yes, Right Click on Header only to hide the column<br>
-    Right Click on the onsite header to show the Facility column.<br>
-    DB Variable: facility<br>
-    
-</div>
-<p>The Facility column stores the name of the facilities that will cause an auto sort by there name.<br>
-    <a href="#facility">See: All About FACILITY Nets</a>
-	<br>
-	<br>
-</p>
- <!-- End Facility -->
- 
-  <hr>
-
-<div class="onsitecol" style="page-break-before: always">
-    <a id="onsitecol"></a>
-<h3>On Site</h3>
-<div class="redimportant">
-    Editable: Yes<br>
-    Splitable Field: No<br>
-    Required Column: No<br>
-    Edit Type: click <br>
-    Right Clickable: Yes, Right Click on Header only to hide show the Facility column.<br>
-    DB Variable: onsite<br>
-    
-</div>
-<p>The OnSite field indicats with 'Yes' or 'No' that the station is present at the facility in the previous column.
-	<br>
-	<a href="#facility">See: All About FACILITY Nets</a>
-</p>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
- <!-- End On Site -->
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
+</div> <!-- End traffic -->
 
 <hr>
 
 <div class="tt" style="page-break-before: always">
-    <a id="tt"></a>
 <h3>tt</h3>
 <div class="redimportant">
     Editable: Yes<br>
@@ -1092,21 +822,17 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Required Column: No<br>
     Edit Type: click <br>
     Right Clickable: No<br>
-    DB Variable: tt<br>
-    
     
 </div>
-<p># This is the <b style="color:#aa7941;">APRStt</b> number assigned to this station on this net. Only 0-99 are APRStt usable.
+<p># This is the <b style="color:#aa7941;">APRStt</b> number assigned to this station on this net. Only 0-99 are APRStt usable. More details on use coming...
 	<br>
-	See: <a href="#APRStt">What is <b style="color:#aa7941;">APRStt</b>?</a>
 	<br>
 </p>
- <!-- End tt -->
+</div> <!-- End tt -->
 
 <hr>
 
 <div class="band">
-    <a id="band"></a>
 <h3>Band</h3>
 <h4>Band this station has checked in from.</h4>
   
@@ -1116,7 +842,6 @@ To accomplish all this two columns have been added to the net display. The 'Faci
         Required Column: *No<br>&nbsp;&nbsp;&nbsp;&nbsp;* Except for 'Multiple Bands' and '80/40 Meters' frequency choices.<br>
         Edit Type: dropdown <br>
         Right Clickable: No<br>
-        DB Variable: band<br>
     </div>
     <div style="padding-bottom: 25px">	
 		<img src="screenshots/bands.png" alt="heardlist" height="300"   />
@@ -1125,13 +850,12 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 </div>
 
 <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-<!-- End band -->
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
+</div> <!-- End band -->
 
 <hr>
 
 <div class="callsign" style="page-break-before: always">
-    <a id="callsign"></a>
 <h3>Call Sign</h3>
 <h4>Call Sign Column Header Right Click</h4>
 
@@ -1142,8 +866,6 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Required Column: Yes<br>
     Edit Type: *N/A<br>&nbsp;&nbsp;&nbsp;&nbsp;* In pre-built/roll call nets, click to edit.<br>
     Right Clickable: Yes on header, and individual cells<br>
-    Double Clickabel: Yes, this is used for DX only callsigns. It looks up a fills default information (lat & lon etc.)<br>
-    DB Variable: callsign<br>
     
 </div>
 
@@ -1153,10 +875,10 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 		</div>
         <div>
 		<p>Right clicking on the column head 'Call Sign' creates a heard list of this net.<br>This same functionality is available by selecting the hamburger menu (right of Help in upper corner) and selecting 'Create a heard list'.<br>A variety of different formats is created. Copy/Paste the one you want.</p>
-		<p>The background of the callsign cell will turn <b style="background: #fbac23;">orange</b> colored if there has been a change to any of the location variables that also changes the latitude and longitude. This would be important during an emergency to know if a station is at home or in the field.
-		</p>
         </div>
 	</div>
+	
+</div> <!-- End flexcontainer -->
 
 <div class="flexcontainer">
 	<div style="width: 50%; padding-right: 20px">
@@ -1169,11 +891,11 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	</div>
 </div> <!-- End flexcontainer -->
 <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End callsign -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="FandLnames">
 <h3>First Name &amp; Last Name</h3>
 
@@ -1183,17 +905,15 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Required Column: First: Yes, Last: No<br>
     Edit Type: click <br>
     Right Clickable: No<br>
-    DB Variable: Fname Lname<br>
     
 </div>
 
-<p>First Name is the operator's first name. Last Name is a separate column. Both names are editable, by doing this they are updated on screen and stored in the stations table.</p>
+<p>First Name is the operator's first name. Last Name is a separate column.</p>
 </div> <!-- End FandLnames -->
 
 <hr>
 
 <div class="tactical">
-    <a id="tactical"></a>
 <h3>TACTICAL</h3>
 <div class="redimportant">
     Editable: Yes<br>
@@ -1206,7 +926,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 
 <img style="float:right; padding-left: 20px; border-radius: 10px;" src="screenshots/tactical.png" alt="tactical" width="430" height="274" />
 	
-	    <div style="padding-right: 20px;">
+	    <dev style="padding-right: 20px;">
 		<p>	The use of Tactical Calls at Public Service Events is becoming more and more common place and it is legal. The use of tactical calls can and does increase the efficiency and speed in identifying a specific function or person. They also eliminate confusion when working with other agencies that have no idea what amateur radio call signs are or mean. Using “ Rest Stop 1 from Net Control” is a lot easier and to the point than “WA0TJT this is KC0BS.” The assignment of a tactical call should, if possible, relate to the amateurs function at the event. Tactical calls such as “Sag 1, Aid Station 4, Police 2, First Aid, Logistics” and so on provide a verbal “picture” of the function.			
 		</p><p>
 			Sometimes a tactical call by location is not the best solution, 'West end of parking lot B' for example. In this case its easier to just use the call sign default suffix such as 'TJT'. But for the <b style="color:blue;">NCS</b> to remember where 'TJT' is located becomes more difficult. Putting that information in the comments line is problematic because you may need to use that field for a report from 'TJT. Which would then blank out the tactical postion information.
@@ -1214,16 +934,15 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 			
 			For the best of both worlds <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> allows for multiple lines within the Tactical field. Any thing entered after the initial tactical call 'TJT' followed by <b style="color:red;">two spaces</b> becomes a second line in the Tactical field. Now you can have a tactical of 'TJT' and below it in the same box it might say 'West end of parking lot B'. <b>You might find it advantageous to put the job title first, for example 'SAG 1', then the 'TJT'.</b> Just don't forget the <b style="color:red;">two spaces</b>.
 		</p>	
-	  
+	    </dev>
 
 <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End tactical -->
 
 <hr>
-	<p style="page-break-before: always"></p>
+	
 <div class="phone">
-    <a id="phone"></a>
 <h3>Phone</h3>
 <div class="redimportant">
     Editable: Yes<br>
@@ -1233,13 +952,12 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Right Clickable: No<br>
     DB Variable: phone<br>
 </div>
-<p>Phone number including country code (optional) and the area code, any readable format is acceptable. This is an editable field and will be stored in the stations table for later use.</p>
+<p>Phone number including country code (optional) and the area code, any readable format is acceptable.</p>
 </div> <!-- End phone -->
 
 <hr>
 
 <div class="email">
-    <a id="email2"></a>
 <h3>eMail</h3>
 <div class="redimportant">
     Editable: Yes<br>
@@ -1249,14 +967,14 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Right Clickable: No<br>
     DB Variable: email<br>
 </div>
-<p>eMail address of this station. This is an editable field and will be stored in the stations table for later use.</p>
+<p>eMail address of this station.</p>
 
 <a class="gotoindex" href="#index">Back to the Index</a>
 
 </div> <!-- End email -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="grid">
 <a id="grid"></a>
 <h3>GRID</h3>
@@ -1294,17 +1012,12 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 </div>
 
 	</div>
-	<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End grid -->
 
 <hr>
-<p style="page-break-before: always"></p>
-<div class="latitude">
-    <a id="latitude"></a>
-<h3>Latitude</h3>
-<div class="flexcontainer" style="column-gap:50px;">
 
+<div class="latitude">
+<h3>Latitude</h3>
 <div class="redimportant">
     Editable: *Yes<br>&nbsp;&nbsp;&nbsp;&nbsp;* Also changes the GRID.<br>
     Splitable Field: No<br>
@@ -1313,22 +1026,13 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Right Clickable: No<br>
     DB Variable: latitude<br>
 </div>
-<div>
-    <img src="screenshots/latitude.png" alt="latitude" style="width: 75%; margin-left: 100px;"   />
-</div>
-</div>
-<p>Latitude of this station. <br>The angular distance of a place north or south of the earth's equator, or of a celestial object north or south of the celestial equator, usually expressed in degrees and minutes.</p>
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<p>Latitude of this station.</p>
 </div> <!-- End latitude -->
 
 <hr>
 
 <div class="longitude">
-    <a id="longitude"></a>
 <h3>Longitude</h3>
-<div class="flexcontainer" style="column-gap:50px;">
 <div class="redimportant">
     Editable: *Yes<br>&nbsp;&nbsp;&nbsp;&nbsp;* Also changes the GRID.<br>
     Splitable Field: No<br>
@@ -1337,19 +1041,12 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Right Clickable: No<br>
     DB Variable: longitude<br>
 </div>
-<div>
-    <img src="screenshots/longitude.png" alt="longitude"   style="width: 75%; margin-left: 100px;" />
-</div>
-</div>
-<p>Longitude of this station.<br>The angular distance of a place east or west of the meridian at Greenwich, England, or west of the standard meridian of a celestial object, usually expressed in degrees and minutes.</p>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<p>Longitude of this station.</p>
 </div> <!-- End longitude -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="timeInOut">
-    <a id="timein"></a>
 <h3>Time In, Time Out</h3>
 <div class="redimportant">
     Editable: No<br>
@@ -1364,9 +1061,6 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <p><b>Time In -</b> The time the station was added to the data base and is not editable. </p>
 
 <p><b>Time Out -</b> The time the station was shown 'OUT' of the net. This would also reflect any In/Out or BRB out times as well. This value is editable but you'll have to ask me for the how.</p>
-</div><p>Both values can be show in local time by selecting that option in the upper left corner of NCM.
-    <br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End timeInOut -->
 
 <hr>
@@ -1379,21 +1073,18 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     Splitable Field: Yes with two spaces or use the <b>&lt;br&gt;</b> HTML tag<br>
     Required Column: Yes<br>
     Edit Type: click <br>
-    Right Clickable: Yes, Brings up the 'Individual Activity Log (ICS-214A)' Report.<br>
+    Right Clickable: Yes<br>
     DB Variable: comments<br>
 </div>
 <p>Time Line is used to enter any comments or reports made by this station. They are then populated into the TimeLine Log table. Each comment is individually entered into the timeline log for reporting in the ICS reports. Each click in this field clears the previous entry, but it has been saved. Changes to several of the column values are also logged here.
 </p>
 <p>Right clicking in one of the cells will produce a chronological listing of all the entries for this station.
 </p>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End TimeLine Log -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="tod">
-    <a id="timeonduty"></a>
 <h3>Time On Duty</h3>
 <div class="redimportant">
     Editable: No<br>
@@ -1404,14 +1095,11 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     DB Variable: timeonduty<br>
 </div>
 <p>Total volunteer hours, and minutes on this net.</p>
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End tod -->
 
 <hr>
 
 <div class="creds">
-    <a id="credentials"></a>
 <h3>CREDS</h3>
 <div class="redimportant">
     Editable: Yes<br>
@@ -1424,24 +1112,19 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <p>CREDS or Credentials - Shows this station operators credentials (if known),i.e. <b style="color:red;">ARES</b>, <b style="color:darkblue;">RACES</b>, etc.
 	</p><p>
 			For the best of both worlds <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> now allows for multiple lines within the Credentials field. Any thing entered after the initial credential i.e. 'KCHEART' followed by <b style="color:red;">two spaces</b> becomes a second line in the Creds field. Now you can have a credential of 'KCHEART' and below it in the same box it might say 'St. Lukes Northland'. More lines are possible if needed, simple use <b style="color:red;">two spaces</b> for the next line.
-	</p><p>
-			This is an editable field and will be stored in the stations table for later use.
 		</p>
-		<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div><!-- End creds -->
 
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="CSD">
-    <a id="county"></a><a id="state"></a><a id="dist"></a>
 <h3>County, State, Dist.</h3>
 <div class="redimportant">
     Editable: Yes<br>
     Splitable Field: No<br>
     Required Column: No<br>
     Edit Type: Click <br>
-    Right Clickable: County Yes, State No, District Yes --> looks up and fills the missing district.<br>
+    Right Clickable: County Yes, State No, District No<br>
     DB Variable - County: county<br>
     DB Variable - State: state<br>
     DB Variable - Dist: district<br>
@@ -1454,7 +1137,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 		<h4>Right Click County</h4>
 		<p>Right clicking on the county name will display a Google map of that county.</p>
 	</div>
-	<div style="padding-bottom: 25px; margin-left: 30px;">
+	<div style="padding-bottom: 25px;">
 		<img src="screenshots/county.png" alt="countydisplay" width="267" />		
 	</div>
 </div>
@@ -1468,9 +1151,9 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 
 
 <div class="what3words" style="page-break-before: always;">
-<a id="what3words"></a><a id="w3w"></a>
+<a id="what3words"></a>
 <h3><b>///</b> W3W<br>
- What 3 Words for determining location</h3>
+ What 3 Words for locations</h3>
 <div class="redimportant">
     Editable: Yes<br>
     Splitable Field: No<br>
@@ -1491,97 +1174,17 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     The W3W field also allows for an additonal comment to be added after the three words. For example you might enter 'spray.shudder.opting Telephone pole in yard' (no quotes). The field in the net log after a data update would then reflect;<p style="color:blue">spray.shudder.optiong <br>N Ames Ave & NW 57 Ct'</p> with the nearest crossroads. But in the Time Line you would see this; <p style="color:blue;">LOCΔ:W3W:OBJ: spray.shudder.opting -> Cross Roads: N Ames Ave & NW 57 Ct (39.198159,-94.601576) Telephone pole in yard</p>
     <p>
     Basically, it treats the entry similar to an APRS object, multiples entries for the same reporting station can then be reported as a neighborhood or a much more local area.
-    
-</p><p><b style="color:red;">NOTE to Loggers:</b>
-    
-</p><p>I highly recommend that before you enter a what 3 words into NCM you first check it at https://what3words.com to be sure you heard it correctly. Only after validation add it to NCM, you may find this will save you some time.
 </p>
 
              <p>See <a href="https://what3words.com" target="_blank">https://what3words.com</a> for more general information about What 3 Words.</p>
 </div> <!-- End what3words -->
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-
-
-</div> <!-- End CSD County, State, District -->
-
-<hr>
-
-<div class="team">
-    <a id="team"></a>
-<h3>Team</h3>
-<div class="redimportant">
-    Editable: Yes<br>
-    Splitable Field: No<br>
-    Required Column: No<br>
-    Edit Type: Click <br>
-    Right Click: No<br>
-    DB Variable - team<br>
-</div>
-<p>Team grouping for events.
-	<br><br>
-</p>
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-</div>
-
-<hr>
-
-
-<div class="APRS_CALL" style="page-break-before: always;">
-<a id="aprs_call"></a><a id="aprscall"></a>
-<h3><b>APRS_CALL</b><br>
- APRS Beacon for determining location</h3>
-<div class="redimportant">
-    Editable: Yes<br>
-    Splitable Field: No<br>
-    Required Column: No<br>
-    Edit Type: Click <br>
-    Right Clickable: Yes<br>
-    DB Variable: APRS_CALL<br>
-</div>
-<p>
-The best use of APRS_CALL looks like this:
-</p><p>
-1. Station WA0TJT manually beacons his location via APRS, and notifies the NCS/logger he/she has done so.
-2. The NCS/logger right clicks on the stations call-ssid information in the APRS_CALL field.  Be sure to have the station’s ssid entered into NCM.
-</p><p>
-The information is propagated to the other location fields of NCM. They are interchangeable; you can use this method to report location information and it’s not dependent on how it was done the previous time using W3W.
-</p>
-</div> <!-- End what3words -->
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-
-<hr>
-
-<div class="country">
-    <a id="country"></a>
-<h3>Country</h3>
-<div class="redimportant">
-    Editable: Yes<br>
-    Splitable Field: No<br>
-    Required Column: No<br>
-    Edit Type: Click <br>
-    Right Click: No<br>
-    DB Variable - country<br>
-</div>
-<p>Full country name. This is an optional column, a blank will usually mean its U.S.A. but it could also mean that the country information has not been entered. See <a href="#callsign">Callsign</a> for more information about using the double click to enter this. But it can also be entered/edited in the usual way.
-	<br><br>
-</p>
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
-</div>
 
 <hr>
 
 <div class="additional" style="page-break-before: always">
 <a id="additionalColumns"></a>
 
-<h3>Display Optional TABLE COLUMNS</h3>
+<h3>Optional TABLE COLUMNS Available for display</h3>
 
 <div class="flexcontainer">
 	<div style="width: 80%;">
@@ -1598,7 +1201,6 @@ The information is propagated to the other location fields of NCM. They are inte
 <a class="gotoindex" href="#index">Back to the Index</a>
 
 </div> <!-- End additional -->
-
 
 <hr>  
 
@@ -1645,7 +1247,7 @@ The information is propagated to the other location fields of NCM. They are inte
 
 <br><br>
 
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 
 </div> <!-- End reports -->
 
@@ -1674,12 +1276,6 @@ The information is propagated to the other location fields of NCM. They are inte
 	 <br>Another more common variation of this sub menu is: <img style=" border-radius: 10px; vertical-align: middle;" alt="submenu" src="screenshots/submenu.png">
 </p>
 
-
-</div>
-
-<a class="gotoindex" href="#index">Back to the Index</a>
-
-
 <hr>
 
 <div class="TimeLineLog">
@@ -1692,13 +1288,7 @@ The information is propagated to the other location fields of NCM. They are inte
 </p><p>The Timeline Log is also updated anytime a comment or report is added to the 'Time Line / Comments' field on the primary net control page. This makes it very simple to record incoming information from a specific station.
 </p><p>Additionally the TimeLine Log reports any change of location of the subject station. The 'Report' field of the log might begin like this "LOCΔ:" this means 'Location Change (delta)' the next field after the colon would tell you where the change was made i.e. COM for comments, W3W for the What3Words column, LAT for latitude and LON for longitude, G for grid. 
 </p><p>Use Time Line Comments to indicate that Message #xx was sent. No need to put the entire message in, just reference its number. Now a record exists showing when the message arrived and when it was sent and what message it was. But if it is more appropriate for the situation, you can copy the entire message into the Comments field or the general comment field.</p><p>Time Log also records any information added to the General comment area of the net control panel. If the net goes on for a significant time (hours) it might be appropriate to copy the weather information to this location occasionaly.  </p>
-
-<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End TimeLine Log -->
-
-
-
 
 <hr>
 
@@ -1710,9 +1300,6 @@ The information is propagated to the other location fields of NCM. They are inte
 	Most <b style="color:red;">ARES/RACES</b> type groups require ICS 100 and ICS 700 certification for credentialing. Click <a href="https://training.fema.gov/emiweb/is/icsresource/assets/nims_training_program.pdf" target="_blank">National Incident Management System</a> for more information.</p>
 	<p>You might also want to check out the ARRL courses at <a href="http://www.arrl.org/online-courses" target="_blank">ARRL Courses &amp; Training</a>
 	</p>
-	
-	<br>
-<a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End fema -->
 
 <hr>
@@ -1727,14 +1314,12 @@ The information is propagated to the other location fields of NCM. They are inte
 <p>See <a href="http://www.aprs.org/aprstt.html" target="_blank">http://www.aprs.org/aprstt.html</a> for more information about APRStt.</p>
 <p>Another newer method would be to use What 3 Words covered <a href="#what3words">here in this document</a>.</p>
 
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 
 </div> <!-- End aprstt -->
 
-
-
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="prebuild">
 <a id="prebuild"></a>
 <h3>How to Pre-Build a Net for use at a future Event</h3>
@@ -1760,11 +1345,11 @@ The information is propagated to the other location fields of NCM. They are inte
 	<li><b>TOD begins when the 'Out' is changed to 'In', so don't forget this important part.</b></li>
 	<li>When the net is over, I recommend you delete any stations that did not check-in. But thats your call and not required.</li>
 </ol>
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End prebuild -->
     
 <hr>
-<p style="page-break-before: always"></p>
+
 <div class="mapping">
 <a id="Mapping"></a>
 <h3>Mapping Your Net </h3>
@@ -1772,12 +1357,11 @@ The information is propagated to the other location fields of NCM. They are inte
 <p>In the 'Reports' dropdown in the upper right corner you can select 'Map This Net'. When selected a map will appear with markers for each station logged into the net. In the lower right corner is a list of Points of Interest that will optionally display various public location that may be of interest to your net. The POIs must first be added to the system, to do this requires a CSV file which will be detailed below.
 </p><p>In addition to the POI's it is also possible to use any marker on the map as a center point to a series of expanding circles with bearing markers for distance and direction needs. To activate this right-click on any marker, two dialog boxes will open asking for the distance between circles and then how many. I suggest you accept the defaults, and adjust only if you don't like the results. See below for an example.
 </p>
-     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px;"  src="screenshots/map.png" alt="map" />
-     
+     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px;"  src="screenshots/map.png" alt="map" width="" height="" />
      
 <div class="flexcontainer">
 	<div style="">
-    	<p>Features Include:</p>
+    	<p>Features Include:
         	<ol>
             	<li>List of stations, clicking a marker will display the information box above it.</li>
             	<li>W3W: A click anywhere on the map will display the What3Words address for that location</li>
@@ -1788,23 +1372,23 @@ The information is propagated to the other location fields of NCM. They are inte
             	<li>The station markers can be hiddent by clicking off the Stations list. Control operator station markers are in Blue, the rest in green.</li>
             	<li>Points of Interest are available. See below for more details. Click to activate your choices. Detail information about the POI will appear when you click the POI marker.</li>
             	<li>Clicking anywhere within the circles will hide the circles but leave in place the bearing and distance markers.</li>
-            	<li>Simplex capabilities example on YouTube: <a href="https://www.youtube.com/watch?v=nsA9Hv6K_00" target="_blank">https://www.youtube.com/watch?v=nsA9Hv6K_00</a></li>
+            	<li>Simplex capabilities example on YouTube: <a href="https://www.youtube.com/watch?v=nsA9Hv6K_00" target="_blank">https://www.youtube.com/watch?v=nsA9Hv6K_00 </li>
             </ol>
-    	 <!-- End Features Include paragraph -->
+    	</p> <!-- End Features Include paragraph -->
 	</div> <!-- End  -->	
 </div>	<!-- End of flexcontainer -->
 </div> <!-- End mapping -->
 <br><br>
 <br><br>
 <br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <a class="gotoindex" href="#index">Back to the Index</a>  
+<br><br><br><br><br><br><br><br><br><br>
+    <a class="gotoindex" href="#index">Back to the Index</a><br><br>    
 	
 
     <hr>
-   <p style="page-break-before: always"></p> 
+    
 <div class="mapping">
-<a id="Mapping2"></a>
+<a id="Mapping"></a>
 <h3>Creating POIs For Mapping </h3>
 <p>To add points of interest create a CSV file with the headers in the below example. There is no limit to the number you can have but try and be reasonable, even a couple hundred would be OK if you have need.
     <br><br>
@@ -1815,8 +1399,8 @@ Sheriff,,"Northmoor Police Department", Platte, "2039 NW 49th Terrace", "Northmo
 <br><br>
     End Example...
 </p>
-
-    <dl class="mappois">
+<p>
+    <dl>
         <dt>Column 1 - class:</dt>
         <dd>Class: Your options are Hospital, Repeater, EOC, Sheriff, SkyWarn, Fire. If you need something else go ahead and use it but keep it to one word. 'Sheriff' should be used for any law enforcement agency. </dd>
         <dt>Column 2 - Type:</dt>
@@ -1847,11 +1431,9 @@ Sheriff,,"Northmoor Police Department", Platte, "2039 NW 49th Terrace", "Northmo
         <dd>notes: Anything you want them to say. Be sure to enclose in double quotes. May be left blank</dd>
 
     </dl>
+</p>
 
-
-
-    <a class="gotoindex" href="#index">Back to the Index</a>
-</div>
+    <a class="gotoindex" href="#index">Back to the Index</a><br><br> 
 <hr>
 
 <div class="responsive">
@@ -1880,94 +1462,61 @@ Responsive Web Design is about using HTML and CSS to resize, hide, shrink, enlar
 </p>
 <p>If your non-MARS group thinks it would like to utilize this functionality let me know via groups.io and we can talk.</p>
 
-    <a class="gotoindex" href="#index">Back to the Index</a>
-</div>
-<hr>
-
-<div class="tables">
-    <a id="tables"></a>
-<h3>The NCM Data Base & Table Definitions</h3>
-
-<div>Data for use in NCM is maintained by a MySQL database.
-    <br><br>
-Tables in NCM:
-</div>
-
-<dl class="dl4dbm">
-    <dt>counties</dt>
-    <dd>Stores the state and county names for all 3144 U.S. counties.</dd>
-    
-    <dt>events</dt>
-    <dd>Stores the Preambles and Closings for all groups who have created same.</dd>
-    
-    <dt>HPD</dt>
-    <dd>Stores the district name or number by county within state. Not all are included.</dd>
-    
-    <dt>NetKind</dt>
-    <dd>Stores the type of net (ARES, Group, Social...) for each group along with the default frequency, kind of net (DMR, Weekly, Digital...) and all of the upper right corner information all for the groups who have chosen to provide same.</dd>
-    
-    <dt>NetLog</dt>
-    <dd>Stores the net details and changes for all nets.</dd>
-    
-    <dt>poi</dt>
-    <dd>Stores all the points of interest for groups who have supplied a list.</dd>
-    
-    <dt>stations</dt>
-    <dd>Stores information about each station that has been recorded in a net. This inclues any station that might have been deleted from any net and all international stations as well. callsign, tactical, Name, lat/lon, grid, county, state district and many more ites. </dd>
-    
-    <dt>TimeLog</dt>
-    <dd>Stores the history of all nets by netID, date and net callsign. </dd>
-</dl>
-
-
-    <a class="gotoindex" href="#index">Back to the Index</a>
-</div>
-
 <hr><hr><hr>
-<p style="page-break-before: always"></p>
+
 <div class="title">
 		<p>Net	</p>
 		<p>Control 
 		<p>Manager</p>
 </div> <!-- End title -->
 
+<a class="gotoindex" href="#index">Back to the Index</a><br><br> 
 <hr>
 
 
 <div class="theend">
     <a id="theend"></a>
-    <div>
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
-Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
+Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
-    </div>
-    
-<span  style="text-align: center; display: inline-block; vertical-align: middle;">
-
-        <img src="BRKMarkers/plum_man.svg" alt="plum_man" style="float:left; padding: 0px; border: 0;" />
-
-    Map Markers courtesy of Bridget R. Kaiser
-
-        <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:right; padding: 0px; border: 0;" />
-
-</span>
-
 <p>
-<div>
- <img src="images/backgroundantenna328x72.png"  alt="backgroundantenna328x72" width="250" >
-    International (DX) station information compliments of Daniel Bateman, KK4FOS with Buckmaster International, LLC
-</div>
-</p>
-<p> 
 Guarantees or Warranties:<br>
      No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
 </p>
-<div class="classictemplate template" style="display: block;"></div>
+<div class="classictemplate template" style="display: block;">
+<style type="text/css">
+  #groupsio_embed_signup input {border:1px solid #999; -webkit-appearance:none;}
+  #groupsio_embed_signup label {display:block; font-size:16px; padding-bottom:10px; font-weight:bold;}
+  #groupsio_embed_signup .email {display:block; padding:8px 0; margin:0 4% 10px 0; text-indent:5px; width:58%; min-width:130px;}
+  #groupsio_embed_signup {
+    background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; 
+  }
+  #groupsio_embed_signup .button {
 
-<div id="groupsio_embed_signup2">
-<form action="https://groups.io/g/NCM/signup?u=5681121157766229570" method="post" id="groupsio-embedded-subscribe-form2" name="groupsio-embedded-subscribe-form" target="_blank">
-    <div id="groupsio_embed_signup_scroll2">
+      width:25%; margin:0 0 10px 0; min-width:90px;
+      background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+      background-repeat: repeat-x;
+      border-color: #245580;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 3px;
+      color: #fff;
+      background-color: #337ab7;
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+</style>
+<div id="groupsio_embed_signup">
+<form action="https://groups.io/g/NCM/signup?u=5681121157766229570" method="post" id="groupsio-embedded-subscribe-form" name="groupsio-embedded-subscribe-form" target="_blank">
+    <div id="groupsio_embed_signup_scroll">
       <label for="email" id="templateformtitle">Subscribe to the NCM groups.io! </label>
       <input type="email" value="" name="email" class="email" id="email" placeholder="email address" required="">
     
@@ -1977,9 +1526,9 @@ Guarantees or Warranties:<br>
   </div>
 </form>
 </div>
-</div> <!-- End theend -->
+</div>
 
-<a class="gotoindex" href="#index">Back to the Index</a>
+<a class="gotoindex" href="#index">Back to the Index</a><br><br>
 </div> <!-- End of theend -->
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -2010,12 +1559,6 @@ function topFunction() {
             $(".HelpBubbles").toggle();
           });
         });
-        
-
-function printfunction() {
-	window.print();
-}
-
 </script> <!-- The scrollFunction to move to the top of the page -->
 
 </body>

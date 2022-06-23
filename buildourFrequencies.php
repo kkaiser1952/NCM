@@ -9,8 +9,6 @@
 
     $call = $_GET["call"];   //$call = 'W0KCN';
    // $netid = $_GET["netid"];
-   
-   $netid = 6066;
 	
 	// get only one record for a return */
 	$sql = ("SELECT row1, row2, row3, row4, row5, row6

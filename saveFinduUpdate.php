@@ -19,61 +19,32 @@
 				return substr_replace($subject, $replace, $pos, strlen($search));
 			}
 			return $subject;
-	} // end str_replace_first function
+	} // end function
 	 
-	    //$q = $_POST["q"];     
-	    
-	    $q = strip_tags(substr($_POST["q"],0, 100));
+	    $q = $_POST["q"];     
+	    //$q = '39.20283, -94.60267,  71892, 4598';
 	    
 	    
 	   // take apart the string q from NetManager-p2.js the getFindu function 
 	    $delta      = 'LOC&#916;';
 	    $parts	    = explode(",",$q);
 		$lat 	    = $parts[0];  
-		$lon 	    = $parts[1]; 
+		$lon 	    = $parts[1];  
 		$recID      = $parts[2];
 		$nID        = $parts[3];
 		$ts         = $parts[4];
 		$objname    = $parts[5];
-		
-		// calculated values
 		$ipaddress  = getRealIpAddr();
 		$gridd 	    = gridsquare($lat, $lon);
         $grid       = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";      
-      //  $crossRoads = getCrossRoads($lat, $lon);
-        $crossRoads = "";
-        $w3w        = $api->convertTo3wa($lat, $lon)[words];
-
+        $crossRoads = getCrossRoads($lat, $lon);
         
-      
-      // This grabs the most recent APRS Objects timestamp post from the timeLog
-      // We will compare it to the just right clicked returned timestamp, if they
-      // match then do NOT update the table, instead tell the logger        
-        $sql = $db_found->prepare("SELECT MAX(SUBSTRING(comment, 23, 14))
-                  FROM `TimeLog` 
-                 WHERE recordID = $recID
-                   AND comment LIKE '%APRS:OBJ%'
-                   AND netID = $nID
-                 LIMIT 1
-               ");
-               
-        $sql->execute();
-    	$PreviousTS = $sql->fetchColumn(); // from TimeLog table
-    	
-    	// this is the step that sends us back to the main page without updating the TimeLog
-    	// Add or if $ts < NOW()-1hour
-    	if ($ts == $PreviousTS) {
-        	exit("The beacon failed, have the station try again.");
-    	} 
-    	
-    	//echo "@54 MaxTS= $PreviousTS newTS= $ts";
+        $w3w = $api->convertTo3wa($lat, $lon)[words];
 			
-        // Pick up some helpful data    
-	    $sql = "SELECT ID, netID, callsign
+			    
+	    $sql = "SELECT ID, netID, callsign 
 	              FROM NetLog 
-					WHERE recordID = $recID
-				    LIMIT 1
-				";
+					WHERE recordID = $recID";
 
 			foreach($db_found->query($sql) as $row) {
 				$netID = $row[netID];
@@ -88,7 +59,6 @@
                   ,longitude    = $lon
                   ,ipaddress    = '$ipaddress'
                   ,grid         = '$grid'
-                  ,w3w          = '$w3w $crossRoads'
              WHERE recordID = $recID  ";	
 
 				$stmt = $db_found->prepare($sql);

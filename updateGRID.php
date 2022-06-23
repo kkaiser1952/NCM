@@ -27,7 +27,7 @@ $sql = "SELECT latitude, longitude
 	 
 	 	   
 $sql2 = "UPDATE NetLog 
-		   SET grid = '$grid', delta = 'Y'
+		   SET grid = '$grid'
 		 WHERE recordID = $recordID";
 	
 	$stmt2 = $db_found->prepare($sql2);

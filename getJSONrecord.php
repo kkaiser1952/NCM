@@ -13,7 +13,6 @@ require_once "geocode.php";     /* added 2017-09-03 */
     
     curl_setopt_array($curl, array(
       CURLOPT_URL => "https://callook.info/$cs1/json",
-      CURLOPT_SSL_VERIFYPEER => false,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,

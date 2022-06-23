@@ -15,7 +15,7 @@
                  WHERE callsign = 'GENCOMM'
                    AND id = 0 
                    AND netID = $q
-                 ORDER BY uniqueID DESC
+                 ORDER BY ID DESC
                  LIMIT 0,1
                 ");
 

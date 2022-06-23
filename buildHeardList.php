@@ -81,6 +81,4 @@ $netID = intval($_POST["q"]);
 			
 			echo "<div><p>Send me an example of anything else you might like. If the information is in the database I'll do my best to supply it.</p></div>";
 			
-			echo "<p>buildHeardList.php</p>";
-			
 ?>

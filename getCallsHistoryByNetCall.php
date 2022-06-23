@@ -9,10 +9,9 @@
     require_once "dbConnectDtls.php";
     
     $netcall = $_POST['netcall']; 
-    $nomo = $_POST[nomo];
     $and1 = '';
     $netcall = strtoupper($netcall);
-    //$nomo = 12;  // number of months
+    $nomo = 12;  // number of months
     $state = '';
     
     if ($state <> '') {
@@ -26,15 +25,14 @@ function secondsToDHMS($seconds) {
 }
 
     $sql = "
-        SELECT  callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
-            COUNT(callsign) as cnt_call
+        SELECT  callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place
           FROM NetLog 
          WHERE netcall = '$netcall'  
            AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
-       /*    $and1 */
+           $and1
            
         GROUP BY callsign
-        ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC
+        ORDER BY `NetLog`.`district`, callsign ASC
          ";
          
 //echo "$sql<br>";
@@ -48,7 +46,7 @@ function secondsToDHMS($seconds) {
 	    $Fname    = ucfirst(strtolower($row[Fname]));
 	    $Lname    = $row[Lname];
 	    
-	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
+	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td>. <td>$row[place]</td>  </tr>";
     }
 ?>
 
@@ -75,7 +73,7 @@ function secondsToDHMS($seconds) {
 		.prime {
     	/*	column-width: 40px; 
     		column-count: 2; */
-    		columns: 20px 2; 
+    		columns: 20px 2;
     		column-gap: 10px; 
     	/*	column-rule-width: 3px;
     		column-rule-style: solid;
@@ -92,10 +90,7 @@ function secondsToDHMS($seconds) {
         
             <div class="prime">
                 <table>
-                    <tr>
-                        <th></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
-                    </tr>
-                        <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
+                    <?php echo "$listing</table></div>"; ?>
                 </table>
             </div>
 </body>

@@ -61,7 +61,6 @@
     // It also sets up the number to appear on each marker and the color of that marker
     $sql = ("SELECT netID ,ID 
                     ,REPLACE(CONCAT('_',callsign),'/','') as callsign     
-                    ,callsign as callsign2
                     ,grid 
                     ,netcall 
                     ,activity 
@@ -151,7 +150,7 @@
     		  //echo ("$dup --> $callsign ");
     		  
 		  $stationMarkers .= "
-			var $callsign = new L.marker(new L.latLng($logrow[koords]),{ 
+			var $callsign = new L.marker(new L.LatLng($logrow[koords]),{ 
 			    rotationAngle: $dup,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,

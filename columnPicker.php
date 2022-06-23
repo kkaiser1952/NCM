@@ -52,7 +52,7 @@ $(document).ready(function() {
 		getCurrent();
 	} else {
 	// Check all the boxes coming in from either the cookie or from the default
-		var testem = columnViews.split(',');  // Split the list into its number and run them with testem.forEach
+		var testem = columnViews.split(',');  // Split the list inot its number and run them with testem.forEach
 		testem.forEach(showChecked);  // Show it on first pass
 	}
 	
@@ -187,9 +187,8 @@ $(document).ready(function() {
 </head>
 
 <body>
-	<h1>These options will write a persistent, first-party cookie to your system.<br>Cookies will expire after 10 days or whenever you decide.</h1>
+	<h1>These options will write a cookie to your system.</h1>
 	
-	        <!-- disable the javascript.window.close before a Zoom presentation -->
     <form onsubmit="setCookie(cookieName, calculate(), 365); javascript:window.close();">
         <p style="font-size: 14pt; font-weight: bold;">Choose a time zone to use, the default is UTC
     	
@@ -318,10 +317,6 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(23)" value="23" class="23">
 				<span class="checkmark"></span>
 			</label> 
-			<label class="container">Team (30)
-				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="30" class="30">
-				<span class="checkmark"></span>
-			</label>
         </div>
 		<div class="column" >		
         
@@ -358,7 +353,7 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(20)" value="20" class="20" >
 				<span class="checkmark"></span>
 			</label>
-			<label class="container">Latitude (21)
+			<label class="container">Latatitude (21)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(21)" value="21" class="21" >
 				<span class="checkmark"></span>
 			</label>
@@ -371,26 +366,15 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(24)" value="24" class="24">
 				<span class="checkmark"></span>
 			</label> 
-			
+			<label class="container">Team (30)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="30" class="30">
+				<span class="checkmark"></span>
+			</label>
 			<!-- added 2021-09-03 -->
 			<label class="container">APRS_CALL (31)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(31)" value="31" class="31">
 				<span class="checkmark"></span>
 			</label>
-			<!-- added 2021-12-07 -->
-			<label class="container">Country (32)
-				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(32)" value="32" class="32">
-				<span class="checkmark"></span>
-			</label>
-			<label class="container">Facility (33)
-				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="33" class="33">
-				<span class="checkmark"></span>
-			</label>
-			<label class="container">onSite (34)
-				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(30)" value="34" class="34">
-				<span class="checkmark"></span>
-			</label>
-
 <!--
 			<label class="container">TRFK-OPS (50) (Custom)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(50)" value="50" class="50">
@@ -449,7 +433,7 @@ $(document).ready(function() {
     </div> <!-- End admincolumns -->
 	</form>
 	
-		<div> columnPicker.php </div>
+		
 <script>
     // This function controls the values of the time in and time out columns based on the time zone 
     function tz_adj(tz_amt) {

@@ -7,8 +7,8 @@ require_once "dbConnectDtls.php";
 	$term = $_GET['term'];
 	$netc = $_GET['nc'];
 	
-	//$term = '0tjt';
-	//$netc = 'mesn';
+	//$term = 'lvs';
+	//$netc = 'k5frc 6-30-36';
 	
 	$nc = explode(' ', trim($netc));
 	$netcall = $nc[0];
@@ -25,7 +25,7 @@ $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,'--',a.cou
            AND (a.callsign LIKE '%$term%' OR a.Fname LIKE '%$term%' OR a.Lname LIKE '%$term%' )
             OR (CONCAT(a.Fname,a.Lname) LIKE '%$term%')
          GROUP BY b.callsign
-         limit 10
+         limit 5
        "; 
   		  	
   		  	$results = array();
@@ -34,7 +34,6 @@ $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,'--',a.cou
   		  				'label' => $row['callsign'], 
   		  				'desc' => $row['name'],
   		  				'value'  => $row['callsign']) );
-			}			
-			   			
+			}
 				echo json_encode($results);	  	
 ?>

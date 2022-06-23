@@ -126,11 +126,10 @@ $sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
             if ($rowcount <= 4 ) {$mfactor = 135; }
               //  else if ($rowcount == 5 || $rowcount == 6 ) {mfactor = 100;}
                 else if ($rowcount <= 5 ) {$mfactor = 100; }
-                else if ($rowcount = 6  ) {$mfactor = 65; }
+                else if ($rowcount = 6 ) {$mfactor = 65; }
                 else if ($rowcount = 7  ) {$mfactor = 46; }
                 else if ($rowcount = 8  ) {$mfactor = 30; }
-                else if ($rowcount = 9  ) {$mfactor = 20; }
-                else if ($rowcount >9   ) {$mfactor = 10; }
+                else if ($rowcount >8 ) {$mfactor = 20; }
         $callwidth = ($rowcount * $mfactor)."px";
             echo "::  $rowcount $mfactor  $callwidth";
 
@@ -217,8 +216,6 @@ $sql = ("
       </ul>
       
   </div>
-  
-  <p>HzTimeline.php</p>
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

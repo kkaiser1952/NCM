@@ -139,8 +139,6 @@ foreach($db_found->query($sql) as $row) {
     
     $tod = secondsToDHMS($row[tod]);
     
-    $call_count += $row[call_count];
-    
     echo "
         <tr>
         <td class='c0'  > $row[id]       </td>
@@ -165,9 +163,7 @@ foreach($db_found->query($sql) as $row) {
 }
     echo '</tbody></table>';
     
-    echo "<br><br>$station_count<br><br>$call_count";
-    
-    echo "<p>buildUniqueCallList.php</p>";
+    echo "<br><br>$station_count<br><br>$row[call_count]";
 				
 ?>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
