@@ -1,5 +1,6 @@
 ENV_SETUP.php
 
+config.php
 dbConnectDtls.php
 to-mega-backup.sh
 flot-master
