@@ -40,24 +40,16 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
-    require_once "wx.php";			   // Makes the weather information available
+    require_once "wxLL.php";			   // Makes the weather information available
+    //require_once "getNewWX.php";
+    require_once "NCMStats.php";
     
 ?>
 
 <html lang="en" >
 <head>
     <meta charset = "UTF-8" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-167869985-1');
-</script>
-
-    
+        
     <title>Amateur Radio Net Control Manager</title>
     <!-- Below is all about favicon images https://www.favicon-generator.org -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png">
@@ -114,97 +106,100 @@
     
     <!-- All the @media stuff -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
+    <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 	 
 <style>
 	/* Use this space for experimental CSS */   
 
-/* The left and right here are the final position of the NCM and Net Control Manager titles */
-/* These future features work with the very last javascript at the bottom of this page. */
-@keyframes pageOpening {
-  /*    from {left:50%; top:50%;  transform:rotate(0deg);}  
-        to {left:10px; top:5px; transform:rotate(360deg);} */
-        from {left:100%; top:5px; }
-        to {left:20px; top:5px;}
-}
-@keyframes moveRightCorner {
-        from {left:20px; top:5px; }
-        to {right:5px; top:5px;}
-}
-.openingImages {
-    /*
+.quotes {
     position: relative;
-    animation: pageOpening 1.0s ;  */
+    top: 45%;
+    left: 5%;
+    width: 75%;
+    display: none;    
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
 }
-#ourfreqs {
-  /*  position: relative; 
-    animation: moveRightCorner 1.0s ; */
+.preQuote {
+    position: relative;
+    top: 45%;
+    left: 5%;
+    width: 90%;
+    font-size: smaller;
+    color:red;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
-/* check these */
-/* https://auralinna.blog/post/2017/how-to-make-a-css-speech-bubble-with-borders-and-drop-shadow/ */
-/* Speech bubble below */
-/* https://www.sitepoint.com/pure-css3-speech-bubbles/ */
-p.TipBubbles {
-      position: relative;
-      color: blue;
-      font-size: larger;
-      left: 20px;
-      width: 300px; 
-  /*     display:inline-block; */
-      
-      height: 30px;       /* size up and down */
-      text-align: center;
-      line-height: 30px;  /* same as height */
-      background-color: yellow;
-      border: 8px solid #999;
-      -webkit-border-radius: 30px;
-      -moz-border-radius: 30px;
-      border-radius: 30px;
-      -webkit-box-shadow: 2px 2px 4px #888;
-      -moz-box-shadow: 2px 2px 4px #888;
-      box-shadow: 2px 2px 4px #888;
+#testnet {
+	color: rid;
+	font-size: 1.5em;
+	position: absolute;
 }
-p.TipBubbles:before {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: 30px;
-      top: 30px;            /* Same as height in TipBubbles */
-      border: 25px solid;
-      border-color: #999 transparent transparent #999;
+
+.Testcontainer {
+    font-size: large;
+    color: red;
+    height: 10px;
 }
-p.TipBubbles:after {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: 38px;
-      top: 30px;            /* Same as height in TipBubbles */
-      border: 15px solid;
-      border-color: yellow transparent transparent yellow;
+
+.btn {
+    background-image: url('https://net-control.us/images/US-NWS-Logo.png');
+    background-size: cover;
+    border: none;
+    width: 50px;
+    height: 50px;
 }
-.initiallyHidden { display: none; }
 
 </style>
+
+<script>
+
+// require_once "wx2.php";	at line 45 
+// This function uses the clickers callsign to look up their lat/lon from the stations table. 
+// That lat/lon is passed on to the wx2.php program to get the appropriate counties wx for display.
+function newWX() {
+    console.log("@698 in newWX");
+    
+    var str = prompt('What is your callsign?');
+        if (str =="") { alert("OK no valid call was entered");
+        }else { str = str.trim(); 
+               console.log('@767 This call is '+str);
+                        
+                  $.ajax({
+			                type: "GET",
+			                url: "getNewWX.php",  
+			                data: {str : str},
+			                success: function(response) {
+                        console.log(response);
+			            },  // end success
+			                error: function() {
+				                alert('Last Query Failed, try again.');
+			                } // End error
+		              }); // End ajax
+	      } // end of else
+}; // end newWX function
+</script>
+
 
 </head>
 <body>
 
-
+<!--<div class="upper-left-corner" style="border: 2px solid blue; "> -->
 <div class="openingImages">
-<!-- NCM and Net Control Manager images at top of page -->
-<img id="smtitle" src="images/NCM.png" alt="NCM" >
-<img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
-
-<span id="version">
-	<a href="#cc" rel="modal:open" id="version2">5.12.28</a> <!-- Years in service . Month . day  of last update -->
-</span> <!-- End of id version -->
+    <!-- NCM and Net Control Manager images at top of page -->
+    <img id="smtitle" src="images/NCM.png" alt="NCM" >
+    <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
+    
+    <span id="version">
+        <!-- Years in service from 2016 . Month . day  of last update -->
+    	<a href="#cc" rel="modal:open" id="version2">6.12.15</a> 
+    </span> <!-- End of id version -->
 </div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
-	<p class="TipBubbles initiallyHidden" style="width: 200px;">Choose Your Time Zone</p>
+	<p class="tb1 TipBubbles initiallyHidden" style="width: 200px; margin-bottom: 40px;">
+    	<a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Choose Your Time Zone</a></p>
     <div id="dttm"> <!-- flex container -->
         <div id="dttm1">
             <input type="radio" name="tz" id="theLocal" value="theLocal" onclick="goLocal()">
@@ -217,14 +212,17 @@ p.TipBubbles:after {
     	</div>  <!-- Friday, August 24, 2018 1:55:13 PM  -->
     </div> <!-- end flex container -->
 		 
-    <p class="TipBubbles initiallyHidden">Weather Report for your IP Address</p>
-	<div class = "weather-place">
-		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" >
+    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 30px;">
+        <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p> <!-- End of P @186 -->
+    <div class = "weather-place">
+        <button class="btn" onClick="javascript:newWX();"></button>
+
 		<a href="https://www.weather.gov" target="_blank" rel="noopener">
     		<!-- CurrentWX() was developed by Jeremy Geeo, KD0EAV Found it wx.php -->
-			<?php echo currentWX(); ?>   <!-- wx.php -->
+			<?php echo getNewWX(); ?>   <!-- wx.php -->
 		</a>  
 	</div> <!-- End of class: weather-place -->
+<!-- </div> --> <!-- End of class: upper-left-corner -->
 		
     <br>
        <!-- The div below builds the Preamble, Agenda... menu --> 
@@ -243,7 +241,8 @@ p.TipBubbles:after {
 
                    <!-- Selections available below the table -->
                    <!-- Open the preamble for the current net -->
-                   <button class="tipsbutton" title="Tips Button">Tips!</button>
+                   
+                   <button class="tbb" title="Tips Button">T</button>
 			       <a id="preambledev" onclick="openPreamblePopup();" title="Click for the preamble">Preamble &nbsp;||&nbsp;</a>
 			       					   
 			       <!-- Open the agenda and announcements for the current net -->
@@ -260,6 +259,10 @@ p.TipBubbles:after {
    		<span class="dropbtn">Reports &nbsp;||&nbsp;</span>
 		  <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
 		  
+		   
+		  
+		    <a href="#" id="buildCallHistoryByNetCall" onclick="buildCallHistoryByNetCall()" title="build a Call History By NetCall">The Usual Suspects</a>
+		  
 		    <a href="buildGroupList.php" target="_blank" rel="noopener" title="Group List">Groups Information</a>
 		    
 		    <a href="groupScoreCard.php" target="_blank" rel="noopener" title="Group Scores">Group Score Card</a>
@@ -268,8 +271,7 @@ p.TipBubbles:after {
 		    <a href="#" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</a>
 			<a href="NCMreports.php" target="_blank" rel="noopener" title="Stats about NCM">Statistics</a>
 		    
-		    <a href="http://www.arrl.org/ares-el" target="_blank" rel="noopener" title="ARES E-Letter">
-		    ARRL ARES E-Letter</a>
+		    
 		    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a>
 		    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
 		<!--    <a href="#" id="mapIDs" onclick="map1()" title="Map This Net">Map This Net</a> -->
@@ -277,6 +279,7 @@ p.TipBubbles:after {
         <!--
 		    <a href="#" id="printByNetID" onclick="printByNetID()" title="Print Report of the active net">Print</a>
 		--> 
+		    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
 			<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
 			<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
 			<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
@@ -307,6 +310,8 @@ p.TipBubbles:after {
 				   		<option value="DisplayHelp">NCM Documentation</option>
 				   		<option value="DisplayKCARES">KCNARES Deployment Manual</option>
 				   		<option value="" disabled >ARES Resources</option>
+				   		<option value="ARESELetter" >ARES E-Letter</option>
+				   		
 				   		<option value="ARESManual">Download the ARES Manual(PDF)</option>
 				   		<option value="DisplayARES">Download ARES Field Resources Manual(PDF)</option>
 				   		<option value="ARESTaskBook"> ARES Standardized Training Plan Task Book [Fillable PDF]</option>
@@ -324,33 +329,34 @@ p.TipBubbles:after {
     </div> <!-- End id rightCorner -->
 	      
 	<div id="org" class="hidden"></div> <!-- is this in use? -->
-	<p class="TipBubbles initiallyHidden" style="color:blue; left:100px; bottom:20px;">Create a net Or just look at a net</p> 
     <div id="netchoice">
 	<div id="netdata">
 		<!-- Use the span below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
-	<!--	
-		<span class="newstuff"> Effective 3/1/2020 all times will be in UTC, report issues to <a href="mailto:wa0tjt@gmail.com?subject=NCM">WA0TJT</a>
-		<br><br>
+	<span style="color:red; font-size: large;">	
+	
+		Please report any issues to wa0tjt@gmail.com Thank you.
+        
 		</span> 
-	-->	
-
 	    </p>
+	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
+        <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a></p>
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->
-			<button id="newbttn" class="newbttn left-cell" onclick="showit();" title="Click to start a new net">Start a new net</button>	
+			<button id="newbttn" class="newbttn left-cell tbb2" onclick="showit();" title="Click to start a new net">Start a new net</button>	
         
 			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
 		</div>
 		
 		<div id="makeNewNet" class="hidden" >	
+            <label class="Testcontainer" for="testnet">Click if making a test net? &nbsp;&nbsp;&nbsp;
+    		    <input id="testnet" type="checkbox" name="testnet" value="y" >
+    		   
+            </label>
+            <br>
+            
 			<div>Enter Your Call Sign:</div>   
-				<input type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
-				
-			<!-- tn is found in NetManager-p2.js at the very bottom -->	
-            <label class="buildtest" for="tn">Click to build a TE0ST net. &nbsp;&nbsp;&nbsp;
-    			<input id="tn" type="checkbox" name="tn" class="tn" />
-			</label>
+				<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
 					
             <?php  require_once "buildThreeDropdowns.php"; ?>
 			
@@ -386,13 +392,13 @@ p.TipBubbles:after {
                 <div class="NewLightbox" id="KindQ">
                     <figure>
                         <a href="#" class="Qclose"></a>
-                        <figcaption>If you typed in your own name in the Group slection above <br> then consider choosing <b>Event</b> or <b>Test</b> here.
+                        <figcaption>If you typed in your own name in the Group selction above <br> then consider choosing <b>Event</b> or <b>Test</b> here.
                         </figcaption>
                     </figure>
                 </div> <!-- End of class: NewLightbox -->
             </div>
             <div id="KindDropdown" >
-                <!-- showKindChoices() & filterFunctions() at the bottom of index.php -->
+                <!-- showKindChoices() & filterFunctions() are in NetManager-p2.js -->
                 <input type="text" onfocus="showKindChoices(); blurGroupChoices();" placeholder="Type to filter list.." id="KindInput" 
                        class="netGroup" onkeyup="filterFunction(1)"/>
                 <div class='KindDropdown-content hidden'>
@@ -450,19 +456,27 @@ p.TipBubbles:after {
 	    
 	    <div id="remarks" class="remarks hidden"></div>
     <!-- Building the upper right corner is triggered by: showActivities() in NetManager.js -->
-    <p class="TipBubbles initiallyHidden" style="color:blue; left: 250px;">Dropdown of the last 10 days nets</p>
-	<div class="btn-toolbar" >
-    	
+    <p class="tb2 TipBubbles initiallyHidden" style="width: 400px; left: 200px; margin-bottom: -40px;">
+        <a class="tipimage" href="https://net-control.us/help.php#open" target="_blank">Dropdown of nets and/or current net being displayed.</a></p>
+    <p class="tb2 TipBubbles initiallyHidden" style="width: 300px; left: 775px; margin-bottom: 40px;">
+        <a class="tipimage" href="https://net-control.us/help.php#refreshtimed" target="_blank">Immediate and Timed Data Refresh</a></p>
+	
+   	<p class="tb1 TipBubbles initiallyHidden" style="left: 200px; width: 450px;  margin-bottom: 50px;">
+        <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Select to display an active or closed net.</a></p>
+        
+        <div class="btn-toolbar" >
+        
 		<div class="form-group" id="form-group-1" title="form-group" >
     		
     		<!-- switchClosed() in NetManager-p2.js -->
     		<!-- The tohide class is used by net_by_num() -->
     		
-    		<label for="select1">Or make a selection from this dropdown</label>
+    	<!--	<label for="select1">Or make a selection from this dropdown</label>  -->
+    	
         	<select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
 	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
 	        	
-	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or, Make a Selection From These Nets</option>
+	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or Select From Past 10 Days Nets</option>
 	        
 	        <option class ="tohide opcolors" value="z" disabled>Open Nets are in green =================//================= Pre-built Nets are in blue</option>
  
@@ -501,25 +515,36 @@ p.TipBubbles:after {
     <!-- This is activated by a jquery on function in netManager.js at about line 391 -->
     
 	<div id="forcb1" class="hidden">
+    	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">
+        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
 		<div id="genComments" class=" editGComms"></div>
 <!--		<div id="genComments" class="editGComms" onclick="empty('genComments'); "> </div> -->
 	</div>   <!-- End ID: forcb1 -->
 	  <!-- End of besticky -->
-	
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:300px; left: 50px; margin-bottom: -40px;">
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Enter Callsign or name displays hints</a</p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:150px; left: 455px; margin-bottom: -40px;">
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Traffic Short Cut</a></p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:250px; left: 655px; margin-bottom: -40px;">
+    	 <a class="tipimage" href="https://net-control.us/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
+	 <p class="tb2 TipBubbles initiallyHidden" style="width:350px; left: 950px; margin-bottom: 40px;">
+    	 <a class="tipimage" href="https://net-control.us/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
 	<div id="admin" class=" admin ">   
 		<div id="csnm" class="hidden">
 
 	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
-			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off"> <!-- Removed autocomplete="on" 2018-08-12 -->
+			<input id="cs1" type="text" placeholder="Call or First Name" maxlength="16" class="cs1" autofocus="autofocus" autocomplete="off" tabindex=1 > <!-- Removed autocomplete="on" 2018-08-12 -->
 			
 			<!-- Below input is where the hints from cs1 and Fname go before being selected -->
 			<input type="hidden" id="hints">
 			
 			<!-- Input first name add readonly to prevent editing -->
 			<!-- autocomplet="on" removed from below on 2018-08-12 -->
-			<input id="Fname" type="text" placeholder="Name" onblur="checkIn();" autocomplete="off">
+			<input id="Fname" type="text" placeholder="Name" onblur="" autocomplete="off" tabindex=2>
+			
+			<input id="TrfkSwitch" type="text" onblur="checkIn(); this.value='' " autocomplete="off" tabindex=3 >
 			
 			<!-- Some attributes of the below field are controled in NetManager.js -->
 			<input id="custom" class="hidden brdrGreen" type="text" placeholder="" autocomplete="off" onblur="checkIn();" >
@@ -559,7 +584,7 @@ p.TipBubbles:after {
 			<div class="hidden" id="subNets"></div> <!-- Home for the sub-nets -->
 			<br>
 					
-	<!--	The 'Export CSV' button is written by the getactivities.php program --> 
+	<!--	The 'Export CSV' & 'Map This Net' buttons are written by the getactivities.php program --> 
 			
 			<!-- HideTimeLine() in NetManager.js -->
 			<button class="timelineBut timelineBut2" onclick="RefreshTimeLine(); location.href='#timeHead';">Update</button>
@@ -569,23 +594,26 @@ p.TipBubbles:after {
 		</div>   
 	</div> <!-- end admin -->		
 
+        <!-- only reference to #status is in netmanager.css, but what does this div do? -->
 	    <div id="status"></div>
-	    
+	    <!--
 	    <div id="modalList" class="hidden">Modal List goes here</div>
+	    -->
 	</div> <!-- End id netchoice -->
 	
-	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2020-12-28</span></p>
+	<!-- https://jquerymodal.com -->
+	<div id="#cc" class="modal" style="display:none;">	
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-12-15</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
 			
 	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
 		</p>
-		<p><a href="#cc" rel="modal:close">Close</a></p>
+		<p><a href="#" rel="modal:close">Close</a></p>
 	</div> <!-- End id cc -->
 	
-	<div id="lli" class="modal-dialog" style="display:none;"></div> <!-- End of id lli -->
+	<div id="lli" class="modal-dialog" style="display:none; "></div> <!-- End of id lli -->
 	
 	<div id="pbl" class=" modal hidden"></div> <!-- End of id ppl, Holds the list of pre-built nets created in PBList.php -->
 	
@@ -594,6 +622,64 @@ p.TipBubbles:after {
 	<div id="testEmail" class="testEmail hidden"></div>
 	
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+     <!-- All the quotes go here -->
+<!--
+        <h3 class="preQuote">Click anywhere to stop animation</h3>
+    	<h2 class="quotes">
+        	<p style="font-size: larger ; color:blue;">https://net-control.us</p>
+        	<!- - https://www.developerdrive.com/responsive-image-gallery-flexbox/ - ->
+        	<div class="image-container">	
+           
+            <img class="myimg" src="images/mars.png" alt="mars" width="100" height="" >      	 
+            
+            <img class="myimg" src="images/skywarn.png" alt="skywarn" width="100" height="" >
+            
+            <img class="myimg" src="images/nts.png" alt="nts" width="100" height="" >
+           
+        	<img class="myimg" src="images/ARES.png" alt="ARES" width="100" height="" >
+        	
+        	<img class="myimg" src="images/RACES.png" alt="RACES" width="100" height="" >
+        	
+            <img class="myimg" src="images/satern.png" alt="satern" width="100" height="" >
+        	
+            <img class="myimg" src="images/QSOTodayEXPOSPEAKERBadge.png" alt="QSOTodayEXPOSPEAKERBadge" width="120" height="" >
+        	<br> 
+        	<img src="images/century21.png" alt="century21" width="225" height="" >
+           
+        	<img src="images/redcross.png" alt="redcross" width="225" height="" >
+        	
+        	<img src="images/cert.png" alt="cert" width="225" height="" >
+        	
+        	<img src="images/waefar.png" alt="waefar" width="225" height="" >
+        
+        	 <!- - Morse code source:  https://fontmeme.com/morse-code/. - ->
+        	</div>        
+        	 <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
+        <br> 
+    	    NCM was designed to make Amateur Radio Net check-ins, management of net resources and net 
+    	    reporting easier and more efficient than using pen and paper. 
+        <br>
+            <img src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="100%">
+                
+        </h2>  <!- - End of H2 - ->
+        
+        <h2 class="quotes"><b style="color:red">HINT:</b><br> Not Logging the Net: <b style="color:green"> Put yourself in 5sec Refresh Mode...</b><b style="color:blue"> Use The Blue 'Timed' Button</b><br>
+             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%"></h2>
+    	
+        <h2 class="quotes">NCM is not a replacement for pen and paper, which will always be your 
+            best backup should something go wrong.<br>
+             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%">
+        </h2>
+        <h2 class="quotes">NCM was designed to be easily usable by the Net Control Operator alone, however someone else keeping log while you control the net is always a good idea.<br>
+             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%">
+        </h2>
+        <?php
+				echo "<h2 class='quotes'>
+				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>
+				    <img src='https://fontmeme.com/permalink/210514/469ac0e73fe5e79d55c4c332c794fa07.png' alt='K'></h2>"?>
+-->
+     <!-- All the quotes end here -->
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
 	
@@ -632,47 +718,62 @@ p.TipBubbles:after {
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
 	
-    <script>
-        
-        $(document).ready(function(){
-          $(".tipsbutton").click(function(){
-            $(".TipBubbles").toggle();
-          });
-        });
-        
-        /*
-            Check this out if animation is still wanted 
-            https://animate.style/#javascript
-        */
-        
-        
-        /*
-        $("#netBody").sortable({
-        cursor: 'row-resize',
-        placeholder: 'ui-state-highlight',
-        opacity: '0.55',
-        items: 'tbody tr'
-        });
-        */
-/*
-       // $("#rightCorner").addClass("hidden");
-        $("#version").addClass("hidden");
-        $("#dttm").addClass("hidden");
-        $(".theBox").addClass("hidden");
-        $(".btn-toolbar").addClass("hidden");
-        $(".weather-place").addClass("hidden");
+            
+<script>
+(function() {
 
-        
-    setTimeout(function() {
-        $("#smtitle").removeClass("hidden");
-       // $("#rightCorner").removeClass("hidden");
-        $("#version").removeClass("hidden");
-        $("#dttm").removeClass("hidden");
-        $(".theBox").removeClass("hidden");
-        $(".btn-toolbar").removeClass("hidden");
-        $(".weather-place").removeClass("hidden");
-    }, 1000);
-*/
+    var quotes = $(".quotes"); //variables
+    var quoteIndex = -1;
+    
+    function showNextQuote() {
+        ++quoteIndex;  //increasing index
+        quotes.eq(quoteIndex % quotes.length) //items ito animate?
+            .fadeIn(6500) //fade in time
+            .delay(250) //time until fade out
+            .fadeOut(5800, showNextQuote); //fade out time, recall function
+    }
+    showNextQuote();  
+})();
+
+$("body").click(function(){
+    $(".quotes").addClass("hidden");
+    $(".preQuote").addClass("hidden");
+});
+
+
+// This javascript function tests the callsign being used to start a new being in a list of callsigns that did not close a previous net.
+function checkCall() {
+    const cs = $("#callsign").val().trim().toUpperCase();
+    const listOfCalls = new Set( ['ah6ez', 'kc1oiz', 'w0erh', 'ad0im', 'k4flm', 'k0wtf', 'wb4ftu', 'k0bcf', 'w1jku' ]);
+    const isCallInSet = listOfCalls.has($("#callsign").val());
+    
+    console.log('@729 in index2.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    
+    // If the callsign starting this net is in the above list then ask for his email to send him a message
+    if (!isCallInSet == '') {
+        var mail = prompt('Please enter your email address.');
+            if (mail == '' || mail == null) {
+                alert("Please be sure to close your net when finished. Thank you!");
+            } else {
+
+                var str = cs+":"+mail;  //alert(str);
+                console.log('@737 str= '+str);
+            
+                $.ajax({
+                    type: 'GET',
+                    url: 'addEmailToStations.php',
+                    data: {q: str},
+                    success: function(response) { 
+                        //alert(response);
+                } // end success
+                }) // end ajax
+                } // else 
+        // Possible ways to send an email
+        // Javascript:  https://smtpjs.com
+        // PHP:         https://www.w3schools.com/php/func_mail_mail.asp
+        // AJAX:        Put the collected email into his record in the stations table.
+    } // End if
+} // end checkCall function
 </script>
 
 </body>

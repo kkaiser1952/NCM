@@ -1,15 +1,14 @@
 <!doctype html>
 <!-- This is the ICS-309 report -->
 <?php
-    
-    $q = 4180;
 
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
     
-    $q = intval($_GET["NetID"]);  // $q = 1189;
+    $q = intval($_GET["NetID"]);  
+   // $q = 3080;
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
@@ -24,8 +23,6 @@
 	//		$parent = $stmt->fetchColumn(0);
 		$stmt -> execute();
 			$children = $stmt->fetchColumn(1); 
-			
-			echo "$children";
 		
 	//	echo "p= $parent<br>";
 	//	echo "c= $children<br>";
@@ -188,7 +185,7 @@ ORDER by timestamp"); */
 		</span>
 	</div>
 	
-	
+	<p>ics309.php</p>
 	
 	
 	

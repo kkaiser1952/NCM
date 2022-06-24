@@ -13,82 +13,13 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
+    
+    echo 'PHP version: ' . phpversion();
 
   //$q = 3818;
    //$q = 4565;
-   $q = 4727;
-   
-   
-   //echo 'PHP version: ' . phpversion();
-   
-   // Create a layer by callsign for every object
-   // Also Create a LayerGroup to make adding them to the map easier
-   $sql = ("SELECT callsign, 
-                   uniqueID, 
-                   x(latlng) as lat, 
-                   y(latlng) as lon, 
-                   comment,
-                   CONCAT('[',x(latlng) , y(latlng),']') as koords
-              FROM TimeLog
-             WHERE netID =  $q
-               AND comment LIKE '%OBJ%'                      
-             ORDER BY callsign, timestamp
-         ");
-   
-    // initial values of variables
-    $theCalls = "var theCalls = L.layerGroup([";
-    $theBounds = "";
-    
-    $thecall = "";
-    
-    $x=0;
-    $len = count($db_found->query($sql)); //echo "<br>len= $len <br>";
-    foreach($db_found->query($sql) as $result) {  
-        
-    		$callsign = $result[callsign];
-    		$recordID = $result[uniqueID];
-    		$lat      = $result[lat];
-    		$lon      = $result[lon];
-    		$comment  = $result[comment];
-    		 		
-    		$OBJlayer .= "var $callsign$recordID = L.marker([$lat,$lon]).bindPopup('$comment');";
-    		    		
-       // To get only one of each callsign step through this loop 
-       if ($thecall <> $result[callsign]) {	
-            $x++;   
-    		$theCalls  .= $result[callsign]."OBJ,";	  	
-    		$theBounds .= "]); var ".$result[callsign]."OBJ = L.latLngBounds([[$lat , $lon]";		
-    		// Reset $thecall to this callsign, test at top of if
-    		$thecall = $result[callsign];
-       }else if ($thecall == $result[callsign]) {
-    		$theBounds .= "[$lat,$lon],"; 		
-    		// Reset $thecall to this callsign, test at top of if
-    		$thecall = $result[callsign];
-       }
-      // $theBounds = "$theBounds);";
-            
-    }; // end foreach...
-    
-    $theBounds = "$theBounds]);";
-    $theCalls  = "$theCalls]);";
-    
-    // This adds the var to the first record while removing the extra ]); stuff
-    $theBounds  = substr("var ".$theBounds, 7 )."";  
-    
-
-    //echo "<br><br>@70 theBounds=<br> $theBounds";
-
-    //echo "<br><br>@72 theCalls: $theCalls"; // var theCalls = L.layerGroup([KD0NBH,W0DLK,WA0TJT,]);
-
-    //echo "<br><br>@74 OBJlayer: $OBJlayer";
-    
-    $objMiddle  = '';
-    $objPadit   = '';
-    $objSW      = '';
-    $objNW      = '';
-    $objNE      = '';
-    $objSE      = '';
-
+   $q = 4743;
+  
    
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -101,6 +32,25 @@
               GROUP BY callsign
               ORDER BY callsign, timestamp
           ");
+          
+  $db_found->prepare("$sql");
+    $data = [];
+    $result = '';
+    
+  while($row = $query->fetch(PDO::fetch_assoc()) {
+       $result .= '<option value="'.$row['callsign'].'" ';
+       if(in_array($row['callsign'], $exp))
+       {
+           $result .= ' selected';
+       }
+       $result .= '>';
+       $result .= $row['id'];
+       $result .= '</option>';
+  }
+   
+   echo $result;
+          
+/*
      foreach($db_found->query($sql) as $row) {
          $objBounds .= "$row[objBounds]";    
          $objMiddle .= "$row[callsign]OBJ.getCenter();";
@@ -135,17 +85,20 @@
               ORDER BY callsign, timestamp ) s         
           ");
           
-//$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = $comm6 = $comm7 = $comm8 = $comm9 = '';
+          $objMarkers       = "";
+          $OBJMarkerList    = "";
+          $allcallList      = "";
 foreach($db_found->query($sql) as $row) {
     $objType = "$row[objType]";
     $comment = "$row[comment]";            
-    $comm1 = $comm2 = $comm3 = $comm4 = $comm5 = $comm6 = $comm7 = $comm8 = $comm9 = '';
-       
+    $comm1   = $comm2 = $comm3 = $comm4 = $comm5 = '';
+        
     switch ($objType) {
         case "W3W":
+            $comm0 = 'W3W';
             // the What 3 Words
             $pos1  = strpos($comment,'W3W:OBJ:')+8;  $pos2 = strpos($comment, '->');
-            $comm1 = substr($comment, $pos1, $pos2-$pos1);
+            $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
             // the cross roads
             $pos1  = strpos($comment,'Roads:')+6;    $pos2 = strpos($comment, '(');
             $comm2 = substr($comment, $pos1, $pos2-$pos1);
@@ -157,34 +110,72 @@ foreach($db_found->query($sql) as $row) {
             $comm4 = substr($comment, $pos1);
             break;
         case "APRS":
+            $comm0 = 'APRS';
             // the APRES capture timestamp
             $pos1  = strpos($comment,'@:')+2;     $pos2 = strpos($comment, '(');
-            $comm5 = substr($comment, $pos1, $pos2-$pos1);
+            $comm5 = '@ '.substr($comment, $pos1, $pos2-$pos1);
             // the coordinates
             $pos1  = strpos($comment,'(')+1;    $pos2 = strpos($comment, ')');
-            $comm6 = substr($comment, $pos1, $pos2-$pos1);
+            $comm3 = substr($comment, $pos1, $pos2-$pos1);
             // the what 3 words
             $pos1  = strpos($comment,'///')+3;    $pos2 = strpos($comment, 'Cross');
-            $comm7 = substr($comment, $pos1, $pos2-$pos1);
+            $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
             // the cross roads
             $pos1  = strpos($comment,'Roads:')+6; $pos2 = strpos($comment, 'Object:');
-            $comm8 = substr($comment, $pos1, $pos2-$pos1);     
+            $comm2 = substr($comment, $pos1, $pos2-$pos1);     
             // the object description
             $pos1  = strpos($comment,'Object:')+7; 
-            $comm9 = substr($comment, $pos1);
+            $comm4 = substr($comment, $pos1);
             break;  
     } // end switch
-            
-    echo "1 W3W $comm1<br>";
-    echo "2 W3W $comm2<br>";
-    echo "3 W3W $comm3<br>";
-    echo "4 W3W $comm4<br>";
-    echo "5 APRS $comm5<br>"; 
-    echo "6 APRS $comm6<br>";
-    echo "7 APRS $comm7<br>";
-    echo "8 APRS $comm8<br>";
-    echo "9 APRS $comm9<br>";
 
+    
+    $dup = 0;
+        if(id==144) {$dup =50;}
+        
+        $markNO     = ''; // the marker number (might be alpha)
+        
+        // pad the first 9 markers with a zero
+        $zerocntr   = str_pad($row[counter], 2, "0", STR_PAD_LEFT);
+        $markername = "images/markers/marker$zerocntr.png";
+        $objmrkr    = "$row[callsign]$zerocntr";
+        $markNO     = "0$zerocntr";
+        
+        $allcallList .= "'$row[callsign]$zerocntr',";
+        
+        $gs = gridsquare($row[lat], $row[lng]); 
+                
+        $icon = "";
+        
+        $OBJMarkerList    .= "$objmrkr,";  
+        $listofMarkers    .= "$objmrkr,";  
+        $comment           = "$row[comment]";
+ 
+            $div1 = "<div class='xx' style='text-transform:uppercase;'>OBJ:<br>$objmrkr<br><br></div>
+                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br>$comm4</div>
+                     <div class='gg'><br>LOCATION: $comm5<br><a href='https://what3words.com/$comm1?maptype=osm' target='_blank'>///$comm1</a><br><br>Cross Roads:<br>$comm2<br><br>Coordinates:<br>$comm3<br>Grid: $gs<br></div>";  
+                     
+            $div2 = "<div class='cc'>Full Comment:<br>".substr($comment,19)."<br><br></div>
+                     <div class='xx'>Captured:<br>$row[timestamp]</div>";     
+                     
+                            
+   
+            $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
+                                rotationAngle: $dup, 
+                                rotationOrigin: 'bottom', 
+                                opacity: 0.75,
+                                contextmenu: true, 
+                                contextmenuWidth: 140,
+                                contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
+                                
+                                icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+                                title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();                    
+                                
+                                $('Objects'._icon).addClass('objmrkr');    
+                                $('Objects'._icon).addClass('huechange');                                          
+                           "; // End of objMarkers
 } // end foreach
+*/
+
 ?>
   

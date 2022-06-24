@@ -9,7 +9,7 @@
     require_once "dbConnectDtls.php";
     
     //$netID = intval( $_GET["NetID"] ); 
-    $netID = 4800;
+    $netID = 6100;
  
 /*   
 st = stations table
@@ -18,81 +18,16 @@ fcc = fcc_amateur.en table
 hp = HPD table
 tl = TimeLog table
 */   
-   
-/* tactical no comparison to NetLog */
-$sql = ("
-    UPDATE stations
-       SET tactical = RIGHT(callsign,3),
-           dttm  = '$open'
-     WHERE tactical = ''
-       AND dttm > DATE_SUB(now(), INTERVAL 90 DAY)
-");
-    $db_found->exec($sql);
-   // printf("\nTactical calls added: %d\n", mysql_affected_rows());
-
-/* email */
-$sql = ("
-    UPDATE stations st
-     INNER JOIN NetLog nl ON st.callsign = nl.callsign
-       SET st.email = nl.email,
-           st.dttm  = '$open'
-     WHERE nl.NetID >= '$netID'
-       AND nl.callsign = st.callsign  
-       AND nl.ID = st.ID
-       AND nl.email <> st.email;
-    SELECT ROW_COUNT()
-");
-    $db_found->exec($sql);
-   // printf("Email records changed or added: ", mysql_affected_rows());
-    
-
-/* Fname */
-$sql = ("
-    UPDATE stations st
-     INNER JOIN NetLog nl ON st.callsign = nl.callsign
-       SET st.Fname = CONCAT(UCASE(LEFT(nl.Fname, 1)), LCASE(SUBSTRING(nl.Fname, 2))),
-           st.dttm  = '$open'
-     WHERE nl.NetID >= '$netID'
-       AND nl.callsign = st.callsign
-       AND nl.ID = st.ID
-       AND nl.Fname <> st.Fname
-");
-    $db_found->exec($sql);
-
-/* Lname */    
-$sql = ("
-    UPDATE stations st
-     INNER JOIN NetLog nl ON st.callsign = nl.callsign
-       SET st.Lname = CONCAT(UCASE(LEFT(nl.Lname, 1)), LCASE(SUBSTRING(nl.Lname, 2))),
-           st.dttm  = '$open'
-     WHERE nl.NetID >= '$netID'
-       AND nl.callsign = st.callsign
-       AND nl.ID = st.ID
-       AND nl.Lname <> st.Lname
-");
-$db_found->exec($sql);
-
-/* creds */
-$sql = ("
-    UPDATE stations st
-     INNER JOIN NetLog nl ON st.callsign = nl.callsign
-       SET st.creds = nl.creds,
-           st.dttm  = '$open'
-     WHERE nl.NetID >= '$netID'
-       AND nl.callsign = st.callsign
-       AND nl.ID = st.ID 
-       AND nl.creds <> st.creds
-");
-$db_found->exec($sql);
 
 /* fccid from fcc_amateur.en */
 $sql = ("
     UPDATE stations st
      INNER JOIN fcc_amateur.en fcc ON st.callsign = fcc.callsign
-       SET st.fccid = fcc.fccid,
+       SET st.fccID = fcc.fccid,
            st.dttm  = '$open'
      WHERE fcc.callsign = st.callsign  
-       AND fcc.fccid <> st.fccid
+       AND fcc.fccid <> st.fccID
+       AND LEFT(st.callsign, 1) IN('a','k','n','w')
 ");
 $db_found->exec($sql);
 
@@ -106,6 +41,7 @@ $sql = ("
      WHERE hp.state = st.state
        AND hp.county = st.county
        AND st.district = '' or st.district IS NULL
+       AND LEFT(st.callsign, 1) IN('a','k','n','w')
 ");
 $db_found->exec($sql);
 
@@ -132,12 +68,28 @@ $stmt = $db_found->prepare("SELECT GROUP_CONCAT(DISTINCT netID) AS netids,
                               FROM NetLog 
                              WHERE status = 0  /* 0 is open, 1 is closed */
                                AND pb = 0      /* 0 is not a pre-built net, 1 is */
+                             ORDER BY netID DESC  
                           ");
     $stmt->execute();
     	$result = $stmt->fetch();
     		$openNets = $result[netids];
     		$theCount = $result[theCount];
-    		    echo("List of $theCount open nets:<br>$openNets<br><br>");
+    		    echo("<p style='columns: 20px 2; column-gap: 10px;'>List of $theCount open nets:<br>$openNets<br><br></p>");
+    		    
+    		    
+/* List of bad callsigns in stations */
+$stmt = $db_found->prepare("SELECT GROUP_CONCAT(callsign) AS badCalls
+                              FROM `stations` 
+                             WHERE state = '' 
+                               AND callsign not like 'nonham%' AND ID < 8000 
+                               AND callsign NOT LIKE ('AF%') AND callsign NOT LIKE ('AAA%') 
+                               AND callsign NOT LIKE ('AAR%')
+                               AND (callsign like 'a%' OR callsign like 'k%' OR callsign like 'n%' OR callsign like 'w%')  
+                           ");
+     $stmt->execute();
+    	$result = $stmt->fetch();
+    		$badCalls = $result[badCalls];
+                echo("<p>List of Bad callsigns in the stations table:<br>$badCalls<br><br><br></p>");
     		    
 
 /* Report on number of updates */

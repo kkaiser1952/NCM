@@ -22,7 +22,8 @@
 	// Loads the programs that create the station, poi, and object markers
 	require_once "stationMarkers.php";
     require_once "poiMarkers.php";    
-    require_once "objMarkers.php";  
+        	
+    //require_once "objMarkers.php";  
 ?>
 
 <html lang="en">
@@ -184,8 +185,20 @@
 
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
+    // This function is used to connect the markers together with a line, it breaks the L.layerGroup into lat/lon pairs
+    function connectTheDots(data){
+        var c = [];
+        for(i in data._layers) {
+            var x = data._layers[i]._latlng.lat;
+            var y = data._layers[i]._latlng.lng;
+            c.push([x, y]);
+        }
+        return c;
+    }
+    // objectKoords = connectTheDots(OBJMarkerList);     outputs what you see below
+    // @108 objectKoords= 39.202337,-94.602932,39.201986,-94.603036,39.20169,-94.603628,39.201259,-94.603175,39.201636,-94.602375,39.2025,-94.6025,39.20167,-94.60217,39.20117,-94.60167,39.20067,-94.6015,39.201016,-94.601541,39.201393,-94.601576,39.20167,-94.60167,39.20217,-94.60233,39.203,-94.60233,39.203,-94.60233,39.203,-94.60233
     
-    what3words.api.convertTo3wa({lat:39.203,lng:-94.602},'en').then(function(response){console.log("@187 W3W= [convertTo3wa]",response);});
+   // what3words.api.convertTo3wa({lat:39.203,lng:-94.602},'en').then(function(response){console.log("@187 W3W= [convertTo3wa]",response);});
     
     // Define the map
     const map = L.map('map', {
@@ -195,21 +208,42 @@
 	
 	var stationMarkers = [];
     var fg = new L.featureGroup();
+  
+    const blackmarkername       = "BRKMarkers/black_flag.svg";
+    const bluemarkername        = "BRKMarkers/blue_flag.svg";
+    const darkgreenmarkername   = "BRKMarkers/darkgreen_flag.svg";
+    const greenmarkername       = "BRKMarkers/green_flag.svg";
+    const graymarkername        = "BRKMarkers/grey_flag.svg";
+    const lightbluemarkername   = "BRKMarkers/lightblue_flag.svg";  
+    const orangemarkername      = "BRKMarkers/orange_flag.svg";   
+    const purplemarkername      = "BRKMarkers/purple_flag.svg";
+    const redmarkername         = "BRKMarkers/red_flag.svg";
+    const whitemarkername       = "BRKMarkers/white_flag.svg";
+    const goldmarkername        = "BRKMarkers/yellow_flag.svg";
+    const plummarkername        = "BRKMarkers/plum_flag.svg";
     
-    var redmarkername = "images/markers/red_50_flag.png";           // center marker
-    var bluemarkername = "images/markers/blue_50_flag.png";         // corners for stations
-    // these two are used by the objects, if there are any
+   // var goldmarkername = "images/markers/gold_50_flag.png";
+   // var orangemarkername = "images/markers/orange_50_flag.png";
+   // var plummarkername = "images/markers/violet_50_flag.png";
+   // var lightbluemarkername = "images/markers/lightblue_50_flag.png";
+  //  var graymarkername = "images/markers/gray_50_flag.png";
+   // var blackmarkername = "images/markers/black_50_flag.png";
     
-    // green, gold, orange, violet, gray, black
-    var greenmarkername = "images/markers/green_50_flag.png";       // corners for objects
-    var goldmarkername = "images/markers/gold_50_flag.png";
-    var orangemarkername = "images/markers/orange_50_flag.png";
-    var violetmarkername = "images/markers/violet_50_flag.png";
-    var lightbluemarkername = "images/markers/lightblue_50_flag.png";
-    var graymarkername = "images/markers/gray_50_flag.png";
-    var blackmarkername = "images/markers/black_50_flag.png";
-    
-    var manInTheMiddle_50 = "images/markers/manInTheMiddle_50.png"; // center for objects
+   // var manInTheMiddle_50 = "images/markers/manInTheMiddle_50.png"; // center for objects
+    var manInTheMiddle_50       = "BRKMarkers/black_flag.svg";
+    var blackmanInTheMiddle     = "BRKMarkers/black_man.svg";
+    var bluemanInTheMiddle      = "BRKMarkers/blue_man.svg";
+    var darkgreenmanInTheMiddle = "BRKMarkers/darkgreen_man.svg";
+    var greymanInTheMiddle      = "BRKMarkers/grey_man.svg";
+    var lightbluemanInTheMiddle = "BRKMarkers/lightblue_man.svg";
+    var orangemanInTheMiddle    = "BRKMarkers/orange_man.svg";
+    var pinkmanInTheMiddle      = "BRKMarkers/pink_man.svg";
+    var purplemanInTheMiddle    = "BRKMarkers/purple_man.svg";
+    var redmanInTheMiddle       = "BRKMarkers/red_man.svg";
+    var whitemanInTheMiddle     = "BRKMarkers/white_man.svg";
+    var goldmanInTheMiddle      = "BRKMarkers/yellow_man.svg";
+    var plummanInTheMiddle      = "BRKMarkers/plum_man.svg";
+
 
 	
 	// Define the layers for the map
@@ -283,10 +317,12 @@ var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
     fireicon = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
     repeatericon = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
     govicon = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-    blueFlagicon = new PoiIconClass({iconUrl: 'images/markers/blue_50_flag.png'}),  // used as corners of the bounds
+
+    blueFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
     
     objicon = new ObjIconClass({iconURL: 'images/markers/marker00.png'}),          // the 00 marker
-    greenFlagicon = new ObjIconClass({iconUrl: 'images/markers/green_50_flag.png'});  // used as corners of the bounds
+
+    greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
 
 // These are the markers that will appear on the map
 // Bring in the station markers to appear on the map
@@ -327,19 +363,19 @@ Stations.addTo(map);
     
     // These are the corner markers of the extended bounds of the stations
     var mk1 = new L.marker(new L.latLng( sw ),{
-        icon: L.icon({iconUrl: bluemarkername , iconSize: [32,36] }),
+        icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
         title:'mk1'}).addTo(map).bindPopup('MK1<br>The SW Corner<br>'+sw).openPopup();
     
     var mk2 = new L.marker(new L.latLng( nw ),{
-       icon: L.icon({iconUrl: bluemarkername , iconSize: [32,36] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
        title:'mk2'}).addTo(map).bindPopup('MK2<br>The NW Corner<br>'+nw).openPopup();
     
     var mk3 = new L.marker(new L.latLng( ne ),{
-       icon: L.icon({iconUrl: bluemarkername , iconSize: [32,36] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
        title:'mk3'}).addTo(map).bindPopup('MK3<br>The NE Corner<br>'+ne).openPopup();
     
     var mk4 = new L.marker(new L.latLng( se ),{
-       icon: L.icon({iconUrl: bluemarkername , iconSize: [32,36] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
        title:'mk4'}).addTo(map).bindPopup('MK4<br>The SE Corner<br>'+se).openPopup();
 	
     // Add the temp center marker to the map here in the javascript code allows it to use the current map view,
@@ -347,7 +383,7 @@ Stations.addTo(map);
     var mk5 = new L.marker(new L.latLng( middle ),{
         contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
         text: 'Click here to add mileage circles', callback: circleKoords}],   
-        icon: L.icon({iconUrl: redmarkername , iconSize: [32, 36] }),     
+        icon: L.icon({iconUrl: blackmanInTheMiddle , iconSize: [220,220] }),     
         title:'mk5'}).addTo(map).bindPopup('MK5<br>The Center Marker<br>'+middle).openPopup();
     
     // Definition of the 5 markers above, corners plus middle    
@@ -359,32 +395,68 @@ Stations.addTo(map);
      //=======================================================================
     //================ Object Marker Corners and all the Objects =============
     //========================================================================
-
-        // These are neded to determine the corners and centers
-        <?php  echo "$objBounds" ;
-               echo "$objMiddle" ;
-               echo "$objPadit";
-        ?>
+    
+    
+    <?php     	
+        include_once "objMarkers.php";  
+        
+        echo "$objBounds" ;
+        echo "$objMiddle" ;
+        echo "$objPadit";
         
         // Object markers here
-        <?php echo "$objMarkers"; ?>
+        echo "$objMarkers";
         
-        console.log('@366 objMarker');
-        //console.log(WA0TJT01);
-         
         // Object Marker List starts here
-        <?php echo "$OBJMarkerList"; ?>
+        echo "$OBJMarkerList";
+    ?>
         
-        console.log('@372 OBJMarkerList'); // dont use line number in console.log below
-        //console.log(OBJMarkerList);
+  
+    // Corner and center flags for the object markers, 5 for each callsign that has objects
+    <?php echo "$cornerMarkers"; ?>
+    
+    <?php echo "$uniqueCallList"; 
+          echo "$allcallList";
+          
+          echo "$allBounds";
+          echo "$allnameBounds";
+         // echo "$allBounds";
+    ?>
+
+              console.log('@426 allnameBounds = '+allnameBounds.toString());
+            
+              console.log('@428 '+uniqueCallList[0]+' '+uniqueCallList[1]+' lngth= '+uniqueCallList.length);
+      
+        // var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,WA0TJT09,WA0TJT10,WA0TJT11,]);
         
-        // Corner and center flags for the object markers, 5 for each callsign that has objects
-        <?php echo "$cornerMarkers"; ?>
+        // var allcallList =['W0DLK','W0DLK','W0DLK','W0DLK','W0DLK','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT','WA0TJT',];
         
+            console.log('@434 allcallList count= '+allcallList.length+' ex: 0 is '+allcallList[0]);
+            console.log(allcallList);
+            
+        // color wheel for the lines
+       const colorwheel = ["green","blue","orange","plum","lightblue","gray","gold","black","red"];
+    
+       var newcolor = 0;
+          
+          for (z of uniqueCallList) {
+            
+            newcolor = colorwheel[z]; // sets the color in the var objectLine below
+                console.log('@473 z= '+z+', newcolor= '+newcolor+', cw= '+colorwheel[z]+' cs= '+allcallList[z]);
+            
+            // Add connecting lines between the object markers           
+            objectKoords = connectTheDots(OBJMarkerList);   console.log('@476 objectKoords= '+objectKoords);
+            var objectLine = L.polyline(objectKoords,{color: newcolor, weight: 4}).addTo(map);
         
-        
-        
- 
+            // Add connecting lines between the corners of the objects
+           //<?php echo "$KornerList"; ?>
+           //objectKornerKoords = connectTheDots(KornerList);
+           //var objectKornerLine = L.polyline(objectKornerKoords,{color: newcolor, weight: 5}).addTo(map);    
+           
+                console.log('@484 z= '+z+', newcolor= '+newcolor+', cw= '+colorwheel[z]+' cs= '+allcallList[z]);
+
+          } // end for loop
+       
         // Add the OBJMarkerList to the map, this was the missing piece 
         OBJMarkerList.addTo(map);
 
@@ -393,7 +465,7 @@ Stations.addTo(map);
     //======================================================================    
 // The classList is the list of POI types.
 var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
-   console.log('@387 in map.php classList= '+classList);
+   console.log('@497 in map.php classList= '+classList);
 
 let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 

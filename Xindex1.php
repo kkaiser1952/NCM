@@ -126,7 +126,7 @@
     position: relative;
     top: 45%;
     left: 5%;
-    width: 90%;
+    width: 75%;
     display: none;    
     font-family: Arial, Helvetica, sans-serif;
     color: blue;
@@ -141,44 +141,35 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.image-container {
-   display: flex;
-     flex-wrap: wrap;
-     padding: 3px;
-     
- /*   justify-content: space-evenly; */
-}
-.myimg1 {
 
-    padding: 5px;
+#testnet {
+	color: rid;
+	font-size: 1.5em;
+	position: absolute;
+}
 
-}
-.myimg {
-  
-    padding: 5px;
-}
-.break {
-    flex-basis: 100%;
-    height: 0;
-}
-.break1 {
-    flex-basis: 100%;
+.Testcontainer {
+    font-size: large;
+    color: red;
     height: 10px;
 }
+
+
 </style>
 
 </head>
 <body>
 
-
+<!--<div class="upper-left-corner" style="border: 2px solid blue; "> -->
 <div class="openingImages">
-<!-- NCM and Net Control Manager images at top of page -->
-<img id="smtitle" src="images/NCM.png" alt="NCM" >
-<img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
-
-<span id="version">
-	<a href="#cc" rel="modal:open" id="version2">6.05.03</a> <!-- Years in service . Month . day  of last update -->
-</span> <!-- End of id version -->
+    <!-- NCM and Net Control Manager images at top of page -->
+    <img id="smtitle" src="images/NCM.png" alt="NCM" >
+    <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
+    
+    <span id="version">
+        <!-- Years in service from 2016 . Month . day  of last update -->
+    	<a href="#cc" rel="modal:open" id="version2">6.12.15</a> 
+    </span> <!-- End of id version -->
 </div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
@@ -198,13 +189,19 @@
 		 
     <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 30px;">
         <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
-	<div class = "weather-place">
+    <div class = "weather-place">
+		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" onclick="newWX()">
+<!--	<div class = "weather-place">
 		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" >
+-->
+<!--		<input id="image" type="image" src="images/US-NWS-Logo.png" width="50" height="50" alt="use coords for NWS" onclick="javascript:alert('hello');" /> -->
+
 		<a href="https://www.weather.gov" target="_blank" rel="noopener">
     		<!-- CurrentWX() was developed by Jeremy Geeo, KD0EAV Found it wx.php -->
 			<?php echo currentWX(); ?>   <!-- wx.php -->
 		</a>  
 	</div> <!-- End of class: weather-place -->
+<!-- </div> --> <!-- End of class: upper-left-corner -->
 		
     <br>
        <!-- The div below builds the Preamble, Agenda... menu --> 
@@ -315,9 +312,9 @@
 	<div id="netdata">
 		<!-- Use the span below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	<span style="color:red; font-size: large;">	
-	<!--
-		Reminder: The default to enter a call is now three tabs... tab tab tab or STOP at the last box<br> and enter T,R,W,P,E,Q,A, or C for the Traffic column in the small, last box. See <a href="https://net-control.us/help.php#checkins" target="_blank">Check-in</a> for details.
-        -->
+	
+		Please report any issues to wa0tjt@gmail.com Thank you.
+        
 		</span> 
 	    </p>
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
@@ -331,13 +328,14 @@
 		</div>
 		
 		<div id="makeNewNet" class="hidden" >	
+            <label class="Testcontainer" for="testnet">Click if making a test net? &nbsp;&nbsp;&nbsp;
+    		    <input id="testnet" type="checkbox" name="testnet" value="y" >
+    		   
+            </label>
+            <br>
+            
 			<div>Enter Your Call Sign:</div>   
-				<input type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
-				
-			<!-- tn is found in NetManager-p2.js at the very bottom -->	
-            <label class="buildtest" for="tn">Click to build a TE0ST net. &nbsp;&nbsp;&nbsp;
-    			<input id="tn" type="checkbox" name="tn" class="tn" />
-			</label>
+				<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
 					
             <?php  require_once "buildThreeDropdowns.php"; ?>
 			
@@ -565,7 +563,7 @@
 			<div class="hidden" id="subNets"></div> <!-- Home for the sub-nets -->
 			<br>
 					
-	<!--	The 'Export CSV' button is written by the getactivities.php program --> 
+	<!--	The 'Export CSV' & 'Map This Net' buttons are written by the getactivities.php program --> 
 			
 			<!-- HideTimeLine() in NetManager.js -->
 			<button class="timelineBut timelineBut2" onclick="RefreshTimeLine(); location.href='#timeHead';">Update</button>
@@ -575,23 +573,26 @@
 		</div>   
 	</div> <!-- end admin -->		
 
+        <!-- only reference to #status is in netmanager.css, but what does this div do? -->
 	    <div id="status"></div>
-	    
+	    <!--
 	    <div id="modalList" class="hidden">Modal List goes here</div>
+	    -->
 	</div> <!-- End id netchoice -->
 	
-	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-02-21</span></p>
+	<!-- https://jquerymodal.com -->
+	<div id="#cc" class="modal" style="display:none;">	
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-12-15</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
 			
 	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
 		</p>
-		<p><a href="#cc" rel="modal:close">Close</a></p>
+		<p><a href="#" rel="modal:close">Close</a></p>
 	</div> <!-- End id cc -->
 	
-	<div id="lli" class="modal-dialog" style="display:none;"></div> <!-- End of id lli -->
+	<div id="lli" class="modal-dialog" style="display:none; "></div> <!-- End of id lli -->
 	
 	<div id="pbl" class=" modal hidden"></div> <!-- End of id ppl, Holds the list of pre-built nets created in PBList.php -->
 	
@@ -602,48 +603,45 @@
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
      <!-- All the quotes go here -->
+<!--
         <h3 class="preQuote">Click anywhere to stop animation</h3>
     	<h2 class="quotes">
-        	<!-- https://www.developerdrive.com/responsive-image-gallery-flexbox/ -->
-        <div class="image-container">	
+        	<p style="font-size: larger ; color:blue;">https://net-control.us</p>
+        	<!- - https://www.developerdrive.com/responsive-image-gallery-flexbox/ - ->
+        	<div class="image-container">	
            
-        <img class="myimg1" src="images/mars.png" alt="mars" width="110" height="" >      	 
+            <img class="myimg" src="images/mars.png" alt="mars" width="100" height="" >      	 
             
-        <img class="myimg1" src="images/skywarn.png" alt="skywarn" width="110" height="" >
+            <img class="myimg" src="images/skywarn.png" alt="skywarn" width="100" height="" >
             
-        <img class="myimg1" src="images/nts.png" alt="nts" width="110" height="" >
+            <img class="myimg" src="images/nts.png" alt="nts" width="100" height="" >
            
-        <img class="myimg1" src="images/ARES.png" alt="ARES" width="110" height="" >
+        	<img class="myimg" src="images/ARES.png" alt="ARES" width="100" height="" >
         	
-        <img class="myimg1" src="images/RACES.png" alt="RACES" width="110" height="" >
+        	<img class="myimg" src="images/RACES.png" alt="RACES" width="100" height="" >
         	
-        <img class="myimg1" src="images/satern.png" alt="satern" width="110" height="" >
+            <img class="myimg" src="images/satern.png" alt="satern" width="100" height="" >
         	
-        <img class="myimg1" src="images/expo-2021-aug14-15-logo-300dpi-transback-2265px-sq.png" alt="expo-2021-aug14-15-logo-300dpi-transback-2265px-sq" width="110" height="" >
-                
-        <img class="break">  <!-- zero px break to a new row -->
-        	
-        <img class="myimg" src="images/century21.png" alt="century21" width="225" height="" >
+            <img class="myimg" src="images/QSOTodayEXPOSPEAKERBadge.png" alt="QSOTodayEXPOSPEAKERBadge" width="120" height="" >
+        	<br> 
+        	<img src="images/century21.png" alt="century21" width="225" height="" >
            
-        <img class="myimg" src="images/redcross.png" alt="redcross" width="225" height="" >
+        	<img src="images/redcross.png" alt="redcross" width="225" height="" >
         	
-        <img class="myimg" src="images/cert.png" alt="cert" width="225" height="" >
+        	<img src="images/cert.png" alt="cert" width="225" height="" >
         	
-        <img class="myimg" src="images/waefar.png" alt="waefar" width="225" height="" >
-             
-        <img class="break1">  <!-- 10px break to a new row -->
-             
-        <img class="myimg" src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="90%">
+        	<img src="images/waefar.png" alt="waefar" width="225" height="" >
         
-        	 <!-- Morse code source:  https://fontmeme.com/morse-code/. -->
-        	</div>
-        	<br>         
+        	 <!- - Morse code source:  https://fontmeme.com/morse-code/. - ->
+        	</div>        
+        	 <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
+        <br> 
     	    NCM was designed to make Amateur Radio Net check-ins, management of net resources and net 
     	    reporting easier and more efficient than using pen and paper. 
         <br>
-        <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
-        
-        </h2>
+            <img src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="100%">
+                
+        </h2>  <!- - End of H2 - ->
         
         <h2 class="quotes"><b style="color:red">HINT:</b><br> Not Logging the Net: <b style="color:green"> Put yourself in 5sec Refresh Mode...</b><b style="color:blue"> Use The Blue 'Timed' Button</b><br>
              <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%"></h2>
@@ -657,9 +655,9 @@
         </h2>
         <?php
 				echo "<h2 class='quotes'>
-				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>have used NCM<br>
+				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>
 				    <img src='https://fontmeme.com/permalink/210514/469ac0e73fe5e79d55c4c332c794fa07.png' alt='K'></h2>"?>
-
+-->
      <!-- All the quotes end here -->
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
@@ -700,6 +698,7 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
+        
 (function() {
 
     var quotes = $(".quotes"); //variables
@@ -719,6 +718,48 @@ $("body").click(function(){
     $(".quotes").addClass("hidden");
     $(".preQuote").addClass("hidden");
 });
+
+
+// This javascript function tests the callsign being used to start a new being in a list of callsigns that did not close a previous net.
+function checkCall() {
+    const listOfCalls = new Set( ['w4dv', 'kc0oiz', 'w0erh', 'ad0im', 'k4ilg', 'k4flm', 'k0wtf', 'wb4ftu' ]);
+    const isCallInSet = listOfCalls.has($("#callsign").val());
+    
+    // If the callsign starting this net is in the above list then ask for his email to send him a message
+    if (!isCallInSet == '') {
+        var mail = prompt('Please enter your email address.');
+            if (mail == '') {
+                alert("Please be sure to close your net when finished. Thank you!");
+            } else {
+                if (mail == null) {
+                    alert("Please be sure to close your net when finished. Thank you!");
+                }
+            }
+    }
+}
+
+function newWX() {
+    var str = prompt('What is your callsign?');
+        if (str =="") {alert("OK no valid call was entered");}
+	else {
+        var thiscall = [str.trim()];
+console.log('this call is '+thiscall);
+                        
+            $.ajax({
+			type: "GET",
+			url: "getNewWX.php",  
+			data: {call : thiscall},
+			success: function(response) {
+			},
+			
+			error: function() {
+				alert('Last Query Failed, try again.');
+			}
+		});
+	} // end of else
+} // end function
+</script>
+
 
 </script>
 

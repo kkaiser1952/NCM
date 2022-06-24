@@ -82,13 +82,13 @@
 			   		<td class='edit_r3c4 r3c4 nobg2'>$r3c4</td> </tr> ");
 			   		
 		echo(" <tr> <td class='edit_r4c1 r4c1 nobg1'>$r4c1</td> 
-					<td class='edit_r4c2 r4c2 nobg'>$r4c2</td>
+					<td class='edit_r4c2 r4c2 nobg' nowrap >$r4c2</td>
 			   		<td class='edit_r4c3 r4c3 nobg'>$r4c3</td>  
 			   		<td class='edit_r4c4 r4c4 nobg'>$r4c4</td> </tr> ");
 			   		
 		echo(" <tr> <td class='edit_r5c1 r5c1 nobg1'>$r5c1</td> 
 					<td class='edit_r5c2 r5c2 nobg2'>$r5c2</td>
-			   		<td class='edit_r5c3 r5c3 nobg2'>$r5c3</td> 
+			   		<td class='edit_r5c3 r5c3 nobg2' nowrap >$r5c3</td> 
 			   		<td class='edit_r5c4 r5c4 nobg2'>$r5c4</td> </tr> ");
 		if ($call != 'DMR'){
 		echo(" <tr> <td class='edit_r6c1 r6c1 nobg1'>$r6c1</td> 

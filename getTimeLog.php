@@ -6,20 +6,7 @@
 	require_once "dbConnectDtls.php";	    
 	
 	$q = intval($_GET['q']); 
-	//$q = 1932;
-	
-	/*
-	$header = '<table class="sortable2" id="pretimeline" style="width:100%;">
-		<thead> 
-			<tr>
-				<th>Date Time</th>
-				<th>ID</th>
-				<th>Callsign</th>
-				<th style="width:1400px; max-width:1400px;">Report</th>
-			</tr>
-		</thead>
-		<tbody>';
-    */
+	//$q = 5961;
 	
 	try {  // Get the start time of the net 
 	$sql = $db_found->prepare("SELECT min(logdate) as minTime from NetLog where netID = '$q' limit 1" );
@@ -41,7 +28,7 @@
 				<th>Date Time</th>
 				<th>ID</th>
 				<th>Callsign</th>
-				<th style="width:1400px; max-width:1400px;">Report</th>
+				<th style="width:1400px; max-width:1400px;">Comments Report</th>
 			</tr>
 		</thead> ';
 		

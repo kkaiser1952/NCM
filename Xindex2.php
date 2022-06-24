@@ -40,7 +40,7 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
-    require_once "wx.php";			   // Makes the weather information available
+    require_once "wx2.php";			   // Makes the weather information available
     
     require_once "NCMStats.php";
     
@@ -141,23 +141,35 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.image-container {
-  /*  display: flex; */
+
+#testnet {
+	color: rid;
+	font-size: 1.5em;
+	position: absolute;
 }
+
+.Testcontainer {
+    font-size: large;
+    color: red;
+    height: 10px;
+}
+
+
 </style>
 
 </head>
 <body>
 
-
+<!--<div class="upper-left-corner" style="border: 2px solid blue; "> -->
 <div class="openingImages">
-<!-- NCM and Net Control Manager images at top of page -->
-<img id="smtitle" src="images/NCM.png" alt="NCM" >
-<img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
-
-<span id="version">
-	<a href="#cc" rel="modal:open" id="version2">6.05.03</a> <!-- Years in service . Month . day  of last update -->
-</span> <!-- End of id version -->
+    <!-- NCM and Net Control Manager images at top of page -->
+    <img id="smtitle" src="images/NCM.png" alt="NCM" >
+    <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
+    
+    <span id="version">
+        <!-- Years in service from 2016 . Month . day  of last update -->
+    	<a href="#cc" rel="modal:open" id="version2">6.10.28</a> 
+    </span> <!-- End of id version -->
 </div>
 
 	<!-- From showDTTM() in NetManager-p2.js -->
@@ -178,12 +190,16 @@
     <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 30px;">
         <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
 	<div class = "weather-place">
-		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" >
+    	<input id="image" type="image" src="images/US-NWS-Logo.png" width="50" height="50" alt="use coords for NWS" onclick="javascript:alert('hello');" /> 
+<!--    	<button style="background: url(images/US-NWS-Logo.png)" ></button> -->
+<!--		<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" > -->
 		<a href="https://www.weather.gov" target="_blank" rel="noopener">
+    		
     		<!-- CurrentWX() was developed by Jeremy Geeo, KD0EAV Found it wx.php -->
-			<?php echo currentWX(); ?>   <!-- wx.php -->
+			<?php echo currentWX(); ?>   <!-- wx.php --> 
 		</a>  
 	</div> <!-- End of class: weather-place -->
+<!-- </div> --> <!-- End of class: upper-left-corner -->
 		
     <br>
        <!-- The div below builds the Preamble, Agenda... menu --> 
@@ -294,9 +310,9 @@
 	<div id="netdata">
 		<!-- Use the span below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	<span style="color:red; font-size: large;">	
-	<!--
-		Reminder: The default to enter a call is now three tabs... tab tab tab or STOP at the last box<br> and enter T,R,W,P,E,Q,A, or C for the Traffic column in the small, last box. See <a href="https://net-control.us/help.php#checkins" target="_blank">Check-in</a> for details.
-        -->
+	
+		Please report any issues to wa0tjt@gmail.com Thank you.
+        
 		</span> 
 	    </p>
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
@@ -310,13 +326,14 @@
 		</div>
 		
 		<div id="makeNewNet" class="hidden" >	
+            <label class="Testcontainer" for="testnet">Click if making a test net? &nbsp;&nbsp;&nbsp;
+    		    <input id="testnet" type="checkbox" name="testnet" value="y" >
+    		   
+            </label>
+            <br>
+            
 			<div>Enter Your Call Sign:</div>   
 				<input type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
-				
-			<!-- tn is found in NetManager-p2.js at the very bottom -->	
-            <label class="buildtest" for="tn">Click to build a TE0ST net. &nbsp;&nbsp;&nbsp;
-    			<input id="tn" type="checkbox" name="tn" class="tn" />
-			</label>
 					
             <?php  require_once "buildThreeDropdowns.php"; ?>
 			
@@ -544,7 +561,7 @@
 			<div class="hidden" id="subNets"></div> <!-- Home for the sub-nets -->
 			<br>
 					
-	<!--	The 'Export CSV' button is written by the getactivities.php program --> 
+	<!--	The 'Export CSV' & 'Map This Net' buttons are written by the getactivities.php program --> 
 			
 			<!-- HideTimeLine() in NetManager.js -->
 			<button class="timelineBut timelineBut2" onclick="RefreshTimeLine(); location.href='#timeHead';">Update</button>
@@ -554,23 +571,26 @@
 		</div>   
 	</div> <!-- end admin -->		
 
+        <!-- only reference to #status is in netmanager.css, but what does this div do? -->
 	    <div id="status"></div>
-	    
+	    <!--
 	    <div id="modalList" class="hidden">Modal List goes here</div>
+	    -->
 	</div> <!-- End id netchoice -->
 	
-	<div id="cc" style="display:none;">	
-		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-02-21</span></p>
+	<!-- https://jquerymodal.com -->
+	<div id="#cc" class="modal" style="display:none;">	
+		<p>&copy; Copyright 2015-2021, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2021-10-28</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
 			
 	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
 		</p>
-		<p><a href="#cc" rel="modal:close">Close</a></p>
+		<p><a href="#" rel="modal:close">Close</a></p>
 	</div> <!-- End id cc -->
 	
-	<div id="lli" class="modal-dialog" style="display:none;"></div> <!-- End of id lli -->
+	<div id="lli" class="modal-dialog" style="display:none; "></div> <!-- End of id lli -->
 	
 	<div id="pbl" class=" modal hidden"></div> <!-- End of id ppl, Holds the list of pre-built nets created in PBList.php -->
 	
@@ -581,9 +601,11 @@
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
      <!-- All the quotes go here -->
+<!--
         <h3 class="preQuote">Click anywhere to stop animation</h3>
     	<h2 class="quotes">
-        	<!-- https://www.developerdrive.com/responsive-image-gallery-flexbox/ -->
+        	<p style="font-size: larger ; color:blue;">https://net-control.us</p>
+        	<!- - https://www.developerdrive.com/responsive-image-gallery-flexbox/ - ->
         	<div class="image-container">	
            
             <img class="myimg" src="images/mars.png" alt="mars" width="100" height="" >      	 
@@ -598,8 +620,7 @@
         	
             <img class="myimg" src="images/satern.png" alt="satern" width="100" height="" >
         	
-            <img class="myimg" src="images/expo-2021-aug14-15-logo-300dpi-transback-2265px-sq.png" alt="expo-2021-aug14-15-logo-300dpi-transback-2265px-sq" width="" height="" >
-           
+            <img class="myimg" src="images/QSOTodayEXPOSPEAKERBadge.png" alt="QSOTodayEXPOSPEAKERBadge" width="120" height="" >
         	<br> 
         	<img src="images/century21.png" alt="century21" width="225" height="" >
            
@@ -609,7 +630,7 @@
         	
         	<img src="images/waefar.png" alt="waefar" width="225" height="" >
         
-        	 <!-- Morse code source:  https://fontmeme.com/morse-code/. -->
+        	 <!- - Morse code source:  https://fontmeme.com/morse-code/. - ->
         	</div>        
         	 <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
         <br> 
@@ -618,7 +639,7 @@
         <br>
             <img src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="100%">
                 
-        </h2>  <!-- End of H2 -->
+        </h2>  <!- - End of H2 - ->
         
         <h2 class="quotes"><b style="color:red">HINT:</b><br> Not Logging the Net: <b style="color:green"> Put yourself in 5sec Refresh Mode...</b><b style="color:blue"> Use The Blue 'Timed' Button</b><br>
              <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%"></h2>
@@ -634,7 +655,7 @@
 				echo "<h2 class='quotes'>
 				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>
 				    <img src='https://fontmeme.com/permalink/210514/469ac0e73fe5e79d55c4c332c794fa07.png' alt='K'></h2>"?>
-
+-->
      <!-- All the quotes end here -->
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	

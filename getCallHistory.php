@@ -74,6 +74,7 @@ function secondsToDHMS($seconds) {
       ,fcc_amateur.am b
  WHERE c.callsign = '$call'
    AND b.callsign = c.callsign
+   AND c.fccid = b.fccid
  ORDER BY c.fccid DESC  /* new on 2019-04-29 */
  LIMIT 0,1
  ";
@@ -116,6 +117,7 @@ SELECT count(a.callsign) as logCount
       ,SUM(IF(YEAR(a.logdate) = '2019', 1,0)) as y2019 
       ,SUM(IF(YEAR(a.logdate) = '2020', 1,0)) as y2020 
       ,SUM(IF(YEAR(a.logdate) = '2021', 1,0)) as y2021
+      ,SUM(IF(YEAR(a.logdate) = '2022', 1,0)) as y2022
       
       ,SUM(IF(YEAR(a.logdate) = '2016', a.timeonduty,0)) as h2016
 	  ,SUM(IF(YEAR(a.logdate) = '2017', a.timeonduty,0)) as h2017
@@ -123,6 +125,7 @@ SELECT count(a.callsign) as logCount
       ,SUM(IF(YEAR(a.logdate) = '2019', a.timeonduty,0)) as h2019 
       ,SUM(IF(YEAR(a.logdate) = '2020', a.timeonduty,0)) as h2020
       ,SUM(IF(YEAR(a.logdate) = '2021', a.timeonduty,0)) as h2021
+      ,SUM(IF(YEAR(a.logdate) = '2022', a.timeonduty,0)) as h2022
       
    FROM ncm.NetLog a
   WHERE a.callsign = '$call'
@@ -156,11 +159,13 @@ SELECT count(a.callsign) as logCount
 		$y2016		= $result[y2016];		     $y2017		= $result[y2017];  	
 		$y2018		= $result[y2018];		     $y2019		= $result[y2019];
 		$y2020		= $result[y2020];            $y2021		= $result[y2021];
+		$y2022		= $result[y2022];
 		
 		$h2016		= $result[h2016];		     $h2017		= $result[h2017];  	
 		$h2018		= $result[h2018];		     $h2019		= $result[h2019];
 		$callsign	= $result[callsign];         $h2020		= $result[h2020];
 		                                         $h2021		= $result[h2021];
+		                                         $h2022		= $result[h2022];
 		
 		// Start what3word stuff
 		// ======================================
@@ -174,6 +179,7 @@ SELECT count(a.callsign) as logCount
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.what3words.com/v3/convert-to-3wa?key=5WHIM4GD&coordinates=$koords&language=en&format=json",
+  CURLOPT_SSL_VERIFYPEER => false,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -266,8 +272,9 @@ foreach ( $result["webPages"]["value"] as $data)
 		$h2019		= secondsToDHMS($h2019);
 		$h2020		= secondsToDHMS($h2020);
 		$h2021		= secondsToDHMS($h2021);
+		$h2022		= secondsToDHMS($h2022);
 		
-		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020,$y2021);
+		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020,$y2021,$y2022);
 		$yearTotals		 = array_sum($yearTotalsArray);
 		
 		// Is there a headshot for this person?
@@ -437,7 +444,8 @@ foreach ( $result["webPages"]["value"] as $data)
 			<!-- Location Information -->
 			<div class='container2'>			   
 				
-				<p class='b'>$call</p>
+				<!-- <p class='b'>$call</p> -->
+				<p class='b'><a href='https://www.qrz.com/db/$call' target='_blank'> $call </a></p>
 				
 				<span>$address </span>
 				
@@ -474,6 +482,7 @@ foreach ( $result["webPages"]["value"] as $data)
 			  	<tr><td> 2019 </td> <td> $y2019 </td> <td> $h2019 </td></tr>
 			  	<tr><td> 2020 </td> <td> $y2020 </td> <td> $h2020 </td></tr>
 			  	<tr><td> 2021 </td> <td> $y2021 </td> <td> $h2021 </td></tr>
+			  	<tr><td> 2022 </td> <td> $y2022 </td> <td> $h2022 </td></tr>
 			  	
 			  	<tr><td> Total </td> <td> $yearTotals </td> <td> $yearHours </td></tr>
 			  	
@@ -488,6 +497,9 @@ foreach ( $result["webPages"]["value"] as $data)
 			  </h5>
 			   			  
 			  $id 
+			  <br><br>
+			  getCallHistory.php
+			  
 			  
 			  </body></html>
 			  </div>

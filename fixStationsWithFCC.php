@@ -29,7 +29,7 @@ SELECT n.callsign as callsign,
   AND f.fccid > n.fccid 
   AND n.id < 8000
 ORDER BY `n`.`callsign` ASC
-LIMIT 20
+LIMIT 500
 ";
 
 //echo "$sql"; 

@@ -150,7 +150,7 @@
     <!-- Under the banner in the upper left corner -->
     <div id="stations"> 
 		<b style="color:red; text-decoration: underline;">TE0ST
-    		</b><br><a class='rowno' id='marker_1' href='#'>1 _WA0TJT</a><br><a class='rowno' id='marker_2' href='#'>2 _W0DLK</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0FTY</a><br><a class='rowno' id='marker_4' href='#'>4 _KC9OAZ</a><br>	</div>
+    		</b><br><a class='rowno' id='marker_1' href='#'>1 _WA0TJT</a><br><a class='rowno' id='marker_2' href='#'>2 _W0DLK</a><br>	</div>
 
     <!-- The title banner -->
     <div id="activity" class="activity">
@@ -184,8 +184,13 @@
 	var stationMarkers = [];
     var fg = new L.featureGroup();
     
+   // var redmarkername = "images/markers/red_50_flag.png";           // center marker
+   // var blackmarkername = "images/markers/blue_50_flag.png";         // corners for stations
+    // these two are used by the objects, if there are any
+    
+    // green, gold, orange, violet, gray, black
+  //  var greenmarkername = "images/markers/green_50_flag.png";       // corners for objects
   
-    // Markers (flags for use as corners and center
     const blackmarkername       = "BRKMarkers/black_flag.svg";
     const bluemarkername        = "BRKMarkers/blue_flag.svg";
     const darkgreenmarkername   = "BRKMarkers/darkgreen_flag.svg";
@@ -197,8 +202,15 @@
     const redmarkername         = "BRKMarkers/red_flag.svg";
     const whitemarkername       = "BRKMarkers/white_flag.svg";
     const goldmarkername        = "BRKMarkers/yellow_flag.svg";
-    const plummarkername        = "BRKMarkers/plum_flag.svg";
     
+   // var goldmarkername = "images/markers/gold_50_flag.png";
+   // var orangemarkername = "images/markers/orange_50_flag.png";
+   // var violetmarkername = "images/markers/violet_50_flag.png";
+   // var lightbluemarkername = "images/markers/lightblue_50_flag.png";
+  //  var graymarkername = "images/markers/gray_50_flag.png";
+   // var blackmarkername = "images/markers/black_50_flag.png";
+    
+   // var manInTheMiddle_50 = "images/markers/manInTheMiddle_50.png"; // center for objects
     var manInTheMiddle_50       = "BRKMarkers/black_flag.svg";
     var blackmanInTheMiddle     = "BRKMarkers/black_man.svg";
     var bluemanInTheMiddle      = "BRKMarkers/blue_man.svg";
@@ -211,7 +223,6 @@
     var redmanInTheMiddle       = "BRKMarkers/red_man.svg";
     var whitemanInTheMiddle     = "BRKMarkers/white_man.svg";
     var goldmanInTheMiddle      = "BRKMarkers/yellow_man.svg";
-    var plummanInTheMiddle      = "BRKMarkers/plum_man.svg";
 
 	
 	// Define the layers for the map
@@ -295,7 +306,7 @@ var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
 // These are the markers that will appear on the map
 // Bring in the station markers to appear on the map
 
-			var _WA0TJT = new L.marker(new L.LatLng(39.203,-94.60233),{ 
+			var _WA0TJT = new L.marker(new L.LatLng(39.20217,-94.60233),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -304,8 +315,8 @@ var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
 			                 
 				icon: new L.NumberedDivIcon({number: '1' }),
 				title:`marker_1` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>1<br><b>WA0TJT</b><br> ID: #0013<br>Keith Kaiser<br>Platte Co., MO Dist: A<br>39.203, -94.60233<br>EM29QE<br><a href='https://what3words.com/mailings.fried.imbalances?maptype=osm' target='_blank'>///mailings.fried.imbalances</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.203&lon=-94.60233&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>1<br><b>WA0TJT</b><br> ID: #0013<br>Keith Kaiser<br>Platte Co., MO Dist: A<br>39.20217, -94.60233<br>EM29QE<br><a href='https://what3words.com/shots.stunt.tulips?maptype=osm' target='_blank'>///shots.stunt.tulips</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.20217&lon=-94.60233&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
 				$(`_WA0TJT`._icon).addClass(`bluemrkr`);
@@ -326,38 +337,6 @@ var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
 				
 				$(`_W0DLK`._icon).addClass(`greenmrkr`);
                 stationMarkers.push(_W0DLK);
-				
-			var _KD0FTY = new L.marker(new L.LatLng(39.206945,-94.604219),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '3' }),
-				title:`marker_3` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>3<br><b>KD0FTY</b><br> ID: #0223<br>Clark Martineau<br>Platte Co., MO Dist: A<br>39.206945, -94.604219<br>EM29QE<br><a href='https://what3words.com/arrange.boxing.casting?maptype=osm' target='_blank'>///arrange.boxing.casting</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.206945&lon=-94.604219&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_KD0FTY`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KD0FTY);
-				
-			var _KC9OAZ = new L.marker(new L.LatLng(39.200531,-94.601332),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '4' }),
-				title:`marker_4` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>4<br><b>KC9OAZ</b><br> ID: #5159<br>Jared Moore<br>Platte  Co., MO Dist: <br>39.200531, -94.601332<br>EM29QE<br><a href='https://what3words.com/inclined.distancing.segregation?maptype=osm' target='_blank'>///inclined.distancing.segregation</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.200531&lon=-94.601332&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_KC9OAZ`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KC9OAZ);
 			;
 
             var HMSPH = new L.marker(new L.LatLng(48.034632,-122.775006),{ 
@@ -5486,19 +5465,19 @@ var firstaidicon = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
  
                         $(`state`._icon).addClass(`govmrkr`);
 var AviationList = L.layerGroup([HMSPH, CFKHB, MCI, PTIACPT, SVBPT, DPNGWA, KCI, RAAB]);var CHPList = L.layerGroup([CHPDC237, HPA172, CHPGS227]);var EOCList = L.layerGroup([W0KCN15, HCES239, W0KCN3, JCDEM265, ALTEOC266, EOC399, NARESEOC, W0KCN4]);var FederalList = L.layerGroup([USFSMRRDO206, LTRD193, LTRDUSFS191, MRFSUSFS205]);var FireList = L.layerGroup([KCMOFS6, KCMOFS7, KCMOFS8, BRVRCOFR29, SPFD171, AFD173, KCMOFS16, AFD174, KCMOFS5, HBFS2, KCMOFS3, TFESS12, RVRSDEFD, GNSVFS1, HBFS3, HBFS1, HBFS4, HBFS5, KCMOFS1, KCMOFS4, KCMOFS17, KCMOFS38, KCMOFS39, KCMOFS40, KCMOFS41, KCMOFS42, KCMOFS43, KCMOFS44, KCMOFS45, KCMOFS47, RVRSFD, KCMOFS14, FIRE13254, KCMOFS37, KCMOFS36, KCMOFS18, KCMOFS19, KCMOFS23, KCMOFS24, KCMOFS25, KCMOFS27, KCMOFS28, KCMOFS29, KCMOFS30, KCMOFS33, KCMOFS34, KCMOFS35, CARROLFD, AFD175, Fire400, GFPD220, WFS2217, BVFD215, PVFD214, MVFD213, MFFS212, PFD209, SVFD208, RDVFD207, HFD202, KVFDFS222, WGVF223, Fire397, PL7650, B272SB, KCMOFS10, SCVFD218, FIRE16257, FIRE15256, FIRE14255, FIRE12253, FIRE11252, FVFDCH201, CFS204, FFD177, WVFD178, TFD179, OVFD181, YFD182, CFPOBFS, KFD34, KFD35, CCFR187, CCFRWHQ189, HFD190, FFD199, BLFD176, FFD198, LFS197, MCVF196, KFPD194, WCFD192]);var HOSPITALList = L.layerGroup([WHIDBEY264, LMH, FORKS261, JCC260, JCC259, SJH160, BATES, PA262, MRCH161, RMH162, JPCH163, TH164, SCH165, JCMC258, WHIDBEY263, SMMC, PETTIS, OPR, EXSPR, OMC, NORKC, MENORA, LSMED, LRHC, LCHD19, LIBRTY, KU0MED, KINDRD, KCVA, PMC, STLPLZ, RAYCO, STJOHN, STJOMC, STLEAS, RESRCH, STLSMI, STLUBR, STLUSO, STM, TRLKWD, TRUHH, W0CPT, WEMO, RMCBKS, KC0CBC, I70, CASS, CMH, CMHS, CUSHNG, DCEC, FITZ, BOTHWL, GVMH, CARROL, BRMC]);var POLICEList = L.layerGroup([PTPOLICE1925, APD231, BLPD236, HTP235, HSUCP233, FPD229, FPD230, EPD228, TPD232, RDPD234]);var RepeaterList = L.layerGroup([W4HRS, W4HRS, W4GL, W4BRK, KK4ONF, KE4MDP, WA4USN, KJ4BWK, KG4BZN, K4NAB, W4DV, K4KNJ, W4HRS, KW4BET, WA4UKX, W4NYK, W4ZKM, K9OH, K4USC, WT4F, WR4SC, WR4SC, KK4ZBE, WR4SC, WR4SC, W4HRS, AD4U, W4BFT, WR4EC, W4GL, W4PAX, W4APE, W4APE, WR4SC, N1RCW, W4FTK , WA4NMW, WR4SC, W4FTK, WX4PG, W4APE, W4HNK, W4GWD, K4CCC, W4GS, WR4SC, WR4SC, KJ4QLH, W4FTK, KK4ONF, W4IAR, W4GS, KA4FEC, NE4SC, KK4BQ, K4HI, W4ANK, WR4SC, W4CAE, K4JLA, KK4B, K2PJ, N4ADM, N4HRS, WA4JRJ, W4ANK, W4RRC, K4ILT, K4YTZ, N2OBS, W4ULH, K4ILT, KA4GDW, KI4RAX, W4NYK, KJ4QLH, W4GS, N4AW, WA4USN, W4CAE, W4FTK, KB4RRC, WR4SC, W4FTK, KD4HLH, W4NYR, KJ4YLP, KK4BQ, W4GL, WB4YXZ, KO4L, W1GRE, KB4RRC, N4AW, WA4USN, W4IQQ, W4APE, WA4SJS, W4DEW, W4APE, WR4SC, W4PDE, N2ZZ, KCRJCRAC2, KCRJCRAC1, KCRKW1, KCRHCV, SAXRPTR, WA0KHP, WA0QFJ, PRATT241, SC242, MP243, KG4BZN, KCRKW2, KCRWW, ACT, DCARC, KCRCNC, KCRHAM4, KCRMED, KCRQFJ, KCRHAM3, KCRHAM2, KCRROO, HH244, HCCH245, HORSE246, KM4ABW, W4TWX, K4LMD, W4APE, K4WD, W4CHR, NE4SC, W4BFT, W4IAR, W4DV, W7JCR268, ROGERS248]);var SheriffList = L.layerGroup([FPD93721, JCSHRFF267, PKVLPD, HCSDGS226, CCSHERIFF, COMOPD, PLTCTYPD, NKCPD, GSTNPD, Sheriff398, RVRSPD, Sheriff401, LKWKPD, HCSO224, HCSOMS225, NRTPD, KCNPPD]);var SkyWarnList = L.layerGroup([CTEAUELV, C2, TANEY210, HWY291on210, Non291Hwy, C11, LecRestStop, BROADWAY, P4, SUNNYSIDE, WATKINSMILL, P2, SWSKOL, C12, P12, P11, P10, P9, P8, P7, P6, P5, P3, P1, XSPRINGS, P13, C1, C10, C9, C8, C7, C6, NWS240, C5, C4, C3]);var StateList = L.layerGroup([CALTRNS238, RGSP221, CFTFS216, CFWS211, CDFMFS210, CDFW250, CFCCFS188, CFICC200, CDFGF219, CFTVS183, CFTFFS180]);
-var Stations = L.layerGroup([_WA0TJT,_W0DLK,_KD0FTY,_KC9OAZ]);
+var Stations = L.layerGroup([_WA0TJT,_W0DLK]);
 // WA0TJT,W0DLK,KD0NBH,KC0YT,AA0JX,AA0DV
 
 // Add the stationmarkers to the map
 Stations.addTo(map);
 //OBJMarkerList.addTo(map);
 
-    var bounds = L.latLngBounds([[[39.203,-94.60233],[39.201636,-94.602375],[39.206945,-94.604219],[39.200531,-94.601332]]]);
+    var bounds = L.latLngBounds([[[39.20217,-94.60233],[39.201636,-94.602375]]]);
     //console.log('@304 bounds= '+JSON.stringify(bounds)); 
     //{"_southWest":{"lat":39.2002636,"lng":-94.641221},"_northEast":{"lat":39.2628465,"lng":-94.568932}}
 
 // I don't know if I need this or not.
-    map.fitBounds([[[39.203,-94.60233],[39.201636,-94.602375],[39.206945,-94.604219],[39.200531,-94.601332]]]);
+    map.fitBounds([[[39.20217,-94.60233],[39.201636,-94.602375]]]);
     
 
     // find the corners and middle of the stationmarkers
@@ -5517,19 +5496,19 @@ Stations.addTo(map);
     
     // These are the corner markers of the extended bounds of the stations
     var mk1 = new L.marker(new L.latLng( sw ),{
-        icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+        icon: L.icon({iconUrl: blackmarkername , iconSize: [200,200] }),
         title:'mk1'}).addTo(map).bindPopup('MK1<br>The SW Corner<br>'+sw).openPopup();
     
     var mk2 = new L.marker(new L.latLng( nw ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [200,200] }),
        title:'mk2'}).addTo(map).bindPopup('MK2<br>The NW Corner<br>'+nw).openPopup();
     
     var mk3 = new L.marker(new L.latLng( ne ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [200,200] }),
        title:'mk3'}).addTo(map).bindPopup('MK3<br>The NE Corner<br>'+ne).openPopup();
     
     var mk4 = new L.marker(new L.latLng( se ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [200,200] }),
        title:'mk4'}).addTo(map).bindPopup('MK4<br>The SE Corner<br>'+se).openPopup();
 	
     // Add the temp center marker to the map here in the javascript code allows it to use the current map view,
@@ -5537,7 +5516,7 @@ Stations.addTo(map);
     var mk5 = new L.marker(new L.latLng( middle ),{
         contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
         text: 'Click here to add mileage circles', callback: circleKoords}],   
-        icon: L.icon({iconUrl: blackmanInTheMiddle , iconSize: [220,220] }),     
+        icon: L.icon({iconUrl: blackmanInTheMiddle , iconSize: [200,200] }),     
         title:'mk5'}).addTo(map).bindPopup('MK5<br>The Center Marker<br>'+middle).openPopup();
     
     // Definition of the 5 markers above, corners plus middle    
@@ -5551,7 +5530,7 @@ Stations.addTo(map);
     //========================================================================
 
         // These are neded to determine the corners and centers
-        var W0DLKOBJ = L.latLngBounds( [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]]);var WA0TJTOBJ = L.latLngBounds( [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]]);W0DLKOBJ.getCenter();WA0TJTOBJ.getCenter();var W0DLKPAD    = W0DLKOBJ.pad(.075);var WA0TJTPAD    = WA0TJTOBJ.pad(.075);        
+        var W0DLKOBJ = L.latLngBounds( [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]]);var WA0TJTOBJ = L.latLngBounds( [[39.20217,-94.60233],[39.20167,-94.60167],[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.201016,-94.601541]]);W0DLKOBJ.getCenter();WA0TJTOBJ.getCenter();var W0DLKPAD    = W0DLKOBJ.pad(.075);var WA0TJTPAD    = WA0TJTOBJ.pad(.075);        
         // Object markers here
          var W0DLK01 = new L.marker(new L.LatLng(39.202337,-94.602932),{
                                 rotationAngle: 0, 
@@ -5729,7 +5708,7 @@ Stations.addTo(map);
                                 
                                 $('Objects'._icon).addClass('objmrkr');    
                                 $('Objects'._icon).addClass('huechange');                                          
-                            var WA0TJT07 = new L.marker(new L.LatLng(39.203,-94.60233),{
+                            var WA0TJT07 = new L.marker(new L.LatLng(39.20167,-94.60167),{
                                 rotationAngle: 0, 
                                 rotationOrigin: 'bottom', 
                                 opacity: 0.75,
@@ -5739,13 +5718,13 @@ Stations.addTo(map);
                                 
                                 icon: L.icon({iconUrl: 'images/markers/marker07.png', iconSize: [32, 34]}),
                                 title:`marker_007`}).addTo(fg).bindPopup(`<div class='xx' style='text-transform:uppercase;'>OBJ:<br>WA0TJT07<br><br></div>
-                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br> man standing on rock</div>
-                     <div class='gg'><br>LOCATION: @ 20210923193427 <br><a href='https://what3words.com/mailings.fried.imbalances?maptype=osm' target='_blank'>///mailings.fried.imbalances</a><br><br>Cross Roads:<br> NW 60th Ct &amp; N Bedford Ave <br><br>Coordinates:<br>39.203,-94.60233<br>Grid: EM29QE<br></div><br><br><div class='cc'>Full Comment:<br> @:20210923193427 (39.203,-94.60233)  ///mailings.fried.imbalances   Cross Roads: NW 60th Ct &amp; N Bedford Ave Object: man standing on rock<br><br></div>
-                     <div class='xx'>Captured:<br>2021-09-23 19:36:12</div>`).openPopup();                    
+                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br> white car in drive</div>
+                     <div class='gg'><br>LOCATION: @ 20210922223316 <br><a href='https://what3words.com/impulses.litter.overhear?maptype=osm' target='_blank'>///impulses.litter.overhear</a><br><br>Cross Roads:<br> N Ames Ave &amp; NW 59 St <br><br>Coordinates:<br>39.20167,-94.60167<br>Grid: EM29QE<br></div><br><br><div class='cc'>Full Comment:<br> @:20210922223316 (39.20167,-94.60167)  ///impulses.litter.overhear   Cross Roads: N Ames Ave &amp; NW 59 St Object: white car in drive<br><br></div>
+                     <div class='xx'>Captured:<br>2021-09-22 22:33:34</div>`).openPopup();                    
                                 
                                 $('Objects'._icon).addClass('objmrkr');    
                                 $('Objects'._icon).addClass('huechange');                                          
-                            var WA0TJT08 = new L.marker(new L.LatLng(39.203,-94.60233),{
+                            var WA0TJT08 = new L.marker(new L.LatLng(39.20217,-94.60233),{
                                 rotationAngle: 0, 
                                 rotationOrigin: 'bottom', 
                                 opacity: 0.75,
@@ -5755,35 +5734,19 @@ Stations.addTo(map);
                                 
                                 icon: L.icon({iconUrl: 'images/markers/marker08.png', iconSize: [32, 34]}),
                                 title:`marker_008`}).addTo(fg).bindPopup(`<div class='xx' style='text-transform:uppercase;'>OBJ:<br>WA0TJT08<br><br></div>
-                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br> null</div>
-                     <div class='gg'><br>LOCATION: @ 20210923193427 <br><a href='https://what3words.com/mailings.fried.imbalances?maptype=osm' target='_blank'>///mailings.fried.imbalances</a><br><br>Cross Roads:<br> N Ames Ave &amp; NW 60th Ct <br><br>Coordinates:<br>39.203,-94.60233<br>Grid: EM29QE<br></div><br><br><div class='cc'>Full Comment:<br> @:20210923193427 (39.203,-94.60233)  ///mailings.fried.imbalances   Cross Roads: N Ames Ave &amp; NW 60th Ct Object: null<br><br></div>
-                     <div class='xx'>Captured:<br>2021-09-23 22:48:37</div>`).openPopup();                    
-                                
-                                $('Objects'._icon).addClass('objmrkr');    
-                                $('Objects'._icon).addClass('huechange');                                          
-                            var WA0TJT09 = new L.marker(new L.LatLng(39.203,-94.60233),{
-                                rotationAngle: 0, 
-                                rotationOrigin: 'bottom', 
-                                opacity: 0.75,
-                                contextmenu: true, 
-                                contextmenuWidth: 140,
-                                contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
-                                
-                                icon: L.icon({iconUrl: 'images/markers/marker09.png', iconSize: [32, 34]}),
-                                title:`marker_009`}).addTo(fg).bindPopup(`<div class='xx' style='text-transform:uppercase;'>OBJ:<br>WA0TJT09<br><br></div>
-                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br> yelloo VW</div>
-                     <div class='gg'><br>LOCATION: @ 20210923193427 <br><a href='https://what3words.com/mailings.fried.imbalances?maptype=osm' target='_blank'>///mailings.fried.imbalances</a><br><br>Cross Roads:<br> NW 60th Ct &amp; N Bedford Ave <br><br>Coordinates:<br>39.203,-94.60233<br>Grid: EM29QE<br></div><br><br><div class='cc'>Full Comment:<br> @:20210923193427 (39.203,-94.60233)  ///mailings.fried.imbalances   Cross Roads: NW 60th Ct &amp; N Bedford Ave Object: yelloo VW<br><br></div>
-                     <div class='xx'>Captured:<br>2021-09-24 01:04:55</div>`).openPopup();                    
+                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br> dead end sign</div>
+                     <div class='gg'><br>LOCATION: @ 20210922223517 <br><a href='https://what3words.com/shots.stunt.tulips?maptype=osm' target='_blank'>///shots.stunt.tulips</a><br><br>Cross Roads:<br> N Ames Ave &amp; NW 60th Ct <br><br>Coordinates:<br>39.20217,-94.60233<br>Grid: EM29QE<br></div><br><br><div class='cc'>Full Comment:<br> @:20210922223517 (39.20217,-94.60233)  ///shots.stunt.tulips   Cross Roads: N Ames Ave &amp; NW 60th Ct Object: dead end sign<br><br></div>
+                     <div class='xx'>Captured:<br>2021-09-22 22:35:39</div>`).openPopup();                    
                                 
                                 $('Objects'._icon).addClass('objmrkr');    
                                 $('Objects'._icon).addClass('huechange');                                          
                                    
-        //console.log('@398 objMarkers '+objMarkers.toString());
+        console.log('@366 objMarker');
         //console.log(WA0TJT01);
          
         // Object Marker List starts here
-        var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,WA0TJT09,]);        
-        console.log('@415 OBJMarkerList'); // dont use line number in console.log below
+        var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,]);        
+        console.log('@372 OBJMarkerList'); // dont use line number in console.log below
         //console.log(OBJMarkerList);
         
         // Corner and center flags for the object markers, 5 for each callsign that has objects
@@ -5820,78 +5783,62 @@ Stations.addTo(map);
            /* This extra ob6 is so we can draw lines around the objects */
            var W0DLKob6 = new L.marker(new L.latLng( W0DLKPAD.getSouthWest() ),{
            icon: L.icon({iconUrl: bluemarkername , iconSize: [200,200] }),
-           title:'ob4'}).addTo(map).bindPopup('OBJ:<br> W0DLKSW<br>'+38.951259+','+-94.353628+'<br>The Objects SE Corner');
+           title:'ob4'}).addTo(map).bindPopup('OBJ:<br> W0DLKSE<br>'+38.951259+','+-94.353628+'<br>The Objects SE Corner');
            var WA0TJTob1 = new L.marker(new L.latLng( WA0TJTPAD.getSouthWest() ),{   
     	/*	contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
             text: 'Click here to add mileage circles', callback: circleKoords}], */
-            icon: L.icon({iconUrl: plummarkername , iconSize: [200,200] }),
+            icon: L.icon({iconUrl: orangemarkername , iconSize: [200,200] }),
             title:'ob1'}).addTo(map).bindPopup('OBJ:<br> WA0TJTSW<br>'+38.95067+','+-94.8515+'<br>The Objects SW Corner');
                         
            var WA0TJTob2 = new L.marker(new L.latLng( WA0TJTPAD.getNorthWest() ),{
         /*   contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], */
-           icon: L.icon({iconUrl: plummarkername , iconSize: [200,200] }),
-           title:'ob2'}).addTo(map).bindPopup('OBJ:<br> WA0TJTNW<br>'+39.453+','+-94.8515+'<br>The Objects NW Corner');
+           icon: L.icon({iconUrl: orangemarkername , iconSize: [200,200] }),
+           title:'ob2'}).addTo(map).bindPopup('OBJ:<br> WA0TJTNW<br>'+39.4525+','+-94.8515+'<br>The Objects NW Corner');
                            
            var WA0TJTob3 = new L.marker(new L.latLng( WA0TJTPAD.getNorthEast() ),{
         /*   contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], */
-           icon: L.icon({iconUrl: plummarkername , iconSize: [200,200] }),
-           title:'ob3'}).addTo(map).bindPopup('OBJ:<br> WA0TJTNE<br>'+39.453+','+-94.3525+'<br>The Objects NE Corner');
+           icon: L.icon({iconUrl: orangemarkername , iconSize: [200,200] }),
+           title:'ob3'}).addTo(map).bindPopup('OBJ:<br> WA0TJTNE<br>'+39.4525+','+-94.3525+'<br>The Objects NE Corner');
                            
            var WA0TJTob4 = new L.marker(new L.latLng( WA0TJTPAD.getSouthEast() ),{
        /*    contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], */
-           icon: L.icon({iconUrl: plummarkername , iconSize: [200,200] }),
+           icon: L.icon({iconUrl: orangemarkername , iconSize: [200,200] }),
            title:'ob4'}).addTo(map).bindPopup('OBJ:<br> WA0TJTSE<br>'+38.95067+','+-94.3525+'<br>The Objects SE Corner');
                            
            var WA0TJTob5 = new L.marker(new L.latLng( WA0TJTPAD.getCenter() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}],   
-           icon: L.icon({iconUrl: plummanInTheMiddle , iconSize: [200,200] }),     
+           icon: L.icon({iconUrl: orangemanInTheMiddle , iconSize: [200,200] }),     
            title:'ob5'}).addTo(map).bindPopup('OBJ:<br> WA0TJTCT<br>'+38.95067+','+-94.3525+'<br>The Objects Center Marker');
            
            /* This extra ob6 is so we can draw lines around the objects */
            var WA0TJTob6 = new L.marker(new L.latLng( WA0TJTPAD.getSouthWest() ),{
-           icon: L.icon({iconUrl: plummarkername , iconSize: [200,200] }),
-           title:'ob4'}).addTo(map).bindPopup('OBJ:<br> WA0TJTSW<br>'+38.95067+','+-94.3525+'<br>The Objects SE Corner');
+           icon: L.icon({iconUrl: orangemarkername , iconSize: [200,200] }),
+           title:'ob4'}).addTo(map).bindPopup('OBJ:<br> WA0TJTSE<br>'+38.95067+','+-94.3525+'<br>The Objects SE Corner');
                    
-        var allnameBounds = (['W0DLKarr','WA0TJTarr',]);        
-        var uniqueCallList = ['W0DLK','WA0TJT',];        
-         console.log('@414 allnameBounds = '+allnameBounds.toString());
-            
-         console.log('@416 '+uniqueCallList[0]+' '+uniqueCallList[1]+' lngth= '+uniqueCallList.length);
-         
-         var WA0TJTarr = [[39.20217,-94.60233],[39.20167,-94.60167],[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
-         
-         //objectKoords= 39.202337,-94.602932,39.201986,-94.603036,39.20169,-94.603628,39.201259,-94.603175,39.201636,-94.602375,39.2025,-94.6025,39.20167,-94.60217,39.20117,-94.60167,39.20067,-94.6015,39.201016,-94.601541,39.201393,-94.601576,39.203,-94.60233,39.203,-94.60233,39.203,-94.60233;
-         var W0DLKarr = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];
-        
         
         // color wheel for the lines
-       const colorwheel = ["green","blue","orange","plum","lightblue","gray","gold","black","red"];
-    
-       var newcolor = 0;
-       var u = -1; // to iterate through the colorwheel
-          for (z of uniqueCallList) {
-        u++;
-           
-            newcolor = colorwheel[u]; // sets the color in the var objectLine below
-                console.log('@433 z= '+u+', newcolor= '+newcolor+', cw= '+colorwheel[u]);
-            
-            // Add connecting lines between the object markers           
-            const objectKoords = connectTheDots(OBJMarkerList);   
-                console.log('@437 objectKoords= '+objectKoords);
-            const objectLine = L.polyline(objectKoords,{color: newcolor, weight: 4}).addTo(map);
-        
-            // Add connecting lines between the corners of the objects
-           //var KornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob6,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob6,]);           //objectKornerKoords = connectTheDots(KornerList);
-           //var objectKornerLine = L.polyline(objectKornerKoords,{color: newcolor, weight: 5}).addTo(map);    
-           
-                console.log('@445 z= '+z+', newcolor= '+newcolor+', cw= '+colorwheel[u]);
+        const colorwheel = ["red","blue","green","gold","orange","violet","lightblue","black"];
+        var objmrkrarray = ['W0DLK','WA0TJT',]; // we'll use this array to change the colors of lines below
+            console.log('@399 '+objmrkrarray.length);
 
-          } // end for loop
-       
+        var thecolor = 0;
+        for (var i = 0; i < objmrkrarray.length; i++) {
+            thecolor = colorwheel[i];
+            console.log('@402 '+i+' thecolor= '+thecolor);
+        // Add connecting lines between the object markers
+        objectKoords = connectTheDots(OBJMarkerList);
+        var objectLine = L.polyline(objectKoords,{color: thecolor, weight: 4}).addTo(map);
+        
+        // Add connecting lines between the corners of the objects
+    /*    var KornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob6,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob6,]);        objectKornerKoords = connectTheDots(KornerList);
+        var objectKornerLine = L.polyline(objectKornerKoords,{color: colorwheel[2], weight: 5}).addTo(map);
+    */    
+        }
+        
         // Add the OBJMarkerList to the map, this was the missing piece 
         OBJMarkerList.addTo(map);
 
@@ -5900,7 +5847,7 @@ Stations.addTo(map);
     //======================================================================    
 // The classList is the list of POI types.
 var classList = 'AviationL,CHPL,EOCL,FederalL,FireL,HOSPITALL,POLICEL,RepeaterL,SheriffL,SkyWarnL,StateL, CornerL, ObjectL;'.split(',');
-   console.log('@457 in map.php classList= '+classList);
+   console.log('@387 in map.php classList= '+classList);
 
 let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
@@ -5970,7 +5917,7 @@ var overlayMaps = {...y };
 
 
 // Set the center point of the map based on the coordinates
-//map.fitBounds([[39.203,-94.60233],[39.201636,-94.602375],[39.206945,-94.604219],[39.200531,-94.601332]], {pad: 0.5});
+//map.fitBounds([[39.20217,-94.60233],[39.201636,-94.602375]], {pad: 0.5});
 
 L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:false}).addTo(map);
 

@@ -50,109 +50,44 @@ if ( $q <> 0 ){
 		$stmt -> execute();
 		$children = $stmt->fetchColumn(1);
 		
+    // Can't get netcall from here because of sum function
 	$sql2 = "select sec_to_time(sum(timeonduty)) as tottime 
-				   ,netcall ,activity, pb
-			   from NetLog where netID = '$q' 
-			   group by netID";
+				   ,activity, pb
+			   FROM NetLog 
+			  WHERE netID = '$q' 
+			  GROUP BY netID";
 		$stmt2 = $db_found->prepare($sql2);
 		$stmt2 -> execute();
 		$tottime = $stmt2->fetchColumn(0); //echo "tottime = $tottime";
 		
 		$stmt2 -> execute(); // commented out 2017-11-22
-		$netcall = trim($stmt2->fetchColumn(1)); //echo "$netcall<br>"; // TE0ST
-		
-		$stmt2 -> execute(); // commented out 2017-11-22
-		$activity = trim($stmt2->fetchColumn(2)); 
+		$activity = trim($stmt2->fetchColumn(1)); 
 
 		$stmt2 -> execute(); // commented out 2017-11-22
 		$prebuilt = $stmt2->fetchColumn(3); 
-			
-     // this causes the entire NCM to crash... i have no idea why?		
-    $sql9 = "SELECT columnViews
-              FROM NetKind
-             WHERE `call` = '$netcall'
-           ";
-    $stmt9 = $db_found->prepare($sql9);
-   // echo "$sql9";
-    $stmt9->execute();
-    $theCookies = $stmt9->fetchColumn(0);
-   // echo "from sql9: $theCookies";
+		
+		
+    // we need to get the netcall from NetLog so we can use it to get the
+    // orgType from NetKind.
+    $sql = "SELECT netcall FROM NetLog WHERE netID = $q LIMIT 1";
+    $stmt = $db_found->prepare($sql);
+    $stmt -> execute();
+    $netcall = $stmt->fetchColumn(0);
+    
+    //echo "@75 $netcall";
+    
+    $sql = "SELECT orgType
+              from NetKind
+             WHERE `call` = '$netcall' 
+             limit 0,1";
+    $stmt = $db_found->prepare($sql);
+    $stmt -> execute();
+    $orgType = $stmt->fetchColumn(0);
+    
+    //echo "@85 $orgType";
     
 } // end of q <> 0	
-	//	include "headerDefinitions.php";
-		
-	$headerAll = '
-		<table id="thisNet" >
-		<thead id="thead" class="forNums" style="text-align: center;" >			
-		<tr>            	
-		    <th title="Row No." class="besticky c0" > &#35 </th> 
-			<th title="Role" class="besticky c1">	Role </th>
-			<th title="Mode" class="besticky DfltMode cent c2" id="dfltmode" 
-			    oncontextmenu="setDfltMode();return false;"> Mode </th>
-			
-			<th title="Status" class="besticky c3" > Status </th>  
-			<th title="Traffic" class="besticky c4"> Traffic </th>
-			
-			<th title="TT No. The assigned APRS TT number." class="besticky c5" width="5%"	
-				oncontextmenu="whatIstt();return false;"> tt# </th>
-            <th title="Band" class="besticky c23" width="5%"> Band </th>
-			<th title="Call Sign" class="besticky c6"	oncontextmenu="heardlist()"> Callsign </th>
-			
-			<th title="TRFK-FOR" class="besticky c50">TRFK-FOR</th>
-			<!--
-			<th title="Section" class="besticky c51"> Section </th>
-			-->
-			<th title="First Name" class="besticky c7">	First Name </th>
-			 
-			<th title="Last Name" class="besticky c8"> Last Name </th>
-			
-			<th title="Tactical Call, Click to change. Or type DELETE to delete entire row." class="besticky c9" oncontextmenu="Clear_All_Tactical()"> Tactical </th>
-			  
-			<th title="Phone, Enter phone number." class="besticky c10"> Phone </th>
-			
-			<th title="email, Enter email address." class="besticky c11"
-			    oncontextmenu="sendGroupEMAIL()"> eMail </th>
-			    
-			<th title="Grid, Maidenhead grid square location." class="besticky c20"> Grid </th>
-			
-			<th title="Latitude"  class="besticky c21"> Latitude  </th>
-			<th title="Longitude" class="besticky c22"> Longitude </th> 
-			    
-			<th title="Time In, Not for edit. " class="besticky c12" > Time In </th>
-			<th title="Time Out, Not for edit." class="besticky c13"> Time Out </th>
-			 
-			<th title="Comments, All comments are saved." class="besticky c14">	Time Line<br>Comments </th>           
-			<th title="Credentials" class="besticky c15"> Credentials </th>
-			<th title="Time On Duty" class="besticky c16"> Time On Duty </th>
-			
-			<th title="County" class="besticky c17"> County </th> 
-			<th title="State" class="besticky c18"> State	</th>
-			<th title="District" class="besticky c59"> Dist </th>
-			<th title="W3W, Enter a What 3 Words location. " class="besticky c24" oncontextmenu="openW3W();"> W3W </th>
-			
-			<th title="Team" class="besticky c30"> Team </th>
-			
-			<th title="APRS_CALL" class="besticky c31"> APRS CALL </th>
-			
-			    <!-- Admin Level -->
-            <th title="recordID" class="besticky c25"> recordID </th>
-            <th title="ID" class="besticky c26"> ID </th>
-            <th title="status" class="besticky c27"> status </th>
-            <th title="home" class="besticky c28"> home </th>
-            <th title="ipaddress" class="besticky c29"> ipaddress </th>
-			 			
-		</tr>
-		</thead>
-	
-		<tbody class="sortable" id="netBody">
-		
-		'; // END OF headerAll 
-		
-
-		  /* the sort order is determined by the number in each of the when clauses */
-   //  if (($q) <> '0') {
-			  	
-	 	echo $headerAll;	 	
+		include "headerDefinitions.php"; 	
 	 	
 	 	       $isopen = 0; // furture test to see if net is open or closed
 			 
@@ -182,7 +117,7 @@ if ( $q <> 0 ){
     // This SQL pulls the appropriate records for the net requested
     // This also determines the sort order the rows appear in.
     if ($q <> 0) {   	  	 	  				  
-	        $g_query = "SELECT  recordID, netID, subNetOfID, id, 
+	        $g_query = "SELECT  recordID, netID, subNetOfID, id, ID, 
 	                            TRIM(callsign) AS callsign, tactical,  
 	        					TRIM(BOTH ' ' FROM Fname) as Fname, 
 	        					grid, traffic, latitude, longitude, netcontrol, 
@@ -195,7 +130,8 @@ if ( $q <> 0 ){
 	        					sec_to_time(timeonduty) as time, netcall, status, Mode, 
 	        					TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
 	        					TRIM(BOTH ' ' FROM county) as county, 
-	        					TRIM(BOTH ' ' FROM state) as state, 
+	        					TRIM(BOTH ' ' FROM country) as country, 
+	        					TRIM(BOTH ' ' FROM state) as state,
 	        					TRIM(BOTH ' ' FROM district) as district, 
 	        					firstLogIn, phone, pb, tt, 
 	        					logdate =
@@ -209,24 +145,26 @@ if ( $q <> 0 ){
 	        					home, ipaddress, cat, section,
 	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
 	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
-	        					row_number, aprs_call
+	        					row_number, aprs_call,
+	        					TRIM(facility) AS facility,
+                                onSite, delta
 	        				   
 					FROM  NetLog 
 					WHERE netID = $q
-		  			ORDER BY case 
-		  				when netcontrol in ('PRM','CMD','TL') then 0 
-		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','SEC','RELAY') then 1
-		  				when active		= 'MISSING' then 2
-		  				when active		= 'BRB' then 2
-		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
-		  				else logdate  
-		  				end, 
-		  			logdate DESC";   
+		  			ORDER BY
+                         CASE when netcontrol in ('PRM','CMD','TL','EM') then 0 ELSE 1 END
+                        ,CASE when netcontrol in ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') then 1 ELSE 4 END
+                                           
+                        ,CASE when active = 'MISSING' then 3 ELSE 80 END
+                        ,CASE when active = 'BRB' then 5 ELSE 80 END
+                        ,CASE when active in('In-Out', 'Out', 'OUT') then 80 END
+                                           
+                        ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
+                        ,facility,logdate";  
 		  			
     }else if ($q == 0) {
         
-	        $g_query = "SELECT DISTINCT callsign, CONCAT(Fname,' ',Lname) as name, email, phone, creds,
-	                                    county, state, district, sum(timeonduty) as Vhours
+	        $g_query = "SELECT DISTINCT callsign, CONCAT(Fname,' ',Lname) as name, email, phone, creds, county, state, district, sum(timeonduty) as Vhours
                           FROM NetLog
                         WHERE id <> 0
                           AND netID <> 0
@@ -247,6 +185,7 @@ if ( $q <> 0 ){
   		$subnetkey	= 0;
   		$pbStat		= 0;
   		$bandkey    = 0;
+  		$cs1Key     = 0;
   		$editCS1	= "";
   		//$isopen     = 0;
   		
@@ -272,7 +211,7 @@ if ( $q <> 0 ){
 				
 				// Set background row color based on some parameters
 				
-				$modCols = $brbCols = $badCols = $newCall = $timeline = $important1 = $important2 = '';
+				$cs1Cols = $modCols = $brbCols = $badCols = $newCall = $timeline = $important1 = $important2 = '';
 				$f = '<font color="black">';
 				
 				// This PHP contians all the column color assignments based on various cell values
@@ -289,7 +228,33 @@ if ( $q <> 0 ){
 					$class = empty($row[comments]) ? 'nonscrollable' : 'scrollable' ;
 					$class = strlen($row[comments]) < 300 ? 'nonscrollable' : 'scrollable' ;
 
-				// The first <tr> is above at the end of the head
+            // start of loop to adjust color and create grouping 
+                    $newFacility = trim("$row[facility]");
+        
+        if ( $row[netcall] == 'MYOWN' ){$orgType = 'FACILITY';}
+        // Facility grouping in NCM display is handled here
+        if (TRIM($orgType) == 'FACILITY' AND $newFacility !== $usedFacility AND $row[facility] !== '') {
+            
+            if ($row[active] == 'OUT') {$color = 'red';}
+            else if($row[active] == 'In') {$color = 'green';}
+				
+            echo " 
+                    </tbody>
+                    <tbody id=\"netBody\">
+                        
+                         <tr> <td></td><td></td><td></td><td></td><td></td>
+                            <td colspan=6 style='color:$color;font-weight:900;font-size:14pt;'>$row[facility]</td> 
+                         </tr> 
+                    
+                    </tbody>
+                    <tbody class=\"sortable\" id=\"netBody\">  
+                    
+            "; // End of echo
+            
+             // Set our switch to the last value
+             $usedFacility = $newFacility;
+         
+        } // end of If facility grouping for FACILITY loop
 				
         // This PHP creates each row (<td>)
 		include "rowDefinitions.php";
@@ -347,9 +312,12 @@ if ( $q <> 0 ){
 	  if ($dupeCallKey == 1 ) { echo ("<span class='redKey'     >Duplicate</span>&nbsp;&nbsp;");}
 	  if ($fliKey      == 1 ) { echo ("<span class='fliKey'     >New Call</span>&nbsp;&nbsp;");}
 	  if ($prioritykey == 1 ) { echo ("<span class='redKey'     >Priority</span>&nbsp;&nbsp;");}
+	  if ($cs1Key      == 1 ) { echo ("<span class='deltakey' title='One of the location values (lat, lon, w3w, grid) changed.'>Location &#916</span>");}
 	  
-	  echo ("<span class='export2CSV' style='padding-left: 150pt;'>
-	  <a href=\"#\" onclick=\"window.open('netCSVdump.php?netID=' + $('#idofnet').html())\" >Export CSV</a>
+	  echo ("<span class='export2CSV' style='padding-left: 10pt;'>
+	  <a href=\"#\" onclick=\"window.open('netCSVdump.php?netID=' + $('#idofnet').html())\" >Export CSV</a></span>
+	  <span style='padding-left: 5pt;'>
+	  <a href=\"#\" id=\"mapIDs\" onclick=\"map2()\" title=\"Map This Net\"><b style=\"color:green;\">Map This Net</b></a>
 	  </span>");
 	  
 	echo ("</span>"); // ends the add2pgtitle div
