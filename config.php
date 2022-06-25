@@ -8,5 +8,7 @@ $_API_OPEN_WXMAP_APPID='';
 // http://extreme-ip-lookup.com/
 $_API_EXTREME_IP_KEY='';
 
+// Google Cloud Platform - Maps
+$_GOOGLE_MAPS_API_KEY='';
 
 ?>
