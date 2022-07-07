@@ -16,7 +16,7 @@
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
-    //$q = 6066;
+    $q = 6066;
     
     	       
 	// Loads the programs that create the station, poi, and object markers

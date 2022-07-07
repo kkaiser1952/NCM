@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
-// getCallHistory.php
-// This program produces a report of the callsign being called, it opens as a modal or windwo
+// getCallOrderByNet.php
+// This program looks at the past several months of a given net. Determines the best grouping of suffix letters to use to evenly call a net by suffix.
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -12,7 +12,8 @@
     $nomo = $_POST[nomo];
     $and1 = '';
     $netcall = strtoupper($netcall);
-    //$nomo = 12;  // number of months
+    $nomo = 16;  // number of months
+    $netcall = 'MESN';
     $state = '';
     
     if ($state <> '') {
@@ -26,32 +27,35 @@ function secondsToDHMS($seconds) {
 }
 
     $sql = "
-        SELECT  callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
-            COUNT(callsign) as cnt_call
+        SELECT  DISTINCT (callsign)
           FROM NetLog 
          WHERE netcall = '$netcall'  
            AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
-       /*    $and1 */
-           
-        GROUP BY callsign
-        ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC
-         ";
+        ";
          
 //echo "$sql<br>";
 
     $listing = '<tr>';
-    $rowno = 0;
+    $suffix  = "";
     foreach($db_found->query($sql) as $row) {
-        $rowno = $rowno + 1;  
+        $firstNum = strcspn("$row[callsign]",'0123456789'); // position of 1st number
+	    $nextLetr = substr("$row[callsign]",$firstNum+1,1); // first letter after 1st number
 	    
-	    $netcallsign = '$row[callsign]';
-	    $Fname    = ucfirst(strtolower('$row[Fname]'));
-	    $Lname    = '$row[Lname]';
-	    
-	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
-    }
-?>
+	        //echo "$row[callsign], $firstNum, $nextLetr <br>";
 
+	     $suffix .= "'$nextLetr',";
+    }
+    
+        //$suffix2 = array("$suffi]");
+        print_r($suffix);
+        //$bigSuffix = array_count_values(array $suffix): array;
+        //$suffix = array("$suffix");
+        //$array_freq = array_count_values($suffix);
+        //print_r($suffix);
+        print_r(array_count_values($suffix));
+        //print_r($array_freq);
+?>
+<!--
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

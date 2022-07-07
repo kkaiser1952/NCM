@@ -1384,6 +1384,8 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 </div>
 <p>Time Line is used to enter any comments or reports made by this station. They are then populated into the TimeLine Log table. Each comment is individually entered into the timeline log for reporting in the ICS reports. Each click in this field clears the previous entry, but it has been saved. Changes to several of the column values are also logged here.
 </p>
+<p>The 'Search Comments: Search for numbersonly' and its associated 'Search' button is for searching numbers only. For example: You're working a marathon and they need each ham along the way to record the bib numbers of the runners as they pass. So you might enter "bib:15" into the 'Time Line Comments field', then maybe "bib:21", and so on. By entering "21" into the search fild all records relating to bib 21 will be displayed.<br>This is not a perfect solution but it has been used a couple of times with success. Give it a try.
+</p>
 <p>Right clicking in one of the cells will produce a chronological listing of all the entries for this station.
 </p>
 <br>
@@ -1974,10 +1976,15 @@ Guarantees or Warranties:<br>
     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5681121157766229570" tabindex="-1" value=""></div>
     <div id="templatearchives"></div>
     <input type="submit" value="Subscribe" name="subscribe" id="groupsio-embedded-subscribe" class="button">
+    <br><br>
   </div>
 </form>
 </div>
 </div> <!-- End theend -->
+
+<div title="Knowing where you can find something is, after all, the most important part of learning"><I style="color:blue;">Scire ubi aliquid invenire possis ea demum maxima pars eruditionis est,</I>
+    <br><br>
+</div>
 
 <a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End of theend -->
