@@ -152,6 +152,7 @@ if ( $q <> 0 ){
 					FROM  NetLog 
 					WHERE netID = $q
 		  			ORDER BY
+		  			     
                          CASE when netcontrol in ('PRM','CMD','TL','EM') then 0 ELSE 1 END
                         ,CASE when netcontrol in ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') then 1 ELSE 4 END
                                            
@@ -160,7 +161,9 @@ if ( $q <> 0 ){
                         ,CASE when active in('In-Out', 'Out', 'OUT') then 80 END
                                            
                         ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
-                        ,facility,logdate";  
+                        ,CASE when netcall in ('MESN') then district END 
+                        ,facility,logdate
+                    ";  
 		  			
     }else if ($q == 0) {
         
