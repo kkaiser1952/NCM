@@ -158,11 +158,12 @@ if ( $q <> 0 ){
                                            
                         ,CASE when active = 'MISSING' then 3 ELSE 80 END
                         ,CASE when active = 'BRB' then 5 ELSE 80 END
-                        ,CASE when active in('In-Out', 'Out', 'OUT') then 80 END
+                        ,CASE when active in('In-Out', 'Out', 'OUT') AND netcall <> 'KCHEART' then 80 END
                                            
                         ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
                         ,CASE when netcall in ('MESN') then district END 
                         ,CASE when netcall in ('KCHEART') then facility END 
+                        ,CASE when netcall in ('KCHEART') AND facility in('', 'Checkins with no assignment') AND active in('In-Out', 'Out', 'OUT') then 95 END
                         ,facility,logdate
                     ";  
 		  			
