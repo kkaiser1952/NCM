@@ -162,6 +162,7 @@ if ( $q <> 0 ){
                                            
                         ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
                         ,CASE when netcall in ('MESN') then district END 
+                        ,CASE when netcall in ('KCHEART') then facility END 
                         ,facility,logdate
                     ";  
 		  			
