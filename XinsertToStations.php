@@ -3,6 +3,8 @@ require_once "dbConnectDtls.php";
 
 // 2020-12-12 This program loads any first time stations that get logged into NCM into the stations table
 // Called by getFCCrecord.php
+//Issue #5 code changes
+//here are my changes
 
     // Because MySQL can only have one auto increment column per table, and recrodID is already set to it.
     // We need to increment the ID manually by first getting the next higher number.
