@@ -8,6 +8,9 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 //require_once "getFCCrecord.php";/* added 2019-11-24 */
 require_once "getJSONrecord.php";
 
+// Get the IP address of the person making the changes.
+    require_once "getRealIpAddr.php";
+
 // The below error output if used looks a lot like echo output so be aware of that
 
 //error_reporting(E_ALL);
@@ -83,6 +86,8 @@ $fdcat  = $parts[8];                //echo "fdcat: $fdcat";
 $fdsec  = $parts[9];
 $mBand  = $parts[7];                // the multiple bands indicator 1 = Yes, 0 or NULL = No
 $tfksrt = $parts[10];               // the shortcut of the traffic column 
+
+$ipaddress = getRealIpAddr();
     
 
 // If mBand = 1 (Yes) then its going to be OK to have duplicate callsigns check in, presumably for each band
@@ -130,7 +135,7 @@ $tfksrt = $parts[10];               // the shortcut of the traffic column
 //echo "$csbase";
     $stmt2 = $db_found->prepare("
         SELECT id, Fname, Lname, creds, email, latitude, longitude,
-		       grid, county, state, district, home, phone, tactical
+		       grid, county, state, district, home, phone, tactical, country
 	      FROM stations 
 	     WHERE callsign = '$csbase'
 	       AND active_call = 'y'
@@ -162,6 +167,7 @@ $stmt2 = $db_found->prepare("
 	$longitude 	= $result[longitude];  $tactical = $result[tactical];
 	$county    	= ucwords(strtolower($result[county]));	   
 	$state 	    = $result[state];
+	$country   	= ucwords(strtolower($result[country]));	
 	$district 	= $result[district];   $tt		 = $result[tt]; 
 	$home       = $result[home];       $phone    = $result[phone];
 	$comments  	= "";	        
@@ -224,8 +230,8 @@ if ("$id" == "") {
     	 //	$id = 8000; 
                 
 				$sql = "INSERT INTO TimeLog 
-						(recordID, 		ID, 	netID, 	  callsign, comment, 	 timestamp) 
-				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments', '$open')";
+						(recordID, 		ID, 	netID, 	  callsign, comment, 	 timestamp, ipaddress) 
+				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments', '$open', '$ipaddress')";
 			
                     $db_found->exec($sql);
                     
@@ -317,27 +323,30 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	
 	
 	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, grid, tactical, email, latitude, longitude, 
-							    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, 
+							    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, country,
 							    district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number ) 
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
-				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$district\",
+				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
 				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \" )"; 
 	
 	$db_found->exec($sql);
 	
 	if ($comments == "First $pbspot Log In" ) { 
     	//do nothing 	
+    	// Initial Log In recording to TimeLog
 	}else { $comments = "Initial $pbspot Log In"; }
 	
 	
 	$sql = "INSERT INTO TimeLog 
-						(recordID, 		ID, 	netID, 	  callsign, comment, 	 timestamp) 
-				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments $logtraffic', '$open')";
+						(recordID, 		ID, 	netID, 	  callsign, comment, 	 timestamp, ipaddress) 
+				VALUES  ('$recordID', 	'$id', 	'$netID', '$cs1', 	'$comments $logtraffic', '$open', '$ipaddress')";
 			
                     $db_found->exec($sql);
+                    
+            include "headerDefinitions.php";
 			  	
-		echo ('	<table id="thisNet">
+	/*	echo ('	<table id="thisNet">
 					<thead id="thead" class="forNums" style="text-align: center;">			
 					<tr>            	
 					    <th title="Row No." class="c0" > &#35 </th>
@@ -351,6 +360,10 @@ if ($Lname == "") {$Lname = "$Lname2";}
 							oncontextmenu="whatIstt();return false;">  	 	tt#	   				</th>
 							 
                         <th title="Band" 	  		class="c23" width="5%"> Band   				</th>
+                        
+                        <th title="Facility" class="besticky cent c33" oncontextmenu= "clearFacilityCookie();return false;"> Facility </th>
+                  
+                        <th title="onsite" class="besticky c34" oncontextmenu="showFacilityColumn();return false;"> On Site </th>
 							
 						<th title="Call Sign"  						
 							oncontextmenu="heardlist()">			   	 	Callsign 				</th>
@@ -382,19 +395,20 @@ if ($Lname == "") {$Lname = "$Lname2";}
 						<th title="W3W"             class="c24">        W3W                     </th>
 						<th title="Team"             class="c30">        Team                     </th>
 						<th title="APRS Call"         class="c31">        APRS Call                     </th>
+						<th title="Country"         class="c32">       Country                    </th>
 					</tr>
 					</thead>
 				
 					<tbody class="sortable" id="netBody"> 
 		  
 		');  //ends the echo of the thead creation
-	                                	
+	  */                              	
 		$num_rows = 0;   // Counter to color row backgrounds in loop below
 		
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
 							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
 							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call
+							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta
 					  FROM  NetLog
                      WHERE netID = $netID
                      ORDER BY case 
@@ -403,6 +417,8 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		  				when active		= 'MISSING' then 2
 		  				when active		= 'BRB' then 2
 		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
+		  				when netcall in ('MESN') then district 
+		  				when netcall in ('KCHEART') then facility
 		  				else logdate  
 		  				end,
 		  				logdate DESC
@@ -414,7 +430,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				 ++$num_rows; // Increment row counter for coloring background of rows
 				 $brbCols = "                 ";
 				 $bgcol = "                 ";
-				 $modCols = $brbCols = $badCols = $newCall = $timeline = $important1 = $important2 = '';
+				 $cs1Cols = $modCols = $brbCols = $badCols = $newCall = $timeline = $important1 = $important2 = '';
 				 $f = '<font color="black">';
 				 				 
 				if ("$row[netcall]" == "") {

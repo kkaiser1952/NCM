@@ -95,6 +95,9 @@ $sql = ("SELECT description, contact, callsign, id, dttm, start, end
 			echo("End: $row[end]");
 			
 		}
+		    echo("<p>buildPreambleListing.php</p>");
+		
 ?>
+
 </body>
 </html>

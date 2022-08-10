@@ -42,7 +42,7 @@ function CellEditFunctionStations( jQuery ) {
 		 placeholder: "",
 		 tooltip    : "Credentials Click to edit...",
 		 style  	: "inherit"
-		 });
+		 })z
 	  		 
 		 $(".editcnty").editable("stationsave.php", {				// County
 		 indicator 	: "Saving...",

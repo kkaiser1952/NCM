@@ -10,7 +10,7 @@ function circleKoords(e) {
    else if (circfeqcnt == 5) { var circolor  = 'yellow'; }
    else if (circfeqcnt  > 5) { var circolor  = 'black'; }
    
-   var LatLng = e.latlng;
+   var LatLng = e.latlng; console.log('@13 '+LatLng);
    var lat = e.latlng["lat"]; 
    var lng = e.latlng["lng"]; 
    
@@ -64,21 +64,33 @@ function circleKoords(e) {
         if(marker.getPopup() && marker.getPopup().getContent().indexOf('OBJ') > -1){
             // whose marker did we find?  This 3 statements work for the middle and the corners
             markerText = marker.getPopup().getContent();    // Everything in the marker
-            whoArray   = markerText.split('<br>');            // add markerText words to an array
-            markerName = whoArray[1];                      // Get the callsign (I hope)
-            ownerCall  = markerName.slice(0, -2);            // Deletes the number from the call
+            whoArray   = markerText.split('<br>');          // add markerText words to an array
+            markerName = whoArray[1];                       // Get the callsign (I hope)
+            //LatLng = 'LatLng('+lat+', '+lng+')';          //     whoArray[2];
+            //markerKord = whoArray[2];
+            ownerCall  = markerName.slice(0, -2);           // Deletes the number from the call
             padCall    = ownerCall.concat('PAD');
             
-                console.log('@72 markerName= '+markerName+' ownerCall= '+ownerCall+' padCall= '+padCall);
+                console.log('@74 markerName= '+markerName+' ownerCall= '+ownerCall+' padCall= '+padCall+' LatLng= '+LatLng)+' dist= '+LatLng.distanceTo( sw );
      
-             maxdist = Math.max(
+            maxdist = Math.max(
+                 LatLng.distanceTo( se ), 
+                 LatLng.distanceTo( ne ), 
+                 LatLng.distanceTo( nw ),
+                 LatLng.distanceTo( sw ),
                  LatLng.distanceTo( window[padCall].getSouthWest() ),
                  LatLng.distanceTo( window[padCall].getSouthEast() ),
                  LatLng.distanceTo( window[padCall].getNorthWest() ),
                  LatLng.distanceTo( window[padCall].getNorthEast() )              
-             )/1609.34;
-     
-                console.log('@82 maxdist= '+maxdist+' from '+markerName+' for '+window[padCall] );
+            )/1609.34; 
+             
+    /*         maxdist = Math.max( 
+                LatLng.distanceTo( se ), 
+                LatLng.distanceTo( ne ), 
+                LatLng.distanceTo( nw ), 
+                LatLng.distanceTo( sw ))/1609.34; */
+             
+                console.log('@89 Object maxdist= '+maxdist+' from '+markerName+' for '+window[padCall] );
                   
                  
         }    // end of if(marker.getPopup...       
@@ -94,7 +106,7 @@ else if(!marker.getPopup() || marker.getPopup().getContent().indexOf('OBJ') === 
         LatLng.distanceTo( nw ), 
         LatLng.distanceTo( sw ))/1609.34;
 
-        console.log('@98 Station maxdist: '+maxdist+' miles Lval= '+Lval);     
+        console.log('@105 Station maxdist: '+maxdist+' miles Lval= '+Lval);     
 } // end of marker is a station   
         
         
@@ -103,7 +115,7 @@ else if(!marker.getPopup() || marker.getPopup().getContent().indexOf('OBJ') === 
              maxfeet = maxdist*5280;
              if      (maxdist > 0  && maxdist <= .5)    {dbr = .05;}
              else if (maxdist > .5 && maxdist <= 1)     {dbr = .075;}
-                console.log('@107 maxdist= '+maxdist+' Lval= '+Lval);     
+                console.log('@114 maxdist= '+maxdist+' Lval= '+Lval);     
          } else {        
         // Set the new calculated distance between markers, 5 is the default dbr     
         if (maxdist > 1  && maxdist <= 2)     {dbr = .75;}
@@ -113,22 +125,22 @@ else if(!marker.getPopup() || marker.getPopup().getContent().indexOf('OBJ') === 
         else if (maxdist > 500 && maxdist <= 750)  {dbr = 50;}
         else if (maxdist > 750)                    {dbr = 100;}
         else                                       {dbr = 5;}
-                console.log('@117 maxdist= '+maxdist+' Lval= '+Lval);
+                console.log('@124 maxdist= '+maxdist+' Lval= '+Lval);
         }
 
 
     distancebetween = prompt('Distance to furthest corner is '+maxdist+" "+Lval+".\n How many "+ Lval+" between circles?", dbr);
    		//if (distancebetween <= 0) {distancebetween = 1;} 
    		//if (distancebetween > 0 && distancebetween <= 10) {distancebetween = 2;}
-   		console.log('@124 db: '+distancebetween);
+   		console.log('@131 db: '+distancebetween);
    		
     maxdist = maxdist/distancebetween;
-        console.log('@127 distancebetween= '+distancebetween+' maxdist= '+maxdist);
+        console.log('@134 distancebetween= '+distancebetween+' maxdist= '+maxdist);
    
     numberofrings = prompt(Math.round(maxdist)+" circles will cover all these objects.\n How many circles do you want to see?", Math.round(maxdist));
    		//if (numberofrings <= 0) {numberofrings = 5;}	
    		
-   console.log('@132 numberofrings = '+numberofrings+' round(maxdist): '+Math.round(maxdist,2));	
+   console.log('@139 numberofrings = '+numberofrings+' round(maxdist): '+Math.round(maxdist,2));	
    		
     
    angle1 = 90;  // mileage boxes going East

@@ -330,11 +330,11 @@ function processGroup() {
 	
 
 	<div class="firstthird">
-		<label for="personalName">Please enter your full name:</label>
+		<label for="personalName">Please enter <u>your</u> full name:</label>
 		<input id="personalName" type="text" name="personalName" size="50" placeholder="Full Name" autofocus autocomplete="false" />
 		<span class="error hidden">Full name is </span>
 	
-		<label for="personalCall">Please enter your personal callsign:</label>
+		<label for="personalCall">Please enter <u>your</u> personal callsign:</label>
 		<input id="personalCall" type="text" name="personalCall" size="10" pattern="\d?[a-zA-Z]{1,2}\d{1,4}[a-zA-Z]{1,4}$" placeholder="WA0TJT" autocomplete="false" />
 		<span class="error hidden">Your call sign is </span>
 		
@@ -346,7 +346,7 @@ function processGroup() {
 	<div class="secondthird">
 						
 		<label for="groupName">What is the full name of the Group you are setting up? For example: "Twin Cities Repeater Club"</label>
-		<input id="groupName" type="textarea" name="groupName" placeholder="Group/club/org Full Name" size="100" autocomplete="false"  onblur="CreateNewUserID()" />
+		<input id="groupName" type="textarea" name="groupName" placeholder="Group/club/org Full Name" size="150" autocomplete="false"  onblur="CreateNewUserID()" />
 		
 		<label for="orgType">What kind of group is this?</label>
 		<input type="radio" name="orgType" value="CLUB">Club
@@ -355,6 +355,8 @@ function processGroup() {
 		<input type="radio" name="orgType" value="ZEVENT">Event
 		<input type="radio" name="orgType" value="SCOUTS">Scouts
 		<input type="radio" name="orgType" value="MARS">Mars
+		<input type="radio" name="orgType" value="OTHER">FACILITY
+		<img src="images/newMarkers/q-mark-in-circle.png" id="QmarkInCircle" class="Qfacility" alt="q-mark-in-circle" width="15px" height="" style="padding-bottom: 25px; margin-left: 1px; background-color: #e0e1e3;" onclick="location.href='https://net-control.us/help.php#facility'" />
 		<input type="radio" name="orgType" value="OTHER">Other
 		
 		<label for="groupCall">What is your groups call sign, or make one up</label>
@@ -471,6 +473,6 @@ function processGroup() {
 </div>
 	
 </form>
-	
+	<p>BuildNewGroup.php</p>
 </body>
 </html>

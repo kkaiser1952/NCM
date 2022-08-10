@@ -1,4 +1,7 @@
 <!doctype html>
+<!-- This is the editor for preambles, closings, events, etc -->
+<!-- New version: 2022-01-20 fixes display during editing of existing p, c, or e -->
+
 <?php
 
 	ini_set('display_errors',1); 
@@ -7,19 +10,34 @@
     require_once "dbConnectDtls.php";
     
     $id = $_GET["id"];
-    //$id = 265;
+    //$id = 465; //465;
     
-	if($id) {
-    	$sql = ("SELECT * FROM events WHERE id = $id ");
-		$num_rows = 0;  
-	
-			foreach($db_found->query($sql) as $row) {
-				++$num_rows;
-				//echo("$row[title]");
-				//$title = "$row[title]";
-			} //end of foreach
+    //echo "$id";
+    
+	if($id) {           
+    	$sql = "SELECT id, title, domain, docType, netkind, description
+    	          FROM events 
+    	         WHERE id = $id 
+    	         LIMIT 1";
+    
+    	$stmt= $db_found->prepare($sql);
+    	$stmt->execute();
+    	    $result = $stmt->fetch();
+    	        $id          = $result[id];
+    	        $title       = $result[title];
+    	        $domain      = $result[domain];
+    	        $docType     = $result[docType];
+    	            // agenda help Preamble Closing and All Groups
+    	        $netkind     = $result[netkind];
+    	        $description = $result[description];
+    	            
+
 	} else {$id = "";}
+	
+	//echo "<br>$id<br>$title<br> $domain<br> $docType<br> $netkind<br>$description<br>";
+
 ?>
+
 <html lang="en">
 <head>
     <title>NCM Preambles, Closings &amp; Agenda Items</title>
@@ -165,12 +183,6 @@ function fillTitle(val) {
 	$("#eventURL").addClass("hidden");
 	$("#eventURLLabel").addClass("hidden");
 	
-	//$("#startDate").addClass("hidden");
-	//$("#startDateLabel").addClass("hidden");
-	
-	//$("#endDate").addClass("hidden");
-	//$("#endDateLabel").addClass("hidden");
-	
 	$("#eventLocation").addClass("hidden");
 	$("#eventLocationLabel").addClass("hidden");
 	
@@ -181,9 +193,6 @@ function fillTitle(val) {
 	} else if (val == 'agenda') {
 		$("#eventURL").removeClass("hidden");
 		$("#eventURLLabel").removeClass("hidden");
-		
-		//$("#startDate").removeClass("hidden");
-		//$("#startDateLabel").removeClass("hidden");
 		
 		$("#endDate").removeClass("hidden");
 		$("#endDateLabel").removeClass("hidden");
@@ -197,8 +206,12 @@ function fillTitle(val) {
 $( function() {
     $( "#startDate" ).datepicker();
     $( "#endDate" ).datepicker();
+    
+    // The below jQuery puts the current values into the dropdowns 2022-01-20
+    $("#docType").val('<?php echo $docType ?>').attr("selected", true);
+    $("#netDomain").val('<?php echo $domain ?>').attr("selected", true);
+    $("#netkind").val('<?php echo $netkind ?>').attr("selected", true);
   } );
-  
   
 </script>
 
@@ -230,7 +243,7 @@ $( function() {
 
 	<b>*</b>
 	<label for="docType">Create a: (Select one from the dropdown list)</label>
-	<select id="docType" name="docType" onchange="fillTitle(this.value)">
+	<select id="docType" name="docType" onchange="fillTitle(this.value);">
 	  <option value="agenda">Announcement or Agenda item</option>
 	  <option value="Preamble" onselect="fillTitle(this.value)">Preamble</option>
 	  <option value="Closing">Closing</option>
@@ -244,13 +257,18 @@ $( function() {
 	<select id="netDomain" class="" name="netDomain">
 		<option value="All Groups" selected>All Groups</option>
 			<?php  
+    		/*	if ( $result[domain] <> '' ) { 
+        			//$addAND = "AND `call` = '$result[domain]';" 
+        			$addAND = 'selected';
+    			} else { $addAND = ''; } */
             	foreach($db_found->query("SELECT `call`, org
 											  FROM NetKind
 											 WHERE `call` <> 'OTHER'
 											   AND `call` <> ''
+											   
 											 ORDER BY `call`")
 										as $net) {
-					echo ("<option value='$net[call]'>$net[call] </option>");
+					echo ("<option value='$net[call]' >$net[call] </option>");
             	}    
 			?>
 					
@@ -278,40 +296,41 @@ $( function() {
 
 	<label for="eventTitle">Title</label>
 	<input type="text" id="eventTitle" 	  class="editEventTitle"     name="eventTitle"	  autofocus   		placeholder="Title"
-	value="<?php echo $row[title]?>"/><br>
+	value="<?php echo $result[title]?>"/><br>
 	
 	<label for="eventLocation" id="eventLocationLabel">Location</label>
-	<input type="text" id="eventLocation" class="editEventLocation"  name="eventLocation"  		placeholder="Location" value="<?php echo $row[location]?>"/>
+	<input type="text" id="eventLocation" class="editEventLocation"  name="eventLocation"  		placeholder="Location" value="<?php echo $result[location]?>"/>
 	<br><br>
 	
 	<label for="eventDate" id="eventDateLabel"><b>*</b> Date of Event</label>
 		&nbsp;&nbsp;&nbsp;
 	<img src="images2/cal.gif" onclick="javascript:NewCssCal ('eventDate','MMMddyyyy','dropdown',true,'12',false,'future')"/>
 	
-	<input type="text" id="eventDate" maxlength="25" size="25" value="<?php echo $row[eventDate]?>"/>
+	<input type="text" id="eventDate" maxlength="25" size="25" value="<?php echo $result[eventDate]?>"/>
 	
 	
 	
 	<br><br>
 	<b>*</b>
 	<label for="eventDisc">Description </label>
-	<textarea id="eventDisc" 		  	  class="editEventDisc" 	 name="eventDisc"			rows="10" cols="100" placeholder="Describe the item." ><?php echo trim( $row[description] )?></textarea>
+	<textarea id="eventDisc" 		  	  class="editEventDisc" 	 name="eventDisc"			rows="10" cols="100" placeholder="Describe the item." ><?php echo trim( $result[description] )?></textarea>
 	</textarea>
 	
 	<br><br>
 	
 	<b>*</b>
 	<label for="contact">Your full name</label>
-	<input type="text" id="contact"    	  class="editContact" 	  	 name="contact" 	  maxlength="60"	placeholder="First and Last Name" value="<?php echo $row[contact]?>"/>
+	<input type="text" id="contact"    	  class="editContact" 	  	 name="contact" 	  maxlength="60"	placeholder="First and Last Name" value="<?php echo $result[contact]?>"/>
 	
 	<label for="callsign">Your callsign</label>
-	<input type="text" id="callsign"   	  class="editCallsign"       name="callsign"	  maxlength="7" 	      placeholder="Callsign"    		  minlength="3" value="<?php echo $row[callsign]?>"/>
+	<input type="text" id="callsign"   	  class="editCallsign"       name="callsign"	  maxlength="7" 	      placeholder="Callsign"    		  minlength="3" value="
+	<?php echo $result[callsign]?>"/>
 	
 	<label for="email">Your email</label>
-	<input type="text" id="email"      	  class="editEmail" 		 name="email" 		  maxlength="255"		           placeholder="eMail Address" value="<?php echo $row[email]?>"/>
+	<input type="text" id="email"      	  class="editEmail" 		 name="email" 		  maxlength="255"		           placeholder="eMail Address" value="<?php echo $result[email]?>"/>
 	
 	<label for="eventURL" id="eventURLLabel">URL of event</label>
-	<input type="text" id="eventURL"   	  class="editEventURL"   	 name="eventURL"	  maxlength="255"   		placeholder="URL" value="<?php echo $row[url]?>"/>
+	<input type="text" id="eventURL"   	  class="editEventURL"   	 name="eventURL"	  maxlength="255"   		placeholder="URL" value="<?php echo $result[url]?>"/>
 	
 	<b>*</b>
 	<!-- These date picers are from:  http://www.rainforestnet.com/index.htm -->
@@ -323,9 +342,9 @@ $( function() {
 	<input type="text" id="startDate">
 	
 	<!--
-	<input type="Text" id="startDate" maxlength="25" size="25" value="<?php echo $row[start]?>" onclick="javascript:NewCssCal ('startDate','MMMddyyyy','dropdown',true,'12',false,'future')"/>
+	<input type="Text" id="startDate" maxlength="25" size="25" value="<?php echo $result[start]?>" onclick="javascript:NewCssCal ('startDate','MMMddyyyy','dropdown',true,'12',false,'future')"/>
      -->   
-<!--	<input type="text" id="startDate" placeholder="Start or only date, time not required" value="<?php echo $row[start]?>"/> -->
+<!--	<input type="text" id="startDate" placeholder="Start or only date, time not required" value="<?php echo $result[start]?>"/> -->
 
 	<br><br>
 	<label for="endDate" id="endDateLabelx">Stop Showing Event: (Click to Select a date &amp; time)</label>
@@ -337,9 +356,9 @@ $( function() {
 	
 	<!--
 
-	<input type="Text" id="endDate" maxlength="25" size="25" value="<?php echo $row[end]?>" onclick="javascript:NewCssCal ('endDate','MMMddyyyy','dropdown',true,'12',false,'future')"/>
+	<input type="Text" id="endDate" maxlength="25" size="25" value="<?php echo $result[end]?>" onclick="javascript:NewCssCal ('endDate','MMMddyyyy','dropdown',true,'12',false,'future')"/>
     -->
-<!--	<input type="text" id="endDate" placeholder="End date if needed" value="<?php echo $row[end]?>"/> -->
+<!--	<input type="text" id="endDate" placeholder="End date if needed" value="<?php echo $result[end]?>"/> -->
 	<br><br>
 	<button id="cancelbutton" onclick="location.href = 'http://net-control.us';" >Cancel</button>
 	<button type="submit" id="submit" onclick= "makeEvent();" >Submit</button>
@@ -348,8 +367,7 @@ $( function() {
 </div>
 
 <div id="eventList"></div>
-
+<p>buildEvents.php</p>
 
 </body>
 </html>
-	

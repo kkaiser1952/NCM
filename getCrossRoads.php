@@ -7,13 +7,16 @@ error_reporting( 0 );
 	
 // =========================================================================================
 // Now lets get the nearest cross roads, 
+// http://img.geonames.org/maps/us-reverse-geocoder.html
 // =========================================================================================
 
 function getCrossRoads($lat, $lng) {
+   // echo "$lat $lng";
     $curl = curl_init();
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
+      CURLOPT_URL => "https://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
+      CURLOPT_SSL_VERIFYPEER => false,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,

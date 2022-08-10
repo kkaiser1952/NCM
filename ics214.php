@@ -30,6 +30,7 @@
     				 frequency
     	       FROM NetLog 
     	       WHERE netID = $q
+    	         AND logdate <> 0 
             ");  
 					
     foreach($db_found->query($sql1) as $row) {
@@ -187,7 +188,7 @@ $(document).ready(function()
             </td>
             <td class="box5">
                 <p class="s1">
-                    5. Home Agency <span class="s2">(and Unit)</span>:<br>&nbsp;<?php echo "$box5" ?></p>
+                    5. Home Agency <span class="s2">(Unit and Team)</span>:<br>&nbsp;<?php echo "$box5" ?></p>
             </td>
         </tr>
         <tr style="height: 17pt">
@@ -207,7 +208,7 @@ $(document).ready(function()
             </td>
             <td class="box6agency">
 	            <span class="box6s2p3a">Time On Duty</span>
-                <span class="box6s2p3b">CREDS, Home Agency (and Unit)</span>
+                <span class="box6s2p3b">CREDS, Home Agency (Unit and Team)</span>
             </td>
         </tr>
 
@@ -243,7 +244,9 @@ $(document).ready(function()
 	        				 TRIM(timeonduty) as tmd, 
 	        			     TRIM(sec_to_time(timeonduty)) as tod,
 	        			     TRIM(CONCAT_WS('  ', state, county, ' Co., Dist.', district)) as dist,
-	        			     TRIM(band) as band
+	        			     TRIM(band) as band,
+	        			     TRIM(team) as team
+	        			     
 	        			     
 	        		   FROM NetLog 
 	        		  WHERE netID = $q 
@@ -284,7 +287,8 @@ $(document).ready(function()
 							   <td class=\"box6td\">$row[band] $nc <span class=\"spread\">$row[tactical]</span></td>
 							   <td class=\"box6td\">
 							   		<span class=\"tod\">$row[tod]</span> 
-							   		<span class=\"creds\">$creds $row[dist]</span>
+							   		<span class=\"creds\">$creds $row[dist],</span>
+							   		<span class=\"team\" style=\"float:right; padding-right:3pt;\">$row[team]</span>
 							   </td>
 							   </tr>";			
 			}
@@ -357,5 +361,8 @@ $(document).ready(function()
             </td>
         </tr>
     </table>
+    <footer>
+        <p style="padding:3px; color:a9a9a9; font-size:9pt;">net-control.us/ICS-214.php</p>
+    </footer>
 </body>
 </html>
