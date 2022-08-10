@@ -1,5 +1,6 @@
 @media print {
     		html {width: 100%;}
+    		.purpose {page-break-after: always;}
 			.helpfulhints {page-break-after: always;}
 			.startanet {page-break-before: always;}
 			.checkins {page-break-before: always;}

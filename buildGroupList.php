@@ -77,7 +77,7 @@
                     ORDER BY t1.call");
 					
 		    foreach($db_found->query($sql1) as $row) {
-			   if ($row[call] <> '' AND $row[call] <> 'OTHER' AND $row[call] <> 'EVENT' AND $row[call] <> 'TE0ST') {
+			   if ('$row[call]' <> '' AND '$row[call]' <> 'OTHER' AND '$row[call]' <> 'EVENT' AND '$row[call]' <> 'TE0ST') {
     			   echo"
     			   <tr>
     			        <td>$row[call]</td>		
@@ -92,8 +92,9 @@
 			   }
 		    }
 		?>
-
+        
     </table>
+    <p>buildGroupList.php</p>
      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
    
     

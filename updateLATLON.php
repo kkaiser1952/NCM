@@ -25,7 +25,7 @@ $sql = "SELECT grid
 	 
 	 	   
 $sql2 = "UPDATE NetLog 
-		   SET latitude = $lat, longitude = $lon
+		   SET latitude = $lat, longitude = $lon, delta = 'Y'
 		 WHERE recordID = $recordID";
 		 
 		 //echo $sql2;

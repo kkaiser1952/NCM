@@ -15,33 +15,53 @@
 	 require_once "GridSquare.php";
  
 		$rawdata = file_get_contents('php://input');
-	//	echo("$rawdata");  
-    // value=wa0tjt-1&id=aprs_call%3A71477wa0tjt-1
-	// value=Platte&id=county%3A27449Platte	
+		    // echo("$rawdata");  
+            // Value=Keith&Id=Fname%3A89407Keith
+            // Value=Douglas&Id=Lname%3A89407Douglas
+            // value=wa0tjt-1&id=aprs_call%3A71477wa0tjt-1
+        	// value=Platte&id=county%3A27449Platte	
 	
+	    // explode the rawdata at the ampersign (&)
 		$part = (explode("&",$rawdata));
-		$part2 	= explode("=",$part[1]); //echo("part2= $part2");  //ArrayArray ( [0] => Value ) Bill Brown
+		$part2 	= explode("=",$part[1]); 
+		    //echo("@27 part2= $part2");  
+            //@27 Part2= ArrayKeith
 
 		$part30	= $part2[0];  //echo("$part30"); // = id  the word 
-		$part31 = $part2[1];  // = Fname%3A203  the word with a tacked on 203 (recordID)
+		$part31 = $part2[1];  
+		    // echo "@32 part31= $part31";
+            // @32 Part31= Fname%3A89407Keith
 
 		$part4	= explode("%3A",$part31); // = Array
 		$recordID = $part4[1]; 
+		    // echo "recordID= $recordID";
+		    // RecordID= 89407Keith
 		
-		$column = $part4[0]; //echo("$column"); // county
+		$column = $part4[0]; 
+		    // echo("$column"); 
+		    // Fnamekeith
 		
-		$value 	= explode("=",$part[0]); //echo("val= $value");  //ArrayArray ( [0] => Value ) Hello World
-		$value  = trim($value[1],"+");  //echo("$value"); // Array ( [0] => Value ) Bill Brown
+		$value 	= explode("=",$part[0]); 
+		    // echo("@45 value= $value");  
+		    // @45 Value= ArrayKeith
+		$value  = trim($value[1],"+");  
+		    // echo("$value"); 
+            // KeithKeith
 		
 		$value  = str_replace("+"," ",$value);
-		$value  = rawurldecode($value);  //echo("value= $value<br>");  //Bill Smith Array ( [0] => Value ) Bill Smith	W
+		$value  = rawurldecode($value);  
+		    // echo("@53 value= $value");  
+		    // @53 value= KeithKeith
 		$value  = trim($value," ");
+		    // echo "$value";
+            // KeithKeith
 		
 		$ipaddress = getRealIpAddr();
 		
 		$moretogo = 0;
 		
 	
+        	
 		// ALLOW UPDATE TO THESE FIELDS BUT TEST tactical for DELETE don't update for that 
 		if ($column == "county"     | $column == "state"     | $column == "grid" | 
 		    $column == "latitude"   | $column == "longitude" | $column == "district" |
@@ -81,27 +101,28 @@
 				$cs1   = $row[callsign];
 			}
 			
-			$delta = "$column Change";
-    			if($column == "grid")           {$delta = 'LOC&#916:Grid: '.$value.' This also changed LAT/LON values';} 
-    			else if($column == "state")     {$delta = 'LOC&#916:State: '.$value;}
-    			else if($column == "county")    {$delta = 'LOC&#916:County: '.$value;} 
-    			else if($column == "district")  {$delta = 'LOC&#916:District: '.$value;}
-    			else if($column == "latitude")  {$delta = 'LOC&#916:LAT: '.$value.' This also changed the grid value';}
-    			else if($column == "longitude") {$delta = 'LOC&#916:LON: '.$value.' This also changed the grid value';}
+			$deltaX = "$column Change";
+    			if($column == "grid")           {$deltaX = 'LOC&#916:Grid: '.$value.' This also changed LAT/LON values';} 
+    			else if($column == "state")     {$deltaX = 'LOC&#916:State: '.$value;}
+    			else if($column == "county")    {$deltaX = 'LOC&#916:County: '.$value;} 
+    			else if($column == "district")  {$deltaX = 'LOC&#916:District: '.$value;}
+    			else if($column == "latitude")  {$deltaX = 'LOC&#916:LAT: '.$value.' This also changed the grid value';}
+    			else if($column == "longitude") {$deltaX = 'LOC&#916:LON: '.$value.' This also changed the grid value';}
 	
 			
     		$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$delta', '$open', '$ipaddress')";
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$deltaX', '$open', '$ipaddress')";
 		
 			$db_found->exec($sql); 
 			
 			if ($column == "TRFK-FOR") {$column = "cat";} // change name back to cat for the rest
 		} // End of multi-column
-		
+				
 		
 		if ($column == "active" ) {
-			$sql = "SELECT ID, netID, callsign from NetLog 
-					WHERE recordID = '$recordID'";
+			$sql = "SELECT ID, netID, callsign 
+			          FROM NetLog 
+					 WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
 				$netID = $row[netID];
@@ -155,7 +176,8 @@
 		// ================================= //
 		// If name conained two names Keith Kaiser for example, this splits off last name and updates Lname in DB
 		elseif ($column == 'Fname' and str_word_count("$value") >= 2) { 
-			//print_r(str_word_count("$value",1)); // Array ( [0] => Bill [1] => Brown ) Bill Brown
+			// print_r(str_word_count("$value",1)); 
+			// Array ( [0] => Bill [1] => Brown ) Bill Brown
 		}
 		
 		// On screen this is Role
@@ -262,7 +284,7 @@
 		
 			$db_found->exec($sql);
 
-		}
+		} // End of aprs_call
 		
 		elseif ($column == 'team' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, team
@@ -281,18 +303,33 @@
 		
 			$db_found->exec($sql);
 
-		}
+		} // End of team
 		
+		elseif ($column == 'facility' AND $value != '') {
+			$sql = "SELECT ID, netID, callsign 
+			          FROM NetLog 
+					 WHERE recordID = '$recordID'";
+					
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row[netID];
+				$ID	   = $row[ID];
+				$cs1   = $row[callsign];
+			} // end elseif column = traffic
+			 
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Facility set to: $value', '$open', '$ipaddress')";
 		
+			$db_found->exec($sql);
+			
+		} // End of Band elseif
 
-				
+					
 		// Update the TimeLog if comments were added
 		elseif ($column == 'comments' AND $value != '') {
 			
 			// The code here fixes the issue of losing any comment with a tick (') in it, but the display in the
 			// Time Line Comments field still shows the backslash (\) used to escape the tick. YIKES!
 			$value = str_replace("'", "\'", $value);
-
 			
 			// First we have to go get some more information about who updated the comment
 			$sql = "SELECT ID, netID, callsign, home
@@ -307,7 +344,7 @@
 			}
 			
 			// If its to reset the home coordinates then do this
-			    $delta = 'LOC&#916;';
+			    $deltaX = 'LOC&#916;';
 			    $Varray = array("@home", "@ home", "@  home", "at home", "gone home,", "headed home", "going home", "home");
             if (in_array(strtolower("$value"), $Varray)) {
     			$latitude = explode(',', $home)[0]; 
@@ -315,13 +352,14 @@
     			$grid = explode(',', $home)[2];
     			$county = explode(',', $home)[3];
     			$state = explode(',', $home)[4];
-    			$value2 = "$delta:COM:@home, reset to home coordinates ($home)";
+    			$value2 = "$deltaX:COM:@home, reset to home coordinates ($home)";
 				
 				//echo ("in Varray");
     			
     		$sql = "UPDATE NetLog 
                        SET latitude = $latitude, longitude = $longitude, 
-                           grid ='$grid', county = '$county', state = '$state', w3w = ''
+                           grid ='$grid', county = '$county', state = '$state', w3w = '',
+                           delta = 'Y' /* indication in table that location has changed */
     			         WHERE recordID = $recordID";
 		
         		$stmt = $db_found->prepare($sql);
@@ -334,7 +372,7 @@
 					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$value2', '$open', '$ipaddress')";
 		
 			$db_found->exec($sql);
-		} // End comments
+		} // End comments elseif
 		
 		
 		// This routine is to delete the row if the tactical was changed to DELETE we do this because
@@ -356,51 +394,77 @@
 				$cs1   	  = $row[callsign];
 			}
 			
-	// This SQL puts the info from NetLog into the TimeLog table
-	$TSsql = "INSERT INTO TimeLog (recordID,  timestamp,  ID,    netID,    callsign, comment, ipaddress)
-			  VALUES ( $recordID, '$dltdTS' ,'$id' ,'$netID' ,'GENCOMM' ,'The call $cs1 with this ID was deleted', '$ipaddress')";
-		
-			$db_found->exec($TSsql);
+    // This SQL puts the info from NetLog into the TimeLog table
+    	$TSsql = "INSERT INTO TimeLog (recordID,  timestamp,  ID,    netID,    callsign, comment, ipaddress)
+    			  VALUES ( $recordID, '$dltdTS' ,'$id' ,'$netID' ,'GENCOMM' ,'The call $cs1 with this ID was deleted', '$ipaddress')";
+    		
+    			$db_found->exec($TSsql);
 			
-	}
+	} // End try for inserting a note into TimeLog on a deleted station
+	
+	// catch any error kicked out by the try
 	catch(PDOException $e) {
 		echo $TSsql . "<br>" . $e->getMessage();
 	}
 
 	try {
 
-		// This SQL does the actual delete from NetLog
-		$sql = "DELETE FROM NetLog WHERE recordID =  $recordID " ;
-		
-	$stmt = $db_found->prepare($sql);
-	$stmt->execute();
-	
-	echo  " DELETED successfully";
-		$value = '';
-	} // end of try
-	catch(PDOException $e) {
-		echo $sql . "<br>" . $e->getMessage();
-	}  // END of delete the row within the save function
+    // This SQL does the actual delete from NetLog
+    		$sql = "DELETE FROM NetLog WHERE recordID =  $recordID " ;
+    		
+    	$stmt = $db_found->prepare($sql);
+    	$stmt->execute();
+    	
+    	echo  " DELETED successfully";
+    		$value = '';
+    	} // end of try that deletes the station from NetLog
+    	
+    	// kick out any error from the try
+    	catch(PDOException $e) {
+    		echo $sql . "<br>" . $e->getMessage();
+    	}  // END of delete the row within the save function
 
-		}
+		} // End comments elseif
 
         if ($column == 'tactical' and str_word_count("$value") >= 2) { 
     			$value = preg_replace('/  /','<br>',$value);
 		}
 		
 		if ($column == 'creds' and str_word_count("$value") >= 2 ) {
-			$value = preg_replace('/  /','<br>',$value);  // this function is at the top of this program
+			    $value = preg_replace('/  /','<br>',$value);  
 		}
-		
 		
 		echo str_replace("+"," ","$value");
 		
-		// Update the NetLog with the new information
+    // This routine is to update the stations table with Fname, Lname, or email
+		if ($column == 'Fname' | $column == "Lname" | $column == "email" | $column == "creds" ) {
+            // Get the callsign to use for updating the stations 
+    		$sql = "SELECT callsign
+    	              FROM NetLog 
+    	             WHERE recordID = $recordID
+    	             LIMIT 1
+    	           ";
+
+            	$stmt= $db_found->prepare($sql);
+            	$stmt->execute();
+            	    $result = $stmt->fetch();
+            	        $callsign = $result[callsign];        
+
+            // Update the stations table for the changed values
+    		$sql = "UPDATE stations SET $column = '$value' 
+    		         WHERE callsign = '$callsign'
+    		       ";
+    		
+    		   $stmt = $db_found->prepare($sql);
+               //$stmt->bindParam(':val', $value, PDO::PARAM_STR);
+               $stmt->execute();
+		} // End of adding hame and email changes to the stations table	
+		
+	// Update the NetLog with the new information
 		$sql = "UPDATE NetLog SET $column = :val WHERE recordID = :rec_id";
 		
 		$stmt = $db_found->prepare($sql);
 		$stmt->bindParam(':val', 	$value, PDO::PARAM_STR);
 		$stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
-		$stmt->execute();
-		
+		$stmt->execute();	
 ?>

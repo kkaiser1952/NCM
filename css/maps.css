@@ -242,6 +242,63 @@ html, body {
             font-weight: bold;
             font-size: 12pt;
         } 
+        
+        .cc {  /* used for the comment */
+		    display: inline-block;
+		    text-transform: lowercase;
+    		font-weight: bold;
+    		color: red;
+    		font-size: larger;
+		}
+		.cc:first-letter {
+    		text-transform: uppercase;
+		}
+		
+		.bb {
+    		font-weight: bold;
+    		color: blue;
+    		font-size: larger;
+		}
+		
+		element.style  {
+    		width: 60px !important;
+        }
+        
+        .gg {
+            font-weight: bold;
+            color: green;
+            font-size: larger;
+        }
+        
+        .xx {
+            font-wight: bold;
+            font-size: x-large;
+        }
+        
+        .objmarker {
+            color: green;
+            font-size: x-large;
+        }
+        
+        .number-icon {
+            background-image: url("images/number-marker-icon.png");
+            text-align:center;
+            color:White;    
+        }
+        
+        .leaflet-control {
+            background: transparent;
+            border: solid black;
+        }
+        
+        .leaflet-control-zoom {
+           z-index: 500 !important;
+        }
+        
+
+        .huechange { 
+            filter: hue-rotate(120deg); 
+        }
 
 		
 		

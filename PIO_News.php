@@ -7,12 +7,13 @@
 
     require_once "dbConnectDtls.php";
     
-    $q = intval( $_GET["NetID"] );   //$q = 2916;
+    $q = intval( $_GET["NetID"] );   
+    //$q = 6729;
 
 			
     $sql1 = ("SELECT CONCAT(Fname,' ',Lname) as fullname,
-                     callsign,
-    	       FROM TimeLog 
+                     callsign
+    	       FROM NetLog 
     	       WHERE netID = $q
             ");  
 					

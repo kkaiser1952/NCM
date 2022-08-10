@@ -3,15 +3,60 @@
 
 // These are default values, they get changed in NetManager.js by goLocal() and goUTC()
 var tzvalue = new Date().getTimezoneOffset(); //alert(tzvalue);
-    setCookie('tzdiff', tzvalue, 2);  // set a cookie with the local time difference from UTC 
-    setCookie('tz_domain', 'UTC', 2); // and a cookie with the default domain of the time zone
+    setCookie('tzdiff', tzvalue, 2, SameSite='Strict');  // set a cookie with the local time difference from UTC 
+    setCookie('tz_domain', 'UTC', 2, SameSite='Strict'); // and a cookie with the default domain of the time zone
+    
+// These two function are based on right clicking either the facility or onsite  
+// This function removes the number (33) from the cookie list  
+// And then replaces the cookie 
+function clearFacilityCookie() {
+    var netcall = $("#domain").html().trim();
+    var facilityCookie = (getCookie('columnChoices_'+netcall.trim()));
+    
+    if (facilityCookie) {  // It found cookies in storage
+        var arrayCookies = facilityCookie.split(',');  // create the array called arrayCookies
+		}  else {
+            facilityCookie = "";
+            arrayCookies = facilityCookie.split(',');
+    }    
+        //alert("1 arrayCookies: "+JSON.stringify(arrayCookies));    
+        for( var i = 0; i < arrayCookies.length; i++) {
+            if ( arrayCookies[i] === "33") {
+                arrayCookies.splice(i, 1);
+            }
+        }
+        //alert("2 arrayCookies: "+JSON.stringify(arrayCookies));
+        setCookie('columnChoices_'+netcall.trim(), arrayCookies, 10);
+            
+} // End clearFacilityCookie()
+
+// This function is to add the facility cookie (33) to the net
+function showFacilityColumn() {
+    var netcall = $("#domain").html().trim();
+    var facilityCookie = (getCookie('columnChoices_'+netcall.trim()));
+    // get the cookie for this net
+    if (facilityCookie) {  // It found cookies in storage
+        var arrayCookies = facilityCookie.split(',');  
+    }  else {
+        facilityCookie = "";
+        var arrayCookies = facilityCookie.split(',');
+    } // End if    
+        //alert("1 arrayCookies: "+JSON.stringify(arrayCookies));  
+        arrayCookies.push("33");  
+        //alert("2 arrayCookies: "+JSON.stringify(arrayCookies));
+        setCookie('columnChoices_'+netcall.trim(), arrayCookies, 10);
+} // End showFacilityColumn()
+
+// End of the facility & On site cookie moves
 
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays, SameSite) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));
   var expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  var SS = "SameSite=Strict";
+  //document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";" + SS + ";path=/";
 }
 
 function getCookie(cname) {
@@ -98,15 +143,20 @@ function testCookies(nc) {
     // Removed 17 & 18 the county and state from the default on 2021-09-14
     if ( $("#activity").html().includes("MARS")) {
         var arrayDefault = ["1","2","3","4","6","7","12","13","14","50"]; 
-    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14"];}
+    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14","18"];} // removed ,"17","18"
 		
     // This sets us up to add the email and phone columns automatically if its a meeting or event
-    if ( $("#activity").html().includes("Meeting") || $("#activity").html().includes("Event") ) {
+    if ( $("#activity").html().includes("Meeting") /*|| $("#activity").html().includes("Event") */ ) {
         var array1011 = ["10","11"]; // for use later in arrayBoth
     } else if ($("#activity").html().includes("Weather Net")) {
-        var array1011 = ["17","18","24"];
+        var array1011 = ["10","11","17","18","24"];
        // alert("array1011: "+JSON.stringify(array1011));
     } else { array1011 = []; }
+    
+    /*
+    if ( $("thenetcallsign").html().includes("JFK50")) {
+        var { array1011 = []; }
+    } */
     
     if ( $("#activity").html().includes("MARS")) {
         var arrayFD = ["2","50"] ;
@@ -116,8 +166,6 @@ function testCookies(nc) {
     if ( $("#add2pgtitle").html().includes("Multiple Bands") || $("#add2pgtitle").html().includes("80/40 Meters")) {
         var array1011 = array1011.concat("23");
     }
-    
-    
 		
     // NC is the netcall, if it doesn't exits go get it
 	if (nc == null) {  // test if nc is empty or undefined
@@ -140,7 +188,7 @@ function testCookies(nc) {
         // alert("arrayCookies: "+JSON.stringify(arrayCookies));
         		
     // This hides all the extra columns as preperation for showing only the requested ones below
-        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30, .c31").hide();
+        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30, .c31, .c32, .c33, .c34").hide();
         $(".c25, .c26, .c27, .c28, .c29").hide(); // Admin Level
         $(" .c50, .c51").hide(); // Custom Level
        
@@ -172,6 +220,9 @@ function showCol(sh) {
             } else if (sh === '24' ) { $(".c24").show();    // W3W
             } else if (sh === '30' ) { $(".c30").show();    // team
             } else if (sh === '31' ) { $(".c31").show();    // aprs_call
+            } else if (sh === '32' ) { $(".c32").show();    // Country
+            } else if (sh === '33' ) { $(".c33").show();    // facility
+            } else if (sh === '34' ) { $(".c34").show();    // onSite        
               // Custom
             } else if (sh === '50' ) { $(".c50").show();    // Cat (Custom)
             } else if (sh === '51' ) { $(".c51").show();    // Section (Custom)

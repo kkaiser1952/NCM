@@ -71,6 +71,7 @@ $curl = curl_init();
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=5WHIM4GD&words=$w3w",
+  CURLOPT_SSL_VERIFYPEER => false,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -156,7 +157,8 @@ if ($CrossRoads) {
 // Now update the NetLog table.
 // ====================================
 $sql2 = "UPDATE NetLog 
-		   SET latitude = $lat, longitude = $lng, grid='$grid',  w3w = '$w3w<br>$CrossRoads'
+		   SET latitude = $lat, longitude = $lng, grid='$grid',  w3w = '$w3w<br>$CrossRoads',
+		       delta = 'Y'
 		 WHERE recordID = $recordID
         ";
 	$stmt2 = $db_found->prepare($sql2);

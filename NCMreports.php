@@ -269,6 +269,8 @@ table.sortable thead {
 
 		<span class="h3size">Select a year (i.e. 2017)</span>
 		<br>
+		<input type="radio" name="reportYear" value="2022"  > 2022
+        &nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportYear" value="2021" checked > 2021
         &nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportYear" value="2020" > 2020

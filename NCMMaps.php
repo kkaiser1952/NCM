@@ -1,3 +1,7 @@
+<?php
+require_once( 'config.php' );
+?>
+
 <!DOCTYPE html >
 <html>
   <head>
@@ -27,7 +31,7 @@
     	}
      </style>
             
-    <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB2NXMDaGFkSztsXXUc4UUPWeyEI-3ZtWM&v=3.exp&libraries=geometry,places&ext=.js"></script>
+    <script src = "https://maps.googleapis.com/maps/api/js?key=<?php echo $_GOOGLE_MAPS_API_KEY; ?>&v=3.exp&libraries=geometry,places&ext=.js"></script>
     
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     

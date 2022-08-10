@@ -19,7 +19,7 @@ table#thisNet tbody tr td:first-child::before {
 }
 
 /* No Break prevents overflow to second line */
-.c10, .c11, .c31  {
+.c10, .c11, .c31, c32  {
     white-space: nowrap;
 }
 .btn-toolbar {
@@ -255,6 +255,11 @@ a.delete:hover::after {
 	background-color: #ffdb2b;
 }
 
+
+.deltakey {
+    background-color:#fbac23;          /* #fdde90; */
+}
+
 /* Controls the colors and timer in the 10 minute timer div */
 #resetx {
 	position:  absolute;
@@ -471,7 +476,7 @@ input[type="radio"] {
 }
 
 /* Time Line button */
-.timeline {
+.timeline, .timelinebut3 {
 	background-color: #cac7c7;
 	border-radius: 8px;
 	border: 2px solid black; 
@@ -733,6 +738,7 @@ xtable.sortable thead {
 
 .cs1 {
 	text-transform:uppercase;
+	white-space: nowrap;
 }
 .cs9 {
     text-transform: uppercase;
@@ -1197,7 +1203,17 @@ prompt {
       overflow: auto;     
     }
     
-    .btn-group2 .timelineBut .dropbtn2 .ckin1 .copyPB .closenet{
+    .timelinesearch {
+      width: 40%;
+      height: 25px;
+      margin: 0 auto;
+      margin-top: 8px;
+      
+      border: 1px solid black;
+      border-radius: 10px !important;
+    }
+    
+    .btn-group2 .timelineBut .dropbtn2 .ckin1 .copyPB .closenet {
       background-color: #cac7c7;
       border-radius: 5px;
       border: 1px solid #cac7c7;
@@ -1206,10 +1222,9 @@ prompt {
       display: inline-block;
       cursor: pointer;
       margin-left: 25px;
-      float: left;
       vertical-align: middle;
     }
-    
+        
     .poiedit {
         background-color: yellow;
         border-radius: 8px;
@@ -1445,14 +1460,44 @@ prompt {
         font-weight: bold !important;
         color: white !important;
         align-content: center;
-   /*     padding-left:10px;
-        padding-right:10px; */
-        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1b6013+44,2989d8+47,207cca+49,1c1fcc+52 */
+  
         background: #1b6013; /* Old browsers */
         background: -moz-linear-gradient(left,  #1b6013 44%, #2989d8 47%, #207cca 49%, #1c1fcc 52%); /* FF3.6-15 */
         background: -webkit-linear-gradient(left,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(to right,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b6013', endColorstr='#1c1fcc',GradientType=1 ); /* IE6-9 */
+        
 
     }
+    
+.quotes {
+    position: relative;
+    top: 45%;
+    left: 5%;
+    width: 75%;
+    display: none;    
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
+}
+.preQuote {
+    position: relative;
+    top: 45%;
+    left: 5%;
+    width: 90%;
+    font-size: smaller;
+    color:red;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+#testnet {
+	color: red;
+	font-size: 1.5em;
+	position: absolute;
+}
+
+.Testcontainer {
+    font-size: large;
+    color: red;
+    height: 10px;
+}
 
