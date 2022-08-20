@@ -419,6 +419,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
 		  				when netcall in ('MESN') then district 
 		  				when netcall in ('KCHEART') then facility
+		  				when netcall like '%SBBT%' then team
 		  				else logdate  
 		  				end,
 		  				logdate DESC
