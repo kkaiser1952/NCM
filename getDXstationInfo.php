@@ -71,7 +71,7 @@
                ,Lname     = '$Lname'
                ,tactical  = RIGHT(callsign, 3)
  
-               ,latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')'))
+          /*     ,latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')) */
                ,dttm      = CURRENT_TIMESTAMP
                ,comment   = '$updated'
                ,country   = '$country'
