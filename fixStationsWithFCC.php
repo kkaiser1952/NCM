@@ -71,8 +71,8 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
                              fccid      = $row[fccfccid] ,
                              dttm       = NOW() ,
                              latitude   = $latitude , 
-                             longitude  = $longitude 
-                          /*   latlng     = GeomFromText('POINT($latitude $longitude)')    */
+                             longitude  = $longitude ,
+                             latlng     = GeomFromText('POINT($latitude $longitude)')    
           WHERE id = $row[id];         
 ";
 

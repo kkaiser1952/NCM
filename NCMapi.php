@@ -137,8 +137,8 @@ if ($err) {
                comment   = 'Update Stations w/Callsign Shortcut',
                dttm      = NOW(),
                zip       = '$zip',
-               country   = '$country'
-        /*       latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')) */
+               country   = '$country',
+               latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')'))
               WHERE callsign = '$cs1' ";
     
         $stmt = $db_found->prepare($sql2);

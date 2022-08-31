@@ -173,7 +173,7 @@ $latlng = "$lat,$lng";
 
 	
 $sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress, latlng) 
-					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress', /* GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')')) */ )";
+					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress', GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')')) )";
         
        //  echo "<br><br>sql2= $sql3"
    $db_found->exec($sql3);
