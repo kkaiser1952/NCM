@@ -32,14 +32,14 @@
 				 
 		
 		/* ==== GROUP ======= */
-		if ($net[call] <> '' ) {        
+		if ('$net[call]' <> '' ) {        
 			$l = (52 - $net[otl])/2;  // how long each leg of equal signs should be
             $e = str_repeat("=", $l); // set e to make the option value 
            
-           $groupList = "$groupList<a href='#$net[id2]' onclick='putInGroupInput(this);'>$net[call] ---> $net[org]</a>\n";
+           $groupList = "$groupList<a href='#$net[id2]' onclick='putInGroupInput(this);'>'$net[call]' ---> $net[org]</a>\n";
            
         } // END THE CALL A.K.A.; GROUP LOOP
-			$thisOrgType = $net[orgType];	
+			$thisOrgType = '$net[orgType]';	
 		} // End of SQL      
 		
 		 //echo $groupList;
