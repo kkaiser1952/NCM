@@ -151,7 +151,7 @@
 	
 <div id="dttm"> <!-- flex container -->
     <div id="dttm1">
-        <input type="radio" name="tz" id="theLocal" value="theLocal" onclick="goLocal()">
+        <input type="radio" name="tz" id="theLocal" value="theLocal" size = "60" onclick="goLocal()">
         <br>
         <input type="radio" name="tz" id="theUTC" value="theUTC" onclick="goUTC()" >
     </div>
