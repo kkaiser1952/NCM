@@ -14,8 +14,8 @@ require_once "dbConnectDtls.php";
 	$netcall = $nc[0];
 	
 	$term = str_replace(' ','', $term); 
-	 		  	// ,' --> ',state,'--',county,'--',district
-$sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,'--',a.county) as name
+	 		  	/* added district: 2022-10-17 */
+$sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,'--',a.county,'  ',a.district) as name
           FROM stations a
               ,NetLog   b
          WHERE a.active_call = 'y' 
