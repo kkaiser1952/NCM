@@ -92,6 +92,14 @@
     <meta name="Revisit" content="1 month" >
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control" >
     
+    <!-- https://fonts.google.com -->
+    <!-- Allerta is used to slash zeros -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Allerta&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Stoke&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cantora+One&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Risque&display=swap" >
+    
+    
     <!-- ===============                          ================================== -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
     
