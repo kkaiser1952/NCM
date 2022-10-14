@@ -354,6 +354,126 @@
 <br>
 </div>
 
+<hr>
+
+<div class="addemailtostations">
+    <a id="addemailtostations"></a>
+    <h3>addMailToStations.php</h3>
+    <p>This program adds the email address given by someone who forgets to close a net, the next time he opens a net.
+        <br>
+        Not currently in use by NCM.
+    </p>
+</div>
+
+<hr>
+
+<div class="adifreadlog">
+    <a id="adifreadlog"></a>
+    <h3>ADIFreadLog.php</h3>
+    <p>Not currently in use by NCM.
+    </p>
+</div>
+
+<hr>
+
+<div class="adiftomysql">
+    <a id="adiftomysql"></a>
+    <h3>ADIFtoMySQL.php</h3>
+    <p>Not currently in use by NCM.
+    </p>
+</div>
+
+<hr>
+
+<div class="buildclosinglisting">
+    <a id="buildclosinglisting"></a>
+    <h3>buildClosingListing.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>NetManager-p2.js</li>
+            <li>NetManager.js</li>
+        </ul>
+    </p>
+</div>
+
+<hr>
+
+<div class="builddwtt">
+    <a id="builddwtt"></a>
+    <h3>buildDWtt.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>NetManager-p2.js</li>
+        </ul>
+        Purpose: Build an APRStt config file from the current net.
+    </p>
+</div>
+
+<hr>
+
+<div class="buildeventdb">
+    <a id="buildeventdb"></a>
+    <h3>buildEventDB.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>buildEvents.php</li>
+        </ul>
+        Purpose: Helps build a new event listing.
+    </p>
+</div>
+
+<hr>
+
+<div class="buildeventlisting">
+    <a id="buildeventlisting"></a>
+    <h3>buildEventListing.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>NetManager-p2.js</li>
+            <li>NetManager.js</li>
+        </ul>
+        Purpose: Helps build a new event listing.
+    </p>
+</div>
+
+<hr>
+
+<div class="buildevents">
+    <a id="buildevents"></a>
+    <h3>buildEvents.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>NetManager.js</li>
+            <li>buildClosingListing.php</li>
+            <li>buildEventListing.php</li>
+            <li>index.php</li>
+            <li>buildourFrequencies.php</li>
+            <li>buildPreambleListing.php</li>
+        </ul>
+        Purpose: Helps build a new event listing.
+    </p>
+</div>
+
+<hr>
+
+<div class="buildfacilitydropdown">
+    <a id="buildfacilitydropdown"></a>
+    <h3>buildFacilityDropDown.php</h3>
+    <p>Used/Called in:
+        <ul>
+            <li>NetManager.js</li>
+            <li>buildClosingListing.php</li>
+            <li>buildEventListing.php</li>
+            <li>index.php</li>
+            <li>buildourFrequencies.php</li>
+            <li>buildPreambleListing.php</li>
+        </ul>
+        Purpose: Helps build a new facility listing.
+    </p>
+</div>
+
+<hr>
+
 <hr><hr><hr>
 <p style="page-break-before: always"></p>
 <div class="title">
