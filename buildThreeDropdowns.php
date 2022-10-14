@@ -13,15 +13,20 @@
          // The left join of NetKind to itself is used to pick up the row of the default kind
          // and freq for each id. This is very cool code!
 		foreach($db_found->query("
-			SELECT t1.id, t1.`call`, t1.orgType, t1.org, t1.freq, t1.kindofnet,
-            	   t2.kindofnet AS dfltKon, t3.freq AS dfltFreq,
-            	   char_length(t1.orgType) as otl,
-           
-                   CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.org)		as id2,
-            
-                   CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	as id3,
-            	   REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','') 		as id4  
-            	   ,t1.id as myid          
+			SELECT t1.id, 
+			       t1.`call`, 
+			       t1.orgType, 
+			       t1.org, 
+			       t1.freq,
+			       t1.kindofnet,
+            	   t2.kindofnet            AS dfltKon, 
+            	   t3.freq                 AS dfltFreq,
+            	   char_length(t1.orgType) AS otl,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.org)	   AS id2,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
+               REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','')  AS id4  
+               
+            	/*   ,t1.id                  AS myid  */        
               FROM NetKind t1
               LEFT JOIN NetKind t2 
                 ON t1.dflt_kind = t2.id
