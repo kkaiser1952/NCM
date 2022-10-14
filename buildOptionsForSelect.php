@@ -14,10 +14,13 @@
    // if (sessionStorage.getItem("tz_domain") == "UTC") { $tzdiff = "-0:00"; }
                
    $sql = ("SELECT netID
-               ,status ,activity ,netcall ,frequency
+               ,status 
+               ,activity 
+               ,netcall 
+               ,frequency
                 /* 1 = colose, 0 = open */  
-               ,MIN(status) as minstat  
-               ,MIN((CONVERT_TZ(dttm,'+00:00','$tzdiff'))) AS mindttm 
+               ,MIN(status) AS minstat  
+               ,MIN((CONVERT_TZ(dttm,'+00:00','$tzdiff')))    AS mindttm 
                ,MIN((CONVERT_TZ(logdate,'+00:00','$tzdiff'))) AS minlogdate
                ,MAX((CONVERT_TZ(timeout,'+00:00','$tzdiff'))) AS timeout
                                                        
@@ -29,7 +32,7 @@
                    DAYNAME(MIN(CONVERT_TZ(dttm,'+00:00','$tzdiff')))) AS daynm
                                          
                ,POSITION('Meeting' IN activity) AS meetType
-               ,POSITION('Event' IN activity) AS eventType
+               ,POSITION('Event' IN activity)   AS eventType
                                            
                ,SUM(IF(timeout IS NULL, 1,0)) AS lo
                
