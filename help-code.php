@@ -80,15 +80,14 @@
 	<h3>Code Index</h3>
 	
 	 <nav class="topics">
-        <a href="#javascript">PHP</a><br>
+        <a href="#php">PHP</a><br>
 		<a href="#javascript">Javascript</a><br>
-		<a href="#javascript">Style Sheets</a><br>
-		
-		<a href="#javascript">jQuery</a><br>
+		<a href="#css">Style Sheets</a><br>
      </nav> <!-- End topics for topic index -->
 	 <br>
 	 <h3>PHP Code Index</h3>
-	 
+
+<div class="php">	 
 	 <nav class="topics">
         <a href="#addemailtostations">addEmailToStations.php</a><br>
         <a href="#adifreadlog">ADIFreadLog.php</a><br>
@@ -281,6 +280,77 @@
 <div>
     <a class="gotoindex" href="#index"><br>Back to the Index</a>
 </div>
+<br>
+</div>
+<div class="javascript">	 
+
+	 <h3>Javascript Code Index</h3>
+	 
+	 <nav class="topics">
+        <a href="#celleditfunctions">CellEditFunctions.js</a><br>
+        <a href="#celleditfunctionStations">CellEditFunctionStations.js</a><br>
+        <a href="#circlekoords">circleKoords.js</a><br>
+        <a href="#control.w3w">control.w3w.js</a><br>
+        <a href="#convertdms">convertDMS.js</a><br>
+        <a href="#cookiemanagement">cookieManagement.js</a><br>
+        <a href="#getcenterfromdegrees">getCenterFromDegrees.js</a><br>
+        
+        <a href="#getnetid.w3w">getNetID.js</a><br>
+        <a href="#grid">grid.js</a><br>
+        <a href="#gridsquare">gridsquare.js</a><br>
+        <a href="#gridtokoords">gridtocoords.js</a><br>
+        <a href="#hamgridsquare">hamgridsquare.js</a><br>
+        <a href="#latlongdistance">latlongdistance.js</a><br>
+        <a href="#leaflet_numbered_markers">leaflet_numbered_markers.js</a><br>
+        
+        <a href="#netmanager-p2">NetManager-p2.js</a><br>
+        <a href="#netmanager">NetManager.js</a><br>
+        <a href="#sorttable">sortTable.js</a><br>
+        <a href="#table2csv.min">table2csv.min.js</a><br>
+        <a href="#timepicker">timepicker.js</a><br>
+        <a href="#w3wdata">w3wdata.js</a><br>
+   
+        
+     </nav>
+<div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
+<div class="javascript">
+      <h3>CSS Code Index</h3>
+	 
+	 <nav class="css">
+        <a href="#bubbles">bubbles.css</a><br>
+        <a href="#closing">closing.css</a><br>
+        <a href="#commplan">commplan.css</a><br>
+        <a href="#events">events.css</a><br>
+        <a href="#eventsbuild">eventsBuild.css</a><br>
+        <a href="#help">help.css</a><br>
+        <a href="#ics205">ics205.css</a><br>
+        
+        <a href="#ics214">ics214.css</a><br>
+        <a href="#ics309">ics309.css</a><br>
+        <a href="#listnets">listNets.css</a><br>
+        <a href="#maps">maps.css</a><br>
+        <a href="#meccstyle">MeccStyle.css</a><br>
+        <a href="#ncmstyle">NCMstyle.css</a><br>
+        <a href="#netmanager-media">NetManager-media.css</a><br>
+        
+        <a href="#netmanager">NetManager.css</a><br>
+        <a href="#preamble">preamble.css</a><br>
+        <a href="#prebuild">preBuild.css</a><br>
+        <a href="#print">print.css</a><br>
+        <a href="#printbynetid">printbyNetID.css</a><br>
+        <a href="#tabs">tabs.css</a><br>
+        <a href="#timelinejs-local">timelineJS-local.css</a><br>
+        
+	 </nav>
+<div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
 
 <hr><hr><hr>
 <p style="page-break-before: always"></p>
@@ -290,13 +360,6 @@
 		<p>Manager</p>
 </div> <!-- End title -->
 
-<!-- Start topics here -->
-<hr>
-
-<div class="assumptions">
-	<a id="assumptions"></a>
-	<h3>Assumptions:</h3>
-</div>
 <hr>
 
 
