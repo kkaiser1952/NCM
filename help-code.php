@@ -32,9 +32,6 @@
     } /* End of media css */
 </style>
 	
-	
-
-    
 </head>
 <body>
 	
@@ -461,14 +458,10 @@
     <h3>buildFacilityDropDown.php</h3>
     <p>Used/Called in:
         <ul>
-            <li>NetManager.js</li>
-            <li>buildClosingListing.php</li>
-            <li>buildEventListing.php</li>
-            <li>index.php</li>
-            <li>buildourFrequencies.php</li>
-            <li>buildPreambleListing.php</li>
+            <li></li>
         </ul>
-        Purpose: Helps build a new facility listing.
+        Purpose: Creates a dropdown list of all facility entries in the DB.<br>
+        Future Development: Not currently part of any other program in NCM.
     </p>
 </div>
 
