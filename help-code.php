@@ -146,6 +146,12 @@
         <a>.editonGRID (Grid)</a><br>
         <a>.editonLAT (Latitude & Grid)</a><br>
         <a>.editonLON (Longitude & Grid)</a><br>
+        
+        <a>.editonaprs_call (APRS Call Sign)</a><br>
+        <a>.editonteam (Team)</a><br>
+        <a>.editonTT (tt value)</a><br>
+        <a>.editonCAT (Traffic For)</a><br>
+        <a>.editonSec (Field Day )</a><br>
         </nav>
         
     </p>
