@@ -72,6 +72,7 @@
 	</div> <!-- end flex-container -->
 </div> <!-- End Banner -->
 <br>
+
 <div class="index"> <!-- Changed from div on 2019-10-01 -->
 	<a id="index"></a>
 	<h3>Code Index</h3>
@@ -82,6 +83,74 @@
 		<a href="#css">Style Sheets</a><br>
      </nav> <!-- End topics for topic index -->
 	 <br>
+	 <div class="javascript">	 
+<a id="javascript"></a>
+	 <h3>Javascript Code Index</h3>
+	 
+	 <nav class="topics">
+        <a href="#CellEditFunctions">CellEditFunctions.js</a><br>
+        <a href="#celleditfunctionStations">CellEditFunctionStations.js</a><br>
+        <a href="#circlekoords">circleKoords.js</a><br>
+        <a href="#control.w3w">control.w3w.js</a><br>
+        <a href="#convertdms">convertDMS.js</a><br>
+        <a href="#cookiemanagement">cookieManagement.js</a><br>
+        <a href="#getcenterfromdegrees">getCenterFromDegrees.js</a><br>
+        
+        <a href="#getnetid.w3w">getNetID.js</a><br>
+        <a href="#grid">grid.js</a><br>
+        <a href="#gridsquare">gridsquare.js</a><br>
+        <a href="#gridtokoords">gridtocoords.js</a><br>
+        <a href="#hamgridsquare">hamgridsquare.js</a><br>
+        <a href="#latlongdistance">latlongdistance.js</a><br>
+        <a href="#leaflet_numbered_markers">leaflet_numbered_markers.js</a><br>
+        
+        <a href="#netmanager-p2">NetManager-p2.js</a><br>
+        <a href="#netmanager">NetManager.js</a><br>
+        <a href="#sorttable">sortTable.js</a><br>
+        <a href="#table2csv.min">table2csv.min.js</a><br>
+        <a href="#timepicker">timepicker.js</a><br>
+        <a href="#w3wdata">w3wdata.js</a><br>
+   
+        
+     </nav>
+<div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+<hr>
+
+<div class="CellEditFunctions">
+    <a id="CellEditFunctions"></a>
+    <h3>CellEditFunctions.js</h3>
+    <p>This program allows editing of most of the columns and genComm they include:
+        <nav class="topics2">
+        <a>.editGComms (General Comments)</a><br>
+        <a>.editTimeOut (Time Out & Time on Duty)</a><br>
+        <a>.editTimeIn (Time In & Time on Duty)</a><br>
+        <a>.editCS1 (Call Sign)</a><br>
+        
+        <a>.editFnm (First Name)</a><br>
+        <a>.editonSite (onSite)</a><br>
+        <a>.editTAC (Tactical Call)</a><br>
+        <a>.editPhone (Phone Number)</a><br>
+        <a>.editLnm (Last Name)</a><br>
+        
+        <a>.editonEMAIL (Email)</a><br>
+        <a>.editonCREDS (Credentials)</a><br>
+        <a>.editoncnty (County)</a><br>
+        <a>.editonstate (State)</a><br>
+        <a>.editoncntry (Country)</a><br>
+        
+        <a>.editondist (District)</a><br>
+        <a>.W3W (What3Words)</a><br>
+        <a>.editonGRID (Grid)</a><br>
+        <a>.editonLAT (Latitude & Grid)</a><br>
+        <a>.editonLON (Longitude & Grid)</a><br>
+        </nav>
+        
+    </p>
+</div>
+
 	 <h3>PHP Code Index</h3>
 
 <div class="php">	 
@@ -280,40 +349,7 @@
 </div>
 <br>
 </div>
-<div class="javascript">	 
-<a id="javascript"></a>
-	 <h3>Javascript Code Index</h3>
-	 
-	 <nav class="topics">
-        <a href="#celleditfunctions">CellEditFunctions.js</a><br>
-        <a href="#celleditfunctionStations">CellEditFunctionStations.js</a><br>
-        <a href="#circlekoords">circleKoords.js</a><br>
-        <a href="#control.w3w">control.w3w.js</a><br>
-        <a href="#convertdms">convertDMS.js</a><br>
-        <a href="#cookiemanagement">cookieManagement.js</a><br>
-        <a href="#getcenterfromdegrees">getCenterFromDegrees.js</a><br>
-        
-        <a href="#getnetid.w3w">getNetID.js</a><br>
-        <a href="#grid">grid.js</a><br>
-        <a href="#gridsquare">gridsquare.js</a><br>
-        <a href="#gridtokoords">gridtocoords.js</a><br>
-        <a href="#hamgridsquare">hamgridsquare.js</a><br>
-        <a href="#latlongdistance">latlongdistance.js</a><br>
-        <a href="#leaflet_numbered_markers">leaflet_numbered_markers.js</a><br>
-        
-        <a href="#netmanager-p2">NetManager-p2.js</a><br>
-        <a href="#netmanager">NetManager.js</a><br>
-        <a href="#sorttable">sortTable.js</a><br>
-        <a href="#table2csv.min">table2csv.min.js</a><br>
-        <a href="#timepicker">timepicker.js</a><br>
-        <a href="#w3wdata">w3wdata.js</a><br>
-   
-        
-     </nav>
-<div>
-    <a class="gotoindex" href="#index"><br>Back to the Index</a>
-</div>
-<br>
+
 </div>
 <div class="css">
     <a id="css"></a>
