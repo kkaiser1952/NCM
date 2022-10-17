@@ -125,33 +125,53 @@
     <p>This program allows editing of most of the columns and genComm they include:
         <nav class="topics2">
         <a>.editGComms (General Comments)</a><br>
-        <a>.editTimeOut (Time Out & Time on Duty)</a><br>
-        <a>.editTimeIn (Time In & Time on Duty)</a><br>
-        <a>.editCS1 (Call Sign)</a><br>
+        <a>.c13/.editTimeOut (Time Out & Time on Duty)</a><br>
+        <a>.c12/.editTimeIn (Time In & Time on Duty)</a><br>
+        <a>.cs1/.c6/.editCS1 (Call Sign)</a><br>
+        <a>.c16/.editable (Timeonduty)
         
-        <a>.editFnm (First Name)</a><br>
-        <a>.editonSite (onSite)</a><br>
-        <a>.editTAC (Tactical Call)</a><br>
-        <a>.editPhone (Phone Number)</a><br>
-        <a>.editLnm (Last Name)</a><br>
+        <a>.c7/.editFnm (First Name)</a><br>
+        <a>.c34/.editonSite (onSite)</a><br>
+        <a>.c9/.editTAC (Tactical Call)</a><br>
+        <a>.c10/.editPhone (Phone Number)</a><br>
+        <a>.c8/.editLnm (Last Name)</a><br>
         
-        <a>.editonEMAIL (Email)</a><br>
-        <a>.editonCREDS (Credentials)</a><br>
-        <a>.editoncnty (County)</a><br>
-        <a>.editonstate (State)</a><br>
-        <a>.editoncntry (Country)</a><br>
+        <a>.c11/.editEMAIL (Email)</a><br>
+        <a>.c15/.editCREDS (Credentials)</a><br>
+        <a>.c17/.editcnty (County)</a><br>
+        <a>.c18/.editstate (State)</a><br>
+        <a>.c32/.editntry (Country)</a><br>
         
-        <a>.editondist (District)</a><br>
-        <a>.W3W (What3Words)</a><br>
-        <a>.editonGRID (Grid)</a><br>
-        <a>.editonLAT (Latitude & Grid)</a><br>
-        <a>.editonLON (Longitude & Grid)</a><br>
+        <a>.c59/.editdist (District)</a><br>
+        <a>.c24/.W3W (What3Words)</a><br>
+        <a>.c20/.editGRID (Grid)</a><br>
+        <a>.c21/.editLAT (Latitude & Grid)</a><br>
+        <a>.c22/.editLON (Longitude & Grid)</a><br>
         
-        <a>.editonaprs_call (APRS Call Sign)</a><br>
-        <a>.editonteam (Team)</a><br>
-        <a>.editonTT (tt value)</a><br>
-        <a>.editonCAT (Traffic For)</a><br>
-        <a>.editonSec (Field Day )</a><br>
+        <a>.c31/.editaprs_call (APRS Call Sign)</a><br>
+        <a>.c30/.editteam (Team)</a><br>
+        <a>.c5/.editTT (tt value)</a><br>
+        <a>.editCAT (Traffic For)</a><br>
+        <a>.c51/.editSec (Field Day )</a><br>
+        
+        <a>.c14/.editC (Comments)</a><br>
+        <a>.c3/.editable_selectACT (Status)</a><br>
+        <a>.c4/.editable_selectTFC (Traffic)</a><br>
+        <a>.c2/.edit_selectMode (Mode)</a><br>
+        <a>.c1/.editable_selectNC (Netcontrol aka Role)</a><br>
+        
+        <a>.c28 (??)</a><br>
+        <a>.c33/.editfacility (Facility)</a><br>
+        <a>.c23/.editable_editBand (Band)</a><br>
+        <a>.c52/.editable (TRFK-FOR)</a><br>
+        <a>.c25/.editable (recordID)</a><br>
+            
+        <a>.c26/.editable (id)</a><br>
+        <a>.c27/.editable (status)</a><br>
+        <a>.c28/.editable (home)</a><br>
+        <a>.c29/.editable (ipaddress)</a><br>
+       
+       
         </nav>
         
     </p>
