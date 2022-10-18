@@ -175,8 +175,116 @@
         </nav>
         
     </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
 </div>
 
+<hr>
+
+<div class="celleditfunctionStations">
+    <a id="celleditfunctionStations"></a>
+    <h3>celleditfunctionStations.js</h3>
+    <p>This program allows editing of most of the columns it includes:
+        <nav class="topics2">
+            <a>.editFnm (First Name)</a><br>  
+            <a>.editTAC (Tactical Call)</a><br>
+            <a>..editPhone (Phone Number)</a><br>
+            <a>.editLnm (Last Name)</a><br>
+            
+            <a>.editEMAIL (Email)</a><br>
+            <a>.editCREDS (Credentials)</a><br>
+            <a>.c17/.editcnty (County)</a><br>
+            <a>.c18/.editstate (State)</a><br>
+            <a>.editdist (District)</a><br>
+            
+            <a>.editGRID (Grid)</a><br>
+            <a>.editLAT (Latitude & Grid)</a><br>
+            <a>.editLON (Longitude & Grid)</a><br>
+        </nav>
+        
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="circlekoords">
+    <a id="circlekoords"></a>
+    <h3>circlekoords.js</h3>
+    <p>This program comes from W3W
+
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="control.w3w">
+    <a id="control.w3w"></a>
+    <h3>control.w3w.js</h3>
+    <p>This program comes from W3W
+
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="convertdms">
+    <a id="convertdms"></a>
+    <h3>convertdms.js</h3>
+    <p>Function: convertDMS(lat, lng)
+        <br>Converts decimal to degrees, minutes, seconds
+
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="cookiemanagement">
+    <a id="cookiemanagement"></a>
+    <h3>cookiemanagement.js</h3>
+    <p>Functions: 
+        <br>clearFacilityCookie()
+        <br>showFacilityColumn()
+        <br>setCookie(cname, cvalue, exdays, SameSite)
+        <br>getCookie(cname)
+        <br>eraseCookie(cookieName)
+        <br>getCurrent()
+        <br>showChecked(sh)
+        <br>calculate()
+        <br>testCookies(nc)
+        <br>showCol(sh)
+
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
 	 <h3>PHP Code Index</h3>
 
 <div class="php">	 
