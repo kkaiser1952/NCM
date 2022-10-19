@@ -96,7 +96,7 @@
         <a href="#cookiemanagement">cookieManagement.js</a><br>
         <a href="#getcenterfromdegrees">getCenterFromDegrees.js</a><br>
         
-        <a href="#getnetid.w3w">getNetID.js</a><br>
+        <a href="#getnetid">getNetID.js</a><br>
         <a href="#grid">grid.js</a><br>
         <a href="#gridsquare">gridsquare.js</a><br>
         <a href="#gridtokoords">gridtocoords.js</a><br>
@@ -109,9 +109,7 @@
         <a href="#sorttable">sortTable.js</a><br>
         <a href="#table2csv.min">table2csv.min.js</a><br>
         <a href="#timepicker">timepicker.js</a><br>
-        <a href="#w3wdata">w3wdata.js</a><br>
-   
-        
+        <a href="#w3wdata">w3wdata.js</a><br>     
      </nav>
 <div>
     <a class="gotoindex" href="#index"><br>Back to the Index</a>
@@ -265,17 +263,142 @@
     <a id="cookiemanagement"></a>
     <h3>cookiemanagement.js</h3>
     <p>Functions: 
-        <br>clearFacilityCookie()
-        <br>showFacilityColumn()
-        <br>setCookie(cname, cvalue, exdays, SameSite)
-        <br>getCookie(cname)
-        <br>eraseCookie(cookieName)
-        <br>getCurrent()
-        <br>showChecked(sh)
-        <br>calculate()
-        <br>testCookies(nc)
-        <br>showCol(sh)
+        <a href="clearFacilityCookie">clearFacilityCookie()</a><br>
+        <a href="showFacilityColumn">showFacilityColumn()</a><br>
+        <a href="setCookie">setCookie(cname, cvalue, exdays, SameSite)</a><br>
+        <a href="getCookie">getCookie(cname)</a><br>
+        <a href="eraseCookie">eraseCookie(cookieName)</a><br>
+        <a href="getCurrent">getCurrent()</a><br>
+        <a href="showChecked">showChecked(sh)</a><br>
+        <a href="calculate">calculate()</a><br>
+        <a href="testCookies">testCookies(nc)</a><br>
+        <a href="showCol">showCol(sh)</a><br>
 
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="getcenterfromdegrees">
+    <a id="getcenterfromdegrees"></a>
+    <h3>getcenterfromdegrees.js</h3>
+    <p>Functions: <br>
+        <a href="GetCenterFromDegrees">GetCenterFromDegrees(data)</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="getNetID">
+    <a id="getNetID"></a>
+    <h3>getNetID.js</h3>
+    <p>Functions: <br>
+        <a href="function">function()</a><br>
+        <a href="initMyBookmarklet">initMyBookmarklet()</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+
+<hr>
+
+<div class="grid">
+    <a id="grid"></a>
+    <h3>grid.js</h3>
+    <p>Functions: <br>
+        <a href="grid">grid(gs)</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="gridsquare">
+    <a id="gridsquare"></a>
+    <h3>gridsquare.js</h3>
+    <p>Functions: <br>
+        <a href="gridsquare">gridsquare()</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="gridtokoords">
+    <a id="gridtokoords"></a>
+    <h3>gridtokoords.js</h3>
+    <p>Functions: <br>
+        <a href="subdivisor">subdivisor()</a><br>
+        <a href="parse_digit">parse_digit(digit)</a><br>
+        <a href="get_grid_square">get_grid_square(grid_square_id)</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="hamgridsquare">
+    <a id="hamgridsquare"></a>
+    <h3>hamgridsquare.js</h3>
+    <p>Functions: <br>
+        <a href="latLonToGridSquare">latLonToGridSquare(param1,param2)</a><br>
+        <a href="gridSquareToLatLon">gridSquareToLatLon(grid, obj)</a><br>
+        <a href="testGridSquare">testGridSquare()</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="latlongdistance">
+    <a id="latlongdistance"></a>
+    <h3>latlongdistance.js</h3>
+    <p>Functions: <br>
+        <a href="distance">distance(lat1, lon1, lat2, lon2, unit)</a><br>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="leaflet_numbered_markers">
+    <a id="leaflet_numbered_markers"></a>
+    <h3>leaflet_numbered_markers.js</h3>
+    <p>
     </p>
     <div>
     <a class="gotoindex" href="#index"><br>Back to the Index</a>
