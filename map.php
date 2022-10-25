@@ -17,7 +17,22 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
+    //$q = 7516;
     
+    // We need the min & max altitude to determin if we want to pull data from poiMarkers.php
+    $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlon,
+                                       MIN(latitude) as minlon,
+                                       MAX(longitude) as maxlong,
+                                       MIN(longitude) as minlong
+                                  FROM NetLog 
+                                WHERE netID = $q;");
+        $stmt->execute();
+    	$result = $stmt->fetch();
+    		$maxlon = $result[maxlon];
+    		$minlon = $result[minlon];
+    		$maxlong = $result[maxlong];
+    		$minlong = $result[minlong];
+    //echo "$maxalt, $minalt";
     	       
 	// Loads the programs that create the station, poi, and object markers
 	require_once "stationMarkers.php";

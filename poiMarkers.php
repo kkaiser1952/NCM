@@ -4,10 +4,8 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
             //$whereClause = "";
-            $whereClause = "where latitude < 50";
-            //$whereClause = "where class <> 'Fire'";
- //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
-   //$whereClause = "WHERE tactical <> '' ";
+            $whereClause = "where (latitude > $minlon and latitude < $maxlon) 
+                              and (longitude > $minlong and longitude < $maxlong)";
 			
     $dupCalls = "";	
     $sql = ("SELECT
