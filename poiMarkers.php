@@ -3,8 +3,9 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-
+            //$whereClause = "";
             $whereClause = "where latitude < 50";
+            //$whereClause = "where class <> 'Fire'";
  //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
    //$whereClause = "WHERE tactical <> '' ";
 			
@@ -44,6 +45,8 @@
             
             //$classList .= "$classList,ObjectL,";
             $classList = "$classList";
+            
+           // echo "$classList";
     
       // Create the leaflet LayerGroup for each type (class) of marker 
       // Problem here, perhaps with tackList
