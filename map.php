@@ -396,7 +396,7 @@ var map = L.map('map', {
     //====================== Points of Interest ============================
     //======================================================================    
     // The classList is the list of POI types.
-    var classList = '<?php echo "$classList $classList2 CornerL, ObjectL;"; ?>'.split(',');;
+    var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');;
      //  console.log('@390 in map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
@@ -448,7 +448,7 @@ var map = L.map('map', {
             let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
             y = {...y, ...SkyWarn};    
             
-        }else if (x == 'StateL' ) {
+        }else if (x == 'StateL') {
             let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
             y = {...y,...State};
             

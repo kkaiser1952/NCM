@@ -4,7 +4,7 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
 
-            $whereClause = "";
+            $whereClause = "where latitude < 50";
  //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
    //$whereClause = "WHERE tactical <> '' ";
 			
@@ -32,7 +32,7 @@
         $sql = ("SELECT 
                     GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
-                   WHERE latitude > 50
+
               $whereClause
                   GROUP BY class
                   ORDER BY class  
@@ -44,22 +44,6 @@
             
             //$classList .= "$classList,ObjectL,";
             $classList = "$classList";
-            
-        $sql = ("SELECT 
-                    GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
-                   FROM poi
-                   WHERE latitude < 50
-              $whereClause
-                  GROUP BY class
-                  ORDER BY class  
-                ");
-    //echo "$sql";
-            foreach($db_found->query($sql) as $row2) {
-                $classList2 .= "$row2[class],";
-            }
-            
-            //$classList .= "$classList,ObjectL,";
-            $classList2 = "$classList2";
     
       // Create the leaflet LayerGroup for each type (class) of marker 
       // Problem here, perhaps with tackList
