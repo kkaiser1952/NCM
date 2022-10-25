@@ -46,6 +46,7 @@
             $classList = "$classList";
     
       // Create the leaflet LayerGroup for each type (class) of marker 
+      // Problem here, perhaps with tackList
         $sql = ("SELECT 
                 GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
                 CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
