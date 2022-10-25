@@ -4,7 +4,7 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
 
-            $whereClause = "";
+            $whereClause = "where latitude > 50";
  //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
    //$whereClause = "WHERE tactical <> '' ";
 			

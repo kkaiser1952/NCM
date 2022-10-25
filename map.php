@@ -448,7 +448,7 @@ var map = L.map('map', {
             let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
             y = {...y, ...SkyWarn};    
             
-        }else if (x == 'StateL') {
+        }else if (x == 'StateL' ) {
             let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
             y = {...y,...State};
             

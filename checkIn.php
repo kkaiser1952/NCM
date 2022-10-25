@@ -199,7 +199,7 @@ if ("$id" == "") {
     
     $stmt = $db_found->prepare("SELECT MAX(id)+1 as unused
                                   FROM stations
-                                 WHERE id < 8000
+                                 WHERE id < 38000
                               ");	
 	
 		$stmt->execute();
@@ -220,7 +220,7 @@ if ("$id" == "") {
                 
                 $stmt = $db_found->prepare("SELECT MAX(id)+1 as unused
                                   FROM stations
-                                 WHERE id >= 8000 and id < 9999
+                                 WHERE id >= 38000 and id < 49999
                               ");	
 	
 		$stmt->execute();
@@ -235,7 +235,7 @@ if ("$id" == "") {
 			
                     $db_found->exec($sql);
                     
-            if ($id > 7999) {
+            if ($id > 37999) {
                     $sql = "INSERT INTO stations 
                             (recordID, ID,  callsign, dttm, comment)
                         VALUES  ('$recordID', 	'$id', 	 '$cs1',  '$open', '$comments')";

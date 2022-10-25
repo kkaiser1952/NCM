@@ -27,7 +27,7 @@ SELECT n.callsign as callsign,
  WHERE n.callsign = f.callsign
   AND (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = n.callsign) 
   AND f.fccid > n.fccid 
-  AND n.id < 8000
+  AND n.id < 38000
 ORDER BY `n`.`callsign` ASC
 LIMIT 500
 ";

@@ -10,7 +10,7 @@ require_once "dbConnectDtls.php";
 	// Get the next ID 
 	$sql = "SELECT MAX(ID)+1 as nextid
               FROM stations 
-             WHERE ID < 8000
+             WHERE ID < 38000
              LIMIT 0,1
            ";
          $stmt = $db_found->prepare($sql);
