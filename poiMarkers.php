@@ -3,10 +3,10 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-            //$whereClause = "";
-            $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
+            $whereClause = "where latitude < 50";
+          /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
                             and (longitude > $minlon and longitude < $maxlon)";
-			
+			*/
     $dupCalls = "";	
     $sql = ("SELECT
                 tactical, latitude, COUNT(latitude)
