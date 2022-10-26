@@ -60,9 +60,13 @@
 		    <th>DGID</th>
 		    <th>mode</th>
 		    <th>Notes</th>
+		    <th>Country</th>
 	    </tr>
 	    <?php
-			$sql1 = ("SELECT * FROM `poi`
+			$sql1 = ("SELECT id, class, Type, name, county, address, city,
+			                 latitude, longitude, grid, altitude, tactical,
+			                 callsign, DGID, mode, Notes, latlng, country
+			            FROM `poi`
                        ORDER BY ID
 					");
 					
@@ -84,6 +88,7 @@
 			        <td>$row[DGID]</td>
 			        <td>$row[mode]</td>	
                     <td>$row[Notes]</td>
+                    <td>$row[country]</td>
 			   </tr>
 			   ";
 		    }
