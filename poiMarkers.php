@@ -4,8 +4,8 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
             //$whereClause = "";
-            $whereClause = "where (latitude > $minlon and latitude < $maxlon) 
-                            and (longitude > $minlong and longitude < $maxlong)";
+            $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
+                            and (longitude > $minlon and longitude < $maxlon)";
 			
     $dupCalls = "";	
     $sql = ("SELECT
