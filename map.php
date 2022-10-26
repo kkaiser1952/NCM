@@ -21,6 +21,7 @@
     //$q = 7516;
     
     // We need the min & max altitude to determin if we want to pull data from poiMarkers.php
+    // This should be changed to min and max longitude or the Americas vs. Europe etc.
     $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlat,
                                        MIN(latitude) as minlat,
                                        MAX(longitude) as maxlon,
@@ -423,6 +424,7 @@ var map = L.map('map', {
     // THE FULL LIST:  Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
     var y = {...station};
     var x;
+   // $var_a = $var_b = $same_var = $var_d = $some_var = 'A';
     for (x of classList) {
         
         if (x == 'AviationL') {

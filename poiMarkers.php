@@ -4,6 +4,7 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
 			// maxlat is calculated in map.php
+			// Eventualy update to bounds for America vs rest of the world
                 if ($maxlat > 50) 
                     {$whereClause = "where latitude > 50";}
                 else
