@@ -3,6 +3,7 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
+            //$whereClause = "where latitude < 50";
             $whereClause = "where latitude < 50";
           /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
                             and (longitude > $minlon and longitude < $maxlon)";
