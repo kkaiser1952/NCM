@@ -3,8 +3,15 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
+			// maxlat is calculated in map.php
+                if ($maxlat > 50) 
+                    {$whereClause = "where latitude > 50";}
+                else
+                    {$whereClause = "where latitude < 50";}
+                ;
+			
             //$whereClause = "where latitude < 50";
-            $whereClause = "where latitude < 50";
+            //$whereClause = "where latitude < 50";
           /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
                             and (longitude > $minlon and longitude < $maxlon)";
 			*/

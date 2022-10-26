@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<!-- Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
+<!-- Leaflet is the primary mapping used here:
+    Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
 
 <!-- This version 2021-10-16 -->
 
