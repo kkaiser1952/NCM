@@ -25,7 +25,8 @@
                                        MAX(longitude) as maxlong,
                                        MIN(longitude) as minlong
                                   FROM NetLog 
-                                WHERE netID = $q;");
+                                WHERE netID = $q AND latitude <> '';
+                               ");
         $stmt->execute();
     	$result = $stmt->fetch();
     		$maxlon = $result[maxlon];

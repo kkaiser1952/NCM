@@ -5,7 +5,7 @@
 			
             //$whereClause = "";
             $whereClause = "where (latitude > $minlon and latitude < $maxlon) 
-                              and (longitude > $minlong and longitude < $maxlong)";
+                            and (longitude > $minlong and longitude < $maxlong)";
 			
     $dupCalls = "";	
     $sql = ("SELECT
