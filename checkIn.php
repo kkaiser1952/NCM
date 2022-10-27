@@ -9,7 +9,7 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 require_once "getJSONrecord.php";
 
 // Get the IP address of the person making the changes.
-    require_once "getRealIpAddr.php";
+require_once "getRealIpAddr.php";
 
 // The below error output if used looks a lot like echo output so be aware of that
 
