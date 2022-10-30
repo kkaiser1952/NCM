@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 // getCallHistory.php
-// This program produces a report of the callsign being called, it opens as a modal or windwo
+// This program produces a report of the callsign being called, it opens as a modal or window
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -27,7 +27,8 @@ function secondsToDHMS($seconds) {
 
     $sql = "
         SELECT  callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
-            COUNT(callsign) as cnt_call
+            COUNT(callsign) as cnt_call,
+            district
           FROM NetLog 
          WHERE netcall = '$netcall'  
            AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
@@ -38,7 +39,7 @@ function secondsToDHMS($seconds) {
          ";
          
 //echo "$sql<br>";
-
+    
     $listing = '<tr>';
     $rowno = 0;
     foreach($db_found->query($sql) as $row) {
@@ -73,15 +74,10 @@ function secondsToDHMS($seconds) {
 			column-span: all;
 		}
 		.prime {
-    	/*	column-width: 40px; 
-    		column-count: 2; */
     		columns: 20px 2; 
     		column-gap: 10px; 
-    	/*	column-rule-width: 3px;
-    		column-rule-style: solid;
-    		column-rule-color: green; 
-    		column-rule: 3px solid green; */
 		}
+		
 	</style>
 	
 </head>
