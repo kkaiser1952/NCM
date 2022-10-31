@@ -176,9 +176,9 @@
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
                         
-            case "town":     $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
+            case "townhall": $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
                              $markername = "images/markers/gov.png";    
-                             $poimrkr = "townmrkr";  break;
+                             $poimrkr = "govmrkr";  break;
             
             case "aviation": $A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    

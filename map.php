@@ -401,7 +401,7 @@ var map = L.map('map', {
         
      var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
      
-     console.log('@389');
+     console.log('@404');
      console.log(polyline);
 
     
@@ -411,7 +411,7 @@ var map = L.map('map', {
     // The classList is the list of POI types.
     //var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
     var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
-     //  console.log('@390 in map.php classList= '+classList);
+       console.log('@414 in map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
@@ -436,10 +436,6 @@ var map = L.map('map', {
             
         }else if (x == 'FederalL') {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            y = {...y,...Federal};
-            
-        }else if (x == 'TownL') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townmrkr'>Town Hall</span>":  TownList};
             y = {...y,...Federal};
             
         }else if (x == 'FireL') {
@@ -467,8 +463,12 @@ var map = L.map('map', {
             y = {...y, ...SkyWarn};    
             
         }else if (x == 'StateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
+            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' />                 <span class='polmarker'>State</span>":  SheriffList};
             y = {...y,...State};
+            
+        }else if (x == 'TownHallL') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  TownHallList};
+            y = {...y,...TownHall};       
             
         }else if (x == 'ObjectL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
@@ -478,6 +478,9 @@ var map = L.map('map', {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
             y = {...y, ...Corners};
         }}; // End of for loop
+        
+        
+        console.log('@485 '+ x, Hospital);
         
         // Here we add the station object with the merged y objects from above
     var overlayMaps = {...y }; 
