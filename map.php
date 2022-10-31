@@ -444,9 +444,8 @@ var map = L.map('map', {
             y = {...y,...Federal};
             
         }else if (x == 'TownHall') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  TownHallList};
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Town Hall</span>":  TownHallList};
             y = {...y,...Federal};
-    
             
         }else if (x == 'FireL') {
             let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
