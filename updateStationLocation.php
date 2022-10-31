@@ -11,7 +11,7 @@
     require_once "GridSquare.php";  /* added 2017-09-03 */
     
     //$netID = intval( $_GET["NetID"] ); 
-    $cs = strtoupper('w3meb');  // does not return address1
+    $cs = strtoupper('KC5FM');  // does not return address1
    // $cs = 'wa0tjt';
  
 /*   
