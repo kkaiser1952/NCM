@@ -95,7 +95,8 @@
 	    $S = 0;  // SkyWarn
 	    $F = 0;  // Firestations
 	    $A = 0;  // Aviation
-	    $G = 0;  // State / Federal
+	    $G = 0;  // State / Federal / 
+	    $T = 0;  // Town Hall
 	    
 	    
 	    $markNO     = ''; // the marker number (might be alpha)
@@ -175,7 +176,7 @@
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
                         
-            case "townhall": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "townhall": $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break;
             
