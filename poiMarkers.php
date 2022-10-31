@@ -160,27 +160,27 @@
                              $markername = "images/markers/fire.png";   
                              $poimrkr = "firemrkr";  break;
                       
-            case "police":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "police":   $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "chp":     $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "chp":      $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "state":   $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "state":    $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
                              
-            case "federal": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "federal":  $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
                         
-            case "townhall": $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
+            case "town":     $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
                              $markername = "images/markers/gov.png";    
-                             $poimrkr = "govmrkr";  break;
+                             $poimrkr = "townmrkr";  break;
             
-            case "aviation":$A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
+            case "aviation": $A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
                                                       

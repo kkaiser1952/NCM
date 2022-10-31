@@ -237,9 +237,6 @@ var map = L.map('map', {
     
     // Adds a temp marker popup to show location of click
     var popup = L.popup();
-    
- 
-    
         
     // Define a PoiIcon class for use by Points of Interest
     var PoiIconClass = L.Icon.extend({
@@ -255,7 +252,6 @@ var map = L.map('map', {
         }
     });
     
-	
     // Adds a temp marker popup to show location of click
     //var popup = L.popup();
     function onMapClick(e) {
@@ -282,8 +278,9 @@ var map = L.map('map', {
         fireicon      = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
+        townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         
-        objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}),          // the 00 marker
+        objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
         greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
@@ -378,8 +375,6 @@ var map = L.map('map', {
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
     <?php echo "$cornerMarkers"; ?>
-    
-
 
     // Object Marker List starts here
     <?php echo "$OBJMarkerList"; ?>
@@ -443,8 +438,8 @@ var map = L.map('map', {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
             y = {...y,...Federal};
             
-        }else if (x == 'TownHall') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Town Hall</span>":  TownHallList};
+        }else if (x == 'TownL') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townmrkr'>Town Hall</span>":  TownList};
             y = {...y,...Federal};
             
         }else if (x == 'FireL') {
