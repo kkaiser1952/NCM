@@ -416,7 +416,7 @@ var map = L.map('map', {
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
-    // THE FULL LIST:  Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
+    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
     var y = {...station};
     var x;
    // $var_a = $var_b = $same_var = $var_d = $some_var = 'A';
@@ -428,7 +428,7 @@ var map = L.map('map', {
             
         }else if (x == 'CHPL') {
             let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y,...CHP}; 
+            y = {...y, ...CHP}; 
             
         }else if (x == 'EOCL') {
             let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
@@ -436,7 +436,7 @@ var map = L.map('map', {
             
         }else if (x == 'FederalL') {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            y = {...y,...Federal};
+            y = {...y, ...Federal};
             
         }else if (x == 'FireL') {
             let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
@@ -456,7 +456,7 @@ var map = L.map('map', {
             
         }else if (x == 'SheriffL') {
             let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y,...Sheriff};
+            y = {...y, ...Sheriff};
             
         }else if (x == 'SkyWarnL') {
             let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
@@ -464,11 +464,11 @@ var map = L.map('map', {
             
         }else if (x == 'StateL') {
             let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' />                 <span class='polmarker'>State</span>":  SheriffList};
-            y = {...y,...State};
+            y = {...y, ...State};
             
-        }else if (x == 'TownHallL') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  TownHallList};
-            y = {...y,...TownHall};       
+        }else if (x == 'townhallL') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
+            y = {...y, ...TownHall};       
             
         }else if (x == 'ObjectL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
@@ -479,8 +479,6 @@ var map = L.map('map', {
             y = {...y, ...Corners};
         }}; // End of for loop
         
-        
-        console.log('@485 '+ x, Hospital);
         
         // Here we add the station object with the merged y objects from above
     var overlayMaps = {...y }; 
