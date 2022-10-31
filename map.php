@@ -442,6 +442,10 @@ var map = L.map('map', {
         }else if (x == 'FederalL') {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
             y = {...y,...Federal};
+            
+        }else if (x == 'TownHall') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  TownHallList};
+            y = {...y,...Federal};
     
             
         }else if (x == 'FireL') {

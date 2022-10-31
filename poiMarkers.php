@@ -97,6 +97,7 @@
 	    $A = 0;  // Aviation
 	    $G = 0;  // State / Federal
 	    
+	    
 	    $markNO     = ''; // the marker number (might be alpha)
 	    $grid       = '';
 	    $rowno      = 0;
@@ -173,6 +174,10 @@
             case "federal": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
+                        
+            case "townhall": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+                             $markername = "images/markers/gov.png";    
+                             $poimrkr = "govmrkr";  break;
             
             case "aviation":$A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    
