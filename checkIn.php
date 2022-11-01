@@ -214,10 +214,13 @@ if ("$id" == "") {
 			// If this is the first log in for this station add them to the TimeLog table 
 			//if ("$comments" == "First Log In" OR "$comments" == "No FCC Record"){
     if ("$comments" == "No FCC Record") {
+        $firstChar = $cs1[0];
         
-            $firstChar = $cs1[0];
-                
-                
+        // Use this to find any DX station that gets logged. The data comes from the
+        // hamcall.net DB courtesy of Daniel Bateman, KK4FOS with Buckmaster International, LLC
+        //if ( $cs1[0] <> 'A' AND $cs1[0] <> 'N' AND $cs1[0] <> 'K' AND $cs1[0] <> 'W' ) 
+            //{ include "getDXstationInfo.php"; }
+
                 $stmt = $db_found->prepare("SELECT MAX(id)+1 as unused
                                   FROM stations
                                  WHERE id >= 38000 and id < 49999
@@ -345,64 +348,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
                     $db_found->exec($sql);
                     
             include "headerDefinitions.php";
-			  	
-	/*	echo ('	<table id="thisNet">
-					<thead id="thead" class="forNums" style="text-align: center;">			
-					<tr>            	
-					    <th title="Row No." class="c0" > &#35 </th>
-						<th title="Role"   >	Role	</th>
-						<th title="Mode" class="DfltMode cent" id="dfltmode">Mode				</th>
-						
-						<th title="Status" > 							 	Status	 			</th>  
-						<th title="Traffic"> 							 	Traffic 				</th>
-						
-						<th title="TT No." 	  		class="c5" width="5%"	
-							oncontextmenu="whatIstt();return false;">  	 	tt#	   				</th>
-							 
-                        <th title="Band" 	  		class="c23" width="5%"> Band   				</th>
-                        
-                        <th title="Facility" class="besticky cent c33" oncontextmenu= "clearFacilityCookie();return false;"> Facility </th>
-                  
-                        <th title="onsite" class="besticky c34" oncontextmenu="showFacilityColumn();return false;"> On Site </th>
-							
-						<th title="Call Sign"  						
-							oncontextmenu="heardlist()">			   	 	Callsign 				</th>
-							
-                        <th title="TRFK-FOR" 	class="c50">TRFK-FOR</th> 
-              <!--          <th title="Section" 	class="c51">  	Section		</th> -->
-				
-						<th title="First Name"> 					   	 	First Name 				</th>
-						<th title="Last Name" 	  	class="c8">  	 	Last Name  				</th>
-						<th title="Tactical Call" 	class="c9"> 	 		Tactical   				</th>
-						  
-						<th title="Phone"     		class="c10"> 	 	Phone     				</th>
-						<th title="email" 	  		class="c11">  	 	eMail    			   	</th>
-						<th title="Grid"      		class="c20">    		Grid      				</th>
-						
-						<th title="Latitude"  		class="c21">    		Latitude  				</th>
-						<th title="Longitude" 		class="c22">    		Longitude 				</th> 
-						    
-						<th title="Time In ">				   	 		Time In  			   	</th>
-						<th title="Time Out">				   	 		Time Out 			   	</th>
-						 
-						<th title="Comments">				   	 		Time Line<br>Comments 	</th>           
-						<th title="Credentials"  	class="c15"> 	 			Credentials 		</th>
-						<th title="Time On Duty" 	class="c16">    		Time On Duty 			</th>
-						
-						<th title="County"   		class="c17">  	 	County 					</th> 
-						<th title="State"    		class="c18"> 	 	State	 				</th>
-						<th title="District" 		class="c59">  	 	Dist	 					</th>
-						<th title="W3W"             class="c24">        W3W                     </th>
-						<th title="Team"             class="c30">        Team                     </th>
-						<th title="APRS Call"         class="c31">        APRS Call                     </th>
-						<th title="Country"         class="c32">       Country                    </th>
-					</tr>
-					</thead>
-				
-					<tbody class="sortable" id="netBody"> 
-		  
-		');  //ends the echo of the thead creation
-	  */                              	
+			  	                             	
 		$num_rows = 0;   // Counter to color row backgrounds in loop below
 		
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
