@@ -8,7 +8,7 @@
     	$tzdiff = "-0:00";   // make no adjustment to the various time values
     }else { 
         $tzdiff = $_COOKIE[tzdiff]/-60;  // adjust the time values based on time zone
-        $tzdiff = "$tzdiff:00";    // echo("tzdiff= $tzdiff");
+        $tzdiff = "$tzdiff:1";    // echo("tzdiff= $tzdiff");
     }
     
    // if (sessionStorage.getItem("tz_domain") == "UTC") { $tzdiff = "-0:00"; }
