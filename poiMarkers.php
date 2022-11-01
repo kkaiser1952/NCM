@@ -206,7 +206,7 @@
                             callback: circleKoords}],
                      
                         icon: L.icon({iconUrl: `$markername`, iconSize: [32, 34]}),
-                        title:`marker_$markNO`}).addTo(fg).bindPopup(`$row[tactical]<br>$row[addr]<br>$gs`).openPopup();                        
+                        title:`marker_$markNO`}).addTo(fg).bindPopup(`$row[tactical]<br>$row[addr]<br>$gs`);           /* .popup after ) */             
  
                         $(`$row[class]`._icon).addClass(`$poimrkr`);";
                      
