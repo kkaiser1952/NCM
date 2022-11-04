@@ -44,7 +44,7 @@
                   END)  AS pbcolor   /* color for the open pre-built nets */
              FROM `NetLog` 
             WHERE (CONVERT_TZ(dttm,'+00:00','$tzdiff') >=    NOW() - INTERVAL 39 DAY AND pb = 1)
-               OR (CONVERT_TZ(logdate,'+00:00','$tzdiff') >= NOW() - INTERVAL 1000 DAY AND pb = 0)
+               OR (CONVERT_TZ(logdate,'+00:00','$tzdiff') >= NOW() - INTERVAL 10 DAY AND pb = 0)
                                                      	
              GROUP BY netID
              ORDER BY netID DESC
