@@ -8,9 +8,9 @@
 
     require_once "dbConnectDtls.php";
     
-    $netcall = $_POST['netcall']; 
+    //$netcall = $_POST['netcall']; 
         $netcall = 'mesn';
-    $nomo = $_POST[nomo];
+    //$nomo = $_POST[nomo];
         $nomo = 3;
     $and1 = '';
     $netcall = strtoupper($netcall);
@@ -40,21 +40,37 @@ function secondsToDHMS($seconds) {
         ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC
          ";
          
-//echo "$sql<br>";
+echo "$sql<br>";
     
     $listing = '<tr>';
     $rowno = 0;
+    $firstrow = 0;
+
+    $firstdist = ' ';
+    
+    echo "firstdist= $firstdist<br>";
+    
+    
     foreach($db_found->query($sql) as $row) {
-        $rowno = $rowno + 1;  
+       // echo ' firstdist= $firstdist<br>';
+        if ($row[district]) <> $firstdist) {$literup = "Y";}
+            echo "$row[district], $literup";
+
+            $rowno = $rowno + 1;  
+    	    
+    	    $netcallsign = '$row[callsign]';
+    	    $Fname    = ucfirst(strtolower('$row[Fname]'));
+    	    $Lname    = '$row[Lname]';
+    	    
+    	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
 	    
-	    $netcallsign = '$row[callsign]';
-	    $Fname    = ucfirst(strtolower('$row[Fname]'));
-	    $Lname    = '$row[Lname]';
-	    
-	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
+	    $firstdist = $row[district];
+	    //echo "2firstdist= $firstdist literup= $literup<br> ";
     }
+    
 ?>
 
+<!--
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -91,10 +107,11 @@ function secondsToDHMS($seconds) {
             <div class="prime">
                 <table>
                     <tr>
-                        <th></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
+                        <th class="<?php $literup ?>"></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
                     </tr>
                         <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
                 </table>
             </div>
 </body>
 </html>
+-->
