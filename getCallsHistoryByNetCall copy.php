@@ -47,14 +47,15 @@ echo "$sql<br>";
     $firstrow = 0;
 
     $firstdist = ' ';
+    $literup = 'N';
     
-    echo "firstdist= $firstdist<br>";
+    //echo "firstdist= $firstdist<br>";
     
     
     foreach($db_found->query($sql) as $row) {
        // echo ' firstdist= $firstdist<br>';
-        if ($row[district]) <> $firstdist) {$literup = "Y";}
-            echo "$row[district], $literup";
+        if ('$row[district])' <> '$firstdist') {$literup = "Y";}
+            //echo "$row[district], $literup";
 
             $rowno = $rowno + 1;  
     	    
@@ -64,8 +65,10 @@ echo "$sql<br>";
     	    
     	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
 	    
-	    $firstdist = $row[district];
-	    //echo "2firstdist= $firstdist literup= $literup<br> ";
+	    $firstdist = "$row[district]";
+	    
+	    echo "2firstdist= $firstdist literup= $literup<br> ";
+	    $literup = "N";
     }
     
 ?>
