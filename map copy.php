@@ -63,7 +63,7 @@
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
     <!-- https://github.com/ardhi/Leaflet.MousePosition -->
-    <!-- <script src="js/L.Control.MousePosition.js"></script> -->
+    <!--<script src="js/L.Control.MousePosition.js"></script>-->
      
     <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
     <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
@@ -101,7 +101,7 @@
      <!-- ******************************** Style Sheets *************************************** -->
     <link rel="stylesheet" href="css/leaflet_numbered_markers.css" />
     <link rel="stylesheet" href="css/L.Grid.css" />   
-    <!-- <link rel="stylesheet" href="css/L.Control.MousePosition.css" /> -->
+    <link rel="stylesheet" href="css/L.Control.MousePosition.css" /> 
     <link rel="stylesheet" href="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.css">
     <link rel="stylesheet" href="css/control.w3w.css" />
     
@@ -121,7 +121,7 @@
 	<style>
 		/* All CSS is in css/maps.css */
 		/* Below is supposed to fix the problem of the controls disapearing */
-		.leaflet-top, .leaflet-left { transform: translate3d (0, 0, 0); will-change: transform; }
+		/*.leaflet-top, .leaflet-left { transform: translate3d (0, 0, 0); will-change: transform; }*/
 	</style>
 	
 </head>
