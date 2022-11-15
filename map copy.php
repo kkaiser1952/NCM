@@ -62,7 +62,14 @@
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
-    <script src="js/L.Control.MousePosition.js"></script>   <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!-- <script src="js/L.Control.MousePosition.js"></script> -->
+     
+    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
+    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
+    
+    <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script>
+    
     <script src="js/hamgridsquare.js"></script>
     
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
@@ -94,7 +101,8 @@
      <!-- ******************************** Style Sheets *************************************** -->
     <link rel="stylesheet" href="css/leaflet_numbered_markers.css" />
     <link rel="stylesheet" href="css/L.Grid.css" />   
-    <link rel="stylesheet" href="css/L.Control.MousePosition.css" />
+    <!-- <link rel="stylesheet" href="css/L.Control.MousePosition.css" /> -->
+    <link rel="stylesheet" href="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.css">
     <link rel="stylesheet" href="css/control.w3w.css" />
     
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
@@ -215,7 +223,8 @@ var map = L.map('map', {
 		w.setCoordinates(e);
 	});
                    
-    L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
+    //L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
+    L.control.mouseCoordinate({utmref:true,qth:true,position:'topright'}).addTo(map);
     
     // https://github.com/ppete2/Leaflet.PolylineMeasure
     // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
