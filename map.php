@@ -18,9 +18,9 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    $q = 7678;
+    //$q = 7678;
     
-    // We need the min & max altitude to determin if we want to pull data from poiMarkers.php
+    // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
     $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlat,
                                        MIN(latitude) as minlat,
