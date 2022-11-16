@@ -18,7 +18,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    $q = 7678;
+    //$q = 7678;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -202,19 +202,31 @@ var map = L.map('map', {
 
 	
 	// Define the layers for the map
-    const Streets = L.esri.Vector.vectorBasemapLayer('ArcGIS:Streets', {
-            apikey: apiKey,
+	
+	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
+	
+	    var esriapi = 'AAPKc202b5ca82cc46b1a95e2fa42efb35acYCUwyelUFSlSEASOJOTcP2Ehjyha8cRtVfncLMglNftid1dxaVFxkDTxJgG_UxEB';
+	
+          Streets = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
+            apikey: esriapi}).addTo(map),
           Imagery = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
-            apikey: apiKey,
-    })
+            apikey: esriapi}).addTo(map),
+          Topo = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            apikey: esriapi}).addTo(map),
+          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            apikey: esriapi}).addTo(map),
+          Standard = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey: esriapi}).addTo(map);
+   
     /*          
           Imagery = L.esri.basemapLayer('Imagery').addTo(map),
           Topo    = L.esri.basemapLayer('Topographic').addTo(map),
           NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
     */
     const baseMaps = { "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
-                       "<span style='color: blue; font-weight: bold;'>NatGeo": NatGeo,
+                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
+                       "<span style='color: blue; font-weight: bold;'>Community": Community,
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets               
                      };
                      
