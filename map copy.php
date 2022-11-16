@@ -11,6 +11,7 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
+    require_once "ENV_SETUP.php";
     require_once "GridSquare.php";
     
     
@@ -18,7 +19,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    //$q = 7678;
+    $q = 7668;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -205,7 +206,9 @@ var map = L.map('map', {
 	
 	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
 	
-	    var esriapi = 'AAPKc202b5ca82cc46b1a95e2fa42efb35acYCUwyelUFSlSEASOJOTcP2Ehjyha8cRtVfncLMglNftid1dxaVFxkDTxJgG_UxEB';
+	   // var esriapi = 'AAPKc202b5ca82cc46b1a95e2fa42efb35acYCUwyelUFSlSEASOJOTcP2Ehjyha8cRtVfncLMglNftid1dxaVFxkDTxJgG_UxEB';
+	   
+	       
 	
           Streets = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
             apikey: esriapi}).addTo(map),
