@@ -223,11 +223,11 @@ var map = L.map('map', {
           Topo    = L.esri.basemapLayer('Topographic').addTo(map),
           NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
     */
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Streets": Streets,
+                       "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                        "<span style='color: blue; font-weight: bold;'>Standard": Standard,
-                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,
-                       "<span style='color: blue; font-weight: bold;'>Community": Community,
-                       "<span style='color: blue; font-weight: bold;'>Streets": Streets               
+                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,                                
+                       "<span style='color: blue; font-weight: bold;'>Community": Community         
                      };
                      
                   
