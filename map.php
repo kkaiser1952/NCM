@@ -224,6 +224,7 @@ var map = L.map('map', {
 	});
                    
     //L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
+    // https://github.com/PowerPan/leaflet.mouseCoordinate replaces mousePosition above
     L.control.mouseCoordinate({utmref:true,qth:true,position:'topright'}).addTo(map);
     
     // https://github.com/ppete2/Leaflet.PolylineMeasure
