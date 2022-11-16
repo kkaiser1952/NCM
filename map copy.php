@@ -205,20 +205,20 @@ var map = L.map('map', {
 	// Define the layers for the map
 	
 	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
-	
-	   // var esriapi = 'AAPKc202b5ca82cc46b1a95e2fa42efb35acYCUwyelUFSlSEASOJOTcP2Ehjyha8cRtVfncLMglNftid1dxaVFxkDTxJgG_UxEB';
 	   
-	       
+	   esriapi = <?php  echo getenv(esriapi); ?>
+	   
+	   //alert (esriapi);
 	
-          Streets = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
+          Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
             apikey: esriapi}).addTo(map),
-          Imagery = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
+          Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
             apikey: esriapi}).addTo(map),
-          Topo = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+          Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
           Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
-          Standard = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
    
     /*          
