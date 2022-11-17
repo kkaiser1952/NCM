@@ -206,39 +206,10 @@ var map = L.map('map', {
 	
 	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
 	   
-	   apikey = <?php  echo getenv(esriapi); ?>  // api for esri maps
-	   
-	   var vectorTiles = {};
-	   
-	   var allEnums = [
-    	   'ArcGIS:Community',
-    	   'ArcGIS:Imagery',
-    	   'ArcGIS:Topographic',
-    	   'OSM:Streets',
-    	   'OSM:StandardRelief',
-	   ];
-	   
-	   vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
-    apiKey
-  });
-  allEnums.forEach((enumString) => {
-    vectorTiles[
-      enumString
-    ] = L.esri.Vector.vectorBasemapLayer(enumString, {
-      apiKey
-    });
-  });
-
-  L.control
-    .layers(vectorTiles, null, {
-      collapsed: false
-    })
-    .addTo(map);
-
-  vectorTiles.Default.addTo(map);
+	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
 	   
 	   //alert (esriapi);
-   /*       Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
             apikey: esriapi}).addTo(map),
           Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
             apikey: esriapi}).addTo(map),
@@ -255,7 +226,7 @@ var map = L.map('map', {
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
                        "<span style='color: blue; font-weight: bold;'>Standard": Standard                                 
                      };
-   */                  
+                     
                   
 // =========  ADD Things to the Map ===============================================================
 
