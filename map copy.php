@@ -19,7 +19,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    //$q = 7668;
+    $q = 7700;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -217,14 +217,20 @@ var map = L.map('map', {
             apikey: esriapi}).addTo(map),
           Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
-          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
-            apikey: esriapi}).addTo(map);
+          Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey})
+            
+            // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
+ // vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+  //  apiKey
+  //});
    
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community":       Community,
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
                        "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
-                       "<span style='color: blue; font-weight: bold;'>Standard": Standard                                 
+                       "<span style='color: blue; font-weight: bold;'>Standard": Default
+                                                    
                      };
                      
                   
