@@ -263,6 +263,8 @@ $(document).ready(function()
 						break;
 						case "3rd": $nc = "Tertiary Net Control";
 						break;
+						case "RELAY": $nc = "Relay Station";
+						break;
 						case "PIO": $nc = "Public Information Officer";
 						break;
 						case "Log": $nc = "Net Logger";
