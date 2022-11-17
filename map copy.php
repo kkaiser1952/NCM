@@ -11,7 +11,7 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
-    require_once "ENV_SETUP.php";
+    require_once "ENV_SETUP.php";      // API's
     require_once "GridSquare.php";
     
     
