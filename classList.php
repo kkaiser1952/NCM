@@ -138,7 +138,12 @@
             case "Fire":     $F = $F+1;  $iconName = "fireicon"; $markNO = "F$F";  
                              $markername = "images/markers/fire.png";   
                              $poimrkr = "firemrkr";  break;
+            
+            case "townhall": $T = $T+1;  $iconName = "townallicon"; $markNO = "T$T";  
+                             $markername = "images/markers/gov.png";   
+                             $poimrkr = "townhallmrkr";  break;
                              
+                                    
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr"; 
