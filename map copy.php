@@ -206,33 +206,56 @@ var map = L.map('map', {
 	
 	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
 	   
-	   esriapi = <?php  echo getenv(esriapi); ?>
+	   apikey = <?php  echo getenv(esriapi); ?>  // api for esri maps
+	   
+	   var vectorTiles = {};
+	   
+	   var allEnums = [
+    	   'ArcGIS:Community',
+    	   'ArcGIS:Imagery',
+    	   'ArcGIS:Topographic',
+    	   'OSM:Streets',
+    	   'OSM:StandardRelief',
+	   ];
+	   
+	   vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+    apiKey
+  });
+  allEnums.forEach((enumString) => {
+    vectorTiles[
+      enumString
+    ] = L.esri.Vector.vectorBasemapLayer(enumString, {
+      apiKey
+    });
+  });
+
+  L.control
+    .layers(vectorTiles, null, {
+      collapsed: false
+    })
+    .addTo(map);
+
+  vectorTiles.Default.addTo(map);
 	   
 	   //alert (esriapi);
-	
+   /*       Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+            apikey: esriapi}).addTo(map),
           Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
             apikey: esriapi}).addTo(map),
           Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
             apikey: esriapi}).addTo(map),
           Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
-          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
-            apikey: esriapi}).addTo(map),
           Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
    
-    /*          
-          Imagery = L.esri.basemapLayer('Imagery').addTo(map),
-          Topo    = L.esri.basemapLayer('Topographic').addTo(map),
-          NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
-    */
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Streets": Streets,
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community":       Community,
+                       "<span style='color: blue; font-weight: bold;'>Streets": Streets,
                        "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
-                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
-                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,                                
-                       "<span style='color: blue; font-weight: bold;'>Community": Community         
+                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,
+                       "<span style='color: blue; font-weight: bold;'>Standard": Standard                                 
                      };
-                     
+   */                  
                   
 // =========  ADD Things to the Map ===============================================================
 
