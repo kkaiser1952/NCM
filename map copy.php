@@ -63,6 +63,7 @@
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
+    <script src="js/geolet.js"></script>
     <!-- https://github.com/ardhi/Leaflet.MousePosition -->
     <!--<script src="js/L.Control.MousePosition.js"></script>-->
      
@@ -246,6 +247,7 @@ var map = L.map('map', {
 		w.setCoordinates(e);
 	});
                    
+    
     //L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
     // https://github.com/PowerPan/leaflet.mouseCoordinate replaces mousePosition above
     L.control.mouseCoordinate({utmref:true,qth:true,position:'topright'}).addTo(map);
@@ -293,6 +295,8 @@ var map = L.map('map', {
 
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
+    
+    L.geolet({ position: 'bottomleft' }).addTo(map);
     
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
