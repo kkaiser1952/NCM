@@ -70,7 +70,7 @@
     <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
     <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
     
-    <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script>
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
     
     <script src="js/hamgridsquare.js"></script>
     
@@ -123,7 +123,7 @@
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
 		.leaflet-control-mouseCoordinate{
-    		background: white;
+    		background: #d0effa;
         }
 	</style>
 	
