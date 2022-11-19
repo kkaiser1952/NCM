@@ -296,6 +296,7 @@ var map = L.map('map', {
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
     
+    // https://github.com/rhlt/leaflet-geolet
     L.geolet({ position: 'bottomleft' }).addTo(map);
     
 
