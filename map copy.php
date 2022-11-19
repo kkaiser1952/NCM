@@ -19,7 +19,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    //$q = 7707;
+    $q = 7707;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -39,7 +39,7 @@
     //echo "$maxalt, $minalt";
     	       
 	// Loads the programs that create the station, poi, and object markers
-	require_once "stationMarkers.php";
+	require_once "stationMarkerscopy.php";
     require_once "poiMarkers.php";    
     require_once "objMarkers.php"; 
 ?>
