@@ -150,7 +150,9 @@
     		  
     		  //echo ("$dup --> $callsign ");
     		  
-		  $stationMarkers .= "
+          require "beautifyMarkers.php";
+    		  
+	/*	  $stationMarkers .= "
 			var $callsign = new L.marker(new L.latLng($logrow[koords]),{ 
 			    rotationAngle: $dup,
 			    rotationOrigin: 'bottom',
@@ -167,7 +169,7 @@
 				$(`$callsign`._icon).addClass(`$logrow[classColor]`);
                 stationMarkers.push($callsign);
 				";
-				
+	*/			
 			
         } // End $row[koords] test... is there a value     
         

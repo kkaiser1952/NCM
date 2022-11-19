@@ -82,8 +82,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
-
-
+    
+    
      
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
@@ -126,6 +126,15 @@
 		/* Below is supposed to fix the problem of the controls disapearing */
 		/*.leaflet-top, .leaflet-left { transform: translate3d (0, 0, 0); will-change: transform; }*/
 	</style>
+	
+	<!-- Experiment to add beautifyl markers -->
+	<!--
+    <link rel="stylesheet"BeautifyMarker-master/leaflet/fontawesome.min.css" />"
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="BeautifyMarker-master/leaflet-beautify-marker-icon.css" />
+    <script src="BeautifyMarker-master/leaflet-beautify-marker-icon.js"></script>
+    -->
+
 	
 </head>
 
