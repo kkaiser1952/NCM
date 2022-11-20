@@ -47,15 +47,19 @@ echo "$sql<br>";
     $firstrow = 0;
 
     $firstdist = ' ';
-    $literup = 'N';
+    $liteitup = 'N';
     
     //echo "firstdist= $firstdist<br>";
     
     
     foreach($db_found->query($sql) as $row) {
        // echo ' firstdist= $firstdist<br>';
-        if ('$row[district])' <> '$firstdist') {$literup = "Y";}
-            //echo "$row[district], $literup";
+       //echo "dist=$row[district]), fd=$firstdist<br>";
+       $firstdist = $row[district];
+        if ('$row[district])' <> '$firstdist') {$liteitup = "Y";}
+        else {$liteitup = "N";}
+        echo "dist=$row[district]), fd=$firstdist, lu=$liteitup<br>";
+            //echo "$row[district], $liteitup";
 
             $rowno = $rowno + 1;  
     	    
@@ -65,10 +69,10 @@ echo "$sql<br>";
     	    
     	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
 	    
-	    $firstdist = "$row[district]";
+	    $firstdist = "";
 	    
-	    echo "2firstdist= $firstdist literup= $literup<br> ";
-	    $literup = "N";
+	    //echo "2firstdist= $firstdist liteitup= $liteitup<br> ";
+	    //$liteitup = "N";
     }
     
 ?>
@@ -110,7 +114,7 @@ echo "$sql<br>";
             <div class="prime">
                 <table>
                     <tr>
-                        <th class="<?php $literup ?>"></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
+                        <th class="<?php $liteitup ?>"></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
                     </tr>
                         <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
                 </table>
