@@ -54,8 +54,9 @@ echo "$sql<br>";
 }
     
     foreach($db_found->query($sql) as $row) {
+        
        if($lastDist !== $row[district]) {
-            $liteitup = "Y";
+            $liteitup = "Y";}
        $lastDist = $row[district];
 }
       
