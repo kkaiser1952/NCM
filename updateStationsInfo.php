@@ -82,6 +82,7 @@ $stmt = $db_found->prepare("SELECT GROUP_CONCAT(callsign) AS badCalls
                               FROM `stations` 
                              WHERE state = '' 
                                AND callsign not like 'nonham%' AND ID < 38000 
+                               AND callsign not like 'emcomm%' AND ID < 38000 
                                AND callsign NOT LIKE ('AF%') AND callsign NOT LIKE ('AAA%') 
                                AND callsign NOT LIKE ('AAR%')
                                AND (callsign like 'a%' OR callsign like 'k%' OR callsign like 'n%' OR callsign like 'w%')  

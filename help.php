@@ -415,7 +415,7 @@
 		
 		<p>Nets marked with "Net Closed" can not be edited. You must re-open it first.  </p>
 		<p>To enter a line break (carridge return) to the 'Comments' field put <b>&lt;br&gt;</b> or simply space twice where you want the break. Then continue to type. Do not use the return on your keyboard. All simple HTML markups are available to use.</p>
-		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.</p>
+		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM or EMCOMM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.</p>
 		
 		<p>Late Check-Ins (after log is closed). The best thing to do is enter them as an 'In-Out' in the 'Status' column. This will assign a one-minute value to TOD. But more importantly it will allow your log to close properly.</p>
 		<p>Duplicate calls are not allowed and will be ignored by the system. However if you have chosen 'Multiple Bands' or '80/40 Meters' as  your frequency while building the net, they will be allowed. Its hoped you will indicate which band they checked in from using the 'Band' column. The 'Band' column will be automatically added if you choose one of the above frequencies.</p>

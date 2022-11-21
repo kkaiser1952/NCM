@@ -186,7 +186,7 @@ $stmt2 = $db_found->prepare("
                                         AND callsign = '$cs1'")->fetchColumn();
     
                                         
-    if ($mBand == 0 AND $dupes > 0 AND $cs1 <> "NONHAM") { // This is a dupe we need to prevent
+    if ($mBand == 0 AND $dupes > 0 AND $cs1 <> "NONHAM" AND $cs1 <> "EMCOMM") { // This is a dupe we need to prevent
        // echo("mBand: $mBand \n dupes: $dupes \n");  // mBand: 0 dupes: 1   dupe call in non-mBand
         break;
        // exit("$cs1 is a duplicate call sign"); //IGNORE IT, DON'T ENTER INTO THE DB
@@ -261,6 +261,13 @@ if ($cs1 == "NONHAM") {
 	$Lname = "";
 	$Fname = "";
 }
+if ($cs1 == "EMCOMM") {
+	$tactical = "";
+	$comments = "Emergency Mgnt. Not A Ham";
+	$Lname = "";
+	$Fname = "";
+}
+
 
 $traffic = " ";
 $logtraffic = " ";

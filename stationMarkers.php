@@ -30,7 +30,7 @@
                FROM NetLog
               WHERE netID = $q  
                 AND latitude <> ''
-                AND callsign <> 'NONHAM'
+                AND callsign NOT IN('NONHAM','EMCOMM')
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -49,7 +49,7 @@
                FROM NetLog
               WHERE netID = $q  
                 AND latitude <> ''
-                AND callsign <> 'NONHAM'
+                AND callsign NOT IN('NONHAM','EMCOMM')
            ");
         foreach($db_found->query($sql) as $callrow) {
             $callsList = $callrow[callsList];
@@ -99,7 +99,7 @@
     		    AND longitude IS NOT NULL
     		    AND latitude <> ''
     		    AND longitude <> ''
-    		    AND callsign <> 'NONHAM'
+    		    AND callsign NOT IN('NONHAM','EMCOMM')
     		    AND callsign NOT LIKE '%CAMP%'
     		    AND callsign NOT LIKE '%CREW%'
     		    AND callsign <> ' '
