@@ -49,17 +49,17 @@ echo "$sql<br>";
     $firstdist = ' ';
     $liteitup = 'N';
     
-    //echo "firstdist= $firstdist<br>";
-    
+   
+    $lastDist = null;
+}
     
     foreach($db_found->query($sql) as $row) {
-       // echo ' firstdist= $firstdist<br>';
-       //echo "dist=$row[district]), fd=$firstdist<br>";
-       $firstdist = $row[district];
-        if ('$row[district])' <> '$firstdist') {$liteitup = "Y";}
-        else {$liteitup = "N";}
+       if($lastDist !== $row[district]) {
+            $liteitup = "Y";
+       $lastDist = $row[district];
+}
+      
         echo "dist=$row[district]), fd=$firstdist, lu=$liteitup<br>";
-            //echo "$row[district], $liteitup";
 
             $rowno = $rowno + 1;  
     	    
@@ -69,10 +69,7 @@ echo "$sql<br>";
     	    
     	    $listing .= "<td>$rowno</td>  <td>$row[callsign]</td>  <td>$row[Fname]</td>   <td>$row[Lname]</td> <td>$row[place]</td>  <td>$row[cnt_call]</td></tr>";
 	    
-	    $firstdist = "";
-	    
-	    //echo "2firstdist= $firstdist liteitup= $liteitup<br> ";
-	    //$liteitup = "N";
+	   
     }
     
 ?>

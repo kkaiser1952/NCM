@@ -336,7 +336,9 @@ foreach($db_found->query($sql) as $row) {
      //echo "$OBJMarkerList";
         // var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,WA0TJT09,]);
     
-    $allOftheKoords = "$alltheKoords";
+    //$allOftheKoords = "$alltheKoords";
+    // use this with leaflet-spline to connect the dots right now its done in a different way
+    
     //$alloftheKoords = " $alltheKoords";
     //echo "$allOftheKoords";
     // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
