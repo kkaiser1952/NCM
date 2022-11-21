@@ -144,7 +144,7 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v7.04.25</a> 
+    	<a href="#cc" rel="modal:open" id="version2">v7.11.21</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
@@ -579,7 +579,7 @@
 	
 	<!-- https://jquerymodal.com -->
 	<div id="#cc" class="modal" style="display:none;">	
-		<p>&copy; Copyright 2015-2022, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2022-04-25</span></p>
+		<p>&copy; Copyright 2015-2023, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2022-11-21</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="doc/help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
