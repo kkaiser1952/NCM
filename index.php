@@ -7,7 +7,7 @@
  document various net operations such as weather emergencies, club meetings, bike ride support and any other 
  logging and/or reporting intensive communications support and management needs. 
  A variety of reports can be created such as mapping stations locations and other DHS/FEMA needs. Including
- the ICS-214 and ICS-309 reports and access to many others.
+ the ICS-214 and ICS-309 reports and access to all the many others.
  
  No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
  
