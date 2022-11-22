@@ -14,7 +14,7 @@
  Extensive help is available by clicking Help in the upper right corner of the opening page.
 
  First written some time in late 2015 and in continous enhancment and upgrade since.
- copyright 2015-2022 by: Keith Kaiser, WA0TJT 
+ copyright 2015-2023 by: Keith Kaiser, WA0TJT 
  Written by: Keith Kaiser, WA0TJT, with the help of many others. See the help file for more details.
  I can be reached at wa0tjt at gmail.com
  
@@ -93,7 +93,7 @@
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control" >
     
     <!-- https://fonts.google.com -->
-    <!-- Allerta is used to slash zeros -->
+    <!-- Allerta is used to slash zeros so don't delete -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Allerta&display=swap" >
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Stoke&display=swap" >
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cantora+One&display=swap" >
@@ -176,7 +176,7 @@
 
 	<a href="https://www.weather.gov" class="theWX" target="_blank" rel="noopener">
 		<!-- CurrentWX() was developed by Jeremy Geeo, KD0EAV Found it wx.php -->
-<?php echo getOpenWX(); ?>   <!-- from wx.php -->
+        <?php echo getOpenWX(); ?>   <!-- from wx.php -->
 	</a>  
 </div> <!-- End of class: weather-place -->
 <!-- End of upper-left-corner stuff -->
@@ -219,7 +219,7 @@
    <!-- Open reports Dropdown of the available reports -->
    <span class="dropdown"> <!-- reports list dropdown -->
 		<span class="dropbtn">Reports &nbsp;||&nbsp;</span>
-	  <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
+        <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
 	  
 	    <a href="#" id="buildCallHistoryByNetCall" onclick="buildCallHistoryByNetCall()" title="build a Call History By NetCall">The Usual Suspects</a>
 	  
@@ -437,6 +437,7 @@
  
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
+<!-- PHP to build the list of nets from the last 10 days -->
 <?php  require_once "buildOptionsForSelect.php"; ?>
         	
         </select>  	<!-- End of ID: select1 -->
@@ -666,7 +667,7 @@
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script src="bootstrap/js/bootstrap.min.js"></script>		<!-- v3.3.2 --> 
+	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
  
 	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
 	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
@@ -678,7 +679,7 @@
 	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
 
     <!-- http://www.appelsiini.net/projects/jeditable -->
-    <script src="js/jquery.jeditable.js"></script>							<!-- 1.8.1 2018-04-05 -->
+    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
 
 	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
 	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
@@ -748,10 +749,10 @@ $("body").click(function(){
 // This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
 function checkCall() {
     const cs = $("#callsign").val().trim().toUpperCase();
-    const listOfCalls = new Set( ['ah6ez', 'kc1oiz', 'w0erh', 'ad0im', 'k4flm', 'k0wtf', 'wb4ftu', 'k0bcf', 'w1jku', 'kn4krz', 'ke0kxz', 'w5ola' ]);
+    const listOfCalls = new Set( ['ah6ez' ]);
     const isCallInSet = listOfCalls.has($("#callsign").val());
     
-    console.log('@727 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
     
     // If the callsign starting this net is in the above list then ask for his email to send him a message
     if (!isCallInSet == '') {
@@ -778,9 +779,6 @@ function checkCall() {
         // AJAX:        Put the collected email into his record in the stations table.
     } // End if
 } // end checkCall function
-
-
-
 
 
 </script>
