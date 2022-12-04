@@ -47,10 +47,7 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-    //require_once "wxLL2.php";           // Test version is wx2.php
-    // Fatal error: Cannot redeclare getOpenWX() (previously declared in /var/www/html/wx.php:188) in /var/www/html/wxLL2.php on line 160
-
-    require_once "NCMStats.php";
+    require_once "NCMStats.php";       // Get some stats
 ?>
 
 <html lang="en" >
