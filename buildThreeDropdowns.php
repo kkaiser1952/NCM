@@ -15,24 +15,23 @@
 		foreach($db_found->query("
 			SELECT t1.id, 
 			       t1.`call`, 
-			       t1.orgType, 
-			       t1.org, 
+			       t1.`orgType`, 
+			       t1.`org`, 
 			       t1.freq,
-			       t1.kindofnet,
-            	   t2.kindofnet            AS dfltKon, 
-            	   t3.freq                 AS dfltFreq,
-            	   char_length(t1.orgType) AS otl,
-               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.org)	   AS id2,
-               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
-               REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','')  AS id4  
-               
-            	/*   ,t1.id                  AS myid  */        
+			       t1.`kindofnet`,
+            	   t2.`kindofnet`            AS `dfltKon`, 
+            	   t3.freq                 AS `dfltFreq`,
+            	   char_length(t1.`orgType`) AS `otl`,
+               CONCAT(t1.id,';',t2.`kindofnet`,';',t3.freq,';',t1.`call`,';',t1.`org`)	   AS id2,
+               CONCAT(t1.id,';',t2.`kindofnet`,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
+               REPLACE(CONCAT(t1.id,';',t2.`kindofnet`,';',t3.`freq`,';',t1.`freq`),' ','')  AS id4  
+                     
               FROM NetKind t1
               LEFT JOIN NetKind t2 
                 ON t1.dflt_kind = t2.id
               LEFT JOIN NetKind t3 
                 ON t1.dflt_freq = t3.id
-            ORDER BY orgType, org
+            ORDER BY 'orgType', 'org'
 			 ") as $net ) {
 				 
 		
