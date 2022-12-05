@@ -2,7 +2,7 @@
 
 <?php
 /***********************************************************************************************************
- PHP version: 7.4+76
+ 
  Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
  document various net operations such as weather emergencies, club meetings, bike ride support and any other 
  logging and/or reporting intensive communications support and management needs. 
@@ -41,6 +41,10 @@
  natural-language processing
  end-to-end learning
 *********************************************************************************************************/
+
+     phpinfo();
+    // PHP Version 5.6.33-0+deb8u1 on v1 as of 2022-12-05
+    // Will be PHP version: 7.4+76 soon
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);

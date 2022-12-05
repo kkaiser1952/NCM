@@ -19,13 +19,14 @@
 			       t1.`org`, 
 			       t1.freq,
 			       t1.`kindofnet`,
-            	   t2.`kindofnet`            AS `dfltKon`, 
-            	   t3.freq                 AS `dfltFreq`,
-            	   char_length(t1.`orgType`) AS `otl`,
-               CONCAT(t1.id,';',t2.`kindofnet`,';',t3.freq,';',t1.`call`,';',t1.`org`)	   AS id2,
-               CONCAT(t1.id,';',t2.`kindofnet`,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
-               REPLACE(CONCAT(t1.id,';',t2.`kindofnet`,';',t3.`freq`,';',t1.`freq`),' ','')  AS id4  
-                     
+            	   t2.`kindofnet`            AS dfltKon, 
+            	   t3.freq                 AS dfltFreq,
+            	   char_length(t1.`orgType`) AS otl,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.`org`)	   AS id2,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
+               REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','')  AS id4  
+               
+            	      
               FROM NetKind t1
               LEFT JOIN NetKind t2 
                 ON t1.dflt_kind = t2.id
