@@ -9,9 +9,9 @@
     require_once "dbConnectDtls.php";
     
     $netcall = $_POST['netcall']; 
-        $netcall = 'kcheart';
+        //$netcall = 'kcheart';
     $nomo = $_POST[nomo];
-        $nomo = 12;
+        //$nomo = 5;
     $and1 = '';
     $netcall = strtoupper($netcall);
 
