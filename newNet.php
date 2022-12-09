@@ -76,6 +76,9 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 		   // if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
 		    if ( $email == ' ' ) { $email = $testEmail; }
 		
+		
+		$phone = ' ';
+		
 		//$id	   = $result[1];
 		$firstLogIn = 0;
 		
