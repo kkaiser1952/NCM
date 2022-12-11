@@ -127,7 +127,7 @@ function secondsToDHMS($seconds) {
                                                        <th>Facility</th> 
                                                        <th>Count</th>
                     </tr>
-                        <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
+                        <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall-FACILITY.php"; ?>
                 </table>
             </div>
 </body>
