@@ -2,45 +2,32 @@
     
 // Use this program to compare NCM.stations with fcc_amateur.en and to 
 // update NCM.stations when there is a difference
-// Written: 2021-09-13 
+// Written: 2022-12-13 as an update to fixStationsWithFCC.php 
 
 require_once "dbConnectDtls.php";
 require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
 $sql = "
-SELECT n.callsign as callsign, 
-       n.id, 
-       n.Fname, 
-       n.Lname,
-       n.fccid as ncmfccid,
-       n.state as ncmstate,
-       f.callsign as fcccallsign,     
-       f.fccid as fccfccid,
-       f.state as fccstate,
-       f.first as first,
-       f.last  as last,
-       f.city  as city,
-       (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = n.callsign) as maxfccid,        
-       CONCAT_WS(' ', f.address1, f.city, f.state, f.zip) as address
-  FROM ncm.stations n
-      ,fcc_amateur.en f
- WHERE n.callsign = f.callsign
-  AND (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = n.callsign) 
-  AND f.fccid > n.fccid 
-  AND n.id < 38000
-ORDER BY `n`.`callsign` ASC
-LIMIT 500
+SELECT a.fccid, a.full_name,
+	   a.first, a.middle, a.last,
+       a.address1, a.city, a.state, a.zip
+  FROM fcc_amateur.en a
+ INNER JOIN (
+    SELECT callsign, MAX(fccid) fccid
+      FROM fcc_amateur.en
+     GROUP BY callsign
+) b     ON a.callsign = b.callsign AND a.fccid = b.fccid
+       AND a.callsign IN ( 'wz1y', 'wa0tjt', 'w0dlk')
 ";
 
-//echo "$sql"; 
-
+echo "$sql"; 
 
 $count = 0;		
 foreach($db_found->query($sql) as $row) {
 $count++;
 
-	$address = $row[address];
+	$address = $row[address1];
 	 
 	$koords  = geocode("$address");
 		$latitude  = $koords[0];
@@ -51,10 +38,13 @@ $count++;
 			if ($state == '') {
 				$state = $row[state];
 			}
+			if ($city == '') {
+    			$city = $row[city];
+			}
 		$gridd 	   = gridsquare($latitude, $longitude);
 		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
 
-//echo "<br>$count";
+echo "<br>$count";
 //UPDATE stations SET latlng = GeomFromText(POINT(39.791869,-93.549968)) WHERE callsign = 'kf0evg';
 
 // to update all the latlng values do this
@@ -68,7 +58,8 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
                              grid       = '$grid' ,
                              county     = '$county' ,
                              state      = '$state' ,
-                             home       = '$latitude,$longitude,$grid,$county,$state' ,
+                             city       = '$city' ,
+                             home       = '$latitude,$longitude,$grid,$county,$state,$city' ,
                              fccid      = $row[fccfccid] ,
                              dttm       = NOW() ,
                              latitude   = $latitude , 
@@ -80,7 +71,7 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
 
 echo("<br><br>$sql2");
 
-
+// uncomment below to do the update
 //$db_found->exec($sql2); 
 
 
