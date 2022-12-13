@@ -1,5 +1,6 @@
 <?php
     
+// fixStationsWithFCC-AddCity.php
 // Use this program to compare NCM.stations with fcc_amateur.en and to 
 // update NCM.stations when there is a difference
 // Written: 2022-12-13 as an update to fixStationsWithFCC.php 
