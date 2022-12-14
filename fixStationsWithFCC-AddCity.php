@@ -15,13 +15,16 @@ SELECT a.fccid, a.full_name,
        a.address1, a.city, a.state, 
        a.zip, a.callsign,
        CONCAT_WS(' ', a.address1, a.city, a.state, a.zip) as address
-  FROM fcc_amateur.en a
+  FROM fcc_amateur.en a,
+       ncm.stations c
  INNER JOIN (
     SELECT callsign, MAX(fccid) fccid
       FROM fcc_amateur.en
      GROUP BY callsign ) b
-        ON a.callsign = b.callsign AND a.fccid = b.fccid
-       AND a.callsign IN ( 'wa0tjt', 'w0dlk')
+        ON a.callsign = b.callsign 
+       AND b.callsign = c.callsign
+       AND a.fccid = b.fccid
+    /*   AND LEFT(b.callsign, 3) = 'wz1' */
 ";
 
 echo "$sql"; 
@@ -32,6 +35,7 @@ $count++;
 
 	$address = $row[address];
 	$city    = $row[city];
+	$fccid   = $row[fccid];
 	 
 	$koords  = geocode("$address");
 	
@@ -49,7 +53,7 @@ $count++;
 		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
 
 //echo "<br><br>count: $count";
-echo "<br><br>$count ==> $row[callsign]: $address, $county, $state, $city";
+echo "<br><br>$count ==> $row[callsign]: $fccid, $address, $county, $state, $city";
 
 //UPDATE stations SET latlng = GeomFromText(POINT(39.791869,-93.549968)) WHERE callsign = 'kf0evg';
 
