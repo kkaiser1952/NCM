@@ -20,11 +20,10 @@ SELECT a.fccid, a.full_name,
  INNER JOIN (
     SELECT a.callsign, MAX(a.fccid) fccid, c.callsign as ccall
       FROM fcc_amateur.en a
-          ,ncm.stations c
      GROUP BY a.callsign ) b
         ON a.callsign = b.callsign 
-	   AND b.callsign = c.ccall
        AND a.fccid = b.fccid
+       AND callsign = 'wa0tjt'
     /*   AND LEFT(b.callsign, 3) = 'wz1' */
 ";
 
