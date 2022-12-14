@@ -15,14 +15,15 @@ SELECT a.fccid, a.full_name,
        a.address1, a.city, a.state, 
        a.zip, a.callsign,
        CONCAT_WS(' ', a.address1, a.city, a.state, a.zip) as address
-  FROM fcc_amateur.en a,
-       ncm.stations c
+  FROM fcc_amateur.en a
+   
  INNER JOIN (
-    SELECT callsign, MAX(fccid) fccid
-      FROM fcc_amateur.en
-     GROUP BY callsign ) b
+    SELECT a.callsign, MAX(a.fccid) fccid, c.callsign as ccall
+      FROM fcc_amateur.en a
+          ,ncm.stations c
+     GROUP BY a.callsign ) b
         ON a.callsign = b.callsign 
-       AND b.callsign = c.callsign
+	   AND b.callsign = c.ccall
        AND a.fccid = b.fccid
     /*   AND LEFT(b.callsign, 3) = 'wz1' */
 ";
