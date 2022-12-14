@@ -12,14 +12,16 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 $sql = "
 SELECT a.fccid, a.full_name,
 	   a.first, a.middle, a.last,
-       a.address1, a.city, a.state, a.zip
+       a.address1, a.city, a.state, 
+       a.zip, a.callsign,
+       CONCAT_WS(' ', a.address1, a.city, a.state, a.zip) as address
   FROM fcc_amateur.en a
  INNER JOIN (
     SELECT callsign, MAX(fccid) fccid
       FROM fcc_amateur.en
-     GROUP BY callsign
-) b     ON a.callsign = b.callsign AND a.fccid = b.fccid
-       AND a.callsign IN ( 'wa0tjt')
+     GROUP BY callsign ) b
+        ON a.callsign = b.callsign AND a.fccid = b.fccid
+       AND a.callsign IN ( 'wa0tjt', 'w0dlk')
 ";
 
 echo "$sql"; 
@@ -28,9 +30,12 @@ $count = 0;
 foreach($db_found->query($sql) as $row) {
 $count++;
 
-	$address = $row[address1];
+	$address = $row[address];
+	$city    = $row[city];
 	 
 	$koords  = geocode("$address");
+	
+	//echo "<br>4: $koords[4];";
 		$latitude  = $koords[0];
 		$longitude = $koords[1];
 	
@@ -39,15 +44,13 @@ $count++;
 			if ($state == '') {
 				$state = $row[state];
 			}
-			if ($city == '') {
-    			$city = $row[city];
-			}
+
 		$gridd 	   = gridsquare($latitude, $longitude);
 		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
 
-echo "<br>$count";
+//echo "<br><br>count: $count";
+echo "<br><br>$count ==> $row[callsign]: $address, $county, $state, $city";
 
-echo "<br><br>$address, $county, $state, $city";
 //UPDATE stations SET latlng = GeomFromText(POINT(39.791869,-93.549968)) WHERE callsign = 'kf0evg';
 
 // to update all the latlng values do this
@@ -57,18 +60,18 @@ echo "<br><br>$address, $county, $state, $city";
 // UPDATE stations SET latlng = POINT(latitude, longitude) WHERE id = 'xxxxxxx';
 
 $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
-                             Lname      = \"$row[last]\" ,
-                             grid       = '$grid' ,
-                             county     = '$county' ,
-                             state      = '$state' ,
-                             city       = '$city' ,
-                             home       = '$latitude,$longitude,$grid,$county,$state,$city' ,
-                             fccid      = $row[fccfccid] ,
-                             dttm       = NOW() ,
-                             latitude   = $latitude , 
-                             longitude  = $longitude ,
-                             latlng     = GeomFromText('POINT($latitude $longitude)')    
-          WHERE id = $row[id];         
+             Lname      = \"$row[last]\" ,
+             grid       = '$grid' ,
+             county     = '$county' ,
+             state      = '$state' ,
+             city       = '$city' ,
+             home       = '$latitude,$longitude,$grid,$county,$state,$city' ,
+             fccid      = $row[fccid] ,
+             dttm       = NOW() ,
+             latitude   = $latitude , 
+             longitude  = $longitude ,
+             latlng     = GeomFromText('POINT($latitude $longitude)')    
+          WHERE id = $row[callsign];         
 ";
 
 
@@ -79,5 +82,5 @@ echo("<br><br>$sql2");
 
 
 } // End foreach
-echo "<br><br>Done --> Count= $count";
+//echo "<br><br>Done --> Count= $count";
 ?>
