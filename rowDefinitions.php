@@ -187,7 +187,7 @@ echo ("
             <div class='$class'> $row[county] </div>								
         </td>
         
-        <td $brbCols class=\"editable editstate c35 cent\" 
+        <td $brbCols class=\"editable editcity c35 cent\" 
             id=\"city:$row[recordID]\"  
             onClick=\"empty('city:$row[recordID]');\"> 
             <div class='$class'> $row[city] </div> 	  					

@@ -340,7 +340,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
-				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city  \" )"; 
+				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city\" )"; 
 	
 	$db_found->exec($sql);
 	
@@ -363,7 +363,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
 							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
 							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta
+							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta, city
 					  FROM  NetLog
                      WHERE netID = $netID
                      ORDER BY case 

@@ -38,6 +38,7 @@
 			<th title="Time On Duty" class="besticky c16"> Time On Duty </th>
 			
 			<th title="County" class="besticky c17"> County </th> 
+			<th title="City" class="besticky c35"> City </th>
 			<th title="State" class="besticky c18"> State	</th>
 			<th title="District" class="besticky c59"> Dist </th>
 			<th title="W3W, Enter a What 3 Words location. " class="besticky c24" oncontextmenu="openW3W();"> W3W </th>
