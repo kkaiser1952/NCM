@@ -186,6 +186,13 @@ echo ("
     	    onClick=\"empty('county:$row[recordID]');\"> 
             <div class='$class'> $row[county] </div>								
         </td>
+        
+        <td $brbCols class=\"editable editstate c35 cent\" 
+            id=\"city:$row[recordID]\"  
+            onClick=\"empty('city:$row[recordID]');\"> 
+            <div class='$class'> $row[city] </div> 	  					
+        </td>
+        
         	
         <td $brbCols class=\"editable editstate c18 cent\" 
             id=\"state:$row[recordID]\"  

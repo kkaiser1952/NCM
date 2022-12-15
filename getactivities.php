@@ -131,6 +131,7 @@ if ( $q <> 0 ){
 	        					TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
 	        					TRIM(BOTH ' ' FROM county) as county, 
 	        					TRIM(BOTH ' ' FROM country) as country, 
+	        					TRIM(BOTH ' ' FROM city) as city,
 	        					TRIM(BOTH ' ' FROM state) as state,
 	        					TRIM(BOTH ' ' FROM district) as district, 
 	        					firstLogIn, phone, pb, tt, 

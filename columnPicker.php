@@ -346,6 +346,10 @@ $(document).ready(function() {
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(17)" value="17" class="17">
 				<span class="checkmark"></span>
 			</label>
+			<label class="container">City (35)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(35)" value="35" class="35">
+				<span class="checkmark"></span>
+			</label>
 			<label class="container">State (18)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(18)" value="18" class="18">
 				<span class="checkmark"></span>
