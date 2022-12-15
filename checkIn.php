@@ -135,7 +135,8 @@ $ipaddress = getRealIpAddr();
 //echo "$csbase";
     $stmt2 = $db_found->prepare("
         SELECT id, Fname, Lname, creds, email, latitude, longitude,
-		       grid, county, state, district, home, phone, tactical, country
+		       grid, county, state, district, home, phone, tactical, country,
+		       city
 	      FROM stations 
 	     WHERE callsign = '$csbase'
 	       AND active_call = 'y'
@@ -170,7 +171,8 @@ $stmt2 = $db_found->prepare("
 	$country   	= ucwords(strtolower($result[country]));	
 	$district 	= $result[district];   $tt		 = $result[tt]; 
 	$home       = $result[home];       $phone    = $result[phone];
-	$comments  	= "";	        
+	$comments  	= "";	  
+	$city       = $result[city];      
 	
 	//echo "stmt2: $cs1, $county, $state, $grid, $phone <br>";
 	
@@ -332,13 +334,13 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	$max_row_num = ($max_row_num + 1);
 	
 	
-	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, grid, tactical, email, latitude, longitude, 
-							    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, country,
-							    district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number ) 
+	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, 
+	                grid, tactical, email, latitude, longitude, 
+				    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, country, district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number, city ) 
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
-				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \" )"; 
+				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city  \" )"; 
 	
 	$db_found->exec($sql);
 	
