@@ -4,13 +4,14 @@ require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
 $csbase = $cs1;
+//$csbase = 'wa0tjt';
 
 	$fccsql = $db_found->prepare("
 	       SELECT  replace(last,\"'\",\"''\") as last 
 				 ,first
 				 ,state
 				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
-				 ,fccid,city
+				 ,fccid, city, zip
 			 FROM fcc_amateur.en
 			WHERE callsign = '$csbase' 
 			  AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$csbase')
@@ -30,6 +31,7 @@ $csbase = $cs1;
 				$Fname 		= ucfirst(strtolower($result[first]));
 				$state2	 	= $result[2];
 				$city       = $result[city];
+				$zip        = $result[zip];
 				$address 	= $result[3];  //echo "$address<br>"; // 73 Summit Avenue NE Swisher IA 52338
 			
 				$firstLogIn = 1;
@@ -48,6 +50,9 @@ $csbase = $cs1;
 				$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";  			
 				$home      = "$latitude,$longitude,$grid,$county,$state";						
 				$comments 	= "First Log In";  // adding state to this works
+				
+				
+//echo ("Lname: $Lname state2: $state2, city: $city, address: $address zip: $zip");
 				
                     include "insertToStations.php";  // added 2020-12-12 to update the stations table
            
