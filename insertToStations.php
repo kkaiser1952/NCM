@@ -21,9 +21,10 @@ require_once "dbConnectDtls.php";
      
        $sql = "INSERT INTO stations (ID, callsign, Fname, Lname, grid, tactical, email, fccid,
                                   latitude, longitude, creds, county, state, district, 
-                                  home, phone, latlng, lastLogDT, firstLogDT )
+                                  home, city, phone, latlng, lastLogDT, firstLogDT )
     
-	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', '$phone', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
+	               '$city', '$phone', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	          ";	      
 	        
 	   $stmt2 = $db_found->prepare($sql);

@@ -10,7 +10,7 @@ $csbase = $cs1;
 				 ,first
 				 ,state
 				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
-				 ,fccid
+				 ,fccid,city
 			 FROM fcc_amateur.en
 			WHERE callsign = '$csbase' 
 			  AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$csbase')
@@ -29,6 +29,7 @@ $csbase = $cs1;
 				$Lname 		= ucfirst(strtolower($result[last])); 
 				$Fname 		= ucfirst(strtolower($result[first]));
 				$state2	 	= $result[2];
+				$city       = $result[city];
 				$address 	= $result[3];  //echo "$address<br>"; // 73 Summit Avenue NE Swisher IA 52338
 			
 				$firstLogIn = 1;

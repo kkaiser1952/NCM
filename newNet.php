@@ -50,7 +50,7 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 // Below was added 2020-12-15
     $stmt2 = $db_found->prepare("
         SELECT MAX(recordID) AS maxID, MAX(id) as newid, id, Fname, Lname, creds, email, latitude, longitude,
-		       grid, county, state, district, home, phone, tactical
+		       grid, county, state, district, home, phone, tactical, city
 	      FROM stations 
 	     WHERE callsign = '$cs1'
          LIMIT 0,1
@@ -72,7 +72,7 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 		$grid  = $result[grid]; 	$county	   = ucwords(strtolower($result[county]));
 		$creds = $result[creds];	$district  = $result[district];
 		$email = $result[email];    $home      = $result[home];	
-		$phone = $result[phone];
+		$phone = $result[phone];    $city      = $result[city];
 		   // if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
 		    if ( $email == ' ' ) { $email = $testEmail; }
 		
@@ -118,10 +118,10 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
       	$timeLogIn	 = $open;
    }
 
-	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county,
+	$sql = "INSERT INTO NetLog (netcontrol, active, callsign, Fname, Lname, activity, tactical, id, netID, grid, latitude, longitude, creds, email, comments, frequency, subNetOfID, logdate, netcall, state, county, city,
 		district, pb, tt, firstLogin, home, testnet, phone) 
 	
-		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', 'Opened NCM', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$district', '$pb', '00', '$firstLogIn', '$home', '$testnet', '$phone' )";
+		VALUES ('PRM', '$statusValue', '$cs1', '$Fname', \"$Lname\", '$activity', 'Net', '$id', '$newNetID', '$grid', '$latitude', '$longitude', '$creds', '$email', 'Opened NCM', '$frequency', '$subNetOfID', '$timeLogIn', '$netcall', '$state', '$county', '$city', '$district', '$pb', '00', '$firstLogIn', '$home', '$testnet', '$phone' )";
 		
 	$db_found->exec($sql);
 	
