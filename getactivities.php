@@ -286,7 +286,7 @@ if ( $q <> 0 ){
 	echo ("</tr>
 		   </tfoot>
 		   </table>"); //End of the table
-
+// start of hidden variables 
 	echo ("<div hidden id='freq2'>              $row[frequency] </div>");
 	echo ("<div hidden id='freq'>                               </div");
 	echo ("<div hidden id='cookies'>            $theCookies     </div");
@@ -298,7 +298,7 @@ if ( $q <> 0 ){
 	echo ("<div hidden id='isopen' val=$isopen> $isopen</div> <!-- 1 = yes this net is still open -->"); // 1 = yes this net is stillopen 
 	echo ("<div hidden id='ispb'> $row[pb] </div>"); 
 	echo ("<div hidden id='pbStat'>$pbStat</div>"); // has there been at least one check-in to this pre-built net?
-	
+// end of hidden variables	
 	// The subnetkey if > 0 places the value below the primary net table listing     /$row[frequency]&nbsp;&nbsp;
 	echo ("<span id='add2pgtitle'>#$row[netID]/$row[netcall]/$freq&nbsp;&nbsp;");
 	
@@ -308,7 +308,7 @@ if ( $q <> 0 ){
 	
 	echo ("<span STYLE='background-color: #befdfc'>Control</span>&nbsp;&nbsp;");
 			
-	  // These span and class all appear under the curren net depending which is in use
+	  // These span and class all appear under the current net depending which is in use
 	  if ($digitalKey  == 1 ) { echo ("<span class='digitalKey' >Digital</span>&nbsp;&nbsp;");} 
 	  if ($trafficKey  == 1 ) { echo ("<span class='trafficKey' >Traffic</span>&nbsp;&nbsp;");} 
 	  if ($logoutKey   == 1 ) { echo ("<span class='logoutKey'  >Logged Out</span>&nbsp;&nbsp;");} 
