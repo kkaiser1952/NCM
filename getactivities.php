@@ -72,7 +72,7 @@ if ( $q <> 0 ){
     $sql = "SELECT netcall FROM NetLog WHERE netID = $q LIMIT 1";
     $stmt = $db_found->prepare($sql);
     $stmt -> execute();
-    $netcall = $stmt->fetchColumn(0);
+        $netcall = $stmt->fetchColumn(0);
     
     //echo "@75 $netcall";
     
@@ -82,10 +82,11 @@ if ( $q <> 0 ){
              limit 0,1";
     $stmt = $db_found->prepare($sql);
     $stmt -> execute();
-    $orgType = $stmt->fetchColumn(orgType);
-    $theCookies = $stmt->fetchColumn(columnViews);
+        $orgType = $stmt->fetchColumn(0);
+    $stmt -> execute();
+        $theCookies = $stmt->fetchColumn(1);
     
-    //echo "@88 $orgType, $theCookies";
+    //echo "   @88 $orgType, $theCookies";
     
 } // end of q <> 0	
 		include "headerDefinitions.php"; 	

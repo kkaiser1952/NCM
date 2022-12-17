@@ -436,8 +436,8 @@
 		
 		echo str_replace("+"," ","$value");
 		
-    // This routine is to update the stations table with Fname, Lname, or email
-		if ($column == 'Fname' | $column == "Lname" | $column == "email" | $column == "creds" ) {
+    // This routine is to update the stations table with Fname, Lname, email or city
+		if ($column == 'Fname' | $column == "Lname" | $column == "email" | $column == "creds" | $column == "city" ) {
             // Get the callsign to use for updating the stations 
     		$sql = "SELECT callsign
     	              FROM NetLog 
