@@ -76,15 +76,16 @@ if ( $q <> 0 ){
     
     //echo "@75 $netcall";
     
-    $sql = "SELECT orgType
+    $sql = "SELECT orgType, columnViews
               from NetKind
              WHERE `call` = '$netcall' 
              limit 0,1";
     $stmt = $db_found->prepare($sql);
     $stmt -> execute();
-    $orgType = $stmt->fetchColumn(0);
+    $orgType = $stmt->fetchColumn(orgType);
+    $theCookies = $stmt->fetchColumn(columnViews);
     
-    //echo "@85 $orgType";
+    //echo "@88 $orgType, $theCookies";
     
 } // end of q <> 0	
 		include "headerDefinitions.php"; 	
@@ -288,8 +289,8 @@ if ( $q <> 0 ){
 		   </table>"); //End of the table
 // start of hidden variables 
 	echo ("<div hidden id='freq2'>              $row[frequency] </div>");
-	echo ("<div hidden id='freq'>                               </div");
-	echo ("<div hidden id='cookies'>            $theCookies     </div");
+	echo ("<div hidden id='freq'>                               </div>");
+	echo ("<div hidden id='cookies'>            $theCookies     </div>");
 	echo ("<div hidden id='type'>Type of Net:	$row[activity]  </div>");
 	echo ("<div hidden id='idofnet'>		 	$row[netID]     </div>");
 	echo ("<div hidden id='activity'>			$row[activity]  </div>"); 
