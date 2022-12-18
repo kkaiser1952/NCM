@@ -162,6 +162,7 @@
 		
 		<a href="#timeonduty">Time On Duty</a><br>
 		<a href="#county">County</a><br>
+		<a href="#city">City</a><br>
         <a href="#state">State</a><br>
         
         <a href="#dist">Dist</a><br>
@@ -1436,16 +1437,17 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <hr>
 <p style="page-break-before: always"></p>
 <div class="CSD">
-    <a id="county"></a><a id="state"></a><a id="dist"></a>
-<h3>County, State, Dist.</h3>
+    <a id="county"></a><a id="city"></a><a id="state"></a><a id="dist"></a>
+<h3>County, City, State, Dist.</h3>
 <div class="redimportant">
     Editable: Yes<br>
     Splitable Field: No<br>
     Required Column: No<br>
     Edit Type: Click <br>
-    Right Clickable: County Yes, State No, District Yes --> looks up and fills the missing district.<br>
+    Right Clickable: County Yes, City No, State No, District Yes --> looks up and fills the missing district.<br>
     DB Variable - County: county<br>
     DB Variable - State: state<br>
+    DB Variable - City: city<br>
     DB Variable - Dist: district<br>
 </div>
 <p>Shows the County, State and Highway Patrol District or ARRL District -- For some Nets these are already shown.
