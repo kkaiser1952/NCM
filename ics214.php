@@ -243,7 +243,7 @@ $(document).ready(function()
 	        				 TRIM(creds) as creds, 
 	        				 TRIM(timeonduty) as tmd, 
 	        			     TRIM(sec_to_time(timeonduty)) as tod,
-	        			     TRIM(CONCAT_WS('  ', state, county, ' Co., Dist.', district)) as dist,
+	        			     TRIM(CONCAT_WS('  ',city, state, county, ' Co., Dist.', district)) as dist,
 	        			     TRIM(band) as band,
 	        			     TRIM(team) as team
 	        			     
