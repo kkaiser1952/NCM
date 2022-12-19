@@ -2,7 +2,7 @@
 
 require_once "dbConnectDtls.php";
 
-    // the term and netcall come from NetManager=p2.js @ gethint.php    
+    // the term and netcall come from NetManager-p2.js @ gethint.php    
 	
 	$term = $_GET['term'];
 	$netc = $_GET['nc'];

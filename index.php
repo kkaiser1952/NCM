@@ -537,7 +537,7 @@
 
 	</div>	<!-- End ID: csnm @467 -->
 		
-			<div  id="txtHint"></div> <!-- populated by NetManager.js -->
+			<div  id="txtHint"></div> <!-- populated by NetManager.js ==> gethintSuspects.php-->
 			<div id="netIDs"></div>			
 			<div id="actLog">net goes here</div> <!-- Home for the net table -->
 			
