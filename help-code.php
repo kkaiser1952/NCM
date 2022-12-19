@@ -75,6 +75,7 @@
 
 <div class="index"> <!-- Changed from div on 2019-10-01 -->
 	<a id="index"></a>
+	<h3><a href="help.php" >The Program Index</a></h3>
 	<h3>Code Index</h3>
 	
 	 <nav class="topics">
