@@ -7,8 +7,8 @@ require_once "dbConnectDtls.php";
 	$term = $_GET['term'];
 	$netc = $_GET['nc'];
 	
-	//$term = '0tjt';
-	//$netc = 'mesn';
+	$term = 'term: 0tjt';
+	$netc = 'netc: mesn';
 	
 	$nc = explode(' ', trim($netc));
 	$netcall = $nc[0];
