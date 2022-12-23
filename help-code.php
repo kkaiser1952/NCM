@@ -6,14 +6,7 @@
 <html lang="en">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-167869985-1');
-</script>
     <title>Amateur Radio Net Control Manager Instructions and Help</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,17 +20,13 @@
     <link rel="stylesheet" type="text/css" href="css/help.css" />
     <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
-
-<style>
-    } /* End of media css */
-</style>
 	
 </head>
 <body>
 	
 <div id="banner">
     
-    <img id="smtitle" src="images/NCM.png" alt="NCM" >
+ <!--   <img id="smtitle" src="images/NCM.png" alt="NCM" > -->
 
 	<div class="title">
 		<p>Net	</p>
@@ -860,6 +849,15 @@ function printfunction() {
 }
 
 </script> <!-- The scrollFunction to move to the top of the page -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167869985-1');
+</script>
 
 </body>
 </html>
