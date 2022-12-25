@@ -1927,6 +1927,8 @@ Tables in NCM:
 <div class="theend">
     <a id="theend"></a>
     <div>
+<p>Dedicated to my mom and dad, Joyce & Marvin Kaiser who knew I wanted to be an Amateur Radio operator before I did.
+</p>
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
 Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
