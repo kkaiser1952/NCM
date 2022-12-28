@@ -25,7 +25,7 @@ require_once "dbConnectDtls.php";
     
 	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', 
 	                   '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
-                       '$city', '$phone', '$zip', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                       '$city', ' ', '$zip', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	          ";	      
 	        
 	   $stmt2 = $db_found->prepare($sql);

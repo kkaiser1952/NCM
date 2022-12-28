@@ -140,7 +140,7 @@ echo "$row[ID] $row[callsign] $row[Fname] $row[Lname] $latitude $longitude $grid
    
 */                       
    $inserts[] = "('$row[ID]', '$row[tempCall]', '$row[tactical]', '$row[Fname]', \"$row[Lname]\", '$latitude', '$longitude', '$grid',
-                  \"$row[city]\", \"$county\", \"$row[state]\", '$district', '$row[zip]', '$row[email]', '$row[phone]',
+                  \"$row[city]\", \"$county\", \"$row[state]\", '$district', '$row[zip]', '$row[email]', ' ',
                   '$row[creds]', '$row[lastLogDT]', '$row[firstLogDT]', '$row[recordID]', '$row[fccid]', 
                    GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), \"$home\")<br><br>";                 
 		

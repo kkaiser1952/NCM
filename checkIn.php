@@ -340,7 +340,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
-				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city\" )"; 
+				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \" \", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city\" )"; 
 	
 	$db_found->exec($sql);
 	
