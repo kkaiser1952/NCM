@@ -61,7 +61,7 @@ $netID = intval($_POST["q"]);
         	$callListwStatPound  .= "$row[callsign]#<br>";
 
             $callListwSNR       .= "<tr><td>$relaystation$row[callsign]?</td><td>$relaystation$row[callsign] ack</td></tr>";
-            $callListwACK       .= "<tr><td>$relaystation$row[callsign]#</td><td>$relaystation$row[callsign] ack</td></tr>";
+            $callListwACK       .= "<tr><td>allcall $row[callsign]#</td><td>$relaystation$row[callsign] ack</td></tr>";
             $callListwTFK       .= "<tr><td>$relaystation$row[callsign]&</td><td>$relaystation$row[callsign] ack</td></tr>";
 	    } // end foreach
 	    
