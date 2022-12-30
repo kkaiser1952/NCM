@@ -19,7 +19,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 3818; 
     //$q = 6066;
-    $q = 7988;
+    //$q = 7988;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -122,9 +122,13 @@
     
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
-	/*	.leaflet-control-mouseCoordinate{
+		.leaflet-control-mouseCoordinate{
     		background: #d0effa;
-    		left: 30px; */
+    		top: 80%;
+    		left: 90px;
+        }
+        .leaflet-container{
+            line-height: 1;
         }
 	</style>
 	
