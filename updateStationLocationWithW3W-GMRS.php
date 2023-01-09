@@ -17,14 +17,18 @@
         use What3words\Geocoder\Geocoder;
         use What3words\Geocoder\AutoSuggestOption;
             $api = new Geocoder("5WHIM4GD");
-            
-  
+
+/*            
+WRKT697  --  holds.shirts.awake
+WQRD631 – menu.strut.taking
+WRTB285 --  vague.events.term
+*/
     
- $callsign = 'WQGQ650';
+ $callsign = 'WRKT697';
  //$w3w     = 'pylon.slamming.grit';        // Brazil
- $w3w     = '///retrospect.buying.duty';    // k0rgb
+ $w3w     = '///holds.shirts.awake';    // k0rgb
  
- echo "$callsign";
+ echo "$callsign, $w3w";
  
  
  // lifted from getFCCrecord.php just to get the fccid
@@ -61,7 +65,7 @@ $w3wLL = $api->convertToCoordinates("$w3w");
 // Use the goecode.php function to find county and state
 // =======================================================
 $address = geocode("$lat,$lng");
-//echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
+echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
 $county = $address[2];
 $state  = $address[3];
 
@@ -79,7 +83,7 @@ $sql = ("
            ,active_call = 'y'
            ,country     = '$country'
            ,dttm        = NOW()
-           ,comment     = 'via: updateStationLocationWithW3W'
+           ,comment     = 'via: updateStationLocationWithW3W-GMRS'
            ,zip         = '64089'
      WHERE callsign = '$callsign'
 ");         
