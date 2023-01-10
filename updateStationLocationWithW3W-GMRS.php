@@ -1,8 +1,12 @@
 <!doctype html>
 <?php
+	/*
+		https://net-control.us/updateStationLocationWithW3W-GMRS.php
+	*/
+	
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table FOR GMRS callsigns */
     /* REQUIRED: a callsign and the What3Words address
-    /* Writte: 2021-10-15 */
+    /* Writte: 2023-01-08 */
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -28,27 +32,8 @@ WRTB285 --  vague.events.term
  //$w3w     = 'pylon.slamming.grit';        // Brazil
  $w3w     = '///holds.shirts.awake';    // k0rgb
  
- echo "$callsign, $w3w";
- 
- 
- // lifted from getFCCrecord.php just to get the fccid
- /*
- $fccsql = $db_found->prepare("
-	       SELECT replace(last,\"'\",\"''\") as last 
-				 ,first
-				 ,state
-				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
-				 ,fccid
-			 FROM fcc_amateur.en
-			WHERE callsign = '$callsign' 
-			  AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$callsign')
-			ORDER BY fccid DESC 
-			LIMIT 0,1 ");		
-					
-    $fccsql->execute();
-	  	$result     = $fccsql->fetch();
-	 	$fccid 	    = $result[fccid];
-*/
+ echo "Updating: $callsign, for: $w3w";
+
  
 // ====================================
 // Now get the lat/lon from W3W site
