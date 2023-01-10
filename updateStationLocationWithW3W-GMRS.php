@@ -59,7 +59,7 @@ $w3wLL = $api->convertToCoordinates("$w3w");
    $lng    = $w3wLL['coordinates']['lng'];     
    $grid   = gridsquare($lat, $lng);	 
    $country= $w3wLL['country']; 
-   
+  
    
 // =======================================================
 // Use the goecode.php function to find county and state
@@ -68,7 +68,6 @@ $address = geocode("$lat,$lng");
 echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
 $county = $address[2];
 $state  = $address[3];
-
 
 $sql = ("
     UPDATE stations 
