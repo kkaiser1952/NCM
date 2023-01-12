@@ -26,7 +26,7 @@
 <div id="banner">
 
 	<div class="title">
-		<p>Netx	</p>
+		<p>Net	</p>
 		<p>Control  <span style="float: right;">Documentation &amp; Help</span></p>
 		<p>Manager</p>
 	</div> <!-- End title -->
