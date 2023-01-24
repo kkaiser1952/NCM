@@ -68,7 +68,7 @@
 	<h3>Code Index</h3>
 	
 	 <nav class="topics">
-        <a href="#php">PHP</a><br>
+        <a href="#php">PHP & HTML</a><br>
 		<a href="#javascript">Javascript</a><br>
 		<a href="#css">Style Sheets</a><br>
      </nav> <!-- End topics for topic index -->
@@ -398,7 +398,35 @@
 </div>
 
 <hr>
-	 <h3>PHP Code Index</h3>
+
+<div class="netmanager">
+    <a id="netmanager"></a>
+    <h3>NetManager.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+
+<div class="netmanager-p2">
+    <a id="netmanager-ps"></a>
+    <h3>NetManager-p2.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+
+</div>
+
+<hr>
+	 <h3>PHP/HTML Code Index</h3>
 
 <div class="php">	 
     <a id="php"></a>
