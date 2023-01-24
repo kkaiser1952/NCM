@@ -505,9 +505,9 @@
         <a href="switchClosed">switchClosed()</a><br>
         <a href="filterSelectOptions">filterSelectOptions(selectElement, attributeName, attributeValue)</a><br>
         
-        <a href="netcall">netcall').on('change',function()</a><br>
+        <a href="netcall">netcall change function()</a><br>
         <a href="fillFreqs">fillFreqs()</a><br>
-        <a href="netGroup">netGroup" ).change(function()</a><br>
+        <a href="netGroup">netGroup change function()</a><br>
          
         <a href="fillaclone">fillaclone()</a><br>
         <a href="doalert">doalert(checkboxElem)</a><br>
@@ -536,6 +536,32 @@
         <a href="putInFreqInput">putInFreqInput(pidi)</a><br>
         <a href="showGroupChoices">showGroupChoices()</a><br>
         <a href="showKindChoices">showKindChoices()</a><br>
+         
+        <a href="showFreqChoices">showFreqChoices()</a><br>
+        <a href="blurGroupChoices">blurGroupChoices()</a><br>
+        <a href="blurKindChoices">blurKindChoices()</a><br>
+         
+        <a href="blurFreqChoices">blurFreqChoices()</a><br>
+        <a href="custom_setup">custom_setup()</a><br>
+        <a href="checkFD">checkFD()</a><br>
+         
+        <a href="net_by_number">net_by_number()</a><br>
+        <a href="dl">dl click(function()</a><br>
+        <a href="thisNet">thisNet").table2csv('download', options)</a><br>
+         
+        <a href="toCVS">toCVS()</a><br>
+        <a href="sendEMAIL">sendEMAIL(adr,netid)</a><br>
+        <a href="sendGroupEMAIL">sendGroupEMAIL()</a><br>
+         
+        <a href="stationTimeLineList">stationTimeLineList(info)</a><br>
+        <a href="rightClickTraffic">rightClickTraffic(recordID)</a><br>
+        <a href="rightClickOnSite">rightClickOnSite(recordID)</a><br>
+         
+        <a href="rightClickDistrict">rightClickDistrict(str)</a><br>
+        <a href="rightClickACT">rightClickACT(recordID)</a><br>
+        <a href="newWX">newWX()</a><br>
+        
+        <a href="tbb">tbb click(function()</a><br>
         
         </nav>
     <p>
