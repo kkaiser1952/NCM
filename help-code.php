@@ -401,6 +401,75 @@
 <div class="netmanager">
     <a id="netmanager"></a>
     <h3>NetManager.js</h3>
+    <p>Functions: <br>
+        <nav class="topics2">
+        <a href="mapwhat3words">mapWhat3Words(w3w)</a><br>
+        <a href="mapgridsquare">MapGridsquare(koords2)</a><br>
+        <a href="mapcounty">MapCounty(cntyst2)</a><br>
+        
+        <a href="whatIstt">whatIstt()</a><br>
+        <a href="setDfltMode">setDfltMode()</a><br>
+        <a href="CallHistoryForWho">CallHistoryForWho()</a><br>
+        
+        <a href="getCallHistory">getCallHistory()</a><br>
+        <a href="rightclickundotimeout">rightclickundotimeout()</a><br>
+        <a href="pre">pre()</a><br>
+        
+        <a href="isKeyPressed">isKeyPressed(event)</a><br>
+        <a href="getDomain">getDomain()</a><br>
+        <a href="openPreamble">openPreamble()</a><br>
+        
+        <a href="openClosing">openClosing()</a><br>
+        <a href="openAgenda">openAgenda()</a><br>
+        <a href="hideit">hideit()</a><br>
+        
+        <a href="showit">showit()</a><br>
+        <a href="showSubNets">showSubNets(str)</a><br>
+        <a href="timelineBut2">timelineBut2.hide(500)</a><br>
+        
+        <a href="closelog">closelog.click(function()</a><br>
+        <a href="graphtimeline">graphtimeline()</a><br>
+        <a href="ics214button">ics214button()</a><br>
+        
+        <a href="ics309button">ics309button())</a><br>
+        <a href="ics205Abutton">ics205Abutton()</a><br>
+        <a href="map1">map1()</a><br>
+        
+        <a href="map2">map2()</a><br>
+        <a href="printByNetID">printByNetID()</a><br>
+        <a href="editGComms">editGComms.on("click", function()</a><br>
+         
+        <a href="empty">empty(thisID)</a><br>
+        <a href="TimeLine">TimeLine()</a><br>
+        <a href="timelinesearch">timelinesearch()</a><br>
+         
+        <a href="RefreshTimeLine">RefreshTimeLine()</a><br>
+        <a href="HideTimeLine">HideTimeLine()</a><br>
+        <a href="showActivities">showActivities(str, str2)</a><br>
+         
+        <a href="showHint">showHint(str)</a><br>
+        <a href="nameHint">nameHint(str)</a><br>
+        <a href="set_cs1">set_cs1(item)</a><br>
+         
+        <a href="set_Fname">set_Fname(item)</a><br>
+        <a href="set_hidden">set_hidden(str)</a><br>
+        <a href="set_hidestuff">set_hidestuff(item)</a><br>
+         
+        <a href="loadsorttable">loadsorttable()</a><br>
+        <a href="selectDomain">selectDomain(thisdom)</a><br>
+        <a href="AprsFiMap">AprsFiMap()</a><br>
+         
+        <a href="RefreshGenComm">RefreshGenComm()</a><br>
+        <a href="ready(function">ready(function ()</a><br>
+        <a href="refresh">refresh()</a><br>
+         
+        <a href="refbutton">refbutton').click(function()</a><br>
+        <a href="showColumns">showColumns()</a><br>
+        <a href="goLocal">goLocal()</a><br>
+         
+        <a href="goUTC">goUTC()</a><br>
+        </nav>
+    </p>
     <p>
     </p>
     <div>
@@ -414,6 +483,61 @@
 <div class="netmanager-p2">
     <a id="netmanager-p2"></a>
     <h3>NetManager-p2.js</h3>
+    <p>Functions: <br>
+        <nav class="topics2">
+        <a href="stuffatthetop">see const at the top</a><br>
+        <a href="doubleClickComments">doubleClickComments(rID, cs1, netID)</a><br>
+        <a href="doubleClickCall">doubleClickCall(rID, cs1, netID)</a><br>
+        
+        <a href="whoAreYou">whoAreYou()</a><br>
+        <a href="openW3W">openW3W()</a><br>
+        <a href="showDTTM">showDTTM()</a><br>
+        
+        <a href="setInterval">setInterval('showDTTM()', 1000)</a><br>
+        <a href="newNet">newNet(str)</a><br>
+        <a href="hideCloseButton">hideCloseButton(pb)</a><br>
+        
+        <a href="checkIn">checkIn()</a><br>
+        <a href="fillFreqs">fillFreqs()</a><br>
+        <a href="fillURC">fillURC()</a><br>
+        
+        <a href="remember-selection">remember-selection').each(function(r)</a><br>
+        <a href="switchClosed">switchClosed()</a><br>
+        <a href="filterSelectOptions">filterSelectOptions(selectElement, attributeName, attributeValue)</a><br>
+        
+        <a href="netcall">netcall').on('change',function()</a><br>
+        <a href="fillFreqs">fillFreqs()</a><br>
+        <a href="netGroup">netGroup" ).change(function()</a><br>
+         
+        <a href="fillaclone">fillaclone()</a><br>
+        <a href="doalert">doalert(checkboxElem)</a><br>
+        <a href="openPreamblePopup">openPreamblePopup()</a><br>
+         
+        <a href="openEventPopup">openEventPopup()</a><br>
+        <a href="openClosingPopup">openClosingPopup()</a><br>
+        <a href="buildDWtt">buildDWtt()</a><br>
+         
+        <a href="openColumnPopup">openColumnPopup()</a><br>
+        <a href="convertToPB">convertToPB()</a><br>
+        <a href="heardlist">heardlist()</a><br>
+         
+        <a href="buildFSQHeardList">buildFSQHeardList()</a><br>
+        <a href="buildCallHistoryByNetCall">buildCallHistoryByNetCall()</a><br>
+        <a href="buildRightCorner">buildRightCorner()</a><br>
+         
+        <a href="scrollFunction">scrollFunction()</a><br>
+        <a href="topFunction">topFunction()</a><br>
+        <a href="Clear_All_Tactical">Clear_All_Tactical()</a><br>
+         
+        <a href="filterFunction">filterFunction(x)</a><br>
+        <a href="putInGroupInput">putInGroupInput(pidi)</a><br>
+        <a href="putInKindInput">putInKindInput(pidi)</a><br>
+         
+        <a href="putInFreqInput">putInFreqInput(pidi)</a><br>
+        <a href="showGroupChoices">showGroupChoices()</a><br>
+        <a href="showKindChoices">showKindChoices()</a><br>
+        
+        </nav>
     <p>
     </p>
     <div>
