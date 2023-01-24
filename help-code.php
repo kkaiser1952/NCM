@@ -94,8 +94,8 @@
         <a href="#latlongdistance">latlongdistance.js</a><br>
         <a href="#leaflet_numbered_markers">leaflet_numbered_markers.js</a><br>
         
-        <a href="#netmanager-p2">NetManager-p2.js</a><br>
         <a href="#netmanager">NetManager.js</a><br>
+        <a href="#netmanager-p2">NetManager-p2.js</a><br>  
         <a href="#sorttable">sortTable.js</a><br>
         <a href="#table2csv.min">table2csv.min.js</a><br>
         <a href="#timepicker">timepicker.js</a><br>
@@ -206,7 +206,7 @@
 <div class="circlekoords">
     <a id="circlekoords"></a>
     <h3>circlekoords.js</h3>
-    <p>This program comes from W3W
+    <p>This program calculates the number of and distance between circles around the clicked point on the map.
 
     </p>
     <div>
@@ -398,7 +398,6 @@
 </div>
 
 <hr>
-
 <div class="netmanager">
     <a id="netmanager"></a>
     <h3>NetManager.js</h3>
@@ -408,13 +407,12 @@
     <a class="gotoindex" href="#index"><br>Back to the Index</a>
 </div>
 <br>
-
 </div>
 
 <hr>
 
 <div class="netmanager-p2">
-    <a id="netmanager-ps"></a>
+    <a id="netmanager-p2"></a>
     <h3>NetManager-p2.js</h3>
     <p>
     </p>
@@ -424,6 +422,58 @@
 <br>
 
 </div>
+
+
+<hr>
+<div class="sorttable">
+    <a id="sorttable"></a>
+    <h3>sortTable.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
+
+<hr>
+<div class="table2csv.min">
+    <a id="table2csv.min"></a>
+    <h3>table2csv.min.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
+
+<hr>
+<div class="timeicker">
+    <a id="timeicker"></a>
+    <h3>timeicker.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
+
+<hr>
+<div class="w3wdata">
+    <a id="w3wdata"></a>
+    <h3>w3wdata.js</h3>
+    <p>
+    </p>
+    <div>
+    <a class="gotoindex" href="#index"><br>Back to the Index</a>
+</div>
+<br>
+</div>
+
+<!-- End of javascript code indes -->
+
 
 <hr>
 	 <h3>PHP/HTML Code Index</h3>
