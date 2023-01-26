@@ -82,7 +82,7 @@
     <!-- End all about favicon images -->
     
     <!-- The meta tag below sends the user to the help file after 90+ minutes of inactivity. -->
-    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/doc/help.php" >
+    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/help.php" >
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" > 
 
@@ -156,7 +156,7 @@
 
 <!-- From showDTTM() in NetManager-p2.js -->
 <p class="tb1 TipBubbles initiallyHidden" style="width: 200px; margin-bottom: 40px;">
-	<a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Choose Your Time Zone</a></p>
+	<a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Choose Your Time Zone</a></p>
 	
 <div id="dttm"> <!-- flex container -->
     <div id="dttm1">
@@ -171,7 +171,7 @@
 </div> <!-- end flex container -->
 		 
 <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 30px;">
-    <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
+    <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
 <div class = "weather-place">
 	<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" onclick="newWX()">
 
@@ -248,7 +248,7 @@
    </span> <!-- End of class dropdown -->
 	
 		  	   <!-- Open the NCM help/instructions document -->
-		  	   <a id="helpdev" href="https://net-control.us/doc/help.php" target="_blank" rel="noopener" title="Click for the extended help document">Help</a>&nbsp;||&nbsp;
+		  	   <a id="helpdev" href="https://net-control.us/help.php" target="_blank" rel="noopener" title="Click for the extended help document">Help</a>&nbsp;||&nbsp;
 				
 		  	   <!-- Alternate dropdown of the lesser needed reports -->
 		  	   <a href="#menu" id="bar-menu" class="gradient-menu"></a>
@@ -296,7 +296,7 @@
 		<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p>
 	
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
-            <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
+            <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
         </p> <!-- End TipBubbles -->
         
 		<div class="theBox">
@@ -412,13 +412,13 @@
 	    
     <!-- Building the upper right corner is triggered by: showActivities() in NetManager.js -->
     <p class="tb2 TipBubbles initiallyHidden" style="width: 400px; left: 200px; margin-bottom: -40px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#open" target="_blank">Dropdown of nets and/or current net being displayed.</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#open" target="_blank">Dropdown of nets and/or current net being displayed.</a></p>
         
     <p class="tb2 TipBubbles initiallyHidden" style="width: 300px; left: 775px; margin-bottom: 40px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#refreshtimed" target="_blank">Immediate and Timed Data Refresh</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#refreshtimed" target="_blank">Immediate and Timed Data Refresh</a></p>
 	
    	<p class="tb1 TipBubbles initiallyHidden" style="left: 200px; width: 450px;  margin-bottom: 50px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Select to display an active or closed net.</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Select to display an active or closed net.</a></p>
         
         <div class="btn-toolbar" >
         
@@ -473,7 +473,7 @@
     
 	<div id="forcb1" class="hidden">
     	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">
-        	<a class="tipimage" href="https://net-control.us/doc/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
+        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
         	
 		<div id="genComments" class=" editGComms"></div>
 
@@ -482,13 +482,13 @@
 	  
 	  <!-- Tip Bubbles -->
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:300px; left: 50px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#checkins" target="_blank">Enter Callsign or name displays hints</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Enter Callsign or name displays hints</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:150px; left: 455px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#checkins" target="_blank">Traffic Short Cut</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Traffic Short Cut</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:250px; left: 655px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:350px; left: 950px; margin-bottom: 40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
 	<div id="admin" class=" admin ">   <!-- End is @645 -->
 		<div id="csnm" class="hidden">
 
@@ -584,7 +584,7 @@
 		<p>&copy; Copyright 2015-2023, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2022-11-21</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
-			Or click <a href="doc/help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
+			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
 			
 	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
 		</p>

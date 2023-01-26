@@ -205,12 +205,12 @@
         <a href="#ARESplan">ARES Plan</a><br>
         <a href="#ARESgroup">ARES Group Registration</a><br>
         <a href="#ARESemcomm">Emergency Communications Training</a><br>
-	 </nav>
+	 </nav>  
 	 
 	 <h3><a href="help-code.php" >The Code Index</a> (work in progress)</h3>
     
 </div> <!-- End index -->
-	
+
 <hr>
 <p style="page-break-before: always"></p> 
 
