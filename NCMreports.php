@@ -179,14 +179,14 @@ table.sortable thead {
 	
         <select id="grp" name="grp" style="width:400px;">    
             <option value="All" disabled selected >Select a net to report about</option>
-            <option value="All"  >All Groups</option>
+        <!--    <option value="All"  >All Groups</option> -->
+            <option value="notlisted">Group Not Listed</option>
 	<?php       	            	   	
     	$row = 0;
     	$sql = "
         	SELECT DISTINCT `call`, org, orgType
 			  FROM `NetKind` 
 			 WHERE `call` NOT IN ( 'TE0ST', 'EVENT') 
-			/* ORDER BY `call` */
 			  ORDER BY orgType, org
         	";
         	foreach($db_found->query($sql) as $act) {
@@ -196,8 +196,7 @@ table.sortable thead {
                  $call = strtoupper($act[call]);        
                  
             //    if ($mod == '' ) { 
-                  if ($thisOrgType <> $act[orgType] ) {
-            	 
+                  if ($thisOrgType <> $act[orgType] ) { 
                     echo "<option value='' disabled>===$act[orgType]===</option>";
                     echo ("<option value='$act[call]'>$act[call] --> $act[org]</option>");
                 }else {
@@ -206,21 +205,13 @@ table.sortable thead {
                 
                 $thisOrgType = $act[orgType];
         	} // end foreach
-        	
-        	/*
-            	 if ($thisOrgType <> $net[orgType] ) {
-                    
-                    echo ("<option value=' ' disabled> $e &nbsp; $net[orgType] &nbsp; $e</option> \n");
-                    echo ("<option value='$net[id2]'>$net[call] ---> $net[org]</option> \n");
-                  } else {
-                    echo ("<option value='$net[id2]'>$net[call] ---> $net[org]</option> \n");
-                  }	
-                  
-						$thisOrgType = $net[orgType];
-            */
-        	
 	?>
         </select>
+        
+        <script>
+           // var grp 	    = $("#grp").val();
+           // if ("#grp" == 'notlisted') {alert( 'no group')};
+        </script>
         
 	<div id="reportKind">
 		<br>
