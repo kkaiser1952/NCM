@@ -578,22 +578,18 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	</div>
 	<div style="padding-left: 20px;">
  <p>
- <div style="width: 40%;"> Start a net video:
-     <!--
-    <video controls="controls" width="800" height="600" name="Start A Net">
-        <source src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov">
-    </video>
-    -->
-    <embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=400 height=300 controller=true autoplay=true PLUGINSPAGE="http://www.apple.com/quicktime/">
- </div>
+
 	Before clicking the <b style="color:red">'Start A New Net'</b> button check to see that someone else has not already started the net for you. To do this, 
 		</p>
 			<p>Reload your web page</p>
 			<p> Then check the dropdown list for the net, open nets are in green.<br>Pre-built and Roll Call nets are in blue.</p>
 			<p> If not already created then...</p>
+			<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
+			
+			<p style="top:2px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=400 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+    			
+			</p>
 
-		<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
-		
 		<p style="color:blue;">Be sure click the "test net" select box at the top if you are creating a TEST net.</p>
 
 	
