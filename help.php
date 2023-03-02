@@ -586,7 +586,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 			<p> If not already created then...</p>
 			<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
 			
-			<p style="top:2px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=400 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+			<p style="padding-top: 1px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=500 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
     			
 			</p>
 
@@ -692,6 +692,10 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	
 	<p>The background color of this menu bar will change from <b style="color:#c992d3">purple</b> to <b style="color:red">red</b> over the course of 10 minutes. Use this as a visual reminder to do a station identification.</p>
 	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">TAB TAB TAB (triple tab)</b> after entering a partial or full call sign only.</p>
+	
+	<p style="padding-top: 1px;"><embed src="video/Add%20A%20Call%20to%20Net.mov" width=400 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+    			
+			</p>
 	
 	<p>1) Type the call sign  (or any 3 character portion of it) and wait for the hints to reveal the correct station. Then single click or arrow down on that station followed by <b style="color:red">TAB TAB TAB (triple tab)</b>. It will populate the call, the name and other fields into the appropriate locations. If it is an unknown call you MUST click <b style="color:green">Check In</b>.<br>
     	If you catch only part of a call you can use the underscore (_) as a wild card. For example if you hear KA0S?Y, missing the middle letter, enter KA0S_Y and wait for the hint. The underscore as a wild card works in any position of the callsign. It also works for multiple positions, such as __0sx, the only requirement being you still need 3 other characters. But be advised it might take longer to return a value.
