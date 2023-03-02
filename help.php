@@ -546,6 +546,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <img  src="screenshots/existingNets.png" alt="existing" width="600"  />
 	</div>
 <div style="padding-left: 20px;">
+
  <p>
 	Before clicking the <b style="color:red">'Start A New Net'</b> button check to see that someone else has not already started the net for you. To do this, 
 		</p>
@@ -577,6 +578,14 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	</div>
 	<div style="padding-left: 20px;">
  <p>
+ <div style="width: 40%;"> Start a net video:
+     <!--
+    <video controls="controls" width="800" height="600" name="Start A Net">
+        <source src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov">
+    </video>
+    -->
+    <embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=400 height=300 controller=true autoplay=true PLUGINSPAGE="http://www.apple.com/quicktime/">
+ </div>
 	Before clicking the <b style="color:red">'Start A New Net'</b> button check to see that someone else has not already started the net for you. To do this, 
 		</p>
 			<p>Reload your web page</p>
