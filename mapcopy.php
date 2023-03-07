@@ -128,6 +128,7 @@
     		background: #d0effa;
     		top: 80%;
     		left: 90px;
+    		padding-bottom: 30px;
         }
         .leaflet-container{
             line-height: 1;
@@ -135,15 +136,19 @@
         
         .leaflet-control-w3w-locationText {
     	/*	position: fixed; */
+    	    position: fixed;
     		font-size: 18pt;
     	/*	top: 275px;
     		right: 17px; */
-    		top: 1000px;
-    		left: 17px;
-    		border: 3px solid #8AC007;
+    		bottom: 475px;
+    		top: 93%;
+    		left: 110px;
+    		border: none;
+    	/*	border: 1px solid #8AC007; */
 		/*    z-index: 400; */
 		    text-decoration: none;
-		    background-color: white;
+		/*    background-color: white; */
+		    width: 30%; 
 		}
 	</style>
 	
