@@ -11,14 +11,15 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
+    require_once "ENV_SETUP.php";      // API's
     require_once "GridSquare.php";
     
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    //$q = 3818; 
+    $q = 8523; 
     //$q = 6066;
-    //$q = 7678;
+    //$q = 7988;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -62,13 +63,14 @@
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
+    <script src="js/geolet.js"></script>
     <!-- https://github.com/ardhi/Leaflet.MousePosition -->
     <!--<script src="js/L.Control.MousePosition.js"></script>-->
      
     <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
     <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
     
-    <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script>
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
     
     <script src="js/hamgridsquare.js"></script>
     
@@ -80,18 +82,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
-
-
+    
+    
      
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
-     <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
-    integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
+     <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
     crossorigin=""></script>
-    
-    <!-- Load Esri Leaflet Geocoder from CDN -->
-	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
-    crossorigin="">
+
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
+    crossorigin=""></script>
     
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
     integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
@@ -109,6 +112,8 @@
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
+    
+    
         
     <!-- What 3 Words -->
     <script src="js/control.w3w.js"></script>
@@ -117,12 +122,39 @@
     <!-- circleKoords is the javascript program that caluclates the number of rings and the distance between them -->
     <script src="js/circleKoords.js"></script>    
     
-
+    <!-- override from leaflet.mousecoordinate.css -->
 	<style>
-		/* All CSS is in css/maps.css */
-		/* Below is supposed to fix the problem of the controls disapearing */
-		/*.leaflet-top, .leaflet-left { transform: translate3d (0, 0, 0); will-change: transform; }*/
+		.leaflet-control-mouseCoordinate{
+    		background: #d0effa;
+    		top: 80%;
+    		left: 90px;
+        }
+        .leaflet-container{
+            line-height: 1;
+        }
+        
+        .leaflet-control-w3w-locationText {
+    	/*	position: fixed; */
+    		font-size: 18pt;
+    	/*	top: 275px;
+    		right: 17px; */
+    		top: 900px;
+    		left: 17px;
+    		border: 3px solid #8AC007;
+		/*    z-index: 400; */
+		    text-decoration: none;
+		    background-color: white;
+		}
 	</style>
+	
+	<!-- Experiment to add beautifyl markers -->
+	<!--
+    <link rel="stylesheet"BeautifyMarker-master/leaflet/fontawesome.min.css" />"
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="BeautifyMarker-master/leaflet-beautify-marker-icon.css" />
+    <script src="BeautifyMarker-master/leaflet-beautify-marker-icon.js"></script>
+    -->
+
 	
 </head>
 
@@ -201,15 +233,36 @@ var map = L.map('map', {
 
 	
 	// Define the layers for the map
-    const Streets = L.esri.basemapLayer('Streets').addTo(map),
-          Imagery = L.esri.basemapLayer('Imagery').addTo(map),
-          Topo    = L.esri.basemapLayer('Topographic').addTo(map),
-          NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
-    
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
-                       "<span style='color: blue; font-weight: bold;'>NatGeo": NatGeo,
+	
+	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
+	   
+	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
+	   
+	   //alert (esriapi);
+          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+            apikey: esriapi}).addTo(map),
+          Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
+            apikey: esriapi}).addTo(map),
+          Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
+            apikey: esriapi}).addTo(map),
+          Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            apikey: esriapi}).addTo(map),
+          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey: esriapi}).addTo(map),
+          Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey: esriapi}).addTo(map);
+            
+            // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
+ // vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+  //  apiKey
+  //});
+   
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
+                       "<span style='color: blue; font-weight: bold;'>Streets": Streets,
+                       "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
-                       "<span style='color: blue; font-weight: bold;'>Streets": Streets               
+                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
+                       "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
                      
                   
@@ -223,9 +276,10 @@ var map = L.map('map', {
 		w.setCoordinates(e);
 	});
                    
+    
     //L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
     // https://github.com/PowerPan/leaflet.mouseCoordinate replaces mousePosition above
-    L.control.mouseCoordinate({utmref:true,qth:true,position:'topright'}).addTo(map);
+    L.control.mouseCoordinate({gpsLong:false,utm:true,qth:true,position:'bottomleft'}).addTo(map);
     
     // https://github.com/ppete2/Leaflet.PolylineMeasure
     // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
@@ -270,6 +324,9 @@ var map = L.map('map', {
 
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
+    
+    // https://github.com/rhlt/leaflet-geolet
+    L.geolet({ position: 'bottomleft' }).addTo(map);
     
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
