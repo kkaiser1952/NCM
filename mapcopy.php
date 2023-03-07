@@ -138,7 +138,7 @@
     		font-size: 18pt;
     	/*	top: 275px;
     		right: 17px; */
-    		top: 900px;
+    		top: 1000px;
     		left: 17px;
     		border: 3px solid #8AC007;
 		/*    z-index: 400; */
