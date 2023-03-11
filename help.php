@@ -257,10 +257,10 @@
 		<u>Better</u> <br> Safari
 	</div>
 	<div>
-		<u>Best</u> <br> Chrome
+		<u>Best</u> <br> Firefox
 	</div>
 	<div>
-		<u>Usually</u> <br> Firefox
+		<u>Usually OK</u> <br> Chrome
 	</div>
 </div>
 
@@ -320,10 +320,10 @@
 	<a id="assumptions"></a>
 	<h3>Assumptions:</h3>
 	
-	<p>For any new net created most columns are filled by values that come from one of two places. Most values are picked up from the 'stations' table. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table of the NCM data base.
+	<p>For any new net created most columns are filled by values that come from one of two places. Most station values are picked up from the 'stations' table. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table of the NCM data base.
 	<ul>
-		<li>All times are stored as universal time (UTC or GMT). You are able to select the local time zone for display purposes.</li>
-		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always default to the stations home address. </li>
+		<li>All times are stored as universal time (UTC). You are able to select the local time zone for display purposes only.</li>
+		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always <b>default to the stations home address</b>. </li>
 <!--		<li>County, State and District: will always default to the last edited value on the last net they logged into.</li> -->
 		<li>Call sign, First and Last Name, phone number, email address, and Credentials are all stored for the open net only. When changed they will NOT be retained for future nets.</li>
 		<li></li>
@@ -400,7 +400,9 @@
 		
 		<p>Nets marked with "Net Closed" can not be edited. You must re-open it first.  </p>
 		<p>To enter a line break (carridge return) to the 'Comments' field put <b>&lt;br&gt;</b> or simply space twice where you want the break. Then continue to type. Do not use the return on your keyboard. All simple HTML markups are available to use.</p>
-		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM or EMCOMM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.</p>
+		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM or EMCOMM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.<br>
+    		<b style="color:red">GMRS</b> licenses can also be entered, however their owner will be the only station identified. This is not in place yet but is coming. For additional users of the same call, I suggest adding a -1, -2, etc. to the parent call.
+		</p>
 		
 		<p>Late Check-Ins (after log is closed). The best thing to do is enter them as an 'In-Out' in the 'Status' column. This will assign a one-minute value to TOD. But more importantly it will allow your log to close properly.</p>
 		<p>Duplicate calls are not allowed and will be ignored by the system. However if you have chosen 'Multiple Bands' or '80/40 Meters' as  your frequency while building the net, they will be allowed. Its hoped you will indicate which band they checked in from using the 'Band' column. The 'Band' column will be automatically added if you choose one of the above frequencies.</p>
@@ -1945,14 +1947,15 @@ Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV)
     </div>
     
     <span>Map Markers courtesy of Bridget R. Kaiser</span>
-<span  style="text-align: center; display: inline-block; vertical-align: middle;">
+    
+    <span  style="text-align: center; display: inline-block; vertical-align: middle;">
 
         <img src="BRKMarkers/plum_man.svg" alt="plum_man" style="float:left; padding: 0px; border: 0;" />
 
-        <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:right; padding: 0px; border: 0;" />
+        <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:left; padding: 0px; border: 0;" />
 
-</span>
-
+    </span>
+   
 <p>
 <div>
  <img src="images/backgroundantenna328x72.png"  alt="backgroundantenna328x72" width="250" >
