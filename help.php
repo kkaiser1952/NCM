@@ -1944,11 +1944,10 @@ Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV)
 </p>
     </div>
     
+    <span>Map Markers courtesy of Bridget R. Kaiser</span>
 <span  style="text-align: center; display: inline-block; vertical-align: middle;">
 
         <img src="BRKMarkers/plum_man.svg" alt="plum_man" style="float:left; padding: 0px; border: 0;" />
-
-    Map Markers courtesy of Bridget R. Kaiser
 
         <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:right; padding: 0px; border: 0;" />
 

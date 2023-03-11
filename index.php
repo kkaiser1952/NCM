@@ -82,13 +82,10 @@
     <!-- End all about favicon images -->
     
     <!-- The meta tag below sends the user to the help file after 90+ minutes of inactivity. -->
-    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/help.php" >
-    
+    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/help.php" > 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" > 
-
     <meta name="description" content="Amateur Radio Net Control Manager" >
     <meta name="author" content="Keith Kaiser, WA0TJT" >
-    
     <meta name="Rating" content="General" >
     <meta name="Revisit" content="1 month" >
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control" >
@@ -99,7 +96,6 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Stoke&display=swap" >
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cantora+One&display=swap" >
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Risque&display=swap" >
-    
     
     <!-- ===============                          ================================== -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
@@ -120,17 +116,7 @@
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 	 
 <style>
-	/* Use this space for experimental CSS */   
 	
-	/* jQuery modal css */
-	/*
-	ui-widget-header,.ui-state-default, ui-button {
-            background:#b9cd6d;
-            border: 2px solid #b9cd6d;
-            color: #03c31d;
-            font-weight: bold;
-         }
-	*/
 </style>
 
 </head>
@@ -145,7 +131,7 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v7.11.21</a> 
+    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
@@ -581,7 +567,7 @@
 	
 	<!-- https://jquerymodal.com -->
 	<div id="#cc" class="modal" style="display:none;">	
-		<p>&copy; Copyright 2015-2023, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2022-11-21</span></p>
+		<p>&copy; Copyright 2015-2023, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2023-03-11</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
 			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
@@ -702,8 +688,6 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
-        
-    	
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
 $ ( function() {
