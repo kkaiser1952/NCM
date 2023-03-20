@@ -17,7 +17,7 @@
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    //$q = 3818; 
+    //$q = 8523; 
     //$q = 6066;
     //$q = 7988;
     
@@ -112,6 +112,8 @@
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
+    
+    
         
     <!-- What 3 Words -->
     <script src="js/control.w3w.js"></script>
@@ -125,11 +127,33 @@
 		.leaflet-control-mouseCoordinate{
     		background: #d0effa;
     		top: 80%;
-    		left: 90px;
+    		left: 10px;
+    		padding-bottom: 40px;
         }
         .leaflet-container{
             line-height: 1;
         }
+        
+        .leaflet-control-w3w-locationText {
+    	/*	position: fixed; */
+    	    position: fixed;
+    		font-size: 14pt;
+    	/*	top: 275px;
+    		right: 17px; */
+    	/*	bottom: 475px; */
+    		
+    		top: 94%;
+    		left: 32px;  /* was 110 */
+    		border: none;
+    	/*	border: 1px solid #8AC007; */
+		/*    z-index: 400; */
+		    text-decoration: none;
+		/*    background-color: white; */
+		    width: 30%; 
+		    background-color: inherit;
+		    color: rgb(182,7,7);
+		    
+		}
 	</style>
 	
 	<!-- Experiment to add beautifyl markers -->
