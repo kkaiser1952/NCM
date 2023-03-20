@@ -127,8 +127,8 @@
 		.leaflet-control-mouseCoordinate{
     		background: #d0effa;
     		top: 80%;
-    		left: 90px;
-    		padding-bottom: 30px;
+    		left: 10px;
+    		padding-bottom: 40px;
         }
         .leaflet-container{
             line-height: 1;
@@ -137,18 +137,21 @@
         .leaflet-control-w3w-locationText {
     	/*	position: fixed; */
     	    position: fixed;
-    		font-size: 18pt;
+    		font-size: 14pt;
     	/*	top: 275px;
     		right: 17px; */
-    		bottom: 475px;
-    		top: 93%;
-    		left: 110px;
+    	/*	bottom: 475px; */
+    		
+    		top: 94%;
+    		left: 32px;  /* was 110 */
     		border: none;
     	/*	border: 1px solid #8AC007; */
 		/*    z-index: 400; */
 		    text-decoration: none;
 		/*    background-color: white; */
 		    width: 30%; 
+		    background-color: inherit;
+		    color: rgb(182,7,7);
 		}
 	</style>
 	
