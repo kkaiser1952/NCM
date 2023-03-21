@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-// getCallHistory.php
+// getCallHistory.php A.K.A. The Usual Suspects
 // This program produces a report of the callsign being called, it opens as a modal or window
 	
 	ini_set('display_errors',1); 

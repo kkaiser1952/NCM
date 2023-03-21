@@ -219,6 +219,8 @@
 	        
 	<!--    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a> -->
 	    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
+	    
+	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">Geo-Distance</a>
 
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
  

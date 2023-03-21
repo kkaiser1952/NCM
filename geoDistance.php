@@ -1,5 +1,6 @@
 <!doctype html>
 <?php
+    // The SQL for this program was written by chat(AI) (ChatGPT) on 2023-03-20 
 
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
@@ -7,7 +8,7 @@
 		    require_once "dbConnectDtls.php";
 		    
 		    $q = intval($_GET["NetID"]);
-		    $q = 8626;
+		    //$q = 8626;
 		    
     echo "<h2>Distance & Bearings for All Stations on Net $q </h2>";
 ?>
@@ -24,23 +25,32 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
     <script src="js/sortTable.js"></script>
     
-    <script>
-	
-	</script>
+
 	
 	<style>
 		.red {
 			color: red;
 		}
+		td {
+          text-align: center;
+          font-size: large;
+        }
+        tr:hover {background-color: coral; font-weight: bold; font-size: xx-large;}
+        th {
+          background-color: #04AA6D;
+          color: white;
+          font-size: 14pt;
+        }
 	</style>
 	
 </head>
 
 <body>
 	<h3 class="instruct">Click any column head to sort</h3>
-    <table class="sortable">
+    <table class="sortable" style="width: 35%">
+                    
 	    <tr>
-    	    <th>Station 1</th>
+    	    <th class="<?php $liteItUp ?>" style="text-align: center;">Station 1</th>
     	    <th>Station 2</th>
     	    <th>Miles</th>
     	    <th>Bearing</th>
@@ -83,21 +93,39 @@
                 WHERE t1.netID = 8626 AND t2.netID = $q
                 ORDER BY t1.callsign
 			");
+			
+			$rowno = 0;
+            $firstrow = 0;
+            $liteItUp = '';
+            $lastCall = null;
 					
 		    foreach($db_found->query($sql) as $row) {
-			   echo"
-			   <tr>		
-			        <td>$row[callsign1]</td>	
-			        <td>$row[callsign2]</td>
-			        <td>$row[miles]</td>
-			        <td>$row[bearing]</td>
-			        <td>$row[reverse]</td>
-			   </tr>
+    		    
+    		    if($lastCall != $row[callsign1]) {
+                    $liteItUp = "style=\"background-color:lightblue\"";
+                    $lastCall = $row[callsign1];
+                } else $liteItUp = "";
+
+                $rowno = $rowno + 1;
+                
+    			   echo"
+    			   <tr $liteItUp>		
+    			        <td>$row[callsign1]</td>	
+    			        <td>$row[callsign2]</td>
+    			        <td>$row[miles]</td>
+    			        <td>$row[bearing]</td>
+    			        <td>$row[reverse]</td>
+    			   </tr>
 		    ";
 		    } // End foreach
 		?>
 
     </table>
+    
+    
+    
+    
+    
     <p>geoDistance.php</p>
      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
    
