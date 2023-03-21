@@ -326,6 +326,8 @@ if ( $q <> 0 ){
 	  echo ("<span class='export2CSV' style='padding-left: 10pt;'>
 	  <a href=\"#\" onclick=\"window.open('netCSVdump.php?netID=' + $('#idofnet').html())\" >Export CSV</a></span>
 	  <span style='padding-left: 5pt;'>
+	  <a href=\"#\" id=\"geoDist\" onclick=\"geoDistance()\" title=\"geoDistance\"><b style=\"color:green;\">geoDistance</b></a>
+	  <span style='padding-left: 5pt;'>
 	  <a href=\"#\" id=\"mapIDs\" onclick=\"map2()\" title=\"Map This Net\"><b style=\"color:green;\">Map This Net</b></a>
 	  </span>");
 	  
