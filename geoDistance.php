@@ -88,7 +88,7 @@
                     NetLog t1
                     JOIN NetLog t2
                     ON t1.callsign < t2.callsign
-                WHERE t1.netID = 8626 AND t2.netID = $q
+                WHERE t1.netID = $q AND t2.netID = $q
                 ORDER BY t1.callsign, t2.callsign
 			");
 			
