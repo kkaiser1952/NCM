@@ -29,6 +29,9 @@
 		.red {
 			color: red;
 		}
+		html {
+        	width: 80%;
+    	}
 		td {
           text-align: center;
           font-size: large;
@@ -39,12 +42,17 @@
           color: white;
           font-size: 14pt;
         }
+        .prime {
+    		columns: 20px 2; 
+    		column-gap: 10px; 
+		}
 	</style>
 	
 </head>
 
 <body>
 	<h3 class="instruct">Click any column head to sort</h3>
+	<div class="prime">
     <table class="sortable" style="width: 35%">
                     
 	    <tr>
@@ -138,7 +146,7 @@
 		?>
 
     </table>
-    
+	</div>
     
     <p>geoDistance.php</p>
      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
