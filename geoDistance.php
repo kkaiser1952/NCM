@@ -56,7 +56,25 @@
 	    </tr>  
 	    <?php
     	    //   DATE(logdate) as netDate,
-			$sql = ("/* SET @netID = 8626; */
+    	    $sql = ("
+    	        SELECT 
+                  n1.callsign AS callsign1,
+                  n2.callsign AS callsign2,
+                  ROUND(69.09 * DEGREES(ACOS(COS(RADIANS(n1.latitude)) * COS(RADIANS(n2.latitude)) * COS(RADIANS(n2.longitude) - RADIANS(n1.longitude)) + SIN(RADIANS(n1.latitude)) * SIN(RADIANS(n2.latitude)))), 1) AS miles,
+                  
+                  ROUND(DEGREES(ATAN2(SIN(RADIANS(n2.longitude - n1.longitude)) * COS(RADIANS(n2.latitude)), COS(RADIANS(n1.latitude)) * SIN(RADIANS(n2.latitude)) - SIN(RADIANS(n1.latitude)) * COS(RADIANS(n2.latitude)) * COS(RADIANS(n2.longitude - n1.longitude)))) + 360) % 360 AS bearing,
+                  
+                  ROUND(DEGREES(ATAN2(SIN(RADIANS(n1.longitude - n2.longitude)) * COS(RADIANS(n1.latitude)), COS(RADIANS(n2.latitude)) * SIN(RADIANS(n1.latitude)) - SIN(RADIANS(n2.latitude)) * COS(RADIANS(n1.latitude)) * COS(RADIANS(n1.longitude - n2.longitude)))) + 360) % 360 AS reverse
+                FROM 
+                  NetLog n1 
+                  JOIN NetLog n2 
+                  ON n1.netID = n2.netID AND n1.callsign < n2.callsign
+                WHERE 
+                  n1.netID = $q
+                ORDER BY 
+                  n1.callsign, n2.callsign
+            ");
+		/*	$sql = 
                 SELECT
                     t1.callsign AS callsign1,
                     t2.callsign AS callsign2,
@@ -90,7 +108,8 @@
                     ON t1.callsign < t2.callsign
                 WHERE t1.netID = $q AND t2.netID = $q
                 ORDER BY t1.callsign, t2.callsign
-			");
+			"); 
+			*/
 			
 			$rowno = 0;
             $firstrow = 0;
