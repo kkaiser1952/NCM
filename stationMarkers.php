@@ -91,7 +91,7 @@
     			   		END as classColor
     			    ,CONCAT(latitude, ',', longitude) as koords 
     			    ,CONCAT(Fname, ' ', Lname) AS name 
-    			    ,CONCAT('<b>',UPPER(callsign),'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
+    			    ,CONCAT('<b>Tactical: ',tactical,'<br>',UPPER(callsign),'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
     			    latitude, longitude
     		   FROM NetLog  		   			   
     		  WHERE netID = $q
