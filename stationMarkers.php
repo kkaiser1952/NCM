@@ -105,6 +105,7 @@
     		    AND callsign <> ' '
     		   
     		  ORDER BY logdate 
+    		  
     		 ");
     		  
 		$rowno              = 0;
