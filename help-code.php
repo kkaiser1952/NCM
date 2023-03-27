@@ -704,9 +704,9 @@
         
         <a href="#getgridcounts">getGridCounts.php</a><br>
         <a href="#getgridlatlnglname">getGridLatLngLname.php</a><br>
-        <a href="#gethint">gething.php</a><br>
+        <a href="#gethint">gethint.php</a><br>
         <a href="#gethintname">gethintName.php</a><br>
-        <a href="#gethingsuspects">gethintSuspects.php</a><br>
+        <a href="#gethintsuspects">gethintSuspects.php</a><br>
         <a href="#getjsonrecord">getJSONrecord.php</a><br>
         <a href="#getkind">getkind.php</a><br>
         
