@@ -4,7 +4,7 @@ require_once "dbConnectDtls.php";
 
 	$q = $_GET['q'];
 
-        $sql = "CREATE VIEW CONCAT('ncm.hint','$q') AS 
+        $sql = "CREATE VIEW CONCAT('$q') AS 
                 SELECT DISTINCT (callsign), CONCAT(Fname,' ',Lname,' --> ',state,'--',county) AS name
                   FROM NetLog
                 WHERE netcall = '$q'

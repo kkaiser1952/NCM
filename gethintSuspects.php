@@ -27,9 +27,9 @@ $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.coun
            AND b.logdate < b.logdate <= NOW() - INTERVAL 60 DAY
            
            AND (a.callsign LIKE '%$term%' OR a.Fname LIKE '%$term%' OR a.Lname LIKE '%$term%' )
-       /*     OR (CONCAT(a.Fname, a.Lname) LIKE '%$term%') */
+    
          GROUP BY b.callsign
-         limit 10
+       
        "; 
   		  	
   		  	$results = array(); // setup the array
