@@ -37,7 +37,8 @@ $sql = (
     ");
         echo "<br>$sql<br>";
         
-        $stmt = execute($sql); 
+        $stmt = $db_found->prepare($sql);
+        execute($stmt); 
         
         
         //$sql->execute();
