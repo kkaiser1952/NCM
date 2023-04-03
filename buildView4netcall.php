@@ -14,14 +14,14 @@ If no callsign is found in the FCC or foreign DB it will be added to the NET wit
 
 require_once "dbConnectDtls.php";
 
-	$q = $_GET['q']; // netcall of net being built
+	//$q = $_GET['q']; // netcall of net being built
 	
-	$q = 'CREW2273';  echo 'q = $q <br>';
-	
+	$q = 'CREW2273'; 
+
 $sql = (
     "CREATE OR REPLACE VIEW ncm.$q AS
-        SELECT DISTINCT st.Fname, st.Lname
-    	    st.callsign, st.email, st.tactical, 
+        SELECT DISTINCT st.callsign, st.Fname, 
+    	    st.Lname, st.email, st.tactical, 
     	    st.latitude, st.longitude, st.grid, 
                 st.county, 	 st.state, 	   st.city, 
                 st.district, st.creds, 	   st.country, 
@@ -29,15 +29,17 @@ $sql = (
           FROM ncm.stations st
           JOIN ncm.NetLog nl ON st.callsign = nl.callsign
          WHERE nl.netcall = '$q'
-           AND nl.logdate >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
-           AND nl.logdate < CURRENT_DATE()
            AND nl.callsign NOT LIKE '%NONHAM%'
            AND nl.callsign NOT LIKE '%EMCOMM%'
+           AND nl.logdate >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+           AND nl.logdate < CURRENT_DATE()
+           
     ");
-        echo $sql;
-        foreach($db_found->query($sql) as $row) {
-                $name .= "$row[name],";
-            }
-
-                echo "<br>name = $name";
+        echo "<br>$sql<br>";
+        
+        $stmt = execute($sql); 
+        
+        
+        //$sql->execute();
+        
 ?>
