@@ -7,17 +7,18 @@ require_once "dbConnectDtls.php";
 	$term = $_GET['term'];
 	$netc = $_GET['nc'];
 	
-	//$term = 'otl';
-	//$netc = 'te0st';
+	$term = 'tjt';
+	$netc = 'TE0ST';
 	
 	//$nc = explode(' ', trim($netc));
 	//$netcall = $nc[0];
 	
 	$term = str_replace(' ','', $term); 
 	
-	echo ("term: $term <br> netc: $netc <br> netcall: $netcall");
+	echo ("term: $term <br> netc: $netc <br><br> ");
 	
 	 		  	/* added district: 2022-10-17 */
+/*
 $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.county,'  ',a.district) as name
           FROM stations a
               ,NetLog   b
@@ -31,29 +32,32 @@ $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.coun
          GROUP BY b.callsign
        
        "; 
-  /*     
+*/     
   $sql = "SELECT callsign, name 
             FROM $netc
-           WHERE callsign LIKE '%$netc%' 
-              OR Fname LIKE '%$netc%' 
-              OR Lname LIKE '%$netc%'
-            GROUP BY callsign
-            limit 0,6;
+           WHERE callsign LIKE '%$term%' 
+              OR Fname LIKE '%$term%' 
+              OR Lname LIKE '%$term%'
+           GROUP BY callsign
+           limit 0,6;
        "; 
-  */		  	
+  		  //	die('after sql build <br>'.$sql);
   		  	$results = array(); // setup the array
-  		  	
+            //die('<br>after array build<br>');
   		  	foreach($db_found->query($sql) as $row) {
-      		  	// get rid of null values, in second thought don't, it might be correct
-      		  //	if ($row['name'] <> '') {
-      		  		array_push($results, array(
-      		  				'label' => $row['callsign'], 
-      		  				'desc' => $row['name'],
-      		  				'value'  => $row['callsign']
-      		  				));
-  		  	//	} // end null test
+          		  //die('<br>inside foreach');
+  		  		array_push($results, array(
+  		  				'label' => $row['callsign'], 
+  		  				'desc' => $row['name'],
+  		  				'value'  => $row['callsign']
+  		  				));
 			} // end foreach loop	
-			   			
+			//die('after foreach Debug message');
+			
+			if (count($results)==0){echo "not in this view";}
+            else {
 			    // write the results array to the hints
-				echo json_encode($results);	  	
+			    header('Content-Type: application/json');
+				echo json_encode($results);	  
+            }
 ?>
