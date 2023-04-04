@@ -390,8 +390,8 @@
 		<div class="last3qs">Complete New Net Creation:</div>
 		
 		<br>
-		<!-- newNet() & hideit() in NetManager-p2.js -->
-		<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
+		<!-- newNet() & hideit() createNetKindView() in NetManager-p2.js -->
+		<input id="submit" type="submit" value="Submit" onClick="newNet(); createNetKindView();"  title="Submit The New Net">
 		<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->

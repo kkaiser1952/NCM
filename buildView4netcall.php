@@ -18,7 +18,7 @@ require_once "dbConnectDtls.php";
 	
 	$dbname = 'ncm'; // hard coded
 	
-	$viewnm = $_GET['q']; // from the 
+	$viewnm = $_GET['viewnm']; // from the 
 	//$viewnm = 'te0st'; 
 	
 	// Check if the view already exists
