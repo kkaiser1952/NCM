@@ -327,7 +327,7 @@
     <div id="GroupDropdown" >
         <!-- showGroupCoices() & filterFunctions() at the bottom of index.php -->
         <input type="text" onfocus="showGroupChoices()" placeholder="Type to filter list.." id="GroupInput" style="background-color:white;"
-               class="netGroup"  onkeyup="filterFunction(0);" required />
+               class="netGroup"  onkeyup="this.value = removeSpaces(this.value); filterFunction(0);" required />
         <div class='GroupDropdown-content hidden'>
             
 <?php echo $groupList;?>    <!-- Created in buildThreeDropdowns.php -->
@@ -766,6 +766,11 @@ function checkCall() {
         // AJAX:        Put the collected email into his record in the stations table.
     } // End if
 } // end checkCall function
+
+// This function is used in the DIV GroupDropdown by the input **** DO NOT DELETE ++++
+function removeSpaces(str) {
+  return str.replace(/\s+/g, '');
+}
 
 
 </script>
