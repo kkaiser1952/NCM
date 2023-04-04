@@ -7,7 +7,7 @@ require_once "dbConnectDtls.php";
 	$term = $_GET['term'];
 	$netc = $_GET['nc'];
 	
-	//$term = 'otl';
+	//$term = 'dlk';
 	//$netc = 'te0st';
 	
 	//$nc = explode(' ', trim($netc));
@@ -15,7 +15,7 @@ require_once "dbConnectDtls.php";
 	
 	$term = str_replace(' ','', $term); 
 	
-	echo ("term: $term <br> netc: $netc <br> netcall: $netcall");
+	//echo ("term: $term <br> netc: $netc <br> netcall: $netcall");
 	
 	 		  	/* added district: 2022-10-17 */
 $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.county,'  ',a.district) as name
@@ -31,16 +31,7 @@ $sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.coun
          GROUP BY b.callsign
        
        "; 
-  /*     
-  $sql = "SELECT callsign, name 
-            FROM $netc
-           WHERE callsign LIKE '%$netc%' 
-              OR Fname LIKE '%$netc%' 
-              OR Lname LIKE '%$netc%'
-            GROUP BY callsign
-            limit 0,6;
-       "; 
-  */		  	
+  		  	
   		  	$results = array(); // setup the array
   		  	
   		  	foreach($db_found->query($sql) as $row) {

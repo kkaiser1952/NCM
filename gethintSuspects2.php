@@ -8,7 +8,7 @@ require_once "dbConnectDtls.php";
 	$netc = $_GET['nc'];
 	
 	$term = 'tjt';
-	$netc = 'TE0ST';
+	$netc = 'mytesting';
 	
 	//$nc = explode(' ', trim($netc));
 	//$netcall = $nc[0];
@@ -17,23 +17,7 @@ require_once "dbConnectDtls.php";
 	
 	echo ("term: $term <br> netc: $netc <br><br> ");
 	
-	 		  	/* added district: 2022-10-17 */
-/*
-$sql = "SELECT a.callsign, CONCAT(a.Fname,' ',a.Lname,' --> ',a.state,' ',a.county,'  ',a.district) as name
-          FROM stations a
-              ,NetLog   b
-         WHERE a.active_call = 'y' 
-           AND a.callsign = b.callsign
-           AND b.netcall LIKE '%$netc%'
-           AND b.logdate < b.logdate <= NOW() - INTERVAL 60 DAY
-           
-           AND (a.callsign LIKE '%$term%' OR a.Fname LIKE '%$term%' OR a.Lname LIKE '%$term%' )
-    
-         GROUP BY b.callsign
-       
-       "; 
-*/     
-  $sql = "SELECT callsign, name 
+       $sql = "SELECT callsign, name 
             FROM $netc
            WHERE callsign LIKE '%$term%' 
               OR Fname LIKE '%$term%' 
