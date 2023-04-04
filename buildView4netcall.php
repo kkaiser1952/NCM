@@ -1,7 +1,9 @@
 <?php
 /*
-How I want hints to work:
-When a new net is started, NCM will check to see if a VIEW for that netcall exists. If it does NOT, it will create one. The name of the VIEW will be the same as the netcall value.
+This program ONLY tests for the existance of a view and creates it if needed
+
+How I want callsign hints to work:
+When a new net is started, NCM will check to see if a VIEW for that netcall exists. If it does NOT, it will create one. The name of the VIEW will be the same as the netcall value. i.e. 'NR0AD'
 
 When a callsign, first name or last name or partial of any 3 consecutive characters is entered into CS1, NCM will check the VIEW for this information.
 
@@ -14,17 +16,20 @@ If no callsign is found in the FCC or foreign DB it will be added to the NET wit
 
 require_once "dbConnectDtls.php";
 	
-	$dbname = 'ncm';
-	$viewnm = 'CREW2273'; 
+	$dbname = 'ncm'; // hard coded
+	
+	$viewnm = $_GET['q']; // from the 
+	//$viewnm = 'te0st'; 
 	
 	// Check if the view already exists
-    $sql_check = "SELECT COUNT(*) as count FROM information_schema.views WHERE table_schema = '$dbname' AND table_name = '$viewnm'";
-    $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->execute();
-    $result_check = $stmt_check->fetch(PDO::FETCH_ASSOC);
+    $sql_check = "SHOW TABLES LIKE '$viewnm'";
+	$stmt_check = $db_found->prepare($sql_check);
+	$stmt_check->execute();
+	$result_check = $stmt_check->fetch(PDO::FETCH_ASSOC);
+	
 
     // Create the SQL statement to create the view if it doesn't exist
-    if ($result_check['count'] == 0) {
+    if (empty($result_check)) {
         $sql_create = 
             "CREATE VIEW $viewnm AS
                 SELECT DISTINCT st.callsign, st.Fname, 
@@ -44,7 +49,7 @@ require_once "dbConnectDtls.php";
             
             try {
                 // Prepare the statement
-                $stmt_create = $conn->prepare($sql_create);
+                $stmt_create = $db_found->prepare($sql_create);
             
                 // Execute the statement
                 $stmt_create->execute();
