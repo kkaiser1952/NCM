@@ -398,7 +398,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				// This PHP contians all the column color assignments based on various cell values
         include "colColorAssign.php";
 		  
-				 $id = str_pad($row[id],2,'0', STR_PAD_LEFT);
+				 $id = str_pad($row['id'],2,'0', STR_PAD_LEFT);
 				 
 				 echo ("<tr  id=\"$row[recordID]\">");
 				 

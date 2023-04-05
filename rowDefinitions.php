@@ -5,7 +5,7 @@
 	
 	// need to adjust for a number with spaces on either side, this is in the tactical column
 	$numsort = '';
-	$tacNO = number_format(intval(preg_replace('/[^0-9.]/','',$row[tactical])));
+	$tacNO = number_format(intval(preg_replace('/[^0-9.]/','',$row['tactical'])));
     //$tacNO = number_format(intval(preg_replace('(?:[ ])[0-9]+(?:[ ])','',$row[tactical])));
 	    if ($tacNO) {
     	    $numsort = "sorttable_customkey=$tacNO";
@@ -62,13 +62,14 @@ echo ("
         <td $brbCols
             class=\"editable editonSite c34 \"	
             oncontextmenu=\"rightClickOnSite('$row[recordID]');return false;\"
-            id=\"onsite:$row[recordID]\" data-onsite=\"$row[onsite]\">
+            id=\"onsite:$row[recordID]\" 
+            data-onsite=\"$row[onsite]\">
              $row[onSite]	       
         </td>
     	
     	    	
         <td $newCall $brbCols $badCols $cs1Cols
-            class=\"editable cs1 '$editCS1' c6 \" 
+            class=\"editable cs1 $editCS1 c6 \" 
             id=\"callsign:$row[recordID]\"
             oncontextmenu=\"getCallHistory('$row[callsign]');return false;\" 
             
@@ -265,7 +266,7 @@ echo ("
         <td $brbCols class=\"editable  c26 cent\" id=\"state:$row[id]\" >	     $row[id]    	  					</td>
         <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 '$row[status]' 	  					</td>
         <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     '$row[home]' 	  					</td>
-        <td $brbCols class=\"editable  c29 cent\" id=\"state:$row[ipaddress]\" >	 $row[ipaddress] 	  				</td>
+        <td $brbCols class=\"editable  c29 cent\" id=\"state:$row[ipaddress]\" > $row[ipaddress] 	  				</td>
         
         <td class=\"editable dltRow\"
             id=\"delete:$row[recordID]\"> 

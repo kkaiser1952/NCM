@@ -389,9 +389,9 @@
 					WHERE recordID = $recordID 
 				  ";
 	foreach($db_found->query($CurrentSQL) as $row) {
-				$netID 	  = $row[netID];
-				$id	   	  = $row[ID];
-				$cs1   	  = $row[callsign];
+				$netID 	  = $row['netID'];
+				$id	   	  = $row['ID'];
+				$cs1   	  = $row['callsign'];
 			}
 			
     // This SQL puts the info from NetLog into the TimeLog table
