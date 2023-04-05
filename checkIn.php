@@ -115,9 +115,9 @@ $ipaddress = getRealIpAddr();
         $stmt1->execute();
         $result1 = $stmt1->fetch();
         
-            $netcall   = $result1[netcall];     $pb         = $result1[pb];
-            $activity2 = $result1[activity];    $subNetOfID = $result1[subNetOfID];
-            $frequency = $result1[frequency];   $max_row_num = $result[max_row_num];
+            $netcall   = $result1['netcall'];     $pb         = $result1['pb'];
+            $activity2 = $result1['activity'];    $subNetOfID = $result1['subNetOfID'];
+            $frequency = $result1['frequency'];   $max_row_num = $result['max_row_num'];
     		
     		
     $stmt2 = $stmt1 = $db_found->prepare(
@@ -127,7 +127,7 @@ $ipaddress = getRealIpAddr();
              ");
         $stmt2->execute();
         $result2=$stmt2->fetch();
-            $max_row_num = $result2[max_row_num];
+            $max_row_num = $result2['max_row_num'];
 
 /* This experimental query pulls the last time this callsign logged on using the stations table */
 
@@ -161,18 +161,18 @@ $stmt2 = $db_found->prepare("
 	
 	$recordID 	= $result[recordID];   
 	$id         = $result[id];  
-	$Fname 	  	= ucwords(strtolower($result[Fname]));
-	$Lname      = ucwords(strtolower($result[Lname]));  
-	$grid  		= $result[grid];	   $creds 	 = $result[creds];
-	$email 		= $result[email];	   $latitude = $result[latitude];
+	$Fname 	  	= ucwords(strtolower($result['Fname']));
+	$Lname      = ucwords(strtolower($result['Lname']));  
+	$grid  		= $result['grid'];	   $creds 	 = $result['creds'];
+	$email 		= $result['email'];	   $latitude = $result[latitude];
 	$longitude 	= $result[longitude];  $tactical = $result[tactical];
-	$county    	= ucwords(strtolower($result[county]));	   
-	$state 	    = $result[state];
-	$country   	= ucwords(strtolower($result[country]));	
-	$district 	= $result[district];   $tt		 = $result[tt]; 
-	$home       = $result[home];       $phone    = $result[phone];
+	$county    	= ucwords(strtolower($result['county']));	   
+	$state 	    = $result['state'];
+	$country   	= ucwords(strtolower($result['country']));	
+	$district 	= $result['district'];   $tt		 = $result['tt']; 
+	$home       = $result['home'];       $phone    = $result['phone'];
 	$comments  	= "";	  
-	$city       = $result[city];      
+	$city       = $result['city'];      
 	
 	//echo "stmt2: $cs1, $county, $state, $grid, $phone <br>";
 	
