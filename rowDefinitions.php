@@ -68,7 +68,7 @@ echo ("
     	
     	    	
         <td $newCall $brbCols $badCols $cs1Cols
-            class=\"editable cs1 $editCS1 c6 \" 
+            class=\"editable cs1 '$editCS1' c6 \" 
             id=\"callsign:$row[recordID]\"
             oncontextmenu=\"getCallHistory('$row[callsign]');return false;\" 
             
@@ -151,13 +151,13 @@ echo ("
     	<td $brbCols class=\"editable editTimeIn cent c12 \"  
     	    id=\"logdate:$row[recordID]\">   
             <span class=\"tzld\"> $row[logdate] </span>
-            <span class=\"tzlld hidden\"> $row[locallogdate] </span>
+            <span class=\"tzlld hidden\"> '$row[locallogdate]' </span>
         </td>
         
     	<td $brbCols class=\"editable editTimeOut cent c13 \" 
     	    id=\"timeout:$row[recordID]\">   
     	    <span class=\"tzto\"> $row[timeout] </span>
-            <span class=\"tzlto hidden\"> $row[localtimeout] </span>
+            <span class=\"tzlto hidden\"> '$row[localtimeout]' </span>
     	        			
         </td>
         	
@@ -263,8 +263,8 @@ echo ("
         <!-- Admin Level -->
         <td $brbCols class=\"editable  c25 cent\" id=\"state:$row[recordID]\" >	 $row[recordID] 	  				</td>
         <td $brbCols class=\"editable  c26 cent\" id=\"state:$row[id]\" >	     $row[id]    	  					</td>
-        <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 $row[status] 	  					</td>
-        <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     $row[home] 	  					</td>
+        <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 '$row[status]' 	  					</td>
+        <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     '$row[home]' 	  					</td>
         <td $brbCols class=\"editable  c29 cent\" id=\"state:$row[ipaddress]\" >	 $row[ipaddress] 	  				</td>
         
         <td class=\"editable dltRow\"

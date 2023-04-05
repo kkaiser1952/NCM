@@ -116,7 +116,7 @@ $ipaddress = getRealIpAddr();
         $result1 = $stmt1->fetch();
         
             $netcall   = $result1['netcall'];     $pb         = $result1['pb'];
-            $activity2 = $result1['activity'];    $subNetOfID = $result1['subNetOfID'];
+            $activity2 = $result1['activity'];    $subNetOfID  = $result1['subNetOfID'];
             $frequency = $result1['frequency'];   $max_row_num = $result['max_row_num'];
     		
     		
@@ -402,8 +402,8 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				 
 				 echo ("<tr  id=\"$row[recordID]\">");
 				 
-				 $class = empty($row[comments]) ? 'nonscrollable' : 'scrollable' ;
-				 $class = strlen($row[comments]) < 300 ? 'nonscrollable' : 'scrollable' ;	
+				 $class = empty($row['comments']) ? 'nonscrollable' : 'scrollable' ;
+				 $class = strlen($row['comments']) < 300 ? 'nonscrollable' : 'scrollable' ;	
 				 
 				 // This PHP creates each row (<td>)
         include "rowDefinitions.php";
