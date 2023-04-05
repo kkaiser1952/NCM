@@ -9,7 +9,7 @@
     require_once "dbConnectDtls.php";
     
     //$netID = intval( $_GET["NetID"] ); 
-    $netID = 6100;
+    //$netID = 6100;
  
 /*   
 st = stations table
