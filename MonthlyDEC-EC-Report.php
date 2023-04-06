@@ -18,7 +18,8 @@ $netcall = 'w0kcn';
 $sql = "SELECT COUNT(DISTINCT callsign) AS `ARES_Members`, 
                SEC_TO_TIME(SUM(timeonduty)) AS `total_time_on_duty`,
                TIME_FORMAT(SEC_TO_TIME(SUM(timeonduty)), '%H:%i') AS `total_time_on_duty_hm`,
-               COUNT(DISTINCT activity) AS distinct_activity
+               COUNT(DISTINCT activity) AS distinct_activity,
+               DISTINCT activity as activity
         FROM NetLog
         WHERE YEAR(logdate) = ?
         AND MONTH(logdate) = ?
