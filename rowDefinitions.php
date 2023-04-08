@@ -266,7 +266,9 @@ echo ("
         <td $brbCols class=\"editable  c26 cent\" id=\"state:$row[id]\" >	     $row[id]    	  					</td>
         <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 '$row[status]' 	  					</td>
         <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     '$row[home]' 	  					</td>
-        <td $brbCols class=\"editable  c29 cent\" id=\"state:$row[ipaddress]\" > $row[ipaddress] 	  				</td>
+        
+        
+        <td $brbCols class='editable c29 cent' id='state:$row[ipaddress]'> $row[ipaddress]</td>
         
         <td class=\"editable dltRow\"
             id=\"delete:$row[recordID]\"> 
