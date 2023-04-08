@@ -149,16 +149,16 @@ echo ("
     	    $row[longitude]  						
         </td>
     	
-    	<td $brbCols class=\"editable editTimeIn cent c12 \"  
-    	    id=\"logdate:$row[recordID]\">   
-            <span class=\"tzld\"> $row[logdate] </span>
-            <span class=\"tzlld hidden\"> '$row[locallogdate]' </span>
+    	<td $brbCols class='editable editTimeIn cent c12 '  
+    	    id='logdate:$row[recordID]'>   
+            <span class='tzld'> $row[logdate] </span>
+            <span class='tzlld hidden'> '$row[locallogdate]' </span>
         </td>
         
-    	<td $brbCols class=\"editable editTimeOut cent c13 \" 
-    	    id=\"timeout:$row[recordID]\">   
-    	    <span class=\"tzto\"> $row[timeout] </span>
-            <span class=\"tzlto hidden\"> '$row[localtimeout]' </span>
+    	<td $brbCols class='editable editTimeOut cent c13 ' 
+    	    id='timeout:$row[recordID]'>   
+    	    <span class='tzto'> $row[timeout] </span>
+            <span class='tzlto hidden'> '$row[localtimeout]' </span>
     	        			
         </td>
         	
@@ -268,7 +268,7 @@ echo ("
         <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     '$row[home]' 	  					</td>
         
         
-        <td $brbCols class='editable c29 cent' id='state:$row[ipaddress]'> $row[ipaddress]</td>
+        <td $brbCols class='editable c29 cent' id='state:$ipaddress'> $ipaddress</td>
         
         <td class=\"editable dltRow\"
             id=\"delete:$row[recordID]\"> 
