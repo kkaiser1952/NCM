@@ -43,7 +43,14 @@
 		// To make the comments <td> scrollable but still stay at the default height if is not needed
 				// this code checks if there are commets and changes the class name, a simple solution.
 					$class = empty($row['comments']) ? 'nonscrollable' : 'scrollable' ;
-					$class = strlen($row['comments']) < 300 ? 'nonscrollable' : 'scrollable' ;
+					//$class = strlen($row['comments']) < 300 ? 'nonscrollable' : 'scrollable' ;
+					if(isset($row['comments'])) {
+                    $class = strlen($row['comments']) < 300 ? 'nonscrollable' : 'scrollable';
+                        }
+                        else {
+                            // Handle the case where the 'comments' key is not present in the $row array.
+                        }
+
 		
 		echo ("<tr>");
 		echo ("<td nowrap>$row[timestamp]</td>");
