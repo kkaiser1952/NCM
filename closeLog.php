@@ -122,7 +122,14 @@
 
 				 $bgcol = "                 ";
 				 				 
-				if ($row[netcall] == "") {$netcall = "All";}
+				//if ($row[netcall] == "") {$netcall = "All";}
+				
+				if (!isset($row['netcall']) || $row['netcall'] == "") {
+                  $netcall = "All";
+                } else {
+                  $netcall = $row['netcall'];
+                }
+
 				
 				// Set background row color based on some parameters
 					
@@ -155,7 +162,7 @@
 	    echo ("<td class=\"editable_selectYNO cent\" id=\"active:$row[recordID]\">$row[active] </td>");	    
 	    echo ("<td class=\"editable_selectTFC\" id=\"traffic:$row[recordID]\">$row[traffic] </td>");  
 	    
-	    echo ("<td class=\"cent\">$row[tt]</td>");  // Callsign ID, not the recordID, not editable	
+	    echo ("<td class=\"cent\">$row['tt']</td>");  // Callsign ID, not the recordID, not editable	
         echo ("<td class=\"editCS1\" id=\"callsign:$row[recordID]\" style=\'text-transform:uppercase\'> $row[callsign] </td>");
         	
         echo ("<td class=\"editFnm\" id=\"Fname:$row[recordID]\"> $row[Fname] </td>");
