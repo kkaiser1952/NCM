@@ -32,8 +32,7 @@
     var map = L.map('map');
 
     // Set the map view to Platte County
-    map.setView([39.3621, -94.7722], 10);
-    stamenTerrain = L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png').addTo(map);
+    map.setView([39.3172, -94.5123], 10);
 
     // Add the OpenStreetMap tile layer to the map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -79,12 +78,10 @@
         map.fitBounds(countyBounds);
       });
       
-      
 
     // Create a new Graticule instance with the desired options
     
-    //var graticule = L.latLngGraticule({
-    L.latlngGraticule({
+    var graticule = L.latLngGraticule({
       interval: 2,
       showLabel: true,
       opacity: 0.5,
@@ -100,10 +97,10 @@
     }).addTo(map);
 
     // Add the Graticule layer to the map
-    //graticule.addTo(map);
+    graticule.addTo(map);
 
     // Bring the Graticule layer to the front of the map
-    //graticule.bringToFront();
+    graticule.bringToFront();
 
   </script>
 </body>
