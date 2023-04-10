@@ -7,7 +7,10 @@
 
 <html>
 <head>
-  <title>Leaflet Map Example</title>
+  <title>Leaflet Lat/Lon Graticule Demo</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   
   <!-- Include Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -30,6 +33,7 @@
 
     // Set the map view to Platte County
     map.setView([39.3621, -94.7722], 10);
+    stamenTerrain = L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png').addTo(map);
 
     // Add the OpenStreetMap tile layer to the map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -74,20 +78,32 @@
         // Fit the map to the bounds of the county layer
         map.fitBounds(countyBounds);
       });
+      
+      
 
     // Create a new Graticule instance with the desired options
-    var graticule = L.latLngGraticule({
-      interval: 1,
+    
+    //var graticule = L.latLngGraticule({
+    L.latlngGraticule({
+      interval: 2,
       showLabel: true,
       opacity: 0.5,
-      fontColor: '#333'
-    });
+      weight: 0.8,
+      color: '#000000',
+      fontColor: '#333',
+      zoomInterval: [
+            {start: 2, end: 3, interval: 30},
+            {start: 4, end: 4, interval: 10},
+            {start: 5, end: 7, interval: 5},
+            {start: 8, end: 10, interval: 1}
+        ]
+    }).addTo(map);
 
     // Add the Graticule layer to the map
-    graticule.addTo(map);
+    //graticule.addTo(map);
 
     // Bring the Graticule layer to the front of the map
-    graticule.bringToFront();
+    //graticule.bringToFront();
 
   </script>
 </body>
