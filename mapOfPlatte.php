@@ -1,78 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Map of Clay and Platte Counties</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.3.1/leaflet.css" />
-	<script src="https://cdn.jsdelivr.net/leaflet/1.3.1/leaflet.js"></script>
-	<style>
-		html, body, #mapid {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-	</style>
+  <title>Leaflet Map Example</title>
+  
+  <!-- Include Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  
+  <!-- Include Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  
+  <style>
+    #map {
+      height: 500px;
+    }
+  </style>
 </head>
 <body>
-	<div id="mapid"></div>
-	<script>
-		var map = L.map('mapid').setView([39.2463, -94.4191], 10);
+  <div id="map"></div>
+  
+  <script>
+    // Create a new map instance
+    var map = L.map('map');
 
-		var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://stamen.com">Stamen</a>',
-			subdomains: 'abcd',
-			minZoom: 0,
-			maxZoom: 20,
-			ext: 'png'
-		}).addTo(map);
+    // Set the map view to the center of the two counties
+    var latlng = L.latLng(39.3621, -94.7722);
+    map.setView(latlng, 10);
 
-		var platteCounty = L.geoJSON(platteCountyData, {
-			style: {
-				color: '#00008B',
-				fillOpacity: 0,
-				weight: 2
-			},
-			onEachFeature: function (feature, layer) {
-				layer.bindTooltip(feature.properties.NAME, {sticky: true}).openTooltip();
-			}
-		}).addTo(map);
+    // Add the OpenStreetMap tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18
+    }).addTo(map);
 
-		var clayCounty = L.geoJSON(clayCountyData, {
-			style: {
-				color: '#00008B',
-				fillOpacity: 0,
-				weight: 2
-			},
-			onEachFeature: function (feature, layer) {
-				layer.bindTooltip(feature.properties.NAME, {sticky: true}).openTooltip();
-			}
-		}).addTo(map);
+    // Load the GeoJSON data for Clay County from OpenStreetMap
+    fetch('https://nominatim.openstreetmap.org/search.php?q=Clay+County+Missouri&polygon_geojson=1&format=geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Create a new GeoJSON layer with the county boundary data
+        var countyLayer = L.geoJSON(data, {
+          style: {
+            color: 'blue',
+            fillOpacity: 0
+          }
+        });
 
-		var markers = [];
-		var bounds = L.latLngBounds();
+        // Add the county layer to the map
+        countyLayer.addTo(map);
 
-		for (var i = 0; i < 5; i++) {
-			var marker = L.marker(getRandomLatLng(platteCounty)).addTo(map);
-			marker.bindTooltip('Marker ' + (i+1));
-			markers.push(marker);
-			bounds.extend(marker.getLatLng());
-		}
+        // Calculate the bounds of the county layer
+        var countyBounds = countyLayer.getBounds();
 
-		map.fitBounds(bounds);
+        // Fit the map to the bounds of the county layer
+        map.fitBounds(countyBounds);
+      });
 
-		function getRandomLatLng(layer) {
-			var bounds = layer.getBounds();
-			var southWest = bounds.getSouthWest();
-			var northEast = bounds.getNorthEast();
-			var lngSpan = northEast.lng - southWest.lng;
-			var latSpan = northEast.lat - southWest.lat;
-			return L.latLng(
-				southWest.lat + latSpan * Math.random(),
-				southWest.lng + lngSpan * Math.random()
-			);
-		}
+    // Load the GeoJSON data for Platte County from OpenStreetMap
+    fetch('https://nominatim.openstreetmap.org/search.php?q=Platte+County+Missouri&polygon_geojson=1&format=geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Create a new GeoJSON layer with the county boundary data
+        var countyLayer = L.geoJSON(data, {
+          style: {
+            color: 'blue',
+            fillOpacity: 0
+          }
+        });
 
-	</script>
+        // Add the county layer to the map
+        countyLayer.addTo(map);
+
+        // Calculate the bounds of the county layer
+        var countyBounds = countyLayer.getBounds();
+
+        // Fit the map to the bounds of the county layer
+        map.fitBounds(countyBounds);
+      });
+  </script>
 </body>
 </html>
