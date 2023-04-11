@@ -18,6 +18,8 @@
   <!-- Include Leaflet JavaScript -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   
+  <script src="js/Leaflet.Graticule.js"></script>
+  
   <style>
     #map {
       height: 800px;
@@ -27,7 +29,18 @@
 <body>
   <div id="map"></div>
   
-  <script>
+  <script type="importmap">
+	{
+		"imports": {
+			"leaflet": "https://unpkg.com/leaflet@1.7.1/dist/leaflet-src.esm.js",
+			"leaflet-auto-graticule": "./dist/L.AutoGraticule.mjs"
+		}
+	}
+  </script>
+  
+  <script type="module">
+      import * as L from 'leaflet';
+      import AutoGraticule from 'leaflet-auto-graticule';
     // Create a new map instance
     var map = L.map('map');
 
@@ -39,6 +52,7 @@
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
       maxZoom: 18
     }).addTo(map);
+    new AutoGraticule().addTo(map);
 
     // Load the GeoJSON data for Platte County from OpenStreetMap
     fetch('https://nominatim.openstreetmap.org/search.php?q=Platte+County+Missouri&polygon_geojson=1&format=geojson')
@@ -80,8 +94,8 @@
       
 
     // Create a new Graticule instance with the desired options
-    
-    var graticule = L.latLngGraticule({
+/*    
+    var graticule = L.latlngGraticule({
       interval: 2,
       showLabel: true,
       opacity: 0.5,
@@ -95,13 +109,15 @@
             {start: 8, end: 10, interval: 1}
         ]
     }).addTo(map);
+    
+    console.log(map.options.crs);
 
     // Add the Graticule layer to the map
-    graticule.addTo(map);
+    //graticule.addTo(map);
 
     // Bring the Graticule layer to the front of the map
-    graticule.bringToFront();
-
+    //graticule.bringToFront();
+*/
   </script>
 </body>
 </html>
