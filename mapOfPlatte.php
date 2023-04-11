@@ -29,18 +29,7 @@
 <body>
   <div id="map"></div>
   
-  <script type="importmap">
-	{
-		"imports": {
-			"leaflet": "https://unpkg.com/leaflet@1.7.1/dist/leaflet-src.esm.js",
-			"leaflet-auto-graticule": "./dist/L.AutoGraticule.mjs"
-		}
-	}
-  </script>
-  
-  <script type="module">
-      import * as L from 'leaflet';
-      import AutoGraticule from 'leaflet-auto-graticule';
+  <script>
     // Create a new map instance
     var map = L.map('map');
 
@@ -52,7 +41,6 @@
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
       maxZoom: 18
     }).addTo(map);
-    new AutoGraticule().addTo(map);
 
     // Load the GeoJSON data for Platte County from OpenStreetMap
     fetch('https://nominatim.openstreetmap.org/search.php?q=Platte+County+Missouri&polygon_geojson=1&format=geojson')
