@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaflet Map Example</title>
-  
-  <!-- Include Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  
-  <!-- Include Leaflet JavaScript -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  
-  <style>
-    #map {
-      height: 600px;
-    }
-  </style>
+	<title>Map of Clay and Platte Counties</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.3.1/leaflet.css" />
+	<script src="https://cdn.jsdelivr.net/leaflet/1.3.1/leaflet.js"></script>
+	<style>
+		html, body, #mapid {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+	</style>
 </head>
 <body>
-  <div id="map"></div>
-  
-  <script>
-    // Create a new map instance
-    var map = L.map('map');
+	<div id="mapid"></div>
+	<script>
+		var map = L.map('mapid').setView([39.2463, -94.4191], 10);
 
-    // Set the map view to Missouri
-    map.setView([38.5, -92.5], 7);
+		var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://stamen.com">Stamen</a>',
+			subdomains: 'abcd',
+			minZoom: 0,
+			maxZoom: 20,
+			ext: 'png'
+		}).addTo(map);
 
-    // Add the OpenStreetMap tile layer to the map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-      maxZoom: 18
-    }).addTo(map);
+		var platteCounty = L.geoJSON(platteCountyData, {
+			style: {
+				color: '#00008B',
+				fillOpacity: 0,
+				weight: 2
+			},
+			onEachFeature: function (feature, layer) {
+				layer.bindTooltip(feature.properties.NAME, {sticky: true}).openTooltip();
+			}
+		}).addTo(map);
 
-    // Load the GeoJSON data for Clay and Platte Counties from OpenStreetMap
-    Promise.all([
-      fetch('https://nominatim.openstreetmap.org/search.php?q=Clay+County+Missouri&polygon_geojson=1&format=geojson'),
-      fetch('https://nominatim.openstreetmap.org/search.php?q=Platte+County+Missouri&polygon_geojson=1&format=geojson')
-    ])
-    .then(function(responses) {
-      return Promise.all(responses.map(function(response) {
-        return response.json();
-      }));
-    })
-    .then(function(datas) {
-      // Create new GeoJSON layers with the county boundary data
-      var clayLayer = L.geoJSON(datas[0]);
-      var platteLayer = L.geoJSON(datas[1]);
+		var clayCounty = L.geoJSON(clayCountyData, {
+			style: {
+				color: '#00008B',
+				fillOpacity: 0,
+				weight: 2
+			},
+			onEachFeature: function (feature, layer) {
+				layer.bindTooltip(feature.properties.NAME, {sticky: true}).openTooltip();
+			}
+		}).addTo(map);
 
-      // Add the county layers to the map
-      clayLayer.addTo(map);
-      platteLayer.addTo(map);
+		var markers = [];
+		var bounds = L.latLngBounds();
 
-      // Calculate the bounds of the county layers
-      var clayBounds = clayLayer.getBounds();
-      var platteBounds = platteLayer.getBounds();
+		for (var i = 0; i < 5; i++) {
+			var marker = L.marker(getRandomLatLng(platteCounty)).addTo(map);
+			marker.bindTooltip('Marker ' + (i+1));
+			markers.push(marker);
+			bounds.extend(marker.getLatLng());
+		}
 
-      // Fit the map to the bounds of the county layers
-      map.fitBounds(clayBounds.extend(platteBounds));
+		map.fitBounds(bounds);
 
-      // Add tooltips to the county layers
-      clayLayer.bindTooltip('Clay County').openTooltip();
-      platteLayer.bindTooltip('Platte County').openTooltip();
+		function getRandomLatLng(layer) {
+			var bounds = layer.getBounds();
+			var southWest = bounds.getSouthWest();
+			var northEast = bounds.getNorthEast();
+			var lngSpan = northEast.lng - southWest.lng;
+			var latSpan = northEast.lat - southWest.lat;
+			return L.latLng(
+				southWest.lat + latSpan * Math.random(),
+				southWest.lng + lngSpan * Math.random()
+			);
+		}
 
-      // Add markers to the map with random coordinates and numbers
-      for (var i = 1; i <= 5; i++) {
-        var marker = L.marker([
-          Math.random() * (platteBounds.getNorth() - platteBounds.getSouth()) + platteBounds.getSouth(),
-          Math.random() * (platteBounds.getEast() - platteBounds.getWest()) + platteBounds.getWest()
-        ]).addTo(map);
-        marker.bindPopup('Marker ' + i);
-      }
-    });
-  </script>
+	</script>
 </body>
 </html>
