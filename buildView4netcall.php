@@ -19,7 +19,7 @@ require_once "dbConnectDtls.php";
 	$dbname = 'ncm'; // hard coded
 	
 	$viewnm = $_GET['viewnm']; // from the 
-	//$viewnm = 'te0st'; 
+	$viewnm = 'W0KCN'; 
 	
 	// Check if the view already exists
     $sql_check = "SHOW TABLES LIKE '$viewnm'";
@@ -31,21 +31,27 @@ require_once "dbConnectDtls.php";
     // Create the SQL statement to create the view if it doesn't exist
     if (empty($result_check)) {
         $sql_create = 
-            "CREATE VIEW $viewnm AS
+            "CREATE VIEW `$viewnm` AS
                 SELECT DISTINCT st.callsign, st.Fname, 
-            	    st.Lname, st.email, st.tactical, 
-            	    st.latitude, st.longitude, st.grid, 
-                        st.county, 	 st.state, 	   st.city, 
-                        st.district, st.creds, 	   st.country, 
-                        CONCAT(st.Fname, ' ', st.Lname, ' --> ', st.state, '--', st.county, '--', st.district) AS name
-                  FROM ncm.stations st
-                  JOIN ncm.NetLog nl ON st.callsign = nl.callsign
-                 WHERE nl.netcall = '$viewnm'
-                   AND nl.callsign NOT LIKE '%NONHAM%'
-                   AND nl.callsign NOT LIKE '%EMCOMM%'
-                   AND nl.logdate >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
-                   AND nl.logdate < CURRENT_DATE()  
-            ";
+                    st.Lname, st.email, st.tactical, 
+                    st.latitude, st.longitude, st.grid, 
+                    st.county, st.state, st.city, 
+                    st.district, st.creds, st.country, 
+                    CONCAT(st.Fname, ' ', st.Lname, ' --> ', st.state, '--', st.county, '--', st.district) AS name
+                FROM ncm.stations st
+                JOIN ncm.NetLog nl ON st.callsign = nl.callsign
+                WHERE nl.netcall = '$viewnm'
+                    AND nl.callsign NOT LIKE '%NONHAM%'
+                    AND nl.callsign NOT LIKE '%EMCOMM%'
+                    AND nl.logdate >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+                    AND nl.logdate < CURRENT_DATE()  
+                WITH CHECK OPTION;
+            
+            ALTER VIEW `$viewnm`
+                DROP PRIMARY KEY,
+                ADD PRIMARY KEY (callsign);
+    "}
+
             
             try {
                 // Prepare the statement
