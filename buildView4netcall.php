@@ -19,7 +19,7 @@ require_once "dbConnectDtls.php";
 	$dbname = 'ncm'; // hard coded
 	
 	$viewnm = $_GET['viewnm']; // from the 
-	//$viewnm = 'te0st'; 
+	//$viewnm = 'W0BU'; 
 	
 	// Check if the view already exists
     $sql_check = "SHOW TABLES LIKE '$viewnm'";
@@ -32,7 +32,7 @@ require_once "dbConnectDtls.php";
     if (empty($result_check)) {
         $sql_create = 
             "CREATE VIEW $viewnm AS
-                SELECT DISTINCT st.callsign, st.Fname, 
+                SELECT DISTINCT st.recordID, st.callsign, st.Fname, 
             	    st.Lname, st.email, st.tactical, 
             	    st.latitude, st.longitude, st.grid, 
                         st.county, 	 st.state, 	   st.city, 
@@ -45,11 +45,7 @@ require_once "dbConnectDtls.php";
                    AND nl.callsign NOT LIKE '%EMCOMM%'
                    AND nl.logdate >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
                    AND nl.logdate < CURRENT_DATE()  
-                   WITH CHECK OPTION;
-                   
-                ALTER VIEW `$viewnm`
-                    DROP PRIMARY KEY,
-                    ADD PRIMARY KEY (`callsign`);
+            ;     
             ";
             
             try {
