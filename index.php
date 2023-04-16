@@ -391,7 +391,8 @@
 		
 		<br>
 		<!-- newNet() & hideit() createNetKindView() in NetManager-p2.js -->
-		<input id="submit" type="submit" value="Submit" onClick="newNet(); createNetKindView();"  title="Submit The New Net">
+		<!-- I removed createNetKindView() on 2023-04-16 don't think we need it -->
+		<input id="submit" type="submit" value="Submit" onClick="newNet();" title="Submit The New Net">
 		<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
