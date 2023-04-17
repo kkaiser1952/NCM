@@ -157,6 +157,14 @@
 	 
 	 <br>
 	 <h3>Report Index</h3>
+	 
+	 <h4>Helpers -- On The Home Page Under The Listing</h4>
+	 <nav class="topics">
+    	 <a href="#Export_CSV">Export CSV</a><br>
+    	 <a href="#geoDistance">geoDistance</a><br>
+    	 <a href="#mapThisNet">Map This Net</a><br>
+     </nav> <!-- End Helpers index -->
+	 
 	 <h4>Under Reports in upper right corner</h4>
 	 
 	 <nav class="topics">
