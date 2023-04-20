@@ -15,7 +15,8 @@ $year = 2023;
 $month = 3;
 $netcall = 'w0kcn';
 
-$sql = "SELECT COUNT(DISTINCT callsign) AS `ARES_Members`, 
+$sql = "SELECT netID,
+               COUNT(callsign) AS `ARES_Members`, 
                SEC_TO_TIME(SUM(timeonduty)) AS `total_time_on_duty`,
                TIME_FORMAT(SEC_TO_TIME(SUM(timeonduty)), '%H:%i') AS `total_time_on_duty_hm`,
                COUNT(DISTINCT activity) AS distinct_activity,
