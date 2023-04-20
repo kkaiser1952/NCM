@@ -123,7 +123,9 @@ else if(!marker.getPopup() || marker.getPopup().getContent().indexOf('OBJ') === 
         else if (maxdist > 10 && maxdist <= 50)    {dbr = 5;}
         else if (maxdist > 50 && maxdist <= 500)   {dbr = 25;}
         else if (maxdist > 500 && maxdist <= 750)  {dbr = 50;}
-        else if (maxdist > 750)                    {dbr = 100;}
+        else if (maxdist > 750 && maxdist <= 1000) {dbr = 75;}
+        else if (maxdist > 1000 && maxdist <= 2000) {dbr = 300;}
+        else if (maxdist > 2000 && maxdist <= 6000) {dbr = 500;}
         else                                       {dbr = 5;}
                 console.log('@124 maxdist= '+maxdist+' Lval= '+Lval);
         }

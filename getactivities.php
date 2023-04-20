@@ -72,19 +72,21 @@ if ( $q <> 0 ){
     $sql = "SELECT netcall FROM NetLog WHERE netID = $q LIMIT 1";
     $stmt = $db_found->prepare($sql);
     $stmt -> execute();
-    $netcall = $stmt->fetchColumn(0);
+        $netcall = $stmt->fetchColumn(0);
     
     //echo "@75 $netcall";
     
-    $sql = "SELECT orgType
+    $sql = "SELECT orgType, columnViews
               from NetKind
              WHERE `call` = '$netcall' 
              limit 0,1";
     $stmt = $db_found->prepare($sql);
     $stmt -> execute();
-    $orgType = $stmt->fetchColumn(0);
+        $orgType = $stmt->fetchColumn(0);
+    $stmt -> execute();
+        $theCookies = $stmt->fetchColumn(1);
     
-    //echo "@85 $orgType";
+    //echo "   @88 $orgType, $theCookies";
     
 } // end of q <> 0	
 		include "headerDefinitions.php"; 	
@@ -131,6 +133,7 @@ if ( $q <> 0 ){
 	        					TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
 	        					TRIM(BOTH ' ' FROM county) as county, 
 	        					TRIM(BOTH ' ' FROM country) as country, 
+	        					TRIM(BOTH ' ' FROM city) as city,
 	        					TRIM(BOTH ' ' FROM state) as state,
 	        					TRIM(BOTH ' ' FROM district) as district, 
 	        					firstLogIn, phone, pb, tt, 
@@ -163,6 +166,7 @@ if ( $q <> 0 ){
                         ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
                         ,CASE when netcall in ('MESN') then district END 
                         ,CASE when netcall in ('KCHEART') then facility END 
+                        ,CASE when netcall like '%sbbt202%' then team END
                         ,CASE when netcall in ('KCHEART') AND (facility in('', 'Checkins with no assignment') AND active in('In-Out', 'Out', 'OUT', 'In', 'IN')) then 95 END
                         ,facility,logdate
                     ";  
@@ -284,10 +288,10 @@ if ( $q <> 0 ){
 	echo ("</tr>
 		   </tfoot>
 		   </table>"); //End of the table
-
+// start of hidden variables 
 	echo ("<div hidden id='freq2'>              $row[frequency] </div>");
-	echo ("<div hidden id='freq'>                               </div");
-	echo ("<div hidden id='cookies'>            $theCookies     </div");
+	echo ("<div hidden id='freq'>                               </div>");
+	echo ("<div hidden id='cookies'>            $theCookies     </div>");
 	echo ("<div hidden id='type'>Type of Net:	$row[activity]  </div>");
 	echo ("<div hidden id='idofnet'>		 	$row[netID]     </div>");
 	echo ("<div hidden id='activity'>			$row[activity]  </div>"); 
@@ -296,7 +300,7 @@ if ( $q <> 0 ){
 	echo ("<div hidden id='isopen' val=$isopen> $isopen</div> <!-- 1 = yes this net is still open -->"); // 1 = yes this net is stillopen 
 	echo ("<div hidden id='ispb'> $row[pb] </div>"); 
 	echo ("<div hidden id='pbStat'>$pbStat</div>"); // has there been at least one check-in to this pre-built net?
-	
+// end of hidden variables	
 	// The subnetkey if > 0 places the value below the primary net table listing     /$row[frequency]&nbsp;&nbsp;
 	echo ("<span id='add2pgtitle'>#$row[netID]/$row[netcall]/$freq&nbsp;&nbsp;");
 	
@@ -306,7 +310,7 @@ if ( $q <> 0 ){
 	
 	echo ("<span STYLE='background-color: #befdfc'>Control</span>&nbsp;&nbsp;");
 			
-	  // These span and class all appear under the curren net depending which is in use
+	  // These span and class all appear under the current net depending which is in use
 	  if ($digitalKey  == 1 ) { echo ("<span class='digitalKey' >Digital</span>&nbsp;&nbsp;");} 
 	  if ($trafficKey  == 1 ) { echo ("<span class='trafficKey' >Traffic</span>&nbsp;&nbsp;");} 
 	  if ($logoutKey   == 1 ) { echo ("<span class='logoutKey'  >Logged Out</span>&nbsp;&nbsp;");} 
@@ -321,6 +325,8 @@ if ( $q <> 0 ){
 	  
 	  echo ("<span class='export2CSV' style='padding-left: 10pt;'>
 	  <a href=\"#\" onclick=\"window.open('netCSVdump.php?netID=' + $('#idofnet').html())\" >Export CSV</a></span>
+	  <span style='padding-left: 5pt;'>
+	  <a href=\"#\" id=\"geoDist\" onclick=\"geoDistance()\" title=\"geoDistance\"><b style=\"color:green;\">geoDistance</b></a></span>
 	  <span style='padding-left: 5pt;'>
 	  <a href=\"#\" id=\"mapIDs\" onclick=\"map2()\" title=\"Map This Net\"><b style=\"color:green;\">Map This Net</b></a>
 	  </span>");

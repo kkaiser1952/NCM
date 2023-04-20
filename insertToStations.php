@@ -10,7 +10,7 @@ require_once "dbConnectDtls.php";
 	// Get the next ID 
 	$sql = "SELECT MAX(ID)+1 as nextid
               FROM stations 
-             WHERE ID < 8000
+             WHERE ID < 38000
              LIMIT 0,1
            ";
          $stmt = $db_found->prepare($sql);
@@ -20,10 +20,12 @@ require_once "dbConnectDtls.php";
      
      
        $sql = "INSERT INTO stations (ID, callsign, Fname, Lname, grid, tactical, email, fccid,
-                                  latitude, longitude, creds, county, state, district, 
-                                  home, phone, latlng, lastLogDT, firstLogDT )
+                                     latitude, longitude, creds, county, state, district, home, 
+                                     city, phone, zip, latlng, lastLogDT, firstLogDT )
     
-	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', '$phone', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', 
+	                   '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
+                       '$city', ' ', '$zip', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	          ";	      
 	        
 	   $stmt2 = $db_found->prepare($sql);

@@ -13,33 +13,38 @@
          // The left join of NetKind to itself is used to pick up the row of the default kind
          // and freq for each id. This is very cool code!
 		foreach($db_found->query("
-			SELECT t1.id, t1.`call`, t1.orgType, t1.org, t1.freq, t1.kindofnet,
-            	   t2.kindofnet AS dfltKon, t3.freq AS dfltFreq,
-            	   char_length(t1.orgType) as otl,
-           
-                   CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.org)		as id2,
-            
-                   CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	as id3,
-            	   REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','') 		as id4  
-            	   ,t1.id as myid          
+			SELECT t1.id, 
+			       t1.`call`, 
+			       t1.`orgType`, 
+			       t1.`org`, 
+			       t1.freq,
+			       t1.`kindofnet`,
+            	   t2.`kindofnet`            AS dfltKon, 
+            	   t3.freq                 AS dfltFreq,
+            	   char_length(t1.`orgType`) AS otl,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`call`,';',t1.`org`)	   AS id2,
+               CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`kindofnet`) 	           AS id3,
+               REPLACE(CONCAT(t1.id,';',t2.kindofnet,';',t3.freq,';',t1.`freq`),' ','')  AS id4  
+               
+            	      
               FROM NetKind t1
               LEFT JOIN NetKind t2 
                 ON t1.dflt_kind = t2.id
               LEFT JOIN NetKind t3 
                 ON t1.dflt_freq = t3.id
-            ORDER BY orgType, org
+            ORDER BY 'orgType', 'org'
 			 ") as $net ) {
 				 
 		
 		/* ==== GROUP ======= */
-		if ($net[call] <> '' ) {        
+		if ($net['call'] <> '' ) {        
 			$l = (52 - $net[otl])/2;  // how long each leg of equal signs should be
             $e = str_repeat("=", $l); // set e to make the option value 
            
-           $groupList = "$groupList<a href='#$net[id2]' onclick='putInGroupInput(this);'>$net[call] ---> $net[org]</a>\n";
+           $groupList = "$groupList<a href='#$net[id2]' onclick='putInGroupInput(this);'>'$net[call]' ---> $net[org]</a>\n";
            
         } // END THE CALL A.K.A.; GROUP LOOP
-			$thisOrgType = $net[orgType];	
+			$thisOrgType = '$net[orgType]';	
 		} // End of SQL      
 		
 		 //echo $groupList;

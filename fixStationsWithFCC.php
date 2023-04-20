@@ -20,6 +20,7 @@ SELECT n.callsign as callsign,
        f.state as fccstate,
        f.first as first,
        f.last  as last,
+       f.city  as city,
        (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = n.callsign) as maxfccid,        
        CONCAT_WS(' ', f.address1, f.city, f.state, f.zip) as address
   FROM ncm.stations n
@@ -27,7 +28,7 @@ SELECT n.callsign as callsign,
  WHERE n.callsign = f.callsign
   AND (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = n.callsign) 
   AND f.fccid > n.fccid 
-  AND n.id < 8000
+  AND n.id < 38000
 ORDER BY `n`.`callsign` ASC
 LIMIT 500
 ";

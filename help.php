@@ -5,15 +5,7 @@
 
 <html lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-167869985-1');
-</script>
     <title>Amateur Radio Net Control Manager Instructions and Help</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,20 +19,11 @@
     <link rel="stylesheet" type="text/css" href="css/help.css" />
     <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
-
-<style>
-    } /* End of media css */
-</style>
 	
-	
-
-    
 </head>
+
 <body>
-	
 <div id="banner">
-    
-    <img id="smtitle" src="images/NCM.png" alt="NCM" >
 
 	<div class="title">
 		<p>Net	</p>
@@ -53,7 +36,6 @@
 			<a href="https://net-control.us">Open Net Control Manager</a>
 			<br>
 			<a href="https://net-control.us/hamnets.html" target="_blank"> What is a Ham Net?</a>
-
 		</div>
 		<div class="topBanner">
 			<?php
@@ -162,6 +144,7 @@
 		
 		<a href="#timeonduty">Time On Duty</a><br>
 		<a href="#county">County</a><br>
+		<a href="#city">City</a><br>
         <a href="#state">State</a><br>
         
         <a href="#dist">Dist</a><br>
@@ -174,6 +157,14 @@
 	 
 	 <br>
 	 <h3>Report Index</h3>
+	 
+	 <h4>Helpers -- On The Home Page Under The Listing</h4>
+	 <nav class="topics">
+    	 <a href="#Export_CSV">Export CSV</a><br>
+    	 <a href="#geoDistance">geoDistance</a><br>
+    	 <a href="#mapThisNet">Map This Net</a><br>
+     </nav> <!-- End Helpers index -->
+	 
 	 <h4>Under Reports in upper right corner</h4>
 	 
 	 <nav class="topics">
@@ -222,10 +213,12 @@
         <a href="#ARESplan">ARES Plan</a><br>
         <a href="#ARESgroup">ARES Group Registration</a><br>
         <a href="#ARESemcomm">Emergency Communications Training</a><br>
-	 </nav>
+	 </nav>  
+	 
+	 <h3><a href="help-code.php" >The Code Index</a> (work in progress)</h3>
     
 </div> <!-- End index -->
-	
+
 <hr>
 <p style="page-break-before: always"></p> 
 
@@ -272,10 +265,10 @@
 		<u>Better</u> <br> Safari
 	</div>
 	<div>
-		<u>Best</u> <br> Chrome
+		<u>Best</u> <br> Firefox
 	</div>
 	<div>
-		<u>Usually</u> <br> Firefox
+		<u>Usually OK</u> <br> Chrome
 	</div>
 </div>
 
@@ -335,10 +328,10 @@
 	<a id="assumptions"></a>
 	<h3>Assumptions:</h3>
 	
-	<p>For any new net created most columns are filled by values that come from one of two places. Most values are picked up from the 'stations' table. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table of the NCM data base.
+	<p>For any new net created most columns are filled by values that come from one of two places. Most station values are picked up from the 'stations' table. Others default to values based on the FCC data base. The FCC data base is only queried the first time a station logs in, just that once. All other default values are from the stations table of the NCM data base.
 	<ul>
-		<li>All times are stored as universal time (UTC or GMT). You are able to select the local time zone for display purposes.</li>
-		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always default to the stations home address. </li>
+		<li>All times are stored as universal time (UTC). You are able to select the local time zone for display purposes only.</li>
+		<li>County, State, District, Latitude, logitude and gird: at the beginning of any net will always <b>default to the stations home address</b>. </li>
 <!--		<li>County, State and District: will always default to the last edited value on the last net they logged into.</li> -->
 		<li>Call sign, First and Last Name, phone number, email address, and Credentials are all stored for the open net only. When changed they will NOT be retained for future nets.</li>
 		<li></li>
@@ -415,7 +408,9 @@
 		
 		<p>Nets marked with "Net Closed" can not be edited. You must re-open it first.  </p>
 		<p>To enter a line break (carridge return) to the 'Comments' field put <b>&lt;br&gt;</b> or simply space twice where you want the break. Then continue to type. Do not use the return on your keyboard. All simple HTML markups are available to use.</p>
-		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.</p>
+		<p>Entering NON-Hams into the system. To do this use the call sign <b style="color:red">NONHAM or EMCOMM</b> and put both the first name and last name (if you have them) into the 'Name' box. The system will make an appropriate entry.<br>
+    		<b style="color:red">GMRS</b> licenses can also be entered, however their owner will be the only station identified. This is not in place yet but is coming. For additional users of the same call, I suggest adding a -1, -2, etc. to the parent call.
+		</p>
 		
 		<p>Late Check-Ins (after log is closed). The best thing to do is enter them as an 'In-Out' in the 'Status' column. This will assign a one-minute value to TOD. But more importantly it will allow your log to close properly.</p>
 		<p>Duplicate calls are not allowed and will be ignored by the system. However if you have chosen 'Multiple Bands' or '80/40 Meters' as  your frequency while building the net, they will be allowed. Its hoped you will indicate which band they checked in from using the 'Band' column. The 'Band' column will be automatically added if you choose one of the above frequencies.</p>
@@ -561,6 +556,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <img  src="screenshots/existingNets.png" alt="existing" width="600"  />
 	</div>
 <div style="padding-left: 20px;">
+
  <p>
 	Before clicking the <b style="color:red">'Start A New Net'</b> button check to see that someone else has not already started the net for you. To do this, 
 		</p>
@@ -592,14 +588,18 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	</div>
 	<div style="padding-left: 20px;">
  <p>
+
 	Before clicking the <b style="color:red">'Start A New Net'</b> button check to see that someone else has not already started the net for you. To do this, 
 		</p>
 			<p>Reload your web page</p>
 			<p> Then check the dropdown list for the net, open nets are in green.<br>Pre-built and Roll Call nets are in blue.</p>
 			<p> If not already created then...</p>
+			<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
+			
+			<p style="padding-top: 1px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=500 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+    			
+			</p>
 
-		<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
-		
 		<p style="color:blue;">Be sure click the "test net" select box at the top if you are creating a TEST net.</p>
 
 	
@@ -703,7 +703,13 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	<p>The background color of this menu bar will change from <b style="color:#c992d3">purple</b> to <b style="color:red">red</b> over the course of 10 minutes. Use this as a visual reminder to do a station identification.</p>
 	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">TAB TAB TAB (triple tab)</b> after entering a partial or full call sign only.</p>
 	
-	<p>1) Type the call sign  (or any portion of it) and wait for the hints to reveal the correct station. Then single click or arrow down on that station followed by <b style="color:red">TAB TAB TAB (triple tab)</b>. It will populate the call, the name and other fields into the appropriate locations. If it is an unknown call you MUST click <b style="color:green">Check In</b>.</p>
+	<p style="padding-top: 1px;"><embed src="video/Add%20A%20Call%20to%20Net.mov" width=400 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+    			
+			</p>
+	
+	<p>1) Type the call sign  (or any 3 character portion of it) and wait for the hints to reveal the correct station. Then single click or arrow down on that station followed by <b style="color:red">TAB TAB TAB (triple tab)</b>. It will populate the call, the name and other fields into the appropriate locations. If it is an unknown call you MUST click <b style="color:green">Check In</b>.<br>
+    	If you catch only part of a call you can use the underscore (_) as a wild card. For example if you hear KA0S?Y, missing the middle letter, enter KA0S_Y and wait for the hint. The underscore as a wild card works in any position of the callsign. It also works for multiple positions, such as __0sx, the only requirement being you still need 3 other characters. But be advised it might take longer to return a value.
+	</p>
 	
 	
 	<p style="font-weight: bold;">2) Perhaps the best way is to enter the call sign then tab three times. The system will automatically enter the names, and additional information. If it can't find it in our DB already it will go to the <b style="color:#aa7941;">FCC</b> data base and pull the needed information. If the call sign can not be found in the <b style="color:#aa7941;">FCC</b> DB a comment is entered and both the call sign and comment will be highlighted in a yellow color.
@@ -1384,6 +1390,8 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 </div>
 <p>Time Line is used to enter any comments or reports made by this station. They are then populated into the TimeLine Log table. Each comment is individually entered into the timeline log for reporting in the ICS reports. Each click in this field clears the previous entry, but it has been saved. Changes to several of the column values are also logged here.
 </p>
+<p>The 'Search Comments: Search for numbersonly' and its associated 'Search' button is for searching numbers only. For example: You're working a marathon and they need each ham along the way to record the bib numbers of the runners as they pass. So you might enter "bib:15" into the 'Time Line Comments field', then maybe "bib:21", and so on. By entering "21" into the search fild all records relating to bib 21 will be displayed.<br>This is not a perfect solution but it has been used a couple of times with success. Give it a try.
+</p>
 <p>Right clicking in one of the cells will produce a chronological listing of all the entries for this station.
 </p>
 <br>
@@ -1434,16 +1442,17 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <hr>
 <p style="page-break-before: always"></p>
 <div class="CSD">
-    <a id="county"></a><a id="state"></a><a id="dist"></a>
-<h3>County, State, Dist.</h3>
+    <a id="county"></a><a id="city"></a><a id="state"></a><a id="dist"></a>
+<h3>County, City, State, Dist.</h3>
 <div class="redimportant">
     Editable: Yes<br>
     Splitable Field: No<br>
     Required Column: No<br>
     Edit Type: Click <br>
-    Right Clickable: County Yes, State No, District Yes --> looks up and fills the missing district.<br>
+    Right Clickable: County Yes, City No, State No, District Yes --> looks up and fills the missing district.<br>
     DB Variable - County: county<br>
     DB Variable - State: state<br>
+    DB Variable - City: city<br>
     DB Variable - Dist: district<br>
 </div>
 <p>Shows the County, State and Highway Patrol District or ARRL District -- For some Nets these are already shown.
@@ -1937,22 +1946,24 @@ Tables in NCM:
 <div class="theend">
     <a id="theend"></a>
     <div>
+<p>Dedicated to my mom and dad, Joyce & Marvin Kaiser who knew I wanted to be an Amateur Radio operator before I did.
+</p>
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
 Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
     </div>
     
-<span  style="text-align: center; display: inline-block; vertical-align: middle;">
+    <span>Map Markers courtesy of Bridget R. Kaiser</span>
+    
+    <span  style="text-align: center; display: inline-block; vertical-align: middle;">
 
         <img src="BRKMarkers/plum_man.svg" alt="plum_man" style="float:left; padding: 0px; border: 0;" />
 
-    Map Markers courtesy of Bridget R. Kaiser
+        <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:left; padding: 0px; border: 0;" />
 
-        <img src="BRKMarkers/plum_flag.svg" alt="plum_flag" style="float:right; padding: 0px; border: 0;" />
-
-</span>
-
+    </span>
+   
 <p>
 <div>
  <img src="images/backgroundantenna328x72.png"  alt="backgroundantenna328x72" width="250" >
@@ -1974,10 +1985,15 @@ Guarantees or Warranties:<br>
     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5681121157766229570" tabindex="-1" value=""></div>
     <div id="templatearchives"></div>
     <input type="submit" value="Subscribe" name="subscribe" id="groupsio-embedded-subscribe" class="button">
+    <br><br>
   </div>
 </form>
 </div>
 </div> <!-- End theend -->
+
+<div title="Knowing where you can find something is, after all, the most important part of learning"><I style="color:blue;">Scire ubi aliquid invenire possis ea demum maxima pars eruditionis est,</I>
+    <br><br>
+</div>
 
 <a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End of theend -->
@@ -2017,6 +2033,15 @@ function printfunction() {
 }
 
 </script> <!-- The scrollFunction to move to the top of the page -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167869985-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167869985-1');
+</script>
 
 </body>
 </html>

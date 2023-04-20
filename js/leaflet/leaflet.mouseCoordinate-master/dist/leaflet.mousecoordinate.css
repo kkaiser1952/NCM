@@ -1,0 +1,17 @@
+.leaflet-control-mouseCoordinate{
+    right: 10px; 
+    width:400px;   
+    min-height:30px;
+    text-align:left;
+    border: 3px solid #8AC007;
+    border-radius:5px;
+    box-shadow:0 1px 5px rgba(0,0,0,.4);
+    background:white no-repeat scroll 0 0 #fff; 
+    font-size: 11pt;
+    font-weight: bold;
+    color:#b60707;
+    top: 70px;
+    background: white;
+    padding:6px 10px 6px 6px}.leaflet-control-mouseCoordinate table{width:100%}.coords{width:145px}
+    
+    /* was: table{width:100%}.coords{width:90px} */

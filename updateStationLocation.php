@@ -1,6 +1,7 @@
 <!doctype html>
 <?php
-    /* This program looks for a change of latitude and longitude based on geocoding the fcc address and comparing it to the stored lat/lon values in the stations table */
+    /* updateStationLocations.php
+        This program looks for a change of latitude and longitude based on geocoding the fcc address and comparing it to the stored lat/lon values in the stations table */
     /* Written: 2021-11-03 */
     
     ini_set('display_errors',1); 
@@ -11,7 +12,7 @@
     require_once "GridSquare.php";  /* added 2017-09-03 */
     
     //$netID = intval( $_GET["NetID"] ); 
-    $cs = strtoupper('w3meb');  // does not return address1
+    $cs = strtoupper('KC1TVI');  // does not return address1
    // $cs = 'wa0tjt';
  
 /*   

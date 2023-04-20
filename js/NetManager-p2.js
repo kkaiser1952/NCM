@@ -213,8 +213,11 @@ function newNet(str) {
 	$("#timer").removeClass("hidden");
 	
 	var newnetnm = $("#GroupInput").val().trim(); //alert('newnetnm= '+newnetnm); // newnetnm= W0KCN
+	    console.log("@216 newnetnm in NetManager-p2.js "+newnetnm);
 	
 	var netcall  = $("#GroupInput").val().trim(); // this should be org
+	//var netview  = $("#GroupInput").val().trim();
+	    console.log("@219 netcall in NetManager-p2.js "+netcall);
 
     var newnetfreq = $("#FreqInput").val();
         if (newnetfreq == '' ) {newnetfreq = '144.520MHz'; }
@@ -292,6 +295,14 @@ function newNet(str) {
 			
 		} // end response
 	}); // end ajax writing of table
+/*	
+	$.ajax({
+    	type: 'POST',
+    	url:  'view4hints.php',
+    	data: {q: netcall},
+    	success: function(response) {console.log('view created')}
+	}
+*/
 }}
 
 function hideCloseButton(pb) {
@@ -348,7 +359,7 @@ function checkIn() {
 //	var cs1 		= cs1.toUpperCase();
 
     // All callsigns require at least one number except these
-    var goodcalls = ["NONHAM","HCALPHA","HCBRAVO","HCCHARLIE","HCDELTA","HCECHO","HCFOXTROT","HCGOLF","HCHOTEL","HCINDIA","HCJULIETT","HCKILO","HCLIMA","HCMIKE","HCNOVEMBER","HCOSCAR","HCPAPA","HCQUEBEC","HCROMEO","HCSIERRA","HCTANGO","HCUNIFORM","HCVICTOR","HCWHISKEY","HCX-RAY","YANKEE","HCZULU","NETCONTROL"];	  
+    var goodcalls = ["NONHAM","HCALPHA","HCBRAVO","HCCHARLIE","HCDELTA","HCECHO","HCFOXTROT","HCGOLF","HCHOTEL","HCINDIA","HCJULIETT","HCKILO","HCLIMA","HCMIKE","HCNOVEMBER","HCOSCAR","HCPAPA","HCQUEBEC","HCROMEO","HCSIERRA","HCTANGO","HCUNIFORM","HCVICTOR","HCWHISKEY","HCX-RAY","YANKEE","HCZULU","NETCONTROL", "EMCOMM"];	  
   	  
   /* The next few lines test the validity of the callsign cs1 and exits if not good */
   	//if (cs1.trim() == "NONHAM") {
@@ -361,13 +372,13 @@ function checkIn() {
 	 // if (firstDigit == null && cs1.trim() != "NONHAM" ) {
       if (firstDigit == null && goodcalls.indexOf(cs1.trim()) < 0 ) {
     	
-		  var cs1 = prompt(cs1+" is an invalid callsign! \n Callsigns worldwide requie at least one number. \n Please enter a correct callsign, or the word NONHAM for non amateurs.");
+		  var cs1 = prompt(cs1+" is an invalid callsign! \n Callsigns worldwide requie at least one number. \n Please enter a correct callsign, or the appropriate word ex. 'NONHAM', 'EMCOMM' for non amateur participants.");
 		  
 			  if (cs1 === "" || (cs1.match(/\d/) == null)) {
 			  	return;
 			  } 
-	  } // End if @195
-  	} // End else @191
+	  } // End if @355
+  	} // End else @357
   	
   //	alert(TSvalue);
 
@@ -561,6 +572,7 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
     // gethint.php here is called gethintSuspects.php    
     
     var nc = $("#thenetcallsign").text();
+        console.log('@575 nc= '+nc);        
     
         $("#cs1").autocomplete({
             autoFocus: true,
@@ -934,9 +946,14 @@ function buildCallHistoryByNetCall() {
 	    
     var popupWindow = window.open("", "_blank",  strWindowFeatures);
     
+    var runurl = 'getCallsHistoryByNetCall.php'; // default
+        if (netcall == 'KCHEART' | netcall == 'kcheart') {runurl = 'getCallsHistoryByNetCall-FACILITY.php';} // KCHEART, etc.
+        
+        //alert(runurl);
+    
     $.ajax({
 		type: 'POST',
-		url: 'getCallsHistoryByNetCall.php',
+		url: runurl,
 		data: {netcall: netcall.trim(), nomo: numofmo},
 		success: function(html) {	
 			popupWindow.document.write(html);		
@@ -945,6 +962,29 @@ function buildCallHistoryByNetCall() {
     
 }
 
+//const netID = $("#idofnet").text().trim();
+function geoDistance() {
+    if ( $('#idofnet').length ) {
+		var netID	 = $("#idofnet").html().trim();
+	} else {
+		var netID = prompt("Enter a Log number.");
+	}
+        	    
+    //var popupWindow = window.open("", "_blank",  strWindowFeatures);
+    
+    window.open("geoDistance.php?NetID="+netID,"_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+    //var runurl = 'geoDistance.php'; // default
+    
+/*    $.ajax({
+		type: 'GET',
+		url: 'geoDistance.php',
+		data: {q: netID},
+		success: function(html) {	
+			popupWindow.document.write(html);		
+		} // end success
+	});
+	*/
+}
 
 // ===================================== put here from index.php at the bottom ------------------------------
 
@@ -1402,3 +1442,20 @@ $(document).ready(function(){
         }
     });
 }); 
+
+// this function creates a table view of the net call in the NetKind table if it doesn't already exist
+function createNetKindView() { 
+    var viewnm = $("#GroupInput").val().trim();
+    //console.log("@1450 createNetKindView() in NetManager-p2.js viewnm= "+viewnm);
+        if(viewnm) {
+            $.ajax({
+                type: "GET",
+                url: "buildView4netcall.php",
+                data: {viewnm: viewnm},
+                success: function(response) {
+                    console.log("@1457 createNetKindView in NetManager-p2.js viewnm= "+viewnm);
+                }
+            });
+        }
+
+} // end createNetKindView()

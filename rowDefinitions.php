@@ -5,7 +5,7 @@
 	
 	// need to adjust for a number with spaces on either side, this is in the tactical column
 	$numsort = '';
-	$tacNO = number_format(intval(preg_replace('/[^0-9.]/','',$row[tactical])));
+	$tacNO = number_format(intval(preg_replace('/[^0-9.]/','',$row['tactical'])));
     //$tacNO = number_format(intval(preg_replace('(?:[ ])[0-9]+(?:[ ])','',$row[tactical])));
 	    if ($tacNO) {
     	    $numsort = "sorttable_customkey=$tacNO";
@@ -62,7 +62,8 @@ echo ("
         <td $brbCols
             class=\"editable editonSite c34 \"	
             oncontextmenu=\"rightClickOnSite('$row[recordID]');return false;\"
-            id=\"onsite:$row[recordID]\" data-onsite=\"$row[onsite]\">
+            id=\"onsite:$row[recordID]\" 
+            data-onsite=\"$row[onsite]\">
              $row[onSite]	       
         </td>
     	
@@ -148,16 +149,16 @@ echo ("
     	    $row[longitude]  						
         </td>
     	
-    	<td $brbCols class=\"editable editTimeIn cent c12 \"  
-    	    id=\"logdate:$row[recordID]\">   
-            <span class=\"tzld\"> $row[logdate] </span>
-            <span class=\"tzlld hidden\"> $row[locallogdate] </span>
+    	<td $brbCols class='editable editTimeIn cent c12 '  
+    	    id='logdate:$row[recordID]'>   
+            <span class='tzld'> $row[logdate] </span>
+            <span class='tzlld hidden'> '$row[locallogdate]' </span>
         </td>
         
-    	<td $brbCols class=\"editable editTimeOut cent c13 \" 
-    	    id=\"timeout:$row[recordID]\">   
-    	    <span class=\"tzto\"> $row[timeout] </span>
-            <span class=\"tzlto hidden\"> $row[localtimeout] </span>
+    	<td $brbCols class='editable editTimeOut cent c13 ' 
+    	    id='timeout:$row[recordID]'>   
+    	    <span class='tzto'> $row[timeout] </span>
+            <span class='tzlto hidden'> '$row[localtimeout]' </span>
     	        			
         </td>
         	
@@ -186,6 +187,13 @@ echo ("
     	    onClick=\"empty('county:$row[recordID]');\"> 
             <div class='$class'> $row[county] </div>								
         </td>
+        
+        <td $brbCols class=\"editable editcity c35 cent\" 
+            id=\"city:$row[recordID]\"  
+            onClick=\"empty('city:$row[recordID]');\"> 
+            <div class='$class'> $row[city] </div> 	  					
+        </td>
+        
         	
         <td $brbCols class=\"editable editstate c18 cent\" 
             id=\"state:$row[recordID]\"  
@@ -256,9 +264,11 @@ echo ("
         <!-- Admin Level -->
         <td $brbCols class=\"editable  c25 cent\" id=\"state:$row[recordID]\" >	 $row[recordID] 	  				</td>
         <td $brbCols class=\"editable  c26 cent\" id=\"state:$row[id]\" >	     $row[id]    	  					</td>
-        <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 $row[status] 	  					</td>
-        <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     $row[home] 	  					</td>
-        <td $brbCols class=\"editable  c29 cent\" id=\"state:$row[ipaddress]\" >	 $row[ipaddress] 	  				</td>
+        <td $brbCols class=\"editable  c27 cent\" id=\"state:$row[status]\" >	 '$row[status]' 	  					</td>
+        <td $brbCols class=\"editable  c28 cent\" id=\"state:$row[home]\" >	     '$row[home]' 	  					</td>
+        
+        
+        <td $brbCols class='editable c29 cent' id='state:$ipaddress'> $ipaddress</td>
         
         <td class=\"editable dltRow\"
             id=\"delete:$row[recordID]\"> 

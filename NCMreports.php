@@ -179,14 +179,14 @@ table.sortable thead {
 	
         <select id="grp" name="grp" style="width:400px;">    
             <option value="All" disabled selected >Select a net to report about</option>
-            <option value="All"  >All Groups</option>
+        <!--    <option value="All"  >All Groups</option> -->
+            <option value="notlisted">Group Not Listed</option>
 	<?php       	            	   	
     	$row = 0;
     	$sql = "
         	SELECT DISTINCT `call`, org, orgType
 			  FROM `NetKind` 
 			 WHERE `call` NOT IN ( 'TE0ST', 'EVENT') 
-			/* ORDER BY `call` */
 			  ORDER BY orgType, org
         	";
         	foreach($db_found->query($sql) as $act) {
@@ -196,8 +196,7 @@ table.sortable thead {
                  $call = strtoupper($act[call]);        
                  
             //    if ($mod == '' ) { 
-                  if ($thisOrgType <> $act[orgType] ) {
-            	 
+                  if ($thisOrgType <> $act[orgType] ) { 
                     echo "<option value='' disabled>===$act[orgType]===</option>";
                     echo ("<option value='$act[call]'>$act[call] --> $act[org]</option>");
                 }else {
@@ -206,21 +205,13 @@ table.sortable thead {
                 
                 $thisOrgType = $act[orgType];
         	} // end foreach
-        	
-        	/*
-            	 if ($thisOrgType <> $net[orgType] ) {
-                    
-                    echo ("<option value=' ' disabled> $e &nbsp; $net[orgType] &nbsp; $e</option> \n");
-                    echo ("<option value='$net[id2]'>$net[call] ---> $net[org]</option> \n");
-                  } else {
-                    echo ("<option value='$net[id2]'>$net[call] ---> $net[org]</option> \n");
-                  }	
-                  
-						$thisOrgType = $net[orgType];
-            */
-        	
 	?>
         </select>
+        
+        <script>
+           // var grp 	    = $("#grp").val();
+           // if ("#grp" == 'notlisted') {alert( 'no group')};
+        </script>
         
 	<div id="reportKind">
 		<br>
@@ -269,9 +260,11 @@ table.sortable thead {
 
 		<span class="h3size">Select a year (i.e. 2017)</span>
 		<br>
+		<input type="radio" name="reportYear" value="2023" checked > 2023
+        &nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportYear" value="2022"  > 2022
         &nbsp;&nbsp;&nbsp;
-		<input type="radio" name="reportYear" value="2021" checked > 2021
+		<input type="radio" name="reportYear" value="2021"  > 2021
         &nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportYear" value="2020" > 2020
         &nbsp;&nbsp;&nbsp;
@@ -291,13 +284,13 @@ table.sortable thead {
 		<br>
 <!--		<input type="radio" name="reportMonth" value="13" checked > All Months -->
 		&nbsp;&nbsp;&nbsp;
-		<input type="radio" name="reportMonth" value="1"> January
+		<input type="radio" name="reportMonth" value="1" checked > January
 		&nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportMonth" value="2"> February
 		&nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportMonth" value="3"> March
 		&nbsp;&nbsp;&nbsp;
-		<input type="radio" name="reportMonth" value="4" checked > April
+		<input type="radio" name="reportMonth" value="4"> April
 		&nbsp;&nbsp;&nbsp;
 		<input type="radio" name="reportMonth" value="5"> May
 		&nbsp;&nbsp;&nbsp;

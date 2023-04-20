@@ -3,11 +3,19 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-
-            $whereClause = "";
- //$whereClause = "WHERE class NOT IN('aviation','CHP','federal', 'police','state') AND tactical <> ''";
-   //$whereClause = "WHERE tactical <> '' ";
+			// maxlat is calculated in map.php
+			// Eventualy update to bounds for America vs rest of the world
+                if ($maxlat > 50) 
+                    {$whereClause = "where latitude > 50";}
+                else
+                    {$whereClause = "where latitude < 50";}
+                ;
 			
+            //$whereClause = "where latitude < 50";
+            //$whereClause = "where latitude < 50";
+          /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
+                            and (longitude > $minlon and longitude < $maxlon)";
+			*/
     $dupCalls = "";	
     $sql = ("SELECT
                 tactical, latitude, COUNT(latitude)
@@ -44,8 +52,11 @@
             
             //$classList .= "$classList,ObjectL,";
             $classList = "$classList";
+            
+           // echo "$classList";
     
       // Create the leaflet LayerGroup for each type (class) of marker 
+      // Problem here, perhaps with tackList
         $sql = ("SELECT 
                 GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
                 CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
@@ -84,7 +95,9 @@
 	    $S = 0;  // SkyWarn
 	    $F = 0;  // Firestations
 	    $A = 0;  // Aviation
-	    $G = 0;  // State / Federal
+	    $G = 0;  // State / Federal / 
+	    $T = 0;  // Town Hall
+	    
 	    
 	    $markNO     = ''; // the marker number (might be alpha)
 	    $grid       = '';
@@ -147,23 +160,27 @@
                              $markername = "images/markers/fire.png";   
                              $poimrkr = "firemrkr";  break;
                       
-            case "police":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "police":   $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "chp":     $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "chp":      $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "state":   $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "state":    $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
                              
-            case "federal": $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
+            case "federal":  $G = $G+1;  $iconName = "govicon"; $markNO = "G$G";  
                              $markername = "images/markers/gov.png";    
                              $poimrkr = "govmrkr";  break; 
+                        
+            case "townhall": $T = $T+1;  $iconName = "govicon"; $markNO = "T$T";  
+                             $markername = "images/markers/gov.png";    
+                             $poimrkr = "govmrkr";  break;
             
-            case "aviation":$A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
+            case "aviation": $A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
                                                       
@@ -189,7 +206,7 @@
                             callback: circleKoords}],
                      
                         icon: L.icon({iconUrl: `$markername`, iconSize: [32, 34]}),
-                        title:`marker_$markNO`}).addTo(fg).bindPopup(`$row[tactical]<br>$row[addr]<br>$gs`).openPopup();                        
+                        title:`marker_$markNO`}).addTo(fg).bindPopup(`$row[tactical]<br>$row[addr]<br>$gs`); /*.openPopup(); */                       
  
                         $(`$row[class]`._icon).addClass(`$poimrkr`);";
                      

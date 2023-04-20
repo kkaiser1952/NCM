@@ -32,7 +32,7 @@ L.Control.w3w = L.Control.extend({
 	_addText: function(container, context)
 	{
 		this._locationText = L.DomUtil.create('span', 'leaflet-control-w3w-locationText' , container);
-		L.DomUtil.get(this._locationText).innerHTML = '<strong>w3w:</strong> ' + this.options.locationText;
+		L.DomUtil.get(this._locationText).innerHTML = '<strong>W3W:</strong> ' + this.options.locationText;
 		return container;
 	},
 	
@@ -58,7 +58,7 @@ L.Control.w3w = L.Control.extend({
 			
 			getJSON('https://api.what3words.com/v2/reverse?key='+this.options.apikey+'&coords='+obj.lat+','+obj.lng, function(data) {
 				console.log(data);
-			  locText.innerHTML = '<strong>w3w:</strong> ' + data.words;
+			  locText.innerHTML = '<strong>W3W:</strong>   ///' + data.words;
 			  locText.dataset.words =("data-",  data.words);
 			  
 			}, function(status) {

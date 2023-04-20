@@ -118,6 +118,7 @@ SELECT count(a.callsign) as logCount
       ,SUM(IF(YEAR(a.logdate) = '2020', 1,0)) as y2020 
       ,SUM(IF(YEAR(a.logdate) = '2021', 1,0)) as y2021
       ,SUM(IF(YEAR(a.logdate) = '2022', 1,0)) as y2022
+      ,SUM(IF(YEAR(a.logdate) = '2023', 1,0)) as y2023
       
       ,SUM(IF(YEAR(a.logdate) = '2016', a.timeonduty,0)) as h2016
 	  ,SUM(IF(YEAR(a.logdate) = '2017', a.timeonduty,0)) as h2017
@@ -126,6 +127,7 @@ SELECT count(a.callsign) as logCount
       ,SUM(IF(YEAR(a.logdate) = '2020', a.timeonduty,0)) as h2020
       ,SUM(IF(YEAR(a.logdate) = '2021', a.timeonduty,0)) as h2021
       ,SUM(IF(YEAR(a.logdate) = '2022', a.timeonduty,0)) as h2022
+      ,SUM(IF(YEAR(a.logdate) = '2023', a.timeonduty,0)) as h2023
       
    FROM ncm.NetLog a
   WHERE a.callsign = '$call'
@@ -159,13 +161,16 @@ SELECT count(a.callsign) as logCount
 		$y2016		= $result[y2016];		     $y2017		= $result[y2017];  	
 		$y2018		= $result[y2018];		     $y2019		= $result[y2019];
 		$y2020		= $result[y2020];            $y2021		= $result[y2021];
-		$y2022		= $result[y2022];
+		$y2022		= $result[y2022];            $y2023		= $result[y2023];
+		
+		/* This is different than above */
 		
 		$h2016		= $result[h2016];		     $h2017		= $result[h2017];  	
 		$h2018		= $result[h2018];		     $h2019		= $result[h2019];
 		$callsign	= $result[callsign];         $h2020		= $result[h2020];
 		                                         $h2021		= $result[h2021];
 		                                         $h2022		= $result[h2022];
+		                                         $h2023		= $result[h2023];
 		
 		// Start what3word stuff
 		// ======================================
@@ -273,8 +278,9 @@ foreach ( $result["webPages"]["value"] as $data)
 		$h2020		= secondsToDHMS($h2020);
 		$h2021		= secondsToDHMS($h2021);
 		$h2022		= secondsToDHMS($h2022);
+		$h2023		= secondsToDHMS($h2023);
 		
-		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020,$y2021,$y2022);
+		$yearTotalsArray = array($y2016,$y2017,$y2018,$y2019,$y2020,$y2021,$y2022,$y2023);
 		$yearTotals		 = array_sum($yearTotalsArray);
 		
 		// Is there a headshot for this person?
@@ -483,6 +489,7 @@ foreach ( $result["webPages"]["value"] as $data)
 			  	<tr><td> 2020 </td> <td> $y2020 </td> <td> $h2020 </td></tr>
 			  	<tr><td> 2021 </td> <td> $y2021 </td> <td> $h2021 </td></tr>
 			  	<tr><td> 2022 </td> <td> $y2022 </td> <td> $h2022 </td></tr>
+			  	<tr><td> 2023 </td> <td> $y2023 </td> <td> $h2023 </td></tr>
 			  	
 			  	<tr><td> Total </td> <td> $yearTotals </td> <td> $yearHours </td></tr>
 			  	

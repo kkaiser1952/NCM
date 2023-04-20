@@ -123,10 +123,10 @@ echo "
           FROM `NetLog` 
          WHERE netID <> 0
            AND id <> 0
-           AND callsign <> 'NONHAM'
+
            AND Fname NOT LIKE '%(%'
-           AND callsign NOT LIKE '%NONHAM%'
-           AND callsign NOT LIKE '%WX%'
+      /*     AND callsign NOT IN ('NONHAM','WX','EMCOMM') */
+
          GROUP BY `callsign`
          ORDER BY call_count DESC
 	");

@@ -9,7 +9,7 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 require_once "getJSONrecord.php";
 
 // Get the IP address of the person making the changes.
-    require_once "getRealIpAddr.php";
+require_once "getRealIpAddr.php";
 
 // The below error output if used looks a lot like echo output so be aware of that
 
@@ -115,9 +115,9 @@ $ipaddress = getRealIpAddr();
         $stmt1->execute();
         $result1 = $stmt1->fetch();
         
-            $netcall   = $result1[netcall];     $pb         = $result1[pb];
-            $activity2 = $result1[activity];    $subNetOfID = $result1[subNetOfID];
-            $frequency = $result1[frequency];   $max_row_num = $result[max_row_num];
+            $netcall   = $result1['netcall'];     $pb         = $result1['pb'];
+            $activity2 = $result1['activity'];    $subNetOfID  = $result1['subNetOfID'];
+            $frequency = $result1['frequency'];   $max_row_num = $result['max_row_num'];
     		
     		
     $stmt2 = $stmt1 = $db_found->prepare(
@@ -127,7 +127,7 @@ $ipaddress = getRealIpAddr();
              ");
         $stmt2->execute();
         $result2=$stmt2->fetch();
-            $max_row_num = $result2[max_row_num];
+            $max_row_num = $result2['max_row_num'];
 
 /* This experimental query pulls the last time this callsign logged on using the stations table */
 
@@ -135,7 +135,8 @@ $ipaddress = getRealIpAddr();
 //echo "$csbase";
     $stmt2 = $db_found->prepare("
         SELECT id, Fname, Lname, creds, email, latitude, longitude,
-		       grid, county, state, district, home, phone, tactical, country
+		       grid, county, state, district, home, phone, tactical, country,
+		       city
 	      FROM stations 
 	     WHERE callsign = '$csbase'
 	       AND active_call = 'y'
@@ -160,17 +161,18 @@ $stmt2 = $db_found->prepare("
 	
 	$recordID 	= $result[recordID];   
 	$id         = $result[id];  
-	$Fname 	  	= ucwords(strtolower($result[Fname]));
-	$Lname      = ucwords(strtolower($result[Lname]));  
-	$grid  		= $result[grid];	   $creds 	 = $result[creds];
-	$email 		= $result[email];	   $latitude = $result[latitude];
+	$Fname 	  	= ucwords(strtolower($result['Fname']));
+	$Lname      = ucwords(strtolower($result['Lname']));  
+	$grid  		= $result['grid'];	   $creds 	 = $result['creds'];
+	$email 		= $result['email'];	   $latitude = $result[latitude];
 	$longitude 	= $result[longitude];  $tactical = $result[tactical];
-	$county    	= ucwords(strtolower($result[county]));	   
-	$state 	    = $result[state];
-	$country   	= ucwords(strtolower($result[country]));	
-	$district 	= $result[district];   $tt		 = $result[tt]; 
-	$home       = $result[home];       $phone    = $result[phone];
-	$comments  	= "";	        
+	$county    	= ucwords(strtolower($result['county']));	   
+	$state 	    = $result['state'];
+	$country   	= ucwords(strtolower($result['country']));	
+	$district 	= $result['district'];   $tt		 = $result['tt']; 
+	$home       = $result['home'];       $phone    = $result['phone'];
+	$comments  	= "";	  
+	$city       = $result['city'];      
 	
 	//echo "stmt2: $cs1, $county, $state, $grid, $phone <br>";
 	
@@ -186,7 +188,7 @@ $stmt2 = $db_found->prepare("
                                         AND callsign = '$cs1'")->fetchColumn();
     
                                         
-    if ($mBand == 0 AND $dupes > 0 AND $cs1 <> "NONHAM") { // This is a dupe we need to prevent
+    if ($mBand == 0 AND $dupes > 0 AND $cs1 <> "NONHAM" AND $cs1 <> "EMCOMM") { // This is a dupe we need to prevent
        // echo("mBand: $mBand \n dupes: $dupes \n");  // mBand: 0 dupes: 1   dupe call in non-mBand
         break;
        // exit("$cs1 is a duplicate call sign"); //IGNORE IT, DON'T ENTER INTO THE DB
@@ -199,7 +201,7 @@ if ("$id" == "") {
     
     $stmt = $db_found->prepare("SELECT MAX(id)+1 as unused
                                   FROM stations
-                                 WHERE id < 8000
+                                 WHERE id < 38000
                               ");	
 	
 		$stmt->execute();
@@ -214,13 +216,16 @@ if ("$id" == "") {
 			// If this is the first log in for this station add them to the TimeLog table 
 			//if ("$comments" == "First Log In" OR "$comments" == "No FCC Record"){
     if ("$comments" == "No FCC Record") {
+        $firstChar = $cs1[0];
         
-            $firstChar = $cs1[0];
-                
-                
+        // Use this to find any DX station that gets logged. The data comes from the
+        // hamcall.net DB courtesy of Daniel Bateman, KK4FOS with Buckmaster International, LLC
+        //if ( $cs1[0] <> 'A' AND $cs1[0] <> 'N' AND $cs1[0] <> 'K' AND $cs1[0] <> 'W' ) 
+            //{ include "getDXstationInfo.php"; }
+
                 $stmt = $db_found->prepare("SELECT MAX(id)+1 as unused
                                   FROM stations
-                                 WHERE id >= 8000 and id < 9999
+                                 WHERE id >= 38000 and id < 49999
                               ");	
 	
 		$stmt->execute();
@@ -235,7 +240,7 @@ if ("$id" == "") {
 			
                     $db_found->exec($sql);
                     
-            if ($id > 7999) {
+            if ($id > 37999) {
                     $sql = "INSERT INTO stations 
                             (recordID, ID,  callsign, dttm, comment)
                         VALUES  ('$recordID', 	'$id', 	 '$cs1',  '$open', '$comments')";
@@ -258,6 +263,13 @@ if ($cs1 == "NONHAM") {
 	$Lname = "";
 	$Fname = "";
 }
+if ($cs1 == "EMCOMM") {
+	$tactical = "";
+	$comments = "Emergency Mgnt. Not A Ham";
+	$Lname = "";
+	$Fname = "";
+}
+
 
 $traffic = " ";
 $logtraffic = " ";
@@ -322,13 +334,13 @@ if ($Lname == "") {$Lname = "$Lname2";}
 	$max_row_num = ($max_row_num + 1);
 	
 	
-	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, grid, tactical, email, latitude, longitude, 
-							    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, country,
-							    district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number ) 
+	$sql = "INSERT INTO NetLog (ID, active, callsign, Fname, Lname, netID, 
+	                grid, tactical, email, latitude, longitude, 
+				    creds, activity, comments, logdate, netcall, subNetOfID, frequency, county, state, country, district, firstLogIn, pb, tt, home, phone, cat, section, traffic, row_number, city ) 
 				VALUES (\"$id\", \"$statusValue\", \"$cs1\", \"$Fname\", \"$Lname\", \"$netID\", \"$grid\",
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
-				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \"$phone\", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \" )"; 
+				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \" \", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city\" )"; 
 	
 	$db_found->exec($sql);
 	
@@ -345,70 +357,13 @@ if ($Lname == "") {$Lname = "$Lname2";}
                     $db_found->exec($sql);
                     
             include "headerDefinitions.php";
-			  	
-	/*	echo ('	<table id="thisNet">
-					<thead id="thead" class="forNums" style="text-align: center;">			
-					<tr>            	
-					    <th title="Row No." class="c0" > &#35 </th>
-						<th title="Role"   >	Role	</th>
-						<th title="Mode" class="DfltMode cent" id="dfltmode">Mode				</th>
-						
-						<th title="Status" > 							 	Status	 			</th>  
-						<th title="Traffic"> 							 	Traffic 				</th>
-						
-						<th title="TT No." 	  		class="c5" width="5%"	
-							oncontextmenu="whatIstt();return false;">  	 	tt#	   				</th>
-							 
-                        <th title="Band" 	  		class="c23" width="5%"> Band   				</th>
-                        
-                        <th title="Facility" class="besticky cent c33" oncontextmenu= "clearFacilityCookie();return false;"> Facility </th>
-                  
-                        <th title="onsite" class="besticky c34" oncontextmenu="showFacilityColumn();return false;"> On Site </th>
-							
-						<th title="Call Sign"  						
-							oncontextmenu="heardlist()">			   	 	Callsign 				</th>
-							
-                        <th title="TRFK-FOR" 	class="c50">TRFK-FOR</th> 
-              <!--          <th title="Section" 	class="c51">  	Section		</th> -->
-				
-						<th title="First Name"> 					   	 	First Name 				</th>
-						<th title="Last Name" 	  	class="c8">  	 	Last Name  				</th>
-						<th title="Tactical Call" 	class="c9"> 	 		Tactical   				</th>
-						  
-						<th title="Phone"     		class="c10"> 	 	Phone     				</th>
-						<th title="email" 	  		class="c11">  	 	eMail    			   	</th>
-						<th title="Grid"      		class="c20">    		Grid      				</th>
-						
-						<th title="Latitude"  		class="c21">    		Latitude  				</th>
-						<th title="Longitude" 		class="c22">    		Longitude 				</th> 
-						    
-						<th title="Time In ">				   	 		Time In  			   	</th>
-						<th title="Time Out">				   	 		Time Out 			   	</th>
-						 
-						<th title="Comments">				   	 		Time Line<br>Comments 	</th>           
-						<th title="Credentials"  	class="c15"> 	 			Credentials 		</th>
-						<th title="Time On Duty" 	class="c16">    		Time On Duty 			</th>
-						
-						<th title="County"   		class="c17">  	 	County 					</th> 
-						<th title="State"    		class="c18"> 	 	State	 				</th>
-						<th title="District" 		class="c59">  	 	Dist	 					</th>
-						<th title="W3W"             class="c24">        W3W                     </th>
-						<th title="Team"             class="c30">        Team                     </th>
-						<th title="APRS Call"         class="c31">        APRS Call                     </th>
-						<th title="Country"         class="c32">       Country                    </th>
-					</tr>
-					</thead>
-				
-					<tbody class="sortable" id="netBody"> 
-		  
-		');  //ends the echo of the thead creation
-	  */                              	
+			  	                             	
 		$num_rows = 0;   // Counter to color row backgrounds in loop below
 		
 		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
 							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
 							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta
+							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta, city
 					  FROM  NetLog
                      WHERE netID = $netID
                      ORDER BY case 
@@ -419,6 +374,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
 		  				when netcall in ('MESN') then district 
 		  				when netcall in ('KCHEART') then facility
+		  				when netcall like '%SBBT%' then team
 		  				else logdate  
 		  				end,
 		  				logdate DESC
@@ -442,12 +398,12 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				// This PHP contians all the column color assignments based on various cell values
         include "colColorAssign.php";
 		  
-				 $id = str_pad($row[id],2,'0', STR_PAD_LEFT);
+				 $id = str_pad($row['id'],2,'0', STR_PAD_LEFT);
 				 
 				 echo ("<tr  id=\"$row[recordID]\">");
 				 
-				 $class = empty($row[comments]) ? 'nonscrollable' : 'scrollable' ;
-				 $class = strlen($row[comments]) < 300 ? 'nonscrollable' : 'scrollable' ;	
+				 $class = empty($row['comments']) ? 'nonscrollable' : 'scrollable' ;
+				 $class = strlen($row['comments']) < 300 ? 'nonscrollable' : 'scrollable' ;	
 				 
 				 // This PHP creates each row (<td>)
         include "rowDefinitions.php";

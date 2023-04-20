@@ -42,8 +42,8 @@ html, body {
 		.leaflet-control-w3w-locationText {
     		position: fixed;
     		font-size: 18pt;
-    		top: 70px;
-    		right: 10px; 
+    		top: 275px;
+    		right: 17px; 
     		border: 3px solid #8AC007;
 		    z-index: 400;
 		    text-decoration: none;
@@ -238,7 +238,7 @@ html, body {
           color: white;
         }
         
-        .eocmarker, .hosmarker, .polmarker, .rptmarker, .firemarker, .skymarker, .biggreenmarker {
+        .townhall, .eocmarker, .hosmarker, .polmarker, .rptmarker, .firemarker, .skymarker, .biggreenmarker {
             font-weight: bold;
             font-size: 12pt;
         } 

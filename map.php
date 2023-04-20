@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<!-- Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
+<!-- Leaflet is the primary mapping used here:
+    Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
 
 <!-- This version 2021-10-16 -->
 
@@ -10,14 +11,32 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
+    require_once "ENV_SETUP.php";      // API's
     require_once "GridSquare.php";
     
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    //$q = 3818; 
+    //$q = 8523; 
     //$q = 6066;
+    //$q = 7988;
     
+    // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
+    // This should be changed to min and max longitude or the Americas vs. Europe etc.
+    $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlat,
+                                       MIN(latitude) as minlat,
+                                       MAX(longitude) as maxlon,
+                                       MIN(longitude) as minlon
+                                  FROM NetLog 
+                                WHERE netID = $q AND latitude <> '';
+                               ");
+        $stmt->execute();
+    	$result = $stmt->fetch();
+    		$maxlat = $result[maxlat];
+    		$minlat = $result[minlat];
+    		$maxlon = $result[maxlon];
+    		$minlon = $result[minlon];
+    //echo "$maxalt, $minalt";
     	       
 	// Loads the programs that create the station, poi, and object markers
 	require_once "stationMarkers.php";
@@ -35,13 +54,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" >
 
      <!-- ******************************** Load LEAFLET from CDN *********************************** -->
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-     crossorigin=""/>
-     
-     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-             crossorigin=""></script>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
      <!-- ********************************* End Load LEAFLET **************************************** -->
      
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -49,7 +63,15 @@
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
-    <script src="js/L.Control.MousePosition.js"></script>   <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <script src="js/geolet.js"></script>
+    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!--<script src="js/L.Control.MousePosition.js"></script>-->
+     
+    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
+    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
+    
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
+    
     <script src="js/hamgridsquare.js"></script>
     
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
@@ -60,18 +82,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
-
-
+    
+    
      
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
-     <script src="https://unpkg.com/esri-leaflet@2.2.4/dist/esri-leaflet.js"
-    integrity="sha512-tyPum7h2h36X52O2gz+Pe8z/3l+Y9S1yEUscbVs5r5aEY5dFmP1WWRY/WLLElnFHa+k1JBQZSCDGwEAnm2IxAQ=="
+     <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
     crossorigin=""></script>
-    
-    <!-- Load Esri Leaflet Geocoder from CDN -->
-	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
-    crossorigin="">
+
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
+    crossorigin=""></script>
     
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
     integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
@@ -81,12 +104,15 @@
      <!-- ******************************** Style Sheets *************************************** -->
     <link rel="stylesheet" href="css/leaflet_numbered_markers.css" />
     <link rel="stylesheet" href="css/L.Grid.css" />   
-    <link rel="stylesheet" href="css/L.Control.MousePosition.css" />
+    <!--<link rel="stylesheet" href="css/L.Control.MousePosition.css" /> -->
+    <link rel="stylesheet" href="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.css">
     <link rel="stylesheet" href="css/control.w3w.css" />
     
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
+    
+    
     
         
     <!-- What 3 Words -->
@@ -96,12 +122,48 @@
     <!-- circleKoords is the javascript program that caluclates the number of rings and the distance between them -->
     <script src="js/circleKoords.js"></script>    
     
-
+    <!-- override from leaflet.mousecoordinate.css -->
 	<style>
-		/* All CSS is in css/maps.css */
-		/* Below is supposed to fix the problem of the controls disapearing */
-		.leaflet-top, .leaflet-left { transform: translate3d (0, 0, 0); will-change: transform; }
+		.leaflet-control-mouseCoordinate{
+    		background: #d0effa;
+    		top: 80%;
+    		left: 10px;
+    		padding-bottom: 40px;
+        }
+        .leaflet-container{
+            line-height: 1;
+        }
+        
+        .leaflet-control-w3w-locationText {
+    	/*	position: fixed; */
+    	    position: fixed;
+    		font-size: 14pt;
+    	/*	top: 275px;
+    		right: 17px; */
+    	/*	bottom: 475px; */
+    		
+    		top: 94%;
+    		left: 32px;  /* was 110 */
+    		border: none;
+    	/*	border: 1px solid #8AC007; */
+		/*    z-index: 400; */
+		    text-decoration: none;
+		/*    background-color: white; */
+		    width: 30%; 
+		    background-color: inherit;
+		    color: rgb(182,7,7);
+		    
+		}
 	</style>
+	
+	<!-- Experiment to add beautifyl markers -->
+	<!--
+    <link rel="stylesheet"BeautifyMarker-master/leaflet/fontawesome.min.css" />"
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="BeautifyMarker-master/leaflet-beautify-marker-icon.css" />
+    <script src="BeautifyMarker-master/leaflet-beautify-marker-icon.js"></script>
+    -->
+
 	
 </head>
 
@@ -180,15 +242,36 @@ var map = L.map('map', {
 
 	
 	// Define the layers for the map
-    const Streets = L.esri.basemapLayer('Streets').addTo(map),
-          Imagery = L.esri.basemapLayer('Imagery').addTo(map),
-          Topo    = L.esri.basemapLayer('Topographic').addTo(map),
-          NatGeo  = L.esri.basemapLayer('NationalGeographic').addTo(map);
-    
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
-                       "<span style='color: blue; font-weight: bold;'>NatGeo": NatGeo,
+	
+	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
+	   
+	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
+	   
+	   //alert (esriapi);
+          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+            apikey: esriapi}).addTo(map),
+          Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
+            apikey: esriapi}).addTo(map),
+          Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
+            apikey: esriapi}).addTo(map),
+          Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            apikey: esriapi}).addTo(map),
+          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey: esriapi}).addTo(map),
+          Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+            apikey: esriapi}).addTo(map);
+            
+            // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
+ // vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+  //  apiKey
+  //});
+   
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
+                       "<span style='color: blue; font-weight: bold;'>Streets": Streets,
+                       "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
-                       "<span style='color: blue; font-weight: bold;'>Streets": Streets               
+                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
+                       "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
                      
                   
@@ -202,7 +285,10 @@ var map = L.map('map', {
 		w.setCoordinates(e);
 	});
                    
-    L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
+    
+    //L.control.mousePosition({separator:',',position:'topright',prefix:''}).addTo(map);
+    // https://github.com/PowerPan/leaflet.mouseCoordinate replaces mousePosition above
+    L.control.mouseCoordinate({gpsLong:false,utm:true,qth:true,position:'bottomleft'}).addTo(map);
     
     // https://github.com/ppete2/Leaflet.PolylineMeasure
     // Position to show the control. Values: 'topright', 'topleft', 'bottomright', 'bottomleft'
@@ -219,9 +305,6 @@ var map = L.map('map', {
     
     // Adds a temp marker popup to show location of click
     var popup = L.popup();
-    
- 
-    
         
     // Define a PoiIcon class for use by Points of Interest
     var PoiIconClass = L.Icon.extend({
@@ -237,7 +320,6 @@ var map = L.map('map', {
         }
     });
     
-	
     // Adds a temp marker popup to show location of click
     //var popup = L.popup();
     function onMapClick(e) {
@@ -252,6 +334,9 @@ var map = L.map('map', {
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
     
+    // https://github.com/rhlt/leaflet-geolet
+    L.geolet({ position: 'bottomleft' }).addTo(map);
+    
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 
@@ -264,8 +349,9 @@ var map = L.map('map', {
         fireicon      = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
+        townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         
-        objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}),          // the 00 marker
+        objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
         greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
@@ -360,8 +446,6 @@ var map = L.map('map', {
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
     <?php echo "$cornerMarkers"; ?>
-    
-
 
     // Object Marker List starts here
     <?php echo "$OBJMarkerList"; ?>
@@ -388,7 +472,7 @@ var map = L.map('map', {
         
      var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
      
-     console.log('@389');
+     console.log('@404');
      console.log(polyline);
 
     
@@ -396,15 +480,17 @@ var map = L.map('map', {
     //====================== Points of Interest ============================
     //======================================================================    
     // The classList is the list of POI types.
-    var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');;
-     //  console.log('@390 in map.php classList= '+classList);
+    //var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
+    var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
+       console.log('@414 in map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
-    // THE FULL LIST:  Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
+    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
     var y = {...station};
     var x;
+   // $var_a = $var_b = $same_var = $var_d = $some_var = 'A';
     for (x of classList) {
         
         if (x == 'AviationL') {
@@ -413,7 +499,7 @@ var map = L.map('map', {
             
         }else if (x == 'CHPL') {
             let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y,...CHP}; 
+            y = {...y, ...CHP}; 
             
         }else if (x == 'EOCL') {
             let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
@@ -421,8 +507,7 @@ var map = L.map('map', {
             
         }else if (x == 'FederalL') {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            y = {...y,...Federal};
-    
+            y = {...y, ...Federal};
             
         }else if (x == 'FireL') {
             let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
@@ -442,15 +527,19 @@ var map = L.map('map', {
             
         }else if (x == 'SheriffL') {
             let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y,...Sheriff};
+            y = {...y, ...Sheriff};
             
         }else if (x == 'SkyWarnL') {
             let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
             y = {...y, ...SkyWarn};    
             
         }else if (x == 'StateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
-            y = {...y,...State};
+            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' />                 <span class='polmarker'>State</span>":  SheriffList};
+            y = {...y, ...State};
+            
+        }else if (x == 'townhallL') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
+            y = {...y, ...TownHall};       
             
         }else if (x == 'ObjectL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
@@ -460,6 +549,7 @@ var map = L.map('map', {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
             y = {...y, ...Corners};
         }}; // End of for loop
+        
         
         // Here we add the station object with the merged y objects from above
     var overlayMaps = {...y }; 

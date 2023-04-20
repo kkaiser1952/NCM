@@ -466,7 +466,7 @@ function processGroup() {
 </div> <!-- End div-rightCorner -->
 	
 <div>
-	<label for="submitform"><p>A net preamble and closeing can be created anytime from the start page using the <span style="color: red;">'New'</span> button in the upper left corner.</p><p>After you submit this form you will be redirected back to the start page. Refresh the page then select 'Start A New Net' again and this time your group should be in the dropdown.</p>
+	<label for="submitform"><p>A net preamble and closing can be created anytime from the start page using the <span style="color: red;">'New'</span> button in the upper left corner.</p><p>After you submit this form you will be redirected back to the start page. Refresh the page then select 'Start A New Net' again and this time your group should be in the dropdown.</p>
 	</label>
 	<input id='submitform'  type="submit" name="submit" value="Submit" >
 	<input class="" type="button" value="Cancel" title="Cancel" onClick="window.location.href=window.location.href">

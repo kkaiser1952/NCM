@@ -632,6 +632,7 @@ function showActivities(str, str2) {
 
 
 // re-wrote these two function 2018-02-12
+// finds and displays a list of hints for the callsign entry
 function showHint(str) {
     // var nc = $( "#thenetcallsign" ).html(); alert('val= '+nc);
    // alert(str);
@@ -652,6 +653,7 @@ function showHint(str) {
 	  	})
 }} 
 
+// finds and displays a list of hints for the name entry
 function nameHint(str) {
 	if (str.length == 0) {
 

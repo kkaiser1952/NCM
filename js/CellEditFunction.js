@@ -145,6 +145,13 @@ function CellEditFunction( jQuery ) {
     		 style  	: "inherit"
 		 });
 		 
+		 $(".editcity").editable("save.php", {				// City
+    		 indicator 	: "Saving...",
+    		 placeholder: "",
+    		 tooltip    : "City Click to edit...",
+    		 style  	: "inherit"
+		 });
+		 
 		 $(".editcntry").editable("save.php", {				// Country
     		 indicator 	: "Saving...",
     		 placeholder: "",
@@ -287,7 +294,7 @@ function CellEditFunction( jQuery ) {
  
 	 
 	 	$(".editable_selectACT").editable("save.php", {  	// status
-    	    data    : '{"In":"In","OUT":"OUT","In-Out":"In-Out","Leave?":"Leave?","Moved":"Moved","BRB":"BRB","Enroute":"Enroute","Assigned":"Assigned","MISSING":"MISSING"}',
+    	    data    : '{"In":"In","OUT":"OUT","In-Out":"In-Out","Leave?":"Leave?","Moved":"Moved","BRB":"BRB","Enroute":"Enroute","Arrived":"Arrived","Assigned":"Assigned","MISSING":"MISSING"}',
     	    type    : "select",
     	    placeholder: "",
     	        onblur: 'submit',
@@ -298,7 +305,7 @@ function CellEditFunction( jQuery ) {
 	 	});
 	 	
 	 	$(".editable_selectTFC").editable("save.php", { 	// traffic
-    	    data: '{"":"","Traffic":"Traffic","Routine":"Routine","Welfare":"Welfare","Priority":"Priority","Emergency":"Emergency","Question":"Question","Announcement":"Announcement","Bulletin":"Bulletin","Comment":"Comment","STANDBY":"STANDBY","Resolved":"Resolved","Sent":"Sent"}',
+    	    data: '{"":"","Traffic":"Traffic","Routine":"Routine","Welfare":"Welfare","Priority":"Priority","Emergency":"Emergency","Question":"Question","Announcement":"Announcement","Bulletin":"Bulletin","Comment":"Comment","STANDBY":"STANDBY","Request":"Request", "Resolved":"Resolved","Sent":"Sent"}',
     	    type    : "select",
     	    placeholder: "",
     	     onblur: "submit",

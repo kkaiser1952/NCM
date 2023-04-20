@@ -122,7 +122,14 @@
 
 				 $bgcol = "                 ";
 				 				 
-				if ($row[netcall] == "") {$netcall = "All";}
+				//if ($row[netcall] == "") {$netcall = "All";}
+				
+				if (!isset($row['netcall']) || $row['netcall'] == "") {
+                  $netcall = "All";
+                } else {
+                  $netcall = $row['netcall'];
+                }
+
 				
 				// Set background row color based on some parameters
 					

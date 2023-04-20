@@ -1,5 +1,5 @@
 <?php
-	// This is the Local timzone version 
+	// This program creates the dropdown for previous net selection
 	// 2020-10-14
 
 // read the time diff from UTC for the local time
@@ -8,28 +8,34 @@
     	$tzdiff = "-0:00";   // make no adjustment to the various time values
     }else { 
         $tzdiff = $_COOKIE[tzdiff]/-60;  // adjust the time values based on time zone
-        $tzdiff = "$tzdiff:00";    // echo("tzdiff= $tzdiff");
+        $tzdiff = "$tzdiff:1";    // echo("tzdiff= $tzdiff");
     }
     
    // if (sessionStorage.getItem("tz_domain") == "UTC") { $tzdiff = "-0:00"; }
                
    $sql = ("SELECT netID
-               ,MIN(status) as minstat  
-               ,MIN((CONVERT_TZ(dttm,'+00:00','$tzdiff'))) AS mindttm 
+               ,status 
+               ,activity 
+               ,netcall 
+               ,frequency
+                /* 1 = colose, 0 = open */  
+               ,MIN(status) AS minstat  
+               ,MIN((CONVERT_TZ(dttm,'+00:00','$tzdiff')))    AS mindttm 
                ,MIN((CONVERT_TZ(logdate,'+00:00','$tzdiff'))) AS minlogdate
-               ,activity ,netcall ,frequency 
                ,MAX((CONVERT_TZ(timeout,'+00:00','$tzdiff'))) AS timeout
-               ,status      /* 1 = colose, 0 = open */                                        
+                                                       
                ,IF(MIN(CONVERT_TZ(logdate,'+00:00','$tzdiff') IS NULL) = 0,
                    DATE(MIN(CONVERT_TZ(logdate,'+00:00','$tzdiff'))), 
                    DATE(MIN(CONVERT_TZ(dttm,'+00:00','$tzdiff')))) AS dteonly
                ,IF(MIN(CONVERT_TZ(logdate,'+00:00','$tzdiff') IS NULL) = 0,
                    DAYNAME(MIN(CONVERT_TZ(logdate,'+00:00','$tzdiff'))), 
-                   DAYNAME(MIN(CONVERT_TZ(dttm,'+00:00','$tzdiff')))) AS daynm                      
+                   DAYNAME(MIN(CONVERT_TZ(dttm,'+00:00','$tzdiff')))) AS daynm
+                                         
                ,POSITION('Meeting' IN activity) AS meetType
-               ,POSITION('Event' IN activity) AS eventType
+               ,POSITION('Event' IN activity)   AS eventType
                                            
                ,SUM(IF(timeout IS NULL, 1,0)) AS lo
+               
                ,pb,
                   (CASE 
                      WHEN pb = '0' THEN ''

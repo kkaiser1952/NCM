@@ -56,15 +56,18 @@
 		    <th>longitude</th>
 		    <th>grid</th>
 		    <th>tactical</th>
-		    <th>callsign</th>
 		    <th>DGID</th>
 		    <th>mode</th>
 		    <th>Notes</th>
+		    <th>Country</th>
 	    </tr>
 	    <?php
-			$sql1 = ("SELECT * FROM `poi`
+			$sql1 = ("SELECT id, class, Type, name, county, address, city,
+			                 latitude, longitude, grid, altitude, tactical,
+			                 DGID, mode, Notes, country
+                        FROM poi
                        ORDER BY ID
-					");
+					;");
 					
 		    foreach($db_found->query($sql1) as $row) {
 			    
@@ -84,6 +87,7 @@
 			        <td>$row[DGID]</td>
 			        <td>$row[mode]</td>	
                     <td>$row[Notes]</td>
+                    <td>$row[country]</td>
 			   </tr>
 			   ";
 		    }

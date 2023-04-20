@@ -243,7 +243,7 @@ $(document).ready(function()
 	        				 TRIM(creds) as creds, 
 	        				 TRIM(timeonduty) as tmd, 
 	        			     TRIM(sec_to_time(timeonduty)) as tod,
-	        			     TRIM(CONCAT_WS('  ', state, county, ' Co., Dist.', district)) as dist,
+	        			     TRIM(CONCAT_WS('  ',city, state, county, ' Co., Dist.', district)) as dist,
 	        			     TRIM(band) as band,
 	        			     TRIM(team) as team
 	        			     
@@ -262,6 +262,8 @@ $(document).ready(function()
 						case "2nd": $nc = "Secondary Net Control";
 						break;
 						case "3rd": $nc = "Tertiary Net Control";
+						break;
+						case "RELAY": $nc = "Relay Station";
 						break;
 						case "PIO": $nc = "Public Information Officer";
 						break;

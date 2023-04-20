@@ -2,19 +2,19 @@
 
 <?php
 /***********************************************************************************************************
- PHP version: 4.7.9
+ 
  Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
  document various net operations such as weather emergencies, club meetings, bike ride support and any other 
  logging and/or reporting intensive communications support and management needs. 
  A variety of reports can be created such as mapping stations locations and other DHS/FEMA needs. Including
- the ICS-214 and ICS-309 reports and access to many others.
+ the ICS-214 and ICS-309 reports and access to all the many others.
  
  No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
  
  Extensive help is available by clicking Help in the upper right corner of the opening page.
 
  First written some time in late 2015 and in continous enhancment and upgrade since.
- copyright 2015-2022 by: Keith Kaiser, WA0TJT 
+ copyright 2015-2023 by: Keith Kaiser, WA0TJT 
  Written by: Keith Kaiser, WA0TJT, with the help of many others. See the help file for more details.
  I can be reached at wa0tjt at gmail.com
  
@@ -41,16 +41,17 @@
  natural-language processing
  end-to-end learning
 *********************************************************************************************************/
+
+    // phpinfo();
+    // PHP Version 5.6.33-0+deb8u1 on v1 as of 2022-12-05
+    // Will be PHP version: 7.4+76 soon
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-    //require_once "wxLL2.php";           // Test version is wx2.php
-    // Fatal error: Cannot redeclare getOpenWX() (previously declared in /var/www/html/wx.php:188) in /var/www/html/wxLL2.php on line 160
-
-    require_once "NCMStats.php";
+    require_once "NCMStats.php";       // Get some stats
 ?>
 
 <html lang="en" >
@@ -81,16 +82,20 @@
     <!-- End all about favicon images -->
     
     <!-- The meta tag below sends the user to the help file after 90+ minutes of inactivity. -->
-    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/doc/help.php" >
-    
+    <meta http-equiv="refresh" content="9200; URL=https://net-control.us/help.php" > 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" > 
-
     <meta name="description" content="Amateur Radio Net Control Manager" >
     <meta name="author" content="Keith Kaiser, WA0TJT" >
-    
     <meta name="Rating" content="General" >
     <meta name="Revisit" content="1 month" >
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control" >
+    
+    <!-- https://fonts.google.com -->
+    <!-- Allerta is used to slash zeros so don't delete -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Allerta&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Stoke&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cantora+One&display=swap" >
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Risque&display=swap" >
     
     <!-- ===============                          ================================== -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
@@ -111,17 +116,7 @@
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 	 
 <style>
-	/* Use this space for experimental CSS */   
 	
-	/* jQuery modal css */
-	/*
-	ui-widget-header,.ui-state-default, ui-button {
-            background:#b9cd6d;
-            border: 2px solid #b9cd6d;
-            color: #03c31d;
-            font-weight: bold;
-         }
-	*/
 </style>
 
 </head>
@@ -136,7 +131,7 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v7.04.25</a> 
+    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
@@ -147,11 +142,11 @@
 
 <!-- From showDTTM() in NetManager-p2.js -->
 <p class="tb1 TipBubbles initiallyHidden" style="width: 200px; margin-bottom: 40px;">
-	<a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Choose Your Time Zone</a></p>
+	<a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Choose Your Time Zone</a></p>
 	
 <div id="dttm"> <!-- flex container -->
     <div id="dttm1">
-        <input type="radio" name="tz" id="theLocal" value="theLocal" onclick="goLocal()">
+        <input type="radio" name="tz" id="theLocal" value="theLocal" size = "60" onclick="goLocal()">
         <br>
         <input type="radio" name="tz" id="theUTC" value="theUTC" onclick="goUTC()" >
     </div>
@@ -162,13 +157,13 @@
 </div> <!-- end flex container -->
 		 
 <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 30px;">
-    <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
+    <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Clickable Weather Report based on your IP Address</a></p>
 <div class = "weather-place">
 	<img src="images/US-NWS-Logo.png" alt="US-NWS-Logo" width="50" height="50" onclick="newWX()">
 
 	<a href="https://www.weather.gov" class="theWX" target="_blank" rel="noopener">
 		<!-- CurrentWX() was developed by Jeremy Geeo, KD0EAV Found it wx.php -->
-<?php echo getOpenWX(); ?>   <!-- from wx.php -->
+        <?php echo getOpenWX(); ?>   <!-- from wx.php -->
 	</a>  
 </div> <!-- End of class: weather-place -->
 <!-- End of upper-left-corner stuff -->
@@ -211,7 +206,7 @@
    <!-- Open reports Dropdown of the available reports -->
    <span class="dropdown"> <!-- reports list dropdown -->
 		<span class="dropbtn">Reports &nbsp;||&nbsp;</span>
-	  <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
+        <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
 	  
 	    <a href="#" id="buildCallHistoryByNetCall" onclick="buildCallHistoryByNetCall()" title="build a Call History By NetCall">The Usual Suspects</a>
 	  
@@ -224,6 +219,8 @@
 	        
 	<!--    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a> -->
 	    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
+	    
+	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">GeoDistance</a>
 
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
  
@@ -239,7 +236,7 @@
    </span> <!-- End of class dropdown -->
 	
 		  	   <!-- Open the NCM help/instructions document -->
-		  	   <a id="helpdev" href="https://net-control.us/doc/help.php" target="_blank" rel="noopener" title="Click for the extended help document">Help</a>&nbsp;||&nbsp;
+		  	   <a id="helpdev" href="https://net-control.us/help.php" target="_blank" rel="noopener" title="Click for the extended help document">Help</a>&nbsp;||&nbsp;
 				
 		  	   <!-- Alternate dropdown of the lesser needed reports -->
 		  	   <a href="#menu" id="bar-menu" class="gradient-menu"></a>
@@ -287,7 +284,7 @@
 		<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p>
 	
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
-            <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
+            <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
         </p> <!-- End TipBubbles -->
         
 		<div class="theBox">
@@ -330,7 +327,7 @@
     <div id="GroupDropdown" >
         <!-- showGroupCoices() & filterFunctions() at the bottom of index.php -->
         <input type="text" onfocus="showGroupChoices()" placeholder="Type to filter list.." id="GroupInput" style="background-color:white;"
-               class="netGroup"  onkeyup="filterFunction(0);" required />
+               class="netGroup"  onkeyup="this.value = removeSpaces(this.value); filterFunction(0);" required />
         <div class='GroupDropdown-content hidden'>
             
 <?php echo $groupList;?>    <!-- Created in buildThreeDropdowns.php -->
@@ -393,8 +390,9 @@
 		<div class="last3qs">Complete New Net Creation:</div>
 		
 		<br>
-		<!-- newNet() & hideit() in NetManager-p2.js -->
-		<input id="submit" type="submit" value="Submit" onClick="newNet();"  title="Submit The New Net">
+		<!-- newNet() & hideit() createNetKindView() in NetManager-p2.js -->
+		<!-- I removed createNetKindView() on 2023-04-16 don't think we need it -->
+		<input id="submit" type="submit" value="Submit" onClick="newNet();" title="Submit The New Net">
 		<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
@@ -403,13 +401,13 @@
 	    
     <!-- Building the upper right corner is triggered by: showActivities() in NetManager.js -->
     <p class="tb2 TipBubbles initiallyHidden" style="width: 400px; left: 200px; margin-bottom: -40px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#open" target="_blank">Dropdown of nets and/or current net being displayed.</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#open" target="_blank">Dropdown of nets and/or current net being displayed.</a></p>
         
     <p class="tb2 TipBubbles initiallyHidden" style="width: 300px; left: 775px; margin-bottom: 40px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#refreshtimed" target="_blank">Immediate and Timed Data Refresh</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#refreshtimed" target="_blank">Immediate and Timed Data Refresh</a></p>
 	
    	<p class="tb1 TipBubbles initiallyHidden" style="left: 200px; width: 450px;  margin-bottom: 50px;">
-        <a class="tipimage" href="https://net-control.us/doc/help.php#assumptions" target="_blank">Select to display an active or closed net.</a></p>
+        <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Select to display an active or closed net.</a></p>
         
         <div class="btn-toolbar" >
         
@@ -429,6 +427,7 @@
  
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
+<!-- PHP to build the list of nets from the last 10 days -->
 <?php  require_once "buildOptionsForSelect.php"; ?>
         	
         </select>  	<!-- End of ID: select1 -->
@@ -463,7 +462,7 @@
     
 	<div id="forcb1" class="hidden">
     	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">
-        	<a class="tipimage" href="https://net-control.us/doc/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
+        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
         	
 		<div id="genComments" class=" editGComms"></div>
 
@@ -472,13 +471,13 @@
 	  
 	  <!-- Tip Bubbles -->
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:300px; left: 50px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#checkins" target="_blank">Enter Callsign or name displays hints</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Enter Callsign or name displays hints</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:150px; left: 455px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#checkins" target="_blank">Traffic Short Cut</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#checkins" target="_blank">Traffic Short Cut</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:250px; left: 655px; margin-bottom: -40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:350px; left: 950px; margin-bottom: 40px;">
-    	 <a class="tipimage" href="https://net-control.us/doc/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
 	<div id="admin" class=" admin ">   <!-- End is @645 -->
 		<div id="csnm" class="hidden">
 
@@ -527,7 +526,7 @@
 
 	</div>	<!-- End ID: csnm @467 -->
 		
-			<div  id="txtHint"></div> <!-- populated by NetManager.js -->
+			<div  id="txtHint"></div> <!-- populated by NetManager.js ==> gethintSuspects.php-->
 			<div id="netIDs"></div>			
 			<div id="actLog">net goes here</div> <!-- Home for the net table -->
 			
@@ -571,10 +570,10 @@
 	
 	<!-- https://jquerymodal.com -->
 	<div id="#cc" class="modal" style="display:none;">	
-		<p>&copy; Copyright 2015-2022, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2022-04-25</span></p>
+		<p>&copy; Copyright 2015-2023, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2023-03-11</span></p>
 		<p>Questions, problems, concerns? ....send them to: 
 			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
-			Or click <a href="doc/help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
+			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
 			
 	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
 		</p>
@@ -658,7 +657,7 @@
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script src="bootstrap/js/bootstrap.min.js"></script>		<!-- v3.3.2 --> 
+	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
  
 	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
 	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
@@ -670,7 +669,7 @@
 	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
 
     <!-- http://www.appelsiini.net/projects/jeditable -->
-    <script src="js/jquery.jeditable.js"></script>							<!-- 1.8.1 2018-04-05 -->
+    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
 
 	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
 	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
@@ -692,8 +691,6 @@
 	<script src="js/cookieManagement.js"></script>
 	
     <script>
-        
-    	
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
 $ ( function() {
@@ -740,10 +737,10 @@ $("body").click(function(){
 // This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
 function checkCall() {
     const cs = $("#callsign").val().trim().toUpperCase();
-    const listOfCalls = new Set( ['ah6ez', 'kc1oiz', 'w0erh', 'ad0im', 'k4flm', 'k0wtf', 'wb4ftu', 'k0bcf', 'w1jku', 'kn4krz', 'ke0kxz', 'w5ola' ]);
+    const listOfCalls = new Set( ['ah6ez' ]);
     const isCallInSet = listOfCalls.has($("#callsign").val());
     
-    console.log('@727 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
     
     // If the callsign starting this net is in the above list then ask for his email to send him a message
     if (!isCallInSet == '') {
@@ -771,8 +768,10 @@ function checkCall() {
     } // End if
 } // end checkCall function
 
-
-
+// This function is used in the DIV GroupDropdown by the input **** DO NOT DELETE ++++
+function removeSpaces(str) {
+  return str.replace(/\s+/g, '');
+}
 
 
 </script>

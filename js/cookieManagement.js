@@ -143,7 +143,7 @@ function testCookies(nc) {
     // Removed 17 & 18 the county and state from the default on 2021-09-14
     if ( $("#activity").html().includes("MARS")) {
         var arrayDefault = ["1","2","3","4","6","7","12","13","14","50"]; 
-    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14","18"];} // removed ,"17","18"
+    } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14","18"];}
 		
     // This sets us up to add the email and phone columns automatically if its a meeting or event
     if ( $("#activity").html().includes("Meeting") /*|| $("#activity").html().includes("Event") */ ) {
@@ -188,7 +188,7 @@ function testCookies(nc) {
         // alert("arrayCookies: "+JSON.stringify(arrayCookies));
         		
     // This hides all the extra columns as preperation for showing only the requested ones below
-        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30, .c31, .c32, .c33, .c34").hide();
+        $(".c5, .c8, .c9, .c10, .c11, .c15, .c16, .c17, .c18, .c59, .c20, .c21, .c22, .c23, .c24, .c30, .c31, .c32, .c33, .c34, .c35 ").hide();
         $(".c25, .c26, .c27, .c28, .c29").hide(); // Admin Level
         $(" .c50, .c51").hide(); // Custom Level
        
@@ -222,7 +222,8 @@ function showCol(sh) {
             } else if (sh === '31' ) { $(".c31").show();    // aprs_call
             } else if (sh === '32' ) { $(".c32").show();    // Country
             } else if (sh === '33' ) { $(".c33").show();    // facility
-            } else if (sh === '34' ) { $(".c34").show();    // onSite        
+            } else if (sh === '34' ) { $(".c34").show();    // onSite    
+            } else if (sh === '35' ) { $(".c35").show();    // City     
               // Custom
             } else if (sh === '50' ) { $(".c50").show();    // Cat (Custom)
             } else if (sh === '51' ) { $(".c51").show();    // Section (Custom)

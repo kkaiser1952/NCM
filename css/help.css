@@ -259,6 +259,10 @@ body {
         	columns: 3;
         	column-span: 3;
     	}
+    	.topics2 {
+        	columns: 2;
+        	column-span: 2;
+    	}
 /*		
 		ol {
     		    list-style: none;

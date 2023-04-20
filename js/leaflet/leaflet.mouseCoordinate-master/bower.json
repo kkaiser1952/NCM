@@ -1,0 +1,29 @@
+{
+  "name": "leaflet.mousecoordinate",
+  "description": "A Coordinate Mouse Viewer for Leaflet",
+  "main": "dist/leaflet.mousecoordinate.js",
+  "authors": [
+    "Johannes Rudolph <johannes.rudolph@gmx.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "mouseCoordinate",
+    "GPS",
+    "UTM",
+    "UTMREF",
+    "QTH",
+    "NAC"
+  ],
+  "homepage": "https://github.com/PowerPan/leaflet.mouseCoordinate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src"
+  ],
+  "dependencies": {
+    "leaflet": "^1.2.0"
+  }
+}

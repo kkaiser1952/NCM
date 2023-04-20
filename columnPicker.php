@@ -197,49 +197,9 @@ $(document).ready(function() {
 				<input type="radio" name="intrests[]" checked onclick="tz_adj(0);" value="46" class="46" > 
 				<span class="checkmark"></span>
 			</label>
-<!--        
-    	<br><br>Time zone display in local time is not ready yet. Watch for this feature.</p>
-	
-	<div class="row">
-    	<div class="column" >
-        	<label class="container">Eastern (40)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-300);" value="40" class="40" > <!- - -5 hr - ->
-				<span class="checkmark"></span>
-			</label>
-			
-			<label class="container">Pacific (43)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-480);" value="43" class="43" > <!- - -8 hr - ->
-				<span class="checkmark"></span>
-			</label>  	
-        </div>	
-    	<div class="column" >
-        	<label class="container">Central (41)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-360);" value="41" class="41" > <!- - -6 hr - ->
-				<span class="checkmark"></span>
-			</label>
 
-			<label class="container">Alaska (44)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-540);" value="44" class="44" > <!- - -9 hr - ->
-				<span class="checkmark"></span>
-			</label>
-        </div>
-        <div class="column" >
-        	<label class="container">Mountain (42)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-420);" value="42" class="42" > <!- - -7 hr - ->
-				<span class="checkmark"></span>
-			</label>
-
-			<label class="container">Hawaii (45)
-				<input type="radio" name="intrests[]"  onclick="tz_adj(-600);" value="45" class="45" > <!- - -10 hr - ->
-				<span class="checkmark"></span>
-			</label>
-        </div>
-	</div>
--->
 	
 	<p style="font-size: 14pt; font-weight: bold;">Columns selected or deselected will appear on the next table refresh.</p>
-	
-	<!-- WAS HERE -->
 	
 		
 	<div class="row">
@@ -344,6 +304,10 @@ $(document).ready(function() {
 						
 			<label class="container">County (17)
 				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(17)" value="17" class="17">
+				<span class="checkmark"></span>
+			</label>
+			<label class="container">City (35)
+				<input type="checkbox" name="intrests[]"  onclick="window.opener.toggleCol(35)" value="35" class="35">
 				<span class="checkmark"></span>
 			</label>
 			<label class="container">State (18)
