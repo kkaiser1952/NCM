@@ -40,6 +40,25 @@ $activity	= ltrim($newnetnm) . " " . ltrim($netKind);  //echo "activity= $activi
 $pbspot = '';
 if ($pb == 1){$pbspot = 'PB';}
 
+//sila: added this; $db_found is undefined when running $db_found->query()
+$strHostName = "ncm-db";
+$strUserName = "ncm";
+$strPassword = "CvN9qLGMFxrMLOBh";
+$strDbName = "ncm";
+
+		try {
+			$db_found = new PDO("mysql:host=$strHostName;port=3306;dbname=$strDbName;charset=utf8", $strUserName, $strPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+			// set the PDO error mode to exception
+			$db_found->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
+		  // mysql_query("SET time_zone = 'America/Chicago'");
+			//echo "Connected successfull    ";
+			}
+		catch(PDOException $e) {
+			echo "Connection failed: " . $e->getMessage();
+		}
+	//end__sila
+
 /* get the next netID from NetLog */
 $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 	$stmt->execute();
@@ -58,21 +77,21 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
                             
 	$stmt2->execute();
 	$result = $stmt2->fetch();
-	
-		$maxID = $result[maxID];
-		$id    = $result[id];	    
-		$newid = $result[newid]; // get it if i need it for a new callsign
-		$latitude  = $result[latitude];   //echo("tt = $tt");	
-		$longitude = $result[longitude];
-		$Fname = ucwords(strtolower($result[Fname]));	
-		$Lname = ucwords(strtolower($result[Lname]));
-		$Lname = $result[Lname];
+	//sila: added single quotes around array keys
+		$maxID = $result['maxID'];
+		$id    = $result['id'];	    
+		$newid = $result['newid']; // get it if i need it for a new callsign
+		$latitude  = $result['latitude'];   //echo("tt = $tt");	
+		$longitude = $result['longitude'];
+		$Fname = ucwords(strtolower($result['Fname']));	
+		$Lname = ucwords(strtolower($result['Lname']));
+		$Lname = $result['Lname'];
 		$Lname = str_replace("'","\'",$Lname);   // The \ is to escape the apostraphe (')
-		$state = $result[state];
-		$grid  = $result[grid]; 	$county	   = ucwords(strtolower($result[county]));
-		$creds = $result[creds];	$district  = $result[district];
-		$email = $result[email];    $home      = $result[home];	
-		$phone = $result[phone];    $city      = $result[city];
+		$state = $result['state'];
+		$grid  = $result['grid']; 	$county	   = ucwords(strtolower($result['county']));
+		$creds = $result['creds'];	$district  = $result['district'];
+		$email = $result['email'];    $home      = $result['home'];	
+		$phone = $result['phone'];    $city      = $result['city'];
 		   // if ( !$email <> '' | $email <> ' ' ) { $email = $testEmail; }
 		    if ( $email == ' ' ) { $email = $testEmail; }
 		
@@ -92,7 +111,7 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
                                  LIMIT 0,1");
                 $stmt->execute();
                 $result = $stmt->fetch();
-        		    $id = $result[newid];
+        		    $id = $result['newid']; //sila: added single quotes
                     $from = 'FCC';
 		}
 		

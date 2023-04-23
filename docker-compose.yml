@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  ncm-db:
+    image: mysql:latest
+    container_name: ncm-mysql-latest
+    command: --sql_mode="" --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: CvN9qLGMFxrMLOBh
+      MYSQL_USER: ncm
+      MYSQL_PASSWORD: CvN9qLGMFxrMLOBh
+#      MYSQL_DATABASE: ncm
+    ports:
+      - "4306:3306"
+    networks:
+      - ncm-network
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 19080:8080
+    networks:
+      - ncm-network
+
+  ncm-app:
+    build: .
+    image: php:8.0-apache
+    ports:
+      - "80:80" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    depends_on:
+      - ncm-db # This service depends on mysql. Start that first.
+    restart: always
+    networks:
+      - ncm-network
+
+# Networks to be created to facilitate communication between containers
+networks:
+  ncm-network:
+
+# Volumes
+volumes:
+    db_data: {}

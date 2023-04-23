@@ -68,7 +68,7 @@
 					
 		    foreach($db_found->query($sql1) as $row) {
 			    
-			    $subnet = $row[subNetOfID];
+			    $subnet = $row['subNetOfID'];
 			    $colorit = '';
 			    $bgcolor = '';
 			    

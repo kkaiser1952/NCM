@@ -26,12 +26,12 @@ $csbase = $cs1;
 		if( !$fccsql->rowCount() < 1 ) {
 			$result = $fccsql->fetch();
 				// Convert first & last name into proper case (first letter uppercase)
-				$fccid      = $result[fccid];
-				$Lname 		= ucfirst(strtolower($result[last])); 
-				$Fname 		= ucfirst(strtolower($result[first]));
+				$fccid      = $result['fccid'];
+				$Lname 		= ucfirst(strtolower($result['last'])); 
+				$Fname 		= ucfirst(strtolower($result['first']));
 				$state2	 	= $result[2];
-				$city       = $result[city];
-				$zip        = $result[zip];
+				$city       = $result['city'];
+				$zip        = $result['zip'];
 				$address 	= $result[3];  //echo "$address<br>"; // 73 Summit Avenue NE Swisher IA 52338
 			
 				$firstLogIn = 1;

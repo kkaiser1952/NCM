@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS 'ncm';
+CREATE DATABASE IF NOT EXISTS 'fcc_amateur';
+
+CREATE USER 'ncm'@'localhost' IDENTIFIED BY 'CvN9qLGMFxrMLOBh';
+GRANT ALL PRIVILEGES ON *.* TO 'ncm'@'localhost';

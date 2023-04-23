@@ -2,6 +2,8 @@
 	// This program creates the dropdown for previous net selection
 	// 2020-10-14
 
+    //sila - constanst tzdiff undefined
+    const tzdiff = "-0:00";
 // read the time diff from UTC for the local time
 	if(!isset($_COOKIE[tzdiff])) {
     	//echo "Cookie named '" . tzdiff . "' is not set!";

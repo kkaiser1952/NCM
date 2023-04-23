@@ -4,6 +4,25 @@
 		$groupList= ' ';
 		$kindList = ' ';
 		$freqList = ' ';
+
+		//sila: added this; $db_found is undefined when running $db_found->query()
+		$strHostName = "ncm-db";
+		$strUserName = "ncm";
+		$strPassword = "CvN9qLGMFxrMLOBh";
+		$strDbName = "ncm";
+		
+				try {
+					$db_found = new PDO("mysql:host=$strHostName;port=3306;dbname=$strDbName;charset=utf8", $strUserName, $strPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+					// set the PDO error mode to exception
+					$db_found->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					
+				  // mysql_query("SET time_zone = 'America/Chicago'");
+					//echo "Connected successfull    ";
+					}
+				catch(PDOException $e) {
+					echo "Connection failed: " . $e->getMessage();
+				}
+			//end__sila
   
         /* 
 		The SQL pulls from NetKind all the information to create the tHree dropdowns. The value from
@@ -12,6 +31,9 @@
 	    */
          // The left join of NetKind to itself is used to pick up the row of the default kind
          // and freq for each id. This is very cool code!
+
+		 //sila: added try-catch
+		 try{
 		foreach($db_found->query("
 			SELECT t1.id, 
 			       t1.`call`, 
@@ -38,14 +60,21 @@
 		
 		/* ==== GROUP ======= */
 		if ($net['call'] <> '' ) {        
-			$l = (52 - $net[otl])/2;  // how long each leg of equal signs should be
-            $e = str_repeat("=", $l); // set e to make the option value 
+			//sila: Undefined constant 'otl' in line beloww...commenting it out
+			//$l = (52 - $net[otl])/2;  // how long each leg of equal signs should be
+            //$e = str_repeat("=", $l); // set e to make the option value 
            
            $groupList = "$groupList<a href='#$net[id2]' onclick='putInGroupInput(this);'>'$net[call]' ---> $net[org]</a>\n";
            
         } // END THE CALL A.K.A.; GROUP LOOP
 			$thisOrgType = '$net[orgType]';	
 		} // End of SQL      
+
+	}
+	catch(Exception $e)
+	{
+		echo 'caught exception: ', $e->getMessage(), "\n";
+	}
 		
 		 //echo $groupList;
 		// echo "$net[myid] thisOrgType= $thisOrgType ===> net OrgType=  $net[orgType] <br> $groupList <br><br>" ;

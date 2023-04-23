@@ -60,6 +60,7 @@
 		echo ("</tr>");
 	}
 		echo ("<tr><td>$ts</td>");
+		//sila: $id and $cs1 undefined at this point
 		echo ("<td>$id</td> <td>$cs1</td> <td>Start of Net</td>");
 		echo ("</tr></tbody></table>");
 			

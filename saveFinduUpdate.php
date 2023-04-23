@@ -98,7 +98,7 @@
         $comment = "$delta:APRS:OBJ: @:$ts ($lat,$lon)  ///$w3w   Cross Roads: $crossRoads Object: $objname";
         
         $sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, latlng, timestamp, ipaddress) 
-					VALUES ('$recID', '$ID', '$nID', '$cs1', '$comment', GeomFromText(CONCAT('POINT (', $lat, ' ', $lon, ')')), '$open', '$ipaddress')";
+					VALUES ('$recID', '$ID', '$nID', '$cs1', '$comment', ST_GeomFromText(CONCAT('POINT (', $lat, ' ', $lon, ')')), '$open', '$ipaddress')";
 						
 			$db_found->exec($sql);
 	

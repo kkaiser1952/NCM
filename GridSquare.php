@@ -53,7 +53,9 @@ $ycalc[2] = $lat +  90;
             $yn[$y] = $ylp;
 		}
 	} 
-  		$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+      //sila: Array and string offset access syntax with curly braces is no longer supported
+      //sila: comment $yqth = $ychr{$yn[1] . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+      $yqth = $ychr[$yn[1]] . $ychr[$yn[4]] . $ynum[$yn[2]] . $ynum[$yn[5]] . $ychr[$yn[3]] . $ychr[$yn[6]];
   		
     	return $yqth;
 } /* end of the gridsquare function */

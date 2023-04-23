@@ -131,21 +131,36 @@ require('config.php');
 	{
 		if ( $ip === false )
 		{
-			if ( $_SERVER['HTTP_X_FORWARDED_FOR'] != '' ) $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			else $ip = $_SERVER['REMOTE_ADDR'];
+			//sila if ( $_SERVER['HTTP_X_FORWARDED_FOR'] != '' ) 
+			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			else 
+				//sila $ip = $_SERVER['REMOTE_ADDR'];
+			if (isset($_SERVER['REMOTE_ADDR'])) 
+				$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
 		if ( $ip == '108.61.195.124' ) return false;
 
 		$cache_file = "/var/www/wx_cache/geo_{$ip}.json";
 		if ( file_exists( $cache_file ) && time()-filemtime( $cache_file ) < 86400 )
+		{
 			return json_decode(file_get_contents( $cache_file ));
+		}
+		else
+		{
+			//sila: if $cache_file does not exist, the file_put_contents() fails below. 
+			//Added code to create file in not exist.
+			touch($cache_file);
+		}
 		
 		$curl = curl_init( "http://extreme-ip-lookup.com/json/{$ip}?key=".$GLOBALS['_API_EXTREME_IP_KEY'] );
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_USERAGENT, 'net-control.us/1.0 kd0eav@clear-sky.net');
 		$data = curl_exec($curl);
+
+		
 		if ( strlen( $data ) > 0 )
 			file_put_contents( $cache_file , $data );
 			

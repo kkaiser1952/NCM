@@ -1,5 +1,5 @@
 <?php
-	
+	require_once "dbConnectDtls.php";  // Access to MySQL
 	// Used by help.php
 	
 function convertSecToTime($sec)
@@ -53,6 +53,22 @@ $sql = "SELECT  COUNT( callsign )                	AS callsigns
 	   	 WHERE netID <> 0 
 	   	   AND activity NOT LIKE '%TEST%'
 ";  
+$strHostName = "ncm-db";
+$strUserName = "ncm";
+$strPassword = "CvN9qLGMFxrMLOBh";
+$strDbName = "ncm";
+
+$db_found ="";
+
+//mysql_set_charset('utf8');
+try {
+	$db_found = new PDO("mysql:host=$strHostName;port=3306;dbname=$strDbName;charset=utf8", $strUserName, $strPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    // set the PDO error mode to exception
+    $db_found->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+  // mysql_query("SET time_zone = 'America/Chicago'");
+	echo "Connected successfull    ";
+
 	$stmt = $db_found->prepare($sql);
 		$stmt -> execute();
 		$callsigns  = $stmt->fetchColumn(0); //echo "\n$callsigns\n";
@@ -83,5 +99,11 @@ $sql3 = "SELECT count(DISTINCT org) as orgCnt FROM `NetKind`";
 		$stmt -> execute();
 		$orgCnt  = $stmt->fetchColumn(0);      	  
      	//  echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
+	}
+catch(PDOException $e) {
+	echo "Connection failed: " . $e->getMessage();
+}
+
+	
      	                  
 ?>

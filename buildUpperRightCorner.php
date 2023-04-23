@@ -19,7 +19,7 @@
 		   "); 
 			  
 			foreach($db_found->query($sql) as $row) {
-				++$num_rows;
+				//sila: undefined, unused... ++$num_rows;
 				$rcols = explode(",","$row[row1]");
 					$r1c1 = $rcols[0];
 					$r1c2 = $rcols[1];
