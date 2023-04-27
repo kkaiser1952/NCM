@@ -73,7 +73,7 @@
 			    $bgcolor = '';
 			    
 			  //  if ($row[netcall] == 'EVENT') {
-				if ($row[pb] == 1 ) {
+				if ($row['pb'] == 1 ) {
 				    $colorit = 'red';
 			    }
 			    

@@ -62,22 +62,22 @@
 
       // Open nets are green, Open PB nets are blue, All else have no color
       $pbcolor = '';
-      	 if ($act[minstat] < $act[lo]) { 
+      	 if ($act['minstat'] < $act['lo']) { 
           	 $pbcolor = 'green';    // for standard nets
-         }if (($act[minstat] < $act[lo]) AND ($act[pb] > 0)) {
+         }if (($act['minstat'] < $act['lo']) AND ($act['pb'] > 0)) {
              $pbcolor = 'pbBlue';   // For PB nets
          }
          
          // We want to know if its a meeting or event so we can set the 'spcl' as a class in the listing
          // This will give us the ability to eventually show the email and phone columns via cookieManagement.js
-         if ($act[meetType] > 0 || $act[eventType] > 0) {
+         if ($act['meetType'] > 0 || $act['eventType'] > 0) {
              $spcl = "spcl";
          }else{
              $spcl = ""; 
          }
       
        // test to see if this is a pre-built net 
-       switch ($act[pb]) {
+       switch ($act['pb']) {
           case 0;   // Not a pre-built
            	$activity = preg_replace('/\s\s+/', ' ', $act[activity]);
            	$dteonly = $act[dteonly];
@@ -95,7 +95,7 @@
          	
         	
         // firstDate and thisDate are used as tests allowing us to put the date betweebn nets 
-        if ($thisDate == $act[dteonly] ) {
+        if ($thisDate == $act['dteonly'] ) {
             $firstDate = false;
         } else {$firstDate = true;}
             
@@ -107,7 +107,7 @@
         } // end if firstdate 
         
         // For Pre-Built, future events
-        if ($act[pb] = 1 AND $act[logdate] > NOW() ) {
+        if ($act['pb'] = 1 AND $act['logdate'] > NOW() ) {
             echo("<option disabled style='color:blue; font-weight:bold'>--------- Future Event --------
             </option>\n");
         }

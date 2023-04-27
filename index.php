@@ -131,7 +131,7 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
+    	<a href="#cc" rel="modal:open" id="version9">v0.0.1-docker</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
@@ -428,8 +428,9 @@
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
 <!-- PHP to build the list of nets from the last 10 days -->
+
 <?php  require_once "buildOptionsForSelect.php"; ?>
-        	
+
         </select>  	<!-- End of ID: select1 -->
 		
 		<div class="btn-group">

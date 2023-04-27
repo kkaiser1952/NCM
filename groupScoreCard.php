@@ -77,15 +77,19 @@
                         					");
 					
 		    foreach($db_found->query($sql1) as $row) {
-			    
-			    $subnet = $row[subNetOfID];
+			    //sila: Undefined array key "subNetOfID" warning
+			    //$subnet = $row['subNetOfID'];
+				//sila: try this:
+				$subnet = $row['subNetOfID'] ?? 'No subnet ID';
 			    $colorit = '';
 			    $bgcolor = '';
 			    
 			  //  if ($row[netcall] == 'EVENT') {
-				if ($row[pb] == 1 ) {
+
+				//sila:  Undefined array key "pb"...commenting out
+				/*if ($row['pb'] == 1 ) {   
 				    $colorit = 'red';
-			    }
+			    }**/
 			    
 			    if ($subnet == 0) {
 				    $subnet = '';
@@ -98,10 +102,6 @@
 			        <td class='logins'>$row[logins]</td>
 			        <td class='logins'>$row[average]</td>
 			        <td style=\"text-align:center\">$row[netID]</td>	
-		<!--	        <td class='subs'>
-			   			<a href=\"https://net-control.us/ics214.php?NetID=$row[subNetOfID]\" target =\"_blank\">$subnet</a>
-			   		</td>
-        -->
 			   		<td class='$colorit netid sorttable_customkey=\"$row[netID]\"'>
 			   			<span style='padding-right: 15px'>
 			   			<a href=\"https://net-control.us/ics214.php?NetID=$row[netID]\" target =\"_blank\"> 214

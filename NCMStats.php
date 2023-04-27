@@ -67,7 +67,6 @@ try {
     $db_found->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
   // mysql_query("SET time_zone = 'America/Chicago'");
-	echo "Connected successfull    ";
 
 	$stmt = $db_found->prepare($sql);
 		$stmt -> execute();
