@@ -59,6 +59,12 @@
     <meta charset = "UTF-8" />
     
     <title>Amateur Radio Net Control Manager</title>
+
+	//sila: added reference to NetManager.js file
+	<script src="js/jquery-3.6.4.min.js"></script>
+	<script type="text/javascript" src="js/NetManager.js"></script>
+	<script type="text/javascript" src="js/NetManager-p2.js"></script>
+
     
     <!-- Below is all about favicon images https://www.favicon-generator.org -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png">
@@ -305,8 +311,41 @@
             -->
             <br>
             
-    <div><b style="color:red">*</b>Enter Your Call Sign:</div>   
-    	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
+    <div><b style="color:red">*</b>Enter Your Call Sign:</div> 
+		  
+    	<input onblur="checkCallSila()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
+		<!-- sila: -->
+		<script type="text/javascript">
+		
+function checkCallSila() {
+    const cs = $("#callsign").val().trim().toUpperCase();
+    const listOfCalls = new Set( ['ah6ez' ]);
+    const isCallInSet = listOfCalls.has($("#callsign").val());
+    
+    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    
+    // If the callsign starting this net is in the above list then ask for his email to send him a message
+    if (!isCallInSet == '') {
+        var mail = prompt('Please enter your email address.');
+            if (mail == '' || mail == null) {
+                alert("Please be sure to close your net when finished. Thank you!");
+            } else {
+
+                var str = cs+":"+mail;  //alert(str);
+                console.log('@737 str= '+str);
+            
+                $.ajax({
+                    type: 'GET',
+                    url: 'addEmailToStations.php',
+                    data: {q: str},
+                    success: function(response) { 
+                } 
+                }) 
+                } 
+    } 
+} 
+</script>
+
 					
 <?php  require_once "buildThreeDropdowns.php"; ?>
 			     
