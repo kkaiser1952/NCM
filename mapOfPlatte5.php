@@ -100,6 +100,7 @@
         countyLayer.addTo(map);
       });
       
+      /*
       // Add a Maidenhead grid overlay with 4 levels of precision
       var gridLevels = [2, 4, 6, 8]; // Define the levels of precision
       var gridPrecisions = gridLevels.map(level => Math.pow(10, -level / 2)); // Calculate the grid precisions
@@ -127,7 +128,20 @@
       
       L.rectangle(bounds, {color: 'blue', weight: 2, fillOpacity: 0, attribution: label }).addTo(map);
       
-      function toMaidenhead(lat, lng, level) {
+      function toMaidenhead(maidenhead, level, precision) {
+  // Maidenhead to lat/lon
+  const { lat, lon } = maidenheadToLatLon(maidenhead);
+
+  // Lat/Lon to Maidenhead
+  const coords = toMaidenheadString(lat, lon, level);
+  const label = toMaidenheadLabel(lat, lon, precision);
+  
+  console.log('coords');
+  return { coords, label };
+}
+*/
+      
+   /*   function toMaidenhead(lat, lng, level) {
           var maidenhead = '';
           var latCoord = (lat + 90) / 180;
           var lngCoord = (lng + 180) / 360;
@@ -144,18 +158,19 @@
             latCoord -= latIndex / latDiv;
             lngCoord -= lngIndex / lngDiv;
           }
-        
+            console.log(maidenhead);
           return maidenhead;
         }
-
+*/
+/*
     function toMaidenheadLabel(lat, lon, precision) {
-      //const coords = toMaidenhead(lat, lon, precision);
-      //const labelLat = `${Math.abs(lat).toFixed(precision)}${lat >= 0 ? 'N' : 'S'}`;
-      //const labelLon = `${Math.abs(lon).toFixed(precision)}${lon >= 0 ? 'E' : 'W'}`;
-      //return `${coords} (${labelLat}, ${labelLon})`;
+      const coords = toMaidenhead(lat, lon, precision);
+      const labelLat = `${Math.abs(lat).toFixed(precision)}${lat >= 0 ? 'N' : 'S'}`;
+      const labelLon = `${Math.abs(lon).toFixed(precision)}${lon >= 0 ? 'E' : 'W'}`;
+      return `${coords} (${labelLat}, ${labelLon})`;
     }
 
-/* 
+ 
       // Convert latitude and longitude to Maidenhead grid square
       function toMaidenhead(lat, lng, level) {
         var precision = Math.pow(10, -level / 2);
@@ -168,15 +183,15 @@
                latSubIndex.toString() +
                lngSubIndex.toString();
       }
-      
+      */
       // Convert Maidenhead grid square to label
-      function toMaidenheadLabel(maidenhead, level) {
-        return 'Maidenhead: ' + maidenhead + ', Precision: ' + level.toString();
-      }
+  //    function toMaidenheadLabel(maidenhead, level) {
+    //    return 'Maidenhead: ' + maidenhead + ', Precision: ' + level.toString();
+    //  }
      
       // Add a Maidenhead grid overlay with 4 levels of precision
      
-    var gridLevels = [2, 4, 6, 8]; // Define the levels of precision
+/*    var gridLevels = [2, 4, 6, 8]; // Define the levels of precision
     var gridPrecisions = gridLevels.map(level => Math.pow(10, -level / 2)); // Calculate the grid precisions
     var minLat = 35.5;
     var maxLat = 40.5;
@@ -199,8 +214,8 @@
         lat += precision;
       }
     }
-      */
-  
+      
+  */
   </script>
 </body>
 </html>
