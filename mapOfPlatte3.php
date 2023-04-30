@@ -10,7 +10,9 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   
 <!-- Include Graticule plugin JavaScript -->
-<script src="https://ha8tks.github.io/Leaflet.Maidenhead/src/L.Maidenhead.js"></script>
+<!--<script src="https://ha8tks.github.io/Leaflet.Maidenhead/src/L.Maidenhead.js"></script>-->
+<script src="js/maidenhead8.js"></script>
+ 
 
   <style>
     html, body, #map {
