@@ -100,22 +100,7 @@
         countyLayer.addTo(map);
       });
       
-   /* var mhLayer = new L.Maidenhead({
-        color: '#00FF00',
-        opacity: 0.5,
-        precision: 8
-    }).addTo(map);
-*/
-    // Add the Maidenhead grid to the map
-    L.maidenhead({
-	    color : 'rgba(255, 0, 0, 0.4)',
-	    redraw: 'move',
-        precision: 8 // Set precision to 8
-    }).addTo(map);
-    
-   // L.utm({ellps: 'WGS84', zone: 15, southHemi: false}).addTo(map);
-    //L.maidenhead({color: 'black', fontsize: 14, precision: 8}).addTo(map);
-
+  
   </script>
 </body>
 </html>
