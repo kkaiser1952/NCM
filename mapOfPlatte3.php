@@ -29,7 +29,7 @@
   
   <script>
     // Create a new map instance
-    var map = L.map('map');
+    var map = L.map('map', {zoom:13, tileSize: 512});
     // Set the bounds to the bounding box of Platte and Clay Counties
     var bounds = L.latLngBounds([[39.3477, -94.7273], [39.3996, -94.4471]]);
     map.fitBounds(bounds);
@@ -37,7 +37,9 @@
     // Add the OpenStreetMap tile layer to the map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-      maxZoom: 18
+      maxZoom: 18,
+      tileSize: 512,
+      zoomOffset: -1
     }).addTo(map);
     
     // Add the county boundaries
