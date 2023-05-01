@@ -18,12 +18,12 @@ require_once "dbConnectDtls.php";
     	    $nextid = $stmt->fetchColumn(0);
     	    //echo("$nextid");
      
-     
+     //sila: added ST_ to GeomFromTest
        $sql = "INSERT INTO stations (ID, callsign, Fname, Lname, grid, tactical, email, fccid,
                                      latitude, longitude, creds, county, state, district, home, 
                                      city, phone, zip, latlng, lastLogDT, firstLogDT )
     
-    //sila: added ST_ to GeomFromTest
+    
 	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', 
 	                   '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
                        '$city', ' ', '$zip', ST_GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
