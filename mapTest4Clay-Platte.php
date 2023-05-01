@@ -84,7 +84,7 @@
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
     
     <script src="https://unpkg.com/leaflet.maidenhead@1.0.0/src/maidenhead.js"></script>
-    <!--<script src="js/Leaflet.Graticule.js"></script>-->
+    <!--<script src="js/Leaflet.Graticule.js"></script>  this is a copy of the above, test b4 using -->
     
     
      

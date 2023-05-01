@@ -6,6 +6,7 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
+    require_once "getCrossRoads.php";
   //  include "get3Words.php";
     
     $call = $_GET['call']; 
@@ -29,7 +30,6 @@ function secondsToDHMS($seconds) {
         SELECT  callsign, grid, creds, email, tactical, district, id, county, state, home,
                 CONCAT(Fname,' ',Lname) as name
           FROM stations  /* changed from NetLog to stations on 2021-08-09 */
-   /*      WHERE recordID = $recordID  commented out on 2019-12-21 */
           WHERE callsign = '$call'
          ";
          
@@ -48,6 +48,9 @@ function secondsToDHMS($seconds) {
 		$grid       = "$Ahome[2]";
         $koords     = "$Ahome[0],$Ahome[1]";
         $koords2    = "lat=$Ahome[0],&lon=$Ahome[1]";
+               
+        $crossroads = getCrossRoads("$Ahome[0],$Ahome[1]");
+        
 
    // echo("$sql<br>$county");
 
@@ -462,6 +465,8 @@ foreach ( $result["webPages"]["value"] as $data)
 				
 				<span> $koords </span>
 				
+				<span> $crossroads </span>
+							
 				<span> aprs.fi Map: $fiAddr </span>
 				
 				<span>what3words: ///$what3words <br>
