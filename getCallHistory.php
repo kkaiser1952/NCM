@@ -7,7 +7,7 @@
 
     require_once "dbConnectDtls.php";
     require_once "getCrossRoads.php";
-  //  include "get3Words.php";
+  
     
     $call = $_GET['call']; 
     //$call = 'WA0TJT';
@@ -16,9 +16,6 @@
     
     $recordID   = $_GET['id']; 
     
-    //echo("$call<br>$recordID");
-    
-  //  echo("call in php: $call id: $id");
     
 // Function to convert tod in seconds to days, hours, min, seconds		
 function secondsToDHMS($seconds) {
@@ -49,7 +46,9 @@ function secondsToDHMS($seconds) {
         $koords     = "$Ahome[0],$Ahome[1]";
         $koords2    = "lat=$Ahome[0],&lon=$Ahome[1]";
                
-        $crossroads = getCrossRoads("$Ahome[0],$Ahome[1]");
+        $crossroads = "";
+        //$crossroads = getCrossRoads("$Ahome[0],$Ahome[1]");
+        echo "$crossroads";
         
 
    // echo("$sql<br>$county");
