@@ -23,7 +23,46 @@
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
-  
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    
+    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!--<script src="js/L.Control.MousePosition.js"></script>-->
+     
+    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
+    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
+    
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
+    
+    <script src="js/hamgridsquare.js"></script>
+    
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
+    <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
+    <!-- Allows for rotating markers when more than one at the same place -->
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    
+    <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
+    
+    
+     
+     <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
+     <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
+    crossorigin=""></script>
+    
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
+    crossorigin=""></script>     
+    <!-- ******************************** End ESRI LEAFLET ***************************************** ->
   
   <!-- What 3 Words -->
   <script src="js/control.w3w.js"></script>
@@ -32,6 +71,122 @@
   <script src="js/leaflet_numbered_markers.js"></script>
   <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
   <script src="js/geolet.js"></script>
+  
+  <script>
+  /*
+ * L.Maidenhead displays a Maidenhead Locator of lines on the map.
+ */
+
+L.Maidenhead = L.LayerGroup.extend({
+
+	
+	options: {
+		// Line and label color
+		color: 'rgba(255, 0, 0, 0.4)',
+		// Redraw on move or moveend
+		redraw: 'move'
+	},
+
+	initialize: function (options) {
+		L.LayerGroup.prototype.initialize.call(this);
+		L.Util.setOptions(this, options);
+
+	},
+
+	onAdd: function (map) {
+		this._map = map;
+		var grid = this.redraw();
+		this._map.on('viewreset '+ this.options.redraw, function () {
+			grid.redraw();
+		});
+
+		this.eachLayer(map.addLayer, map);
+	},
+	
+	onRemove: function (map) {
+		// remove layer listeners and elements
+		map.off('viewreset '+ this.options.redraw, this.map);
+		this.eachLayer(this.removeLayer, this);
+	},
+
+	redraw: function () {
+		var d3 =         new Array(20,10,10,10,10,10,1 ,1 ,1 ,1 ,1/24,1/24,1/24,1/24,1/24,1/240,1/240,1/240,1/240/24,1/240/24,1/240/24 );
+		var lat_cor =    new Array(0 ,8 ,8 ,8 ,10,14,6 ,8 ,8 ,8 ,1.4 ,2.5 ,3   ,3.5 ,4   ,4    ,3.5  ,3.5  ,1.45    ,1.8     ,1.6      );
+		var bounds = map.getBounds();
+		var zoom = map.getZoom();
+		var unit = d3[zoom];
+		var lcor = lat_cor[zoom];
+		var w = bounds.getWest();
+		var e = bounds.getEast();
+		var n = bounds.getNorth();
+		var s = bounds.getSouth();
+		if (zoom==1) {var c = 2;} else {var c = 0.1;}
+		if (n > 85) n = 85;
+		if (s < -85) s = -85;
+		var left = Math.floor(w/(unit*2))*(unit*2);
+		var right = Math.ceil(e/(unit*2))*(unit*2);
+		var top = Math.ceil(n/unit)*unit;
+		var bottom = Math.floor(s/unit)*unit;
+		this.eachLayer(this.removeLayer, this);
+		for (var lon = left; lon < right; lon += (unit*2)) {
+			for (var lat = bottom; lat < top; lat += unit) {
+			var bounds = [[lat,lon],[lat+unit,lon+(unit*2)]];
+			this.addLayer(L.rectangle(bounds, {color: this.options.color, weight: 1, fill:false, interactive: false}));
+			//var pont = map.latLngToLayerPoint([lat,lon]);
+			//console.log(pont.x);
+			this.addLayer(this._getLabel(lon+unit-(unit/lcor),lat+(unit/2)+(unit/lcor*c)));
+			}
+		}
+		return this;
+	},
+    	
+	_getLabel: function(lon,lat) {
+	  var title_size = new Array(0 ,10,12,16,20,26,12,16,24,36,12  ,14  ,20  ,36  ,60  ,12   ,20   ,36   ,8   ,12      ,24       );
+	  var zoom = map.getZoom();
+	  var size = title_size[zoom]+'px';
+	  var title = '<span style="cursor: default;"><font style="color:'+this.options.color+'; font-size:'+size+'; font-weight: 900; ">' + this._getLocator(lon,lat) + '</font></span>';
+      var myIcon = L.divIcon({className: 'my-div-icon', html: title});
+      var marker = L.marker([lat,lon], {icon: myIcon}, clickable=false);
+      return marker;
+	},
+	
+	_getLocator: function(lon,lat) {
+	  var ydiv_arr=new Array(10, 1, 1/24, 1/240, 1/240/24);
+	  var d1 = "ABCDEFGHIJKLMNOPQR".split("");
+	  var d2 = "ABCDEFGHIJKLMNOPQRSTUVWX".split("");
+	  var d4 =         new Array(0 ,1 ,1 ,1 ,1 ,1 ,2 ,2 ,2 ,2 ,3   ,3   ,3   ,3   ,3   ,4    ,4    ,4    ,5    ,5       ,5        );
+      var locator = "";
+      var x = lon;
+      var y = lat;
+      var precision = d4[map.getZoom()];
+      while (x < -180) {x += 360;}
+      while (x > 180) {x -=360;}
+      x = x + 180;
+      y = y + 90;
+      locator = locator + d1[Math.floor(x/20)] + d1[Math.floor(y/10)];
+      for (var i=0; i<4; i=i+1) {
+		if (precision > i+1) {
+        rlon = x%(ydiv_arr[i]*2);
+        rlat = y%(ydiv_arr[i]);
+			if ((i%2)==0) {
+				locator += Math.floor(rlon/(ydiv_arr[i+1]*2)) +""+ Math.floor(rlat/(ydiv_arr[i+1]));
+			} else {
+				locator += d2[Math.floor(rlon/(ydiv_arr[i+1]*2))] +""+ d2[Math.floor(rlat/(ydiv_arr[i+1]))];	
+			}
+		}
+	  }  
+      return locator;
+	},
+
+  
+	
+
+});
+
+L.maidenhead = function (options) {
+	return new L.Maidenhead(options);
+};
+      </script>
 
   
   <style>
@@ -278,44 +433,6 @@
     }
   </script>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    
-    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
-    <!--<script src="js/L.Control.MousePosition.js"></script>-->
-     
-    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
-    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
-    
-    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
-    
-    <script src="js/hamgridsquare.js"></script>
-    
-    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
-    <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
-    <!-- Allows for rotating markers when more than one at the same place -->
-    <script src="js/leaflet.rotatedMarker.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
-    
-    <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
-    
-    
-     
-     <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
-     <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
-    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
-    crossorigin=""></script>
-
-  <!-- Load Esri Leaflet Vector from CDN -->
-  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
-    crossorigin=""></script>
-    
-    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
-    crossorigin=""></script>     
-    <!-- ******************************** End ESRI LEAFLET ***************************************** -->
+  
 </body>
 </html>
