@@ -24,8 +24,9 @@ function secondsToDHMS($seconds) {
 }
 
     $sql = "
-        SELECT  callsign, grid, creds, email, tactical, district, id, county, state, home,
-                CONCAT(Fname,' ',Lname) as name
+        SELECT  callsign, grid, creds, email, tactical, district, id, county, state, home, 
+                CONCAT(Fname,' ',Lname) as name,
+                latitude, longitude
           FROM stations  /* changed from NetLog to stations on 2021-08-09 */
           WHERE callsign = '$call'
          ";
@@ -47,8 +48,11 @@ function secondsToDHMS($seconds) {
         $koords2    = "lat=$Ahome[0],&lon=$Ahome[1]";
                
         $crossroads = "";
-        //$crossroads = getCrossRoads("$Ahome[0],$Ahome[1]");
-        echo "$crossroads";
+        $crossroads = getCrossRoads($result[latitude],$result[longitude]);
+        
+        // CURL Error #:SSL: no alternative certificate subject name matches target host name 'api.geonames.org'
+        // above error: check the HTTP V. HTTPS in the request
+        //echo "$crossroads";
         
 
    // echo("$sql<br>$county");
@@ -464,9 +468,11 @@ foreach ( $result["webPages"]["value"] as $data)
 				
 				<span> $koords </span>
 				
+				<span style='color:blue; font-weight:bold;'>Crossroads</span>
+				
 				<span> $crossroads </span>
 							
-				<span> aprs.fi Map: $fiAddr </span>
+				<span><br> aprs.fi Map: $fiAddr </span>
 				
 				<span>what3words: ///$what3words <br>
 				    W3W Map: $w3wmap
