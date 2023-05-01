@@ -17,7 +17,7 @@
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    $q = 8913; 
+    $q = 8973; 
     //$q = 6066;
     //$q = 7988;
     
@@ -84,6 +84,7 @@
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
     
     <script src="https://unpkg.com/leaflet.maidenhead@1.0.0/src/maidenhead.js"></script>
+    <!--<script src="js/Leaflet.Graticule.js"></script>-->
     
     
      
@@ -591,8 +592,66 @@ var map = L.map('map', {
             console.log(e);
             lastLayer = e.relatedTarget; 
         });
+        
+        // Add the county boundaries
+    var countyStyle = {
+      "color": "#ff7800",
+      "weight": 3,
+      "opacity": 1,
+      "fillOpacity": 0,
+    };
+
+    // Load the GeoJSON data for Platte County from OpenStreetMap
+    fetch('https://nominatim.openstreetmap.org/search.php?q=Platte+County+Missouri&polygon_geojson=1&format=geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Create a new GeoJSON layer with the county boundary data
+        var countyLayer = L.geoJSON(data, {
+          style: {
+            color: 'blue',
+            opacity: 1,
+            fillOpacity: 0,
+            weight: 3
+          },
+          onEachFeature: function(feature, layer) {
+            layer.bindTooltip(feature.properties.display_name, {
+              sticky: true
+            });
+          }
+        });
+
+        // Add the county layer to the map
+        countyLayer.addTo(map);
+      });
+
+    // Load the GeoJSON data for Clay County from OpenStreetMap
+    fetch('https://nominatim.openstreetmap.org/search.php?q=Clay+County+Missouri&polygon_geojson=1&format=geojson')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Create a new GeoJSON layer with the county boundary data
+        var countyLayer = L.geoJSON(data, {
+          style: {
+            color: 'blue',
+            opacity: 1,
+            fillOpacity: 0,
+            weight: 3
+          },
+          onEachFeature: function(feature, layer) {
+            layer.bindTooltip(feature.properties.display_name, {
+              sticky: true
+            });
+          }
+        });
+
+        // Add the county layer to the map
+        countyLayer.addTo(map);
+      });
 	    
-map.setZoom(12);
+map.setZoom(17);
  L.maidenhead({precision: 8}).addTo(map)
 
 
