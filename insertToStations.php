@@ -23,9 +23,10 @@ require_once "dbConnectDtls.php";
                                      latitude, longitude, creds, county, state, district, home, 
                                      city, phone, zip, latlng, lastLogDT, firstLogDT )
     
+    //sila: added ST_ to GeomFromTest
 	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', 
 	                   '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
-                       '$city', ' ', '$zip', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                       '$city', ' ', '$zip', ST_GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	          ";	      
 	        
 	   $stmt2 = $db_found->prepare($sql);
