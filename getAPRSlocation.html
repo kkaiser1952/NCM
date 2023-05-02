@@ -17,18 +17,21 @@
       function getAPRSData() {
         var callsign = document.getElementById("callsign").value.toUpperCase();
         var apiKey = "5275.AYRjLwAFgx6ud"; // replace with your API key
-        var url = `https://api.aprs.fi/api/get?name=${callsign}&what=loc&apikey=${apiKey}&format=json`;
+        /*var url = `https://api.aprs.fi/api/get?name=${callsign}&what=loc&apikey=${apiKey}apiKey&format=json`; */
+        var url = `https://crossorigin.me/https://api.aprs.fi/api/get?name=${callsign}&what=loc&apikey=${apiKey}apiKey&format=json`;
         fetch(url)
           .then(response => response.json())
           .then(data => {
             if (data.result === "ok") {
-              var location = data.entries[0].lat + ", " + data.entries[0].lng;
+             // var location = data.entries[0].lat + ", " + data.entries[0].lng;
+             var location = JSON.stringify(data.entries[0], null, 2);
+              
               document.getElementById("location").innerHTML = location;
             } else {
               throw new Error(data.description);
             }
           })
-          .catch(error => console.error(error));
+         // .catch(error => console.error(error));
       }
     </script>
   </body>
