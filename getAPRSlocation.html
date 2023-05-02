@@ -1,24 +1,31 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-    <link rel="shortcut icon" href="#" />
-
-    <meta charset = "UTF-8" />
-    <title></title>
-    <script src = js/getAPRSlocation.js></script>
-    
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>APRS API Test</title>
+  </head>
+  <body>
+    <h1>APRS API Test</h1>
+    <label for="callsign">Callsign:</label>
+    <input type="text" id="callsign" name="callsign" />
+    <button onclick="getAPRSData()">Get Location</button>
+    <div id="location"></div>
     <script>
-        //const jout = getAPRSlocation('WA0TJT-8'); 
-        
-        console.log(getAPRSlocation("WA0TJT-8"));
+      function getAPRSData() {
+        var callsign = document.getElementById("callsign").value;
+        var apiKey = "mykeygoeshere"; // replace with your API key
+        var url = `https://api.aprs.fi/api/get?name=${callsign}&what=loc&apikey=${apiKey}&format=json`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data.result === "ok") {
+              var location = data.entries[0].lat + ", " + data.entries[0].lng;
+              document.getElementById("location").innerHTML = location;
+            } else {
+              throw new Error(data.description);
+            }
+          })
+          .catch(error => console.error(error));
+      }
     </script>
- 
-</head>
-<body>
-    <div>
-    
-    </div>
-
-</body>
+  </body>
 </html>
