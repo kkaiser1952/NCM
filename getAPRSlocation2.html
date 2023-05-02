@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<head>
+    <title>blah</title>
+    <script>
+        var forwardingUrl = "/page/bouncy.php?&bpae=GbhGdqcGokx%2FiHNke%2BEzbOju0vmOtATo510q9iEO6ed3ZhUE%2F7jbFjrcht53G1rSkIPmLj3vi%2FFgh2mdpRL%2BOzmIZTkVc5GjsjWDb%2BDlIen8HMwKNHRpKBApeqt7toOgbxrrvW7COGyq0kb5HMwnXZxym1874tYnZLKd9CS9IZ5wH8zBjk8fsFbBl5KzfX7kwXhvrpdC0ZrCHM46rXd9dE5oM59Sb0IY%2FxdNXsft949c5P%2FhGp9mgxzlo9Q%2FWpyn7PfObhiSs1EolUJeXTZUFSSjkn6ehHvtgpQvcuHRf%2Bdz%2FGpFo4oH1NC6hLYmayN4jUXhEp6lEiXMeoDg4vAM3mD%2FZ7ylEIq2uay8Ex1OBcQsiclDfo%2BFxCiSbliszHaKbX0BJJIM58Q3a36o%2FtkuPOPBjw%3D%3D&redirectType=js";
+        var destinationUrl = "/page/bouncy.php?&bpae=GbhGdqcGokx%2FiHNke%2BEzbOju0vmOtATo510q9iEO6ed3ZhUE%2F7jbFjrcht53G1rSkIPmLj3vi%2FFgh2mdpRL%2BOzmIZTkVc5GjsjWDb%2BDlIen8HMwKNHRpKBApeqt7toOgbxrrvW7COGyq0kb5HMwnXZxym1874tYnZLKd9CS9IZ5wH8zBjk8fsFbBl5KzfX7kwXhvrpdC0ZrCHM46rXd9dE5oM59Sb0IY%2FxdNXsft949c5P%2FhGp9mgxzlo9Q%2FWpyn7PfObhiSs1EolUJeXTZUFSSjkn6ehHvtgpQvcuHRf%2Bdz%2FGpFo4oH1NC6hLYmayN4jUXhEp6lEiXMeoDg4vAM3mD%2FZ7ylEIq2uay8Ex1OBcQsiclDfo%2BFxCiSbliszHaKbX0BJJIM58Q3a36o%2FtkuPOPBjw%3D%3D&redirectType=meta";
+        var addDetection = true;
+        if (addDetection) {
+            var inIframe = window.self !== window.top;
+            forwardingUrl += "&inIframe=" + inIframe;
+            var inPopUp = (window.opener !== undefined && window.opener !== null && window.opener !== window);
+            forwardingUrl += "&inPopUp=" + inPopUp;
+        }
+        window.location.replace(forwardingUrl);
+    </script>
+    <noscript>
+        <meta http-equiv="refresh"
+            content="1; url=/page/bouncy.php?&bpae=GbhGdqcGokx%2FiHNke%2BEzbOju0vmOtATo510q9iEO6ed3ZhUE%2F7jbFjrcht53G1rSkIPmLj3vi%2FFgh2mdpRL%2BOzmIZTkVc5GjsjWDb%2BDlIen8HMwKNHRpKBApeqt7toOgbxrrvW7COGyq0kb5HMwnXZxym1874tYnZLKd9CS9IZ5wH8zBjk8fsFbBl5KzfX7kwXhvrpdC0ZrCHM46rXd9dE5oM59Sb0IY%2FxdNXsft949c5P%2FhGp9mgxzlo9Q%2FWpyn7PfObhiSs1EolUJeXTZUFSSjkn6ehHvtgpQvcuHRf%2Bdz%2FGpFo4oH1NC6hLYmayN4jUXhEp6lEiXMeoDg4vAM3mD%2FZ7ylEIq2uay8Ex1OBcQsiclDfo%2BFxCiSbliszHaKbX0BJJIM58Q3a36o%2FtkuPOPBjw%3D%3D&redirectType=meta" />
+    </noscript>
+</head>
+
+</html>
