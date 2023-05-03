@@ -750,7 +750,7 @@ function checkCall() {
     const listOfCalls = new Set( ['ah6ez' ]);
     const isCallInSet = listOfCalls.has($("#callsign").val());
     
-    console.log('@815 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    console.log('@753 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
     
     // If the callsign starting this net is in the above list then ask for his email to send him a message
     if (!isCallInSet == '') {
@@ -786,50 +786,51 @@ function removeSpaces(str) {
 
 </script>
 
-
-
 <script>
     $(document).ready(function() {
-    console.log('@864 top of new sort code');
-   
-  // check if a sort order is stored in local storage
-  var sortOrder = localStorage.getItem('my-sort-order');
-  
-  //console.log('@869 '+sortOrder);
-  console.log($('#actLog').length);
-
-  // apply the stored sort order to the table if present
-  if (sortOrder) {
-    applySortOrder(sortOrder);
-  } else {
-    // apply default sort order to "Call Sign" column
-    applySortOrder('callsign asc');
-  }
-
-  // add event listener for right-click on table headers
-  $('th').contextmenu(function() {
-    // get the column name and sort direction
-    var columnName = $(this).attr('data-column-name');
-    var sortDirection = $(this).attr('data-sort-direction');
+        
+    console.log('@792 now in ready');
+  // add event listener for net selection dropdown
+  $('#actLog').change(function() {
+    // populate the actLog table here
+    //console.log($('#actLog').length);
     
-    console.log('@875 new stuff '+columnName+',  '+sortDirection);
+    // check if a sort order is stored in local storage
+    var sortOrder = localStorage.getItem('my-sort-order');
+    
+    console.log('@801 '+sortOrder);
 
-    // toggle the sort direction
-    if (sortDirection === 'asc') {
-      sortDirection = 'desc';
+    // apply the stored sort order to the table if present
+    if (sortOrder) {
+      applySortOrder(sortOrder);
     } else {
-      sortDirection = 'asc';
+      // apply default sort order to "Call Sign" column
+      applySortOrder('callsign asc');
     }
 
-    // build the sort order string and apply it to the table
-    var sortOrder = columnName + ' ' + sortDirection;
-    applySortOrder(sortOrder);
+    // add event listener for right-click on table headers
+    $('th').contextmenu(function() {
+      // get the column name and sort direction
+      var columnName = $(this).attr('data-column-name');
+      var sortDirection = $(this).attr('data-sort-direction');
 
-    // store the sort order in local storage
-    localStorage.setItem('my-sort-order', sortOrder);
+      // toggle the sort direction
+      if (sortDirection === 'asc') {
+        sortDirection = 'desc';
+      } else {
+        sortDirection = 'asc';
+      }
 
-    // prevent default right-click behavior
-    return false;
+      // build the sort order string and apply it to the table
+      var sortOrder = columnName + ' ' + sortDirection;
+      applySortOrder(sortOrder);
+
+      // store the sort order in local storage
+      localStorage.setItem('my-sort-order', sortOrder);
+
+      // prevent default right-click behavior
+      return false;
+    });
   });
 
   // function to apply the given sort order to the table
@@ -852,6 +853,7 @@ function removeSpaces(str) {
     // ...
   }
 });
+
 
 
 </script>
