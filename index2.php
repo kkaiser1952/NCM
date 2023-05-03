@@ -691,7 +691,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
 <!-- My javascript -->	
-	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
+	<script src="js/NetManager2.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
 	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
 	
 	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
@@ -791,14 +791,28 @@ function removeSpaces(str) {
         
     console.log('@792 now in ready');
   // add event listener for net selection dropdown
-  $('#actLog').change(function() {
-    // populate the actLog table here
-    //console.log($('#actLog').length);
-    
-    // check if a sort order is stored in local storage
-    var sortOrder = localStorage.getItem('my-sort-order');
-    
-    console.log('@801 '+sortOrder);
+  $(document).on('change', '#actLog', function() {
+  var sortOrder = localStorage.getItem('my-sort-order');
+  console.log('@796 sortOrder:', sortOrder);
+
+  if (sortOrder !== null) {
+    console.log('@799 sortOrder is not null');
+    var rows = $('#actLog tbody > tr').get();
+    console.log('@801 rows:', rows);
+
+    rows.sort(function(a, b) {
+      var keyA = $(a).children('td').eq(sortOrder).text().toUpperCase();
+      var keyB = $(b).children('td').eq(sortOrder).text().toUpperCase();
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+
+    $.each(rows, function(index, row) {
+      $('#actLog').children('tbody').append(row);
+    });
+  } 
+});
 
     // apply the stored sort order to the table if present
     if (sortOrder) {
@@ -831,7 +845,7 @@ function removeSpaces(str) {
       // prevent default right-click behavior
       return false;
     });
-  });
+  
 
   // function to apply the given sort order to the table
   function applySortOrder(sortOrder) {
