@@ -774,6 +774,66 @@ function checkCall() {
         // AJAX:        Put the collected email into his record in the stations table.
     } // End if
 } // end checkCall function
+
+$(document).ready(function() {
+  // check if a sort order is stored in local storage
+  var sortOrder = localStorage.getItem('my-sort-order');
+
+  // apply the stored sort order to the table if present
+  if (sortOrder) {
+    applySortOrder(sortOrder);
+  } else {
+    // apply default sort order to "Call Sign" column
+    applySortOrder('callsign asc');
+  }
+
+  // add event listener for right-click on table headers
+  $('th').contextmenu(function() {
+    // get the column name and sort direction
+    var columnName = $(this).attr('data-column-name');
+    var sortDirection = $(this).attr('data-sort-direction');
+    
+    console.log('@794 '+columnName+'  '+sortDirection);
+
+    // toggle the sort direction
+    if (sortDirection === 'asc') {
+      sortDirection = 'desc';
+    } else {
+      sortDirection = 'asc';
+    }
+
+    // build the sort order string and apply it to the table
+    var sortOrder = columnName + ' ' + sortDirection;
+    applySortOrder(sortOrder);
+
+    // store the sort order in local storage
+    localStorage.setItem('my-sort-order', sortOrder);
+
+    // prevent default right-click behavior
+    return false;
+  });
+
+  // function to apply the given sort order to the table
+  function applySortOrder(sortOrder) {
+    // add 'sorttable_sorted' class to the appropriate table header
+    $('th[data-column-name="' + sortOrder.split(' ')[0] + '"]')
+      .addClass('sorttable_sorted')
+      .siblings()
+      .removeClass('sorttable_sorted');
+
+    // remove the sort indicators from other table headers
+    $('th span').html('');
+
+    // add the sort indicator to the appropriate table header
+    var sortIndicator = sortOrder.split(' ')[1] === 'asc' ? '▴' : '▾';
+    $('th[data-column-name="' + sortOrder.split(' ')[0] + '"] span')
+      .html('&nbsp;' + sortIndicator);
+
+    // do the sorting here using the sortOrder string
+    // ...
+  }
+});
+
 </script>
 
 </body>
