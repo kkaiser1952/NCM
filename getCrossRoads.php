@@ -18,7 +18,8 @@ function getCrossRoads($lat, $lng) {
 
     $curl = curl_init();
     
-    // http://www.geonames.org/maps/osm-reverse-geocoder.html
+// http://www.geonames.org/maps/osm-reverse-geocoder.html
+
     curl_setopt_array($curl, array(
       CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
       CURLOPT_SSL_VERIFYPEER => false,
@@ -47,9 +48,13 @@ function getCrossRoads($lat, $lng) {
            $street1  = $crc['intersection']['street1']; 
            $street2  = $crc['intersection']['street2'];     
            
-           return "$street1 &amp; $street2";
+           $CrossRoads = "$street1 &amp; $street2";
            
-          // echo "$CrossRoads";
+           //return "$street1 &amp; $street2";
+           
+           echo "$CrossRoads";
+           
+          // return "$street1 &amp; $street2";
             
     } // end else	
 };  // End function
