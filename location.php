@@ -32,7 +32,6 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "Altitude: {$altitude}<br>";
     echo "First Time: {$firsttime} UTC<br>";
     echo "This Time: {$thistime} UTC<br>";
-    //echo "Koords: {$koords}<br>";
     
     // Now get the crossroads data
     include('getCrossRoads.php');
@@ -48,18 +47,19 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "<br><br>Data Array:<br>";
     print_r($data);
     
-    // Now lets add the what3words words from the W3W geocoder
-    require_once('/path/to/w3w-php-wrapper/src/Geocoder.php');
-
-    $w3w_api_key = $config['geocoder']['api_key'];
-    $geocoder = new \What3words\Geocoder\Geocoder($config['geocoder']['w3w_api_key']);
-   // $language = 'EN';
-   // $format = 'json';
     
-    $result = $geocoder->convertTo3wa($lat, $lng, $language, $format);
-    echo ("$result");
+
+    // Now lets add the what3words words from the W3W geocoder
+    $w3w_api_key = $config['geocoder']['api_key'];
+    require_once("Geocoder.php");
+    use What3words\Geocoder\Geocoder;
+    //use What3words\Geocoder\AutoSuggestOption;
+
+    $api = new Geocoder("$w3w_api_key");
+       
+    $result = $api->convertTo3wa($lat, $lng);
     print_r($result);
- 
+    
 }
 
 get_aprs_data("wa0tjt-1");
