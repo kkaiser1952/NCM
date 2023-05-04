@@ -1,68 +1,39 @@
+
+
 <?php
-function formatUnixTimestamp($unixTimestamp) {
-    $dateObject = new DateTime();
-    $dateObject->setTimestamp($unixTimestamp);
+function get_aprs_data($callsign) {
+    // Construct the API URL
+    $api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey=5275.AYRjLwAFgx6ud&format=json";
+    //$api_url = "http://api.aprs.fi/api/get?name=" . strtoupper($callsign) . "&what=loc&apikey=" . $api_key . "&format=json";
 
-    $date = $dateObject->format('m/d/Y');
-    $time = $dateObject->format('h:i:s A');
-
-    $datetime = "$date $time";
-
-    return $datetime;
+    
+    echo "url: {$api_url} <br><br>";
+    
+    // Fetch the data from the API
+    $json_data = file_get_contents($api_url);
+    $data = json_decode($json_data, true);
+    
+    // Extract the required data
+    $lat = $data['entries'][0]['lat'];
+    $lng = $data['entries'][0]['lng'];
+    $altitude = $data['entries'][0]['altitude'];
+    $time = gmdate('Y-m-d H:i:s', $data['entries'][0]['time']);
+    $pastime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
+    $koords = "{$lat},{$lng}";
+    
+    // Output the data
+    echo "Latitude: {$lat}<br>";
+    echo "Longitude: {$lng}<br>";
+    echo "Altitude: {$altitude}<br>";
+    echo "Time: {$time} UTC<br>";
+    echo "Past Time: {$pastime} UTC<br>";
+    echo "Koords: {$koords}<br>";
+    
+    // Output the entire data array for debugging purposes
+    echo "Data Array:<br>";
+    print_r($data);
 }
 
-
-// Set the API endpoint and parameters
-$url = 'http://api.aprs.fi/api/get';
-$params = array(
-    'name' => 'WA0TJT-8',
-    'what' => 'loc',
-    'apikey' => '5275.AYRjLwAFgx6ud',
-    'format' => 'json'
-);
-$query_string = http_build_query($params);
-$request_url = $url . '?' . $query_string;
-
-// Create a new cURL handle
-$ch = curl_init();
-
-// Set the cURL options
-curl_setopt($ch, CURLOPT_URL, $request_url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request
-$response = curl_exec($ch);
-
-// Check for errors
-if(curl_errno($ch)) {
-    echo 'Error: ' . curl_error($ch);
-}
-
-// Close the cURL handle
-curl_close($ch);
-
-// Parse the JSON response
-$data = json_decode($response, true);
-
-// Output the latitude and longitude data
-
-$lat = $data['entries'][0]['lat'];
-$lng = $data['entries'][0]['lng'];
-$time = $data['entries'][0]['time'];
-$lasttime = $data['entries'][0]['lasttime'];
-$altitude = $data['entries'][0]['altitude'];
-
-$current = formatUnixTimestamp($time);
-$lasttime = formatUnixTimestamp($lasttime);
-
-echo "Latitude: $lat, Longitude: $lng <br>";
-echo "Time: $time, Last Time: $lasttime <br>";
-echo "Altitude: $altitude <br>";
-echo "Current Time: $current <br>";
-echo "Last Time: $lasttime <br>";
-
-echo '<pre>'; print_r($data); echo '</pre>';
-
-
+get_aprs_data("KJ4NES-2");
 
 ?>
