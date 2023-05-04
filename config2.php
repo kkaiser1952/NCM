@@ -22,7 +22,12 @@ $config = array(
     'aprs_fi' => array(
         // http://aprs.fi ...
         'api_key' => '5275.AYRjLwAFgx6ud'
-    )
+    ),
+    
+    'geocoder' => array(
+        // this is for w3w also
+        'api_key' => '5WHIM4GD'
+    );
 
 );
 

@@ -20,13 +20,13 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $lat = $data['entries'][0]['lat'];
     $lng = $data['entries'][0]['lng'];
     $altitude = $data['entries'][0]['altitude'];
+    
+    // $firsttime is the value of time in the returned array. It is the last time heard
+    // $thistime is the value of lasttime in the array. It is the most current time heard
     $firsttime = gmdate('Y-m-d H:i:s', $data['entries'][0]['time']);
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
-    //$koords = "{$lat}, {$lng}";
     
-   
-    
-    // Output the data
+    // Output the aprs supplied data
     echo "Latitude: {$lat}<br>";
     echo "Longitude: {$lng}<br>";
     echo "Altitude: {$altitude}<br>";
@@ -34,10 +34,24 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "This Time: {$thistime} UTC<br>";
     //echo "Koords: {$koords}<br>";
     
+    // Now get the crossroads data
     include('getCrossRoads.php');
     $crossroads = getCrossRoads($lat, $lng);
+    echo "{$crossroads}<br>";
+    
+    // Now get the gridsquare 
+    include('GetGridSquare.php');
+    $yqth = getgridsquare($lat, $lng);
+    echo "Grid Square {$yqth}<br><br>";
+    
+    // Now get the what3words words           
+    $geocoder = new \What3words\Geocoder\Geocoder($config['geocoder']['api_key']);
+    
+    $result = $geocoder->convertTo3wa($lat, $lng, $language, $format);
+    print_r($result);
 
-    echo "Crossroads: {$crossroads}<br><br>";
+    echo "<br>";
+
     
     
     // Output the entire data array for debugging purposes
@@ -45,6 +59,6 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     print_r($data);
 }
 
-get_aprs_data("wa0tjt-5");
+get_aprs_data("wa0tjt-8");
 
 ?>
