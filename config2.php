@@ -27,7 +27,7 @@ $config = array(
     'geocoder' => array(
         // this is for w3w also
         'api_key' => '5WHIM4GD'
-    );
+    )
 
 );
 

@@ -39,26 +39,29 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $crossroads = getCrossRoads($lat, $lng);
     echo "{$crossroads}<br>";
     
-    // Now get the gridsquare 
+    // Now get the gridsquare
     include('GetGridSquare.php');
     $yqth = getgridsquare($lat, $lng);
     echo "Grid Square {$yqth}<br><br>";
     
-    // Now get the what3words words           
-    $geocoder = new \What3words\Geocoder\Geocoder($config['geocoder']['api_key']);
+    // Output the entire data array for debugging purposes
+    echo "<br><br>Data Array:<br>";
+    print_r($data);
+    
+    // Now lets add the what3words words from the W3W geocoder
+    require_once('/path/to/w3w-php-wrapper/src/Geocoder.php');
+
+    $w3w_api_key = $config['geocoder']['api_key'];
+    $geocoder = new \What3words\Geocoder\Geocoder($config['geocoder']['w3w_api_key']);
+   // $language = 'EN';
+   // $format = 'json';
     
     $result = $geocoder->convertTo3wa($lat, $lng, $language, $format);
+    echo ("$result");
     print_r($result);
-
-    echo "<br>";
-
-    
-    
-    // Output the entire data array for debugging purposes
-    echo "Data Array:<br>";
-    print_r($data);
+ 
 }
 
-get_aprs_data("wa0tjt-8");
+get_aprs_data("wa0tjt-1");
 
 ?>
