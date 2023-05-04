@@ -290,6 +290,7 @@
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	
 		<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p>
+		<p style="margin-bottom:14px; font-weight: bold;">This version calls netManager2.js for testing</p>
 	
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
             <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
@@ -720,7 +721,6 @@ $ ( function() {
         $( "#q-mark-in-circle" ).dialog( "open" );
     });
 }); // end click @ #q-mark-in-circle()
-
 
 
 (function() {

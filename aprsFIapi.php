@@ -1,9 +1,14 @@
 
 
 <?php
+    
+
+    
 function get_aprs_data($callsign) {
+    include('config.php');
     // Construct the API URL
-    $api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey=5275.AYRjLwAFgx6ud&format=json";
+    //$api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey=."$_APRS_API_KEY".&format=json";
+     $api_url = "http://api.aprs.fi/api/get?name=".strtoupper($callsign)."&what=loc&apikey=".$_APRS_API_KEY."&format=json";
     //$api_url = "http://api.aprs.fi/api/get?name=" . strtoupper($callsign) . "&what=loc&apikey=" . $api_key . "&format=json";
 
     
