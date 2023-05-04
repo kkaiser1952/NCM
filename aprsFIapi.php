@@ -2,15 +2,18 @@
 
 <?php
     
-
+//include('config2.php');
+include(.'getCrossRoads.php');
     
-function get_aprs_data($callsign) {
-    include('config.php');
-    // Construct the API URL
-    //$api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey=."$_APRS_API_KEY".&format=json";
-     $api_url = "http://api.aprs.fi/api/get?name=".strtoupper($callsign)."&what=loc&apikey=".$_APRS_API_KEY."&format=json";
-    //$api_url = "http://api.aprs.fi/api/get?name=" . strtoupper($callsign) . "&what=loc&apikey=" . $api_key . "&format=json";
-
+function get_aprs_data($callsign, $aprs_fi_api_key) {
+    
+    $callsign = strtoupper($callsign);
+    
+    include('config2.php');
+    
+    $aprs_fi_api_key = $config['aprs_fi']['api_key'];
+    
+    $api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
     echo "url: {$api_url} <br><br>";
     
@@ -39,6 +42,6 @@ function get_aprs_data($callsign) {
     print_r($data);
 }
 
-get_aprs_data("KJ4NES-2");
+get_aprs_data("KC0QBU-9");
 
 ?>
