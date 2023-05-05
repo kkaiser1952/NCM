@@ -52,13 +52,17 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
     require_once("Geocoder.php");
-    use What3words\Geocoder\Geocoder;
+ //   use What3words\Geocoder\Geocoder;
     //use What3words\Geocoder\AutoSuggestOption;
+    $lat = (float) $data['entries'][0]['lat'];
+    $lng = (float) $data['entries'][0]['lng'];
+    
+    echo ('<br><br>lat '.$lat);
 
-    $api = new Geocoder("$w3w_api_key");
+  //  $api = new Geocoder("$w3w_api_key");
        
-    $result = $api->convertTo3wa($lat, $lng);
-    print_r($result);
+  //  $result = $api->convertTo3wa($lat, $lng);
+  //  print_r($result);
     
 }
 
