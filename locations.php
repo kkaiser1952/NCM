@@ -9,8 +9,9 @@
 // Call_APRS:   This field requires a right clcik of the call-ssid to fill all the rest
     
 // callsign must be in the form WA0TJT-8 
-function locations($callsign) {
-    
+
+function locations($callsign, $grid = null, $lat = null, $lng = null) {
+      
     $callsign = strtoupper($callsign);
     
     echo "<u>For Callsign: $callsign</u><br><br>";
@@ -99,6 +100,7 @@ function locations($callsign) {
     
 }
 
+//Examples:
 locations("wa0tjt-1");
 
 ?>

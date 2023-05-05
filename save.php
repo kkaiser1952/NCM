@@ -1,4 +1,10 @@
  <?php
+     
+     ini_set('display_errors', 1);
+     ini_set('display_startup_errors', 1);
+     error_reporting(E_ALL);
+     
+
      // Get the IP address of the person making the changes.
     require_once "getRealIpAddr.php";
 	
@@ -8,13 +14,14 @@
 				return substr_replace($subject, $replace, $pos, strlen($search));
 			}
 			return $subject;
-	}
+	} // end of str_replace_irst function
 	
 	// credentials and grid calculator
 	 require_once "dbConnectDtls.php";
 	 require_once "GridSquare.php";
  
 		$rawdata = file_get_contents('php://input');
+		    error_log("rawdata= $rawdata");
 		    // echo("$rawdata");  
             // Value=Keith&Id=Fname%3A89407Keith
             // Value=Douglas&Id=Lname%3A89407Douglas
@@ -74,10 +81,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$tactical  = $row[tactical];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$tactical  = $row['tactical'];
 			}
 			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
@@ -96,9 +103,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			$deltaX = "$column Change";
