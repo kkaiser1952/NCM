@@ -1,8 +1,20 @@
 <?php
+// The idea here is; if any of these feilds is edited in NCM, some cases by a right clcik, each
+// will call this function to update itself and all the other columns. A change of value on any
+// of these values will have an effect on ALL of these values.
+// Latitude:    This will get its value here
+// Longitude:   This will get its value here 
+// W3W:         This field requires a right clcik of the call-ssid to fill all the rest
+// Grid:        This will get its value here
+// Call_APRS:   This field requires a right clcik of the call-ssid to fill all the rest
     
-function get_aprs_data($callsign, $aprs_fi_api_key) {
+// callsign must be in the form WA0TJT-8 
+function get_aprs_data($callsign) {
     
     $callsign = strtoupper($callsign);
+    
+    echo "<u>For Callsign: $callsign</u><br><br>";
+    //echo "<u>From The APRS API</u><br>";
     
     include('config2.php');
     
@@ -48,7 +60,7 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "<br>Grid Square: {$yqth}<br>";
     
     // Output the entire data array for debugging purposes
-    echo "<br>Data Array:<br>";
+    echo "<br><u>The Data Array From The APRS.fi API:</u><br>";
     print_r($data);
     
     // Now lets add the what3words words from the W3W geocoder
@@ -65,8 +77,8 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     $result = $api->convertTo3wa($lat, $lng);
-    echo "<u>From Geocoder by What3Words</u><br>";
-    echo "<br><br>W3W Array:<br>";
+    echo "<br><br><u>The Geocoder Array by What3Words</u><br>";
+    //echo "<br><br><u>W3W Array:</u><br>";
     print_r($result);
     
     echo "<br>";
@@ -80,12 +92,13 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $map = $result['map'];
     $place = $result['nearestPlace'];
     
-    echo "<br>Words: {$words}<br>";
+    echo "<br><u>From Geocoder by What3Words</u><br>";
+    echo "Words: {$words}<br>";
     echo "Map: {$map}<br>";
     echo "Nearest Place: {$place}<br>";
     
 }
 
-get_aprs_data("wa0tjt-8");
+get_aprs_data("wa0tjt-1");
 
 ?>
