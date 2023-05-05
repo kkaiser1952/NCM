@@ -47,25 +47,37 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "<br><br>Data Array:<br>";
     print_r($data);
     
-    
-
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
-    require_once("Geocoder.php");
- //   use What3words\Geocoder\Geocoder;
-    //use What3words\Geocoder\AutoSuggestOption;
+    //echo ($w3w_api_key);
+    require_once('Geocoder.php');
+  //  use What3words\Geocoder\Geocoder;
+ 
     $lat = (float) $data['entries'][0]['lat'];
     $lng = (float) $data['entries'][0]['lng'];
     
-    echo ('<br><br>lat '.$lat);
-
-  //  $api = new Geocoder("$w3w_api_key");
+    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br><br>');
+    
+    $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
-  //  $result = $api->convertTo3wa($lat, $lng);
-  //  print_r($result);
+    $result = $api->convertTo3wa($lat, $lng);
+    print_r($result);
+    
+    echo "<br><br>";
+    
+    $southwest_lat = $result['square']['southwest']['lat'];
+    $southwest_lng = $result['square']['southwest']['lng'];
+    $northeast_lat = $result['square']['northeast']['lat'];
+    $northeast_lng = $result['square']['northeast']['lng'];
+    $words = $result['words'];
+    $language = $result['language'];
+    $map = $result['map'];
+    
+    echo "Words: {$words}<br>";
+    echo "Map: {$map}<br>";
     
 }
 
-get_aprs_data("wa0tjt-1");
+get_aprs_data("wa0tjt-8");
 
 ?>
