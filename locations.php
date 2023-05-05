@@ -14,7 +14,7 @@ function locations($callsign, $grid = null, $lat = null, $lng = null) {
       
     $callsign = strtoupper($callsign);
     
-    echo "<u>For Callsign: $callsign</u><br><br>";
+    echo "<br><u>For Callsign: $callsign</u><br><br>";
     //echo "<u>From The APRS API</u><br>";
      
     include('config2.php');

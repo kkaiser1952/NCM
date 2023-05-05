@@ -21,7 +21,7 @@
 	 require_once "GridSquare.php";
  
 		$rawdata = file_get_contents('php://input');
-		    error_log("rawdata= $rawdata");
+		    //error_log("rawdata= $rawdata");
 		    // echo("$rawdata");  
             // Value=Keith&Id=Fname%3A89407Keith
             // Value=Douglas&Id=Lname%3A89407Douglas
@@ -132,9 +132,9 @@
 					 WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			// Then we insert the new update into the TimeLog table
@@ -193,9 +193,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			// Then we insert the new update into the TimeLog table
@@ -220,11 +220,11 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$recordID = $row[recordID];
-				$tt		  = $row[tt];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$recordID = $row['recordID'];
+				$tt		  = $row['tt'];
 			} // end elseif column = mode
 			
 			// Then we insert the new update into the TimeLog table
@@ -242,9 +242,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			
 			// Then we insert the new update into the TimeLog table
@@ -259,9 +259,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			
 			// Then we insert the new update into the TimeLog table	
@@ -279,10 +279,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$aprs_call  = $row[aprs_call];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$aprs_call  = $row['aprs_call'];
 			//	$value = strtoupper($value);
 			}
 			
@@ -299,10 +299,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$team  = $row[team];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$team  = $row['team'];
 			}
 			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
@@ -318,9 +318,9 @@
 					 WHERE recordID = '$recordID'";
 					
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			 
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
@@ -344,10 +344,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$home  = $row[home];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$home  = $row['home'];
 			}
 			
 			// If its to reset the home coordinates then do this
@@ -455,7 +455,7 @@
             	$stmt= $db_found->prepare($sql);
             	$stmt->execute();
             	    $result = $stmt->fetch();
-            	        $callsign = $result[callsign];        
+            	        $callsign = $result['callsign'];        
 
             // Update the stations table for the changed values
     		$sql = "UPDATE stations SET $column = '$value' 
