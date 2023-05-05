@@ -9,13 +9,13 @@
 // Call_APRS:   This field requires a right clcik of the call-ssid to fill all the rest
     
 // callsign must be in the form WA0TJT-8 
-function get_aprs_data($callsign) {
+function locations($callsign) {
     
     $callsign = strtoupper($callsign);
     
     echo "<u>For Callsign: $callsign</u><br><br>";
     //echo "<u>From The APRS API</u><br>";
-    
+     
     include('config2.php');
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
@@ -99,6 +99,6 @@ function get_aprs_data($callsign) {
     
 }
 
-get_aprs_data("wa0tjt-1");
+locations("wa0tjt-1");
 
 ?>
