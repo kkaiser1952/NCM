@@ -27,6 +27,7 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
     
     // Output the aprs supplied data
+    echo "<u>From The APRS API</u><br>";
     echo "Latitude: {$lat}<br>";
     echo "Longitude: {$lng}<br>";
     echo "Altitude: {$altitude}<br>";
@@ -34,36 +35,41 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     echo "This Time: {$thistime} UTC<br>";
     
     // Now get the crossroads data
+    echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
     $crossroads = getCrossRoads($lat, $lng);
+    
     echo "{$crossroads}<br>";
     
     // Now get the gridsquare
     include('GetGridSquare.php');
+    echo "<br><u>From GetGridSquare.php</u>";
     $yqth = getgridsquare($lat, $lng);
-    echo "Grid Square {$yqth}<br><br>";
+    echo "<br>Grid Square: {$yqth}<br>";
     
     // Output the entire data array for debugging purposes
-    echo "<br><br>Data Array:<br>";
+    echo "<br>Data Array:<br>";
     print_r($data);
     
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
-    //echo ($w3w_api_key);
+    
     require_once('Geocoder.php');
   //  use What3words\Geocoder\Geocoder;
- 
+    
     $lat = (float) $data['entries'][0]['lat'];
     $lng = (float) $data['entries'][0]['lng'];
     
-    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br><br>');
+    //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     $result = $api->convertTo3wa($lat, $lng);
+    echo "<u>From Geocoder by What3Words</u><br>";
+    echo "<br><br>W3W Array:<br>";
     print_r($result);
     
-    echo "<br><br>";
+    echo "<br>";
     
     $southwest_lat = $result['square']['southwest']['lat'];
     $southwest_lng = $result['square']['southwest']['lng'];
@@ -72,9 +78,11 @@ function get_aprs_data($callsign, $aprs_fi_api_key) {
     $words = $result['words'];
     $language = $result['language'];
     $map = $result['map'];
+    $place = $result['nearestPlace'];
     
-    echo "Words: {$words}<br>";
+    echo "<br>Words: {$words}<br>";
     echo "Map: {$map}<br>";
+    echo "Nearest Place: {$place}<br>";
     
 }
 
