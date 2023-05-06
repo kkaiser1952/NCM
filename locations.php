@@ -97,10 +97,18 @@ function locations($callsign, $grid = null, $lat = null, $lng = null) {
     echo "Words: {$words}<br>";
     echo "Map: {$map}<br>";
     echo "Nearest Place: {$place}<br>";
-    
+        
 }
 
 //Examples:
 locations("wa0tjt-1");
+
+ // Capture the output of echo statements into a variable
+$output = ob_get_contents();
+ob_end_clean();
+
+// Return the output as the result of the script
+echo $output;
+
 
 ?>
