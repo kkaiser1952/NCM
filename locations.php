@@ -101,7 +101,7 @@ function locations($callsign) {
 }
 
 //Examples:
-locations("wa0tjt-1");
+//locations("wa0tjt-1");
 
  // Capture the output of echo statements into a variable
 $output = ob_get_contents();
