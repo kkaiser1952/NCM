@@ -10,7 +10,7 @@
     
 // callsign must be in the form WA0TJT-8 
 
-function locations($callsign, $grid = null, $lat = null, $lng = null) {
+function locations($callsign) {
       
     $callsign = strtoupper($callsign);
     
