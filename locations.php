@@ -10,18 +10,20 @@
     
 // callsign must be in the form WA0TJT-8 
 
-function locations($callsign) {
+// When running this from netManager-p2.js, if you need to add variables just uncomment the echo statments and everything will be displayed.
+
+function locations($aprs_callsign) {
       
-    $callsign = strtoupper($callsign);
+    $aprs_callsign = strtoupper($aprs_callsign);
     
-    echo "<br><u>For Callsign: $callsign</u><br><br>";
+    //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API</u><br>";
      
     include('config2.php');
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
     
-    $api_url = "http://api.aprs.fi/api/get?name={$callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
+    $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
     //echo "url: {$api_url} <br><br>";
     
