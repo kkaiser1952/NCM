@@ -106,11 +106,11 @@ function locations($aprs_callsign) {
 //locations("wa0tjt-1");
 
  // Capture the output of echo statements into a variable
-$output = ob_get_contents();
-ob_end_clean();
+//$output = ob_get_contents();
+//ob_end_clean();
 
 // Return the output as the result of the script
-echo $output;
+//echo $output;
 
 
 ?>
