@@ -101,6 +101,6 @@ function locations_APRS($aprs_call) {
 } // end of locations_APRS function
 
 //Examples:
-locations_APRS("wd0hxn-11");
+//locations_APRS("wd0hxn-11");
 
 ?>
