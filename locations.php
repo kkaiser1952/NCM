@@ -16,8 +16,8 @@ function locations($aprs_callsign) {
       
     $aprs_callsign = strtoupper($aprs_callsign);
     
-    //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
-    //echo "<u>From The APRS API</u><br>";
+    echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
+    echo "<u>From The APRS API, part 1</u><br>";
      
     include('config2.php');
     
@@ -25,7 +25,7 @@ function locations($aprs_callsign) {
     
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
-    //echo "url: {$api_url} <br><br>";
+    echo "url: {$api_url} <br><br>";
     
     // Fetch the data from the API
     $json_data = file_get_contents($api_url);
@@ -42,7 +42,7 @@ function locations($aprs_callsign) {
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
     
     // Output the aprs supplied data
-    echo "<u>From The APRS API</u><br>";
+    echo "<u>From The APRS API part 2</u><br>";
     echo "Latitude: {$lat}<br>";
     echo "Longitude: {$lng}<br>";
     echo "Altitude: {$altitude}<br>";
@@ -75,13 +75,13 @@ function locations($aprs_callsign) {
     $lat = (float) $data['entries'][0]['lat'];
     $lng = (float) $data['entries'][0]['lng'];
     
-    //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
+    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     $result = $api->convertTo3wa($lat, $lng);
     echo "<br><br><u>The Geocoder Array by What3Words</u><br>";
-    //echo "<br><br><u>W3W Array:</u><br>";
+    echo "<br><br><u>W3W Array:</u><br>";
     print_r($result);
     
     echo "<br>";
