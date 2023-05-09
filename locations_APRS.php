@@ -1,19 +1,19 @@
 <?php
-ini_set('display_errors',1); 
+    ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call = $_GET["aprs_call"]; 
-//function locations_APRS($aprs_call) {
-    
-    echo "locations_APRS() called successfully<br>";
-      
-    $aprs_callsign = strtoupper($aprs_call);
+	$aprs_call = $_GET["aprs_call"];      
+        $aprs_callsign = strtoupper($aprs_call);
+        
+    $CurrentLat = $_GET["CurrentLat"];
+    $CurrentLng = $_GET["CurrentLng"];
+     
     
     // Add debugging statement to check if $aprs_callsign is correct
-    echo "aprs_callsign: " . $aprs_callsign . "<br>";
+    //echo "aprs_callsign: " . $aprs_callsign . "<br>";
     
-    echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
-    echo "<u>From The APRS API, part 1</u><br>";
+    //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
+    //echo "<u>From The APRS API, part 1</u><br>";
      
     include('config2.php');
     
@@ -21,16 +21,16 @@ ini_set('display_errors',1);
     
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
-    echo "url: {$api_url} <br><br>";
+    //echo "url: {$api_url} <br><br>";
     
     // Fetch the data from the API
     $json_data = file_get_contents($api_url);
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
-    echo "<pre>";
+    //echo "<pre>";
     print_r($data);
-    echo "</pre>";
+    //echo "</pre>";
     
     // Extract the required data
     $lat = $data['entries'][0]['lat'];
@@ -43,29 +43,29 @@ ini_set('display_errors',1);
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
     
     // Output the aprs supplied data
-    echo "<u>From The APRS API part 2</u><br>";
-    echo "Latitude: {$lat}<br>";
-    echo "Longitude: {$lng}<br>";
-    echo "Altitude: {$altitude}<br>";
-    echo "First Time: {$firsttime} UTC<br>";
-    echo "This Time: {$thistime} UTC<br>";
+    //echo "<u>From The APRS API part 2</u><br>";
+    //echo "Latitude: {$lat}<br>";
+    //echo "Longitude: {$lng}<br>";
+    //echo "Altitude: {$altitude}<br>";
+    //echo "First Time: {$firsttime} UTC<br>";
+    //echo "This Time: {$thistime} UTC<br>";
     
     // Now get the crossroads data
-    echo "<br><u>From The getCrossRoads()</u><br>";
+    //echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
     $crossroads = getCrossRoads($lat, $lng);
     
-    echo "{$crossroads}<br>";
+    //echo "{$crossroads}<br>";
     
     // Now get the gridsquare
     include('GetGridSquare.php');
-    echo "<br><u>From GetGridSquare.php</u>";
-    $yqth = getgridsquare($lat, $lng);
-    echo "<br>Grid Square: {$yqth}<br>";
+    //echo "<br><u>From GetGridSquare.php</u>";
+    $grid = getgridsquare($lat, $lng);
+    //echo "<br>Grid Square: {$grid}<br>";
     
     // Output the entire data array for debugging purposes
-    echo "<br><u>The Data Array From The APRS.fi API:</u><br>";
-    print_r($data);
+    //echo "<br><u>The Data Array From The APRS.fi API:</u><br>";
+   // print_r($data);
     
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
@@ -76,30 +76,56 @@ ini_set('display_errors',1);
     $lat = (float) $data['entries'][0]['lat'];
     $lng = (float) $data['entries'][0]['lng'];
     
-    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
+    //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     $result = $api->convertTo3wa($lat, $lng);
-    echo "<br><br><u>The Geocoder Array by What3Words</u><br>";
-    echo "<br><br><u>W3W Array:</u><br>";
-    print_r($result);
+    //echo "<br><br><u>The Geocoder Array by What3Words</u><br>";
+    //echo "<br><br><u>W3W Array:</u><br>";
+    //print_r($result);
     
-    echo "<br>"; 
+    //echo "<br>"; 
     
-    $southwest_lat = $result['square']['southwest']['lat'];
-    $southwest_lng = $result['square']['southwest']['lng'];
-    $northeast_lat = $result['square']['northeast']['lat'];
-    $northeast_lng = $result['square']['northeast']['lng'];
+    //$southwest_lat = $result['square']['southwest']['lat'];
+    //$southwest_lng = $result['square']['southwest']['lng'];
+    //$northeast_lat = $result['square']['northeast']['lat'];
+    //$northeast_lng = $result['square']['northeast']['lng'];
     $words = $result['words'];
-    $language = $result['language'];
+    //$language = $result['language'];
     $map = $result['map'];
-    $place = $result['nearestPlace'];
+    //$place = $result['nearestPlace'];
     
-    echo "<br><u>From Geocoder by What3Words</u><br>";
-    echo "Words: {$words}<br>";
-    echo "Map: {$map}<br>";
-    echo "Nearest Place: {$place}<br>";
+    //echo "<br><u>From Geocoder by What3Words</u><br>";
+    //echo "Words: {$words}<br>";
+    //echo "Map: {$map}<br>";
+    //echo "Nearest Place: {$place}<br>";
     
+    $varsToKeep = array(
+        "aprs_callsign" => $aprs_callsign,   
+        "lat" => $CurrentLat,     
+        "lng" => $CurrentLat,  
+        "altitude" => $altitude,
+        "firsttime" => $firsttime,
+        "thistime" => $thistime,
+        "crossroads" => $crossroads,
+        "grid" => $grid,
+        "words" => $words,
+        "map" => $map
+        
+    );
+    
+    // Get all defined variables
+//$vars = get_defined_vars();
 
+// Remove built-in variables
+//unset($vars["GLOBALS"], $vars["_POST"], $vars["_GET"], $vars["_COOKIE"], $vars["_SERVER"], $vars["_FILES"], $vars["_ENV"]);
+
+// Convert variables to JSON
+$json = json_encode($varsToKeep);
+
+// //echo JSON
+echo $json;
+    
+    
 ?>
