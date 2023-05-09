@@ -1,20 +1,13 @@
 <?php
-// The idea here is; if any of these feilds is edited in NCM, some cases by a right clcik, each
-// will call this function to update itself and all the other columns. A change of value on any
-// of these values will have an effect on ALL of these values.
-// Latitude:    This will get its value here
-// Longitude:   This will get its value here 
-// W3W:         This field requires a right clcik of the call-ssid to fill all the rest
-// Grid:        This will get its value here
-// Call_APRS:   This field requires a right clcik of the call-ssid to fill all the rest
+
+function locations($aprs_call) {
     
-// callsign must be in the form WA0TJT-8 
-
-// When running this from netManager-p2.js, if you need to add variables just uncomment the echo statments and everything will be displayed.
-
-function locations($aprs_callsign) {
+    echo "locations() called successfully<br>";
       
-    $aprs_callsign = strtoupper($aprs_callsign);
+    $aprs_callsign = strtoupper($aprs_call);
+    
+    // Add debugging statement to check if $aprs_callsign is correct
+    echo "aprs_callsign: " . $aprs_callsign . "<br>";
     
     echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     echo "<u>From The APRS API, part 1</u><br>";
@@ -30,6 +23,11 @@ function locations($aprs_callsign) {
     // Fetch the data from the API
     $json_data = file_get_contents($api_url);
     $data = json_decode($json_data, true);
+    
+    // Add debugging statement to check if $data contains the expected values
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
     
     // Extract the required data
     $lat = $data['entries'][0]['lat'];
@@ -99,18 +97,10 @@ function locations($aprs_callsign) {
     echo "Words: {$words}<br>";
     echo "Map: {$map}<br>";
     echo "Nearest Place: {$place}<br>";
-        
+    
 }
 
 //Examples:
 //locations("wa0tjt-1");
-
- // Capture the output of echo statements into a variable
-//$output = ob_get_contents();
-//ob_end_clean();
-
-// Return the output as the result of the script
-//echo $output;
-
 
 ?>
