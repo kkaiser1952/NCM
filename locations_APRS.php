@@ -1,6 +1,9 @@
 <?php
-
-function locations_APRS($aprs_call) {
+ini_set('display_errors',1); 
+	error_reporting (E_ALL ^ E_NOTICE);
+	
+	$aprs_call = $_GET["aprs_call"]; 
+//function locations_APRS($aprs_call) {
     
     echo "locations_APRS() called successfully<br>";
       
@@ -98,9 +101,5 @@ function locations_APRS($aprs_call) {
     echo "Map: {$map}<br>";
     echo "Nearest Place: {$place}<br>";
     
-} // end of locations_APRS function
-
-//Examples:
-locations_APRS("k6sts-21");
 
 ?>
