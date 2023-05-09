@@ -247,7 +247,7 @@ echo ("
             class=\"editable editaprs_call  c31 cent\" 
             id=\"aprs_call:$row[recordID]\" 
             style=\"text-transform:uppercase\"
-            oncontextmenu=\"getFindu('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude]');return false; \"
+            oncontextmenu=\"getAPRSLocations('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude]');return false; \"
             onClick=\"empty('aprs_call:$row[recordID]');
             \">
             <div class='$class'> $row[aprs_call]	</div> 
