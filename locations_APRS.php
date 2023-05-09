@@ -4,13 +4,9 @@
 	
 	$aprs_call = $_GET["aprs_call"];      
         $aprs_callsign = strtoupper($aprs_call);
-        
+    $recordID   = $_GET["recordID"]; 
     $CurrentLat = $_GET["CurrentLat"];
     $CurrentLng = $_GET["CurrentLng"];
-     
-    
-    // Add debugging statement to check if $aprs_callsign is correct
-    //echo "aprs_callsign: " . $aprs_callsign . "<br>";
     
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
@@ -21,8 +17,6 @@
     
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
-    //echo "url: {$api_url} <br><br>";
-    
     // Fetch the data from the API
     $json_data = file_get_contents($api_url);
     $data = json_decode($json_data, true);
@@ -32,7 +26,7 @@
     print_r($data);
     //echo "</pre>";
     
-    // Extract the required data
+    // Extract the required data from the aprs.fi api 
     $lat = $data['entries'][0]['lat'];
     $lng = $data['entries'][0]['lng'];
     $altitude = $data['entries'][0]['altitude'];
@@ -73,17 +67,18 @@
     require_once('Geocoder.php');
   //  use What3words\Geocoder\Geocoder;
     
-    $lat = (float) $data['entries'][0]['lat'];
-    $lng = (float) $data['entries'][0]['lng'];
+    $latx = (float) $data['entries'][0]['lat'];
+        $lat = number_format($latx, 6);
+    $lngx = (float) $data['entries'][0]['lng'];
+        $lng = number_format($lngx, 6);
     
     //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     $result = $api->convertTo3wa($lat, $lng);
-    //echo "<br><br><u>The Geocoder Array by What3Words</u><br>";
-    //echo "<br><br><u>W3W Array:</u><br>";
-    //print_r($result);
+    //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
+        //print_r($result);
     
     //echo "<br>"; 
     
@@ -102,30 +97,23 @@
     //echo "Nearest Place: {$place}<br>";
     
     $varsToKeep = array(
-        "aprs_callsign" => $aprs_callsign,   
-        "lat" => $CurrentLat,     
-        "lng" => $CurrentLat,  
-        "altitude" => $altitude,
-        "firsttime" => $firsttime,
-        "thistime" => $thistime,
-        "crossroads" => $crossroads,
-        "grid" => $grid,
-        "words" => $words,
-        "map" => $map
-        
+        "aprs_callsign" => htmlspecialchars($aprs_callsign),
+        "recordID"      => htmlspecialchars($recordID),
+        "CurrentLat"    => htmlspecialchars($CurrentLat),
+        "CurrentLng"    => htmlspecialchars($CurrentLng),
+        "lat"           => htmlspecialchars($lat),
+        "lng"           => htmlspecialchars($lng),
+        "koords"        => htmlspecialchars($lat,$lng),
+        "altitude"      => htmlspecialchars($altitude),
+        "crossroads"    => htmlspecialchars($crossroads),
+        "firsttime"     => htmlspecialchars($firsttime),
+        "thistime"      => htmlspecialchars($thistime),
+        "grid"          => htmlspecialchars($grid),
+        "what3words"    => htmlspecialchars($words),
+        "map"           => htmlspecialchars($map)
     );
-    
-    // Get all defined variables
-//$vars = get_defined_vars();
 
-// Remove built-in variables
-//unset($vars["GLOBALS"], $vars["_POST"], $vars["_GET"], $vars["_COOKIE"], $vars["_SERVER"], $vars["_FILES"], $vars["_ENV"]);
-
-// Convert variables to JSON
 $json = json_encode($varsToKeep);
-
-// //echo JSON
 echo $json;
-    
-    
+
 ?>
