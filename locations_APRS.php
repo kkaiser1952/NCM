@@ -120,9 +120,12 @@
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid)
     );
+    
+    $crsroads = $words.'<br>'.$crossroads;
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
+echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
     require_once "dbConnectDtls.php";
@@ -133,7 +136,7 @@ echo $json;
               ,longitude    = '$lng'
               ,ipaddress    = '$ipaddress'
               ,grid         = '$grid'
-              ,w3w          = '$words $crossroads'
+              ,w3w          = '$crsroads'
               ,dttm         = now()
               ,comments     = 'Altitude: $altitude_feet'
          WHERE recordID = $recordID;
