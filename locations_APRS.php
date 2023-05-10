@@ -29,7 +29,8 @@
     // Extract the required data from the aprs.fi api 
     $lat = $data['entries'][0]['lat'];
     $lng = $data['entries'][0]['lng'];
-    $altitude = $data['entries'][0]['altitude'];
+    $altitude_meters = $data['entries'][0]['altitude'];
+    $altitude_feet   = $data['entries'][0]['altitude']*3.28084;
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -104,7 +105,8 @@
         "CurrentLng"    => htmlspecialchars($CurrentLng),
         "lat"           => htmlspecialchars($lat),
         "lng"           => htmlspecialchars($lng),
-        "altitude"      => htmlspecialchars($altitude),
+        "altitude_meters" => htmlspecialchars($altitude_meters),
+        "altitude_feet" => htmlspecialchars($altitude_feet),
         "crossroads"    => htmlspecialchars($crossroads),
         "firsttime"     => htmlspecialchars($firsttime),
         "thistime"      => htmlspecialchars($thistime),
@@ -113,7 +115,6 @@
         "map"           => htmlspecialchars($map)
     );
 
-//$json = json_encode($varsToKeep);
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
 
