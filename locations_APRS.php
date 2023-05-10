@@ -121,7 +121,8 @@
         "nid"           => htmlspecialchars($nid)
     );
     
-    $crsroads = $words.'<br>'.$crossroads;
+    
+    $crsroads = "$words.'<br>'.$crossroads";
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
