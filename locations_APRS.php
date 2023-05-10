@@ -23,7 +23,7 @@
     
     // Add debugging statement to check if $data contains the expected values
     //echo "<pre>";
-    print_r($data);
+        //print_r($data);
     //echo "</pre>";
     
     // Extract the required data from the aprs.fi api 
@@ -47,7 +47,8 @@
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
-    $crossroads = getCrossRoads($lat, $lng);
+    $crds = getCrossRoads($lat, $lng);
+    $crossroads = $crds;
     
     //echo "{$crossroads}<br>";
     
@@ -103,7 +104,6 @@
         "CurrentLng"    => htmlspecialchars($CurrentLng),
         "lat"           => htmlspecialchars($lat),
         "lng"           => htmlspecialchars($lng),
-        "koords"        => htmlspecialchars($lat,$lng),
         "altitude"      => htmlspecialchars($altitude),
         "crossroads"    => htmlspecialchars($crossroads),
         "firsttime"     => htmlspecialchars($firsttime),
@@ -113,7 +113,8 @@
         "map"           => htmlspecialchars($map)
     );
 
-$json = json_encode($varsToKeep);
+//$json = json_encode($varsToKeep);
+$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
 
 ?>
