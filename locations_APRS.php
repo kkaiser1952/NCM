@@ -9,6 +9,7 @@
     $CurrentLng = $_GET["CurrentLng"];
     $cs1        = $_GET["cs1"]; // callsign of row
     $nid        = $_GET["nid"]; // netID
+    $objName    = $_GET["objName"];
     
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
@@ -29,12 +30,13 @@
     //echo "</pre>";
     
     // Extract the required data from the aprs.fi api 
-    $lat = $data['entries'][0]['lat'];
-    $lng = $data['entries'][0]['lng'];
+    $lat             = $data['entries'][0]['lat'];
+    $lng             = $data['entries'][0]['lng'];
     $altitude_meters = $data['entries'][0]['altitude'];
     $alt_feet        = $data['entries'][0]['altitude']*3.28084;
-    $aprs_comment = $data['entries'][0]['comment'];
-    $altitude_feet   = number_format($alt_feet, 1);
+        $altitude_feet   = number_format($alt_feet, 1);
+    $aprs_comment    = $data['entries'][0]['comment'];
+        //echo "aprs comment: {$aprs_comment};
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -48,7 +50,7 @@
     //echo "Altitude: {$altitude}<br>";
     //echo "First Time: {$firsttime} UTC<br>";
     //echo "This Time: {$thistime} UTC<br>";
-    echo "aprs comment: {$aprs_comment};
+    //echo "aprs comment: {$aprs_comment};
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -123,14 +125,13 @@
         "what3words"    => htmlspecialchars($words),
         "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
-        "nid"           => htmlspecialchars($nid)
+        "nid"           => htmlspecialchars($nid),
+        "aprs_comment"  => htmlspecialchars($aprs_comment),
+        "objName"       => htmlspecialchars($objName)
     );
-    
-    
-   // $crsroads = "$words<br>$crossroads";
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo $json;
+echo $json;
 echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
@@ -144,18 +145,18 @@ echo "\n\n";
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = 'Altitude: $altitude_feet'
+              ,comments     = '$objName'
          WHERE recordID = $recordID;
        ";
        
        $stmt = $db_found->prepare($sql);
-      // $stmt->execute();
+       $stmt->execute();
        
        //echo $sql;   
        //echo "\n\n";
        
        //$deltaX = 'LOC&#916;';
-       $deltax = 'LOC&#916:APRS '.$aprs_callsign.': This also changed lat/lng, grid, w3w';
+       $deltax = 'LOC&#916:APRS '.$aprs_callsign.': Also changed lat/lng, grid, w3w.  '.$aprs_comment;
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
@@ -165,7 +166,6 @@ echo "\n\n";
        echo $sql;
        
        $stmt = $db_found->prepare($sql);
-      // $stmt->execute();
-       
-       
+       $stmt->execute();
+        
 ?>
