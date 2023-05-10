@@ -50,8 +50,7 @@
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
-    $crds = getCrossRoads($lat, $lng);
-    $crossroads = $crds;
+    $crossroads = getCrossRoads($lat, $lng);
     
     //echo "{$crossroads}<br>";
     
@@ -102,6 +101,9 @@
     
     
     // This is for printing only
+
+    $crossroads = html_entity_decode($crossroads);
+
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
@@ -122,7 +124,7 @@
     );
     
     
-    $crsroads = "$words.'<br>'.$crossroads";
+   // $crsroads = "$words<br>$crossroads";
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
@@ -137,7 +139,7 @@ echo "\n\n";
               ,longitude    = '$lng'
               ,ipaddress    = '$ipaddress'
               ,grid         = '$grid'
-              ,w3w          = '$crsroads'
+              ,w3w          = '$crossroads\n$words'
               ,dttm         = now()
               ,comments     = 'Altitude: $altitude_feet'
          WHERE recordID = $recordID;
