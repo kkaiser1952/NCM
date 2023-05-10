@@ -128,7 +128,7 @@
    // $crsroads = "$words<br>$crossroads";
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
+//echo $json;
 echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
@@ -149,14 +149,19 @@ echo "\n\n";
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
        
-       echo $sql;   
-       echo "\n\n";
+       //echo $sql;   
+       //echo "\n\n";
        
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
-            VALUES (now(), '$cs1', APRS_Call: $aprs_callsign', '$nid');      
+            VALUES ( NOW(), '$cs1', 'APRS_Call: $aprs_callsign', '$nid');      
        ";
        
        echo $sql;
+       
+       $stmt = $db_found->prepare($sql);
+       $stmt->execute();
+       
+       
 ?>
