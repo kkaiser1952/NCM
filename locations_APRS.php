@@ -32,7 +32,8 @@
     $lat = $data['entries'][0]['lat'];
     $lng = $data['entries'][0]['lng'];
     $altitude_meters = $data['entries'][0]['altitude'];
-    $altitude_feet   = $data['entries'][0]['altitude']*3.28084;
+    $alt_feet        = $data['entries'][0]['altitude']*3.28084;
+    $altitude_feet   = number_format($alt_feet, 1);
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -139,11 +140,14 @@ echo "\n\n";
               ,longitude    = '$lng'
               ,ipaddress    = '$ipaddress'
               ,grid         = '$grid'
-              ,w3w          = '$crossroads\n$words'
-              ,dttm         = now()
+              ,w3w          = '$words<br>$crossroads'
+              ,dttm         = NOW()
               ,comments     = 'Altitude: $altitude_feet'
          WHERE recordID = $recordID;
        ";
+       
+       $stmt = $db_found->prepare($sql);
+       $stmt->execute();
        
        echo $sql;   
        echo "\n\n";

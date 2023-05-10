@@ -52,7 +52,8 @@ function getCrossRoads($lat, $lng) {
            
            //return "$street1 &amp; $street2";
            
-           echo "$CrossRoads";
+           //echo "$CrossRoads";
+           return $CrossRoads;
            
           // return "$street1 &amp; $street2";
             
