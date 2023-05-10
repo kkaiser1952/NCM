@@ -7,6 +7,8 @@
     $recordID   = $_GET["recordID"]; 
     $CurrentLat = $_GET["CurrentLat"];
     $CurrentLng = $_GET["CurrentLng"];
+    $cs1        = $_GET["cs1"]; // callsign of row
+    $nid        = $_GET["nid"]; // netID
     
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
@@ -114,7 +116,9 @@
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
         "what3words"    => htmlspecialchars($words),
-        "map"           => htmlspecialchars($map) 
+        "map"           => htmlspecialchars($map),
+        "cs1"           => htmlspecialchars($cs1),
+        "nid"           => htmlspecialchars($nid)
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
@@ -132,17 +136,16 @@ echo $json;
               ,w3w          = '$words $crossroads'
               ,dttm         = now()
               ,comments     = 'Altitude: $altitude_feet'
-         WHERE recordID = $recordID  
+         WHERE recordID = $recordID;
        ";
        
        echo $sql;   
+       echo "\n\n";
        
        $sql = 
-       "UPDATE TimeLog 
-           SET timestamp    = now()
-              ,callsign     = ''
-              ,comment      = 'APRS_Call: $aprs_callsign'
-         WHERE netID = $netID  
+       "INSERT INTO TimeLog 
+            (timestamp, callsign, comment, netID)
+            VALUES (now(), '$cs1', APRS_Call: $aprs_callsign', '$nid');      
        ";
        
        echo $sql;
