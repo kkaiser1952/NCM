@@ -33,6 +33,7 @@
     $lng = $data['entries'][0]['lng'];
     $altitude_meters = $data['entries'][0]['altitude'];
     $alt_feet        = $data['entries'][0]['altitude']*3.28084;
+    $aprs_comment = $data['entries'][0]['comment'];
     $altitude_feet   = number_format($alt_feet, 1);
     
     // $firsttime is the value of time in the returned array. It is the last time heard
@@ -47,6 +48,7 @@
     //echo "Altitude: {$altitude}<br>";
     //echo "First Time: {$firsttime} UTC<br>";
     //echo "This Time: {$thistime} UTC<br>";
+    echo "aprs comment: {$aprs_comment};
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -147,21 +149,23 @@ echo "\n\n";
        ";
        
        $stmt = $db_found->prepare($sql);
-       $stmt->execute();
+      // $stmt->execute();
        
        //echo $sql;   
        //echo "\n\n";
        
+       //$deltaX = 'LOC&#916;';
+       $deltax = 'LOC&#916:APRS '.$aprs_callsign.': This also changed lat/lng, grid, w3w';
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', 'APRS_Call: $aprs_callsign', '$nid');      
+            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
        echo $sql;
        
        $stmt = $db_found->prepare($sql);
-       $stmt->execute();
+      // $stmt->execute();
        
        
 ?>
