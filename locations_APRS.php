@@ -98,6 +98,8 @@
     //echo "Map: {$map}<br>";
     //echo "Nearest Place: {$place}<br>";
     
+    
+    // This is for printing only
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
@@ -112,10 +114,36 @@
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
         "what3words"    => htmlspecialchars($words),
-        "map"           => htmlspecialchars($map)
+        "map"           => htmlspecialchars($map) 
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
 
+// This SQL updates the NetLog with all the information we just created.
+    require_once "dbConnectDtls.php";
+    
+       $sql = 
+       "UPDATE NetLog 
+           SET latitude     = '$lat'
+              ,longitude    = '$lng'
+              ,ipaddress    = '$ipaddress'
+              ,grid         = '$grid'
+              ,w3w          = '$words $crossroads'
+              ,dttm         = now()
+              ,comments     = 'Altitude: $altitude_feet'
+         WHERE recordID = $recordID  
+       ";
+       
+       echo $sql;   
+       
+       $sql = 
+       "UPDATE TimeLog 
+           SET timestamp    = now()
+              ,callsign     = ''
+              ,comment      = 'APRS_Call: $aprs_callsign'
+         WHERE netID = $netID  
+       ";
+       
+       echo $sql;
 ?>
