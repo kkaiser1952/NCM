@@ -17,7 +17,7 @@
     include('config2.php');
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
-    
+
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
     // Fetch the data from the API
@@ -43,6 +43,8 @@
     $firsttime = gmdate('Y-m-d H:i:s', $data['entries'][0]['time']);
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
     
+    $thislatlng = $lat.','$lng;
+    
     // Output the aprs supplied data
     //echo "<u>From The APRS API part 2</u><br>";
     //echo "Latitude: {$lat}<br>";
@@ -51,6 +53,7 @@
     //echo "First Time: {$firsttime} UTC<br>";
     //echo "This Time: {$thistime} UTC<br>";
     //echo "aprs comment: {$aprs_comment};
+    echo "thislatlng: {$thislatlng}";
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
