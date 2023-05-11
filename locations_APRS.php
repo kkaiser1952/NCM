@@ -11,6 +11,8 @@
     $nid        = $_GET["nid"]; // netID
     $objName    = $_GET["objName"];
     
+    //echo ("objName at top: $objName");
+    
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
      
@@ -43,7 +45,8 @@
     $firsttime = gmdate('Y-m-d H:i:s', $data['entries'][0]['time']);
     $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
     
-    $thislatlng = $lat.','$lng;
+    // for including into the Time Line Log at end of the comment or object
+    $thislatlng = "$lat,$lng";
     
     // Output the aprs supplied data
     //echo "<u>From The APRS API part 2</u><br>";
@@ -53,40 +56,33 @@
     //echo "First Time: {$firsttime} UTC<br>";
     //echo "This Time: {$thistime} UTC<br>";
     //echo "aprs comment: {$aprs_comment};
-    echo "thislatlng: {$thislatlng}";
+    //echo "thislatlng: {$thislatlng}";
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
     $crossroads = getCrossRoads($lat, $lng);
-    
     //echo "{$crossroads}<br>";
     
     // Now get the gridsquare
     include('GetGridSquare.php');
-    //echo "<br><u>From GetGridSquare.php</u>";
     $grid = getgridsquare($lat, $lng);
     //echo "<br>Grid Square: {$grid}<br>";
-    
-    // Output the entire data array for debugging purposes
-    //echo "<br><u>The Data Array From The APRS.fi API:</u><br>";
-   // print_r($data);
     
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
     
+    // use What3words\Geocoder\Geocoder;
     require_once('Geocoder.php');
-  //  use What3words\Geocoder\Geocoder;
-    
     $latx = (float) $data['entries'][0]['lat'];
         $lat = number_format($latx, 6);
     $lngx = (float) $data['entries'][0]['lng'];
         $lng = number_format($lngx, 6);
-    
     //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
+    // Get the what3words using lat lng
     $result = $api->convertTo3wa($lat, $lng);
     //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
         //print_r($result);
@@ -129,11 +125,12 @@
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
         "aprs_comment"  => htmlspecialchars($aprs_comment),
-        "objName"       => htmlspecialchars($objName)
+        "objName"       => htmlspecialchars($objName),
+        "thislatlng"    => htmlspecialchars($thislatlng)
     );
 
-//$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo $json;
+$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
+echo $json;
 //echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
@@ -158,14 +155,14 @@
        //echo "\n\n";
        
        //$deltaX = 'LOC&#916;';
-       $deltax = 'LOC&#916:APRS '.$objName.': Also changed lat/lng, grid, w3w.  '.$aprs_comment;
+       $deltax = 'LOC&#916:APRS '.$objName.': Changed lat/lng, grid, w3w.  '.$aprs_comment.'; '.$thislatlng;
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       //echo $sql;
+       echo $sql;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
@@ -173,7 +170,7 @@
 /* Things yet to do: Might be different programs
     If a location changes and the Comments have anything like 'home' in it, clear it out.
     Check the time of the last APRS_CALL update vs. the new one, don't update if they are equal. But put in time line Comments 'No Update On Last Request', its possible they moved but APRS-IS hasn't updated.
-    Consider building a switch function to control row colors.
+    Consider building a switch function to control row colors. CSS?
     Looks like I'll need to put "obj" into the time line comments to make a track
     W3W changes are not asking for an object like aprs_call is
         
