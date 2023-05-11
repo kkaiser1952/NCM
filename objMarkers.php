@@ -4,21 +4,19 @@
 			error_reporting (E_ALL ^ E_NOTICE);
 			
     // This is for what3words usage
+    /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
-    
-    /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
     require_once "Geocoder.php";
-                use What3words\Geocoder\Geocoder;
-              //  use What3words\Geocoder\AutoSuggestOption;
-                
-                $api = new Geocoder("$w3w_api_key");           
+        use What3words\Geocoder\Geocoder;
+      //  use What3words\Geocoder\AutoSuggestOption;
+        
+        $api = new Geocoder("$w3w_api_key");           
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-    // For testing
-   $q = 9045;
+   //$q = 4743;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -33,8 +31,6 @@
               GROUP BY callsign
               ORDER BY callsign, timestamp
           ");
-          
-        //echo ("$sql");
     
         $allnameBounds = "";
         $allPoints = "";
@@ -58,7 +54,7 @@
             // var W0DLKPAD = W0DLKOBJ.pad(.075);
          
      } // end of foreach loop 
-          
+     
      $oByers = "var oByers = $oByersCnt";
      
         // This creates a lat/lon list for each callsign with objects. This is used in
@@ -76,8 +72,6 @@
                 
         // objectLine = L.polyline([[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]],{color: newcolor, weight: 4}).addTo(map);
             } 
-     
-
      //echo "$alltheKoords";
     // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
       
@@ -162,36 +156,6 @@ foreach($db_found->query($sql) as $row) {
     echo "4 $comm0 $comm4<br>";
     echo "5 $comm0 $comm5<br>"; 
 */   
-
-    $varsToKeep = array(
-        "objBounds"      => htmlspecialchars($objBounds),
-        "oByersCnt"      => htmlspecialchars($oByersCnt),
-        "allnameBounds"  => htmlspecialchars($allnameBounds),
-        "objMiddle"      => htmlspecialchars($objMiddle),
-        "allPoints"      => htmlspecialchars($allPoints),
-        "objPadit"       => htmlspecialchars($objPadit),
-        "objSW"          => htmlspecialchars($objSW),
-        "objNW"          => htmlspecialchars($objNW),
-        "objNe"          => htmlspecialchars($objNE),
-        "objSe"          => htmlspecialchars($objSE),
-        "oByers"         => htmlspecialchars($oByers),
-        "alltheKoords"   => htmlspecialchars($alltheKoords,     
-        "koords"        => htmlspecialchars($koords),
-        "callsign"      => htmlspecialchars($callsign),    
-        "objType"           => htmlspecialchars($objType),
-        "comment"           => htmlspecialchars($comment),
-        
-        "comm0"  => htmlspecialchars($comm0),
-        "pos1"   => htmlspecialchars($pos1),
-        "comm1"  => htmlspecialchars($comm1),
-        "comm2"  => htmlspecialchars($comm2),
-        "comm3"  => htmlspecialchars($comm3),
-        "comm4"  => htmlspecialchars($comm4),
-        "comm5"  => htmlspecialchars($comm5),
-    );
-
-$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
 
     $dup = 0;
         if(id==144) {$dup =50;}
