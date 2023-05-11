@@ -105,8 +105,7 @@
     //echo "Nearest Place: {$place}<br>";
     
     
-    // This is for printing only
-
+    // This stuff is for printing only
     $crossroads = html_entity_decode($crossroads);
 
     $varsToKeep = array(
@@ -130,9 +129,9 @@
         "objName"       => htmlspecialchars($objName)
     );
 
-$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
-echo "\n\n";
+//$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
+//echo $json;
+//echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
     require_once "dbConnectDtls.php";
@@ -156,19 +155,19 @@ echo "\n\n";
        //echo "\n\n";
        
        //$deltaX = 'LOC&#916;';
-       $deltax = 'LOC&#916:APRS '.$aprs_callsign.': Also changed lat/lng, grid, w3w.  '.$aprs_comment;
+       $deltax = 'LOC&#916:APRS '.$objName.': Also changed lat/lng, grid, w3w.  '.$aprs_comment;
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       echo $sql;
+       //echo $sql;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
        
-/* Things yet to do: 
+/* Things yet to do: Might be different programs
     If a location changes and the Comments have anything like 'home' in it, clear it out.
     Check the time of the last APRS_CALL update vs. the new one, don't update if they are equal. But put in time line Comments 'No Update On Last Request', its possible they moved but APRS-IS hasn't updated.
     Consider building a switch function to control row colors.
