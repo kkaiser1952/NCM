@@ -1,100 +1,28 @@
 <?php
     
     ini_set('display_errors',1); 
-			error_reporting (E_ALL ^ E_NOTICE);
-			
-    // This is for what3words usage
-    /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
-    // Now lets add the what3words words from the W3W geocoder
-    $w3w_api_key = $config['geocoder']['api_key'];
-    require_once "Geocoder.php";
-        use What3words\Geocoder\Geocoder;
-      //  use What3words\Geocoder\AutoSuggestOption;
-        
-        $api = new Geocoder("$w3w_api_key");           
+			error_reporting (E_ALL ^ E_NOTICE);         
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
    //$q = 4743;
       
-   $sql = (" SELECT callsign, 
-                    CONCAT(callsign,'OBJ') as callOBJ,
-                    COUNT(callsign) as numofcs, 
-                    CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),']);') as objBounds,
-                    CONCAT (' [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),'],') as arrBounds,
-                    CONCAT (callsign,'arr') as allnameBounds
-               FROM TimeLog 
-              WHERE netID = $q 
-                AND callsign <> 'GENCOMM'
-                AND comment LIKE '%OBJ%' 
-              GROUP BY callsign
-              ORDER BY callsign, timestamp
-          ");
-    
-        $allnameBounds = "";
-        $allPoints = "";
-        $oByersCnt = 0;
-     foreach($db_found->query($sql) as $row) {
-         $objBounds .= "$row[objBounds]";    
-         $oByersCnt = $oByersCnt + 1;
-         
-
-         $allnameBounds .= "'$row[allnameBounds]',";
-         $objMiddle .= "$row[callsign]OBJ.getCenter();";
-         $allPoints .= "$row[arrBounds]";
-         
-         $objPadit  .= "var $row[callsign]PAD    = $row[callsign]OBJ.pad(.075);";
-         $objSW     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthWest();";
-         $objNW     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthWest();";
-         $objNE     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthEast();";
-         $objSE     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthEast();";
-         
-        // echo ("$objPadit");
-            // var W0DLKPAD = W0DLKOBJ.pad(.075);
-         
-     } // end of foreach loop 
-     
-     $oByers = "var oByers = $oByersCnt";
-     
-        // This creates a lat/lon list for each callsign with objects. This is used in
-        // the map.php program in the polyline function
-        $sqlk = ("SELECT CONCAT('var ', callsign, 'latlngs = [',
-                         GROUP_CONCAT(CONCAT( '[',x(latlng),',',y(latlng),']')),']') as allKoords
-                    FROM TimeLog
-                   WHERE netID = $q
-                     AND comment LIKE '%OBJ:%'
-                   GROUP BY callsign
-                ");
-                
-            foreach($db_found->query($sqlk) as $row) {
-                $alltheKoords .= $row[allKoords].';';
-                
-        // objectLine = L.polyline([[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]],{color: newcolor, weight: 4}).addTo(map);
-            } 
-     //echo "$alltheKoords";
-    // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
+  
       
-        $sql = ("SELECT callsign, timestamp, 
-                	CASE 
-                    	WHEN comment LIKE '%W3W:OBJ:%'  THEN  'W3W'
-                        WHEN comment LIKE '%APRS:OBJ:%' THEN 'APRS' 
-                    END AS 'objType',           
-	                comment,
-	                x(latlng) as lat, 
-	                y(latlng) as lng,
-                    counter,
-                    CONCAT('[',x(latlng),',',y(latlng),']') as koords         
-               FROM (
-             SELECT callsign, timestamp,
-              	    comment,  
-              	    latlng, x(latlng), y(latlng),
-                        @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
-                        @prev_c := callsign
-               FROM TimeLog, (select @counter := 0, @prev_c := null) init
-              WHERE netID = $q
-                AND comment LIKE '%OBJ:%' 
-              ORDER BY callsign, timestamp ) s         
+$sql = ("
+SELECT uniqueID, recordID, callsign,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', 1) AS latitude,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1) AS longitude,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, 'OBJ::', -1), ':', 1) AS objType,
+  
+  REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, 'OBJ::', -1), ':', -1), 'Changed lat/lng, grid, w3w. ', '') AS objName,
+  REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), '; ', -1), 'Changed lat/lng, grid, w3w. ', '') AS comment
+FROM TimeLog
+WHERE netID = 9045
+  AND comment LIKE '%OBJ::%'
+  AND (SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', 1) + 0) != 0
+  AND (SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1) + 0) != 0
           ");
           
           $objMarkers       = "";
