@@ -74,11 +74,13 @@
             } 
      //echo "$alltheKoords";
     // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
+    
+// LOCΔ:APRS OBJ::balloon: Changed lat/lng, grid, w3w. 16.28V 21C; 38.31422,-122.28640
       
         $sql = ("SELECT callsign, timestamp, 
                 	CASE 
                     	WHEN comment LIKE '%W3W:OBJ:%'  THEN  'W3W'
-                        WHEN comment LIKE '%APRS:OBJ:%' THEN 'APRS' 
+                        WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
                     END AS 'objType',           
 	                comment,
 	                x(latlng) as lat, 
