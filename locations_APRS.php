@@ -9,7 +9,7 @@
     $CurrentLng = $_GET["CurrentLng"];
     $cs1        = $_GET["cs1"]; // callsign of row
     $nid        = $_GET["nid"]; // netID
-    $objName    = $_GET["objName"];
+    $objName    = $_GET["objName"]; // like car, truck, fallen tree
     
     //echo ("objName at top: $objName");
     
@@ -166,6 +166,8 @@ echo $json;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
+       
+       //$objName = "";
        
 /* Things yet to do: Might be different programs
     If a location changes and the Comments have anything like 'home' in it, clear it out.
