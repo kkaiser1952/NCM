@@ -7,6 +7,19 @@
     require_once "GridSquare.php";
 
    //$q = 4743;
+   
+   SELECT 
+
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', 1) AS latitude,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1) AS longitude,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(comment, 'OBJ::', -1), ':', 1) AS objType,
+  REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, 'OBJ::', -1), ':', -1), 'Changed lat/lng, grid, w3w. ', '') AS objName,
+  REPLACE(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), '; ', -1), 'Changed lat/lng, grid, w3w. ', ''), CONCAT(' ', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1)), '') AS comment
+FROM TimeLog
+WHERE comment LIKE '%OBJ::%'
+  AND (SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', 1) + 0) != 0
+  AND (SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1) + 0) != 0;
+
       
   
       
