@@ -18,18 +18,24 @@
 
    //$q = 4743;
       
-   $sql = (" SELECT callsign, 
-                    CONCAT(callsign,'OBJ') as callOBJ,
-                    COUNT(callsign) as numofcs, 
-                    CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),']);') as objBounds,
-                    CONCAT (' [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),'],') as arrBounds,
-                    CONCAT (callsign,'arr') as allnameBounds
-               FROM TimeLog 
-              WHERE netID = $q 
-                AND callsign <> 'GENCOMM'
-                AND comment LIKE '%OBJ%' 
-              GROUP BY callsign
-              ORDER BY callsign, timestamp
+   $sql = (" SELECT callsign,
+       CONCAT(callsign, 'OBJ') AS callOBJ,
+       COUNT(callsign) AS numofcs,
+       CONCAT('var ', callsign, 'OBJ = L.latLngBounds( [', GROUP_CONCAT('[', latitude, ',', longitude, ']'), ']);') AS objBounds,
+       CONCAT(GROUP_CONCAT('[', latitude, ',', longitude, '],')) AS arrBounds,
+       CONCAT(callsign, 'arr') AS allnameBounds
+FROM (
+    SELECT callsign,
+           SUBSTRING_INDEX(SUBSTRING_INDEX(comment, ', ', -2), ', ', 1) AS latitude,
+           SUBSTRING_INDEX(SUBSTRING_INDEX(comment, ', ', -1), ', ', -1) AS longitude
+    FROM TimeLog
+    WHERE netID = 9071
+      AND callsign <> 'GENCOMM'
+      AND comment LIKE '%OBJ:%'
+) AS subquery
+GROUP BY callsign;
+
+             
           ");
     
         $allnameBounds = "";
