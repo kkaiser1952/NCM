@@ -38,6 +38,8 @@ WHERE netID = 9045
   AND (SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '; ', -1), ',', -1) + 0) != 0
           ");
           
+          echo ("$sql");
+          
           $objMarkers       = "";
           $OBJMarkerList    = "";
           $allcallList      = "";
