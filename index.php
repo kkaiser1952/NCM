@@ -102,10 +102,14 @@
     
     <!-- =============== All above this should not be editied ====================== -->
     
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
-	<link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	--> <!-- v3.3.7 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"  />
+	<!-- <link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >	-->	<!-- v0.9.1 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.css"  />
+	 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"  /> -->
+	<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
 
     <!-- ============== My style sheets ============================================= -->
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
@@ -118,6 +122,54 @@
 <style>
 	
 </style>
+	<!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
+	
+    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->		    <!-- v3.3.2 --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" ></script>
+ 
+	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
+	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
+	
+	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
+
+	<!-- sila: comment these -->
+	<!-- <script src="bootstrap/js/bootstrap-select.min.js"></script> -->				<!-- v1.12.4 2018-1-18 -->
+	<!-- <script src="bootstrap/js/bootstrap-multiselect.js"></script>  -->				<!-- 2.0 2018-1-18 -->
+ 
+	<!-- sila: upgrade to v1.13.18 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.js"></script>
+
+
+    <!-- http://www.appelsiini.net/projects/jeditable -->
+    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
+
+	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
+	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
+	<script src="js/jquery.countdownTimer.js"></script>							<!-- 1.0.8 2018-1-18 -->
+	
+	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
+	
+	<!-- Updated from 1.12.1 on 3/21/22 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+	
+<!-- My javascript -->	
+	<script src="js/cookieManagement.js"></script>
+	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
+	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+	
+	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
+	
+	<script src="js/grid.js"></script>
+	<script src="js/gridtokoords.js"></script>
+	
 
 </head>
 
@@ -649,46 +701,7 @@
 -->
      <!-- All the quotes end here -->
 	
-<!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
-	
-    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
-    <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
- 
-	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
-	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
-	
-	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
-
-	<script src="bootstrap/js/bootstrap-select.min.js"></script>				<!-- v1.12.4 2018-1-18 -->
-	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
-
-    <!-- http://www.appelsiini.net/projects/jeditable -->
-    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
-
-	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
-	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
-	<script src="js/jquery.countdownTimer.js"></script>							<!-- 1.0.8 2018-1-18 -->
-	
-	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
-	
-	<!-- Updated from 1.12.1 on 3/21/22 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
-	
-<!-- My javascript -->	
-	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
-	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
-	
-	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
-	
-	<script src="js/grid.js"></script>
-	<script src="js/gridtokoords.js"></script>
-	<script src="js/cookieManagement.js"></script>
 	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places

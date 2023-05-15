@@ -93,27 +93,30 @@ function testCookies(nc) {
 		} */
 		
     //var arrayDefault = ["1","2","3","4","6","7","12","13","14","17","18"];
+    //sila
+    var $this = $(this);
+    var $_html = $this.html();
     
     // This test was added because the MARS groups don't want to see the county and state.
     // Removed 17 & 18 the county and state from the default on 2021-09-14
-    if ( $("#activity").html().includes("MARS")) {
+    if ( $("#activity")._html().includes("MARS")) {
         var arrayDefault = ["1","2","3","4","6","7","12","13","14","50"]; 
     } else {var arrayDefault = ["1","2","3","4","6","7","9","12","13","14"];}
 		
     // This sets us up to add the email and phone columns automatically if its a meeting or event
-    if ( $("#activity").html().includes("Meeting") || $("#activity").html().includes("Event") ) {
+    if ( $("#activity")._html().includes("Meeting") || $("#activity")._html().includes("Event") ) {
         var array1011 = ["10","11"]; // for use later in arrayBoth
-    } else if ($("#activity").html().includes("Weather Net")) {
+    } else if ($("#activity")._html().includes("Weather Net")) {
         var array1011 = ["17","18","24"];
        // alert("array1011: "+JSON.stringify(array1011));
     } else { array1011 = []; }
     
-    if ( $("#activity").html().includes("MARS")) {
+    if ( $("#activity")._html().includes("MARS")) {
         var arrayFD = ["2","50"] ;
     } else { arrayFD = arrayDefault ; }
     
     // This adds the Band column by default if the frequency is set to Multiple Bands
-    if ( $("#add2pgtitle").html().includes("Multiple Bands") || $("#add2pgtitle").html().includes("80/40 Meters")) {
+    if ( $("#add2pgtitle")._html().includes("Multiple Bands") || $("#add2pgtitle")._html().includes("80/40 Meters")) {
         var array1011 = array1011.concat("23");
     }
     
@@ -121,7 +124,7 @@ function testCookies(nc) {
 		
     // NC is the netcall, if it doesn't exits go get it
 	if (nc == null) {  // test if nc is empty or undefined
-		var netcall = $("#domain").html().trim(); 
+		var netcall = $("#domain")._html().trim(); 
 	}else{
 		var netcall = nc; 
 	}
