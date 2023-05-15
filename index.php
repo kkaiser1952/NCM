@@ -223,6 +223,8 @@
 	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">GeoDistance</a>
 
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
+	    
+	    <a href="https://vhf.dxview.org" id="mapdxView" target="_blank">DXView Propagation Map</a>
  
 	    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
 		<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
