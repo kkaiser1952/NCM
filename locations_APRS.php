@@ -11,7 +11,7 @@
     $nid        = $_GET["nid"]; // netID
     $objName    = $_GET["objName"]; // like car, truck, fallen tree
     
-    //echo ("objName at top: $objName");
+    echo ("objName at top: $objName");
     
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
