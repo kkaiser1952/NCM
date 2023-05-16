@@ -175,5 +175,5 @@ echo $json;
     Consider building a switch function to control row colors. CSS?
     Looks like I'll need to put "obj" into the time line comments to make a track
     W3W changes are not asking for an object like aprs_call is
-        
+  */      
 ?>
