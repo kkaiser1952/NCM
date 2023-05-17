@@ -155,13 +155,15 @@ echo $json;
        //echo "\n\n";
        
        //Interpretation of the deltax variable;
-       /*
-        Identifier: 'LOC&#916:APRS;'
-        Item name: 'Red Car'
-        Additional information: 'Parked in the middle of the street'
-        what3words string: '///summer.topic.yesterday'
-        Nearest crossroads: '60th Court & Ames Ave'
-        Latitude and longitude: '39.20245, -94.60254'
+       /* The field delimiter is the ampersand, &
+    LOCΔ:APRS& OBJ::8 past 56th ct & Keith and Deb from KCMO & pickles.honest.groove & N Ames Ave & 56th & 39.19783,-94.60167
+    
+        Identifier: 'LOC&#916:APRS OBJ::8'  This could also be APRS COM::
+        Item name: '8'  This can also be things like 'Red Car', 'Tree on roof', etc.
+        Additional information: past 56th ct & Keith and Deb from KCMO these are APRS comments from the reporting source
+        what3words string: '///summer.topic.yesterday'  The W3W address
+        Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
+        Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
        */
        $deltax = 'LOC&#916:APRS& '.$objName.' & '.$aprs_comment.' & '.$words.' & '.$crossroads.' & '.$thislatlng;
        
