@@ -163,7 +163,7 @@ echo $json;
         Nearest crossroads: '60th Court & Ames Ave'
         Latitude and longitude: '39.20245, -94.60254'
        */
-       $deltax = 'LOC&#916:APRS:: '.$objName.':: '.$aprs_comment.':: '.$words.':: '.$crossroads.':: '.$thislatlng;
+       $deltax = 'LOC&#916:APRS& '.$objName.' & '.$aprs_comment.' & '.$words.' & '.$crossroads.' & '.$thislatlng;
        
        $sql = 
        "INSERT INTO TimeLog 
