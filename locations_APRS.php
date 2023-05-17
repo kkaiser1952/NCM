@@ -162,18 +162,9 @@ echo $json;
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       echo $sql;
+       //echo $sql;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
-       
-       //$objName = "";
-       
-/* Things yet to do: Might be different programs
-    If a location changes and the Comments have anything like 'home' in it, clear it out.
-    Check the time of the last APRS_CALL update vs. the new one, don't update if they are equal. But put in time line Comments 'No Update On Last Request', its possible they moved but APRS-IS hasn't updated.
-    Consider building a switch function to control row colors. CSS?
-    Looks like I'll need to put "obj" into the time line comments to make a track
-    W3W changes are not asking for an object like aprs_call is
-  */      
+        
 ?>
