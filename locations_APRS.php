@@ -155,7 +155,8 @@ echo $json;
        //echo "\n\n";
        
        //$deltaX = 'LOC&#916;';
-       $deltax = 'LOC&#916:APRS '.$objName.': '.$aprs_comment.'; '.$thislatlng;
+       $deltax = 'LOC&#916:APRS '.$objName.': '.$aprs_comment.'; '.$words.'; '.$crossroads.'; '.$thislatlng;
+       
        $sql = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
