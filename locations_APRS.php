@@ -154,8 +154,16 @@ echo $json;
        //echo $sql;   
        //echo "\n\n";
        
-       //$deltaX = 'LOC&#916;';
-       $deltax = 'LOC&#916:APRS '.$objName.': '.$aprs_comment.'; '.$words.'; '.$crossroads.'; '.$thislatlng;
+       //Interpretation of the deltax variable;
+       /*
+        Identifier: 'LOC&#916:APRS;'
+        Item name: 'Red Car'
+        Additional information: 'Parked in the middle of the street'
+        what3words string: '///summer.topic.yesterday'
+        Nearest crossroads: '60th Court & Ames Ave'
+        Latitude and longitude: '39.20245, -94.60254'
+       */
+       $deltax = 'LOC&#916:APRS:: '.$objName.':: '.$aprs_comment.':: '.$words.':: '.$crossroads.':: '.$thislatlng;
        
        $sql = 
        "INSERT INTO TimeLog 
