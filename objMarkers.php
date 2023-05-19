@@ -102,8 +102,7 @@
                    
                     CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']') as koords         
                FROM (
-             SELECT callsign, timestamp,
-              	    comment,  latlng, 
+             SELECT callsign, timestamp, comment,  
               	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
                         @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
                         @prev_c := callsign
@@ -121,13 +120,12 @@
           $alllatlngs       = "";
           
 foreach($db_found->query($sql) as $row) {
-    $koords = $row[koords];
-    $callsign = $row[callsign];
-
-        
-    $objType = "$row[objType]";
-    $comment = "$row[comment]";            
-    $comm1   = $comm2 = $comm3 = $comm4 = $comm5 = '';
+    $koords   = "$row[koords]";
+    $callsign = "$row[callsign]";  
+    $objType  = "$row[objType]";
+    $comment  = "$row[comment]"; 
+               
+    $comm1    = $comm2 = $comm3 = $comm4 = $comm5 = '';
         
     // Switch is used to break apart the comment line in the TimeLog table for easier
     // additon to the marker pop-ups.
@@ -135,7 +133,7 @@ foreach($db_found->query($sql) as $row) {
         case "W3W":
             $comm0 = 'W3W';
             // the What 3 Words
-            $pos1  = strpos($comment,'W3W:OBJ:')+8;  $pos2 = strpos($comment, '->');
+            $pos1  = strpos($comment,'W3W OBJ:')+8;  $pos2 = strpos($comment, '->');
             $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
             // the cross roads
             $pos1  = strpos($comment,'Roads:')+6;    $pos2 = strpos($comment, '(');
@@ -150,16 +148,20 @@ foreach($db_found->query($sql) as $row) {
         case "APRS":
             $comm0 = 'APRS';
             // the APRES capture timestamp
-            $pos1  = strpos($comment,'@:')+2;     $pos2 = strpos($comment, '(');
+            $pos1  = strpos($comment,'@:')+2;     
+            $pos2  = strpos($comment, '(');
             $comm5 = '@ '.substr($comment, $pos1, $pos2-$pos1);
             // the coordinates
-            $pos1  = strpos($comment,'(')+1;    $pos2 = strpos($comment, ')');
+            $pos1  = strpos($comment,'(')+1;    
+            $pos2  = strpos($comment, ')');
             $comm3 = substr($comment, $pos1, $pos2-$pos1);
             // the what 3 words
-            $pos1  = strpos($comment,'///')+3;    $pos2 = strpos($comment, 'Cross');
+            $pos1  = strpos($comment,'///')+3;    
+            $pos2  = strpos($comment, 'Cross');
             $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
             // the cross roads
-            $pos1  = strpos($comment,'Roads:')+6; $pos2 = strpos($comment, 'Object:');
+            $pos1  = strpos($comment,'Roads:')+6; 
+            $pos2  = strpos($comment, 'Object:');
             $comm2 = substr($comment, $pos1, $pos2-$pos1);     
             // the object description
             $pos1  = strpos($comment,'Object:')+7; 
@@ -197,13 +199,17 @@ foreach($db_found->query($sql) as $row) {
         $comment = "$row[comment]";
  
             $div1 = "<div class='xx' style='text-transform:uppercase;'>OBJ:<br>$objmrkr<br><br></div>
-                     <div style='color:red; font-weight: bold; font-size:18pt;'>Object Description:<br>$comm4</div>
+            
+                     <div style='color:red; font-weight: bold; font-size:14pt;'>Object Description:<br>$comm4</div>
+                     
                      <div class='gg'><br>LOCATION: $comm5<br><a href='https://what3words.com/$comm1?maptype=osm' target='_blank'>///$comm1</a><br><br>Cross Roads:<br>$comm2<br><br>Coordinates:<br>$comm3<br>Grid: $gs<br></div>";  
                      
             $div2 = "<div class='cc'>Full Comment:<br>".substr($comment,19)."<br><br></div>
+            
                      <div class='xx'>Captured:<br>$row[timestamp]</div>";       
                      
-    //echo "<br>div1: $div1 <br>";   
+    //echo "<br>div1:<br> $div1 <br><br>";   
+   // echo "<br>div2: $div1 <br><br>";
    
             $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
                                 rotationAngle: $dup, 
@@ -219,15 +225,15 @@ foreach($db_found->query($sql) as $row) {
                                 $('Objects'._icon).addClass('objmrkr');    
                                 $('Objects'._icon).addClass('huechange');                                          
                            "; // End of objMarkers
-    //echo "objMarkers: $objMarkers <br>";
+    //echo "objMarkers:<br> $objMarkers <br>";
 } // end foreach
 
 
  // Create corner markers for each callsign that has objects.
     $sql = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
 	                 MAX(SUBSTRING(comment, -18, 8)) as maxLat,
-	                 MIN(SUBSTRING(comment, -9, 8)) as minLng,
-	                 MAX(SUBSTRING(comment, -9, 8)) as maxLng,                 
+	                 MIN(SUBSTRING(comment, -9, 8))  as minLng,
+	                 MAX(SUBSTRING(comment, -9, 8))  as maxLng,                 
 	                 callsign
 	            FROM TimeLog
 	           WHERE netID = $q
@@ -258,18 +264,19 @@ foreach($db_found->query($sql) as $row) {
     foreach($db_found->query($sql) as $row) {
            $callsign = $row[callsign];      
                                 
-    	   $minLat = $row[minLat]-0.25;     ////echo "@216 minLat= $minLat";
-    	   $maxLat = $row[maxLat]+0.25;     ////echo "@217 maxLat= $maxLat";
-    	   $minLng = $row[minLng]+0.25;     ////echo "@218 minLng= $minLng";
-    	   $maxLng = $row[maxLng]-0.25;     ////echo "@219 maxLng= $maxLng";
+    	   $minLat = $row[minLat]-0.25;     ////echo "minLat= $minLat";
+    	   $maxLat = $row[maxLat]+0.25;     ////echo "maxLat= $maxLat";
+    	   $minLng = $row[minLng]+0.25;     ////echo "minLng= $minLng";
+    	   $maxLng = $row[maxLng]-0.25;     ////echo "maxLng= $maxLng";
 
 
           // It takes 5 sets to complete the square a to b, b to c, c to d, d to e, e back to a
           //           NorthWest              NorthEast           SouthEast            SouthWest              same as first
-          //       [[$maxLat, $maxLng],    [$maxLat, $minLng ], [$minLat, $minLng ], [$minLat, $maxLng ],  [$maxLat, $maxLng]]";   
+          //       [[$maxLat, $maxLng],    [$maxLat, $minLng ], [$minLat, $minLng ], [$minLat, $maxLng ],  [$maxLat, $maxLng]]";  
+           
           
           // in ob5 I use $row[callsign]OBJ instead of PAD because there is no padding on the center, its the center       
-        if ($thecall <> $row[callsign]) {	
+        if ($thecall <> '$row[callsign]') {	
             $uniqueCallList .= "'$row[callsign]',";
            // $uniqueCallList .= CONCAT('$row[callsign]', 'latlngs');
            //var uniqueCallList = ['W0DLKlatlngs', 'WA0TJTlatlngs'];
@@ -277,7 +284,7 @@ foreach($db_found->query($sql) as $row) {
             $cmn++;
             	
     		$cornerMarkers .=
-           "var $row[callsign]ob1 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{   
+        "var $row[callsign]ob1 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{   
     		contextmenu: true, 
     		contextmenuWidth: 140, 
     		contextmenuItems: [{ 
@@ -286,32 +293,31 @@ foreach($db_found->query($sql) as $row) {
             icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
             title:'ob1'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SW<br>'+$minLat+','+$maxLng+'<br>The Objects SW Corner');
                         
-           var $row[callsign]ob2 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthWest() ),{
+        var $row[callsign]ob2 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthWest() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], 
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob2'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]NW<br>'+$maxLat+','+$maxLng+'<br>The Objects NW Corner');
                            
-           var $row[callsign]ob3 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthEast() ),{
+        var $row[callsign]ob3 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthEast() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], 
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob3'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]NE<br>'+$maxLat+','+$minLng+'<br>The Objects NE Corner');
                            
-           var $row[callsign]ob4 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthEast() ),{
+        var $row[callsign]ob4 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthEast() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}],
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob4'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SE<br>'+$minLat+','+$minLng+'<br>The Objects SE Corner');
                            
-           var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
+        var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}],   
            icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [200,200] }),     
            title:'ob5'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]CT<br>'+$minLat+','+$minLng+'<br>The Objects Center Marker');
            
-           /* This extra ob6 is so we can draw lines around the objects */
-           var $row[callsign]ob6 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{
+        var $row[callsign]ob6 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob6'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SW<br>'+$minLat+','+$maxLng+'<br>The Objects SW Corner');
            ";        
@@ -321,52 +327,34 @@ foreach($db_found->query($sql) as $row) {
         // It talkes 5 markers to close a square a to b, b to c, c to d, d to e, e to a
         $KornerList .= "$row[callsign]ob1, $row[callsign]ob2, $row[callsign]ob3, $row[callsign]ob4, $row[callsign]ob6,";
           
-          $thecall = $row[callsign]; // reset the value
+          $thecall = '$row[callsign]'; // reset the value
           
         } // end of if loop
     $cmn++;
     }; // end foreach loop
     
-    ////echo "$objMarkers";
+    //echo objMarkers:<br> "$objMarkers";
       
     $allPoints = rtrim($allPoints,",");
-    //$allPoints = "var allPoints = ([$allPoints]);";
-    
-      // //echo "$allPoints";
-       //var W0DLKarr = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];
-       //var WA0TJTarr = [[39.20217,-94.60233],[39.20167,-94.60167],[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
-      
+       //echo allPoints:<br> "$allPoints";
+       
     $allnameBounds = "let allnameBounds = [$allnameBounds];";
-        ////echo "$allnameBounds"; // 
-        //var allnameBounds = (['W0DLKarr','WA0TJTarr',]);
+       //echo "$allnameBounds"; // 
       
     $allcallList = "var allcallList =[$allcallList];";
-       // //echo "$allcallList";
-        //var allcallList =['W0DLK01','W0DLK02','W0DLK03','W0DLK04','W0DLK05','WA0TJT01','WA0TJT02','WA0TJT03','WA0TJT04','WA0TJT05','WA0TJT06','WA0TJT07','WA0TJT08','WA0TJT09','WA0TJT10','WA0TJT11',];
+       // echo "$allcallList";
       
     $uniqueCallList = "var uniqueCallList = [$uniqueCallList];";
-        ////echo "$uniqueCallList"; 
-        // var uniqueCallList = ['W0DLKlatlngs','WA0TJTlatlngs',];
+       //echo "$uniqueCallList"; 
 
     $KornerList = "var KornerList = L.layerGroup([$KornerList]);";
-        ////echo "$KornerList";
-        //var KornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob6,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob6,]);
+      //echo "$KornerList";
     
     $OBJCornerList = "var OBJCornerList = L.layerGroup([$OBJCornerList]);";
-        ////echo "$OBJCornerList";
-        //var OBJCornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob5,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob5,]);
+      //echo "$OBJCornerList";
 
-   // $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);";
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     ////echo "$OBJMarkerList";
-        // var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,WA0TJT09,]);
-    
-    //$allOftheKoords = "$alltheKoords";
-    // use this with leaflet-spline to connect the dots right now its done in a different way
-    
-    //$alloftheKoords = " $alltheKoords";
-    ////echo "$allOftheKoords";
-    // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
+     //echo "$OBJMarkerList";
         
 ?>
   
