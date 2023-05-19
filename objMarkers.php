@@ -127,11 +127,46 @@ foreach($db_found->query($sql) as $row) {
     
     //echo "$comment<br><br>";
                
-    $comm1 = $comm2 = $comm3 = $comm4 = 0;  $comm5 = '';
+    //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
+    //$pos1 = $pos2 = 0;
+    
+    //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 & 1 Driveway & Keith and Deb from KCMO & ///mice.beak.glimmer & N Ames Ave & NW 60th Ct & 39.20283,-94.60267";
+
+    $pos1 = strpos($comment, 'OBJ::') + 5;
+    $pos2 = strpos($comment, ' & ');
+    
+    $comm51 = substr($comment, $pos1, $pos2 - $pos1);
+    echo "comm51: $comm51 <br><br>";
+    
+    $variableArray = [];
+    $startPos = $pos2 + 3;
+    $index = 1;
+    
+    while (($endPos = strpos($comment, ' & ', $startPos)) !== false) {
+        $variableArray[] = trim(substr($comment, $startPos, $endPos - $startPos));
+        $startPos = $endPos + 3;
+        $index++;
+    }
+    
+    $variableArray[] = trim(substr($comment, $startPos));
+    
+    // Assign variables dynamically
+    for ($i = 0; $i < count($variableArray); $i++) {
+        ${'comm' . ($i + 1)} = $variableArray[$i];
+    }
+    
+    // Output the variables
+    echo "comm1: $comm1 <br>";
+    echo "comm2: $comm2 <br>";
+    echo "comm3: $comm3 <br>";
+    echo "comm4: $comm4 <br>";
+    echo "comm5: $comm5 <br>";
+
         
     // Switch is used to break apart the comment line in the TimeLog table for easier
     // additon to the marker pop-ups.
-    switch ($objType) {
+   
+  /*  switch ($objType) {
         case "W3W":
             $comm0 = 'W3W';
             // the What 3 Words
@@ -156,12 +191,11 @@ foreach($db_found->query($sql) as $row) {
                 echo "comm5: $comm5 <br><br>";
                 
             // the APRS OBJ
-            $comm3 = '';
-            $pos11  = strpos($comment,'&');    
-            $pos23  = strpos($comment, ' & ', $pos11);
-            $comm3 = substr($comment, $pos11, $pos23);
-                echo "pos11:  $pos11 <br>";
-                echo "pos23:  $pos23 <br>";
+            $pos1  = stripos($comment,'&');    
+            //$pos2  = strpos($comment,'&', $pos1+1);
+            $comm3 = substr($comment, $pos2, stripos($comment,$pos2,$pos2+1));
+                echo "pos1:  $pos1 <br>";
+                echo "pos2:  $pos2 <br>";
                 echo "comm3: $comm3 <br><br>";
                 
             // the what 3 words
@@ -176,7 +210,7 @@ foreach($db_found->query($sql) as $row) {
             $pos1  = strpos($comment,'Object:')+8; 
             $comm4 = substr($comment, $pos1);
             break;  
-    } // end switch
+    } // end switch */
            
    /*
     echo "1 $comm0 <br> $comm1<br><br> ";
