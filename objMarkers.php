@@ -150,13 +150,17 @@ foreach($db_found->query($sql) as $row) {
         case "APRS":
             $comm0 = 'APRS';
             // the APRES capture timestamp
-            $pos1  = strpos($comment,'@::')+2;     
-            $pos2  = strpos($comment, '(');
-            $comm5 = '@ '.substr($comment, $pos1, $pos2-$pos1);
+            $pos1  = strpos($comment,'OBJ::')+5;     
+            $pos2  = strpos($comment, ' & ');
+            $comm5 = substr($comment, $pos1, $pos2-$pos1);
+                
             // the coordinates
-            $pos1  = strpos($comment,'(')+1;    
+            $pos1  = strpos($comment,'///');    
             $pos2  = strpos($comment, ')');
             $comm3 = substr($comment, $pos1, $pos2-$pos1);
+                echo "pos1: $pos1 <br>";
+                echo "pos2: $pos2 <br>";
+                echo "comm5: $comm5 <br><br>";
             // the what 3 words
             $pos1  = strpos($comment,'///')+3;    
             $pos2  = strpos($comment, 'Cross');
@@ -171,7 +175,7 @@ foreach($db_found->query($sql) as $row) {
             break;  
     } // end switch
            
-   
+   /*
     echo "1 $comm0 <br> $comm1<br><br> ";
     echo "pos1: $pos1 <br><br>";
     echo "pos2: $pos2 <br><br>";
