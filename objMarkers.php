@@ -16,12 +16,12 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 4743;
+   $q = 9114;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
                     COUNT(callsign) as numofcs, 
-                    CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),']);') as objBounds,
+                    CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [' , GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8) ,']'),']);') as objBounds,
                     CONCAT (' [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),'],') as arrBounds,
                     CONCAT (callsign,'arr') as allnameBounds
                FROM TimeLog 
@@ -31,6 +31,8 @@
               GROUP BY callsign
               ORDER BY callsign, timestamp
           ");
+          
+          echo "$sql";
     
         $allnameBounds = "";
         $allPoints = "";
