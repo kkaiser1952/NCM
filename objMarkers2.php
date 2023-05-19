@@ -29,22 +29,36 @@ $sql = (" SELECT
             callsign,
             timestamp,
             comment, 
+            CONCAT(callsign,'OBJ') as callOBJ,
+            COUNT(callsign) as numofcs, 
             SUBSTRING(comment, -18, 8) AS lat,
             SUBSTRING(comment, -9, 8) AS lng,
-            SUBSTRING(comment, LOCATE('&', comment) + 16, LOCATE(' & ', comment, LOCATE('&', comment) + 1) - LOCATE('&', comment) - 16) AS aprs_call
-        FROM TimeLog
-        WHERE netID = $q
-          AND comment LIKE '%OBJ::%'
-          AND callsign LIKE '%w0dlk%'
-        ORDER BY timestamp  
-          ");
+            
+            SUBSTRING(comment, LOCATE('&', comment) + 16, LOCATE(' & ', comment, LOCATE('&', comment) + 1) - LOCATE('&', comment) - 16) AS aprs_call,
+            
+            CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [' , GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8) ,']'),']);') as objBounds,
+            
+            CONCAT (' [', GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']'),'],') as arrBounds,
+            
+            CONCAT (callsign,'arr') as allnameBounds
+            
+          FROM TimeLog
+         WHERE netID = $q
+           AND comment LIKE '%OBJ::%'
+           AND callsign LIKE '%w0dlk%'  /* OR callsign LIKE '%wa0tjt%' */
+         ORDER BY timestamp  
+      ");
           
-          //echo ("$sql");
+          echo ("$sql <br><br>");
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
           $allcallList      = "";
           $alllatlngs       = "";
+          
+          $allnameBounds    = "";
+          $allPoints        = "";
+          $oByersCnt        = 0;
           
 
 foreach($db_found->query($sql) as $row) {
@@ -52,6 +66,17 @@ foreach($db_found->query($sql) as $row) {
     $callsign = $row['callsign'];
     $objType = $row['objType'];
     $comment = $row['comment'];
+    
+    $allPoints .= "$row[arrBounds]";
+    $objBounds .= "$row[objBounds]"; 
+    $oByersCnt = $oByersCnt + 1;
+    $allnameBounds .= "'$row[allnameBounds]',";
+    
+     $objPadit  .= "var $row[callsign]PAD    = $row[callsign]OBJ.pad(.075);";
+     $objSW     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthWest();";
+     $objNW     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthWest();";
+     $objNE     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthEast();";
+     $objSE     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthEast();";
             
     $result = extractVariables($comment);
     // Output the extracted variables
@@ -63,6 +88,8 @@ $javascriptVariables = [];
 $crossroads = '';
 
 foreach ($result as $name => $variable) {
+    
+    
     if ($name !== 'variable1' && $name !== 'variable2') {
         echo $row['callsign'] . ' ' . $row['aprs_call'] . ' ' . $name . ": " . $variable . "<br>";
 
@@ -74,10 +101,17 @@ foreach ($result as $name => $variable) {
     }
 }
 
-echo "Crossroads: " . $crossroads;
+echo "Crossroads:  $crossroads <br>";
+echo "objBounds: $objBounds <br>";
+echo "allPoints: $allPoints <br>";
+echo "oByersCnt: $oByersCnt <br>";
+echo "allnameBounds: $allnameBounds <br>";
 
 
 } // end foreach
+
+$oByers = "var oByers = $oByersCnt";
+echo "oByers: $oByers <br>";
       
 ?>
   
