@@ -16,32 +16,34 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 9114;
+   //$q = 9114;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
                     COUNT(callsign) as numofcs, 
                     CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [' , GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8) ,']'),']);') as objBounds,
-                    CONCAT (' [', GROUP_CONCAT('[',x(latlng),',',y(latlng),']'),'],') as arrBounds,
+                    
+                    CONCAT (' [', GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']'),'],') as arrBounds,
+                    
                     CONCAT (callsign,'arr') as allnameBounds
                FROM TimeLog 
               WHERE netID = $q 
                 AND callsign <> 'GENCOMM'
-                AND comment LIKE '%OBJ%' 
+                AND comment LIKE '%OBJ::%' /* or comment LIKE '%COM::%' */
               GROUP BY callsign
               ORDER BY callsign, timestamp
           ");
           
-          echo "$sql";
+          //echo "First sql:<br> $sql <br><br>";
     
         $allnameBounds = "";
         $allPoints = "";
         $oByersCnt = 0;
+        
      foreach($db_found->query($sql) as $row) {
          $objBounds .= "$row[objBounds]";    
-         $oByersCnt = $oByersCnt + 1;
+         $oByersCnt  = $oByersCnt + 1;
          
-
          $allnameBounds .= "'$row[allnameBounds]',";
          $objMiddle .= "$row[callsign]OBJ.getCenter();";
          $allPoints .= "$row[arrBounds]";
@@ -52,45 +54,57 @@
          $objNE     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthEast();";
          $objSE     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthEast();";
          
-        // echo ("$objPadit");
+        // //echo ("$objPadit");
             // var W0DLKPAD = W0DLKOBJ.pad(.075);
          
      } // end of foreach loop 
      
      $oByers = "var oByers = $oByersCnt";
      
+     //echo "objSW: $objSW <br>";
+     //echo "oByers: $oByers <br><br>";
+     
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
-        $sqlk = ("SELECT CONCAT('var ', callsign, 'latlngs = [',
-                         GROUP_CONCAT(CONCAT( '[',x(latlng),',',y(latlng),']')),']') as allKoords
+        $sqlk = ("SELECT CONCAT(
+                            'var ',
+                            callsign,
+                            'latlngs = [',
+                            GROUP_CONCAT(
+                                CONCAT('[', SUBSTRING(comment, -18, 8),
+                                ',',
+                                SUBSTRING(comment, -9, 8),
+                                ']')
+                            ),
+                            ']'
+                        ) AS allKoords
                     FROM TimeLog
-                   WHERE netID = $q
-                     AND comment LIKE '%OBJ:%'
+                   WHERE netID = 9114 AND COMMENT LIKE '%OBJ:%'
                    GROUP BY callsign
                 ");
                 
+        //echo "sqlk:<br> $sqlk <br><br>";
+                
             foreach($db_found->query($sqlk) as $row) {
                 $alltheKoords .= $row[allKoords].';';
-                
-        // objectLine = L.polyline([[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]],{color: newcolor, weight: 4}).addTo(map);
-            } 
-     //echo "$alltheKoords";
-    // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
+            }
+             
+     //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
-        $sql = ("SELECT callsign, timestamp, 
+        $sql = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
-                    	WHEN comment LIKE '%W3W:OBJ:%'  THEN  'W3W'
-                        WHEN comment LIKE '%APRS:OBJ:%' THEN 'APRS' 
+                    	WHEN comment LIKE '%W3W OBJ:%'  THEN  'W3W'
+                        WHEN comment LIKE '%APRS OBJ:%' THEN 'APRS' 
                     END AS 'objType',           
-	                comment,
-	                x(latlng) as lat, 
-	                y(latlng) as lng,
-                    counter,
-                    CONCAT('[',x(latlng),',',y(latlng),']') as koords         
+	              
+	                SUBSTRING(comment, -18, 8) AS lat,
+                    SUBSTRING(comment, -9, 8) AS lng,
+                   
+                    CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']') as koords         
                FROM (
              SELECT callsign, timestamp,
-              	    comment,  
-              	    latlng, x(latlng), y(latlng),
+              	    comment,  latlng, 
+              	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
                         @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
@@ -99,12 +113,13 @@
               ORDER BY callsign, timestamp ) s         
           ");
           
+        //echo "3rd sql:<br> $sql <br><br>";
+          
           $objMarkers       = "";
           $OBJMarkerList    = "";
           $allcallList      = "";
           $alllatlngs       = "";
           
-
 foreach($db_found->query($sql) as $row) {
     $koords = $row[koords];
     $callsign = $row[callsign];
@@ -151,14 +166,13 @@ foreach($db_found->query($sql) as $row) {
             $comm4 = substr($comment, $pos1);
             break;  
     } // end switch
-/*           
-    echo "1 $comm0 $comm1<br>";
-    echo "2 $comm0 $comm2<br>";
-    echo "3 $comm0 $comm3<br>";
-    echo "4 $comm0 $comm4<br>";
-    echo "5 $comm0 $comm5<br>"; 
-*/   
-
+           
+    //echo "1 $comm0 $comm1<br>";
+    //echo "2 $comm0 $comm2<br>";
+    //echo "3 $comm0 $comm3<br>";
+    //echo "4 $comm0 $comm4<br>";
+    //echo "5 $comm0 $comm5<br>"; 
+   
     $dup = 0;
         if(id==144) {$dup =50;}
         
@@ -173,6 +187,8 @@ foreach($db_found->query($sql) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
+        
+        //echo "<br>gs: $gs <br>";
                 
         $icon = "";
         
@@ -185,7 +201,9 @@ foreach($db_found->query($sql) as $row) {
                      <div class='gg'><br>LOCATION: $comm5<br><a href='https://what3words.com/$comm1?maptype=osm' target='_blank'>///$comm1</a><br><br>Cross Roads:<br>$comm2<br><br>Coordinates:<br>$comm3<br>Grid: $gs<br></div>";  
                      
             $div2 = "<div class='cc'>Full Comment:<br>".substr($comment,19)."<br><br></div>
-                     <div class='xx'>Captured:<br>$row[timestamp]</div>";          
+                     <div class='xx'>Captured:<br>$row[timestamp]</div>";       
+                     
+    //echo "<br>div1: $div1 <br>";   
    
             $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
                                 rotationAngle: $dup, 
@@ -201,14 +219,15 @@ foreach($db_found->query($sql) as $row) {
                                 $('Objects'._icon).addClass('objmrkr');    
                                 $('Objects'._icon).addClass('huechange');                                          
                            "; // End of objMarkers
+    //echo "objMarkers: $objMarkers <br>";
 } // end foreach
 
 
  // Create corner markers for each callsign that has objects.
-    $sql = ("SELECT  MIN(x(latlng)) as minLat,
-	                 MAX(x(latlng)) as maxLat,
-	                 MIN(y(latlng)) as minLng,
-	                 MAX(y(latlng)) as maxLng,                 
+    $sql = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
+	                 MAX(SUBSTRING(comment, -18, 8)) as maxLat,
+	                 MIN(SUBSTRING(comment, -9, 8)) as minLng,
+	                 MAX(SUBSTRING(comment, -9, 8)) as maxLng,                 
 	                 callsign
 	            FROM TimeLog
 	           WHERE netID = $q
@@ -216,6 +235,8 @@ foreach($db_found->query($sql) as $row) {
                GROUP BY callsign
                ORDER BY callsign
            ");
+           
+    //echo "<br>Fourth sql:<br> $sql <br>";
           
     $thecall = "";
 
@@ -237,10 +258,10 @@ foreach($db_found->query($sql) as $row) {
     foreach($db_found->query($sql) as $row) {
            $callsign = $row[callsign];      
                                 
-    	   $minLat = $row[minLat]-0.25;     //echo "@216 minLat= $minLat";
-    	   $maxLat = $row[maxLat]+0.25;     //echo "@217 maxLat= $maxLat";
-    	   $minLng = $row[minLng]+0.25;     //echo "@218 minLng= $minLng";
-    	   $maxLng = $row[maxLng]-0.25;     //echo "@219 maxLng= $maxLng";
+    	   $minLat = $row[minLat]-0.25;     ////echo "@216 minLat= $minLat";
+    	   $maxLat = $row[maxLat]+0.25;     ////echo "@217 maxLat= $maxLat";
+    	   $minLng = $row[minLng]+0.25;     ////echo "@218 minLng= $minLng";
+    	   $maxLng = $row[maxLng]-0.25;     ////echo "@219 maxLng= $maxLng";
 
 
           // It takes 5 sets to complete the square a to b, b to c, c to d, d to e, e back to a
@@ -306,45 +327,45 @@ foreach($db_found->query($sql) as $row) {
     $cmn++;
     }; // end foreach loop
     
-    //echo "$objMarkers";
+    ////echo "$objMarkers";
       
     $allPoints = rtrim($allPoints,",");
     //$allPoints = "var allPoints = ([$allPoints]);";
     
-      // echo "$allPoints";
+      // //echo "$allPoints";
        //var W0DLKarr = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];
        //var WA0TJTarr = [[39.20217,-94.60233],[39.20167,-94.60167],[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
       
     $allnameBounds = "let allnameBounds = [$allnameBounds];";
-        //echo "$allnameBounds"; // 
+        ////echo "$allnameBounds"; // 
         //var allnameBounds = (['W0DLKarr','WA0TJTarr',]);
       
     $allcallList = "var allcallList =[$allcallList];";
-       // echo "$allcallList";
+       // //echo "$allcallList";
         //var allcallList =['W0DLK01','W0DLK02','W0DLK03','W0DLK04','W0DLK05','WA0TJT01','WA0TJT02','WA0TJT03','WA0TJT04','WA0TJT05','WA0TJT06','WA0TJT07','WA0TJT08','WA0TJT09','WA0TJT10','WA0TJT11',];
       
     $uniqueCallList = "var uniqueCallList = [$uniqueCallList];";
-        //echo "$uniqueCallList"; 
+        ////echo "$uniqueCallList"; 
         // var uniqueCallList = ['W0DLKlatlngs','WA0TJTlatlngs',];
 
     $KornerList = "var KornerList = L.layerGroup([$KornerList]);";
-        //echo "$KornerList";
+        ////echo "$KornerList";
         //var KornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob6,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob6,]);
     
     $OBJCornerList = "var OBJCornerList = L.layerGroup([$OBJCornerList]);";
-        //echo "$OBJCornerList";
+        ////echo "$OBJCornerList";
         //var OBJCornerList = L.layerGroup([W0DLKob1, W0DLKob2, W0DLKob3, W0DLKob4, W0DLKob5,WA0TJTob1, WA0TJTob2, WA0TJTob3, WA0TJTob4, WA0TJTob5,]);
 
    // $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);";
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     //echo "$OBJMarkerList";
+     ////echo "$OBJMarkerList";
         // var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,W0DLK05,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,WA0TJT08,WA0TJT09,]);
     
     //$allOftheKoords = "$alltheKoords";
     // use this with leaflet-spline to connect the dots right now its done in a different way
     
     //$alloftheKoords = " $alltheKoords";
-    //echo "$allOftheKoords";
+    ////echo "$allOftheKoords";
     // var W0DLKlatlngs = [[39.201636,-94.602375],[39.201259,-94.603175],[39.20169,-94.603628],[39.201986,-94.603036],[39.202337,-94.602932]];var WA0TJTlatlngs = [[39.201393,-94.601576],[39.20067,-94.6015],[39.20167,-94.60217],[39.20117,-94.60167],[39.2025,-94.6025],[39.203,-94.60233],[39.203,-94.60233],[39.201016,-94.601541],[39.203,-94.60233]];
         
 ?>
