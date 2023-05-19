@@ -7,19 +7,7 @@
     require_once "GridSquare.php";
    // require_once "extractVariables.php";
    
-/*
-function extractVariables($string) {
-    $variables = explode('&', $string);
-    $extractedVariables = [];
 
-    foreach ($variables as $index => $variable) {
-    $extractedVariables["variable" . ($index + 1)] = trim($variable);
-}
-
-    var_dump($extractedVariables);
-    return $extractedVariables;
-}
-*/
 function extractVariables($string) {
     $variables = explode('&', $string);
     $extractedVariables = [];
@@ -47,6 +35,7 @@ $sql = (" SELECT
         FROM TimeLog
         WHERE netID = $q
           AND comment LIKE '%OBJ::%'
+          AND callsign LIKE '%w0dlk%'
         ORDER BY timestamp  
           ");
           
@@ -86,9 +75,6 @@ foreach ($result as $name => $variable) {
 }
 
 echo "Crossroads: " . $crossroads;
-
-
-
 
 
 } // end foreach
