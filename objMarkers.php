@@ -164,7 +164,7 @@ foreach($db_found->query($sql) as $row) {
             $pos2  = strpos($comment, 'Object:');
             $comm2 = substr($comment, $pos1, $pos2-$pos1);     
             // the object description
-            $pos1  = strpos($comment,'Object:')+7; 
+            $pos1  = strpos($comment,'Object:')+8; 
             $comm4 = substr($comment, $pos1);
             break;  
     } // end switch
@@ -200,7 +200,7 @@ foreach($db_found->query($sql) as $row) {
  
             $div1 = "<div class='xx' style='text-transform:uppercase;'>OBJ:<br>$objmrkr<br><br></div>
             
-                     <div style='color:red; font-weight: bold; font-size:14pt;'>Object Description:<br>$comm4</div>
+                     /*<div style='color:red; font-weight: bold; font-size:14pt;'>Object Description:<br>$comm4</div>*/
                      
                      <div class='gg'><br>LOCATION: $comm5<br><a href='https://what3words.com/$comm1?maptype=osm' target='_blank'>///$comm1</a><br><br>Cross Roads:<br>$comm2<br><br>Coordinates:<br>$comm3<br>Grid: $gs<br></div>";  
                      
