@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 9114;
+   $q = 9114;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -124,6 +124,8 @@ foreach($db_found->query($sql) as $row) {
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
     $comment  = "$row[comment]"; 
+    
+    echo "$comment<br><br>";
                
     $comm1    = $comm2 = $comm3 = $comm4 = $comm5 = '';
         
@@ -148,7 +150,7 @@ foreach($db_found->query($sql) as $row) {
         case "APRS":
             $comm0 = 'APRS';
             // the APRES capture timestamp
-            $pos1  = strpos($comment,'@:')+2;     
+            $pos1  = strpos($comment,'@::')+2;     
             $pos2  = strpos($comment, '(');
             $comm5 = '@ '.substr($comment, $pos1, $pos2-$pos1);
             // the coordinates
@@ -169,12 +171,17 @@ foreach($db_found->query($sql) as $row) {
             break;  
     } // end switch
            
-    //echo "1 $comm0 $comm1<br>";
-    //echo "2 $comm0 $comm2<br>";
-    //echo "3 $comm0 $comm3<br>";
-    //echo "4 $comm0 $comm4<br>";
-    //echo "5 $comm0 $comm5<br>"; 
    
+    echo "1 $comm0 <br> $comm1<br><br> ";
+    echo "pos1: $pos1 <br><br>";
+    echo "pos2: $pos2 <br><br>";
+    echo "comm5: $comm5 <br><br>";
+   /*
+    echo "2 $comm0 <br> $comm2<br><br> ";
+    echo "3 $comm0 <br> $comm3<br><br> ";
+    echo "4 $comm0 <br> $comm4<br><br> ";
+    echo "5 $comm0 <br> $comm5<br><br> "; 
+   */
     $dup = 0;
         if(id==144) {$dup =50;}
         
