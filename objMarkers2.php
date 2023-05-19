@@ -69,6 +69,10 @@ foreach($db_found->query($sql) as $row) {
     //var_dump($result);
         $crossroads = '';
 
+$javascriptVariables = [];
+
+$crossroads = '';
+
 foreach ($result as $name => $variable) {
     if ($name !== 'variable1' && $name !== 'variable2') {
         echo $row['callsign'] . ' ' . $row['aprs_call'] . ' ' . $name . ": " . $variable . "<br>";
@@ -81,7 +85,10 @@ foreach ($result as $name => $variable) {
     }
 }
 
-echo "Crossroads: " . $crossroads . "<br>";
+echo "Crossroads: " . $crossroads;
+
+
+
 
 
 } // end foreach
