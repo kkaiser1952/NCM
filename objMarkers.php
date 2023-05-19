@@ -123,11 +123,11 @@ foreach($db_found->query($sql) as $row) {
     $koords   = "$row[koords]";
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
-    $comment  = "$row[comment]"; 
+    $comment  = "$row[comment];"; 
     
-    echo "$comment<br><br>";
+    //echo "$comment<br><br>";
                
-    $comm1    = $comm2 = $comm3 = $comm4 = $comm5 = '';
+    $comm1 = $comm2 = $comm3 = $comm4 = 0;  $comm5 = '';
         
     // Switch is used to break apart the comment line in the TimeLog table for easier
     // additon to the marker pop-ups.
@@ -149,18 +149,21 @@ foreach($db_found->query($sql) as $row) {
             break;
         case "APRS":
             $comm0 = 'APRS';
-            // the APRES capture timestamp
+            // the APRES call
             $pos1  = strpos($comment,'OBJ::')+5;     
             $pos2  = strpos($comment, ' & ');
             $comm5 = substr($comment, $pos1, $pos2-$pos1);
-                
-            // the coordinates
-            $pos1  = strpos($comment,'///');    
-            $pos2  = strpos($comment, ')');
-            $comm3 = substr($comment, $pos1, $pos2-$pos1);
-                echo "pos1: $pos1 <br>";
-                echo "pos2: $pos2 <br>";
                 echo "comm5: $comm5 <br><br>";
+                
+            // the APRS OBJ
+            $comm3 = '';
+            $pos11  = strpos($comment,'&');    
+            $pos23  = strpos($comment, ' & ', $pos11);
+            $comm3 = substr($comment, $pos11, $pos23);
+                echo "pos11:  $pos11 <br>";
+                echo "pos23:  $pos23 <br>";
+                echo "comm3: $comm3 <br><br>";
+                
             // the what 3 words
             $pos1  = strpos($comment,'///')+3;    
             $pos2  = strpos($comment, 'Cross');
