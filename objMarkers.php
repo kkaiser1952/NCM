@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 9114;
+   //$q = 9114;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -54,15 +54,9 @@
          $objNE     .= "var $row[callsign]padit  = $row[callsign]PAD.getNorthEast();";
          $objSE     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthEast();";
          
-        // //echo ("$objPadit");
-            // var W0DLKPAD = W0DLKOBJ.pad(.075);
-         
      } // end of foreach loop 
      
      $oByers = "var oByers = $oByersCnt";
-     
-     //echo "objSW: $objSW <br>";
-     //echo "oByers: $oByers <br><br>";
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
@@ -131,12 +125,30 @@ foreach($db_found->query($sql) as $row) {
     //$pos1 = $pos2 = 0;
     
     //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 & 1 Driveway & Keith and Deb from KCMO & ///mice.beak.glimmer & N Ames Ave & NW 60th Ct & 39.20283,-94.60267";
-
-    $pos1 = strpos($comment, 'OBJ::') + 5;
-    $pos2 = strpos($comment, ' & ');
     
-    $comm51 = substr($comment, $pos1, $pos2 - $pos1);
-    echo "comm51: $comm51 <br><br>";
+    switch ($objType) {
+    case "COM":
+        $pos1 = strpos($comment, 'COM::') + 5;
+        $pos2 = strpos($comment, ' & ');
+        
+        $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
+        //echo "aprs_call: $aprs_call <br><br>";   
+        break;
+    case "APRS":
+        $pos1 = strpos($comment, 'OBJ::') + 5;
+        $pos2 = strpos($comment, ' & ');
+        
+        $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
+        //echo "aprs_call: $aprs_call <br><br>";
+        break;
+    } // end switch
+    
+
+    //$pos1 = strpos($comment, 'OBJ::') + 5;
+    //$pos2 = strpos($comment, ' & ');
+    
+    //$aprs_call = substr($comment, $pos1, $pos2 - $pos1);
+    //echo "aprs_call: $aprs_call <br><br>";
     
     $variableArray = [];
     $startPos = $pos2 + 3;
@@ -156,73 +168,16 @@ foreach($db_found->query($sql) as $row) {
     }
     
     // Output the variables
-    echo "comm1: $comm1 <br>";
-    echo "comm2: $comm2 <br>";
-    echo "comm3: $comm3 <br>";
-    echo "comm4: $comm4 <br>";
-    echo "comm5: $comm5 <br>";
-
+    /*
+    echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
+    echo "comm1: $comm1 <br>";          // Entered comment
+    echo "comm2: $comm2 <br>";          // From APRS comment 
+    echo "comm3: $comm3 <br>";          // What3Words
+    echo "comm4: $comm4 <br>";          // First Crossroad
+    echo "comm5: $comm5 <br>";          // Second Crossroad
+    echo "crossroads: $comm4 & $comm5"; // Corssroads
+    */
         
-    // Switch is used to break apart the comment line in the TimeLog table for easier
-    // additon to the marker pop-ups.
-   
-  /*  switch ($objType) {
-        case "W3W":
-            $comm0 = 'W3W';
-            // the What 3 Words
-            $pos1  = strpos($comment,'W3W OBJ:')+8;  $pos2 = strpos($comment, '->');
-            $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
-            // the cross roads
-            $pos1  = strpos($comment,'Roads:')+6;    $pos2 = strpos($comment, '(');
-            $comm2 = substr($comment, $pos1, $pos2-$pos1);
-            // the coordinates
-            $pos1  = strpos($comment,'(')+1;        $pos2 = strpos($comment, ')');
-            $comm3 = substr($comment, $pos1, $pos2-$pos1);
-            // the object description
-            $pos1  = strpos($comment,')')+1;    
-            $comm4 = substr($comment, $pos1);
-            break;
-        case "APRS":
-            $comm0 = 'APRS';
-            // the APRES call
-            $pos1  = strpos($comment,'OBJ::')+5;     
-            $pos2  = strpos($comment, ' & ');
-            $comm5 = substr($comment, $pos1, $pos2-$pos1);
-                echo "comm5: $comm5 <br><br>";
-                
-            // the APRS OBJ
-            $pos1  = stripos($comment,'&');    
-            //$pos2  = strpos($comment,'&', $pos1+1);
-            $comm3 = substr($comment, $pos2, stripos($comment,$pos2,$pos2+1));
-                echo "pos1:  $pos1 <br>";
-                echo "pos2:  $pos2 <br>";
-                echo "comm3: $comm3 <br><br>";
-                
-            // the what 3 words
-            $pos1  = strpos($comment,'///')+3;    
-            $pos2  = strpos($comment, 'Cross');
-            $comm1 = trim(substr($comment, $pos1, $pos2-$pos1));
-            // the cross roads
-            $pos1  = strpos($comment,'Roads:')+6; 
-            $pos2  = strpos($comment, 'Object:');
-            $comm2 = substr($comment, $pos1, $pos2-$pos1);     
-            // the object description
-            $pos1  = strpos($comment,'Object:')+8; 
-            $comm4 = substr($comment, $pos1);
-            break;  
-    } // end switch */
-           
-   /*
-    echo "1 $comm0 <br> $comm1<br><br> ";
-    echo "pos1: $pos1 <br><br>";
-    echo "pos2: $pos2 <br><br>";
-    echo "comm5: $comm5 <br><br>";
-   /*
-    echo "2 $comm0 <br> $comm2<br><br> ";
-    echo "3 $comm0 <br> $comm3<br><br> ";
-    echo "4 $comm0 <br> $comm4<br><br> ";
-    echo "5 $comm0 <br> $comm5<br><br> "; 
-   */
     $dup = 0;
         if(id==144) {$dup =50;}
         
@@ -259,20 +214,20 @@ foreach($db_found->query($sql) as $row) {
     //echo "<br>div1:<br> $div1 <br><br>";   
    // echo "<br>div2: $div1 <br><br>";
    
-            $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
-                                rotationAngle: $dup, 
-                                rotationOrigin: 'bottom', 
-                                opacity: 0.75,
-                                contextmenu: true, 
-                                contextmenuWidth: 140,
-                                contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
-                                
-                                icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                                title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();                    
-                                
-                                $('Objects'._icon).addClass('objmrkr');    
-                                $('Objects'._icon).addClass('huechange');                                          
-                           "; // End of objMarkers
+        $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
+                            rotationAngle: $dup, 
+                            rotationOrigin: 'bottom', 
+                            opacity: 0.75,
+                            contextmenu: true, 
+                            contextmenuWidth: 140,
+                            contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
+                            
+                            icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+                            title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();                    
+                            
+                            $('Objects'._icon).addClass('objmrkr');    
+                            $('Objects'._icon).addClass('huechange');                                          
+                       "; // End of objMarkers
     //echo "objMarkers:<br> $objMarkers <br>";
 } // end foreach
 
