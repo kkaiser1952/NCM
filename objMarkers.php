@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 9114;
+   $q = 9114;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -106,7 +106,7 @@
               ORDER BY callsign, timestamp ) s         
           ");
           
-        //echo "3rd sql:<br> $sql <br><br>";
+        echo "3rd sql:<br> $sql <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
