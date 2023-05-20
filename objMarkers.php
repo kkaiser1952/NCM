@@ -127,8 +127,8 @@ foreach($db_found->query($sql) as $row) {
     //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 & 1 Driveway & Keith and Deb from KCMO & ///mice.beak.glimmer & N Ames Ave & NW 60th Ct & 39.20283,-94.60267";
     
     switch ($objType) {
-    case "COM":
-        $pos1 = strpos($comment, 'COM::') + 5;
+    case "W3W":
+        $pos1 = strpos($comment, 'W3W::') + 5;
         $pos2 = strpos($comment, ' & ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
