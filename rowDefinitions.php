@@ -227,7 +227,7 @@ echo ("
         <td $brbCols 
             class=\"editable W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
-            oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
+            oncontextmenu=\"getAPRSLocations('$row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID]');return false; \" 
             onClick=\"empty('w3w:$row[recordID]');\">
             <div class='$class'> $row[w3w]	</div> 
         </td>   
