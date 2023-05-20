@@ -94,7 +94,7 @@
 	                SUBSTRING(comment, -18, 8) AS lat,
                     SUBSTRING(comment, -9, 8) AS lng,
                    
-                    CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']') as koords         
+                    CONCAT(SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8)) as koords         
                FROM (
              SELECT callsign, timestamp, comment,  
               	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
@@ -201,34 +201,41 @@ foreach($db_found->query($sql) as $row) {
        
         $comment = "$row[comment]";
  
-            $div1 = "<div class='xx' style='text-transform:uppercase;'>OBJ:<br>$objmrkr<br></div>
-            
-                     <div style='color:red; font-weight: bold; font-size:14pt;'>
-                        APRS Comment:<br>$comm2
-                     <br>
-                     </div>
-                     <div style='color:blue; font-weight: bold; font-size:14pt;'>
-                        Station Comment:<br>$comm1
-                     <br>
-                     </div>
-                     
-                     <div class='gg'>
-                     <br>
-                        Cross Roads:<br> $comm4 & $comm5
-                     <br><br>
-                        What3Words:<br> $comm3
-                     <br><br>
-                        Grid Square:<br> $gs
-                     <br>
-                     </div>";
-                    
-                    /*
-                     <div class='gg'><br>LOCATION: $comm5<br><a href='https://what3words.com/$comm1?maptype=osm' target='_blank'>///$comm1</a><br><br>Cross Roads:<br>$comm2<br><br>Coordinates:<br>$comm3<br>Grid: $gs<br></div>";  
-                     */
-                     
-            $div2 = "<div class='cc'>Full Comment:<br>".substr($comment,19)."<br><br></div>
-            
-                     <div class='xx'>Captured:<br>$row[timestamp]</div>";       
+        // Content when an object marker is clicked.
+        $div1 = "<div class='xx' style='text-transform:uppercase;'>
+                    OBJ: $objmrkr
+                 </div>
+                 
+                 <div class='gg'>
+                 <br>
+                    Cross Roads:<br> $comm4 & $comm5
+                 <br><br>
+                    What3Words:<br> $comm3
+                 <br><br>
+                    Grid Square:<br> $gs &nbsp;&nbsp;&nbsp; AT: $koords
+                 <br>
+                 </div>
+                 
+                 <div style='color:red; font-weight: bold;'>
+                 <br>
+                    APRS Comment:<br>$comm2
+                 <br>
+                 </div>
+                 <div style='color:blue; font-weight: bold;'>
+                 <br>
+                    Station Comment:<br>$comm1
+                 <br>
+                 </div>
+                ";
+                
+        $div2 = "<div class='cc'>
+                    Full Comment:<br>".substr($comment,19)."
+                 <br><br>
+                 </div>
+                 <div class='xx'>
+                    Captured:<br>$row[timestamp]
+                 </div>
+                ";       
                      
     //echo "<br>div1:<br> $div1 <br><br>";   
     //echo "<br>div2: $div1 <br><br>";
