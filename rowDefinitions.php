@@ -230,7 +230,8 @@ echo ("
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
             onClick=\"empty('w3w:$row[recordID]');\">
             <div class='$class'> $row[w3w]	</div> 
-        </td>   
+        </td> 
+        
         <!-- onClick=\"empty('w3w:$row[recordID]'); getW3W('$row[recordID]'); event.preventDefault(); 
             \"> -->
         <!-- https://www.formget.com/jquery-dialog-form/ -->
