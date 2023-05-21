@@ -13,6 +13,8 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "ENV_SETUP.php";      // API's
     require_once "GridSquare.php";
+    require_once "config.php";
+    require_once "config2.php";
     
     
     // Value comes from an open net or prompt 
