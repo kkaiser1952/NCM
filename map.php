@@ -472,8 +472,8 @@ var map = L.map('map', {
         
      var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
      
-     console.log('@404');
-     console.log(polyline);
+     //console.log('@404');
+     //console.log(polyline);
 
     
     //====================================================================== 
