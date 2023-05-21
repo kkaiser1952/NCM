@@ -472,6 +472,13 @@ var map = L.map('map', {
         
      var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
      
+     /*
+     var markerBounds = L.featureGroup(objmarkers).getBounds();
+            console.log('markerBounds: '+markerBounds);
+        
+        map.fitBounds(markerBounds);
+    */
+     
      //console.log('@404');
      //console.log(polyline);
 
@@ -590,11 +597,12 @@ var map = L.map('map', {
             lastLayer = e.relatedTarget; 
         });
         
-        var markerBounds = L.featureGroup(markers).getBounds();
+        /*
+        var markerBounds = L.featureGroup(objmarkers).getBounds();
             console.log('markerBounds: '+markerBounds);
         
         map.fitBounds(markerBounds);
-
+        */
 
 	    
 
