@@ -21,7 +21,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 8523; 
     //$q = 6066;
-    //$q = 7988;
+    //$q = 9128;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -250,13 +250,13 @@ var map = L.map('map', {
 	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
 	   
 	   //alert (esriapi);
-          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
-            apikey: esriapi}).addTo(map),
+          //Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
+            //apikey: esriapi}).addTo(map),
           Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
-            apikey: esriapi}).addTo(map),
-          Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
-            apikey: esriapi}).addTo(map),
-          Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            //apikey: esriapi}).addTo(map),
+          //Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
+            //apikey: esriapi}).addTo(map),
+          //Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
           Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map),
@@ -268,11 +268,9 @@ var map = L.map('map', {
   //  apiKey
   //});
    
-    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
+    const baseMaps = {  Standard,
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
-                       "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
-                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,
-                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
+                                              "<span style='color: blue; font-weight: bold;'>Standard": Standard,
                        "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
                      
@@ -591,6 +589,13 @@ var map = L.map('map', {
             console.log(e);
             lastLayer = e.relatedTarget; 
         });
+        
+        var markerBounds = L.featureGroup(markers).getBounds();
+            console.log('markerBounds: '+markerBounds);
+        
+        map.fitBounds(markerBounds);
+
+
 	    
 
 </script>   <!-- End of javascript holding the map stuff -->
