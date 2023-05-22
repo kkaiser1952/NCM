@@ -224,6 +224,7 @@ echo ("
         </td>
        --> 
     
+    
         <td $brbCols 
             class=\"editable W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
@@ -231,12 +232,7 @@ echo ("
             onClick=\"empty('w3w:$row[recordID]');\">
             <div class='$class'> $row[w3w]	</div> 
         </td> 
-        
-        <!-- onClick=\"empty('w3w:$row[recordID]'); getW3W('$row[recordID]'); event.preventDefault(); 
-            \"> -->
-        <!-- https://www.formget.com/jquery-dialog-form/ -->
-        
-        
+              
         <td $brbCols 
             class=\"editable editteam  c30 cent\" 
             id=\"team:$row[recordID]\" 
@@ -244,6 +240,14 @@ echo ("
             <div class='$class'> $row[team]	</div> 
         </td>
         
+    <!--    <td $brbCols 
+            class=\"editable W3W  c24 cent\" 
+            id=\"w3w:$row[recordID]\" 
+            oncontextmenu=\"getW3W('$row[w3w], $row[recordID], $row[latitude], $row[longitude],$row[callsign], $row[netID]');return false; \" 
+            onClick=\"empty('w3w:$row[recordID]');\">
+            <div class='$class'> $row[w3w]	</div> 
+        </td>
+    -->    
         <td $brbCols 
             class=\"editable editaprs_call  c31 cent\" 
             id=\"aprs_call:$row[recordID]\" 

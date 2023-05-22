@@ -1,23 +1,58 @@
 <?php
+    // Designed to work much like its counter part locations_APRS but with W3W as input
+
+// Function to convert W3W into lat/long
+function convertW3WtoCoordinates($what3words) {
+    $w3w_api_key = $config['geocoder']['api_key'];
+    //$apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+    $url = "https://api.what3words.com/v3/convert-to-coordinates?words=" . $what3words . "&key=" . $w3w_api_key;
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode === 200) {
+        $data = json_decode($response, true);
+        if (isset($data['coordinates'])) {
+            $latitude = $data['coordinates']['lat'];
+            $longitude = $data['coordinates']['lng'];
+            return array($latitude, $longitude);
+        } else {
+            echo "Invalid response from API";
+        }
+    } else {
+        echo "Request failed with status code: " . $httpCode;
+    }
+}
+    
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call = $_GET["aprs_call"];      
-        $aprs_callsign = strtoupper($aprs_call);
+	$W3W_entered = $_GET["W3W_entered"];      // the three words entered into the field
     $recordID   = $_GET["recordID"]; 
-    $CurrentLat = $_GET["CurrentLat"];
-    $CurrentLng = $_GET["CurrentLng"];
-    $cs1        = $_GET["cs1"]; // callsign of row
-    $nid        = $_GET["nid"]; // netID
-    $objName    = $_GET["objName"]; // like car, truck, fallen tree
+    $CurrentLat = $_GET["CurrentLat"];        // the current latitude, usually home
+    $CurrentLng = $_GET["CurrentLng"];        // the current longitude, usually home
+    $cs1        = $_GET["cs1"];               // callsign of row
+    $nid        = $_GET["nid"];               // netID
+    $objName    = $_GET["objName"];           // like car, truck, fallen tree
     
     echo ("objName at top: $objName");
     
-    //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
-    //echo "<u>From The APRS API, part 1</u><br>";
+    echo "<br><u>W3W entered: $W3W_entered</u><br><br>";
      
     include('config2.php');
     
+    //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
+    list($latitude, $longitude) = convertW3WtoCoordinates($W3W_entered);
+    echo "W3W Latitude: " . $latitude . "<br>";
+    echo "W3W Longitude: " . $longitude . "<br>";
+
+
+/*
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
@@ -39,6 +74,8 @@
         $altitude_feet   = number_format($alt_feet, 1);
     $aprs_comment    = $data['entries'][0]['comment'];
         //echo "aprs comment: {$aprs_comment};
+        
+*/
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -70,20 +107,20 @@
     //echo "<br>Grid Square: {$grid}<br>";
     
     // Now lets add the what3words words from the W3W geocoder
-    $w3w_api_key = $config['geocoder']['api_key'];
+    //$w3w_api_key = $config['geocoder']['api_key'];
     
     // use What3words\Geocoder\Geocoder;
-    require_once('Geocoder.php');
-    $latx = (float) $data['entries'][0]['lat'];
-        $lat = number_format($latx, 6);
-    $lngx = (float) $data['entries'][0]['lng'];
-        $lng = number_format($lngx, 6);
+    //require_once('Geocoder.php');
+    //$latx = (float) $data['entries'][0]['lat'];
+        //$lat = number_format($latx, 6);
+    //$lngx = (float) $data['entries'][0]['lng'];
+        //$lng = number_format($lngx, 6);
     //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
-    $api = new What3words\Geocoder\Geocoder($w3w_api_key);
+    //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     // Get the what3words using lat lng
-    $result = $api->convertTo3wa($lat, $lng);
+    //$result = $api->convertTo3wa($lat, $lng);
     //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
         //print_r($result);
     
@@ -93,7 +130,7 @@
     //$southwest_lng = $result['square']['southwest']['lng'];
     //$northeast_lat = $result['square']['northeast']['lat'];
     //$northeast_lng = $result['square']['northeast']['lng'];
-    $words = $result['words'];
+    //$words = $result['words'];
     //$language = $result['language'];
     $map = $result['map'];
     //$place = $result['nearestPlace'];
