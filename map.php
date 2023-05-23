@@ -65,7 +65,7 @@
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
-    <script src="js/geolet.js"></script>
+    <!-- <script src="js/geolet.js"></script> -->
     <!-- https://github.com/ardhi/Leaflet.MousePosition -->
     <!--<script src="js/L.Control.MousePosition.js"></script>-->
      
@@ -335,7 +335,7 @@ var map = L.map('map', {
     L.grid().addTo(map);  
     
     // https://github.com/rhlt/leaflet-geolet
-    L.geolet({ position: 'bottomleft' }).addTo(map);
+    //L.geolet({ position: 'bottomleft' }).addTo(map);
     
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
