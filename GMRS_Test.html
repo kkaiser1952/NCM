@@ -8,46 +8,22 @@
 
 <script>
 function testCallsign(callsign) {
-  const gmrsRegex = /^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/;
-
-  if (gmrsRegex.test(callsign)) {
-    // GMRS Callsign
-    console.log("callsign");
-    const url = `https://data.fcc.gov/api/license-view/basicSearch/getLicenses?searchValue=${callsign}`;
-
-    console.log(url);
-
-    $.ajax({
-      url: "https://cors-anywhere.herokuapp.com/" + url,
-      method: 'GET',
-      success: function(data) {
-        // Extract desired details
-        const license = data.Licenses[0];
-
-        const result = {
-          category: "GMRS Callsign",
-          licName: license.licName,
-          callsign: license.callsign,
-          categoryDesc: license.categoryDesc,
-          serviceDesc: license.serviceDesc,
-          statusDesc: license.statusDesc,
-          licenseID: license.licenseID
-        };
-
-        console.log(result);
-      },
-      error: function(error) {
-        console.error("Error retrieving details from the API:", error);
-      }
-    });
-  } else {
-    // Invalid Callsign
-    console.log("Invalid Callsign");
-  }
+    const gmrsRegex = /^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/;
+        // Some code to do that testing
+        if (gmrsRegex.test(callsign)) {
+            // Callsign matches the GMRS pattern
+            console.log("valid: "+callsign);
+            //console.log("Valid GMRS Callsign");
+          } else {
+            // Callsign does not match the GMRS pattern
+            console.log("Invalid Callsign");
+          }
 }
 
-testCallsign("WRWK464"); // Example GMRS Callsign
-testCallsign("Invalid"); // Example Invalid Callsign
+
+testCallsign('WRWK464'); // Example GMRS Callsign
+//testCallsign("Invalid"); // Example Invalid Callsign
+
 
 </script>
 <body>
