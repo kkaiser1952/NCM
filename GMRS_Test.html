@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>GMRS Test</title>
+   
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+// Function to test the callsign and retrieve details if GMRS
+function testCallsign(callsign, regex, callback) {
+  if (regex.test(callsign)) {
+    // Perform the necessary operations for GMRS callsign
+    // ...
+
+    const result = {
+      category: "GMRS Callsign",
+      licName: "",
+      callsign,
+      categoryDesc: "",
+      serviceDesc: "",
+      statusDesc: "",
+      licenseID: ""
+    };
+
+    callback(null, result);
+  } else {
+    const result = {
+      category: "Valid Callsign",
+      licName: "",
+      callsign,
+      categoryDesc: "",
+      serviceDesc: "",
+      statusDesc: "",
+      licenseID: ""
+    };
+
+    callback(null, result);
+  }
+}
+
+const callsign = "WRWK464";
+const gmrsRegex = /^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/;
+
+testCallsign(callsign, gmrsRegex, function(error, result) {
+  if (error) {
+    console.error("Error:", error);
+  } else {
+    console.log(result);
+  }
+});
+
+
+//const callsign = "WRWK464";
+</script>
+    
+    
+<style>    
+</style>
+<body>
+      
+<div class="nofirstletter">
+  
+</div>
+  
+ 
+</body>
+</html>
