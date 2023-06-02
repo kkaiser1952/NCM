@@ -7,6 +7,7 @@
 </head>
 
 <script>
+    /*
 function testCallsign(callsign) {
     const gmrsRegex = /^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/;
         // Some code to do that testing
@@ -23,7 +24,35 @@ function testCallsign(callsign) {
 
 testCallsign('WRWK464'); // Example GMRS Callsign
 //testCallsign("Invalid"); // Example Invalid Callsign
+*/
+url: "https://data.fcc.gov/api/license-view/basicSearch/getLicenses?searchValue=WROY605";
 
+$.ajax({
+      url: "https://cors-anywhere.herokuapp.com/" + url,
+      
+      method: 'GET',
+      success: function(data) {
+        // Extract desired details
+        const license = data.Licenses[0];
+        
+        console.log("in the ajax");
+
+        const result = {
+          category: "GMRS Callsign",
+          licName: license.licName,
+          callsign: license.callsign,
+          categoryDesc: license.categoryDesc,
+          serviceDesc: license.serviceDesc,
+          statusDesc: license.statusDesc,
+          licenseID: license.licenseID
+        };
+
+        console.log(result);
+      },
+      error: function(error) {
+        console.error("Error retrieving details from the API:", error);
+      }
+    });
 
 </script>
 <body>
