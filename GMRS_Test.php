@@ -13,7 +13,8 @@
    <?php
 
 function testCallsign($callsign) {
-  $gmrsRegex = '/^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/';
+  //$gmrsRegex = '/^[A-Za-z]{1,4}\d{1,2}[A-Za-z]{2}$/';
+  $gmrsRegex = '/^[A-Za-z]{4}\d{3}$/';
 
   if (preg_match($gmrsRegex, $callsign)) {
     // GMRS Callsign
