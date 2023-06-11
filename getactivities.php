@@ -155,8 +155,57 @@ if ( $q <> 0 ){
 					FROM  NetLog 
 					WHERE netID = $q
 		  			ORDER BY
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN 0
+                        WHEN netcontrol IN ('PRM','CMD','TL','EM') THEN 1
+                        ELSE 2
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+                        WHEN netcontrol IN ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') THEN 1
+                        ELSE 4
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+                        WHEN active = 'MISSING' THEN 3
+                        ELSE 80
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+                        WHEN active = 'BRB' THEN 5
+                        ELSE 80
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+                        WHEN active IN ('In-Out', 'Out', 'OUT') THEN 80
+                        ELSE NULL
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+                        WHEN facility = 'Checkins with no assignment' THEN 95
+                        ELSE 6
+                      END,
+                      CASE
+                        WHEN netcall = 'MESN' THEN district
+                        ELSE NULL
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN facility
+                        ELSE NULL
+                      END,
+                      CASE
+                        WHEN netcall LIKE '%sbbt202%' THEN team
+                        ELSE NULL
+                      END,
+                      CASE
+                        WHEN netcall IN ('KCHEART', 'ARHAB') AND (facility IN ('', 'Checkins with no assignment') AND active IN ('In-Out', 'Out', 'OUT', 'In', 'IN')) THEN 95
+                        ELSE NULL
+                      END,
+                      facility,
+                      logdate
+
 		  			     
-                         CASE when netcontrol in ('PRM','CMD','TL','EM') then 0 ELSE 1 END
+                /*         CASE when netcontrol in ('PRM','CMD','TL','EM') then 0 ELSE 1 END
                         ,CASE when netcontrol in ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') then 1 ELSE 4 END
                                            
                         ,CASE when active = 'MISSING' then 3 ELSE 80 END
@@ -169,6 +218,7 @@ if ( $q <> 0 ){
                         ,CASE when netcall like '%sbbt202%' then team END
                         ,CASE when netcall in ('KCHEART') AND (facility in('', 'Checkins with no assignment') AND active in('In-Out', 'Out', 'OUT', 'In', 'IN')) then 95 END
                         ,facility,logdate
+                */
                     ";  
 		  			
     }else if ($q == 0) {
