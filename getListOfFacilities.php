@@ -13,26 +13,24 @@ require_once "dbConnectDtls.php";
 	
 	$recordID = 134912;
 	
-	$sql = "SELECT netcall FROM NetLog WHERE recordID = $recordID LIMIT 0,1;";
-	//echo "first sql: $sql <br>";
+	$sql = "SELECT netcall FROM NetLog WHERE recordID = $recordID LIMIT 0,1";
+	    //echo "first sql: $sql <br>";
+	    echo "<script>console.log('first SQL: $sql');</script>";
 	    $stmt = $db_found->prepare($sql);
 		$stmt -> execute();
 		$groupcall = $stmt->fetchColumn(0);
 		
 		//echo "group call: $groupcall <br>";
+		echo "<script>console.log('group call: $groupcall');</script>";
+
 	 
-	$sql = "SELECT `facility`
-			  FROM ncm.facility
-			 WHERE groupcall = '$groupcall';
-		   ";
-	//echo "$sql<br><br>";
+	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall'";
+	    //echo "<br>second sql: $sql<br><br>";
+	    echo "<script>console.log('second SQL2: $sql2');</script>";
         //$list = "{\" \":\" \","; // add a blank to the list
         $list = "{";
         $listarray = array();
-	  	foreach($db_found->query($sql) as $row) {
-		//++$num_rows;    /* "Traffic":"Traffic" */
-		   // $list .= "$row[facility],";
-		   // $listarray[] = $row;
+	  	foreach($db_found->query($sql2) as $row) {
 		    $list .= "\"$row[facility]\":\"$row[facility]\",";
         } // end foreach
 		    
