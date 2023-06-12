@@ -9,9 +9,9 @@ error_reporting(E_ALL);
 
 require_once "dbConnectDtls.php";
 
-	//$recordID   = $_GET['recordID'];	
+	$recordID   = $_GET['recordID'];	
 	
-	$recordID = 134912;
+	//$recordID = 134912;
 	
 	$sql = "SELECT netcall FROM NetLog WHERE recordID = $recordID LIMIT 0,1";
 	    //echo "first sql: $sql <br>";
@@ -20,11 +20,11 @@ require_once "dbConnectDtls.php";
 		$stmt -> execute();
 		$groupcall = $stmt->fetchColumn(0);
 		
-		//echo "group call: $groupcall <br>";
+		//echo "1st group call: $groupcall <br>";
 		echo "<script>console.log('group call: $groupcall');</script>";
 
 	 
-	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall'";
+	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall' ";
 	    //echo "<br>second sql: $sql<br><br>";
 	    echo "<script>console.log('second SQL2: $sql2');</script>";
         //$list = "{\" \":\" \","; // add a blank to the list
@@ -35,6 +35,7 @@ require_once "dbConnectDtls.php";
         } // end foreach
 		    
 		    $list = $list.'}';
-		    echo "$list";
+		    //echo "$list";
+
 ?>
 		
