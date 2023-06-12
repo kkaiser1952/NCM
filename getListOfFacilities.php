@@ -35,7 +35,7 @@ require_once "dbConnectDtls.php";
         } // end foreach
 		    
 		    $list = $list.'}';
-		    //echo "$list";
+		    echo "$list";
 
 ?>
 		
