@@ -15,19 +15,31 @@ require_once "dbConnectDtls.php";
 	
 	$sql = "SELECT netcall FROM NetLog WHERE recordID = $recordID LIMIT 0,1";
 	    //echo "first sql: $sql <br>";
-	    echo "<script>console.log('first SQL: $sql');</script>";
+	    //echo "<script>console.log('first SQL: $sql');</script>";
 	    $stmt = $db_found->prepare($sql);
 		$stmt -> execute();
 		$groupcall = $stmt->fetchColumn(0);
 		
 		//echo "1st group call: $groupcall <br>";
-		echo "<script>console.log('group call: $groupcall');</script>";
+		//echo "<script>console.log('group call: $groupcall');</script>";
+		
+    $sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall'";
+        $listarray = array();
+        foreach ($db_found->query($sql2) as $row) {
+            $listarray[$row['facility']] = $row['facility'];
+        }
+
+// Send JSON response
+header('Content-Type: application/json');
+echo json_encode($listarray);
+
 
 	 
-	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall' ";
+//	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall' ";
 	    //echo "<br>second sql: $sql<br><br>";
-	    echo "<script>console.log('second SQL2: $sql2');</script>";
+	    //echo "<script>console.log('second SQL2: $sql2');</script>";
         //$list = "{\" \":\" \","; // add a blank to the list
+/*
         $list = "{";
         $listarray = array();
 	  	foreach($db_found->query($sql2) as $row) {
@@ -36,6 +48,7 @@ require_once "dbConnectDtls.php";
 		    
 		    $list = $list.'}';
 		    echo "$list";
+*/
 
 ?>
 		
