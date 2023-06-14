@@ -33,22 +33,5 @@ require_once "dbConnectDtls.php";
 header('Content-Type: application/json');
 echo json_encode($listarray);
 
-
-	 
-//	$sql2 = "SELECT facility FROM ncm.facility WHERE groupcall = '$groupcall' ";
-	    //echo "<br>second sql: $sql<br><br>";
-	    //echo "<script>console.log('second SQL2: $sql2');</script>";
-        //$list = "{\" \":\" \","; // add a blank to the list
-/*
-        $list = "{";
-        $listarray = array();
-	  	foreach($db_found->query($sql2) as $row) {
-		    $list .= "\"$row[facility]\":\"$row[facility]\",";
-        } // end foreach
-		    
-		    $list = $list.'}';
-		    echo "$list";
-*/
-
 ?>
 		
