@@ -129,14 +129,14 @@ foreach($db_found->query($sql) as $row) {
     switch ($objType) {
     case "W3W":
         $pos1 = strpos($comment, 'W3W::') + 5;
-        $pos2 = strpos($comment, ' & ');
+        $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
         //echo "aprs_call: $aprs_call <br><br>";   
         break;
     case "APRS":
         $pos1 = strpos($comment, 'OBJ::') + 5;
-        $pos2 = strpos($comment, ' & ');
+        $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
         //echo "aprs_call: $aprs_call <br><br>";
@@ -154,7 +154,7 @@ foreach($db_found->query($sql) as $row) {
     $startPos = $pos2 + 3;
     $index = 1;
     
-    while (($endPos = strpos($comment, ' & ', $startPos)) !== false) {
+    while (($endPos = strpos($comment, ' : ', $startPos)) !== false) {
         $variableArray[] = trim(substr($comment, $startPos, $endPos - $startPos));
         $startPos = $endPos + 3;
         $index++;

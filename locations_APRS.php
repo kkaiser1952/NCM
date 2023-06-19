@@ -144,7 +144,9 @@ echo $json;
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$objName APRS Update<Confirmed'
+              ,comments     = '$objName : '
+          /*    ,comments     = '$objName : APRS Update<Confirmed' 
+              ,comments     = 'APRS Update : $objName :' */
          WHERE recordID = $recordID;
        ";
        
