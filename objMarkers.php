@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 9114;
+   $q = 9327;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -73,7 +73,8 @@
                             ']'
                         ) AS allKoords
                     FROM TimeLog
-                   WHERE netID = 9114 AND COMMENT LIKE '%OBJ:%'
+                   WHERE netID = $q
+                     AND COMMENT LIKE '%OBJ::%'
                    GROUP BY callsign
                 ");
                 
@@ -87,8 +88,8 @@
       
         $sql = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
-                    	WHEN comment LIKE '%W3W OBJ:%'  THEN  'W3W'
-                        WHEN comment LIKE '%APRS OBJ:%' THEN 'APRS' 
+                    	WHEN comment LIKE '%W3W OBJ::%'  THEN  'W3W'
+                        WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
                     END AS 'objType',           
 	              
 	                SUBSTRING(comment, -18, 8) AS lat,
@@ -102,7 +103,7 @@
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
-                AND comment LIKE '%OBJ:%' 
+                AND comment LIKE '%OBJ::%' 
               ORDER BY callsign, timestamp ) s         
           ");
           
@@ -124,7 +125,7 @@ foreach($db_found->query($sql) as $row) {
     //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
     //$pos1 = $pos2 = 0;
     
-    //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 & 1 Driveway & Keith and Deb from KCMO & ///mice.beak.glimmer & N Ames Ave & NW 60th Ct & 39.20283,-94.60267";
+    //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 : 1 Driveway : Keith and Deb from KCMO : ///mice.beak.glimmer & N Ames Ave & NW 60th Ct : 39.20283,-94.60267";
     
     switch ($objType) {
     case "W3W":
@@ -168,15 +169,16 @@ foreach($db_found->query($sql) as $row) {
     }
     
     // Output the variables
-    /*
+    
     echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
     echo "comm1: $comm1 <br>";          // Entered comment
     echo "comm2: $comm2 <br>";          // From APRS comment 
     echo "comm3: $comm3 <br>";          // What3Words
     echo "comm4: $comm4 <br>";          // First Crossroad
     echo "comm5: $comm5 <br>";          // Second Crossroad
-    echo "crossroads: $comm4 & $comm5"; // Corssroads
-    */
+    echo "crossroads: $comm4 <br>"; // Corssroads
+    //echo "comm6: $comm5";              // Koords
+    echo "<br>";
         
     $dup = 0;
         if(id==144) {$dup =50;}
