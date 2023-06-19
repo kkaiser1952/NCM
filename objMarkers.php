@@ -169,16 +169,23 @@ foreach($db_found->query($sql) as $row) {
     }
     
     // Output the variables
-    
+    /*
     echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
     echo "comm1: $comm1 <br>";          // Entered comment
     echo "comm2: $comm2 <br>";          // From APRS comment 
     echo "comm3: $comm3 <br>";          // What3Words
-    echo "comm4: $comm4 <br>";          // First Crossroad
-    echo "comm5: $comm5 <br>";          // Second Crossroad
-    echo "crossroads: $comm4 <br>"; // Corssroads
-    //echo "comm6: $comm5";              // Koords
+    echo "comm4: $comm4 <br>";          // Crossroad
+    echo "comm5: $comm5 <br>";          // koords
     echo "<br>";
+    */
+    /*
+    aprs_call: 1134 WA0TJT-1 
+    comm1: harden 
+    comm2: Keith and Deb from KCMO 
+    comm3: ///chum.hamstrings.conspire 
+    comm4: N Harden St & NW 58th St 
+    comm5: 39.19900,-94.60667; 
+    */
         
     $dup = 0;
         if(id==144) {$dup =50;}
@@ -268,7 +275,7 @@ foreach($db_found->query($sql) as $row) {
 	                 callsign
 	            FROM TimeLog
 	           WHERE netID = $q
-                 AND comment LIKE '%OBJ%' 
+                 AND comment LIKE '%OBJ::%' 
                GROUP BY callsign
                ORDER BY callsign
            ");
