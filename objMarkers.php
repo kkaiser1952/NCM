@@ -34,7 +34,7 @@
               ORDER BY callsign, timestamp
           ");
           
-          echo "First sql:<br> $sql <br><br>";
+          //echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";

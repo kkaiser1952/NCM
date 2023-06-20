@@ -21,7 +21,7 @@
     $q = intval($_GET["NetID"]); 
     //$q = 8523; 
     //$q = 6066;
-    //$q = 9128;
+    //$q = 9327;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
