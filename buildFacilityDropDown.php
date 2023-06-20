@@ -87,23 +87,23 @@ $recordID = 92615;
         const latitude   = elArray[2];
         const longitude  = elArray[3];
         
-        console.log("@89 0: "+idSelected+" 1: "+facility+" 2: "+latitude+" 3: "+longitude);
+        //console.log("@89 0: "+idSelected+" 1: "+facility+" 2: "+latitude+" 3: "+longitude);
         //alert ("idSelected= "+idSelected);
-        console.log("@91 selected value of idSelected= "+idSelected);
+        //console.log("@91 selected value of idSelected= "+idSelected);
         
         if (idSelected == 0) {
-            console.log("@94 selected value was 0, new facility being created & added to the table");
+            //console.log("@94 selected value was 0, new facility being created & added to the table");
             $(".newFacilityDiv").removeClass("hidden");
         } // End of idSelected = 0 (create a new facility)
         
         // Checkins with no assignment
         else if (idSelected == 43) {
-            console.log("@100 selected value of idSelected= "+idSelected);
+            //console.log("@100 selected value of idSelected= "+idSelected);
             $(".newFacilityDiv").addClass("hidden");
         }
         // Checkins with an assignment
         else {
-            console.log('@105 value selected was '+idSelected);
+            //console.log('@105 value selected was '+idSelected);
             $(".newFacilityDiv").addClass("hidden");
         }
     } // End of function getOption()
