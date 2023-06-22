@@ -7,18 +7,18 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
-$sql = $db_found->prepare("SELECT netID, MIN(logdate) AS start_date, MAX(logclosedtime) AS end_date, netcall, COUNT(*) AS count, 
-    MAX(logclosedtime) AS logclosedtime,
-    (SELECT COUNT(DISTINCT netID)
-     FROM NetLog
-     WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-       AND dttm <= CURDATE()
-    ) AS netID_count
-    FROM NetLog
-    WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-      AND dttm <= CURDATE()
-    GROUP BY netID, netcall
-    ORDER BY netID DESC
+$sql = $db_found->prepare("SELECT netID, dttm, netcall, COUNT(*) AS count,
+            (SELECT COUNT(DISTINCT netID)
+             FROM NetLog
+             WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+               AND dttm <= CURDATE()
+            ) AS netID_count,
+            logclosedtime
+        FROM NetLog
+        WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+          AND dttm <= CURDATE()
+        GROUP BY netID, netcall
+        ORDER BY netID DESC
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -45,8 +45,8 @@ $cssStyles = "
         background-color: #FFFFFF;
     }
     
-    .empty-value {
-        background-color: red;
+    .red-row {
+        background-color: #FF0000;
     }
 </style>
 ";
@@ -56,7 +56,7 @@ echo $cssStyles;
 
 // Print the title
 if (!empty($result)) {
-    $title = "Past 5 days NCM Report of " . $result[0]['netID_count'] . " net";
+    $title = "Past 5 days NCM Report of " . $result[0]['netID_count'] . " Nets";
     echo '<h1>' . $title . '</h1>';
 } else {
     echo 'No results found.';
@@ -69,43 +69,49 @@ if (!empty($result)) {
 
     // Table header
     echo '<tr>';
-    echo '<th>Net ID</th>';
-    echo '<th>Net Call</th>';
-    echo '<th>Count</th>';
-    echo '<th>Start Date</th>';
-    echo '<th>End Date</th>';
-    echo '<th>Elapsed Time</th>';
+    foreach (array_keys($result[0]) as $column) {
+        if ($column !== 'netID_count') {
+            echo '<th>' . $column . '</th>';
+        }
+    }
     echo '</tr>';
 
     // Table rows
     foreach ($result as $rowIndex => $row) {
-        // Calculate elapsed time
-        $startDate = strtotime($row['start_date']);
-        $endDate = strtotime($row['end_date']);
-        $elapsedTime = gmdate('H:i', $endDate - $startDate);
-
+        // Check if logclosedtime is null or empty
+        $isClosed = empty($row['logclosedtime']);
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
+        // Add red-row class if logclosedtime is null or empty
+        $rowClass .= $isClosed ? ' red-row' : '';
 
         // Start a table row with the appropriate class
         echo '<tr class="' . $rowClass . '">';
 
-        // Output each column in the desired order
-        echo '<td>' . ($row['netID'] ?? '<span class="empty-value">Empty</span>') . '</td>';
-        echo '<td>' . ($row['netcall'] ?? '<span class="empty-value">Empty</span>') . '</td>';
-        echo '<td>' . ($row['count'] ?? '<span class="empty-value">Empty</span>') . '</td>';
-        echo '<td>' . ($row['start_date'] ?? '<span class="empty-value">Empty</span>') . '</td>';
-        echo '<td>' . ($row['end_date'] ?? '<span class="empty-value">Empty</span>') . '</td>';
-        echo '<td>' . ($elapsedTime ?? '<span class="empty-value">Empty</span>') . '</td>';
+        // Output each column value in a table cell
+        foreach ($row as $column => $columnValue) {
+            if ($column === 'netID_count') {
+                continue;
+            }
+
+            // If logclosedtime is null or empty, leave the column entry empty
+            if ($isClosed && $column === 'logclosedtime') {
+                echo '<td></td>';
+            } else {
+                echo '<td>' . $columnValue . '</td>';
+            }
+        }
 
         // Close the table row
         echo '</tr>';
     }
-
-    // End the table
+    
+        // End the table
     echo '</table>';
 } else {
     echo 'No results found.';
 }
 ?>
+
+
 
