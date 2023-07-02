@@ -103,23 +103,28 @@ if (!empty($result)) {
 
     // Table header
     echo '<tr>';
+    
     foreach (array_keys($result[0]) as $column) {
         if ($column !== 'netID_count') {
             echo '<th>' . $column . '</th>';
         }
     }
+    
     echo '</tr>';
 
-    // Initialize variables
-    $currentDate = null;
-    $totalCount = 0;
-
     // Table rows
+    $currentDate = null;
     foreach ($result as $rowIndex => $row) {
         // Check if logclosedtime is null or empty
         $isClosed = empty($row['logclosedtime']);
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
+        // Add red-row class if logclosedtime is null or empty
+        $rowClass .= $isClosed ? ' red-row' : '';
+        // Add blue-row class if count is 1
+        if ($row['count'] == 1) {
+            $rowClass .= ' blue-bg ';
+        }
 
         // Output each column value in a table row
         echo '<tr class="' . $rowClass . '">';
@@ -127,29 +132,13 @@ if (!empty($result)) {
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['dttm'], 0, 10);
         $dayOfWeek = date('l', strtotime($date));
-        $count = '[' . $totalCount . ']';
-
+        
         if ($currentDate !== $date) {
-            // Output the previous day's total count
-            if ($currentDate !== null) {
-                echo '<td></td><td></td><td>' . $count . '</td>';
-            }
-
-            // Output the new day and reset the total count
             echo '<tr class="date-row">';
-            echo '<td>' . $result[0]['netID_count'] . '</td>';
-            echo '<td>' . $date . ' (' . $dayOfWeek . ')' . '</td>';
-            echo '<td></td>';
-            echo '<td></td>';
-            echo '<td></td>';
+            echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')</td>';
             echo '</tr>';
-
-            $totalCount = 0;
             $currentDate = $date;
         }
-
-        // Add the current row's count to the total count
-        $totalCount += $row['count'];
 
         foreach ($row as $column => $columnValue) {
             if ($column === 'netID_count') {
@@ -167,15 +156,11 @@ if (!empty($result)) {
         echo '</tr>';
     }
 
-    // Output the total count for the last day
-    echo '<td></td><td></td><td>' . $count . '</td>';
-
     // End the table
     echo '</table>';
 } else {
     echo 'No results found.';
 }
-
 ?>
 
 
