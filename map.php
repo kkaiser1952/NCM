@@ -268,9 +268,9 @@ var map = L.map('map', {
   //  apiKey
   //});
    
-    const baseMaps = {  Standard,
+    const baseMaps = {  
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
-                                              "<span style='color: blue; font-weight: bold;'>Standard": Standard,
+                       "<span style='color: blue; font-weight: bold;'>Standard": Standard,
                        "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
                      

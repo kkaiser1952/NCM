@@ -48,6 +48,18 @@ $cssStyles = "
     .red-row {
         background-color: #FF0000;
     }
+    
+    .red-bg {
+        background-color: red;
+    }
+    
+    .blue-bg {
+        background-color: blue;
+    }
+    
+    label {
+      font-weight: bold;
+    }
 </style>
 ";
 
@@ -57,7 +69,19 @@ echo $cssStyles;
 // Print the title
 if (!empty($result)) {
     $title = "Past 5 days NCM Report of " . $result[0]['netID_count'] . " Nets";
-    echo '<h1>' . $title . '</h1>';
+    echo '<h1>' . $title . '</h1>
+    
+     <form>  <!-- This adds a legend to the top of the report -->
+        <label for="open_nets">Open Net:</label>
+        <input type="text" id="open_nets" name="open_nets" class="red-bg" value="">
+        
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <label for="one_entry">One Entry:</label>
+        <input type="text" id="one_entry" name="one_entry" class="blue-bg" value=""><br><br>
+      </form>
+    '
+    ;
 } else {
     echo 'No results found.';
 }
