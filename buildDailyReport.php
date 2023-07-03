@@ -7,16 +7,16 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
-$sql = $db_found->prepare("SELECT netID, dttm, netcall, COUNT(*) AS count,
+$sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
             (SELECT COUNT(DISTINCT netID)
              FROM NetLog
-             WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-               AND dttm <= CURDATE()
+             WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+               AND logdate <= CURDATE()
             ) AS netID_count,
             logclosedtime
         FROM NetLog
-        WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-          AND dttm <= CURDATE()
+        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+          AND logdate <= CURDATE()
         GROUP BY netID, netcall
         ORDER BY netID DESC
 ");
@@ -46,7 +46,7 @@ $cssStyles = "
     }
     
     .red-row {
-        background-color: #FF0000;
+        background-color: red;
         color: white;
         font-weight: bold;
     }
@@ -130,7 +130,7 @@ if (!empty($result)) {
         echo '<tr class="' . $rowClass . '">';
 
         // Output the date and day of the week in a separate row for the start of a new day
-        $date = substr($row['dttm'], 0, 10);
+        $date = substr($row['logdate'], 0, 10);
         $dayOfWeek = date('l', strtotime($date));
         
         if ($currentDate !== $date) {

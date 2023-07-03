@@ -144,7 +144,8 @@ if ( $q <> 0 ){
                                     end as pbStat,
 	        				/*	logdate as pbStat, */
 	        					band, w3w,
-	        					team, aprs_call,
+	        					TRIM(team) AS team, 
+	        					aprs_call,
 	        					home, ipaddress, cat, section,
 	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
 	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
