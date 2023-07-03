@@ -56,7 +56,7 @@ $cssStyles = "
         color: white;
     }
     
-    .blue-bg {
+    .blue-row {
         background-color: blue;
         color: white;
         font-weight: bold;
@@ -88,7 +88,7 @@ if (!empty($result)) {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
         <label for="one_entry">One Entry:</label>
-        <input type="text" id="one_entry" name="one_entry" class="blue-bg" value=""><br><br>
+        <input type="text" id="one_entry" name="one_entry" class="blue-row" value=""><br><br>
       </form>
     '
     ;
@@ -123,7 +123,7 @@ if (!empty($result)) {
         $rowClass .= $isClosed ? ' red-row' : '';
         // Add blue-row class if count is 1
         if ($row['count'] == 1) {
-            $rowClass .= ' blue-bg ';
+            $rowClass .= ' blue-row ';
         }
 
         // Output each column value in a table row
