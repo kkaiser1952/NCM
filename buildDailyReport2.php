@@ -9,10 +9,12 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 // Your SQL query
 $sql = $db_found->prepare("
     SELECT 
-        DATE(dttm) AS date,
+        DATE(dttm) AS date, 
+        GROUP_CONCAT(DISTINCT netcall) AS netcall,
+        GROUP_CONCAT(netID) AS netIDs,
+        GROUP_CONCAT(callsign) AS callsign_list,
         COUNT(DISTINCT netID) AS netID_count,
-        DATE_FORMAT(MAX(dttm), '%Y-%m-%d %W') AS dttm,
-        SUM(`count`) AS total_count
+        DATE_FORMAT(MAX(dttm), '%Y-%m-%d %W') AS dttm
     FROM NetLog
     WHERE dttm >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
     GROUP BY date
