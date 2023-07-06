@@ -32,6 +32,7 @@ try {
     // Prepare and execute the query
     $stmt = $db_found->prepare($sql);
     $stmt->execute();
+    
 
     // HTML table generation
     echo '<table>';

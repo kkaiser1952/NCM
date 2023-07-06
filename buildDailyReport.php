@@ -84,8 +84,7 @@ if (!empty($result)) {
      <form>  <!-- This adds a legend to the top of the report -->
         <label for="open_nets">Open Net:</label>
         <input type="text" id="open_nets" name="open_nets" class="red-bg" value="">
-        
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
         <label for="one_entry">One Entry:</label>
         <input type="text" id="one_entry" name="one_entry" class="blue-row" value=""><br><br>
