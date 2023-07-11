@@ -7,19 +7,28 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
-$sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
-            (SELECT COUNT(DISTINCT netID)
-             FROM NetLog
-             WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-               AND logdate <= CURDATE()
-            ) AS netID_count,
-            logclosedtime
-        FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-          AND logdate <= CURDATE()
-          
-        GROUP BY netID, netcall
-        ORDER BY netID DESC
+$sql = $db_found->prepare("SELECT
+    NetLog.netID,
+    NetLog.logdate,
+    NetLog.netcall,
+    COUNT(*) AS count,
+    sub.netID_count,
+    NetLog.logclosedtime
+FROM NetLog
+JOIN (
+    SELECT
+        netID,
+        COUNT(DISTINCT netID) AS netID_count
+    FROM NetLog
+    WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+        AND logdate <= CURDATE()
+    GROUP BY netID
+) AS sub ON NetLog.netID = sub.netID
+WHERE NetLog.logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+    AND NetLog.logdate <= CURDATE()
+GROUP BY NetLog.netID, NetLog.netcall
+ORDER BY NetLog.netID DESC;
+
 ");
 
 // Execute the SQL query and store the result in $result variable
