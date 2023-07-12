@@ -13,7 +13,12 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
              FROM NetLog
              WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
              logclosedtime,
-             SEC_TO_TIME(SUM(TIME_TO_SEC(timeonduty))) AS total_time
+             /*SUM(timeonduty) as total_time*/
+             CONCAT(
+    LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
+    LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
+    LPAD(MOD(SUM(timeonduty), 60), 2, '0')
+  ) AS Volunteer_Time
          
            /*  CONCAT(
     FLOOR(TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) / 60), 'h ',
