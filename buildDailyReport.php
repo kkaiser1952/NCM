@@ -15,8 +15,10 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
             ) AS netID_count,
             logclosedtime
         FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-          AND logdate <= CURDATE()
+      /*  WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+          AND logdate <= CURDATE() */
+          
+        WHERE logdate < CURDATE() + INTERVAL 5 DAY
           
         GROUP BY netID, netcall
         ORDER BY netID DESC
