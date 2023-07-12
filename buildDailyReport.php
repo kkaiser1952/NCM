@@ -10,20 +10,21 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
             (SELECT COUNT(DISTINCT netID)
              FROM NetLog
-             WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-               AND logdate <= CURDATE()
-            ) AS netID_count,
-            logclosedtime
+             WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+             logclosedtime,
+         
+             CONCAT(
+    FLOOR(TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) / 60), 'h ',
+    TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) % 60, 'm'
+  ) AS ttl_time
         FROM NetLog
-      /*  WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-          AND logdate <= CURDATE() */
-          
-        WHERE logdate < CURDATE() + INTERVAL 5 DAY
-          
-        GROUP BY netID, netcall
-        ORDER BY netID DESC
+       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+       GROUP BY netID, netcall
+       ORDER BY netID DESC
 ");
 
+/*  WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+          AND logdate <= CURDATE() */
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
