@@ -8,16 +8,17 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
-            pb,
+            pb,   /* testnet, */
             (SELECT COUNT(DISTINCT netID)
              FROM NetLog
              WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
              logclosedtime,
+             SEC_TO_TIME(SUM(TIME_TO_SEC(timeonduty))) AS total_time
          
-             CONCAT(
+           /*  CONCAT(
     FLOOR(TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) / 60), 'h ',
     TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) % 60, 'm'
-  ) AS ttl_time
+  ) AS total_time */
         FROM NetLog
        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
        GROUP BY netID, netcall
@@ -66,6 +67,12 @@ $cssStyles = "
     
     .blue-bg {
         background-color: blue;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .purple-bg {
+        background-color: purple;
         color: white;
         font-weight: bold;
     }
@@ -127,6 +134,7 @@ if (!empty($result)) {
     // Table header
     echo '<tr>';
     
+    // Add the headers 
     foreach (array_keys($result[0]) as $column) {
         if ($column !== 'netID_count' && $column !== 'pb') {
             echo '<th>' . $column . '</th>';
@@ -149,15 +157,22 @@ if (!empty($result)) {
             $rowClass .= ' red-bg ';
         }
         
+        if ($row['total_time']) {
+            $total_time = gmdate('H:i:s', $total_time);
+        }
+        
         // Pre-built net background
         if ($row['pb'] == 1) {
             $rowClass .= ' blue-bg ';
         }
+        
+        // Pre-built net background
+        if ($row['netcall'] = 'TEST' OR $row['netcall'] = 'TE0ST' ) {
+      //      $rowClass .= ' purple-bg ';
+        }
 
         // Output each column value in a table row
-        if ($row['pb'] !== 'pb') {
-        echo '<tr class="' . $rowClass . '">';
-        }
+            echo '<tr class="' . $rowClass . '">';
 
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -169,9 +184,10 @@ if (!empty($result)) {
             echo '</tr>';
             $currentDate = $date;
         }
-
+        
+        // Column data you don't want to see
         foreach ($row as $column => $columnValue) {
-            if ($column === 'netID_count') {
+            if ($column === 'netID_count' OR $column === 'pb') {
                 continue;
             }
 
