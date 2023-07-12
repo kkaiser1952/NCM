@@ -8,6 +8,7 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
+            pb,
             (SELECT COUNT(DISTINCT netID)
              FROM NetLog
              WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
@@ -23,8 +24,6 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
        ORDER BY netID DESC
 ");
 
-/*  WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-          AND logdate <= CURDATE() */
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -49,7 +48,6 @@ $cssStyles = "
         background-color: #FFFFFF;
     }
     
-    <!-- used for Open Nets -->
     .red-row {
         background-color: #087f47;
         color: white;
@@ -61,7 +59,12 @@ $cssStyles = "
         color: white;
     }
     
-    .blue-row {
+    .green-bg {
+        background-color: green;
+        color: white;
+    }
+    
+    .blue-bg {
         background-color: blue;
         color: white;
         font-weight: bold;
@@ -74,7 +77,19 @@ $cssStyles = "
     .date-row {
       font-weight: bold;
       font-size: 14pt;
-      color: green;
+      color: darkgreen;
+      
+    .opcolors {
+        font-weight: bold !important;
+        color: white !important;
+        align-content: center;
+  
+        background: #1b6013; /* Old browsers */
+        background: -moz-linear-gradient(left,  #1b6013 44%, #2989d8 47%, #207cca 49%, #1c1fcc 52%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    }
+
 </style>
 ";
 
@@ -83,16 +98,20 @@ echo $cssStyles;
 
 // Print the title
 if (!empty($result)) {
-    $title = "Past 5 days NCM Report of " . $result[0]['netID_count'] . " Nets";
+    $title = "Past 5 days NCM Report for " . $result[0]['netID_count'] . " Nets <br> Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
+    
     echo '<h1>' . $title . '</h1>
     
      <form>  <!-- This adds a legend to the top of the report -->
         <label for="open_nets">Open Net:</label>
-        <input type="text" id="open_nets" name="open_nets" class="red-bg" value="">
+        <input type="text" id="open_nets" name="open_nets" class="green-bg" value="">
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-        <label for="one_entry">One Entry:</label>
-        <input type="text" id="one_entry" name="one_entry" class="blue-row" value=""><br><br>
+        <label for="one_entry">Only One Entry:</label>
+        <input type="text" id="one_entry" name="one_entry" class="red-bg" value=""><br>
+        
+        <label for="prebuilt">Pre-Built:</label>
+        <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value=""><br><br>
       </form>
     '
     ;
@@ -109,7 +128,7 @@ if (!empty($result)) {
     echo '<tr>';
     
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count') {
+        if ($column !== 'netID_count' && $column !== 'pb') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -123,15 +142,22 @@ if (!empty($result)) {
         $isClosed = empty($row['logclosedtime']);
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
-        // Add red-row class if logclosedtime is null or empty
+        // Add blue-bg class if logclosedtime is null or empty
         $rowClass .= $isClosed ? ' red-row' : '';
-        // Add blue-row class if count is 1
+        // Add red-bg class if count is 1
         if ($row['count'] == 1) {
-            $rowClass .= ' blue-row ';
+            $rowClass .= ' red-bg ';
+        }
+        
+        // Pre-built net background
+        if ($row['pb'] == 1) {
+            $rowClass .= ' blue-bg ';
         }
 
         // Output each column value in a table row
+        if ($row['pb'] !== 'pb') {
         echo '<tr class="' . $rowClass . '">';
+        }
 
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
