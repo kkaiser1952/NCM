@@ -49,8 +49,9 @@ $cssStyles = "
         background-color: #FFFFFF;
     }
     
+    <!-- used for Open Nets -->
     .red-row {
-        background-color: red;
+        background-color: #087f47;
         color: white;
         font-weight: bold;
     }
