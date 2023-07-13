@@ -1,3 +1,10 @@
+</DOCTYPE html>
+<html>
+    <head>
+        <script src="js/NetManager-p2.js"></script>
+    </head>
+<body>
+
 <?php
 // The purpose of this page/program is to send a daily report of NCM to my messages
 // Written: 2023-06-21, first day of summer	
@@ -15,15 +22,10 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
              logclosedtime,
              /*SUM(timeonduty) as total_time*/
              CONCAT(
-    LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
-    LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
-    LPAD(MOD(SUM(timeonduty), 60), 2, '0')
-  ) AS Volunteer_Time
-         
-           /*  CONCAT(
-    FLOOR(TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) / 60), 'h ',
-    TIMESTAMPDIFF(MINUTE, MIN(logdate), logclosedtime) % 60, 'm'
-  ) AS total_time */
+                    LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
+                    LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
+                    LPAD(MOD(SUM(timeonduty), 60), 2, '0')
+                  ) AS Volunteer_Time     
         FROM NetLog
        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
        GROUP BY netID, netcall
@@ -33,6 +35,9 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// JS functions
+//$jsFunctions = "<script src='js/NetManager-p2.js'></script>"
 
 // CSS styles for the report table
 $cssStyles = "
@@ -115,7 +120,7 @@ if (!empty($result)) {
     echo '<h1>' . $title . '</h1>
     
      <form>  <!-- This adds a legend to the top of the report -->
-        <label for="open_nets">Open Net:</label>
+        <label for="open_nets">Open Nets:</label>
         <input type="text" id="open_nets" name="open_nets" class="green-bg" value="">
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -123,7 +128,10 @@ if (!empty($result)) {
         <input type="text" id="one_entry" name="one_entry" class="red-bg" value=""><br>
         
         <label for="prebuilt">Pre-Built:</label>
-        <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value=""><br><br>
+        <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <label for="test">Test Nets:</label>
+        <input type="text" id="test" name="test" class="purple-bg" value=""><br><br>
       </form>
     '
     ;
@@ -145,8 +153,7 @@ if (!empty($result)) {
             echo '<th>' . $column . '</th>';
         }
     }
-    
-    echo '</tr>';
+    echo '</tr>'; // end for Table header
 
     // Table rows
     $currentDate = null;
@@ -171,9 +178,9 @@ if (!empty($result)) {
             $rowClass .= ' blue-bg ';
         }
         
-        // Pre-built net background
-        if ($row['netcall'] = 'TEST' OR $row['netcall'] = 'TE0ST' ) {
-      //      $rowClass .= ' purple-bg ';
+        // Test/TE0ST net background
+        if ($row['netcall'] == 'TEST' OR $row['netcall'] == 'TE0ST' ) {
+            $rowClass .= ' purple-bg ';
         }
 
         // Output each column value in a table row
@@ -203,6 +210,10 @@ if (!empty($result)) {
                 echo '<td>' . $columnValue . '</td>';
             }
         }
+        
+         if ($column === 'netID') {
+                echo '<td onclick="net_by_number()">' . $columnValue . '</td>';
+            }
 
         echo '</tr>';
     }
@@ -214,5 +225,6 @@ if (!empty($result)) {
 }
 ?>
 
-
+</body>
+</html>
 
