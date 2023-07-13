@@ -213,9 +213,10 @@ if (!empty($result)) {
         }
         
         // Test/TE0ST net background
-        if ($row['netcall'] == 'TEST' OR $row['netcall'] == 'TE0ST' ) {
-            $rowClass .= ' purple-bg ';
-        }
+        $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
+            if (in_array($row['netcall'], $validNetcalls, true)) {
+                $rowClass .= ' purple-bg ';
+            }
 
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
