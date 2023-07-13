@@ -1,7 +1,41 @@
 </DOCTYPE html>
 <html>
     <head>
-        <script src="js/NetManager-p2.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+          $(document).ready(function() {
+              $('tr td:first-child').click(function() {
+                var value = $(this).text(); // Get the text value of the clicked <td>
+                net_by_number(value); // Call your function with the retrieved value
+              });
+          });
+          
+          function net_by_number(value) {
+            alert("You clicked the first table cell with value: " + value);
+            // Perform any other desired actions using the value
+          }
+
+/*
+function net_by_number(value) {
+    console.log('net_by_number function value= '+value);
+  $.ajax({
+    type: "GET",
+    url: "getkind.php",
+    data: { q: value },
+    success: function (html) {
+      var remarks = 'Net No: ' + value + ', ' + html;
+      $("#remarks").html(remarks);
+      //console.log('In the success section: ' + html + '<br> ' + remarks);
+    },
+    error: function () {
+      alert('Last Query Failed, try again.');
+    }
+  });
+}
+*/
+
+        </script>
     </head>
 <body>
 
@@ -210,10 +244,6 @@ if (!empty($result)) {
                 echo '<td>' . $columnValue . '</td>';
             }
         }
-        
-         if ($column === 'netID') {
-                echo '<td onclick="net_by_number()">' . $columnValue . '</td>';
-            }
 
         echo '</tr>';
     }
