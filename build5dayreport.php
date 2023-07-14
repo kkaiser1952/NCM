@@ -202,12 +202,12 @@ if (!empty($result)) {
         $isClosed = empty($row['logclosedtime']);
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
-        // Add blue-bg class if logclosedtime is null or empty
+        
         $rowClass .= $isClosed ? ' red-row' : '';
         // Add red-bg class if count is 1
-       /* if ($row['count'] == 1) {
+        if ($row['count'] == 1) {
             $rowClass .= ' red-bg ';
-        } */
+        } 
         
         if ($row['total_time']) {
             $total_time = gmdate('H:i:s', $total_time);
