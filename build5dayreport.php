@@ -16,25 +16,6 @@
             // Perform any other desired actions using the value
           }
 
-/*
-function net_by_number(value) {
-    console.log('net_by_number function value= '+value);
-  $.ajax({
-    type: "GET",
-    url: "getkind.php",
-    data: { q: value },
-    success: function (html) {
-      var remarks = 'Net No: ' + value + ', ' + html;
-      $("#remarks").html(remarks);
-      //console.log('In the success section: ' + html + '<br> ' + remarks);
-    },
-    error: function () {
-      alert('Last Query Failed, try again.');
-    }
-  });
-}
-*/
-
         </script>
     </head>
 <body>
@@ -222,14 +203,12 @@ if (!empty($result)) {
         if ($row['pb'] == 1) {
             $rowClass .= ' blue-bg ';
         }
-        
-        
-        
+         
         // Test/TE0ST net background
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
             if (in_array($row['netcall'], $validNetcalls, true)) {
                 $rowClass .= ' purple-bg ';
-            }
+            } 
 
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
@@ -268,6 +247,26 @@ if (!empty($result)) {
     echo 'No results found.';
 }
 ?>
+
+<script>
+$(document).ready(function() {
+  // Define the function
+  function checkAndSetColor(tdIndex, valueToCheck, bgColor) {
+    // Get the value of the specified <td> using .eq()
+    var tdValue = $("tr td").eq(tdIndex - 1).text();
+
+    // Check if the value matches the specified value
+    if (tdValue.trim() === valueToCheck) {
+      // Set the background color of the first <td> to the specified color
+      $("tr td").eq(0).css("background-color", bgColor);
+    }
+  }
+
+  // Call the function with the desired parameters
+  checkAndSetColor(4, "1", "red");
+});
+
+</script>
 
 </body>
 </html>
