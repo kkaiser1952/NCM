@@ -104,7 +104,17 @@ $cssStyles = "
         color: white;
     }
     
+    .red-netID {
+        background-color: red;
+        color: white;
+    }
+    
     .green-bg {
+        background-color: green;
+        color: white;
+    }
+    
+    .green-netID {
         background-color: green;
         color: white;
     }
@@ -115,7 +125,19 @@ $cssStyles = "
         font-weight: bold;
     }
     
+    .blue-netID {
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+    }
+    
     .purple-bg {
+        background-color: purple;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .purple-netID {
         background-color: purple;
         color: white;
         font-weight: bold;
@@ -129,17 +151,6 @@ $cssStyles = "
       font-weight: bold;
       font-size: 14pt;
       color: darkgreen;
-      
-    .opcolors {
-        font-weight: bold !important;
-        color: white !important;
-        align-content: center;
-  
-        background: #1b6013; /* Old browsers */
-        background: -moz-linear-gradient(left,  #1b6013 44%, #2989d8 47%, #207cca 49%, #1c1fcc 52%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    }
 
 </style>
 ";
@@ -211,6 +222,8 @@ if (!empty($result)) {
         if ($row['pb'] == 1) {
             $rowClass .= ' blue-bg ';
         }
+        
+        
         
         // Test/TE0ST net background
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
