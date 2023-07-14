@@ -132,6 +132,16 @@ $cssStyles = "
       font-weight: bold;
       font-size: 14pt;
       color: darkgreen;
+    }
+    
+    .redblue-bg {
+      background-color: linear-gradient(to right, red 50%, blue 50%) !important;
+    }
+    
+    .redpurple-bg {
+      background-color: linear-gradient(to right, red 50%, blue 50%) !important;
+    }
+
 
 </style>
 ";
@@ -200,15 +210,20 @@ if (!empty($result)) {
         }
         
         // Pre-built net background
-        if ($row['pb'] == 1) {
-            $rowClass .= ' blue-bg ';
+        if ($row['pb'] == 1 && $row['count'] == 1) {
+            $rowClass = 'redblue-bg';
+        } elseif ($row['pb'] == 1) {
+            $rowClass = 'blue-bg';
         }
          
         // Test/TE0ST net background
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
-            if (in_array($row['netcall'], $validNetcalls, true)) {
-                $rowClass .= ' purple-bg ';
-            } 
+        if (in_array($row['netcall'], $validNetcalls, true) && $row['count'] == 1) {
+            $rowClass = 'redpurple-bg';
+        } elseif (in_array($row['netcall'], $validNetcalls, true)) {
+            $rowClass .= ' purple-bg ';
+        }
+ 
 
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
@@ -248,6 +263,7 @@ if (!empty($result)) {
 }
 ?>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
   // Define the function
@@ -259,11 +275,13 @@ $(document).ready(function() {
     if (tdValue.trim() === valueToCheck) {
       // Set the background color of the first <td> to the specified color
       $("tr td").eq(0).css("background-color", bgColor);
+      // Set the background color of the entire <tr> to the specified color
+      $("tr").css("background-color", bgColor);
     }
   }
 
   // Call the function with the desired parameters
-  checkAndSetColor(4, "1", "red");
+  //checkAndSetColor(4, "1", "red");
 });
 
 </script>

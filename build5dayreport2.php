@@ -129,17 +129,25 @@ if (!empty($result)) {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('td.red-td').click(function() {
-            var value = $(this).text(); // Get the text value of the clicked <td>
-            net_by_number(value); // Call your function with the retrieved value
-        });
-    });
+$(document).ready(function() {
+  // Define the function
+  function checkAndSetColor(tdIndex, valueToCheck, bgColor) {
+    // Get the value of the specified <td> using .eq()
+    var tdValue = $("tr td").eq(tdIndex - 1).text();
 
-    function net_by_number(value) {
-        alert("You clicked the first table cell with value: " + value);
-        // Perform any other desired actions using the value
+    // Check if the value matches the specified value
+    if (tdValue.trim() === valueToCheck) {
+      // Set the background color of the first <td> to the specified color
+      $("tr td").eq(0).css("background-color", bgColor);
+      // Set the background color of the entire <tr> to the specified color
+      $("tr").css("background-color", bgColor);
     }
+  }
+
+  // Call the function with the desired parameters
+  //checkAndSetColor(4, "1", "red");
+});
+
 </script>
 
 </body>
