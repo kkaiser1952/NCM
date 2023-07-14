@@ -139,7 +139,11 @@ $cssStyles = "
     }
     
     .redpurple-bg {
-      background-color: linear-gradient(to right, red 50%, blue 50%) !important;
+      background-color: linear-gradient(to right, red 50%, purple 50%) !important;
+    }
+    
+    .redgreen-bg {
+      background-color: linear-gradient(to right, red 50%, green 50%) !important;
     }
 
 
@@ -201,9 +205,9 @@ if (!empty($result)) {
         // Add blue-bg class if logclosedtime is null or empty
         $rowClass .= $isClosed ? ' red-row' : '';
         // Add red-bg class if count is 1
-        if ($row['count'] == 1) {
+       /* if ($row['count'] == 1) {
             $rowClass .= ' red-bg ';
-        }
+        } */
         
         if ($row['total_time']) {
             $total_time = gmdate('H:i:s', $total_time);
@@ -218,13 +222,12 @@ if (!empty($result)) {
          
         // Test/TE0ST net background
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
-        if (in_array($row['netcall'], $validNetcalls, true) && $row['count'] == 1) {
+        if (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true) && $row['count'] == 1) {
             $rowClass = 'redpurple-bg';
-        } elseif (in_array($row['netcall'], $validNetcalls, true)) {
-            $rowClass .= ' purple-bg ';
+        } elseif (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true)) {
+            $rowClass .= ' purple-bg';
         }
  
-
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
 
