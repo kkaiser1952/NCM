@@ -17,6 +17,101 @@
           }
 
         </script>
+        <style>
+    table {
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 8px;
+        border: 1px solid #000000;
+    }
+    
+    .odd-row {
+        background-color: #F0F0F0;
+    }
+    
+    .even-row {
+        background-color: #FFFFFF;
+    }
+    
+    .red-row {
+        background-color: #087f47;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .red-bg {
+        background-color: red;
+        color: white;
+    }
+    
+    .red-netID {
+        background-color: red;
+        color: white;
+    }
+    
+    .green-bg {
+        background-color: green;
+        color: white;
+    }
+    
+    .green-netID {
+        background-color: green;
+        color: white;
+    }
+    
+    .blue-bg {
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .blue-netID {
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .purple-bg {
+        background-color: purple;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .purple-netID {
+        background-color: purple;
+        color: white;
+        font-weight: bold;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    .date-row {
+      font-weight: bold;
+      font-size: 14pt;
+      color: darkgreen;
+    }
+    
+    
+    .redblue-bg {
+      background-color: linear-gradient(to right, red 50%, blue 50%);
+    }
+    
+    
+    .redpurple-bg {
+      background-color: linear-gradient(to right, red 50%, purple 50%);
+    }
+    
+    
+    .redgreen-bg {
+      background-color: linear-gradient(to right, red 50%, green 50%);
+    }
+
+
+</style>
     </head>
 <body>
 
@@ -47,7 +142,7 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
        ORDER BY netID DESC
 ");
 
-$stuff = "stuff here";
+//$stuff = "stuff here";
 
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
@@ -138,17 +233,17 @@ $cssStyles = "
     
     // 1 record, pre-built
     .redblue-bg {
-      background-color: linear-gradient(to right, red 50%, blue 50%) !important;
+      background-color: linear-gradient(to right, red 50%, blue 50%);
     }
     
     // 1 record, test net
     .redpurple-bg {
-      background-color: linear-gradient(to right, red 50%, purple 50%) !important;
+      background-color: linear-gradient(to right, red 50%, purple 50%);
     }
     
     // 1 record, open net
     .redgreen-bg {
-      background-color: linear-gradient(to right, red 50%, green 50%) !important;
+      background-color: linear-gradient(to right, red 50%, green 50%);
     }
 
 
@@ -278,24 +373,41 @@ $(document).ready(function() {
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
 
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
-  function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
-    // Loop through all the <tr> elements
-    $("tr").each(function() {
-      // Get the values of the specified <td> elements using .eq()
-      var tdValueFirst = $(this).find("td").eq(tdIndex1 - 1).text().trim();
-      var tdValueSecond = $(this).find("td").eq(tdIndex2 - 1).text().trim();
-      
-    console.log("Column One: ", tdValueFirst);
-    console.log("Column Four: ", tdValue1);
-    console.log("Column Five: ", tdValue2);
+function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
+  // Loop through all the <tr> elements
+  $("tr").each(function() {
+    // Get the values of the specified <td> elements using .eq()
+    var tdValueFirst = $(this).find("td").eq(tdIndex1).text().trim();
+    var tdValueSecond = $(this).find("td").eq(tdIndex2).text().trim();
 
-      // Check if both conditions are met
-      if (tdValueFirst === tdValue1 && (tdValue2 === "" || tdValue2.toLowerCase() === "null")) {
-        // Add the specified CSS class to the first <td> of the current row
-        $(this).find("td:first-child").addClass(bgClass);
-      }
+    // Get all column values
+    var columnValues = [];
+    $(this).find("td").each(function() {
+      columnValues.push($(this).text().trim());
     });
-  }
+
+    console.log("Column 1: ", columnValues[0]);
+    console.log("Column 2: ", columnValues[1]);
+    console.log("Column 3: ", columnValues[2]);
+    console.log("Column 4: ", columnValues[3]);
+    console.log("tdValueFirst: ", tdValueFirst);
+    console.log("Column 5: ", columnValues[4]);
+    console.log("tdValueSecond: ", tdValueSecond);
+    console.log("Column 6: ", columnValues[5]);
+
+    // Check if both conditions are met
+    if (tdValueFirst === tdValue1 && (tdValue2 === "" || tdValue2.trim().toLowerCase() === "null")) {
+      // Remove all existing classes from the row (tr)
+      $(this).removeClass();
+
+      // Add the specified CSS class to the entire row (tr) of the current <td> element
+      $(this).addClass(bgClass);
+    }
+  });
+}
+
+ // end of the checkAndSetColor function
+
 });
 
 </script>
