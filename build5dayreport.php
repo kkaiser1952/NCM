@@ -47,6 +47,8 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
        ORDER BY netID DESC
 ");
 
+$stuff = "stuff here";
+
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -227,6 +229,9 @@ if (!empty($result)) {
         } elseif (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true)) {
             $rowClass .= ' purple-bg';
         }
+        
+        // stuff row
+    echo '<tr>' . $stuff . '</tr>';
  
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
