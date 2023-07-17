@@ -136,14 +136,17 @@ $cssStyles = "
       color: darkgreen;
     }
     
+    // 1 record, pre-built
     .redblue-bg {
       background-color: linear-gradient(to right, red 50%, blue 50%) !important;
     }
     
+    // 1 record, test net
     .redpurple-bg {
       background-color: linear-gradient(to right, red 50%, purple 50%) !important;
     }
     
+    // 1 record, open net
     .redgreen-bg {
       background-color: linear-gradient(to right, red 50%, green 50%) !important;
     }
@@ -268,25 +271,31 @@ if (!empty($result)) {
 }
 ?>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  // Define the function
-  function checkAndSetColor(tdIndex, valueToCheck, bgColor) {
-    // Get the value of the specified <td> using .eq()
-    var tdValue = $("tr td").eq(tdIndex - 1).text();
 
-    // Check if the value matches the specified value
-    if (tdValue.trim() === valueToCheck) {
-      // Set the background color of the first <td> to the specified color
-      $("tr td").eq(0).css("background-color", bgColor);
-      // Set the background color of the entire <tr> to the specified color
-      $("tr").css("background-color", bgColor);
-    }
+  // Call the function with the desired parameters for your specific case
+  checkAndSetColor(3, "1", 4, "", "redgreen-bg");
+
+  // Function to apply the specified CSS class to the first <td> of rows matching the conditions
+  function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
+    // Loop through all the <tr> elements
+    $("tr").each(function() {
+      // Get the values of the specified <td> elements using .eq()
+      var tdValueFirst = $(this).find("td").eq(tdIndex1 - 1).text().trim();
+      var tdValueSecond = $(this).find("td").eq(tdIndex2 - 1).text().trim();
+      
+    console.log("Column One: ", tdValueFirst);
+    console.log("Column Four: ", tdValue1);
+    console.log("Column Five: ", tdValue2);
+
+      // Check if both conditions are met
+      if (tdValueFirst === tdValue1 && (tdValue2 === "" || tdValue2.toLowerCase() === "null")) {
+        // Add the specified CSS class to the first <td> of the current row
+        $(this).find("td:first-child").addClass(bgClass);
+      }
+    });
   }
-
-  // Call the function with the desired parameters
-  //checkAndSetColor(4, "1", "red");
 });
 
 </script>
