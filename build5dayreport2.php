@@ -17,101 +17,147 @@
           }
 
         </script>
+        
         <style>
-    table {
-        border-collapse: collapse;
-    }
-    
-    th, td {
-        padding: 8px;
-        border: 1px solid #000000;
-    }
-    
-    .odd-row {
-        background-color: #F0F0F0;
-    }
-    
-    .even-row {
-        background-color: #FFFFFF;
-    }
-    
-    .red-row {
-        background-color: #087f47;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .red-bg {
-        background-color: red;
-        color: white;
-    }
-    
-    .red-netID {
-        background-color: red;
-        color: white;
-    }
-    
-    .green-bg {
-        background-color: green;
-        color: white;
-    }
-    
-    .green-netID {
-        background-color: green;
-        color: white;
-    }
-    
-    .blue-bg {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .blue-netID {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-bg {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-netID {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    label {
-      font-weight: bold;
-    }
-    
-    .date-row {
-      font-weight: bold;
-      font-size: 14pt;
-      color: darkgreen;
-    }
-    
-    
-    .redblue-bg {
-      background-color: linear-gradient(to right, red 50%, blue 50%);
-    }
-    
-    
-    .redpurple-bg {
-      background-color: linear-gradient(to right, red 50%, purple 50%);
-    }
-    
-    
-    .redgreen-bg {
-      background-color: linear-gradient(to right, red 50%, green 50%);
-    }
+            table {
+                border-collapse: collapse;
+            }
+            
+            th, td {
+                padding: 8px;
+                border: 1px solid #000000;
+            }
+            
+            .odd-row {
+                background-color: #F0F0F0;
+            }
+            
+            .even-row {
+                background-color: #FFFFFF;
+            }
+            
+            .red-row {
+                background-color: #087f47;
+                color: white;
+                font-weight: bold;
+            }
+            
+            /* Style for nets with 1 entry */
+            .red-bg {
+                background-color: red;
+                color: white;
+            }
+            
+            .red-netID {
+                background-color: red;
+                color: white;
+            }
+            
+            /* Style for Open nets */
+            .green-bg {
+                background-color: green;
+                color: white;
+            }
+            
+            .green-netID {
+                background-color: green;
+                color: white;
+            }
+            
+            /* Style for Pre-Built nets */
+            .blue-bg {
+                background-color: blue;
+                color: white;
+                font-weight: bold;
+            }
+            
+            .blue-netID {
+                background-color: blue;
+                color: white;
+                font-weight: bold;
+            }
+            
+            /* Style for Test nets */
+            .purple-bg {
+                background-color: purple;
+                color: white;
+                font-weight: bold;
+            }
+            
+            .purple-netID {
+                background-color: purple;
+                color: white;
+                font-weight: bold;
+            }
+            
+            label {
+              font-weight: bold;
+            }
+            
+            .date-row {
+              font-weight: bold;
+              font-size: 14pt;
+              color: darkgreen;
+            }
+            
+            /* Style for 1 record and pre-built net */
+            .redblue-bg {
+              background-color: red;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redpurple-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, blue);
+              color: white;
+            }
+            
+            /* Style for the last three columns (purple) */
+            .redpurple-bg td:nth-last-child(-n + 3) {
+              background-color: blue;
+              color: white;
+            }
+            
+            /* Style for 1 record and test net */
+            .redpurple-bg {
+              background-color: blue;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redpurple-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, purple);
+              color: white;
+            }
+            
+            /* Style for the last three columns (purple) */
+            .redpurple-bg td:nth-last-child(-n + 3) {
+              background-color: purple;
+              color: white;
+            }
+            
+           
+            /* Style for 1 record and open net */
+            /* Style for the first two columns (red) */
+            .redgreen-bg td:nth-child(-n + 2) {
+              background-color: red;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redgreen-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, green);
+              color: white;
+            }
+            
+            /* Style for the last three columns (green) */
+            .redgreen-bg td:nth-last-child(-n + 3) {
+              background-color: green;
+              color: white;
+            }
 
 
-</style>
+        </style>
     </head>
 <body>
 
@@ -147,111 +193,6 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-// JS functions
-//$jsFunctions = "<script src='js/NetManager-p2.js'></script>"
-
-// CSS styles for the report table
-$cssStyles = "
-<style>
-    table {
-        border-collapse: collapse;
-    }
-    
-    th, td {
-        padding: 8px;
-        border: 1px solid #000000;
-    }
-    
-    .odd-row {
-        background-color: #F0F0F0;
-    }
-    
-    .even-row {
-        background-color: #FFFFFF;
-    }
-    
-    .red-row {
-        background-color: #087f47;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .red-bg {
-        background-color: red;
-        color: white;
-    }
-    
-    .red-netID {
-        background-color: red;
-        color: white;
-    }
-    
-    .green-bg {
-        background-color: green;
-        color: white;
-    }
-    
-    .green-netID {
-        background-color: green;
-        color: white;
-    }
-    
-    .blue-bg {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .blue-netID {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-bg {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-netID {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    label {
-      font-weight: bold;
-    }
-    
-    .date-row {
-      font-weight: bold;
-      font-size: 14pt;
-      color: darkgreen;
-    }
-    
-    // 1 record, pre-built
-    .redblue-bg {
-      background-color: linear-gradient(to right, red 50%, blue 50%);
-    }
-    
-    // 1 record, test net
-    .redpurple-bg {
-      background-color: linear-gradient(to right, red 50%, purple 50%);
-    }
-    
-    // 1 record, open net
-    .redgreen-bg {
-      background-color: linear-gradient(to right, red 50%, green 50%);
-    }
-
-
-</style>
-";
-
-// Print CSS styles
-echo $cssStyles;
 
 // Print the title
 if (!empty($result)) {
