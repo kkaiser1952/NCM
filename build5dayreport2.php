@@ -84,11 +84,6 @@
                 font-weight: bold;
             }
             
-            .purple-netID {
-                background-color: purple;
-                color: white;
-                font-weight: bold;
-            }
             
             label {
               font-weight: bold;
@@ -96,7 +91,7 @@
             
             .date-row {
               font-weight: bold;
-              font-size: 14pt;
+              font-size: 16pt;
               color: darkgreen;
             }
             
@@ -118,9 +113,11 @@
               color: white;
             }
             
+            
             /* Style for 1 record and test net */
+            /* Style for the first two columns (red) */
             .redpurple-bg {
-              background-color: blue;
+              background-color: red;
               color: white;
             }
             

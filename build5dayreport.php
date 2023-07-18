@@ -312,12 +312,13 @@ if (!empty($result)) {
 
 <script>
 $(document).ready(function() {
+    
 
-  // Call the function with the desired parameters for your specific case
-  checkAndSetColor(3, "1", 4, "", "redgreen-bg");
-  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg");
-  //checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg");
-  //checkAndSetColor(3, "1", 4, <?php echo $pb; ?>, "bluegreen-bg");
+  // CSS assignments for linear-gradient row colors
+  checkAndSetColor(3, "1", 4, "", "redgreen-bg"); // 1 record/open net
+  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg"); // 1 record/pre-built net
+  checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg"); // 1 record/test net
+ 
 
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
