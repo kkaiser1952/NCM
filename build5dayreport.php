@@ -17,6 +17,149 @@
           }
 
         </script>
+        
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            
+            th, td {
+                padding: 8px;
+                border: 1px solid #000000;
+            }
+            
+            .odd-row {
+                background-color: #F0F0F0;
+            }
+            
+            .even-row {
+                background-color: #FFFFFF;
+            }
+            
+            .red-row {
+                background-color: #087f47;
+                color: white;
+                font-weight: bold;
+            }
+            
+            /* Style for nets with 1 entry */
+            .red-bg {
+                background-color: red;
+                color: white;
+            }
+            
+            .red-netID {
+                background-color: red;
+                color: white;
+            }
+            
+            /* Style for Open nets */
+            .green-bg {
+                background-color: green;
+                color: white;
+            }
+            
+            .green-netID {
+                background-color: green;
+                color: white;
+            }
+            
+            /* Style for Pre-Built nets */
+            .blue-bg {
+                background-color: blue;
+                color: white;
+                font-weight: bold;
+            }
+            
+            .blue-netID {
+                background-color: blue;
+                color: white;
+                font-weight: bold;
+            }
+            
+            /* Style for Test nets */
+            .purple-bg {
+                background-color: purple;
+                color: white;
+                font-weight: bold;
+            }
+            
+            .purple-netID {
+                background-color: purple;
+                color: white;
+                font-weight: bold;
+            }
+            
+            label {
+              font-weight: bold;
+            }
+            
+            .date-row {
+              font-weight: bold;
+              font-size: 14pt;
+              color: darkgreen;
+            }
+            
+            /* Style for 1 record and pre-built net */
+            .redblue-bg {
+              background-color: red;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redpurple-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, blue);
+              color: white;
+            }
+            
+            /* Style for the last three columns (purple) */
+            .redpurple-bg td:nth-last-child(-n + 3) {
+              background-color: blue;
+              color: white;
+            }
+            
+            /* Style for 1 record and test net */
+            .redpurple-bg {
+              background-color: blue;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redpurple-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, purple);
+              color: white;
+            }
+            
+            /* Style for the last three columns (purple) */
+            .redpurple-bg td:nth-last-child(-n + 3) {
+              background-color: purple;
+              color: white;
+            }
+            /* END: Style for 1 record and test net */
+            
+           
+            /* Style for 1 record and open net */
+            /* Style for the first two columns (red) */
+            .redgreen-bg td:nth-child(-n + 2) {
+              background-color: red;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redgreen-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, green);
+              color: white;
+            }
+            
+            /* Style for the last three columns (green) */
+            .redgreen-bg td:nth-last-child(-n + 3) {
+              background-color: green;
+              color: white;
+            }
+            /* END: Style for 1 record and open net */
+
+
+        </style>
     </head>
 <body>
 
@@ -47,113 +190,11 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
        ORDER BY netID DESC
 ");
 
-$stuff = "stuff here";
+//$stuff = "stuff here";
 
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-// JS functions
-//$jsFunctions = "<script src='js/NetManager-p2.js'></script>"
-
-// CSS styles for the report table
-$cssStyles = "
-<style>
-    table {
-        border-collapse: collapse;
-    }
-    
-    th, td {
-        padding: 8px;
-        border: 1px solid #000000;
-    }
-    
-    .odd-row {
-        background-color: #F0F0F0;
-    }
-    
-    .even-row {
-        background-color: #FFFFFF;
-    }
-    
-    .red-row {
-        background-color: #087f47;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .red-bg {
-        background-color: red;
-        color: white;
-    }
-    
-    .red-netID {
-        background-color: red;
-        color: white;
-    }
-    
-    .green-bg {
-        background-color: green;
-        color: white;
-    }
-    
-    .green-netID {
-        background-color: green;
-        color: white;
-    }
-    
-    .blue-bg {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .blue-netID {
-        background-color: blue;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-bg {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .purple-netID {
-        background-color: purple;
-        color: white;
-        font-weight: bold;
-    }
-    
-    label {
-      font-weight: bold;
-    }
-    
-    .date-row {
-      font-weight: bold;
-      font-size: 14pt;
-      color: darkgreen;
-    }
-    
-    .redblue-bg {
-      background-color: linear-gradient(to right, red 50%, blue 50%) !important;
-    }
-    
-    .redpurple-bg {
-      background-color: linear-gradient(to right, red 50%, purple 50%) !important;
-    }
-    
-    .redgreen-bg {
-      background-color: linear-gradient(to right, red 50%, green 50%) !important;
-    }
-
-
-</style>
-";
-
-// Print CSS styles
-echo $cssStyles;
 
 // Print the title
 if (!empty($result)) {
@@ -226,12 +267,10 @@ if (!empty($result)) {
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
         if (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true) && $row['count'] == 1) {
             $rowClass = 'redpurple-bg';
+            $purple = 1;
         } elseif (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true)) {
             $rowClass .= ' purple-bg';
         }
-        
-        // stuff row
-    echo '<tr>' . $stuff . '</tr>';
  
         // Output each column value in a table row
             echo '<tr class="' . $rowClass . '">';
@@ -261,7 +300,7 @@ if (!empty($result)) {
             }
         }
 
-        echo '</tr>';
+        echo '</tr>'; 
     }
 
     // End the table
@@ -271,25 +310,53 @@ if (!empty($result)) {
 }
 ?>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  // Define the function
-  function checkAndSetColor(tdIndex, valueToCheck, bgColor) {
-    // Get the value of the specified <td> using .eq()
-    var tdValue = $("tr td").eq(tdIndex - 1).text();
 
-    // Check if the value matches the specified value
-    if (tdValue.trim() === valueToCheck) {
-      // Set the background color of the first <td> to the specified color
-      $("tr td").eq(0).css("background-color", bgColor);
-      // Set the background color of the entire <tr> to the specified color
-      $("tr").css("background-color", bgColor);
+  // Call the function with the desired parameters for your specific case
+  checkAndSetColor(3, "1", 4, "", "redgreen-bg");
+  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg");
+  //checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg");
+  //checkAndSetColor(3, "1", 4, <?php echo $pb; ?>, "bluegreen-bg");
+
+  // Function to apply the specified CSS class to the first <td> of rows matching the conditions
+function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
+  // Loop through all the <tr> elements
+  $("tr").each(function() {
+    // Get the values of the specified <td> elements using .eq()
+    var tdValueFirst = $(this).find("td").eq(tdIndex1).text().trim();
+    var tdValueSecond = $(this).find("td").eq(tdIndex2).text().trim();
+
+    // Get all column values
+    var columnValues = [];
+    $(this).find("td").each(function() {
+      columnValues.push($(this).text().trim());
+    });
+
+    /*
+    console.log("Column 1: ", columnValues[0]);     // netID
+    console.log("Column 2: ", columnValues[1]);     // logdate
+    console.log("Column 3: ", columnValues[2]);     // netcall
+    console.log("Column 4: ", columnValues[3]);     // count of callsigns
+    console.log("tdValueFirst: ", tdValueFirst);    // Requested value of column 4
+    console.log("Column 5: ", columnValues[4]);     // logclosedtime
+    console.log("tdValueSecond: ", tdValueSecond);  // Requested value of column 5
+    console.log("Column 6: ", columnValues[5]);     // Volunteer_Time
+    */
+
+    // Check if both conditions are met
+    if (tdValueFirst === tdValue1 && (tdValueSecond  === "" || tdValue2.trim().toLowerCase() === "null")) {
+      // Remove all existing classes from the row (tr)
+      $(this).removeClass();
+
+      // Add the specified CSS class to the entire row (tr) of the current <td> element
+      $(this).addClass(bgClass);
     }
-  }
+  });
+}
 
-  // Call the function with the desired parameters
-  //checkAndSetColor(4, "1", "red");
+ // end of the checkAndSetColor function
+
 });
 
 </script>
