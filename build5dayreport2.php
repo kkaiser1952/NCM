@@ -95,24 +95,29 @@
               color: darkgreen;
             }
             
+            
+            /* ALL BELOW ARE WORKING */
+           
             /* Style for 1 record and pre-built net */
+            /* Style for the first two columns (red) */
             .redblue-bg {
               background-color: red;
               color: white;
             }
             
             /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(3) {
+            .redblue-bg td:nth-child(3) {
               background-image: linear-gradient(to right, red, blue);
               color: white;
             }
             
             /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 3) {
+            .redblue-bg td:nth-last-child(-n + 3) {
               background-color: blue;
               color: white;
             }
             
+             /* ---- */
             
             /* Style for 1 record and test net */
             /* Style for the first two columns (red) */
@@ -134,6 +139,7 @@
             }
             /* END: Style for 1 record and test net */
             
+            /* ---- */
            
             /* Style for 1 record and open net */
             /* Style for the first two columns (red) */
