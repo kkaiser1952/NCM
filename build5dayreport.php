@@ -378,10 +378,7 @@ $(document).ready(function() {
 
   // Call the function with the desired parameters for your specific case
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
-  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg");
-  //checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg");
-  //checkAndSetColor(3, "1", 4, <?php echo $pb; ?>, "bluegreen-bg");
-
+  
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
   // Loop through all the <tr> elements

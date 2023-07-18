@@ -167,6 +167,28 @@
             
             /* ---- */
             
+            /* Style for open, test net */
+            /* Style for the first two columns (green) */
+   /*        .greenputple-bg td:nth-child(-n + 2) {
+              background-color: green;
+              color: white;
+            }
+    */        
+            /* Style for the third column (gradient) */
+    /*        .greenpurple-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, green, purple);
+              color: white;
+            }
+    */       
+            /* Style for the last three columns (green) */
+    /*        .greenpurple-bg td:nth-last-child(-n + 3) {
+              background-color: purple;
+              color: white;
+            } 
+    */       /* END: Style for open/test net net */
+            
+            /* ---- */
+            
             /* Style for combination label */
             .combo-bg {
               background-image: linear-gradient(to right, red 0%, green 25%, blue 50%, purple 75%);
