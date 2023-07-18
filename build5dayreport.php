@@ -36,11 +36,12 @@
                 background-color: #FFFFFF;
             }
             
+            /*
             .red-row {
                 background-color: #087f47;
                 color: white;
                 font-weight: bold;
-            }
+            } */
             
             /* Style for nets with 1 entry */
             .red-bg {
@@ -48,10 +49,11 @@
                 color: white;
             }
             
+            /*
             .red-netID {
                 background-color: red;
                 color: white;
-            }
+            } */
             
             /* Style for Open nets */
             .green-bg {
@@ -59,10 +61,11 @@
                 color: white;
             }
             
+            /*
             .green-netID {
                 background-color: green;
                 color: white;
-            }
+            } */
             
             /* Style for Pre-Built nets */
             .blue-bg {
@@ -71,11 +74,12 @@
                 font-weight: bold;
             }
             
+            /*
             .blue-netID {
                 background-color: blue;
                 color: white;
                 font-weight: bold;
-            }
+            } */
             
             /* Style for Test nets */
             .purple-bg {
@@ -84,11 +88,6 @@
                 font-weight: bold;
             }
             
-            .purple-netID {
-                background-color: purple;
-                color: white;
-                font-weight: bold;
-            }
             
             label {
               font-weight: bold;
@@ -96,31 +95,38 @@
             
             .date-row {
               font-weight: bold;
-              font-size: 14pt;
+              font-size: 16pt;
               color: darkgreen;
             }
             
+            
+            /* ALL BELOW ARE WORKING */
+           
             /* Style for 1 record and pre-built net */
+            /* Style for the first two columns (red) */
             .redblue-bg {
               background-color: red;
               color: white;
             }
             
             /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(3) {
+            .redblue-bg td:nth-child(3) {
               background-image: linear-gradient(to right, red, blue);
               color: white;
             }
             
             /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 3) {
+            .redblue-bg td:nth-last-child(-n + 3) {
               background-color: blue;
               color: white;
             }
             
+             /* ---- */
+            
             /* Style for 1 record and test net */
+            /* Style for the first two columns (red) */
             .redpurple-bg {
-              background-color: blue;
+              background-color: red;
               color: white;
             }
             
@@ -137,6 +143,7 @@
             }
             /* END: Style for 1 record and test net */
             
+            /* ---- */
            
             /* Style for 1 record and open net */
             /* Style for the first two columns (red) */
@@ -157,8 +164,45 @@
               color: white;
             }
             /* END: Style for 1 record and open net */
+            
+            /* ---- */
+            
+            /* Style for combination label */
+            .combo-bg {
+              background-image: linear-gradient(to right, red 0%, green 25%, blue 50%, purple 75%);
+              width: 300px;
+            }
+            
+            /* Apply some general styling to the form rows and columns */
+            .report-container {
+              max-width: 600px; /* Adjust the width as needed */
+              margin-left: 100;
+            }
+            
+            /* Apply some general styling to the form rows and columns */
+            .form-row {
+              display: flex;
+              align-items: baseline; /* Vertically align based on the baseline */
+              justify-content: flex-start; /* Align form rows to the left */
+              margin-bottom: 10px;
+            }
+            
+            .form-column {
+              flex: 1;
+              margin-right: 20px;
+            }
+            
+            /* Set a fixed width for labels to make them the same length */
+            .form-row label {
+              flex-basis: 120px; /* Adjust the width as needed */
+            }
+            
+            /* Set a fixed width for the last input (field5) to make it the same length */
+            .form-row:last-child input {
+              max-width: calc(100% - 120px); /* 100% minus the label width */
+            }
 
-
+            
         </style>
     </head>
 <body>
@@ -198,25 +242,44 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-    $title = "Past 5 days NCM Report for " . $result[0]['netID_count'] . " Nets <br> Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
+    $title = "Past 5 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+     Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
     
-    echo '<h1>' . $title . '</h1>
-    
-     <form>  <!-- This adds a legend to the top of the report -->
-        <label for="open_nets">Open Nets:</label>
-        <input type="text" id="open_nets" name="open_nets" class="green-bg" value="">
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <label for="one_entry">Only One Entry:</label>
-        <input type="text" id="one_entry" name="one_entry" class="red-bg" value=""><br>
-        
-        <label for="prebuilt">Pre-Built:</label>
-        <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-        <label for="test">Test Nets:</label>
-        <input type="text" id="test" name="test" class="purple-bg" value=""><br><br>
-      </form>
-    '
+    echo '<h1 style="margin-left:100;">' . $title . '</h1>
+        <div class="report-container">     
+        <form>
+          <!-- First line -->
+          <div class="form-row">
+            <div class="form-column">
+              <label for="open_nets">Open Nets:</label>
+              <input type="text" id="open_nets" name="open_nets" class="green-bg" value="">
+            </div>
+            <div class="form-column">
+              <label for="one_entry">Only One Entry:</label>
+              <input type="text" id="one_entry" name="one_entry" class="red-bg" value="">
+            </div>
+          </div>
+          
+          <!-- Second line -->
+          <div class="form-row">
+            <div class="form-column">
+              <label for="prebuilt">Pre-Built:</label>
+              <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value="">
+            </div>
+            <div class="form-column">
+              <label for="test">Test Nets:</label>
+              <input type="text" id="test" name="test" class="purple-bg" value="">
+            </div>
+          </div>
+          
+          <!-- Third line -->
+          <div class="form-row">
+            <label for="combo">Combination Nets:</label>
+            <input type="text" id="combo" name="combo" class="combo-bg" value="" style="width: 300px;">
+          </div>
+        </form>
+        </div>
+    ' // this tick closes the echo at the $title line 
     ;
 } else {
     echo 'No results found.';
@@ -246,7 +309,7 @@ if (!empty($result)) {
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
         
-        $rowClass .= $isClosed ? ' red-row' : '';
+        $rowClass .= $isClosed ? ' red-bg' : '';
         // Add red-bg class if count is 1
         if ($row['count'] == 1) {
             $rowClass .= ' red-bg ';
@@ -312,13 +375,12 @@ if (!empty($result)) {
 
 <script>
 $(document).ready(function() {
-    
 
-  // CSS assignments for linear-gradient row colors
-  checkAndSetColor(3, "1", 4, "", "redgreen-bg"); // 1 record/open net
-  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg"); // 1 record/pre-built net
-  checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg"); // 1 record/test net
- 
+  // Call the function with the desired parameters for your specific case
+  checkAndSetColor(3, "1", 4, "", "redgreen-bg");
+  //checkAndSetColor(3, "1", 4, <? echo "$pb"; ?>, "redblue-bg");
+  //checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg");
+  //checkAndSetColor(3, "1", 4, <?php echo $pb; ?>, "bluegreen-bg");
 
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
