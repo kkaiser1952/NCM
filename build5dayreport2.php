@@ -135,6 +135,7 @@
               background-color: purple;
               color: white;
             }
+            /* END: Style for 1 record and test net */
             
            
             /* Style for 1 record and open net */
@@ -155,6 +156,7 @@
               background-color: green;
               color: white;
             }
+            /* END: Style for 1 record and open net */
 
 
         </style>
@@ -265,6 +267,7 @@ if (!empty($result)) {
         $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
         if (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true) && $row['count'] == 1) {
             $rowClass = 'redpurple-bg';
+            $purple = 1;
         } elseif (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true)) {
             $rowClass .= ' purple-bg';
         }
@@ -312,6 +315,9 @@ $(document).ready(function() {
 
   // Call the function with the desired parameters for your specific case
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
+  //checkAndSetColor(3, "1", 4, <? echo $pb; ?>, "redblue-bg");
+  //checkAndSetColor(3, "1", 4, <? $purple=1 ?>, "redpurple-bg");
+  //checkAndSetColor(3, "1", 4, <?php echo $pb; ?>, "bluegreen-bg");
 
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
@@ -327,17 +333,19 @@ function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
       columnValues.push($(this).text().trim());
     });
 
-    console.log("Column 1: ", columnValues[0]);
-    console.log("Column 2: ", columnValues[1]);
-    console.log("Column 3: ", columnValues[2]);
-    console.log("Column 4: ", columnValues[3]);
-    console.log("tdValueFirst: ", tdValueFirst);
-    console.log("Column 5: ", columnValues[4]);
-    console.log("tdValueSecond: ", tdValueSecond);
-    console.log("Column 6: ", columnValues[5]);
+    /*
+    console.log("Column 1: ", columnValues[0]);     // netID
+    console.log("Column 2: ", columnValues[1]);     // logdate
+    console.log("Column 3: ", columnValues[2]);     // netcall
+    console.log("Column 4: ", columnValues[3]);     // count of callsigns
+    console.log("tdValueFirst: ", tdValueFirst);    // Requested value of column 4
+    console.log("Column 5: ", columnValues[4]);     // logclosedtime
+    console.log("tdValueSecond: ", tdValueSecond);  // Requested value of column 5
+    console.log("Column 6: ", columnValues[5]);     // Volunteer_Time
+    */
 
     // Check if both conditions are met
-    if (tdValueFirst === tdValue1 && (tdValue2 === "" || tdValue2.trim().toLowerCase() === "null")) {
+    if (tdValueFirst === tdValue1 && (tdValueSecond  === "" || tdValue2.trim().toLowerCase() === "null")) {
       // Remove all existing classes from the row (tr)
       $(this).removeClass();
 
