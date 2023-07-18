@@ -36,11 +36,12 @@
                 background-color: #FFFFFF;
             }
             
+            /*
             .red-row {
                 background-color: #087f47;
                 color: white;
                 font-weight: bold;
-            }
+            } */
             
             /* Style for nets with 1 entry */
             .red-bg {
@@ -48,10 +49,11 @@
                 color: white;
             }
             
+            /*
             .red-netID {
                 background-color: red;
                 color: white;
-            }
+            } */
             
             /* Style for Open nets */
             .green-bg {
@@ -59,10 +61,11 @@
                 color: white;
             }
             
+            /*
             .green-netID {
                 background-color: green;
                 color: white;
-            }
+            } */
             
             /* Style for Pre-Built nets */
             .blue-bg {
@@ -71,11 +74,12 @@
                 font-weight: bold;
             }
             
+            /*
             .blue-netID {
                 background-color: blue;
                 color: white;
                 font-weight: bold;
-            }
+            } */
             
             /* Style for Test nets */
             .purple-bg {
@@ -160,8 +164,12 @@
               color: white;
             }
             /* END: Style for 1 record and open net */
-
-
+            
+            /* Style for combination label */
+            .combo-bg {
+              background-image: linear-gradient(to right, red 25%, green 25%, blue 25%, purple 25% );
+            }
+            
         </style>
     </head>
 <body>
@@ -217,7 +225,10 @@ if (!empty($result)) {
         <input type="text" id="prebuilt" name="prebuilt" class="blue-bg" value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         
         <label for="test">Test Nets:</label>
-        <input type="text" id="test" name="test" class="purple-bg" value=""><br><br>
+        <input type="text" id="test" name="test" class="purple-bg" value=""><br>
+        
+        <label for="combo">Combination Nets:</label>
+        <input type="text" id="combo" name="combo" class="combo-bg" value=""><br><br>
       </form>
     '
     ;
@@ -249,7 +260,7 @@ if (!empty($result)) {
         // Get the row class
         $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
         
-        $rowClass .= $isClosed ? ' red-row' : '';
+        $rowClass .= $isClosed ? ' red-bg' : '';
         // Add red-bg class if count is 1
         if ($row['count'] == 1) {
             $rowClass .= ' red-bg ';
