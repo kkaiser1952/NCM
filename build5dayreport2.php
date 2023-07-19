@@ -166,6 +166,28 @@
             /* END: Style for 1 record and open net */
             
             /* ---- */
+           
+            /* Style for 1 record and closed net */
+            /* Style for the first two columns (red) */
+            .redclear-bg td:nth-child(-n + 2) {
+              background-color: red;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
+            .redclear-bg td:nth-child(3) {
+              background-image: linear-gradient(to right, red, transparent);
+              color: white;
+            }
+            
+            /* Style for the last three columns (green) */
+            .redclear-bg td:nth-last-child(-n + 3) {
+              background-color: transparent;
+              color: white;
+            }
+            /* END: Style for 1 record and open net */
+            
+            /* ---- */
             
             /* Style for open, test net */
             /* Style for the first two columns (green) */
@@ -191,7 +213,7 @@
             
             /* Style for combination label */
             .combo-bg {
-              background-image: linear-gradient(to right, red 0%, green 25%, blue 50%, purple 75%);
+              background-image: linear-gradient(to right, red 0%, green 25%, blue 60%, purple 75%);
               width: 300px;
             }
             
@@ -277,7 +299,7 @@ if (!empty($result)) {
               <input type="text" id="open_nets" name="open_nets" class="green-bg" value="">
             </div>
             <div class="form-column">
-              <label for="one_entry">Only One Entry:</label>
+              <label for="one_entry">One Entry:</label>
               <input type="text" id="one_entry" name="one_entry" class="red-bg" value="">
             </div>
           </div>
@@ -296,7 +318,7 @@ if (!empty($result)) {
           
           <!-- Third line -->
           <div class="form-row">
-            <label for="combo">Combination Nets:</label>
+            <label for="combo">Combo Nets:</label>
             <input type="text" id="combo" name="combo" class="combo-bg" value="" style="width: 300px;">
           </div>
         </form>
