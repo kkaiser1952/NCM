@@ -397,6 +397,14 @@ if (!empty($result)) {
 
 <script>
 $(document).ready(function() {
+    // Adding a word to one of the header <th> values
+    // Find the second <th> element using :eq(1) selector (index starts from 0)
+    var secondHeader = $("th:eq(1)");
+    var fourthHeader = $("th:eq(4)");
+
+    // Append the word using .append() method
+    secondHeader.append(" UTC");
+    fourthHeader.append(" UTC");
 
   // Call the function with the desired parameters for your specific case
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
