@@ -429,7 +429,10 @@ $(document).ready(function() {
     fourthHeader.append(" UTC");
 
   // Call the function with the desired parameters for your specific case
+  // One entry but the net is open
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
+  // One entry but the net is closed
+  checkAndSetColor(3, "1", 4, "<? echo $logclosedtime ?>", "redclear-bg");
   
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
