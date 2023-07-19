@@ -261,7 +261,7 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
-            pb,   /* testnet, */
+            pb,  /* testnet, */
             (SELECT COUNT(DISTINCT netID)
              FROM NetLog
              WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
@@ -431,8 +431,9 @@ $(document).ready(function() {
   // Call the function with the desired parameters for your specific case
   // One entry but the net is open
   checkAndSetColor(3, "1", 4, "", "redgreen-bg");
-  // One entry but the net is closed
-  checkAndSetColor(3, "1", 4, "<? echo $logclosedtime ?>", "redclear-bg");
+  // One entry but and net is closed
+  //checkAndSetColor(3, "1", 4, "<? echo $logclosedtime ?>", "redclear-bg");
+  //checkAndSetColor(3, "1", 4, "", "redclear-bg");
   
   // Function to apply the specified CSS class to the first <td> of rows matching the conditions
 function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
