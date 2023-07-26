@@ -280,7 +280,7 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedt
 
        (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)) AS netID_count,
 
        CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
@@ -293,85 +293,15 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedt
           ELSE ''
        END) AS ccss
 
-FROM (
-   SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
-   FROM NetLog
-   WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-   GROUP BY netID  -- Only group by netID in the subquery
-) AS Subquery
-GROUP BY netID
-ORDER BY netID DESC;
+        FROM (
+           SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
+           FROM NetLog
+           WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
+           GROUP BY netID  -- Only group by netID in the subquery
+        ) AS Subquery
+        GROUP BY netID
+        ORDER BY netID DESC;
 ");
-
-$sql->execute();
-$resultRows = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-// Create a variable to hold the final value
-$THEcss = '';
-
-foreach ($resultRows as $row) {
-    $PBcss = $row['PBcss'];
-    $LCTcss = $row['LCTcss'];
-    $TNcss = $row['TNcss'];
-    $ccss = $row['ccss'];
-
-    // Check the values of PBcss, LCTcss, TNcss, and ccss
-    if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
-        // ALL LCTcss and TNcss and ccss are set
-        $THEcss = 'combo-bg';
-    } elseif (!empty($PBcss) && !empty($ccss)) {
-        // Both PBcss and ccss are set
-        $THEcss = 'redblue-bg';
-    } elseif (!empty($LCTcss) && !empty($ccss)) {
-        // Both LCTcss and ccss are set
-        $THEcss = 'redgreen-bg';
-    } elseif (!empty($TNcss) && !empty($ccss)) {
-        // Both TNcss and ccss are set
-        $THEcss = 'redpurple-bg';
-    } elseif (!empty($LCTcss) && !empty($TNcss)) {
-        // Both LCTcss and TNcss are set
-        $THEcss = 'greenpurple-bg';
-    } elseif (!empty($PBcss) && !empty($TNcss)) {
-        // Both LCTcss and TNcss are set
-        $THEcss = 'bluepurple-bg';
-    } elseif (!empty($PBcss)) {
-        // Only PBcss is set
-        $THEcss = $PBcss;
-    } elseif (!empty($LCTcss)) {
-        // Only LCTcss is set
-        $THEcss = $LCTcss;
-    } elseif (!empty($TNcss)) {
-        // Only TNcss is set
-        $THEcss = $TNcss;
-    } elseif (!empty($ccss)) {
-        // Only ccss is set
-        $THEcss = $ccss;
-    } else {
-        // None of the combinations are set, so take the value of whichever column is set
-        if (!empty($PBcss)) {
-            $THEcss = $PBcss;
-        } elseif (!empty($LCTcss)) {
-            $THEcss = $LCTcss;
-        } elseif (!empty($TNcss)) {
-            $THEcss = $TNcss;
-        } elseif (!empty($ccss)) {
-            $THEcss = $ccss;
-        } else {
-            // If none of the columns have a value, you may set a default value here if needed
-            $THEcss = 'x';
-        }
-    }
-
-    //$rowClass =  $THEcss ;
-    //$THEcss = $THEcss;
-    
-    // Now $THEcss will hold the desired value based on the conditions above for each row in the $resultRows array
-    if (!empty($THEcss)) {
-    echo "THEcss for netID: " . $row['netID'] . " is: $THEcss <br>" . PHP_EOL;
-}}
-
-
-//$stuff = "stuff here";
 
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
@@ -420,14 +350,14 @@ if (!empty($result)) {
     ;
 } else {
     echo 'No results found.';
-}
+} // overall end of IF after Print the title
 
 // Check if there are any rows in the result set
 if (!empty($result)) {
     // Start the table
     echo '<table>';
 
-    // Table header
+    // Start the Table header
     echo '<tr>';
     
     // Add the headers 
@@ -439,21 +369,66 @@ if (!empty($result)) {
     echo '</tr>'; // end for Table header
 
     // Table rows
-    $currentDate = null;
-    foreach ($result as $rowIndex => $row) {
-        
-        //$rowClass =  '$THEcss' ;
-        
-        if ($row['total_time']) {
-            $total_time = gmdate('H:i:s', $total_time);
-        }
- 
-        // Output each column value in a table row
-            echo '<tr class="' . $THEcss . '">';
+$currentDate = null;
+foreach ($result as $rowIndex => $row) {
+    // Calculate the value of $THEcss for this specific row based on the conditions
+    $PBcss = $row['PBcss'];
+    $LCTcss = $row['LCTcss'];
+    $TNcss = $row['TNcss'];
+    $ccss = $row['ccss'];
 
-        // Output the date and day of the week in a separate row for the start of a new day
-        $date = substr($row['logdate'], 0, 10);
-        $dayOfWeek = date('l', strtotime($date));
+    if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
+        // ALL LCTcss and TNcss and ccss are set
+        $THEcss = 'combo-bg';
+    } elseif (!empty($PBcss) && !empty($ccss)) {
+        // Both PBcss and ccss are set
+        $THEcss = 'redblue-bg';
+    } elseif (!empty($LCTcss) && !empty($ccss)) {
+        // Both LCTcss and ccss are set
+        $THEcss = 'redgreen-bg';
+    } elseif (!empty($TNcss) && !empty($ccss)) {
+        // Both TNcss and ccss are set
+        $THEcss = 'redpurple-bg';
+    } elseif (!empty($LCTcss) && !empty($TNcss)) {
+        // Both LCTcss and TNcss are set
+        $THEcss = 'greenpurple-bg';
+    } elseif (!empty($PBcss) && !empty($TNcss)) {
+        // Both LCTcss and TNcss are set
+        $THEcss = 'bluepurple-bg';
+    } elseif (!empty($PBcss)) {
+        // Only PBcss is set
+        $THEcss = $PBcss;
+    } elseif (!empty($LCTcss)) {
+        // Only LCTcss is set
+        $THEcss = $LCTcss;
+    } elseif (!empty($TNcss)) {
+        // Only TNcss is set
+        $THEcss = $TNcss;
+    } elseif (!empty($ccss)) {
+        // Only ccss is set
+        $THEcss = $ccss;
+    } else {
+        // None of the combinations are set, so take the value of whichever column is set
+        if (!empty($PBcss)) {
+            $THEcss = $PBcss;
+        } elseif (!empty($LCTcss)) {
+            $THEcss = $LCTcss;
+        } elseif (!empty($TNcss)) {
+            $THEcss = $TNcss;
+        } elseif (!empty($ccss)) {
+            $THEcss = $ccss;
+        } else {
+            // If none of the columns have a value, you may set a default value here if needed
+            $THEcss = 'x';
+        }
+    }
+
+    // Output each column value in a table row with the correct class attribute
+    echo '<tr class="' . $THEcss . '">';
+
+    // Output the date and day of the week in a separate row for the start of a new day
+    $date = substr($row['logdate'], 0, 10);
+    $dayOfWeek = date('l', strtotime($date));        
         
         if ($currentDate !== $date) {
             echo '<tr class="date-row">';
@@ -467,23 +442,24 @@ if (!empty($result)) {
             if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
                 continue;
             }
-echo '<tr class="' . $THEcss . '">';
+
             // If logclosedtime is null or empty, leave the column entry empty
             if ($isClosed && $column === 'logclosedtime') {
                 echo '<td></td>';
             } else {
                 echo '<td>' . $columnValue . '</td>';
             }
-        }
+        } // End foreach
 
         echo '</tr>'; 
-    }
+} // End foreach
 
     // End the table
     echo '</table>';
+    
 } else {
     echo 'No results found.';
-}
+} 
 ?>
 
 <script>
