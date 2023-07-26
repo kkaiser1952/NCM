@@ -35,25 +35,12 @@
             .even-row {
                 background-color: #FFFFFF;
             }
-            
-            /*
-            .red-row {
-                background-color: #087f47;
-                color: white;
-                font-weight: bold;
-            } */
-            
+                        
             /* Style for nets with 1 entry */
             .red-bg {
                 background-color: red;
                 color: white;
             }
-            
-            /*
-            .red-netID {
-                background-color: red;
-                color: white;
-            } */
             
             /* Style for Open nets */
             .green-bg {
@@ -61,26 +48,13 @@
                 color: white;
             }
             
-            /*
-            .green-netID {
-                background-color: green;
-                color: white;
-            } */
-            
             /* Style for Pre-Built nets */
             .blue-bg {
                 background-color: blue;
                 color: white;
                 font-weight: bold;
             }
-            
-            /*
-            .blue-netID {
-                background-color: blue;
-                color: white;
-                font-weight: bold;
-            } */
-            
+                        
             /* Style for Test nets */
             .purple-bg {
                 background-color: purple;
@@ -99,8 +73,6 @@
               color: darkgreen;
             }
             
-            
-            /* ALL BELOW ARE WORKING */
            
             /* Style for 1 record and pre-built net */
             /* Style for the first two columns (red) */
@@ -115,7 +87,7 @@
               color: white;
             }
             
-            /* Style for the last three columns (purple) */
+            /* Style for the last three columns (blue) */
             .redblue-bg td:nth-last-child(-n + 3) {
               background-color: blue;
               color: white;
@@ -164,50 +136,6 @@
               color: white;
             }
             /* END: Style for 1 record and open net */
-            
-            /* ---- */
-           
-            /* Style for 1 record and closed net */
-            /* Style for the first two columns (red) */
-            .redclear-bg td:nth-child(-n + 2) {
-              background-color: red;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .redclear-bg td:nth-child(3) {
-              background-image: linear-gradient(to right, red, transparent);
-              color: white;
-            }
-            
-            /* Style for the last three columns (green) */
-            .redclear-bg td:nth-last-child(-n + 3) {
-              background-color: transparent;
-              color: white;
-            }
-            /* END: Style for 1 record and open net */
-            
-            /* ---- */
-            
-            /* Style for open, test net */
-            /* Style for the first two columns (green) */
-   /*        .greenputple-bg td:nth-child(-n + 2) {
-              background-color: green;
-              color: white;
-            }
-    */        
-            /* Style for the third column (gradient) */
-    /*        .greenpurple-bg td:nth-child(3) {
-              background-image: linear-gradient(to right, green, purple);
-              color: white;
-            }
-    */       
-            /* Style for the last three columns (green) */
-    /*        .greenpurple-bg td:nth-last-child(-n + 3) {
-              background-color: purple;
-              color: white;
-            } 
-    */       /* END: Style for open/test net net */
             
             /* ---- */
             
@@ -380,6 +308,10 @@ foreach ($result as $rowIndex => $row) {
     $LCTcss = $row['LCTcss'];
     $TNcss = $row['TNcss'];
     $ccss = $row['ccss'];
+    
+    $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
+    
+    //$THEcss = '';
 
     if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
         // ALL LCTcss and TNcss and ccss are set
@@ -411,7 +343,7 @@ foreach ($result as $rowIndex => $row) {
     } elseif (!empty($ccss)) {
         // Only ccss is set
         $THEcss = $ccss;
-    } else {
+    } /* else {   // commented out, but kept just in case
         // None of the combinations are set, so take the value of whichever column is set
         if (!empty($PBcss)) {
             $THEcss = $PBcss;
@@ -425,7 +357,8 @@ foreach ($result as $rowIndex => $row) {
             // If none of the columns have a value, you may set a default value here if needed
             $THEcss = 'x';
         }
-    }
+    } */
+    
 
     // Output each column value in a table row with the correct class attribute
     echo '<tr class="' . $THEcss . '">';

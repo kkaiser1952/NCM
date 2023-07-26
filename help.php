@@ -1489,6 +1489,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     DB Variable: w3w<br>
 </div>
    
+ <a href="https://what3wordsnotion.notion.site/US-Public-Safety-with-what3words-eede3a88cd1e46848d5bfe62ff230b43" target="_blank">US Public Safety with what3words</a>
 <p>what3words is an easy way to talk about any precise location in the world. It gives every 3m x 3m square (10 sq/ft) a unique combination of three words: a what3words address.
 </p><p>A what3words address is more precise than a street address, and many people find three words easier to remember and say than GPS coordinates, grid references or latitude and  longitude.
 
