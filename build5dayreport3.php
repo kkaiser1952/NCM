@@ -363,7 +363,7 @@ foreach ($resultRows as $row) {
     }
 
     //$rowClass =  $THEcss ;
-    $THEcss = $THEcss;
+    //$THEcss = $THEcss;
     
     // Now $THEcss will hold the desired value based on the conditions above for each row in the $resultRows array
     if (!empty($THEcss)) {
@@ -467,7 +467,7 @@ if (!empty($result)) {
             if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
                 continue;
             }
-
+echo '<tr class="' . $THEcss . '">';
             // If logclosedtime is null or empty, leave the column entry empty
             if ($isClosed && $column === 'logclosedtime') {
                 echo '<td></td>';
