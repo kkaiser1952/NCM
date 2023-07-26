@@ -173,8 +173,6 @@
             .form-row:last-child input {
               max-width: calc(100% - 120px); /* 100% minus the label width */
             }
-
-            
         </style>
     </head>
 <body>
@@ -301,102 +299,82 @@ if (!empty($result)) {
     echo '</tr>'; // end for Table header
 
     // Table rows
-$currentDate = null;
-foreach ($result as $rowIndex => $row) {
-    // Calculate the value of $THEcss for this specific row based on the conditions
-    $PBcss = $row['PBcss'];
-    $LCTcss = $row['LCTcss'];
-    $TNcss = $row['TNcss'];
-    $ccss = $row['ccss'];
+    $currentDate = null;
+    foreach ($result as $rowIndex => $row) {
+        // Calculate the value of $THEcss for this specific row based on the conditions
+        $PBcss = $row['PBcss'];
+        $LCTcss = $row['LCTcss'];
+        $TNcss = $row['TNcss'];
+        $ccss = $row['ccss'];
+        
+        // style every other row
+        $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
     
-    $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
-    
-    //$THEcss = '';
-
-    if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
-        // ALL LCTcss and TNcss and ccss are set
-        $THEcss = 'combo-bg';
-    } elseif (!empty($PBcss) && !empty($ccss)) {
-        // Both PBcss and ccss are set
-        $THEcss = 'redblue-bg';
-    } elseif (!empty($LCTcss) && !empty($ccss)) {
-        // Both LCTcss and ccss are set
-        $THEcss = 'redgreen-bg';
-    } elseif (!empty($TNcss) && !empty($ccss)) {
-        // Both TNcss and ccss are set
-        $THEcss = 'redpurple-bg';
-    } elseif (!empty($LCTcss) && !empty($TNcss)) {
-        // Both LCTcss and TNcss are set
-        $THEcss = 'greenpurple-bg';
-    } elseif (!empty($PBcss) && !empty($TNcss)) {
-        // Both LCTcss and TNcss are set
-        $THEcss = 'bluepurple-bg';
-    } elseif (!empty($PBcss)) {
-        // Only PBcss is set
-        $THEcss = $PBcss;
-    } elseif (!empty($LCTcss)) {
-        // Only LCTcss is set
-        $THEcss = $LCTcss;
-    } elseif (!empty($TNcss)) {
-        // Only TNcss is set
-        $THEcss = $TNcss;
-    } elseif (!empty($ccss)) {
-        // Only ccss is set
-        $THEcss = $ccss;
-    } /* else {   // commented out, but kept just in case
-        // None of the combinations are set, so take the value of whichever column is set
-        if (!empty($PBcss)) {
+        if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
+            // ALL LCTcss and TNcss and ccss are set
+            $THEcss = 'combo-bg';
+        } elseif (!empty($PBcss) && !empty($ccss)) {
+            // Both PBcss and ccss are set
+            $THEcss = 'redblue-bg';
+        } elseif (!empty($LCTcss) && !empty($ccss)) {
+            // Both LCTcss and ccss are set
+            $THEcss = 'redgreen-bg';
+        } elseif (!empty($TNcss) && !empty($ccss)) {
+            // Both TNcss and ccss are set
+            $THEcss = 'redpurple-bg';
+        } elseif (!empty($LCTcss) && !empty($TNcss)) {
+            // Both LCTcss and TNcss are set
+            $THEcss = 'greenpurple-bg';
+        } elseif (!empty($PBcss) && !empty($TNcss)) {
+            // Both LCTcss and TNcss are set
+            $THEcss = 'bluepurple-bg';
+        } elseif (!empty($PBcss)) {
+            // Only PBcss is set
             $THEcss = $PBcss;
         } elseif (!empty($LCTcss)) {
+            // Only LCTcss is set
             $THEcss = $LCTcss;
         } elseif (!empty($TNcss)) {
+            // Only TNcss is set
             $THEcss = $TNcss;
         } elseif (!empty($ccss)) {
+            // Only ccss is set
             $THEcss = $ccss;
-        } else {
-            // If none of the columns have a value, you may set a default value here if needed
-            $THEcss = 'x';
-        }
-    } */
+        } 
+        
+        // The Test
+        if ($row[netID] == 9601 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss;}
+        
+        // Output each column value in a table row with the correct class attribute
+        echo '<tr class="' . $THEcss . '">';
     
-
-    // Output each column value in a table row with the correct class attribute
-    echo '<tr class="' . $THEcss . '">';
-
-    // Output the date and day of the week in a separate row for the start of a new day
-    $date = substr($row['logdate'], 0, 10);
-    $dayOfWeek = date('l', strtotime($date));        
-        
-        if ($currentDate !== $date) {
-            echo '<tr class="date-row">';
-            echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')</td>';
-            echo '</tr>';
-            $currentDate = $date;
-        }
-        
-        // Column data you don't want to see
-        foreach ($row as $column => $columnValue) {
-            if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
-                continue;
+        // Output the date and day of the week in a separate row for the start of a new day
+        $date = substr($row['logdate'], 0, 10);
+        $dayOfWeek = date('l', strtotime($date));        
+             
+            if ($currentDate !== $date) {
+                echo '<tr class="date-row">';
+                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')</td>';
+                echo '</tr>';
+                $currentDate = $date;
             }
-
-            // If logclosedtime is null or empty, leave the column entry empty
-            if ($isClosed && $column === 'logclosedtime') {
-                echo '<td></td>';
-            } else {
-                echo '<td>' . $columnValue . '</td>';
-            }
-        } // End foreach
-
-        echo '</tr>'; 
+            
+            // Column data you don't want to see
+            foreach ($row as $column => $columnValue) {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
+                    continue;
+                }
+                    echo '<td>' . $columnValue . '</td>';
+            } // End foreach
+    
+            echo '</tr>'; 
 } // End foreach
-
-    // End the table
-    echo '</table>';
-    
-} else {
-    echo 'No results found.';
-} 
+        // End the table
+        echo '</table>';
+        
+    } else {
+        echo 'No results found.';
+    } 
 ?>
 
 <script>
