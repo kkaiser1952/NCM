@@ -260,23 +260,114 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
-$sql = $db_found->prepare("SELECT netID, logdate, netcall, COUNT(*) AS count,
-            pb,  /* testnet, */
-            (SELECT COUNT(DISTINCT netID)
-             FROM NetLog
-             WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
-             logclosedtime,
-             /*SUM(timeonduty) as total_time*/
-             CONCAT(
-                    LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
-                    LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
-                    LPAD(MOD(SUM(timeonduty), 60), 2, '0')
-                  ) AS Volunteer_Time     
+$sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedtime, testnet,
+       (CASE
+       	  WHEN pb = '0' THEN ''
+          WHEN pb = '1' THEN 'blue-bg'
+          ELSE ''
+       END) AS PBcss,
+
+       (CASE
+          WHEN logclosedtime IS NOT NULL THEN ''
+          WHEN logclosedtime IS NULL THEN 'green-bg'
+          ELSE ''
+       END) AS LCTcss,
+
+       (CASE
+	       WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
+          ELSE ''
+       END) AS TNcss,
+
+       (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
-       GROUP BY netID, netcall
-       ORDER BY netID DESC
+        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+
+       CONCAT(
+            LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
+            LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
+            LPAD(MOD(SUM(timeonduty), 60), 2, '0')
+       ) AS Volunteer_Time,
+
+       (CASE
+          WHEN count = 1 THEN 'red-bg'
+          ELSE ''
+       END) AS ccss
+
+FROM (
+   SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
+   FROM NetLog
+   WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+   GROUP BY netID  -- Only group by netID in the subquery
+) AS Subquery
+GROUP BY netID
+ORDER BY netID DESC;
 ");
+
+// Assuming you have fetched the data from the SQL query into an array of rows named $resultRows
+// Each row should contain the columns: netID, logdate, netcall, count, pb, logclosedtime, testnet, ccss, LCTcss, TNcss, PBcss
+
+$sql->execute();
+$resultRows = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Create a variable to hold the final value
+$THEcss = '';
+
+foreach ($resultRows as $row) {
+    $PBcss = $row['PBcss'];
+    $LCTcss = $row['LCTcss'];
+    $TNcss = $row['TNcss'];
+    $ccss = $row['ccss'];
+
+    // Check the values of PBcss, LCTcss, TNcss, and ccss
+    if (!empty($PBcss) && !empty($ccss)) {
+        // Both PBcss and ccss are set
+        $THEcss = 'redblue-bg';
+    } elseif (!empty($LCTcss) && !empty($ccss)) {
+        // Both LCTcss and ccss are set
+        $THEcss = 'redgreen-bg';
+    } elseif (!empty($TNcss) && !empty($ccss)) {
+        // Both TNcss and ccss are set
+        $THEcss = 'redpurple-bg';
+    } elseif (!empty($LCTcss) && !empty($TNcss)) {
+        // Both LCTcss and TNcss are set
+        $THEcss = 'greenpurple-bg';
+    } elseif (!empty($PBcss) && !empty($TNcss)) {
+        // Both LCTcss and TNcss are set
+        $THEcss = 'bluepurple-bg';
+    } elseif (!empty($PBcss)) {
+        // Only PBcss is set
+        $THEcss = $PBcss;
+    } elseif (!empty($LCTcss)) {
+        // Only LCTcss is set
+        $THEcss = $LCTcss;
+    } elseif (!empty($TNcss)) {
+        // Only TNcss is set
+        $THEcss = $TNcss;
+    
+    } elseif (!empty($ccss)) {
+        // Only ccss is set
+        $THEcss = $ccss;
+    } else {
+        // None of the combinations are set, so take the value of whichever column is set
+        if (!empty($PBcss)) {
+            $THEcss = $PBcss;
+        } elseif (!empty($LCTcss)) {
+            $THEcss = $LCTcss;
+        } elseif (!empty($TNcss)) {
+            $THEcss = $TNcss;
+        } elseif (!empty($ccss)) {
+            $THEcss = $ccss;
+        } else {
+            // If none of the columns have a value, you may set a default value here if needed
+            $THEcss = '';
+        }
+    }
+
+    // Now $THEcss will hold the desired value based on the conditions above for each row in the $resultRows array
+    if (!empty($THEcss)) {
+    echo "THEcss for netID: " . $row['netID'] . " is: $THEcss <br>" . PHP_EOL;
+}}
+
 
 //$stuff = "stuff here";
 
