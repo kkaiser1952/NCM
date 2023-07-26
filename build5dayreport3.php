@@ -260,7 +260,11 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
-$sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedtime, testnet,
+$sql = $db_found->prepare("
+SELECT netID, logdate,  netcall, 
+       count, pb,       logclosedtime, 
+       testnet,
+       
        (CASE
        	  WHEN pb = '0' THEN ''
           WHEN pb = '1' THEN 'blue-bg'
@@ -280,7 +284,7 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedt
 
        (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)) AS netID_count,
+        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
 
        CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
@@ -293,14 +297,14 @@ $sql = $db_found->prepare("SELECT netID, logdate, netcall, count, pb, logclosedt
           ELSE ''
        END) AS ccss
 
-        FROM (
-           SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
-           FROM NetLog
-           WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
-           GROUP BY netID  -- Only group by netID in the subquery
-        ) AS Subquery
-        GROUP BY netID
-        ORDER BY netID DESC;
+    FROM (
+       SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
+       FROM NetLog
+       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+       GROUP BY netID  -- Only group by netID in the subquery
+    ) AS Subquery
+    GROUP BY netID
+    ORDER BY netID DESC;
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -463,6 +467,7 @@ foreach ($result as $rowIndex => $row) {
 ?>
 
 <script>
+/* The following function put UTC after logdate and logclosedtime column names in the title */
 $(document).ready(function() {
     // Adding a word to one of the header <th> values
     // Find the second <th> element using :eq(1) selector (index starts from 0)
@@ -478,4 +483,3 @@ $(document).ready(function() {
 
 </body>
 </html>
-
