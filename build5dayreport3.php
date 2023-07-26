@@ -303,9 +303,6 @@ GROUP BY netID
 ORDER BY netID DESC;
 ");
 
-// Assuming you have fetched the data from the SQL query into an array of rows named $resultRows
-// Each row should contain the columns: netID, logdate, netcall, count, pb, logclosedtime, testnet, ccss, LCTcss, TNcss, PBcss
-
 $sql->execute();
 $resultRows = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -319,7 +316,10 @@ foreach ($resultRows as $row) {
     $ccss = $row['ccss'];
 
     // Check the values of PBcss, LCTcss, TNcss, and ccss
-    if (!empty($PBcss) && !empty($ccss)) {
+    if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
+        // ALL LCTcss and TNcss and ccss are set
+        $THEcss = 'combo-bg';
+    } elseif (!empty($PBcss) && !empty($ccss)) {
         // Both PBcss and ccss are set
         $THEcss = 'redblue-bg';
     } elseif (!empty($LCTcss) && !empty($ccss)) {
@@ -343,7 +343,6 @@ foreach ($resultRows as $row) {
     } elseif (!empty($TNcss)) {
         // Only TNcss is set
         $THEcss = $TNcss;
-    
     } elseif (!empty($ccss)) {
         // Only ccss is set
         $THEcss = $ccss;
@@ -359,10 +358,13 @@ foreach ($resultRows as $row) {
             $THEcss = $ccss;
         } else {
             // If none of the columns have a value, you may set a default value here if needed
-            $THEcss = '';
+            $THEcss = 'x';
         }
     }
 
+    //$rowClass =  $THEcss ;
+    $THEcss = $THEcss;
+    
     // Now $THEcss will hold the desired value based on the conditions above for each row in the $resultRows array
     if (!empty($THEcss)) {
     echo "THEcss for netID: " . $row['netID'] . " is: $THEcss <br>" . PHP_EOL;
@@ -430,7 +432,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'ccss') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -439,39 +441,15 @@ if (!empty($result)) {
     // Table rows
     $currentDate = null;
     foreach ($result as $rowIndex => $row) {
-        // Check if logclosedtime is null or empty
-        $isClosed = empty($row['logclosedtime']);
-        // Get the row class
-        $rowClass = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
         
-        $rowClass .= $isClosed ? ' red-bg' : '';
-        // Add red-bg class if count is 1
-        if ($row['count'] == 1) {
-            $rowClass .= ' red-bg ';
-        } 
+        //$rowClass =  '$THEcss' ;
         
         if ($row['total_time']) {
             $total_time = gmdate('H:i:s', $total_time);
         }
-        
-        // Pre-built net background
-        if ($row['pb'] == 1 && $row['count'] == 1) {
-            $rowClass = 'redblue-bg';
-        } elseif ($row['pb'] == 1) {
-            $rowClass = 'blue-bg';
-        }
-         
-        // Test/TE0ST net background
-        $validNetcalls = ['TEST', 'TE0ST', 'TEOST', 'TE0ST'];
-        if (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true) && $row['count'] == 1) {
-            $rowClass = 'redpurple-bg';
-            $purple = 1;
-        } elseif (in_array(strtolower($row['netcall']), array_map('strtolower', $validNetcalls), true)) {
-            $rowClass .= ' purple-bg';
-        }
  
         // Output each column value in a table row
-            echo '<tr class="' . $rowClass . '">';
+            echo '<tr class="' . $THEcss . '">';
 
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -486,7 +464,7 @@ if (!empty($result)) {
         
         // Column data you don't want to see
         foreach ($row as $column => $columnValue) {
-            if ($column === 'netID_count' OR $column === 'pb') {
+            if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
                 continue;
             }
 
@@ -518,52 +496,6 @@ $(document).ready(function() {
     // Append the word using .append() method
     secondHeader.append(" UTC");
     fourthHeader.append(" UTC");
-
-  // Call the function with the desired parameters for your specific case
-  // One entry but the net is open
-  checkAndSetColor(3, "1", 4, "", "redgreen-bg");
-  // One entry but and net is closed
-  //checkAndSetColor(3, "1", 4, "<? echo $logclosedtime ?>", "redclear-bg");
-  //checkAndSetColor(3, "1", 4, "", "redclear-bg");
-  
-  // Function to apply the specified CSS class to the first <td> of rows matching the conditions
-function checkAndSetColor(tdIndex1, tdValue1, tdIndex2, tdValue2, bgClass) {
-  // Loop through all the <tr> elements
-  $("tr").each(function() {
-    // Get the values of the specified <td> elements using .eq()
-    var tdValueFirst = $(this).find("td").eq(tdIndex1).text().trim();
-    var tdValueSecond = $(this).find("td").eq(tdIndex2).text().trim();
-
-    // Get all column values
-    var columnValues = [];
-    $(this).find("td").each(function() {
-      columnValues.push($(this).text().trim());
-    });
-
-    /*
-    console.log("Column 1: ", columnValues[0]);     // netID
-    console.log("Column 2: ", columnValues[1]);     // logdate
-    console.log("Column 3: ", columnValues[2]);     // netcall
-    console.log("Column 4: ", columnValues[3]);     // count of callsigns
-    console.log("tdValueFirst: ", tdValueFirst);    // Requested value of column 4
-    console.log("Column 5: ", columnValues[4]);     // logclosedtime
-    console.log("tdValueSecond: ", tdValueSecond);  // Requested value of column 5
-    console.log("Column 6: ", columnValues[5]);     // Volunteer_Time
-    */
-
-    // Check if both conditions are met
-    if (tdValueFirst === tdValue1 && (tdValueSecond  === "" || tdValue2.trim().toLowerCase() === "null")) {
-      // Remove all existing classes from the row (tr)
-      $(this).removeClass();
-
-      // Add the specified CSS class to the entire row (tr) of the current <td> element
-      $(this).addClass(bgClass);
-    }
-  });
-}
-
- // end of the checkAndSetColor function
-
 });
 
 </script>
