@@ -187,20 +187,19 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("
-SELECT netID, 
-       logdate,  
-       netcall, 
+SELECT netID, logdate,  netcall, 
        count,
-       pb,       
-       logclosedtime, 
+       pb,       logclosedtime, 
        testnet,
        
        (CASE
+       	  WHEN pb = '0' THEN ''
           WHEN pb = '1' THEN 'blue-bg'
           ELSE ''
        END) AS PBcss,
 
        (CASE
+          WHEN logclosedtime IS NOT NULL THEN ''
           WHEN logclosedtime IS NULL THEN 'green-bg'
           ELSE ''
        END) AS LCTcss,
@@ -212,7 +211,7 @@ SELECT netID,
 
        (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+        WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
 
        CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
@@ -228,8 +227,7 @@ SELECT netID,
     FROM (
        SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
        FROM NetLog
-    /*   WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) */
-      WHERE DATE(logdate) BETWEEN DATE(logclosedtime)
+       WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
        GROUP BY netID  -- Only group by netID in the subquery
     ) AS Subquery
     GROUP BY netID
@@ -242,7 +240,7 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-    $title = "Past 5 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+    $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
      Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
