@@ -188,7 +188,7 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT netID, 
-       MIN(logdate) as startdate,  
+       logdate,  
        netcall, 
        count,
        pb,       
@@ -212,7 +212,7 @@ SELECT netID,
 
        (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-        WHERE startdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
 
        CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
@@ -228,7 +228,7 @@ SELECT netID,
     FROM (
        SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
        FROM NetLog
-       WHERE startdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
        GROUP BY netID  -- Only group by netID in the subquery
     ) AS Subquery
     GROUP BY netID
