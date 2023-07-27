@@ -343,7 +343,7 @@ if (!empty($result)) {
         } 
         
         // The Test
-        if ($row[netID] == 9601 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss;}
+        if ($row[netID] == 9606 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss;}
         
         // Output each column value in a table row with the correct class attribute
         echo '<tr class="' . $THEcss . '">';
