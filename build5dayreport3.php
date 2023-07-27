@@ -187,18 +187,20 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("
-SELECT netID, logdate,  netcall, 
-       count, pb,       logclosedtime, 
+SELECT netID, 
+       MIN(logdate) as startdate,  
+       netcall, 
+       count,
+       pb,       
+       logclosedtime, 
        testnet,
        
        (CASE
-       	  WHEN pb = '0' THEN ''
           WHEN pb = '1' THEN 'blue-bg'
           ELSE ''
        END) AS PBcss,
 
        (CASE
-          WHEN logclosedtime IS NOT NULL THEN ''
           WHEN logclosedtime IS NULL THEN 'green-bg'
           ELSE ''
        END) AS LCTcss,
@@ -210,7 +212,7 @@ SELECT netID, logdate,  netcall,
 
        (SELECT COUNT(DISTINCT netID)
         FROM NetLog
-        WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
+        WHERE startdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)) AS netID_count,
 
        CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
@@ -226,7 +228,7 @@ SELECT netID, logdate,  netcall,
     FROM (
        SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
        FROM NetLog
-       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+       WHERE startdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
        GROUP BY netID  -- Only group by netID in the subquery
     ) AS Subquery
     GROUP BY netID
