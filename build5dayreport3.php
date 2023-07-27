@@ -228,7 +228,8 @@ SELECT netID,
     FROM (
        SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
        FROM NetLog
-       WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)
+    /*   WHERE logdate >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) */
+      WHERE DATE(logdate) BETWEEN DATE(logclosedtime)
        GROUP BY netID  -- Only group by netID in the subquery
     ) AS Subquery
     GROUP BY netID
