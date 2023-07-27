@@ -213,11 +213,17 @@ SELECT netID, logdate,  netcall,
         FROM NetLog
         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
 
-       CONCAT(
+    /*   CONCAT(
             LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
             LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
             LPAD(MOD(SUM(timeonduty), 60), 2, '0')
        ) AS Volunteer_Time,
+    */
+    CONCAT(
+    LPAD(FLOOR(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) / 3600), 2, '0'), ':',
+    LPAD(FLOOR(MOD(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END), 3600) / 60), 2, '0'), ':',
+    LPAD(MOD(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END), 60), 2, '0')
+) AS Volunteer_Time,
 
        (CASE
           WHEN count = 1 THEN 'red-bg'
