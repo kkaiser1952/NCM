@@ -213,17 +213,11 @@ SELECT netID, logdate,  netcall,
         FROM NetLog
         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
 
-    /*   CONCAT(
-            LPAD(FLOOR(SUM(timeonduty) / 3600), 2, '0'), ':',
-            LPAD(FLOOR(MOD(SUM(timeonduty), 3600) / 60), 2, '0'), ':',
-            LPAD(MOD(SUM(timeonduty), 60), 2, '0')
-       ) AS Volunteer_Time,
-    */
     CONCAT(
-    LPAD(FLOOR(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) / 3600), 2, '0'), ':',
-    LPAD(FLOOR(MOD(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END), 3600) / 60), 2, '0'), ':',
-    LPAD(MOD(SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END), 60), 2, '0')
-) AS Volunteer_Time,
+            LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
+            LPAD(FLOOR(MOD(timeonduty_total, 3600) / 60), 2, '0'), ':',
+            LPAD(MOD(timeonduty_total, 60), 2, '0')
+       ) AS Volunteer_Time,
 
        (CASE
           WHEN count = 1 THEN 'red-bg'
@@ -231,10 +225,11 @@ SELECT netID, logdate,  netcall,
        END) AS ccss
 
     FROM (
-       SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty
-       FROM NetLog
-       WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-       GROUP BY netID  -- Only group by netID in the subquery
+    SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty,
+           SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
+    FROM NetLog
+    WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    GROUP BY netID
     ) AS Subquery
     GROUP BY netID
     ORDER BY netID DESC;
