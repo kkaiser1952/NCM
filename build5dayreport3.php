@@ -371,7 +371,7 @@ if (!empty($result)) {
             if ($currentDate !== $date) {
                 echo '<tr class="date-row">';
                 echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')
-                Total Time: ' . $row[Total_Time] . '</td>';
+                Total Time: ' . $row[Total_Time] .  '</td>';
                 
                 echo '</tr>';
                 $currentDate = $date;
