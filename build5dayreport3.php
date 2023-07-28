@@ -187,13 +187,14 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("
-SELECT netID, logdate,  netcall, 
+SELECT netID, logdate, netcall, 
        count,
-       pb,       logclosedtime, 
+       pb,
+       logclosedtime, 
        testnet,
        
        (CASE
-       	  WHEN pb = '0' THEN ''
+          WHEN pb = '0' THEN ''
           WHEN pb = '1' THEN 'blue-bg'
           ELSE ''
        END) AS PBcss,
@@ -205,7 +206,7 @@ SELECT netID, logdate,  netcall,
        END) AS LCTcss,
 
        (CASE
-	       WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
+          WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
           ELSE ''
        END) AS TNcss,
 
@@ -213,7 +214,7 @@ SELECT netID, logdate,  netcall,
         FROM NetLog
         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
 
-    CONCAT(
+       CONCAT(
             LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
             LPAD(FLOOR(MOD(timeonduty_total, 3600) / 60), 2, '0'), ':',
             LPAD(MOD(timeonduty_total, 60), 2, '0')
@@ -222,17 +223,30 @@ SELECT netID, logdate,  netcall,
        (CASE
           WHEN count = 1 THEN 'red-bg'
           ELSE ''
-       END) AS ccss
+       END) AS ccss,
 
-    FROM (
+       CONCAT(
+            LPAD(FLOOR(total_timeonduty_sum / 3600), 2, '0'), ':',
+            LPAD(FLOOR(MOD(total_timeonduty_sum, 3600) / 60), 2, '0'), ':',
+            LPAD(MOD(total_timeonduty_sum, 60), 2, '0')
+       ) AS Total_Time  -- Display total_timeonduty_sum as hours:minutes:seconds
+
+FROM (
     SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty,
            SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
     FROM NetLog
     WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     GROUP BY netID
-    ) AS Subquery
-    GROUP BY netID
-    ORDER BY netID DESC;
+) AS Subquery,
+
+(SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
+ FROM NetLog
+ WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+) AS TotalTimeQuery
+
+GROUP BY netID, total_timeonduty_sum
+
+ORDER BY netID DESC;
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -294,7 +308,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'ccss') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'ccss' && $column !== 'Total_Time') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -356,14 +370,16 @@ if (!empty($result)) {
              
             if ($currentDate !== $date) {
                 echo '<tr class="date-row">';
-                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')</td>';
+                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')
+                Total Time: ' . $row[Total_Time] . '</td>';
+                
                 echo '</tr>';
                 $currentDate = $date;
             }
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss' OR $column === 'Total_Time') {
                     continue;
                 }
                     echo '<td>' . $columnValue . '</td>';
