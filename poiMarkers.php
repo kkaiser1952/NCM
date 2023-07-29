@@ -88,6 +88,7 @@
             
   // ===========================================
   
+        // Class of POI
         $H = 0;  // Hospitals
 	    $E = 0;  // EOC
 	    $R = 0;  // Repeaters
@@ -97,6 +98,7 @@
 	    $A = 0;  // Aviation
 	    $G = 0;  // State / Federal / 
 	    $T = 0;  // Town Hall
+	    $K = 0;  // RF Holes 
 	    
 	    
 	    $markNO     = ''; // the marker number (might be alpha)
@@ -183,7 +185,12 @@
             case "aviation": $A = $A+1;  $iconName = "govicon"; $markNO = "A$A";  
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
-                                                      
+                             
+    /*        case "rfhole"    $K = $k+1;  $iconName = "rfhole"; $markNO = "K$K";
+                             $markername = "images/markers/rfhole.png";    
+                             $poimrkr = "rfholemrkr";  break;
+            
+    */                                                  
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr"; 
