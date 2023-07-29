@@ -1,7 +1,6 @@
 <!doctype html>
 
 <?php
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -17,29 +16,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Set the current date (date only) in the 'Notes' column
     $currentDate = date('Y-m-d');
-    $notes = "Created: " . $currentDate;
+    $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
+    $notesWithDate = "Created: " . $currentDate . ' ' . $notes;
+    
+    // Get the latest ID from the table 'poi'
+$query = "SELECT id FROM poi ORDER BY id DESC LIMIT 1";
+$result = $db_found->query($query);
+if ($result && $result->rowCount() > 0) {
+    $latestIdRow = $result->fetch(PDO::FETCH_ASSOC);
+    $tacticalId = $latestIdRow['id'] + 1;
+} else {
+    // If no rows are present, start with ID = 1
+    $tacticalId = 1;
+}
 
-    // Concatenate "RF-HoleK1" with the ID number
-    $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
 
     // Prepare and bind the SQL statement to insert the data
-    $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, Notes, name) VALUES (:callsign, :radius, :w3w, :type, :notes, :name)");
+    $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes)");
 
     // Bind the values to the named placeholders
     $stmt->bindValue(':callsign', $callsign);
     $stmt->bindValue(':radius', $radius);
     $stmt->bindValue(':w3w', $w3w);
     $stmt->bindValue(':type', $type);
-    $stmt->bindValue(':notes', $notes);
 
-    // Concatenate "RF-HoleK1" with the ID number
-    $name = $namePrefix . ' ' . $db_found->lastInsertId();
-    $stmt->bindValue(':name', $name);
+    // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
+    $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
+    $tacticalPrefix = "RFH";
+    //$tacticalId = $db_found->lastInsertId()+1;
+    // Add this line to echo the value to the console log
+//echo "<script>console.log('Tactical ID: " . $tacticalId . "');</script>";
+
+    $tactical = $tacticalPrefix . '-' . $tacticalId;
+$stmt->bindValue(':tactical', $tactical);
+
+$name = $namePrefix . ' ' . $tacticalId;
+$stmt->bindValue(':name', $name);
+
+
+    // Bind the 'Notes' column value
+    $stmt->bindValue(':notes', $notesWithDate);
 
     // Execute the prepared statement
     if ($stmt->execute()) {
         // Retrieve the entire record by querying the database
-        $query = "SELECT * FROM poi WHERE id = " . $db_found->lastInsertId();
+        $lastInsertId = $db_found->lastInsertId();
+        $query = "SELECT * FROM poi WHERE id = " . $lastInsertId;
         $result = $db_found->query($query);
 
         if ($result && $result->rowCount() > 0) {
@@ -48,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error: Record not found";
         }
-
     } else {
         echo "Error: " . $stmt->errorInfo()[2];
     }
