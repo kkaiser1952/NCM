@@ -1,5 +1,7 @@
 <!doctype html>
 
+<!-- ///slap.rider.steer -->
+
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
@@ -13,6 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $radius = $_POST['radius'];
     $w3w = $_POST['w3w'];
     $type = $_POST['type'];
+    
+    //echo 'w3w at tope; ' . $w3w;
 
     // Convert the w3w value into latitude and longitude
     $curl = curl_init();
@@ -38,12 +42,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $w3wLL = json_decode($response, true);
 
         // Check if latitude and longitude are present
-        if (isset($w3wLL['lat']) && isset($w3wLL['lng'])) {
-            $latitude = $w3wLL['lat'];
-            $longitude = $w3wLL['lng'];
+        if (isset($w3wLL['coordinates'])) {
+            $latitude = $w3wLL['coordinates']['lat'];
+            $longitude = $w3wLL['coordinates']['lng'];
+            
+            $parts = explode(',', $w3wLL['nearestPlace']);
+            
+            // Use explode to split the string by comma and get the first part
+            //$parts = explode(',', $nearest);
+            
+            // Trim any leading or trailing whitespace from the first part
+            $city = trim($parts[0]);
+            
+            //$city = $w3wLL['nearestPlace'];
+            
+            //echo "$w3wLL['"
+
 
             // Prepare and bind the SQL statement to insert the data
-            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude)");
+            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude, :city)");
 
             // Bind the values to the named placeholders
             $stmt->bindValue(':callsign', $callsign);
@@ -52,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':type', $type);
             $stmt->bindValue(':latitude', $latitude);
             $stmt->bindValue(':longitude', $longitude);
+            $stmt->bindValue(':city', $city);
 
             // Set the current date (date only) in the 'Notes' column
             $currentDate = date('Y-m-d');
@@ -92,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $row = $result->fetch(PDO::FETCH_ASSOC);
                     echo json_encode($row); // Return the inserted record's data as JSON
                 } else {
-                    echo "Error: Record not found";
+                    echo "Error: Latitude or Longitude not found from What3Words API.";
                 }
             } else {
                 echo "Error: " . $stmt->errorInfo()[2];
