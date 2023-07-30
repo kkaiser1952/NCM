@@ -1,7 +1,5 @@
 <?php
     
-    require_once(ENV_SETUP.php);
-    
     // Get the lat/lon from a what3words address
     
   //  https://api.what3words.com/v3/convert-to-coordinates?words=filled.count.soap&key=[API-KEY]
@@ -15,7 +13,7 @@
 	$curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=[apikey:w3wapikey]&words=$w3w",
+  CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=5WHIM4GD&words=$w3w",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
