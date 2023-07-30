@@ -105,6 +105,7 @@ $stmt->bindValue(':name', $name);
             max-width: 300px;
             margin: 0 auto;
             text-align: left;
+            margin-left: 20px;
         }
 
         label {
@@ -133,6 +134,17 @@ $stmt->bindValue(':name', $name);
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        
+        /* Style the select element */
+        select[name="type"] {
+          font-size: 16pt; /* Adjust the font size as per your requirement */
+        }
+        
+        /* Style the options within the dropdown */
+        select[name="type"] option {
+          font-size: 16pt; /* Adjust the font size as per your requirement */
+        }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -151,16 +163,16 @@ $stmt->bindValue(':name', $name);
     <div class="form-container">
         <!-- ... -->
 <form id="poiForm" method="post">
-    <label for="callsign">Callsign:</label>
+    <label for="callsign">Your Callsign:</label>
     <input type="text" name="callsign" required><br>
 
-    <label for="radius">Radius:</label>
+    <label for="radius">Radius in miles:</label>
     <input type="text" name="radius" required><br>
 
     <label for="w3w">What3Words:</label>
     <input type="text" name="w3w" required><br>
 
-    <label for="type">Type:</label>
+    <label for="type">Severity Type:</label>
     <select name="type" required>
         <option value="K1">K0 - No Copy</option>
         <option value="K1">K1 - Very Poor</option>
