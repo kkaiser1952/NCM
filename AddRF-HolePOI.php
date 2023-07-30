@@ -170,7 +170,7 @@ $stmt->bindValue(':name', $name);
     </select><br>
 
     <label for="notes">Notes:</label>
-    <input type="text" name="notes" value="date added" required><br>
+    <input type="text" name="notes" id="infield" value="date added" onclick=empty(); required><br>
 
     <input type="submit" value="Add Entry">
     <input type="button" value="Cancel" onclick="resetForm()">
@@ -196,6 +196,17 @@ $stmt->bindValue(':name', $name);
         });
     });
 </script>
+<script>
+  // Get the input element
+  const inputElement = document.getElementById('infield');
+
+  // Add a click event listener to the input field
+  inputElement.addEventListener('click', function() {
+    // Clear the value when clicked
+    inputElement.value = '';
+  });
+</script>
+
 <!-- ... -->
 
 </body>
