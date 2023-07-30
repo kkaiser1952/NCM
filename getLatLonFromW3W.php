@@ -32,6 +32,8 @@ if ($err) {
   echo $response;
   
     $w3wLL = json_decode($response, true);
+    
+    echo "$wewLL";
         
         $koords = $w3wLL['coordinates']; 
         

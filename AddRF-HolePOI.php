@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
+require_once "getLatLonFromW3W.php";
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $radius = $_POST['radius'];
     $w3w = $_POST['w3w'];
     $type = $_POST['type'];
+    
+    
 
     // Set the current date (date only) in the 'Notes' column
     $currentDate = date('Y-m-d');
