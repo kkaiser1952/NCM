@@ -7,8 +7,8 @@
   // {"country":"US","square":{"southwest":{"lng":-94.602915,"lat":39.202889},"northeast":{"lng":-94.60288,"lat":39.202916}},"nearestPlace":"Riverside, Missouri","coordinates":{"lng":-94.602897,"lat":39.202903},"words":"easily.hardest.ended","language":"en","map":"https:\/\/w3w.co\/easily.hardest.ended"};
     
     // example address
-    $w3w = "easily.hardest.ended";
-    	
+   // $w3w = "easily.hardest.ended";
+//<?php
 	$curl = curl_init();
 
 curl_setopt_array($curl, array(
@@ -29,21 +29,14 @@ curl_close($curl);
 if ($err) {
   echo "cURL Error #:" . $err;
 } else {
-  echo $response;
+  //echo $response;
   
     $w3wLL = json_decode($response, true);
     
-    echo "$wewLL";
-        
-        $koords = $w3wLL['coordinates']; 
-        
-        echo "$koords";
-        
-        //echo "<PRE>".json_encode($koords, JSON_PRETTY_PRINT)."</PRE><br>";
+    //$latitude = $w3wLL['lat'];
+    //$longitude = $w3wLL['lng'];
         
 } // end else
-		    
-        // End what3word stuff
       
 ?>
 

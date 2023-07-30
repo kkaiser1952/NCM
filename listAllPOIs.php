@@ -90,8 +90,8 @@
 			        <td>$row[mode]</td>	
                     <td>$row[Notes]</td>
                     <td>$row[country]</td>
-                    <td>$row[w3w]</td>
-                    <td>$row[radius]</td>
+            <!--        <td>$row[w3w]</td>
+                    <td>$row[radius]</td> 
 			   </tr>
 			   ";
 		    }

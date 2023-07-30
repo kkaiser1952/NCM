@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
-require_once "getLatLonFromW3W.php";
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,71 +13,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $radius = $_POST['radius'];
     $w3w = $_POST['w3w'];
     $type = $_POST['type'];
-    
-    
 
-    // Set the current date (date only) in the 'Notes' column
-    $currentDate = date('Y-m-d');
-    $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
-    $notesWithDate = "Created: " . $currentDate . ' ' . $notes;
-    
-    // Get the latest ID from the table 'poi'
-$query = "SELECT id FROM poi ORDER BY id DESC LIMIT 1";
-$result = $db_found->query($query);
-if ($result && $result->rowCount() > 0) {
-    $latestIdRow = $result->fetch(PDO::FETCH_ASSOC);
-    $tacticalId = $latestIdRow['id'] + 1;
-} else {
-    // If no rows are present, start with ID = 1
-    $tacticalId = 1;
-}
+    // Convert the w3w value into latitude and longitude
+    $curl = curl_init();
 
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=5WHIM4GD&words=$w3w",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+    ));
 
-    // Prepare and bind the SQL statement to insert the data
-    $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes)");
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
 
-    // Bind the values to the named placeholders
-    $stmt->bindValue(':callsign', $callsign);
-    $stmt->bindValue(':radius', $radius);
-    $stmt->bindValue(':w3w', $w3w);
-    $stmt->bindValue(':type', $type);
+    curl_close($curl);
 
-    // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
-    $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
-    $tacticalPrefix = "RFH";
-    //$tacticalId = $db_found->lastInsertId()+1;
-    // Add this line to echo the value to the console log
-//echo "<script>console.log('Tactical ID: " . $tacticalId . "');</script>";
-
-    $tactical = $tacticalPrefix . '-' . $tacticalId;
-$stmt->bindValue(':tactical', $tactical);
-
-$name = $namePrefix . ' ' . $tacticalId;
-$stmt->bindValue(':name', $name);
-
-
-    // Bind the 'Notes' column value
-    $stmt->bindValue(':notes', $notesWithDate);
-
-    // Execute the prepared statement
-    if ($stmt->execute()) {
-        // Retrieve the entire record by querying the database
-        $lastInsertId = $db_found->lastInsertId();
-        $query = "SELECT * FROM poi WHERE id = " . $lastInsertId;
-        $result = $db_found->query($query);
-
-        if ($result && $result->rowCount() > 0) {
-            $row = $result->fetch(PDO::FETCH_ASSOC);
-            echo json_encode($row); // Return the inserted record's data as JSON
-        } else {
-            echo "Error: Record not found";
-        }
+    if ($err) {
+        echo "cURL Error #:" . $err;
     } else {
-        echo "Error: " . $stmt->errorInfo()[2];
+        $w3wLL = json_decode($response, true);
+
+        // Check if latitude and longitude are present
+        if (isset($w3wLL['lat']) && isset($w3wLL['lng'])) {
+            $latitude = $w3wLL['lat'];
+            $longitude = $w3wLL['lng'];
+
+            // Prepare and bind the SQL statement to insert the data
+            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude)");
+
+            // Bind the values to the named placeholders
+            $stmt->bindValue(':callsign', $callsign);
+            $stmt->bindValue(':radius', $radius);
+            $stmt->bindValue(':w3w', $w3w);
+            $stmt->bindValue(':type', $type);
+            $stmt->bindValue(':latitude', $latitude);
+            $stmt->bindValue(':longitude', $longitude);
+
+            // Set the current date (date only) in the 'Notes' column
+            $currentDate = date('Y-m-d');
+            $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
+            $notesWithDate = "Created: " . $currentDate . ' ' . $notes;
+
+            // Get the latest ID from the table 'poi'
+            $query = "SELECT id FROM poi ORDER BY id DESC LIMIT 1";
+            $result = $db_found->query($query);
+            if ($result && $result->rowCount() > 0) {
+                $latestIdRow = $result->fetch(PDO::FETCH_ASSOC);
+                $tacticalId = $latestIdRow['id'] + 1;
+            } else {
+                // If no rows are present, start with ID = 1
+                $tacticalId = 1;
+            }
+
+            // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
+            $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
+            $tacticalPrefix = "RFH";
+            $tactical = $tacticalPrefix . '-' . $tacticalId;
+            $stmt->bindValue(':tactical', $tactical);
+
+            $name = $namePrefix . ' ' . $tacticalId;
+            $stmt->bindValue(':name', $name);
+
+            // Bind the 'Notes' column value
+            $stmt->bindValue(':notes', $notesWithDate);
+
+            // Execute the prepared statement
+            if ($stmt->execute()) {
+                // Retrieve the entire record by querying the database
+                $lastInsertId = $db_found->lastInsertId();
+                $query = "SELECT * FROM poi WHERE id = " . $lastInsertId;
+                $result = $db_found->query($query);
+
+                if ($result && $result->rowCount() > 0) {
+                    $row = $result->fetch(PDO::FETCH_ASSOC);
+                    echo json_encode($row); // Return the inserted record's data as JSON
+                } else {
+                    echo "Error: Record not found";
+                }
+            } else {
+                echo "Error: " . $stmt->errorInfo()[2];
+            }
+        } else {
+            echo "Error: Latitude or Longitude not found from What3Words API.";
+        }
     }
+
     exit; // End the script here, no need to execute the remaining code.
 }
-// AddRF-HolePOI.php code ends here
 ?>
 <!-- Your HTML form code here -->
 
