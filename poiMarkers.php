@@ -16,6 +16,8 @@
           /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
                             and (longitude > $minlon and longitude < $maxlon)";
 			*/
+			
+			    $whereClause = '';
     $dupCalls = "";	
     $sql = ("SELECT
                 tactical, latitude, COUNT(latitude)
@@ -186,11 +188,10 @@
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
                              
-    /*        case "rfhole"    $K = $k+1;  $iconName = "rfhole"; $markNO = "K$K";
-                             $markername = "images/markers/rfhole.png";    
+            case "rf-hole"    $K = $k+1;  $iconName = "govicon"; $markNO = "K$K";
+                             $markername = "images/markers/aviation.png";    
                              $poimrkr = "rfholemrkr";  break;
-            
-    */                                                  
+                                                             
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr"; 
@@ -212,10 +213,10 @@
                         contextmenuItems: [{ text: 'Click here to add mileage circles',
                             callback: circleKoords}],
                      
-                        icon: L.icon({iconUrl: `$markername`, iconSize: [32, 34]}),
-                        title:`marker_$markNO`}).addTo(fg).bindPopup(`$row[tactical]<br>$row[addr]<br>$gs`); /*.openPopup(); */                       
+                        icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+                        title:'marker_$markNO'}).addTo(fg).bindPopup('$row[tactical]<br>$row[addr]<br>$gs'); /*.openPopup(); */                       
  
-                        $(`$row[class]`._icon).addClass(`$poimrkr`);";
+                        $('$row[class]'._icon).addClass('$poimrkr');";
                      
     }; // End of foreach for poi markers
     
