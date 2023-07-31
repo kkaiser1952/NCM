@@ -42,7 +42,7 @@
     	       
 	// Loads the programs that create the station, poi, and object markers
 	require_once "stationMarkers.php";
-    //require_once "poiMarker.php";    
+    //require_once "poiMarker2.php";    
     require_once "objMarkers.php"; 
 ?>
 
