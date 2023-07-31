@@ -3,7 +3,7 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-			require_once "dbConnectDtls.php";
+			//require_once "dbConnectDtls.php";
 			
 			if (!$db_found) {
                 die("Database connection failed: " . mysqli_connect_error());
@@ -145,8 +145,8 @@
         $icon = "";
         $poiBounds .= "[$row[koords]],";  
         
-    // for this echo you might need to position a } bracket to close the foreach
-    //echo "<br><br>$poiBounds<br>";
+        // for this echo you might need to position a } bracket to close the foreach
+        //echo "<br><br>$poiBounds<br>";
         
         // Assign variables based on the class                     
         switch ("$row[class]") {
@@ -208,14 +208,13 @@
     
     } // End of switch
     
-    echo "$iconName, $markNO, $markername, $poimrkr<br>";
-    
-    
+    //echo "$iconName,  $markNO,  $markername,  $poimrkr<br>";
+       
     $dup = 0;
         if(id==144) {$dup =50;}
-      //  if(strpos("$dupCalls", "$callsign") !== false) { $dup = 45; }
+        // if(strpos("$dupCalls", "$callsign") !== false) { $dup = 45; }
               
-         //if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
+        // if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
        
          $poiMarkers .= "
             var $tactical = new L.marker(new L.LatLng({$row[latitude]},{$row[longitude]}),{ 
@@ -234,9 +233,8 @@
          "; // End of $poiMarkers build
                      
     }; // End of foreach for poi markers
-       
-    
-   // echo "$poiMarkers<br>";
+        
+    //echo "<br>$poiMarkers<br>";
    
     $poiBounds  = substr($poiBounds, 0, -1)."]"; 
         //echo ("poiBounds= <br>$poiBounds<br><br>");

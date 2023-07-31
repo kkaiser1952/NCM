@@ -17,21 +17,38 @@
     require_once "config2.php";
     
     
+    // Loads the programs that create the station, poi, and object markers
+	require_once "stationMarkers.php";
+    include "poiMarkers2.php";    
+    require_once "objMarkers.php";
+    
+    /*
+    $success = require_once "poiMarkers2.php";
+        if ($success) {
+            echo "The file was successfully included.";
+        } else {
+            echo "The file was already included before.";
+        }
+    */
+    
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     //$q = 8523; 
     //$q = 6066;
-    $q = 9630;
+    //$q = 9327;
+      $q = 9630;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
-    $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlat,
-                                       MIN(latitude) as minlat,
-                                       MAX(longitude) as maxlon,
-                                       MIN(longitude) as minlon
-                                  FROM NetLog 
-                                WHERE netID = $q AND latitude <> '';
-                               ");
+    $sql="SELECT MAX(latitude) as maxlat,
+                 MIN(latitude) as minlat,
+                 MAX(longitude) as maxlon,
+                 MIN(longitude) as minlon
+            FROM NetLog 
+           WHERE netID = $q AND latitude <> ''
+          ";
+          //echo "$sql";
+        $stmt = $db_found->prepare($sql);
         $stmt->execute();
     	$result = $stmt->fetch();
     		$maxlat = $result[maxlat];
@@ -40,10 +57,7 @@
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
     	       
-	// Loads the programs that create the station, poi, and object markers
-	require_once "stationMarkers.php";
-    //require_once "poiMarker2.php";    
-    require_once "objMarkers.php"; 
+	 
 ?>
 
 <html lang="en">
