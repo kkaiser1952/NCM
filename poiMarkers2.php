@@ -5,72 +5,64 @@
 			
 			require_once "dbConnectDtls.php";
 			
-			$maxlat = 30.202;
-			
 			if (!$db_found) {
                 die("Database connection failed: " . mysqli_connect_error());
             }
 			
 			// maxlat is calculated in map.php
 			// Eventualy update to bounds for America vs rest of the world
+			/*
                 if ($maxlat >= 50) 
                     {$whereClause = "where latitude > 50";}
                 else
                     {$whereClause = "where latitude < 50";}
                 ;
 			
-            //$whereClause = "where latitude < 50";
-            //$whereClause = "where latitude < 50";
-          /*  $whereClause = "where (latitude > $minlat and latitude < $maxlat) 
-                            and (longitude > $minlon and longitude < $maxlon)";
-			*/
-			
 			    $whereClause = '';
+			 */
+			    
     $dupCalls = "";	
-    $sql = ("SELECT
-                tactical, latitude, COUNT(latitude)
+    
+    $sql = ("SELECT tactical, latitude, COUNT(latitude)
                FROM poi
-              $whereClause  
-
+               /*$whereClause */
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
     //echo "$sql";
+    
     foreach($db_found->query($sql) as $duperow) {
             $dupCalls .= "$duperow[tactical],";
-        };
-		//echo "<br>$dupCalls<br>";
+    };
+		//echo "<br>dupCalls= $dupCalls<br>";
 		
 		$POIMarkerList = "";
-    $listofMarkers = "";
-    $classList = "";  // The rest come from the poi table
+        $listofMarkers = "";
+        $classList     = "";  // The rest come from the poi table
     
         // This is the list needed for overlaymaps
-        $sql = ("SELECT 
-                    GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
+        $sql = ("SELECT GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
-
-              $whereClause
+                   /*$whereClause*/
                   GROUP BY class
                   ORDER BY class  
-                ");
+               ");
     //echo "<br>$sql<br>";
     foreach($db_found->query($sql) as $row) {
                 $classList .= "$row[class],";
-            }
+    }
             
-            //$classList .= "$classList,ObjectL,";
-            $classList = "$classList";
+        //$classList .= "$classList,ObjectL,";
+        $classList = "$classList";
+        
+        //echo "<br>$classList<br>";  // issue with split RF-Hole check it out
             
-            //echo "<br>$classList<br>";  // issue with split RF-Hole check it out
-            
-            // Create the leaflet LayerGroup for each type (class) of marker 
-      // Problem here, perhaps with tackList
-        $sql = ("SELECT 
-                GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
-                CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
-                  FROM  poi 
-        $whereClause
+        // Create the leaflet LayerGroup for each type (class) of marker 
+        // Problem here, perhaps with tackList
+        $sql = ("SELECT GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
+                        CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
+                   FROM  poi 
+                   /*$whereClause*/
              	 GROUP BY class
                  ORDER BY class
                ");
@@ -83,25 +75,27 @@
             
   // ===========================================
   
-  $class = "";
-    $overlayListNames = "";
+        $class = "";
+        $overlayListNames = "";
   
-        $sql = ("SELECT class, GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList                     
+        $sql = ("SELECT class, 
+                        GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList                     
                    FROM  poi
-                $whereClause
+                /*$whereClause*/
 				  GROUP BY class
                   ORDER BY class
                "); 
             foreach($db_found->query($sql) as $row) {
-                $class = "$row[class]";
+                $class .= "$row[class] ";
                 $overlayListNames .= '"'.$class.'": '."$row[tackList],\r\n";
             };
             
-            //echo "<br>$class<br><br>$overlayListNames";
+            // Remove the .= in the $class definition above if an issue arrives from here
+            // echo "<br>$class<br><br>$overlayListNames";
             
   // ===========================================
   
-  // Class of POI
+        // Class of POI
         $H = 0;  // Hospitals
 	    $E = 0;  // EOC
 	    $R = 0;  // Repeaters
@@ -124,33 +118,34 @@
         
         // Pull detail data FROM  poi table
         $sql = ("SELECT id, LOWER(class) as class, 
-                       address, latitude, longitude, grid,
-                       CONCAT(latitude,',',longitude) as koords,
-                       CONCAT(name,'<br>',address,'<br>',city,'<br><b style=\'color:red;\'>',
-                       Notes,'</b><br>',latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
-                       REPLACE(tactical,'-','') AS tactical, 
-                       callsign,
-                       CONCAT(class,id) as altTactical
-                  FROM  poi 
-         $whereClause
-         
+                        address, latitude, longitude, grid,
+                        CONCAT(latitude,',',longitude) as koords,
+                        CONCAT(name,'<br>',address,'<br>',city,'<br><b style=\'color:red;\'>',
+                        Notes,'</b><br>',latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
+                        REPLACE(tactical,'-','') AS tactical, 
+                        callsign,
+                        CONCAT(class,id) as altTactical
+                  FROM poi 
                  ORDER BY class 
                ");              
-    //echo "<br><br>$sql<br>";
+        //echo "<br><br>$sql<br>";
       
-      //$rowno = 0;
+      $rowno = 0;
       foreach($db_found->query($sql) as $row) {
-        $rowno = $rowno + 1;
-        $tactical = $row[tactical]; ////echo "$tactical";
-           // if ($tactical == "" ) {$tactical = $row[class]$row[id];}
-           if ($row[tactical] === "" ) {$tactical = $row[altTactical];}   ////echo "$row[altTactical]";}
+        $rowno    = $rowno + 1;
+        $tactical = $row[tactical]; 
+           if ($row[tactical] === "" ) {$tactical = $row[altTactical];}   
+            //echo "$row[altTactical]";}
+            
         // Calculates the grdsquare
-        //$gs = gridsquare($row[latitude], $row[longitude]); 
+        // gs is now in the table as grid if you need it
+        // $gs = gridsquare($row[latitude], $row[longitude]); 
                 
         //$MarkerName = "$row[class]Markers";
         $icon = "";
         $poiBounds .= "[$row[koords]],";  
         
+    // for this echo you might need to position a } bracket to close the foreach
     //echo "<br><br>$poiBounds<br>";
         
         // Assign variables based on the class                     
@@ -213,7 +208,7 @@
     
     } // End of switch
     
-    //echo "$iconName, $markNO, $markername, $poimrkr<br>";
+    echo "$iconName, $markNO, $markername, $poimrkr<br>";
     
     
     $dup = 0;
@@ -241,20 +236,22 @@
     }; // End of foreach for poi markers
        
     
-    echo "$poiMarkers<br>";
-
-        //echo "POI vars<br><br>";    
-    // replace last comma with closed square bracket, or a comma or whatever....  
-    /*    
-        $poiBounds  = substr($poiBounds, 0, -1)."]";                    //echo ("poiBounds= <br>$poiBounds<br><br>");       
-        $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
-        $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 //echo ("poiMarkers= <br>$poiMarkers<br><br>");
-               
-        $listofMarkers = substr($listofMarkers, 0, -1)."";              //echo ("listofMarkers= <br>$listofMarkers<br><br>");       
-        $overlayListNames = substr($overlayListNames, 0, -1)."";        //echo ("overlayListNames= <br>$overlayListNames<br><br>"); 
-    
-    */    
-  
+   // echo "$poiMarkers<br>";
+   
+    $poiBounds  = substr($poiBounds, 0, -1)."]"; 
+        //echo ("poiBounds= <br>$poiBounds<br><br>");
+        
+    $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        
+        //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
+        
+    $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 
+        //echo ("poiMarkers= <br>$poiMarkers<br><br>");
+        
+    $listofMarkers = substr($listofMarkers, 0, -1)."";              
+        echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
+        
+    $overlayListNames = substr($overlayListNames, 0, -1)."";        
+        //echo ("overlayListNames= <br>$overlayListNames<br><br>"); // two commas by RFH
   
 ?>
 
