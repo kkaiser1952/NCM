@@ -118,16 +118,20 @@
         
         // Pull detail data FROM  poi table
         $sql = ("SELECT id, LOWER(class) as class, 
-                        address, latitude, longitude, grid,
-                        CONCAT(latitude,',',longitude) as koords,
-                        CONCAT(name,'<br>',address,'<br>',city,'<br><b style=\'color:red;\'>',
-                        Notes,'</b><br>',latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
-                        REPLACE(tactical,'-','') AS tactical, 
-                        callsign,
-                        CONCAT(class,id) as altTactical
-                  FROM poi 
-                 ORDER BY class 
-               ");              
+            address, latitude, longitude, grid,
+            CONCAT(latitude,',',longitude) as koords,
+                        
+            CONCAT(name,'<br>',address,'<br>',city,
+                   '<br> <b style=\"color:red;\">',Notes, '</b><br>',
+                   latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
+                        
+            REPLACE(tactical,'-','') AS tactical, 
+            callsign,
+            CONCAT(class,id) as altTactical
+        FROM poi 
+        ORDER BY class 
+       ");
+              
         //echo "<br><br>$sql<br>";
       
       $rowno = 0;
@@ -246,7 +250,7 @@
         //echo ("poiMarkers= <br>$poiMarkers<br><br>");
         
     $listofMarkers = substr($listofMarkers, 0, -1)."";              
-        echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
+        //echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
         
     $overlayListNames = substr($overlayListNames, 0, -1)."";        
         //echo ("overlayListNames= <br>$overlayListNames<br><br>"); // two commas by RFH

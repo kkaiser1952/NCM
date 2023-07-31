@@ -16,21 +16,6 @@
     require_once "config.php";
     require_once "config2.php";
     
-    
-    // Loads the programs that create the station, poi, and object markers
-	require_once "stationMarkers.php";
-    include "poiMarkers2.php";    
-    require_once "objMarkers.php";
-    
-    /*
-    $success = require_once "poiMarkers2.php";
-        if ($success) {
-            echo "The file was successfully included.";
-        } else {
-            echo "The file was already included before.";
-        }
-    */
-    
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     //$q = 8523; 
@@ -56,8 +41,12 @@
     		$maxlon = $result[maxlon];
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
-    	       
-	 
+    
+    // Loads the programs that create the station, poi, and object markers
+	include "stationMarkers.php";
+    include "poiMarkers2.php";    
+    include "objMarkers.php";
+
 ?>
 
 <html lang="en">
@@ -127,8 +116,6 @@
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
-    
-    
     
         
     <!-- What 3 Words -->
