@@ -136,7 +136,7 @@
          
                  ORDER BY class 
                ");              
-      //echo "<br><br>$sql<br>";
+    //echo "<br><br>$sql<br>";
       
       //$rowno = 0;
       foreach($db_found->query($sql) as $row) {
@@ -150,6 +150,8 @@
         //$MarkerName = "$row[class]Markers";
         $icon = "";
         $poiBounds .= "[$row[koords]],";  
+        
+    //echo "<br><br>$poiBounds<br>";
         
         // Assign variables based on the class                     
         switch ("$row[class]") {
@@ -209,7 +211,10 @@
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr";
     
-    }
+    } // End of switch
+    
+    //echo "$iconName, $markNO, $markername, $poimrkr<br>";
+    
     
     $dup = 0;
         if(id==144) {$dup =50;}
@@ -218,7 +223,7 @@
          //if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
        
          $poiMarkers .= "
-            var $tactical = new L.marker(new L.LatLng($row[latitude],$row[longitude]),{ 
+            var $tactical = new L.marker(new L.LatLng({$row[latitude]},{$row[longitude]}),{ 
                         rotationAngle: $dup,
                         rotationOrigin: 'bottom',
                         opacity: 0.75,
@@ -228,20 +233,19 @@
                             callback: circleKoords}],
                      
                         icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                        title:'marker_$markNO'}).addTo(fg).bindPopup('$row[tactical]<br>$row[addr]<br>$gs'); /*.openPopup(); */                       
+                        title:'marker_$markNO'}).addTo(fg).bindPopup('$row[tactical]<br>$row[addr]<br>$gs');                        
  
-                        $('$row[class]'._icon).addClass('$poimrkr');";
+                        $('$row[class]'._icon).addClass('$poimrkr');
+         "; // End of $poiMarkers build
                      
     }; // End of foreach for poi markers
+       
     
-    //echo "<br><br>poiBounds= $poiBounds<br>"; 
-        //echo "k= $K <br>";
-    
-    //echo "<br><br>poiMarkers= $poiMarkers";
-   
+    echo "$poiMarkers<br>";
 
         //echo "POI vars<br><br>";    
-    // replace last comma with closed square bracket, or a comma or whatever....       
+    // replace last comma with closed square bracket, or a comma or whatever....  
+    /*    
         $poiBounds  = substr($poiBounds, 0, -1)."]";                    //echo ("poiBounds= <br>$poiBounds<br><br>");       
         $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
         $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 //echo ("poiMarkers= <br>$poiMarkers<br><br>");
@@ -249,7 +253,7 @@
         $listofMarkers = substr($listofMarkers, 0, -1)."";              //echo ("listofMarkers= <br>$listofMarkers<br><br>");       
         $overlayListNames = substr($overlayListNames, 0, -1)."";        //echo ("overlayListNames= <br>$overlayListNames<br><br>"); 
     
-        
+    */    
   
   
 ?>
