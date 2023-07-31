@@ -222,7 +222,7 @@
     
     
     
-   // echo "<br><br>poiMarkers= $poiMarkers";
+    echo "<br><br>poiMarkers= $poiMarkers";
    
 
         //echo "POI vars<br><br>";    
