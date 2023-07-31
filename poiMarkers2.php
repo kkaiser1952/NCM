@@ -117,28 +117,36 @@
 	    $poiMarkers = "";
         
         // Pull detail data FROM  poi table
-        $sql = ("SELECT id, LOWER(class) as class, 
+        // Assuming you have your database connection setup
+// $db = new PDO("mysql:host=hostname;dbname=database", "username", "password");
+
+$sql = "SELECT id, LOWER(class) as class, 
             address, latitude, longitude, grid,
             CONCAT(latitude,',',longitude) as koords,
                         
             CONCAT(name,'<br>',address,'<br>',city,
-                   '<br> <b style=\"color:red;\">',Notes, '</b><br>',
+                   '<br> <b style=\"color:red;\">', Notes, '</b><br>',
                    latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
                         
             REPLACE(tactical,'-','') AS tactical, 
             callsign,
             CONCAT(class,id) as altTactical
         FROM poi 
-        ORDER BY class 
-       ");
+        ORDER BY class";
+
+$stmt = $db_found->prepare($sql);
+$stmt->execute();
+
               
         //echo "<br><br>$sql<br>";
       
       $rowno = 0;
-      foreach($db_found->query($sql) as $row) {
-        $rowno    = $rowno + 1;
-        $tactical = $row[tactical]; 
-           if ($row[tactical] === "" ) {$tactical = $row[altTactical];}   
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $rowno = $rowno + 1;
+    $tactical = $row['tactical']; 
+    if ($row['tactical'] === "") {
+        $tactical = $row['altTactical'];
+    }
             //echo "$row[altTactical]";}
             
         // Calculates the grdsquare
