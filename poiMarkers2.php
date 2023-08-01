@@ -115,13 +115,16 @@
 	    $gs         = "";
 	    $poiBounds  = "[";
 	    $poiMarkers = "";
+	    
+/* Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721 0 Ft. */
         
         // Pull detail data FROM  poi table
-        $sql = ("SELECT id, LOWER(class) as class, 
+        $sql = ("SELECT id, name, address, Notes, 
+                        LOWER(class) as class, 
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
                         
-                        CONCAT(name, ' ', {address}, ' ', city, ' ', Notes, ' ',
+                        CONCAT(name, ' ', address, ' ', Notes, ' ',
                         latitude, ', ', longitude, ' ', altitude, ' Ft.' ) as addr,
                         
                         REPLACE(tactical,'-','') AS tactical, 
@@ -233,7 +236,7 @@
                          
                 icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
                 title: '$row[tactical] $row[addr] $gs',
-                    }).addTo(fg).bindPopup($row[tactical] $row[addr] $gs);                        
+                    }).addTo(fg).bindPopup('$row[tactical] $row[name] $row[address] $row[Notes] $row[koords] $row[altitude]  $gs');                        
          
                 $('{$row['class']}'._icon).addClass('$poimrkr');
             ";
