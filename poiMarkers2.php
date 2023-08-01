@@ -231,7 +231,7 @@
                             callback: circleKoords}],
                      
                         icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                        title:'marker_$markNO'}).addTo(fg).bindPopup('$row[tactical]<br>$row[addr]<br>$gs');                        
+            title:'marker_$markNO'}).addTo(fg).bindPopup(\"$row[tactical]<br>$row[addr]<br>$gs<br>\");                        
  
                         $('$row[class]'._icon).addClass('$poimrkr');
          "; // End of $poiMarkers build
