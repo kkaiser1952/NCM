@@ -121,9 +121,8 @@
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
                         
-                        CONCAT(name,'<br>',address,'<br>',city,
-                        '<br>' ,Notes, '<br>',
-                        latitude,', ',longitude,',  ',altitude,' Ft.') as addr,
+                        CONCAT(name, ' ', {address}, ' ', city, ' ', Notes, ' ',
+                        latitude, ', ', longitude, ' ', altitude, ' Ft.' ) as addr,
                         
                         REPLACE(tactical,'-','') AS tactical, 
                         callsign,
@@ -219,22 +218,26 @@
         // if(strpos("$dupCalls", "$callsign") !== false) { $dup = 45; }
               
         // if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
+        
+      //  Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721,  0 Ft.
        
          $poiMarkers .= "
-            var $tactical = new L.marker(new L.LatLng({$row[latitude]},{$row[longitude]}),{ 
-                        rotationAngle: $dup,
-                        rotationOrigin: 'bottom',
-                        opacity: 0.75,
-                        contextmenu: true, 
-                        contextmenuWidth: 140,
-                        contextmenuItems: [{ text: 'Click here to add mileage circles',
-                            callback: circleKoords}],
-                     
-                        icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-            title:'marker_$markNO'}).addTo(fg).bindPopup(\"$row[tactical]<br>$row[addr]<br>$gs<br>\");                        
- 
-                        $('$row[class]'._icon).addClass('$poimrkr');
-         "; // End of $poiMarkers build
+            var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}),{ 
+                rotationAngle: $dup,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+                title: '$row[tactical] $row[addr] $gs',
+                    }).addTo(fg).bindPopup($row[tactical] $row[addr] $gs);                        
+         
+                $('{$row['class']}'._icon).addClass('$poimrkr');
+            ";
+ // End of $poiMarkers build
                      
     }; // End of foreach for poi markers
         

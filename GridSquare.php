@@ -58,11 +58,11 @@ $ycalc[2] = $lat +  90;
     	return $yqth;
 } /* end of the gridsquare function */
 
-echo "$yqth<br>";
+//echo "$yqth<br>";
 
-$gs = gridsquare(39.2028965, -94.602876);
-echo "$gs<br>";
-echo "$gs[0], $gs[1]...$gs[5]<br>";
-print_r("$gs");
+//$gs = gridsquare(39.2028965, -94.602876);
+//echo "$gs<br>";
+//echo "$gs[0], $gs[1]...$gs[5]<br>";
+//print_r("$gs");
 
 ?>
