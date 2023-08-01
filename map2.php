@@ -57,6 +57,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" >
+	<link rel="shortcut icon" type="image/x-icon" href="favicons/apple-icon.png">
 
      <!-- ******************************** Load LEAFLET from CDN *********************************** -->
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
