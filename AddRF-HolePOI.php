@@ -1,5 +1,5 @@
 <!-- This program is used to add a RF-Hole style POI to the poi table -->
-<!-- Written: 2023=07-30 by WA0TJT -->
+<!-- Written: 2023-07-30 by WA0TJT -->
 
 <!-- ///slap.rider.steer -->
 
@@ -13,7 +13,6 @@ require_once "GridSquare.php";
 
 $w3wApiKey = getenv('w3wapikey');
 
-
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the values from the form submission
@@ -21,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $radius   = $_POST['radius']; // This is in miles, .05, .1, 1.0, 2.5, etc
     $w3w      = $_POST['w3w']; // Entered as the primary value of a location
     $type     = $_POST['type']; // Meant to be the severity of the RF Hole ... K0 to K4
-    $band     = $_POST['band'];
-    
+    $band     = implode(', ', $_POST['band']); // Convert the array to a comma-separated string
+
     // Convert the w3w value into latitude and longitude with this W3W API
     $curl = curl_init();
 
@@ -45,26 +44,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "cURL Error #:" . $err;
     } else {
         $w3wLL = json_decode($response, true);
-        
-        // Print the ARRAY created above in something easy to read
-        // print_r($w3wLL);
 
         // Check if latitude and longitude are present
         if (isset($w3wLL['coordinates'])) {
             $latitude = $w3wLL['coordinates']['lat'];
             $longitude = $w3wLL['coordinates']['lng'];
-            
+
             // Use explode to split the string by comma and get the first part
             $parts = explode(',', $w3wLL['nearestPlace']);
-            
+
             // Trim any leading or trailing whitespace from the first part
             $city = trim($parts[0]);
             $country = $w3wLL['country'];
-            
-            $grid   = gridsquare($latitude, $longitude);   
+
+            $grid = gridsquare($latitude, $longitude);
+
+            // Set the current date (date only) in the 'Notes' column
+            $currentDate = date('Y-m-d');
+            $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
+            $notesWithDate = "Created: " . $currentDate . ' -- ' . $notes;
 
             // Prepare and bind the SQL statement to insert the data
-            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude, :city, :country, :grid, :class, :band)");
+            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class, band) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :Notes, :latitude, :longitude, :city, :country, :grid, :class, :band)");
 
             // Bind the values to the named placeholders
             $stmt->bindValue(':callsign', $callsign);
@@ -78,11 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':grid', $grid);
             $stmt->bindValue(':class', 'RF-Hole');
             $stmt->bindValue(':band', $band);
-
-            // Set the current date (date only) in the 'Notes' column
-            $currentDate = date('Y-m-d');
-            $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
-            $notesWithDate = "Created: " . $currentDate . ' -- ' . $notes;
+            $stmt->bindValue(':Notes', $notesWithDate); // Update ':notes' to ':Notes'
 
             // Get the latest ID from the table 'poi'
             $query = "SELECT id FROM poi ORDER BY id DESC LIMIT 1";
@@ -96,23 +93,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
-            $namePrefix     = "RF-HoleK1"; // Change this if you want a different prefix
+            $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
             $tacticalPrefix = "RFH";
-            $tactical       = $tacticalPrefix . '-' . $tacticalId;
-                $stmt->bindValue(':tactical', $tactical);
+            $tactical = $tacticalPrefix . '-' . $tacticalId;
+            $stmt->bindValue(':tactical', $tactical);
 
-            $name           = $namePrefix . ' ' . $tacticalId;
-                $stmt->bindValue(':name', $name);
-
-            // Bind the 'Notes' column value
-                $stmt->bindValue(':notes', $notesWithDate);
+            $name = $namePrefix . ' ' . $tacticalId;
+            $stmt->bindValue(':name', $name);
 
             // Execute the prepared statement
             if ($stmt->execute()) {
                 // Retrieve the entire record by querying the database
                 $lastInsertId = $db_found->lastInsertId();
-                $query        = "SELECT * FROM poi WHERE id = " . $lastInsertId;
-                $result       = $db_found->query($query);
+                $query = "SELECT * FROM poi WHERE id = " . $lastInsertId;
+                $result = $db_found->query($query);
 
                 if ($result && $result->rowCount() > 0) {
                     $row = $result->fetch(PDO::FETCH_ASSOC);
@@ -131,6 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit; // End the script here, no need to execute the remaining code.
 }
 ?>
+
    
 <!DOCTYPE html>
 <html lang="en">
@@ -227,7 +222,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- ... -->
         <form id="poiForm" method="post">
             <label for="callsign">Your Callsign:</label>
-            <input type="text" name="callsign" required><br>
+            <input type="text" name="callsign" id="callsign" style="text-transform: uppercase;"><br>
+
         
             <label for="radius">Radius in miles, (.1 or .01, 1.2 etc):</label>
             <input type="text" name="radius" required><br>
