@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $radius   = $_POST['radius']; // This is in miles, .05, .1, 1.0, 2.5, etc
     $w3w      = $_POST['w3w']; // Entered as the primary value of a location
     $type     = $_POST['type']; // Meant to be the severity of the RF Hole ... K0 to K4
-    $band     = implode(', ', $_POST['band']); // Convert the array to a comma-separated string
+    $band     = $_POST['band']; // This will be a string containing one or more repeater frequencies
+
 
     // Convert the w3w value into latitude and longitude with this W3W API
     $curl = curl_init();
@@ -136,85 +137,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!--  <link rel="stylesheet" type="text/css" media="all" href="css/ics214.css"> -->
     <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
 
-    <style>
-        body {
-            font-size: 16pt;
-        }
+<style>
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 18pt;
+    background-color: #f7f7f7; /* Optional: Add a background color for better visibility */
+}
 
-        /* Container for the title */
-        .title-container {
-            text-align: left;
-        }
+.container {
+    width: 60%; /* Adjust the width as per your requirement */
+    max-width: 1000px; /* Add a max-width for larger screens */
+}
 
-        /* Container for the form */
-        .form-container {
-            max-width: 300px;
-            margin: 0 auto;
-            text-align: left;
-            margin-left: 20px;
-        }
+/* Center the title and instructions */
+.title-container {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
+.instructions {
+    max-width: 100%; /* Allow instructions to take full width */
+    font-size: 14pt;
+    color: #5a8bff; /* Set the desired text color */
+    -webkit-text-fill-color: #5a8bff; /* For Safari */
+    -webkit-opacity: 1; /* For Safari */
+}
 
-        input[type="text"],
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            font-size: inherit;
-        }
+/* Container for the form */
+.form-container {
+    text-align: left;
+}
 
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            font-size: inherit;
-        }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: inherit;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: inherit;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style the select element */
+select[name="type"] {
+    font-size: 16pt; /* Adjust the font size as per your requirement */
+}
+
+/* Style the options within the dropdown */
+select[name="type"] option {
+    font-size: 16pt; /* Adjust the font size as per your requirement */
+}
+
+/* CSS to horizontally align checkboxes and match style with select */
+.checkbox-container {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 12px;
+}
+
+.checkbox-container label {
+    font-size: 16pt;
+    margin-right: 10px; /* Add more space between the label and checkbox */
+}
         
-        /* Style the select element */
-        select[name="type"] {
-          font-size: 16pt; /* Adjust the font size as per your requirement */
-        }
-        
-        /* Style the options within the dropdown */
-        select[name="type"] option {
-          font-size: 16pt; /* Adjust the font size as per your requirement */
-        }
-        
-        /* CSS to horizontally align checkboxes and match style with select */
-        .checkbox-container {
-            display: inline-block;
-            margin-right: 20px;
-        }
-    
-        .checkbox-container input[type="checkbox"] {
-            margin-right: 12px;
-        }
-    
-        .checkbox-container label {
-            font-size: 16px;
-            margin-right: 10px; /* Add more space between the label and checkbox */
-        }
-        
-    </style>
+</style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
+    <div class="container">
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
-        <h1>Add A RF Hole POI Entry</h1>
+        <h2>Welcome to the RF Hole POI <br> Submission Form</h2>
+        <h3 id="instructions">Please fill out the form below to submit the details of the RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as dead spots where your repeater can't hit. Additional help can be found at; <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
     </div>
     
     <!-- Container for the form (left-justified) -->
@@ -228,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="radius">Radius in miles, (.1 or .01, 1.2 etc):</label>
             <input type="text" name="radius" required><br>
         
-            <label for="w3w">What3Words:</label>
+            <label for="w3w">What3Words e.g., ///alas.hockey.rebound:</label>
             <input type="text" name="w3w" required><br>
         
             <label for="type">Severity Type:</label>
@@ -242,24 +265,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select><br><br>
             
             <div class="form-group">
-                <label for="frequencies">List Tested Repeater Frequencies, semicolon seperated:</label>
-                <input type="text" name="frequencies" id="frequencies" placeholder="Enter one or more repeater frequencies" required>
+                <label for="frequencies">List Tested Repeater Frequencies, comma seperated:</label>
+                <input type="text" name="band" id="band" placeholder="Enter one or more repeater frequencies (e.g., xx.xxx or xxx.xxx)" required>
             </div>
             
-  <!--          <label for="bands">Select Tested Bands:</label>
-            <div class="checkbox-container">
-                <input type="checkbox" name="band[]" id="vhf" value="VHF" checked>
-                <label for="vhf">VHF</label>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" name="band[]" id="uhf" value="UHF">
-                <label for="uhf">UHF</label>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" nname="band[]" id="hf" value="HF">
-                <label for="hf">HF</label>
-            </div> -->
-            <br><br>
+            <br>
         
             <label for="notes">Notes:</label>
             <input type="text" name="notes" id="infield" placeholder="Enter your notes here..." required><br>
@@ -269,6 +279,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="button" value="Cancel" onclick="resetForm()">
         </form>
     </div> <!-- End of div at class="form-container" -->
+</div> <!-- End of div at class="container" -->
+    
+<script>
+    function validateFrequencies() {
+        const inputElement = document.getElementById('band');
+        const frequencies = inputElement.value.trim();
+
+        // Split the frequencies by the delimiter (e.g., comma)
+        const frequencyArray = frequencies.split(',');
+
+        // Check each frequency in the array
+        for (const frequency of frequencyArray) {
+            // Use regex to match the format xx.xxx or xxx.xxx
+            if (!/^\d{1,3}\.\d{3}$/.test(frequency.trim())) {
+                alert('Invalid frequency format. Frequencies must be in the format xx.xxx or xxx.xxx');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Add event listener to the form submit event to perform validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        if (!validateFrequencies()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+</script>
+
 
 <script>
     function resetForm() {
