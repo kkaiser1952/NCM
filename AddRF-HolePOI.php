@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':city', $city);
             $stmt->bindValue(':country', $country);
             $stmt->bindValue(':grid', $grid);
-            $stmt->bindValue(':class', 'RF-Hole');
+            $stmt->bindValue(':class', 'RF_Hole');
             $stmt->bindValue(':band', $band);
             $stmt->bindValue(':Notes', $notesWithDate); // Update ':notes' to ':Notes'
 
@@ -93,9 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
-            $namePrefix = "RF-HoleK1"; // Change this if you want a different prefix
+            $namePrefix = "RF_HoleK1"; // Change this if you want a different prefix
             $tacticalPrefix = "RFH";
-            $tactical = $tacticalPrefix . '-' . $tacticalId;
+            $tactical = $tacticalPrefix . '_' . $tacticalId;
             $stmt->bindValue(':tactical', $tactical);
 
             $name = $namePrefix . ' ' . $tacticalId;
@@ -214,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
-        <h1>Add A RF-Hole POI Entry</h1>
+        <h1>Add A RF Hole POI Entry</h1>
     </div>
     
     <!-- Container for the form (left-justified) -->
@@ -241,7 +241,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="K4">K4 - Variable</option>
             </select><br><br>
             
-            <label for="bands">Select Tested Bands:</label>
+            <div class="form-group">
+                <label for="frequencies">List Tested Repeater Frequencies, semicolon seperated:</label>
+                <input type="text" name="frequencies" id="frequencies" placeholder="Enter one or more repeater frequencies" required>
+            </div>
+            
+  <!--          <label for="bands">Select Tested Bands:</label>
             <div class="checkbox-container">
                 <input type="checkbox" name="band[]" id="vhf" value="VHF" checked>
                 <label for="vhf">VHF</label>
@@ -253,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="checkbox-container">
                 <input type="checkbox" nname="band[]" id="hf" value="HF">
                 <label for="hf">HF</label>
-            </div>
+            </div> -->
             <br><br>
         
             <label for="notes">Notes:</label>
