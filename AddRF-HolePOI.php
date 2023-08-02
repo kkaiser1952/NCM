@@ -18,9 +18,10 @@ $w3wApiKey = getenv('w3wapikey');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the values from the form submission
     $callsign = strtoupper($_POST['callsign']); // Convert callsign to uppercase
-    $radius = $_POST['radius']; // This is in miles, .05, .1, 1.0, 2.5, etc
-    $w3w = $_POST['w3w']; // Entered as the primary value of a location
-    $type = $_POST['type']; // Meant to be the severity of the RF Hole ... K0 to K4
+    $radius   = $_POST['radius']; // This is in miles, .05, .1, 1.0, 2.5, etc
+    $w3w      = $_POST['w3w']; // Entered as the primary value of a location
+    $type     = $_POST['type']; // Meant to be the severity of the RF Hole ... K0 to K4
+    $band     = $_POST['band'];
     
     // Convert the w3w value into latitude and longitude with this W3W API
     $curl = curl_init();
@@ -63,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $grid   = gridsquare($latitude, $longitude);   
 
             // Prepare and bind the SQL statement to insert the data
-            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude, :city, :country, :grid, :class)");
+            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :notes, :latitude, :longitude, :city, :country, :grid, :class, :band)");
 
             // Bind the values to the named placeholders
             $stmt->bindValue(':callsign', $callsign);
@@ -76,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':country', $country);
             $stmt->bindValue(':grid', $grid);
             $stmt->bindValue(':class', 'RF-Hole');
+            $stmt->bindValue(':band', $band);
 
             // Set the current date (date only) in the 'Notes' column
             $currentDate = date('Y-m-d');
@@ -194,6 +196,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           font-size: 16pt; /* Adjust the font size as per your requirement */
         }
         
+        /* CSS to horizontally align checkboxes and match style with select */
+        .checkbox-container {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 12px;
+        }
+    
+        .checkbox-container label {
+            font-size: 16px;
+            margin-right: 10px; /* Add more space between the label and checkbox */
+        }
+        
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -226,10 +243,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="K2">K2 - Noisy, Poor Copy</option>
                 <option value="K3">K3 - Noisy, Copyable</option>
                 <option value="K4">K4 - Variable</option>
-            </select><br>
+            </select><br><br>
+            
+            <label for="bands">Select Tested Bands:</label>
+            <div class="checkbox-container">
+                <input type="checkbox" name="band[]" id="vhf" value="VHF" checked>
+                <label for="vhf">VHF</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" name="band[]" id="uhf" value="UHF">
+                <label for="uhf">UHF</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" nname="band[]" id="hf" value="HF">
+                <label for="hf">HF</label>
+            </div>
+            <br><br>
         
             <label for="notes">Notes:</label>
-            <input type="text" name="notes" id="infield" value="" onclick=empty(); required><br>
+            <input type="text" name="notes" id="infield" placeholder="Enter your notes here..." required><br>
+
         
             <input type="submit" value="Add Entry">
             <input type="button" value="Cancel" onclick="resetForm()">
