@@ -3,7 +3,7 @@
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-			//require_once "dbConnectDtls.php";
+			require_once "dbConnectDtls.php";
 			
 			if (!$db_found) {
                 die("Database connection failed: " . mysqli_connect_error());
@@ -50,6 +50,7 @@
     //echo "<br>$sql<br>";
     foreach($db_found->query($sql) as $row) {
                 $classList .= "$row[class],";
+                echo "$classList<br>";
     }
             
         //$classList .= "$classList,ObjectL,";
