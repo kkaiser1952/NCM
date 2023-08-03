@@ -134,8 +134,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Add RF-Hole POI</title>
     <meta name="Keith Kaiser" content="Graham" />
-    <!--  <link rel="stylesheet" type="text/css" media="all" href="css/ics214.css"> -->
     <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <style>
 body {
@@ -248,15 +249,13 @@ select[name="type"] option {
         
 </style>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 <body>
     <div class="container">
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
         <h2>Welcome to the RF Hole POI <br> Submission Form</h2>
-        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. Additional help can be found at; <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
+        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
     </div>
     
     <!-- Container for the form (left-justified) -->
@@ -294,7 +293,7 @@ select[name="type"] option {
             <input type="text" name="notes" id="infield" placeholder="Enter your notes here..." required><br>
 
         
-            <input type="submit" value="Add Entry">
+            <input type="submit" id="submitBtn" value="Add Entry">
             <input type="button" value="Cancel" onclick="resetForm()">
             
             <!-- Link to List All PoIs -->
@@ -353,6 +352,7 @@ select[name="type"] option {
         });
     });
 </script>
+
 <script>
   // Get the input element
   const inputElement = document.getElementById('infield');
