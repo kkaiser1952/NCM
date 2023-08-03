@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':city', $city);
             $stmt->bindValue(':country', $country);
             $stmt->bindValue(':grid', $grid);
-            $stmt->bindValue(':class', 'RF_Hole');
+            $stmt->bindValue(':class', 'RFHole');
             $stmt->bindValue(':band', $band);
             $stmt->bindValue(':Notes', $notesWithDate); // Update ':notes' to ':Notes'
 
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Calculate and bind the 'tactical' column value (e.g., "RF-HoleK1 535")
-            $namePrefix = "RF_HoleK1"; // Change this if you want a different prefix
+            $namePrefix = "RFHoleK1"; // Change this if you want a different prefix
             $tacticalPrefix = "RFH";
             $tactical = $tacticalPrefix . '_' . $tacticalId;
             $stmt->bindValue(':tactical', $tactical);

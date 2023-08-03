@@ -7786,51 +7786,15 @@ var fireList = L.layerGroup([FFD199, FFD198, LFS197, MCVF196, CFKHB, KFPD194, PE
 
 var hospitalList = L.layerGroup([JCC260, HSIM, SCH165, FWRW5, JPCH163, RMH162, FWRW4, JCC259, LMH, FWRW6, MARIEN, FWWEST, LUISEN, HESCH, TH164]);
 
-var HT CompatableList = L.layerGroup([TANEY210]);
 
-var HT Compatible w/staticList = L.layerGroup([HWY291on210, CTEAUELV]);
+var AuxCommList = L.layerGroup([HCES239]);
 
-var HT Not compatible at this locationList = L.layerGroup([Non291Hwy, XSPRINGS, WATKINSMILL, SWSKOL, SUNNYSIDE]);
+var repeaterList = L.layerGroup([KCRJCRAC1, KCRJCRAC2]);
 
-var Humboldt County CERT AuxCommList = L.layerGroup([HCES239]);
-
-var JCRAC club repeaterList = L.layerGroup([KCRJCRAC1, KCRJCRAC2]);
-
-var Jerry Dixon KCØKWList = L.layerGroup([KCRKW1, KCRHAM4, KCRKW2, KCRHAM3, KCRMED, KCRHAM2]);
+var KCØKWList = L.layerGroup([KCRKW1, KCRHAM4, KCRKW2, KCRHAM3, KCRMED, KCRHAM2]);
 
 var KCHEARTList = L.layerGroup([NORKC, SMMC, RMCBKS, RESRCH, RAYCO, PMC, PETTIS, OMC, MENORA, LSMED, STJOHN, STJOMC, STLEAS, WEMO, W0CPT, TRUHH, TRLKWD, STM, STLUSO, STLUBR, STLSMI, STLPLZ, LRHC, LCHD19, DCEC, CUSHNG, CMHS, CMH, CASS, CARROL, BRMC, BOTHWL, BATES, OPR, EXSPR, FITZ, GVMH, I70, KC0CBC, KCVA, LIBRTY, KU0MED, KINDRD]);
 
-var KD0CNCList = L.layerGroup([KCRCNC]);
-
-var Keith Little NØWWList = L.layerGroup([KCRWW]);
-
-var Kershaw County EOCList = L.layerGroup([EOC399]);
-
-var Kershaw County Fire / SheriffList = L.layerGroup([Fire400]);
-
-var Leavenworth club repeaterList = L.layerGroup([KCRROO]);
-
-var Lecompton Rest Stop List = L.layerGroup([LecRestStop]);
-
-var Level 3 Trauma Center, HelipadList = L.layerGroup([SJH160]);
-
-var Level 4 Trauma Center, HelipadList = L.layerGroup([MRCH161]);
-
-var No Known Repeater AvailableList = L.layerGroup([BROADWAY]);
-
-var Operator DB9KN MaxList = L.layerGroup([DB0QA]);
-
-var Operator DF1VB JochenList = L.layerGroup([DB0WA]);
-
-var Operator DH6KQ AndreasList = L.layerGroup([DB0AVR]);
-
-var Operator DJ2UN UliList = L.layerGroup([DJ2UB]);
-
-var Operator DL8KBX KlausList = L.layerGroup([DB0SE]);
-
-var Operator DL8KCS WernerList = L.layerGroup([DB0NIS]);
-
-var PCARG club repeaterList = L.layerGroup([WA0QFJ, KCRQFJ]);
 
 var policeList = L.layerGroup([EPD228, CHPGS227, USFSMRRDO206, CDFW250, FPD229, APD231, TPD232, RDPD234, HTP235, BLPD236, CHPDC237, PTPOLICE1925, FPD230, LTRD193, LTRDUSFS191, LKWKPD, FPD93721, RVRSPD, COMOPD, NRTPD, HSUCP233, GSTNPD, NKCPD, PKVLPD, KCNPPD, PLTCTYPD, KSZS, HPA172]);
 
@@ -7840,9 +7804,9 @@ var RF_HoleList = L.layerGroup([RFH_533, RFH_568, RFH_569]);
 
 var sheriffList = L.layerGroup([CCSHERIFF, HCSDGS226, HCSOMS225, HCSO224, Sheriff401, Sheriff398, JCSHRFF267, SC242, NARESEOC]);
 
-var Sheriff Backup: Solar GeneratorList = L.layerGroup([SPM247]);
+var GeneratorList = L.layerGroup([SPM247]);
 
-var Sheriff, Public Work List = L.layerGroup([HCCH245]);
+
 
 var stateList = L.layerGroup([RGSP221]);
     
@@ -7959,7 +7923,6 @@ var stateList = L.layerGroup([RGSP221]);
     //====================== Points of Interest ============================
     //======================================================================    
     // The classList is the list of POI types.
-    //var classList = 'Amatuer Radio StationL,aviationL,Cal Fire Fixed Wing Air Attack BaseL,Clay Co. Repeater ClubL,EOCL,fireL,hospitalL,HT CompatableL,HT Compatible w/staticL,HT Not compatible at this locationL,Humboldt County CERT AuxCommL,JCRAC club repeaterL,Jerry Dixon KCØKWL,KCHEARTL,KD0CNCL,Keith Little NØWWL,Kershaw County EOCL,Kershaw County Fire / SheriffL,Leavenworth club repeaterL,Lecompton Rest Stop L,Level 3 Trauma Center, HelipadL,Level 4 Trauma Center, HelipadL,No Known Repeater AvailableL,Operator DB9KN MaxL,Operator DF1VB JochenL,Operator DH6KQ AndreasL,Operator DJ2UN UliL,Operator DL8KBX KlausL,Operator DL8KCS WernerL,PCARG club repeaterL,policeL,repeaterL,RF_HoleL,Sheriff Backup: Solar GeneratorL,Sheriff, Public Work L,sheriffL,stateL, CornerL, ObjectL;'.split(',');
 
     var classList = 'Amatuer Radio StationL,aviationL,Cal Fire Fixed Wing Air Attack BaseL,Clay Co. Repeater ClubL,EOCL,fireL,hospitalL,HT CompatableL,HT Compatible w/staticL,HT Not compatible at this locationL,Humboldt County CERT AuxCommL,JCRAC club repeaterL,Jerry Dixon KCØKWL,KCHEARTL,KD0CNCL,Keith Little NØWWL,Kershaw County EOCL,Kershaw County Fire / SheriffL,Leavenworth club repeaterL,Lecompton Rest Stop L,Level 3 Trauma Center, HelipadL,Level 4 Trauma Center, HelipadL,No Known Repeater AvailableL,Operator DB9KN MaxL,Operator DF1VB JochenL,Operator DH6KQ AndreasL,Operator DJ2UN UliL,Operator DL8KBX KlausL,Operator DL8KCS WernerL,PCARG club repeaterL,policeL,repeaterL,RF_HoleL,Sheriff Backup: Solar GeneratorL,Sheriff, Public Work L,sheriffL,stateL, CornerL, ObjectL;'.split(',');
        console.log('@414 in map.php classList= '+classList);
