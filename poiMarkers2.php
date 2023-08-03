@@ -50,7 +50,7 @@
     //echo "<br>$sql<br>";
     foreach($db_found->query($sql) as $row) {
                 $classList .= "$row[class],";
-                echo "$classList<br>";
+               // echo "$classList<br>";
     }
             
         //$classList .= "$classList,ObjectL,";
@@ -205,7 +205,7 @@
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
                              
-            case "rf-hole":  $K = $K+1;  $iconName = "govicon"; $markNO = "K$K";
+            case "rfhole":  $K = $K+1;  $iconName = "govicon"; $markNO = "K$K";
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;
                                                              
