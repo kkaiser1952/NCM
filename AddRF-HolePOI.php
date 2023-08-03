@@ -226,6 +226,25 @@ select[name="type"] option {
     font-size: 16pt;
     margin-right: 10px; /* Add more space between the label and checkbox */
 }
+
+/* Position the link on the right side and style it */
+.list-pois-link {
+    font-size: 18px;
+    float: right;
+    margin-top: 10px;
+    color: #5a8bff;
+}
+
+/* Add some spacing between the buttons and the link */
+#poiForm {
+    margin-bottom: 20px;
+}
+
+/* Center the form horizontally */
+.form-container {
+    margin: 0 auto;
+}
+
         
 </style>
 
@@ -237,7 +256,7 @@ select[name="type"] option {
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
         <h2>Welcome to the RF Hole POI <br> Submission Form</h2>
-        <h3 id="instructions">Please fill out the form below to submit the details of the RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as dead spots where your repeater can't hit. Additional help can be found at; <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
+        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. Additional help can be found at; <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
     </div>
     
     <!-- Container for the form (left-justified) -->
@@ -266,7 +285,7 @@ select[name="type"] option {
             
             <div class="form-group">
                 <label for="frequencies">List Tested Repeater Frequencies, comma seperated:</label>
-                <input type="text" name="band" id="band" placeholder="Enter one or more repeater frequencies (e.g., xx.xxx or xxx.xxx)" required>
+                <input type="text" name="band" id="band" placeholder="Enter one or more repeater frequencies (e.g., xx.xxx, xxx.xxx)" required>
             </div>
             
             <br>
@@ -277,6 +296,9 @@ select[name="type"] option {
         
             <input type="submit" value="Add Entry">
             <input type="button" value="Cancel" onclick="resetForm()">
+            
+            <!-- Link to List All PoIs -->
+            <a href="https://net-control.us/listAllPOIs.php" class="list-pois-link">List All PoI's</a>
         </form>
     </div> <!-- End of div at class="form-container" -->
 </div> <!-- End of div at class="container" -->
