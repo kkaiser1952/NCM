@@ -60,15 +60,21 @@
             
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
+        // Fix this when we upgrade MySQL to v8
         $sql = ("SELECT 
-                    GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackList,
+                    GROUP_CONCAT(tackListChunk SEPARATOR ', ') AS tackList,
                     CONCAT(
                         'var ', class, 'List = L.layerGroup([',
-                        GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', '),
+                        GROUP_CONCAT(tackListChunk SEPARATOR ', '),
                         ']);'
                     ) AS MarkerList
-                FROM poi 
-                GROUP BY class
+                FROM (
+                    SELECT
+                        class,
+                        GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackListChunk
+                    FROM poi
+                    GROUP BY class
+                ) AS subquery
                 ORDER BY class;
                ");
             foreach($db_found->query($sql) as $row) {

@@ -118,7 +118,17 @@
     <!-- Under the banner in the upper left corner -->
     <div id="stations"> 
 		<b style="color:red; text-decoration: underline;">
-		    <b>MODES</b><br><a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br><a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br><a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br><a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br><a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br><a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br><a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br><a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br><a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
+		    <b>MODES</b><br>
+		    <a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br>
+		    <a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br>
+		    <a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br>
+		    <a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br>
+		    <a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br>
+		    <a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br>
+		    <a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br>
+		    <a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br>
+		    <a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br>
+		    <a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
 
     <!-- The title banner -->
     <div id="activity" class="activity">
@@ -457,7 +467,7 @@ var map = L.map('map', {
                 stationMarkers.push(_W0JWT);
 			;
 
-            var MCI = new L.marker(new L.LatLng(39.3003,-94.72721),{ 
+            var MCI271 = new L.marker(new L.LatLng(39.3003,-94.72721),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -467,12 +477,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'MCI Kansas City International Airport   39.3003,-94.72721' ,
-                    }).addTo(fg).bindPopup('MCI Kansas City International Airport   39.3003,-94.72721' );                        
+                title: 'MCI271 Kansas City International Airport   39.3003,-94.72721' ,
+                    }).addTo(fg).bindPopup('MCI271 Kansas City International Airport   39.3003,-94.72721' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var KCI = new L.marker(new L.LatLng(39.12051,-94.59077),{ 
+            var KCI272 = new L.marker(new L.LatLng(39.12051,-94.59077),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -482,12 +492,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'KCI Charles B Wheeler Downtown Airport   39.12051,-94.59077' ,
-                    }).addTo(fg).bindPopup('KCI Charles B Wheeler Downtown Airport   39.12051,-94.59077' );                        
+                title: 'KCI272 Charles B Wheeler Downtown Airport   39.12051,-94.59077' ,
+                    }).addTo(fg).bindPopup('KCI272 Charles B Wheeler Downtown Airport   39.12051,-94.59077' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var PTIACPT = new L.marker(new L.LatLng(48.053802,-122.810628),{ 
+            var PTIACPT273 = new L.marker(new L.LatLng(48.053802,-122.810628),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -497,12 +507,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'PTIACPT PT Intl Airport Cutoff   48.053802,-122.810628' ,
-                    }).addTo(fg).bindPopup('PTIACPT PT Intl Airport Cutoff   48.053802,-122.810628' );                        
+                title: 'PTIACPT273 PT Intl Airport Cutoff   48.053802,-122.810628' ,
+                    }).addTo(fg).bindPopup('PTIACPT273 PT Intl Airport Cutoff   48.053802,-122.810628' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var HMSPH = new L.marker(new L.LatLng(48.034632,-122.775006),{ 
+            var HMSPH274 = new L.marker(new L.LatLng(48.034632,-122.775006),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -512,12 +522,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'HMSPH Hadlock Mason St   48.034632,-122.775006' ,
-                    }).addTo(fg).bindPopup('HMSPH Hadlock Mason St   48.034632,-122.775006' );                        
+                title: 'HMSPH274 Hadlock Mason St   48.034632,-122.775006' ,
+                    }).addTo(fg).bindPopup('HMSPH274 Hadlock Mason St   48.034632,-122.775006' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var SVBPT = new L.marker(new L.LatLng(48.077025,-122.840721),{ 
+            var SVBPT275 = new L.marker(new L.LatLng(48.077025,-122.840721),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -527,12 +537,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'SVBPT Sky Valley   48.077025,-122.840721' ,
-                    }).addTo(fg).bindPopup('SVBPT Sky Valley   48.077025,-122.840721' );                        
+                title: 'SVBPT275 Sky Valley   48.077025,-122.840721' ,
+                    }).addTo(fg).bindPopup('SVBPT275 Sky Valley   48.077025,-122.840721' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var RAAB = new L.marker(new L.LatLng(40.5555,-124.13204),{ 
+            var RAAB203 = new L.marker(new L.LatLng(40.5555,-124.13204),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -542,12 +552,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'RAAB Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' ,
-                    }).addTo(fg).bindPopup('RAAB Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' );                        
+                title: 'RAAB203 Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' ,
+                    }).addTo(fg).bindPopup('RAAB203 Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' );                        
          
                 $('aviation'._icon).addClass('aviationmrkr');
             
-            var W0KCN4 = new L.marker(new L.LatLng(39.3721733,-94.780929),{ 
+            var W0KCN446 = new L.marker(new L.LatLng(39.3721733,-94.780929),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -557,12 +567,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/eoc.png', iconSize: [32, 34]}),
-                title: 'W0KCN4 Northland ARES Platte Co. EOC   39.3721733,-94.780929' ,
-                    }).addTo(fg).bindPopup('W0KCN4 Northland ARES Platte Co. EOC   39.3721733,-94.780929' );                        
+                title: 'W0KCN446 Northland ARES Platte Co. EOC   39.3721733,-94.780929' ,
+                    }).addTo(fg).bindPopup('W0KCN446 Northland ARES Platte Co. EOC   39.3721733,-94.780929' );                        
          
                 $('eoc'._icon).addClass('eocmrkr');
             
-            var W0KCN3 = new L.marker(new L.LatLng(39.2859182,-94.667236),{ 
+            var W0KCN347 = new L.marker(new L.LatLng(39.2859182,-94.667236),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -572,8 +582,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/eoc.png', iconSize: [32, 34]}),
-                title: 'W0KCN3 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' ,
-                    }).addTo(fg).bindPopup('W0KCN3 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' );                        
+                title: 'W0KCN347 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' ,
+                    }).addTo(fg).bindPopup('W0KCN347 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' );                        
          
                 $('eoc'._icon).addClass('eocmrkr');
             
@@ -622,7 +632,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGOBER = new L.marker(new L.LatLng(50.512222,6.465568),{ 
+            var LGOBER512 = new L.marker(new L.LatLng(50.512222,6.465568),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -632,8 +642,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGOBER Gerätehaus Oberhausen   50.512222,6.465568' ,
-                    }).addTo(fg).bindPopup('LGOBER Gerätehaus Oberhausen   50.512222,6.465568' );                        
+                title: 'LGOBER512 Gerätehaus Oberhausen   50.512222,6.465568' ,
+                    }).addTo(fg).bindPopup('LGOBER512 Gerätehaus Oberhausen   50.512222,6.465568' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -652,7 +662,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHARP = new L.marker(new L.LatLng(50.518637,6.406335),{ 
+            var LGHARP514 = new L.marker(new L.LatLng(50.518637,6.406335),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -662,12 +672,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHARP Gerätehaus Harperscheid   50.518637,6.406335' ,
-                    }).addTo(fg).bindPopup('LGHARP Gerätehaus Harperscheid   50.518637,6.406335' );                        
+                title: 'LGHARP514 Gerätehaus Harperscheid   50.518637,6.406335' ,
+                    }).addTo(fg).bindPopup('LGHARP514 Gerätehaus Harperscheid   50.518637,6.406335' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGDREI = new L.marker(new L.LatLng(50.542354,6.405359),{ 
+            var LGDREI515 = new L.marker(new L.LatLng(50.542354,6.405359),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -677,12 +687,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGDREI Gerätehaus Dreiborn   50.542354,6.405359' ,
-                    }).addTo(fg).bindPopup('LGDREI Gerätehaus Dreiborn   50.542354,6.405359' );                        
+                title: 'LGDREI515 Gerätehaus Dreiborn   50.542354,6.405359' ,
+                    }).addTo(fg).bindPopup('LGDREI515 Gerätehaus Dreiborn   50.542354,6.405359' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGWAL = new L.marker(new L.LatLng(50.71185,6.180236),{ 
+            var LGWAL517 = new L.marker(new L.LatLng(50.71185,6.180236),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -692,12 +702,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGWAL Gerätehaus Wahlhem   50.71185,6.180236' ,
-                    }).addTo(fg).bindPopup('LGWAL Gerätehaus Wahlhem   50.71185,6.180236' );                        
+                title: 'LGWAL517 Gerätehaus Wahlhem   50.71185,6.180236' ,
+                    }).addTo(fg).bindPopup('LGWAL517 Gerätehaus Wahlhem   50.71185,6.180236' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGOBER = new L.marker(new L.LatLng(50.72883,6.174868),{ 
+            var LGOBER518 = new L.marker(new L.LatLng(50.72883,6.174868),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -707,12 +717,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGOBER Gerätehaus Kornelimuenster   50.72883,6.174868' ,
-                    }).addTo(fg).bindPopup('LGOBER Gerätehaus Kornelimuenster   50.72883,6.174868' );                        
+                title: 'LGOBER518 Gerätehaus Kornelimuenster   50.72883,6.174868' ,
+                    }).addTo(fg).bindPopup('LGOBER518 Gerätehaus Kornelimuenster   50.72883,6.174868' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGMAUS = new L.marker(new L.LatLng(50.755673,6.281836),{ 
+            var LGMAUS519 = new L.marker(new L.LatLng(50.755673,6.281836),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -722,12 +732,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGMAUS Gerätehaus Mausbach   50.755673,6.281836' ,
-                    }).addTo(fg).bindPopup('LGMAUS Gerätehaus Mausbach   50.755673,6.281836' );                        
+                title: 'LGMAUS519 Gerätehaus Mausbach   50.755673,6.281836' ,
+                    }).addTo(fg).bindPopup('LGMAUS519 Gerätehaus Mausbach   50.755673,6.281836' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGIMGE = new L.marker(new L.LatLng(50.577741,6.263472),{ 
+            var LGIMGE520 = new L.marker(new L.LatLng(50.577741,6.263472),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -737,12 +747,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGIMGE Gerätehaus Imgenbroich   50.577741,6.263472' ,
-                    }).addTo(fg).bindPopup('LGIMGE Gerätehaus Imgenbroich   50.577741,6.263472' );                        
+                title: 'LGIMGE520 Gerätehaus Imgenbroich   50.577741,6.263472' ,
+                    }).addTo(fg).bindPopup('LGIMGE520 Gerätehaus Imgenbroich   50.577741,6.263472' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGMALT = new L.marker(new L.LatLng(50.553727,6.241281),{ 
+            var LGMALT521 = new L.marker(new L.LatLng(50.553727,6.241281),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -752,12 +762,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGMALT Gerätehaus Monschau   50.553727,6.241281' ,
-                    }).addTo(fg).bindPopup('LGMALT Gerätehaus Monschau   50.553727,6.241281' );                        
+                title: 'LGMALT521 Gerätehaus Monschau   50.553727,6.241281' ,
+                    }).addTo(fg).bindPopup('LGMALT521 Gerätehaus Monschau   50.553727,6.241281' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGPUFF = new L.marker(new L.LatLng(50.938861,6.212034),{ 
+            var LGPUFF522 = new L.marker(new L.LatLng(50.938861,6.212034),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -767,12 +777,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGPUFF Gerätehaus Puffendorf   50.938861,6.212034' ,
-                    }).addTo(fg).bindPopup('LGPUFF Gerätehaus Puffendorf   50.938861,6.212034' );                        
+                title: 'LGPUFF522 Gerätehaus Puffendorf   50.938861,6.212034' ,
+                    }).addTo(fg).bindPopup('LGPUFF522 Gerätehaus Puffendorf   50.938861,6.212034' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGLOVE = new L.marker(new L.LatLng(50.933525,6.187821),{ 
+            var LGLOVE523 = new L.marker(new L.LatLng(50.933525,6.187821),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -782,12 +792,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGLOVE Gerätehaus Loverich   50.933525,6.187821' ,
-                    }).addTo(fg).bindPopup('LGLOVE Gerätehaus Loverich   50.933525,6.187821' );                        
+                title: 'LGLOVE523 Gerätehaus Loverich   50.933525,6.187821' ,
+                    }).addTo(fg).bindPopup('LGLOVE523 Gerätehaus Loverich   50.933525,6.187821' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBEGG = new L.marker(new L.LatLng(50.926302,6.169567),{ 
+            var LGBEGG524 = new L.marker(new L.LatLng(50.926302,6.169567),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -797,12 +807,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBEGG Gerätehaus Beggendorf   50.926302,6.169567' ,
-                    }).addTo(fg).bindPopup('LGBEGG Gerätehaus Beggendorf   50.926302,6.169567' );                        
+                title: 'LGBEGG524 Gerätehaus Beggendorf   50.926302,6.169567' ,
+                    }).addTo(fg).bindPopup('LGBEGG524 Gerätehaus Beggendorf   50.926302,6.169567' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var W0KCN15 = new L.marker(new L.LatLng(39.363954,-94.584749),{ 
+            var W0KCN1588 = new L.marker(new L.LatLng(39.363954,-94.584749),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -812,12 +822,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'W0KCN15 Northland ARES Clay Co. Fire Station #2   39.363954,-94.584749' ,
-                    }).addTo(fg).bindPopup('W0KCN15 Northland ARES Clay Co. Fire Station #2   39.363954,-94.584749' );                        
+                title: 'W0KCN1588 Northland ARES Clay Co. Fire Station #2   39.363954,-94.584749' ,
+                    }).addTo(fg).bindPopup('W0KCN1588 Northland ARES Clay Co. Fire Station #2   39.363954,-94.584749' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RVRSDEFD = new L.marker(new L.LatLng(39.175757,-94.616012),{ 
+            var RVRSDEFD89 = new L.marker(new L.LatLng(39.175757,-94.616012),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -827,12 +837,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RVRSDEFD Riverside, MO City Fire Department   39.175757,-94.616012' ,
-                    }).addTo(fg).bindPopup('RVRSDEFD Riverside, MO City Fire Department   39.175757,-94.616012' );                        
+                title: 'RVRSDEFD89 Riverside, MO City Fire Department   39.175757,-94.616012' ,
+                    }).addTo(fg).bindPopup('RVRSDEFD89 Riverside, MO City Fire Department   39.175757,-94.616012' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var BRVRCOFR29 = new L.marker(new L.LatLng(28.431189,-80.805377),{ 
+            var BRVRCOFR2990 = new L.marker(new L.LatLng(28.431189,-80.805377),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -842,12 +852,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'BRVRCOFR29 Brevard County Fire Rescue Station 29   28.431189,-80.805377' ,
-                    }).addTo(fg).bindPopup('BRVRCOFR29 Brevard County Fire Rescue Station 29   28.431189,-80.805377' );                        
+                title: 'BRVRCOFR2990 Brevard County Fire Rescue Station 29   28.431189,-80.805377' ,
+                    }).addTo(fg).bindPopup('BRVRCOFR2990 Brevard County Fire Rescue Station 29   28.431189,-80.805377' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var TFESS12 = new L.marker(new L.LatLng(28.589587,-80.831269),{ 
+            var TFESS1291 = new L.marker(new L.LatLng(28.589587,-80.831269),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -857,12 +867,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'TFESS12 Titusville Fire & Emergency Services Station 12   28.589587,-80.831269' ,
-                    }).addTo(fg).bindPopup('TFESS12 Titusville Fire & Emergency Services Station 12   28.589587,-80.831269' );                        
+                title: 'TFESS1291 Titusville Fire & Emergency Services Station 12   28.589587,-80.831269' ,
+                    }).addTo(fg).bindPopup('TFESS1291 Titusville Fire & Emergency Services Station 12   28.589587,-80.831269' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var GNSVFS1 = new L.marker(new L.LatLng(34.290941,-83.826461),{ 
+            var GNSVFS192 = new L.marker(new L.LatLng(34.290941,-83.826461),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -872,12 +882,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'GNSVFS1 Gainesville Fire Station 1   34.290941,-83.826461' ,
-                    }).addTo(fg).bindPopup('GNSVFS1 Gainesville Fire Station 1   34.290941,-83.826461' );                        
+                title: 'GNSVFS192 Gainesville Fire Station 1   34.290941,-83.826461' ,
+                    }).addTo(fg).bindPopup('GNSVFS192 Gainesville Fire Station 1   34.290941,-83.826461' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS1 = new L.marker(new L.LatLng(38.84544806200006,-94.55557100699997),{ 
+            var KCMOFS196 = new L.marker(new L.LatLng(38.84544806200006,-94.55557100699997),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -887,12 +897,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS1 KCMO Fire Station No. 1   38.84544806200006,-94.55557100699997' ,
-                    }).addTo(fg).bindPopup('KCMOFS1 KCMO Fire Station No. 1   38.84544806200006,-94.55557100699997' );                        
+                title: 'KCMOFS196 KCMO Fire Station No. 1   38.84544806200006,-94.55557100699997' ,
+                    }).addTo(fg).bindPopup('KCMOFS196 KCMO Fire Station No. 1   38.84544806200006,-94.55557100699997' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS3 = new L.marker(new L.LatLng(39.29502746500003,-94.57483520999995),{ 
+            var KCMOFS397 = new L.marker(new L.LatLng(39.29502746500003,-94.57483520999995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -902,12 +912,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS3 KCMO Fire Station No. 3   39.29502746500003,-94.57483520999995' ,
-                    }).addTo(fg).bindPopup('KCMOFS3 KCMO Fire Station No. 3   39.29502746500003,-94.57483520999995' );                        
+                title: 'KCMOFS397 KCMO Fire Station No. 3   39.29502746500003,-94.57483520999995' ,
+                    }).addTo(fg).bindPopup('KCMOFS397 KCMO Fire Station No. 3   39.29502746500003,-94.57483520999995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS4 = new L.marker(new L.LatLng(39.21082648400005,-94.62698133999999),{ 
+            var KCMOFS498 = new L.marker(new L.LatLng(39.21082648400005,-94.62698133999999),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -917,12 +927,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS4 KCMO Fire Station No. 4   39.21082648400005,-94.62698133999999' ,
-                    }).addTo(fg).bindPopup('KCMOFS4 KCMO Fire Station No. 4   39.21082648400005,-94.62698133999999' );                        
+                title: 'KCMOFS498 KCMO Fire Station No. 4   39.21082648400005,-94.62698133999999' ,
+                    }).addTo(fg).bindPopup('KCMOFS498 KCMO Fire Station No. 4   39.21082648400005,-94.62698133999999' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS5 = new L.marker(new L.LatLng(39.29465245500006,-94.72458748899999),{ 
+            var KCMOFS599 = new L.marker(new L.LatLng(39.29465245500006,-94.72458748899999),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -932,12 +942,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS5 KCMO Fire Station No. 5   39.29465245500006,-94.72458748899999' ,
-                    }).addTo(fg).bindPopup('KCMOFS5 KCMO Fire Station No. 5   39.29465245500006,-94.72458748899999' );                        
+                title: 'KCMOFS599 KCMO Fire Station No. 5   39.29465245500006,-94.72458748899999' ,
+                    }).addTo(fg).bindPopup('KCMOFS599 KCMO Fire Station No. 5   39.29465245500006,-94.72458748899999' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS6 = new L.marker(new L.LatLng(39.164872338000066,-94.54946718099995),{ 
+            var KCMOFS6100 = new L.marker(new L.LatLng(39.164872338000066,-94.54946718099995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -947,12 +957,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS6 KCMO Fire Station No. 6   39.164872338000066,-94.54946718099995' ,
-                    }).addTo(fg).bindPopup('KCMOFS6 KCMO Fire Station No. 6   39.164872338000066,-94.54946718099995' );                        
+                title: 'KCMOFS6100 KCMO Fire Station No. 6   39.164872338000066,-94.54946718099995' ,
+                    }).addTo(fg).bindPopup('KCMOFS6100 KCMO Fire Station No. 6   39.164872338000066,-94.54946718099995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS7 = new L.marker(new L.LatLng(39.088027072000045,-94.59222542099997),{ 
+            var KCMOFS7101 = new L.marker(new L.LatLng(39.088027072000045,-94.59222542099997),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -962,12 +972,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS7 KCMO Fire Station No. 7   39.088027072000045,-94.59222542099997' ,
-                    }).addTo(fg).bindPopup('KCMOFS7 KCMO Fire Station No. 7   39.088027072000045,-94.59222542099997' );                        
+                title: 'KCMOFS7101 KCMO Fire Station No. 7   39.088027072000045,-94.59222542099997' ,
+                    }).addTo(fg).bindPopup('KCMOFS7101 KCMO Fire Station No. 7   39.088027072000045,-94.59222542099997' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS8 = new L.marker(new L.LatLng(39.09503169800007,-94.57740912999998),{ 
+            var KCMOFS8102 = new L.marker(new L.LatLng(39.09503169800007,-94.57740912999998),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -977,12 +987,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS8 KCMO Fire Station No. 8   39.09503169800007,-94.57740912999998' ,
-                    }).addTo(fg).bindPopup('KCMOFS8 KCMO Fire Station No. 8   39.09503169800007,-94.57740912999998' );                        
+                title: 'KCMOFS8102 KCMO Fire Station No. 8   39.09503169800007,-94.57740912999998' ,
+                    }).addTo(fg).bindPopup('KCMOFS8102 KCMO Fire Station No. 8   39.09503169800007,-94.57740912999998' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS10 = new L.marker(new L.LatLng(39.10270070000007,-94.56220495299999),{ 
+            var KCMOFS10103 = new L.marker(new L.LatLng(39.10270070000007,-94.56220495299999),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -992,12 +1002,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS10 KCMO Fire Station No. 10   39.10270070000007,-94.56220495299999' ,
-                    }).addTo(fg).bindPopup('KCMOFS10 KCMO Fire Station No. 10   39.10270070000007,-94.56220495299999' );                        
+                title: 'KCMOFS10103 KCMO Fire Station No. 10   39.10270070000007,-94.56220495299999' ,
+                    }).addTo(fg).bindPopup('KCMOFS10103 KCMO Fire Station No. 10   39.10270070000007,-94.56220495299999' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS16 = new L.marker(new L.LatLng(39.29508854300008,-94.68790113199998),{ 
+            var KCMOFS16104 = new L.marker(new L.LatLng(39.29508854300008,-94.68790113199998),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1007,12 +1017,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS16 KCMO Fire Station No. 16   39.29508854300008,-94.68790113199998' ,
-                    }).addTo(fg).bindPopup('KCMOFS16 KCMO Fire Station No. 16   39.29508854300008,-94.68790113199998' );                        
+                title: 'KCMOFS16104 KCMO Fire Station No. 16   39.29508854300008,-94.68790113199998' ,
+                    }).addTo(fg).bindPopup('KCMOFS16104 KCMO Fire Station No. 16   39.29508854300008,-94.68790113199998' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS17 = new L.marker(new L.LatLng(39.06448674100005,-94.56659040899996),{ 
+            var KCMOFS17105 = new L.marker(new L.LatLng(39.06448674100005,-94.56659040899996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1022,12 +1032,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS17 KCMO Fire Station No. 17   39.06448674100005,-94.56659040899996' ,
-                    }).addTo(fg).bindPopup('KCMOFS17 KCMO Fire Station No. 17   39.06448674100005,-94.56659040899996' );                        
+                title: 'KCMOFS17105 KCMO Fire Station No. 17   39.06448674100005,-94.56659040899996' ,
+                    }).addTo(fg).bindPopup('KCMOFS17105 KCMO Fire Station No. 17   39.06448674100005,-94.56659040899996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS18 = new L.marker(new L.LatLng(39.068426627000065,-94.54306673199994),{ 
+            var KCMOFS18106 = new L.marker(new L.LatLng(39.068426627000065,-94.54306673199994),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1037,12 +1047,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS18 KCMO Fire Station No. 18   39.068426627000065,-94.54306673199994' ,
-                    }).addTo(fg).bindPopup('KCMOFS18 KCMO Fire Station No. 18   39.068426627000065,-94.54306673199994' );                        
+                title: 'KCMOFS18106 KCMO Fire Station No. 18   39.068426627000065,-94.54306673199994' ,
+                    }).addTo(fg).bindPopup('KCMOFS18106 KCMO Fire Station No. 18   39.068426627000065,-94.54306673199994' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS19 = new L.marker(new L.LatLng(39.04970557900003,-94.59317453799997),{ 
+            var KCMOFS19107 = new L.marker(new L.LatLng(39.04970557900003,-94.59317453799997),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1052,12 +1062,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS19 KCMO Fire Station No. 19   39.04970557900003,-94.59317453799997' ,
-                    }).addTo(fg).bindPopup('KCMOFS19 KCMO Fire Station No. 19   39.04970557900003,-94.59317453799997' );                        
+                title: 'KCMOFS19107 KCMO Fire Station No. 19   39.04970557900003,-94.59317453799997' ,
+                    }).addTo(fg).bindPopup('KCMOFS19107 KCMO Fire Station No. 19   39.04970557900003,-94.59317453799997' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS23 = new L.marker(new L.LatLng(39.10519819800004,-94.52673633999996),{ 
+            var KCMOFS23108 = new L.marker(new L.LatLng(39.10519819800004,-94.52673633999996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1067,12 +1077,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS23 KCMO Fire Station No. 23   39.10519819800004,-94.52673633999996' ,
-                    }).addTo(fg).bindPopup('KCMOFS23 KCMO Fire Station No. 23   39.10519819800004,-94.52673633999996' );                        
+                title: 'KCMOFS23108 KCMO Fire Station No. 23   39.10519819800004,-94.52673633999996' ,
+                    }).addTo(fg).bindPopup('KCMOFS23108 KCMO Fire Station No. 23   39.10519819800004,-94.52673633999996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS24 = new L.marker(new L.LatLng(39.08534478900003,-94.51940024199996),{ 
+            var KCMOFS24109 = new L.marker(new L.LatLng(39.08534478900003,-94.51940024199996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1082,12 +1092,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS24 KCMO Fire Station No. 24   39.08534478900003,-94.51940024199996' ,
-                    }).addTo(fg).bindPopup('KCMOFS24 KCMO Fire Station No. 24   39.08534478900003,-94.51940024199996' );                        
+                title: 'KCMOFS24109 KCMO Fire Station No. 24   39.08534478900003,-94.51940024199996' ,
+                    }).addTo(fg).bindPopup('KCMOFS24109 KCMO Fire Station No. 24   39.08534478900003,-94.51940024199996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS25 = new L.marker(new L.LatLng(39.10791790600007,-94.57838314599996),{ 
+            var KCMOFS25110 = new L.marker(new L.LatLng(39.10791790600007,-94.57838314599996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1097,12 +1107,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS25 KCMO Fire Station No. 25   39.10791790600007,-94.57838314599996' ,
-                    }).addTo(fg).bindPopup('KCMOFS25 KCMO Fire Station No. 25   39.10791790600007,-94.57838314599996' );                        
+                title: 'KCMOFS25110 KCMO Fire Station No. 25   39.10791790600007,-94.57838314599996' ,
+                    }).addTo(fg).bindPopup('KCMOFS25110 KCMO Fire Station No. 25   39.10791790600007,-94.57838314599996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS27 = new L.marker(new L.LatLng(39.09423963200004,-94.50519189199997),{ 
+            var KCMOFS27111 = new L.marker(new L.LatLng(39.09423963200004,-94.50519189199997),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1112,12 +1122,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS27 KCMO Fire Station No. 27   39.09423963200004,-94.50519189199997' ,
-                    }).addTo(fg).bindPopup('KCMOFS27 KCMO Fire Station No. 27   39.09423963200004,-94.50519189199997' );                        
+                title: 'KCMOFS27111 KCMO Fire Station No. 27   39.09423963200004,-94.50519189199997' ,
+                    }).addTo(fg).bindPopup('KCMOFS27111 KCMO Fire Station No. 27   39.09423963200004,-94.50519189199997' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS28 = new L.marker(new L.LatLng(38.92612585100005,-94.57996235599995),{ 
+            var KCMOFS28112 = new L.marker(new L.LatLng(38.92612585100005,-94.57996235599995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1127,12 +1137,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS28 KCMO Fire Station No. 28   38.92612585100005,-94.57996235599995' ,
-                    }).addTo(fg).bindPopup('KCMOFS28 KCMO Fire Station No. 28   38.92612585100005,-94.57996235599995' );                        
+                title: 'KCMOFS28112 KCMO Fire Station No. 28   38.92612585100005,-94.57996235599995' ,
+                    }).addTo(fg).bindPopup('KCMOFS28112 KCMO Fire Station No. 28   38.92612585100005,-94.57996235599995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS29 = new L.marker(new L.LatLng(39.01353614300007,-94.56910049699997),{ 
+            var KCMOFS29113 = new L.marker(new L.LatLng(39.01353614300007,-94.56910049699997),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1142,12 +1152,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS29 KCMO Fire Station No. 29   39.01353614300007,-94.56910049699997' ,
-                    }).addTo(fg).bindPopup('KCMOFS29 KCMO Fire Station No. 29   39.01353614300007,-94.56910049699997' );                        
+                title: 'KCMOFS29113 KCMO Fire Station No. 29   39.01353614300007,-94.56910049699997' ,
+                    }).addTo(fg).bindPopup('KCMOFS29113 KCMO Fire Station No. 29   39.01353614300007,-94.56910049699997' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS30 = new L.marker(new L.LatLng(38.98954598500006,-94.55777761299998),{ 
+            var KCMOFS30114 = new L.marker(new L.LatLng(38.98954598500006,-94.55777761299998),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1157,12 +1167,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS30 KCMO Fire Station No. 30   38.98954598500006,-94.55777761299998' ,
-                    }).addTo(fg).bindPopup('KCMOFS30 KCMO Fire Station No. 30   38.98954598500006,-94.55777761299998' );                        
+                title: 'KCMOFS30114 KCMO Fire Station No. 30   38.98954598500006,-94.55777761299998' ,
+                    }).addTo(fg).bindPopup('KCMOFS30114 KCMO Fire Station No. 30   38.98954598500006,-94.55777761299998' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS33 = new L.marker(new L.LatLng(39.00341036400005,-94.49917701399994),{ 
+            var KCMOFS33115 = new L.marker(new L.LatLng(39.00341036400005,-94.49917701399994),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1172,12 +1182,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS33 KCMO Fire Station No. 33   39.00341036400005,-94.49917701399994' ,
-                    }).addTo(fg).bindPopup('KCMOFS33 KCMO Fire Station No. 33   39.00341036400005,-94.49917701399994' );                        
+                title: 'KCMOFS33115 KCMO Fire Station No. 33   39.00341036400005,-94.49917701399994' ,
+                    }).addTo(fg).bindPopup('KCMOFS33115 KCMO Fire Station No. 33   39.00341036400005,-94.49917701399994' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS34 = new L.marker(new L.LatLng(39.18216645700005,-94.52198633599994),{ 
+            var KCMOFS34116 = new L.marker(new L.LatLng(39.18216645700005,-94.52198633599994),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1187,12 +1197,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS34 KCMO Fire Station No. 34   39.18216645700005,-94.52198633599994' ,
-                    }).addTo(fg).bindPopup('KCMOFS34 KCMO Fire Station No. 34   39.18216645700005,-94.52198633599994' );                        
+                title: 'KCMOFS34116 KCMO Fire Station No. 34   39.18216645700005,-94.52198633599994' ,
+                    }).addTo(fg).bindPopup('KCMOFS34116 KCMO Fire Station No. 34   39.18216645700005,-94.52198633599994' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS35 = new L.marker(new L.LatLng(39.04105321900005,-94.54716372899998),{ 
+            var KCMOFS35117 = new L.marker(new L.LatLng(39.04105321900005,-94.54716372899998),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1202,12 +1212,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS35 KCMO Fire Station No. 35   39.04105321900005,-94.54716372899998' ,
-                    }).addTo(fg).bindPopup('KCMOFS35 KCMO Fire Station No. 35   39.04105321900005,-94.54716372899998' );                        
+                title: 'KCMOFS35117 KCMO Fire Station No. 35   39.04105321900005,-94.54716372899998' ,
+                    }).addTo(fg).bindPopup('KCMOFS35117 KCMO Fire Station No. 35   39.04105321900005,-94.54716372899998' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS36 = new L.marker(new L.LatLng(38.947990154000024,-94.58198512499996),{ 
+            var KCMOFS36118 = new L.marker(new L.LatLng(38.947990154000024,-94.58198512499996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1217,12 +1227,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS36 KCMO Fire Station No. 36   38.947990154000024,-94.58198512499996' ,
-                    }).addTo(fg).bindPopup('KCMOFS36 KCMO Fire Station No. 36   38.947990154000024,-94.58198512499996' );                        
+                title: 'KCMOFS36118 KCMO Fire Station No. 36   38.947990154000024,-94.58198512499996' ,
+                    }).addTo(fg).bindPopup('KCMOFS36118 KCMO Fire Station No. 36   38.947990154000024,-94.58198512499996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS37 = new L.marker(new L.LatLng(38.98838295400003,-94.59471418799995),{ 
+            var KCMOFS37119 = new L.marker(new L.LatLng(38.98838295400003,-94.59471418799995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1232,12 +1242,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS37 KCMO Fire Station No. 37   38.98838295400003,-94.59471418799995' ,
-                    }).addTo(fg).bindPopup('KCMOFS37 KCMO Fire Station No. 37   38.98838295400003,-94.59471418799995' );                        
+                title: 'KCMOFS37119 KCMO Fire Station No. 37   38.98838295400003,-94.59471418799995' ,
+                    }).addTo(fg).bindPopup('KCMOFS37119 KCMO Fire Station No. 37   38.98838295400003,-94.59471418799995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS38 = new L.marker(new L.LatLng(39.24114461900007,-94.57637879999999),{ 
+            var KCMOFS38120 = new L.marker(new L.LatLng(39.24114461900007,-94.57637879999999),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1247,12 +1257,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS38 KCMO Fire Station No. 38   39.24114461900007,-94.57637879999999' ,
-                    }).addTo(fg).bindPopup('KCMOFS38 KCMO Fire Station No. 38   39.24114461900007,-94.57637879999999' );                        
+                title: 'KCMOFS38120 KCMO Fire Station No. 38   39.24114461900007,-94.57637879999999' ,
+                    }).addTo(fg).bindPopup('KCMOFS38120 KCMO Fire Station No. 38   39.24114461900007,-94.57637879999999' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS39 = new L.marker(new L.LatLng(39.037389129000076,-94.44871189199995),{ 
+            var KCMOFS39121 = new L.marker(new L.LatLng(39.037389129000076,-94.44871189199995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1262,12 +1272,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS39 KCMO Fire Station No. 39   39.037389129000076,-94.44871189199995' ,
-                    }).addTo(fg).bindPopup('KCMOFS39 KCMO Fire Station No. 39   39.037389129000076,-94.44871189199995' );                        
+                title: 'KCMOFS39121 KCMO Fire Station No. 39   39.037389129000076,-94.44871189199995' ,
+                    }).addTo(fg).bindPopup('KCMOFS39121 KCMO Fire Station No. 39   39.037389129000076,-94.44871189199995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS40 = new L.marker(new L.LatLng(39.18825564000008,-94.57705538299996),{ 
+            var KCMOFS40122 = new L.marker(new L.LatLng(39.18825564000008,-94.57705538299996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1277,12 +1287,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS40 KCMO Fire Station No. 40   39.18825564000008,-94.57705538299996' ,
-                    }).addTo(fg).bindPopup('KCMOFS40 KCMO Fire Station No. 40   39.18825564000008,-94.57705538299996' );                        
+                title: 'KCMOFS40122 KCMO Fire Station No. 40   39.18825564000008,-94.57705538299996' ,
+                    }).addTo(fg).bindPopup('KCMOFS40122 KCMO Fire Station No. 40   39.18825564000008,-94.57705538299996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS41 = new L.marker(new L.LatLng(38.956671338000035,-94.52135318999996),{ 
+            var KCMOFS41123 = new L.marker(new L.LatLng(38.956671338000035,-94.52135318999996),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1292,12 +1302,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS41 KCMO Fire Station No. 41   38.956671338000035,-94.52135318999996' ,
-                    }).addTo(fg).bindPopup('KCMOFS41 KCMO Fire Station No. 41   38.956671338000035,-94.52135318999996' );                        
+                title: 'KCMOFS41123 KCMO Fire Station No. 41   38.956671338000035,-94.52135318999996' ,
+                    }).addTo(fg).bindPopup('KCMOFS41123 KCMO Fire Station No. 41   38.956671338000035,-94.52135318999996' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS42 = new L.marker(new L.LatLng(38.924447272000066,-94.51993356699995),{ 
+            var KCMOFS42124 = new L.marker(new L.LatLng(38.924447272000066,-94.51993356699995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1307,12 +1317,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS42 KCMO Fire Station No. 42   38.924447272000066,-94.51993356699995' ,
-                    }).addTo(fg).bindPopup('KCMOFS42 KCMO Fire Station No. 42   38.924447272000066,-94.51993356699995' );                        
+                title: 'KCMOFS42124 KCMO Fire Station No. 42   38.924447272000066,-94.51993356699995' ,
+                    }).addTo(fg).bindPopup('KCMOFS42124 KCMO Fire Station No. 42   38.924447272000066,-94.51993356699995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS43 = new L.marker(new L.LatLng(38.96734958800005,-94.43185910999995),{ 
+            var KCMOFS43125 = new L.marker(new L.LatLng(38.96734958800005,-94.43185910999995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1322,12 +1332,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS43 KCMO Fire Station No. 43   38.96734958800005,-94.43185910999995' ,
-                    }).addTo(fg).bindPopup('KCMOFS43 KCMO Fire Station No. 43   38.96734958800005,-94.43185910999995' );                        
+                title: 'KCMOFS43125 KCMO Fire Station No. 43   38.96734958800005,-94.43185910999995' ,
+                    }).addTo(fg).bindPopup('KCMOFS43125 KCMO Fire Station No. 43   38.96734958800005,-94.43185910999995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS44 = new L.marker(new L.LatLng(39.246423046000075,-94.66588993499994),{ 
+            var KCMOFS44126 = new L.marker(new L.LatLng(39.246423046000075,-94.66588993499994),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1337,12 +1347,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS44 KCMO Fire Station No. 44   39.246423046000075,-94.66588993499994' ,
-                    }).addTo(fg).bindPopup('KCMOFS44 KCMO Fire Station No. 44   39.246423046000075,-94.66588993499994' );                        
+                title: 'KCMOFS44126 KCMO Fire Station No. 44   39.246423046000075,-94.66588993499994' ,
+                    }).addTo(fg).bindPopup('KCMOFS44126 KCMO Fire Station No. 44   39.246423046000075,-94.66588993499994' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS45 = new L.marker(new L.LatLng(38.89023597400006,-94.58854005199998),{ 
+            var KCMOFS45127 = new L.marker(new L.LatLng(38.89023597400006,-94.58854005199998),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1352,12 +1362,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS45 KCMO Fire Station No. 45   38.89023597400006,-94.58854005199998' ,
-                    }).addTo(fg).bindPopup('KCMOFS45 KCMO Fire Station No. 45   38.89023597400006,-94.58854005199998' );                        
+                title: 'KCMOFS45127 KCMO Fire Station No. 45   38.89023597400006,-94.58854005199998' ,
+                    }).addTo(fg).bindPopup('KCMOFS45127 KCMO Fire Station No. 45   38.89023597400006,-94.58854005199998' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS47 = new L.marker(new L.LatLng(39.14034793800005,-94.52048369499994),{ 
+            var KCMOFS47128 = new L.marker(new L.LatLng(39.14034793800005,-94.52048369499994),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1367,12 +1377,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS47 KCMO Fire Station No. 47   39.14034793800005,-94.52048369499994' ,
-                    }).addTo(fg).bindPopup('KCMOFS47 KCMO Fire Station No. 47   39.14034793800005,-94.52048369499994' );                        
+                title: 'KCMOFS47128 KCMO Fire Station No. 47   39.14034793800005,-94.52048369499994' ,
+                    }).addTo(fg).bindPopup('KCMOFS47128 KCMO Fire Station No. 47   39.14034793800005,-94.52048369499994' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KCMOFS14 = new L.marker(new L.LatLng(39.24420365000003,-94.52101456199995),{ 
+            var KCMOFS14129 = new L.marker(new L.LatLng(39.24420365000003,-94.52101456199995),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1382,12 +1392,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KCMOFS14 KCMO Fire Station No. 14   39.24420365000003,-94.52101456199995' ,
-                    }).addTo(fg).bindPopup('KCMOFS14 KCMO Fire Station No. 14   39.24420365000003,-94.52101456199995' );                        
+                title: 'KCMOFS14129 KCMO Fire Station No. 14   39.24420365000003,-94.52101456199995' ,
+                    }).addTo(fg).bindPopup('KCMOFS14129 KCMO Fire Station No. 14   39.24420365000003,-94.52101456199995' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RVRSFD = new L.marker(new L.LatLng(39.17579,-94.615947),{ 
+            var RVRSFD134 = new L.marker(new L.LatLng(39.17579,-94.615947),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1397,12 +1407,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RVRSFD    Riverside City Fire Department   39.17579,-94.615947' ,
-                    }).addTo(fg).bindPopup('RVRSFD    Riverside City Fire Department   39.17579,-94.615947' );                        
+                title: 'RVRSFD134    Riverside City Fire Department   39.17579,-94.615947' ,
+                    }).addTo(fg).bindPopup('RVRSFD134    Riverside City Fire Department   39.17579,-94.615947' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var CARROLFD = new L.marker(new L.LatLng(39.364764,-93.482455),{ 
+            var CARROLFD148 = new L.marker(new L.LatLng(39.364764,-93.482455),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1412,12 +1422,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'CARROLFD Carrollton Fire Department   39.364764,-93.482455' ,
-                    }).addTo(fg).bindPopup('CARROLFD Carrollton Fire Department   39.364764,-93.482455' );                        
+                title: 'CARROLFD148 Carrollton Fire Department   39.364764,-93.482455' ,
+                    }).addTo(fg).bindPopup('CARROLFD148 Carrollton Fire Department   39.364764,-93.482455' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KSZW = new L.marker(new L.LatLng(50.813106,6.15943),{ 
+            var KSZW405 = new L.marker(new L.LatLng(50.813106,6.15943),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1427,12 +1437,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KSZW DRK Fernmeldezug   50.813106,6.15943' ,
-                    }).addTo(fg).bindPopup('KSZW DRK Fernmeldezug   50.813106,6.15943' );                        
+                title: 'KSZW405 DRK Fernmeldezug   50.813106,6.15943' ,
+                    }).addTo(fg).bindPopup('KSZW405 DRK Fernmeldezug   50.813106,6.15943' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RSIM = new L.marker(new L.LatLng(50.606579,6.303835),{ 
+            var RSIM406 = new L.marker(new L.LatLng(50.606579,6.303835),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1442,12 +1452,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RSIM Gemeindeverwaltung Simmerath   50.606579,6.303835' ,
-                    }).addTo(fg).bindPopup('RSIM Gemeindeverwaltung Simmerath   50.606579,6.303835' );                        
+                title: 'RSIM406 Gemeindeverwaltung Simmerath   50.606579,6.303835' ,
+                    }).addTo(fg).bindPopup('RSIM406 Gemeindeverwaltung Simmerath   50.606579,6.303835' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PSIM = new L.marker(new L.LatLng(50.61,6.302051),{ 
+            var PSIM407 = new L.marker(new L.LatLng(50.61,6.302051),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1457,12 +1467,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PSIM Wache Simmerath   50.61,6.302051' ,
-                    }).addTo(fg).bindPopup('PSIM Wache Simmerath   50.61,6.302051' );                        
+                title: 'PSIM407 Wache Simmerath   50.61,6.302051' ,
+                    }).addTo(fg).bindPopup('PSIM407 Wache Simmerath   50.61,6.302051' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGEIC = new L.marker(new L.LatLng(50.579681,6.303993),{ 
+            var LGEIC409 = new L.marker(new L.LatLng(50.579681,6.303993),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1472,12 +1482,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGEIC Gerätehaus Eicherscheid   50.579681,6.303993' ,
-                    }).addTo(fg).bindPopup('LGEIC Gerätehaus Eicherscheid   50.579681,6.303993' );                        
+                title: 'LGEIC409 Gerätehaus Eicherscheid   50.579681,6.303993' ,
+                    }).addTo(fg).bindPopup('LGEIC409 Gerätehaus Eicherscheid   50.579681,6.303993' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGEIN = new L.marker(new L.LatLng(50.582916,6.37867),{ 
+            var LGEIN410 = new L.marker(new L.LatLng(50.582916,6.37867),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1487,12 +1497,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGEIN Gerätehaus Einruhr   50.582916,6.37867' ,
-                    }).addTo(fg).bindPopup('LGEIN Gerätehaus Einruhr   50.582916,6.37867' );                        
+                title: 'LGEIN410 Gerätehaus Einruhr   50.582916,6.37867' ,
+                    }).addTo(fg).bindPopup('LGEIN410 Gerätehaus Einruhr   50.582916,6.37867' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGERK = new L.marker(new L.LatLng(50.564697,6.361316),{ 
+            var LGERK411 = new L.marker(new L.LatLng(50.564697,6.361316),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1502,12 +1512,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGERK Gerätehaus Erkensruhr   50.564697,6.361316' ,
-                    }).addTo(fg).bindPopup('LGERK Gerätehaus Erkensruhr   50.564697,6.361316' );                        
+                title: 'LGERK411 Gerätehaus Erkensruhr   50.564697,6.361316' ,
+                    }).addTo(fg).bindPopup('LGERK411 Gerätehaus Erkensruhr   50.564697,6.361316' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGDED = new L.marker(new L.LatLng(50.583751,6.355568),{ 
+            var LGDED412 = new L.marker(new L.LatLng(50.583751,6.355568),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1517,12 +1527,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGDED Gerätehaus Dedenborn   50.583751,6.355568' ,
-                    }).addTo(fg).bindPopup('LGDED Gerätehaus Dedenborn   50.583751,6.355568' );                        
+                title: 'LGDED412 Gerätehaus Dedenborn   50.583751,6.355568' ,
+                    }).addTo(fg).bindPopup('LGDED412 Gerätehaus Dedenborn   50.583751,6.355568' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHAM = new L.marker(new L.LatLng(50.564858,6.329027),{ 
+            var LGHAM413 = new L.marker(new L.LatLng(50.564858,6.329027),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1532,12 +1542,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHAM Gerätehaus Hammer   50.564858,6.329027' ,
-                    }).addTo(fg).bindPopup('LGHAM Gerätehaus Hammer   50.564858,6.329027' );                        
+                title: 'LGHAM413 Gerätehaus Hammer   50.564858,6.329027' ,
+                    }).addTo(fg).bindPopup('LGHAM413 Gerätehaus Hammer   50.564858,6.329027' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGKES = new L.marker(new L.LatLng(50.606444,6.331613),{ 
+            var LGKES414 = new L.marker(new L.LatLng(50.606444,6.331613),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1547,12 +1557,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGKES Gerätehaus Kesternich   50.606444,6.331613' ,
-                    }).addTo(fg).bindPopup('LGKES Gerätehaus Kesternich   50.606444,6.331613' );                        
+                title: 'LGKES414 Gerätehaus Kesternich   50.606444,6.331613' ,
+                    }).addTo(fg).bindPopup('LGKES414 Gerätehaus Kesternich   50.606444,6.331613' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGLAM = new L.marker(new L.LatLng(50.632156,6.271407),{ 
+            var LGLAM415 = new L.marker(new L.LatLng(50.632156,6.271407),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1562,12 +1572,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGLAM Gerätehaus Lammersdorf   50.632156,6.271407' ,
-                    }).addTo(fg).bindPopup('LGLAM Gerätehaus Lammersdorf   50.632156,6.271407' );                        
+                title: 'LGLAM415 Gerätehaus Lammersdorf   50.632156,6.271407' ,
+                    }).addTo(fg).bindPopup('LGLAM415 Gerätehaus Lammersdorf   50.632156,6.271407' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGROL = new L.marker(new L.LatLng(50.62973,6.311586),{ 
+            var LGROL416 = new L.marker(new L.LatLng(50.62973,6.311586),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1577,12 +1587,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGROL Gerätehaus Rollesbroich   50.62973,6.311586' ,
-                    }).addTo(fg).bindPopup('LGROL Gerätehaus Rollesbroich   50.62973,6.311586' );                        
+                title: 'LGROL416 Gerätehaus Rollesbroich   50.62973,6.311586' ,
+                    }).addTo(fg).bindPopup('LGROL416 Gerätehaus Rollesbroich   50.62973,6.311586' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGRUR = new L.marker(new L.LatLng(50.614395,6.378801),{ 
+            var LGRUR417 = new L.marker(new L.LatLng(50.614395,6.378801),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1592,12 +1602,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGRUR Gerätehaus Rurberg   50.614395,6.378801' ,
-                    }).addTo(fg).bindPopup('LGRUR Gerätehaus Rurberg   50.614395,6.378801' );                        
+                title: 'LGRUR417 Gerätehaus Rurberg   50.614395,6.378801' ,
+                    }).addTo(fg).bindPopup('LGRUR417 Gerätehaus Rurberg   50.614395,6.378801' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSIM = new L.marker(new L.LatLng(50.607846,6.297847),{ 
+            var LGSIM418 = new L.marker(new L.LatLng(50.607846,6.297847),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1607,12 +1617,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSIM Gerätehaus Simmerath   50.607846,6.297847' ,
-                    }).addTo(fg).bindPopup('LGSIM Gerätehaus Simmerath   50.607846,6.297847' );                        
+                title: 'LGSIM418 Gerätehaus Simmerath   50.607846,6.297847' ,
+                    }).addTo(fg).bindPopup('LGSIM418 Gerätehaus Simmerath   50.607846,6.297847' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSTE = new L.marker(new L.LatLng(50.626846,6.354188),{ 
+            var LGSTE419 = new L.marker(new L.LatLng(50.626846,6.354188),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1622,12 +1632,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSTE Gerätehaus Steckenborn   50.626846,6.354188' ,
-                    }).addTo(fg).bindPopup('LGSTE Gerätehaus Steckenborn   50.626846,6.354188' );                        
+                title: 'LGSTE419 Gerätehaus Steckenborn   50.626846,6.354188' ,
+                    }).addTo(fg).bindPopup('LGSTE419 Gerätehaus Steckenborn   50.626846,6.354188' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSTR = new L.marker(new L.LatLng(50.624717,6.334544),{ 
+            var LGSTR420 = new L.marker(new L.LatLng(50.624717,6.334544),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1637,12 +1647,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSTR Gerätehaus Strauch   50.624717,6.334544' ,
-                    }).addTo(fg).bindPopup('LGSTR Gerätehaus Strauch   50.624717,6.334544' );                        
+                title: 'LGSTR420 Gerätehaus Strauch   50.624717,6.334544' ,
+                    }).addTo(fg).bindPopup('LGSTR420 Gerätehaus Strauch   50.624717,6.334544' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGWOF = new L.marker(new L.LatLng(50.62717,6.382292),{ 
+            var LGWOF421 = new L.marker(new L.LatLng(50.62717,6.382292),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1652,12 +1662,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGWOF Gerätehaus Woffelsbach   50.62717,6.382292' ,
-                    }).addTo(fg).bindPopup('LGWOF Gerätehaus Woffelsbach   50.62717,6.382292' );                        
+                title: 'LGWOF421 Gerätehaus Woffelsbach   50.62717,6.382292' ,
+                    }).addTo(fg).bindPopup('LGWOF421 Gerätehaus Woffelsbach   50.62717,6.382292' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HBFS1 = new L.marker(new L.LatLng(40.80125,-124.16873),{ 
+            var HBFS1166 = new L.marker(new L.LatLng(40.80125,-124.16873),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1667,12 +1677,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HBFS1 Humboldt Bay Fire Station 1  HBF Main Office 40.80125,-124.16873' ,
-                    }).addTo(fg).bindPopup('HBFS1 Humboldt Bay Fire Station 1  HBF Main Office 40.80125,-124.16873' );                        
+                title: 'HBFS1166 Humboldt Bay Fire Station 1  HBF Main Office 40.80125,-124.16873' ,
+                    }).addTo(fg).bindPopup('HBFS1166 Humboldt Bay Fire Station 1  HBF Main Office 40.80125,-124.16873' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RMON = new L.marker(new L.LatLng(50.560007,6.237547),{ 
+            var RMON422 = new L.marker(new L.LatLng(50.560007,6.237547),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1682,12 +1692,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RMON Stadtverwaltung Monschau   50.560007,6.237547' ,
-                    }).addTo(fg).bindPopup('RMON Stadtverwaltung Monschau   50.560007,6.237547' );                        
+                title: 'RMON422 Stadtverwaltung Monschau   50.560007,6.237547' ,
+                    }).addTo(fg).bindPopup('RMON422 Stadtverwaltung Monschau   50.560007,6.237547' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HBFS4 = new L.marker(new L.LatLng(40.79978,-124.14866),{ 
+            var HBFS4167 = new L.marker(new L.LatLng(40.79978,-124.14866),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1697,12 +1707,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HBFS4 Humboldt Bay Fire Station 4   40.79978,-124.14866' ,
-                    }).addTo(fg).bindPopup('HBFS4 Humboldt Bay Fire Station 4   40.79978,-124.14866' );                        
+                title: 'HBFS4167 Humboldt Bay Fire Station 4   40.79978,-124.14866' ,
+                    }).addTo(fg).bindPopup('HBFS4167 Humboldt Bay Fire Station 4   40.79978,-124.14866' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PMON = new L.marker(new L.LatLng(50.558336,6.239711),{ 
+            var PMON423 = new L.marker(new L.LatLng(50.558336,6.239711),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1712,12 +1722,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PMON Wache Monschau   50.558336,6.239711' ,
-                    }).addTo(fg).bindPopup('PMON Wache Monschau   50.558336,6.239711' );                        
+                title: 'PMON423 Wache Monschau   50.558336,6.239711' ,
+                    }).addTo(fg).bindPopup('PMON423 Wache Monschau   50.558336,6.239711' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HBFS3 = new L.marker(new L.LatLng(40.78177,-124.18126),{ 
+            var HBFS3168 = new L.marker(new L.LatLng(40.78177,-124.18126),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1727,12 +1737,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HBFS3 Humboldt Bay Fire Station 3   40.78177,-124.18126' ,
-                    }).addTo(fg).bindPopup('HBFS3 Humboldt Bay Fire Station 3   40.78177,-124.18126' );                        
+                title: 'HBFS3168 Humboldt Bay Fire Station 3   40.78177,-124.18126' ,
+                    }).addTo(fg).bindPopup('HBFS3168 Humboldt Bay Fire Station 3   40.78177,-124.18126' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGMON = new L.marker(new L.LatLng(50.565182,6.25227),{ 
+            var LGMON424 = new L.marker(new L.LatLng(50.565182,6.25227),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1742,12 +1752,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGMON Gerätehaus Altstadt   50.565182,6.25227' ,
-                    }).addTo(fg).bindPopup('LGMON Gerätehaus Altstadt   50.565182,6.25227' );                        
+                title: 'LGMON424 Gerätehaus Altstadt   50.565182,6.25227' ,
+                    }).addTo(fg).bindPopup('LGMON424 Gerätehaus Altstadt   50.565182,6.25227' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HBFS5 = new L.marker(new L.LatLng(40.78097,-124.12982),{ 
+            var HBFS5169 = new L.marker(new L.LatLng(40.78097,-124.12982),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1757,12 +1767,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HBFS5 Humboldt Bay Fire Station 5   40.78097,-124.12982' ,
-                    }).addTo(fg).bindPopup('HBFS5 Humboldt Bay Fire Station 5   40.78097,-124.12982' );                        
+                title: 'HBFS5169 Humboldt Bay Fire Station 5   40.78097,-124.12982' ,
+                    }).addTo(fg).bindPopup('HBFS5169 Humboldt Bay Fire Station 5   40.78097,-124.12982' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHOE1 = new L.marker(new L.LatLng(50.537637,6.254052),{ 
+            var LGHOE1425 = new L.marker(new L.LatLng(50.537637,6.254052),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1772,12 +1782,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHOE1 Gerätehaus Höfen   50.537637,6.254052' ,
-                    }).addTo(fg).bindPopup('LGHOE1 Gerätehaus Höfen   50.537637,6.254052' );                        
+                title: 'LGHOE1425 Gerätehaus Höfen   50.537637,6.254052' ,
+                    }).addTo(fg).bindPopup('LGHOE1425 Gerätehaus Höfen   50.537637,6.254052' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HBFS2 = new L.marker(new L.LatLng(40.75793,-124.17967),{ 
+            var HBFS2170 = new L.marker(new L.LatLng(40.75793,-124.17967),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1787,12 +1797,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HBFS2 Humboldt Bay Fire Station 2   40.75793,-124.17967' ,
-                    }).addTo(fg).bindPopup('HBFS2 Humboldt Bay Fire Station 2   40.75793,-124.17967' );                        
+                title: 'HBFS2170 Humboldt Bay Fire Station 2   40.75793,-124.17967' ,
+                    }).addTo(fg).bindPopup('HBFS2170 Humboldt Bay Fire Station 2   40.75793,-124.17967' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LHROH = new L.marker(new L.LatLng(50.549038,6.283202),{ 
+            var LHROH426 = new L.marker(new L.LatLng(50.549038,6.283202),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1802,8 +1812,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LHROH Gerätehaus Rohren   50.549038,6.283202' ,
-                    }).addTo(fg).bindPopup('LHROH Gerätehaus Rohren   50.549038,6.283202' );                        
+                title: 'LHROH426 Gerätehaus Rohren   50.549038,6.283202' ,
+                    }).addTo(fg).bindPopup('LHROH426 Gerätehaus Rohren   50.549038,6.283202' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1822,7 +1832,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGMOE = new L.marker(new L.LatLng(50.566583,6.217732),{ 
+            var LGMOE427 = new L.marker(new L.LatLng(50.566583,6.217732),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1832,12 +1842,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGMOE Gerätehaus Mützenich   50.566583,6.217732' ,
-                    }).addTo(fg).bindPopup('LGMOE Gerätehaus Mützenich   50.566583,6.217732' );                        
+                title: 'LGMOE427 Gerätehaus Mützenich   50.566583,6.217732' ,
+                    }).addTo(fg).bindPopup('LGMOE427 Gerätehaus Mützenich   50.566583,6.217732' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGKAL = new L.marker(new L.LatLng(50.524809,6.219386),{ 
+            var LGKAL428 = new L.marker(new L.LatLng(50.524809,6.219386),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1847,8 +1857,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGKAL Gerätehaus Kalterherberg   50.524809,6.219386' ,
-                    }).addTo(fg).bindPopup('LGKAL Gerätehaus Kalterherberg   50.524809,6.219386' );                        
+                title: 'LGKAL428 Gerätehaus Kalterherberg   50.524809,6.219386' ,
+                    }).addTo(fg).bindPopup('LGKAL428 Gerätehaus Kalterherberg   50.524809,6.219386' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1867,7 +1877,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RROE = new L.marker(new L.LatLng(50.647679,6.195132),{ 
+            var RROE429 = new L.marker(new L.LatLng(50.647679,6.195132),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1877,8 +1887,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RROE Gemeinde Verwaltung Roetgen   50.647679,6.195132' ,
-                    }).addTo(fg).bindPopup('RROE Gemeinde Verwaltung Roetgen   50.647679,6.195132' );                        
+                title: 'RROE429 Gemeinde Verwaltung Roetgen   50.647679,6.195132' ,
+                    }).addTo(fg).bindPopup('RROE429 Gemeinde Verwaltung Roetgen   50.647679,6.195132' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1897,7 +1907,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PROE = new L.marker(new L.LatLng(50.647679,6.195132),{ 
+            var PROE430 = new L.marker(new L.LatLng(50.647679,6.195132),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1907,8 +1917,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PROE Wache Roetgen   50.647679,6.195132' ,
-                    }).addTo(fg).bindPopup('PROE Wache Roetgen   50.647679,6.195132' );                        
+                title: 'PROE430 Wache Roetgen   50.647679,6.195132' ,
+                    }).addTo(fg).bindPopup('PROE430 Wache Roetgen   50.647679,6.195132' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1927,7 +1937,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGROE = new L.marker(new L.LatLng(50.645685,6.193941),{ 
+            var LGROE431 = new L.marker(new L.LatLng(50.645685,6.193941),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1937,8 +1947,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGROE Gerätehaus Roetgen   50.645685,6.193941' ,
-                    }).addTo(fg).bindPopup('LGROE Gerätehaus Roetgen   50.645685,6.193941' );                        
+                title: 'LGROE431 Gerätehaus Roetgen   50.645685,6.193941' ,
+                    }).addTo(fg).bindPopup('LGROE431 Gerätehaus Roetgen   50.645685,6.193941' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1957,7 +1967,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGROT = new L.marker(new L.LatLng(50.679374,6.215632),{ 
+            var LGROT432 = new L.marker(new L.LatLng(50.679374,6.215632),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1967,8 +1977,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGROT Gerätehaus Rott   50.679374,6.215632' ,
-                    }).addTo(fg).bindPopup('LGROT Gerätehaus Rott   50.679374,6.215632' );                        
+                title: 'LGROT432 Gerätehaus Rott   50.679374,6.215632' ,
+                    }).addTo(fg).bindPopup('LGROT432 Gerätehaus Rott   50.679374,6.215632' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -1987,7 +1997,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RSTO = new L.marker(new L.LatLng(50.772383,6.226992),{ 
+            var RSTO433 = new L.marker(new L.LatLng(50.772383,6.226992),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -1997,8 +2007,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RSTO Stadtverwaltung Stolberg   50.772383,6.226992' ,
-                    }).addTo(fg).bindPopup('RSTO Stadtverwaltung Stolberg   50.772383,6.226992' );                        
+                title: 'RSTO433 Stadtverwaltung Stolberg   50.772383,6.226992' ,
+                    }).addTo(fg).bindPopup('RSTO433 Stadtverwaltung Stolberg   50.772383,6.226992' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2017,7 +2027,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PSTO = new L.marker(new L.LatLng(50.771952,6.215136),{ 
+            var PSTO434 = new L.marker(new L.LatLng(50.771952,6.215136),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2027,8 +2037,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PSTO Polizeihauptwache Stolberg   50.771952,6.215136' ,
-                    }).addTo(fg).bindPopup('PSTO Polizeihauptwache Stolberg   50.771952,6.215136' );                        
+                title: 'PSTO434 Polizeihauptwache Stolberg   50.771952,6.215136' ,
+                    }).addTo(fg).bindPopup('PSTO434 Polizeihauptwache Stolberg   50.771952,6.215136' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2047,7 +2057,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HSTO = new L.marker(new L.LatLng(50.772706,6.229039),{ 
+            var HSTO435 = new L.marker(new L.LatLng(50.772706,6.229039),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2057,8 +2067,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HSTO Bethlehem Health Center   50.772706,6.229039' ,
-                    }).addTo(fg).bindPopup('HSTO Bethlehem Health Center   50.772706,6.229039' );                        
+                title: 'HSTO435 Bethlehem Health Center   50.772706,6.229039' ,
+                    }).addTo(fg).bindPopup('HSTO435 Bethlehem Health Center   50.772706,6.229039' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2077,7 +2087,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWSTO = new L.marker(new L.LatLng(50.772356,6.215903),{ 
+            var FWSTO436 = new L.marker(new L.LatLng(50.772356,6.215903),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2087,8 +2097,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWSTO Feuerwache Stolberg   50.772356,6.215903' ,
-                    }).addTo(fg).bindPopup('FWSTO Feuerwache Stolberg   50.772356,6.215903' );                        
+                title: 'FWSTO436 Feuerwache Stolberg   50.772356,6.215903' ,
+                    }).addTo(fg).bindPopup('FWSTO436 Feuerwache Stolberg   50.772356,6.215903' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2107,7 +2117,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGVEN = new L.marker(new L.LatLng(50.706595,6.218356),{ 
+            var LGVEN437 = new L.marker(new L.LatLng(50.706595,6.218356),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2117,8 +2127,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGVEN Gerätehaus Vennwegen   50.706595,6.218356' ,
-                    }).addTo(fg).bindPopup('LGVEN Gerätehaus Vennwegen   50.706595,6.218356' );                        
+                title: 'LGVEN437 Gerätehaus Vennwegen   50.706595,6.218356' ,
+                    }).addTo(fg).bindPopup('LGVEN437 Gerätehaus Vennwegen   50.706595,6.218356' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2137,7 +2147,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBRE = new L.marker(new L.LatLng(50.730662,6.218026),{ 
+            var LGBRE438 = new L.marker(new L.LatLng(50.730662,6.218026),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2147,8 +2157,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBRE Gerätehaus Breinig   50.730662,6.218026' ,
-                    }).addTo(fg).bindPopup('LGBRE Gerätehaus Breinig   50.730662,6.218026' );                        
+                title: 'LGBRE438 Gerätehaus Breinig   50.730662,6.218026' ,
+                    }).addTo(fg).bindPopup('LGBRE438 Gerätehaus Breinig   50.730662,6.218026' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2167,7 +2177,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGZWE = new L.marker(new L.LatLng(50.721203,6.253643),{ 
+            var LGZWE439 = new L.marker(new L.LatLng(50.721203,6.253643),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2177,12 +2187,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGZWE Gerätehaus Zweifall   50.721203,6.253643' ,
-                    }).addTo(fg).bindPopup('LGZWE Gerätehaus Zweifall   50.721203,6.253643' );                        
+                title: 'LGZWE439 Gerätehaus Zweifall   50.721203,6.253643' ,
+                    }).addTo(fg).bindPopup('LGZWE439 Gerätehaus Zweifall   50.721203,6.253643' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KFD35 = new L.marker(new L.LatLng(41.57543,-124.04627),{ 
+            var KFD35184 = new L.marker(new L.LatLng(41.57543,-124.04627),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2192,12 +2202,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KFD35 Klamath Fire Station 35   41.57543,-124.04627' ,
-                    }).addTo(fg).bindPopup('KFD35 Klamath Fire Station 35   41.57543,-124.04627' );                        
+                title: 'KFD35184 Klamath Fire Station 35   41.57543,-124.04627' ,
+                    }).addTo(fg).bindPopup('KFD35184 Klamath Fire Station 35   41.57543,-124.04627' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGVIC = new L.marker(new L.LatLng(50.744947,6.263825),{ 
+            var LGVIC440 = new L.marker(new L.LatLng(50.744947,6.263825),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2207,12 +2217,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGVIC Gerätehaus Vicht   50.744947,6.263825' ,
-                    }).addTo(fg).bindPopup('LGVIC Gerätehaus Vicht   50.744947,6.263825' );                        
+                title: 'LGVIC440 Gerätehaus Vicht   50.744947,6.263825' ,
+                    }).addTo(fg).bindPopup('LGVIC440 Gerätehaus Vicht   50.744947,6.263825' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var KFD34 = new L.marker(new L.LatLng(41.57347,-124.07127),{ 
+            var KFD34185 = new L.marker(new L.LatLng(41.57347,-124.07127),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2222,12 +2232,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'KFD34 Klamath Fire Station 34   41.57347,-124.07127' ,
-                    }).addTo(fg).bindPopup('KFD34 Klamath Fire Station 34   41.57347,-124.07127' );                        
+                title: 'KFD34185 Klamath Fire Station 34   41.57347,-124.07127' ,
+                    }).addTo(fg).bindPopup('KFD34185 Klamath Fire Station 34   41.57347,-124.07127' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGGRE = new L.marker(new L.LatLng(50.771925,6.303416),{ 
+            var LGGRE441 = new L.marker(new L.LatLng(50.771925,6.303416),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2237,12 +2247,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGGRE Gerätehaus Gressenich   50.771925,6.303416' ,
-                    }).addTo(fg).bindPopup('LGGRE Gerätehaus Gressenich   50.771925,6.303416' );                        
+                title: 'LGGRE441 Gerätehaus Gressenich   50.771925,6.303416' ,
+                    }).addTo(fg).bindPopup('LGGRE441 Gerätehaus Gressenich   50.771925,6.303416' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var CFPOBFS = new L.marker(new L.LatLng(41.75657,-124.15613),{ 
+            var CFPOBFS186 = new L.marker(new L.LatLng(41.75657,-124.15613),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2252,12 +2262,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'CFPOBFS CFPO Beatsch Fire station   41.75657,-124.15613' ,
-                    }).addTo(fg).bindPopup('CFPOBFS CFPO Beatsch Fire station   41.75657,-124.15613' );                        
+                title: 'CFPOBFS186 CFPO Beatsch Fire station   41.75657,-124.15613' ,
+                    }).addTo(fg).bindPopup('CFPOBFS186 CFPO Beatsch Fire station   41.75657,-124.15613' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGWER = new L.marker(new L.LatLng(50.78098,6.286442),{ 
+            var LGWER442 = new L.marker(new L.LatLng(50.78098,6.286442),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2267,8 +2277,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGWER Gerätehaus Werth   50.78098,6.286442' ,
-                    }).addTo(fg).bindPopup('LGWER Gerätehaus Werth   50.78098,6.286442' );                        
+                title: 'LGWER442 Gerätehaus Werth   50.78098,6.286442' ,
+                    }).addTo(fg).bindPopup('LGWER442 Gerätehaus Werth   50.78098,6.286442' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2287,7 +2297,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGDON = new L.marker(new L.LatLng(50.781169,6.237568),{ 
+            var LGDON443 = new L.marker(new L.LatLng(50.781169,6.237568),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2297,8 +2307,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGDON Gerätehaus Donnerberg   50.781169,6.237568' ,
-                    }).addTo(fg).bindPopup('LGDON Gerätehaus Donnerberg   50.781169,6.237568' );                        
+                title: 'LGDON443 Gerätehaus Donnerberg   50.781169,6.237568' ,
+                    }).addTo(fg).bindPopup('LGDON443 Gerätehaus Donnerberg   50.781169,6.237568' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2317,7 +2327,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGATS = new L.marker(new L.LatLng(50.786182,6.217396),{ 
+            var LGATS444 = new L.marker(new L.LatLng(50.786182,6.217396),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2327,8 +2337,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGATS Gerätehaus Atsch   50.786182,6.217396' ,
-                    }).addTo(fg).bindPopup('LGATS Gerätehaus Atsch   50.786182,6.217396' );                        
+                title: 'LGATS444 Gerätehaus Atsch   50.786182,6.217396' ,
+                    }).addTo(fg).bindPopup('LGATS444 Gerätehaus Atsch   50.786182,6.217396' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2347,7 +2357,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSMIT = new L.marker(new L.LatLng(50.773596,6.233773),{ 
+            var LGSMIT445 = new L.marker(new L.LatLng(50.773596,6.233773),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2357,8 +2367,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSMIT Gerätehaus Stolberg Mitte   50.773596,6.233773' ,
-                    }).addTo(fg).bindPopup('LGSMIT Gerätehaus Stolberg Mitte   50.773596,6.233773' );                        
+                title: 'LGSMIT445 Gerätehaus Stolberg Mitte   50.773596,6.233773' ,
+                    }).addTo(fg).bindPopup('LGSMIT445 Gerätehaus Stolberg Mitte   50.773596,6.233773' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2377,7 +2387,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RESCH = new L.marker(new L.LatLng(50.817958,6.271965),{ 
+            var RESCH446 = new L.marker(new L.LatLng(50.817958,6.271965),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2387,12 +2397,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RESCH Stadtverwaltung Eschweiler   50.817958,6.271965' ,
-                    }).addTo(fg).bindPopup('RESCH Stadtverwaltung Eschweiler   50.817958,6.271965' );                        
+                title: 'RESCH446 Stadtverwaltung Eschweiler   50.817958,6.271965' ,
+                    }).addTo(fg).bindPopup('RESCH446 Stadtverwaltung Eschweiler   50.817958,6.271965' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PESCH = new L.marker(new L.LatLng(50.822081,6.27491),{ 
+            var PESCH447 = new L.marker(new L.LatLng(50.822081,6.27491),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2402,8 +2412,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PESCH Polizeihauptwache Eschweiler   50.822081,6.27491' ,
-                    }).addTo(fg).bindPopup('PESCH Polizeihauptwache Eschweiler   50.822081,6.27491' );                        
+                title: 'PESCH447 Polizeihauptwache Eschweiler   50.822081,6.27491' ,
+                    }).addTo(fg).bindPopup('PESCH447 Polizeihauptwache Eschweiler   50.822081,6.27491' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2422,7 +2432,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWESCH = new L.marker(new L.LatLng(50.81122,6.255358),{ 
+            var FWESCH449 = new L.marker(new L.LatLng(50.81122,6.255358),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2432,8 +2442,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWESCH Feuerwache Eschweiler   50.81122,6.255358' ,
-                    }).addTo(fg).bindPopup('FWESCH Feuerwache Eschweiler   50.81122,6.255358' );                        
+                title: 'FWESCH449 Feuerwache Eschweiler   50.81122,6.255358' ,
+                    }).addTo(fg).bindPopup('FWESCH449 Feuerwache Eschweiler   50.81122,6.255358' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2452,7 +2462,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBOH = new L.marker(new L.LatLng(50.798068,6.280844),{ 
+            var LGBOH450 = new L.marker(new L.LatLng(50.798068,6.280844),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2462,12 +2472,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBOH Gerätehaus Bohl   50.798068,6.280844' ,
-                    }).addTo(fg).bindPopup('LGBOH Gerätehaus Bohl   50.798068,6.280844' );                        
+                title: 'LGBOH450 Gerätehaus Bohl   50.798068,6.280844' ,
+                    }).addTo(fg).bindPopup('LGBOH450 Gerätehaus Bohl   50.798068,6.280844' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var CFKHB = new L.marker(new L.LatLng(40.71948,-123.92928),{ 
+            var CFKHB195 = new L.marker(new L.LatLng(40.71948,-123.92928),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2477,12 +2487,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'CFKHB Cal Fire Kneeland Helitack Base  Cal Fire Rotary Air Craft and refull Air Attack Base 40.71948,-123.92928' ,
-                    }).addTo(fg).bindPopup('CFKHB Cal Fire Kneeland Helitack Base  Cal Fire Rotary Air Craft and refull Air Attack Base 40.71948,-123.92928' );                        
+                title: 'CFKHB195 Cal Fire Kneeland Helitack Base  Cal Fire Rotary Air Craft and refull Air Attack Base 40.71948,-123.92928' ,
+                    }).addTo(fg).bindPopup('CFKHB195 Cal Fire Kneeland Helitack Base  Cal Fire Rotary Air Craft and refull Air Attack Base 40.71948,-123.92928' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGWEI = new L.marker(new L.LatLng(50.825261,6.308295),{ 
+            var LGWEI451 = new L.marker(new L.LatLng(50.825261,6.308295),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2492,8 +2502,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGWEI Gerätehaus Weisweilerl   50.825261,6.308295' ,
-                    }).addTo(fg).bindPopup('LGWEI Gerätehaus Weisweilerl   50.825261,6.308295' );                        
+                title: 'LGWEI451 Gerätehaus Weisweilerl   50.825261,6.308295' ,
+                    }).addTo(fg).bindPopup('LGWEI451 Gerätehaus Weisweilerl   50.825261,6.308295' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2512,7 +2522,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGDUE = new L.marker(new L.LatLng(50.835584,6.273568),{ 
+            var LGDUE452 = new L.marker(new L.LatLng(50.835584,6.273568),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2522,8 +2532,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGDUE Gerätehaus Dürwiss   50.835584,6.273568' ,
-                    }).addTo(fg).bindPopup('LGDUE Gerätehaus Dürwiss   50.835584,6.273568' );                        
+                title: 'LGDUE452 Gerätehaus Dürwiss   50.835584,6.273568' ,
+                    }).addTo(fg).bindPopup('LGDUE452 Gerätehaus Dürwiss   50.835584,6.273568' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2542,7 +2552,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGLOH = new L.marker(new L.LatLng(50.863128,6.290406),{ 
+            var LGLOH453 = new L.marker(new L.LatLng(50.863128,6.290406),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2552,8 +2562,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGLOH Gerätehaus Neu_Lohn   50.863128,6.290406' ,
-                    }).addTo(fg).bindPopup('LGLOH Gerätehaus Neu_Lohn   50.863128,6.290406' );                        
+                title: 'LGLOH453 Gerätehaus Neu_Lohn   50.863128,6.290406' ,
+                    }).addTo(fg).bindPopup('LGLOH453 Gerätehaus Neu_Lohn   50.863128,6.290406' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2572,7 +2582,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LHKIN = new L.marker(new L.LatLng(50.843966,6.229124),{ 
+            var LHKIN454 = new L.marker(new L.LatLng(50.843966,6.229124),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2582,8 +2592,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LHKIN Gerätehaus Kinsweiler   50.843966,6.229124' ,
-                    }).addTo(fg).bindPopup('LHKIN Gerätehaus Kinsweiler   50.843966,6.229124' );                        
+                title: 'LHKIN454 Gerätehaus Kinsweiler   50.843966,6.229124' ,
+                    }).addTo(fg).bindPopup('LHKIN454 Gerätehaus Kinsweiler   50.843966,6.229124' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2602,7 +2612,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGROE1 = new L.marker(new L.LatLng(50.822782,6.235976),{ 
+            var LGROE1455 = new L.marker(new L.LatLng(50.822782,6.235976),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2612,8 +2622,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGROE1 Gerätehaus Röhe   50.822782,6.235976' ,
-                    }).addTo(fg).bindPopup('LGROE1 Gerätehaus Röhe   50.822782,6.235976' );                        
+                title: 'LGROE1455 Gerätehaus Röhe   50.822782,6.235976' ,
+                    }).addTo(fg).bindPopup('LGROE1455 Gerätehaus Röhe   50.822782,6.235976' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2632,7 +2642,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RWUER = new L.marker(new L.LatLng(50.819575,6.129974),{ 
+            var RWUER456 = new L.marker(new L.LatLng(50.819575,6.129974),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2642,8 +2652,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RWUER Stadtverwaltung Würselen   50.819575,6.129974' ,
-                    }).addTo(fg).bindPopup('RWUER Stadtverwaltung Würselen   50.819575,6.129974' );                        
+                title: 'RWUER456 Stadtverwaltung Würselen   50.819575,6.129974' ,
+                    }).addTo(fg).bindPopup('RWUER456 Stadtverwaltung Würselen   50.819575,6.129974' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2662,7 +2672,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PWUER = new L.marker(new L.LatLng(50.820841,6.128693),{ 
+            var PWUER457 = new L.marker(new L.LatLng(50.820841,6.128693),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2672,8 +2682,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PWUER Polizeiwache Würselen   50.820841,6.128693' ,
-                    }).addTo(fg).bindPopup('PWUER Polizeiwache Würselen   50.820841,6.128693' );                        
+                title: 'PWUER457 Polizeiwache Würselen   50.820841,6.128693' ,
+                    }).addTo(fg).bindPopup('PWUER457 Polizeiwache Würselen   50.820841,6.128693' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2692,7 +2702,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HRMK = new L.marker(new L.LatLng(50.815424,6.142567),{ 
+            var HRMK458 = new L.marker(new L.LatLng(50.815424,6.142567),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2702,12 +2712,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HRMK Rhein_Maas Klinikum   50.815424,6.142567' ,
-                    }).addTo(fg).bindPopup('HRMK Rhein_Maas Klinikum   50.815424,6.142567' );                        
+                title: 'HRMK458 Rhein_Maas Klinikum   50.815424,6.142567' ,
+                    }).addTo(fg).bindPopup('HRMK458 Rhein_Maas Klinikum   50.815424,6.142567' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWWUER = new L.marker(new L.LatLng(50.829789,6.136548),{ 
+            var FWWUER459 = new L.marker(new L.LatLng(50.829789,6.136548),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2717,8 +2727,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWWUER Feuerwache Würselen   50.829789,6.136548' ,
-                    }).addTo(fg).bindPopup('FWWUER Feuerwache Würselen   50.829789,6.136548' );                        
+                title: 'FWWUER459 Feuerwache Würselen   50.829789,6.136548' ,
+                    }).addTo(fg).bindPopup('FWWUER459 Feuerwache Würselen   50.829789,6.136548' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2737,7 +2747,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBAR = new L.marker(new L.LatLng(50.844639,6.112714),{ 
+            var LGBAR460 = new L.marker(new L.LatLng(50.844639,6.112714),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2747,8 +2757,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBAR Gerätehaus Bardenberg   50.844639,6.112714' ,
-                    }).addTo(fg).bindPopup('LGBAR Gerätehaus Bardenberg   50.844639,6.112714' );                        
+                title: 'LGBAR460 Gerätehaus Bardenberg   50.844639,6.112714' ,
+                    }).addTo(fg).bindPopup('LGBAR460 Gerätehaus Bardenberg   50.844639,6.112714' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2767,7 +2777,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBROI = new L.marker(new L.LatLng(50.826609,6.174031),{ 
+            var LGBROI461 = new L.marker(new L.LatLng(50.826609,6.174031),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2777,12 +2787,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBROI Gerätehaus Broichweiden   50.826609,6.174031' ,
-                    }).addTo(fg).bindPopup('LGBROI Gerätehaus Broichweiden   50.826609,6.174031' );                        
+                title: 'LGBROI461 Gerätehaus Broichweiden   50.826609,6.174031' ,
+                    }).addTo(fg).bindPopup('LGBROI461 Gerätehaus Broichweiden   50.826609,6.174031' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGWMIT = new L.marker(new L.LatLng(50.829789,6.136548),{ 
+            var LGWMIT462 = new L.marker(new L.LatLng(50.829789,6.136548),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2792,8 +2802,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGWMIT Gerätehaus Mitte   50.829789,6.136548' ,
-                    }).addTo(fg).bindPopup('LGWMIT Gerätehaus Mitte   50.829789,6.136548' );                        
+                title: 'LGWMIT462 Gerätehaus Mitte   50.829789,6.136548' ,
+                    }).addTo(fg).bindPopup('LGWMIT462 Gerätehaus Mitte   50.829789,6.136548' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2812,7 +2822,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RHER = new L.marker(new L.LatLng(50.870513,6.101261),{ 
+            var RHER463 = new L.marker(new L.LatLng(50.870513,6.101261),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2822,8 +2832,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RHER Stadtverwaltung Herzogenrath   50.870513,6.101261' ,
-                    }).addTo(fg).bindPopup('RHER Stadtverwaltung Herzogenrath   50.870513,6.101261' );                        
+                title: 'RHER463 Stadtverwaltung Herzogenrath   50.870513,6.101261' ,
+                    }).addTo(fg).bindPopup('RHER463 Stadtverwaltung Herzogenrath   50.870513,6.101261' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2842,7 +2852,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var UEHER = new L.marker(new L.LatLng(50.870836,6.102201),{ 
+            var UEHER464 = new L.marker(new L.LatLng(50.870836,6.102201),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2852,8 +2862,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'UEHER Polizeiwache Herzogenrath   50.870836,6.102201' ,
-                    }).addTo(fg).bindPopup('UEHER Polizeiwache Herzogenrath   50.870836,6.102201' );                        
+                title: 'UEHER464 Polizeiwache Herzogenrath   50.870836,6.102201' ,
+                    }).addTo(fg).bindPopup('UEHER464 Polizeiwache Herzogenrath   50.870836,6.102201' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2872,7 +2882,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWHER = new L.marker(new L.LatLng(50.866874,6.09844),{ 
+            var FWHER465 = new L.marker(new L.LatLng(50.866874,6.09844),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2882,8 +2892,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWHER Feuerwache Herzogenrath   50.866874,6.09844' ,
-                    }).addTo(fg).bindPopup('FWHER Feuerwache Herzogenrath   50.866874,6.09844' );                        
+                title: 'FWHER465 Feuerwache Herzogenrath   50.866874,6.09844' ,
+                    }).addTo(fg).bindPopup('FWHER465 Feuerwache Herzogenrath   50.866874,6.09844' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2902,7 +2912,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGMER = new L.marker(new L.LatLng(50.887492,6.101902),{ 
+            var LGMER466 = new L.marker(new L.LatLng(50.887492,6.101902),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2912,8 +2922,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGMER Gerätehaus Merkstein   50.887492,6.101902' ,
-                    }).addTo(fg).bindPopup('LGMER Gerätehaus Merkstein   50.887492,6.101902' );                        
+                title: 'LGMER466 Gerätehaus Merkstein   50.887492,6.101902' ,
+                    }).addTo(fg).bindPopup('LGMER466 Gerätehaus Merkstein   50.887492,6.101902' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2932,7 +2942,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGKOH = new L.marker(new L.LatLng(50.832215,6.085105),{ 
+            var LGKOH467 = new L.marker(new L.LatLng(50.832215,6.085105),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2942,8 +2952,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGKOH Gerätehaus Kohlscheid   50.832215,6.085105' ,
-                    }).addTo(fg).bindPopup('LGKOH Gerätehaus Kohlscheid   50.832215,6.085105' );                        
+                title: 'LGKOH467 Gerätehaus Kohlscheid   50.832215,6.085105' ,
+                    }).addTo(fg).bindPopup('LGKOH467 Gerätehaus Kohlscheid   50.832215,6.085105' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2962,7 +2972,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RBAES = new L.marker(new L.LatLng(50.908164,6.187756),{ 
+            var RBAES468 = new L.marker(new L.LatLng(50.908164,6.187756),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -2972,8 +2982,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RBAES Stadtverwaltung Baesweiler   50.908164,6.187756' ,
-                    }).addTo(fg).bindPopup('RBAES Stadtverwaltung Baesweiler   50.908164,6.187756' );                        
+                title: 'RBAES468 Stadtverwaltung Baesweiler   50.908164,6.187756' ,
+                    }).addTo(fg).bindPopup('RBAES468 Stadtverwaltung Baesweiler   50.908164,6.187756' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -2992,7 +3002,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PBAES = new L.marker(new L.LatLng(50.908164,6.187756),{ 
+            var PBAES469 = new L.marker(new L.LatLng(50.908164,6.187756),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3002,8 +3012,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PBAES Polizeiwache Baesweiler   50.908164,6.187756' ,
-                    }).addTo(fg).bindPopup('PBAES Polizeiwache Baesweiler   50.908164,6.187756' );                        
+                title: 'PBAES469 Polizeiwache Baesweiler   50.908164,6.187756' ,
+                    }).addTo(fg).bindPopup('PBAES469 Polizeiwache Baesweiler   50.908164,6.187756' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3022,7 +3032,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBAES = new L.marker(new L.LatLng(50.908164,6.187756),{ 
+            var LGBAES470 = new L.marker(new L.LatLng(50.908164,6.187756),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3032,8 +3042,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBAES Gerätehaus Baesweiler   50.908164,6.187756' ,
-                    }).addTo(fg).bindPopup('LGBAES Gerätehaus Baesweiler   50.908164,6.187756' );                        
+                title: 'LGBAES470 Gerätehaus Baesweiler   50.908164,6.187756' ,
+                    }).addTo(fg).bindPopup('LGBAES470 Gerätehaus Baesweiler   50.908164,6.187756' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3052,7 +3062,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBEG = new L.marker(new L.LatLng(50.926302,6.169597),{ 
+            var LGBEG471 = new L.marker(new L.LatLng(50.926302,6.169597),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3062,8 +3072,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBEG Gerätehaus Beggendorf   50.926302,6.169597' ,
-                    }).addTo(fg).bindPopup('LGBEG Gerätehaus Beggendorf   50.926302,6.169597' );                        
+                title: 'LGBEG471 Gerätehaus Beggendorf   50.926302,6.169597' ,
+                    }).addTo(fg).bindPopup('LGBEG471 Gerätehaus Beggendorf   50.926302,6.169597' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3082,7 +3092,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGOID = new L.marker(new L.LatLng(50.892694,6.18344),{ 
+            var LGOID472 = new L.marker(new L.LatLng(50.892694,6.18344),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3092,8 +3102,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGOID Gerätehaus Oidtweiler   50.892694,6.18344' ,
-                    }).addTo(fg).bindPopup('LGOID Gerätehaus Oidtweiler   50.892694,6.18344' );                        
+                title: 'LGOID472 Gerätehaus Oidtweiler   50.892694,6.18344' ,
+                    }).addTo(fg).bindPopup('LGOID472 Gerätehaus Oidtweiler   50.892694,6.18344' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3112,7 +3122,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSET = new L.marker(new L.LatLng(50.925385,6.200954),{ 
+            var LGSET473 = new L.marker(new L.LatLng(50.925385,6.200954),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3122,8 +3132,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSET Gerätehaus Setterich   50.925385,6.200954' ,
-                    }).addTo(fg).bindPopup('LGSET Gerätehaus Setterich   50.925385,6.200954' );                        
+                title: 'LGSET473 Gerätehaus Setterich   50.925385,6.200954' ,
+                    }).addTo(fg).bindPopup('LGSET473 Gerätehaus Setterich   50.925385,6.200954' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3142,7 +3152,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RALS = new L.marker(new L.LatLng(50.875364,6.166517),{ 
+            var RALS474 = new L.marker(new L.LatLng(50.875364,6.166517),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3152,8 +3162,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RALS Stadtverwaltung Alsdorf   50.875364,6.166517' ,
-                    }).addTo(fg).bindPopup('RALS Stadtverwaltung Alsdorf   50.875364,6.166517' );                        
+                title: 'RALS474 Stadtverwaltung Alsdorf   50.875364,6.166517' ,
+                    }).addTo(fg).bindPopup('RALS474 Stadtverwaltung Alsdorf   50.875364,6.166517' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3172,7 +3182,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PALS = new L.marker(new L.LatLng(50.871914,6.179722),{ 
+            var PALS475 = new L.marker(new L.LatLng(50.871914,6.179722),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3182,8 +3192,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PALS Polizeiwache Alsdorf   50.871914,6.179722' ,
-                    }).addTo(fg).bindPopup('PALS Polizeiwache Alsdorf   50.871914,6.179722' );                        
+                title: 'PALS475 Polizeiwache Alsdorf   50.871914,6.179722' ,
+                    }).addTo(fg).bindPopup('PALS475 Polizeiwache Alsdorf   50.871914,6.179722' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3202,7 +3212,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGALS = new L.marker(new L.LatLng(50.875067,6.173953),{ 
+            var LGALS476 = new L.marker(new L.LatLng(50.875067,6.173953),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3212,12 +3222,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGALS Gerätehaus Alsdorf   50.875067,6.173953' ,
-                    }).addTo(fg).bindPopup('LGALS Gerätehaus Alsdorf   50.875067,6.173953' );                        
+                title: 'LGALS476 Gerätehaus Alsdorf   50.875067,6.173953' ,
+                    }).addTo(fg).bindPopup('LGALS476 Gerätehaus Alsdorf   50.875067,6.173953' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHOE = new L.marker(new L.LatLng(50.860056,6.20485),{ 
+            var LGHOE477 = new L.marker(new L.LatLng(50.860056,6.20485),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3227,8 +3237,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHOE Gerätehaus Hoengen   50.860056,6.20485' ,
-                    }).addTo(fg).bindPopup('LGHOE Gerätehaus Hoengen   50.860056,6.20485' );                        
+                title: 'LGHOE477 Gerätehaus Hoengen   50.860056,6.20485' ,
+                    }).addTo(fg).bindPopup('LGHOE477 Gerätehaus Hoengen   50.860056,6.20485' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3247,7 +3257,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBET = new L.marker(new L.LatLng(50.886872,6.198953),{ 
+            var LGBET478 = new L.marker(new L.LatLng(50.886872,6.198953),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3257,8 +3267,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBET Gerätehaus Bettendorf   50.886872,6.198953' ,
-                    }).addTo(fg).bindPopup('LGBET Gerätehaus Bettendorf   50.886872,6.198953' );                        
+                title: 'LGBET478 Gerätehaus Bettendorf   50.886872,6.198953' ,
+                    }).addTo(fg).bindPopup('LGBET478 Gerätehaus Bettendorf   50.886872,6.198953' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3277,7 +3287,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RAAC = new L.marker(new L.LatLng(50.768098,6.088472),{ 
+            var RAAC479 = new L.marker(new L.LatLng(50.768098,6.088472),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3287,12 +3297,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RAAC Stadtverwaltung Aachen   50.768098,6.088472' ,
-                    }).addTo(fg).bindPopup('RAAC Stadtverwaltung Aachen   50.768098,6.088472' );                        
+                title: 'RAAC479 Stadtverwaltung Aachen   50.768098,6.088472' ,
+                    }).addTo(fg).bindPopup('RAAC479 Stadtverwaltung Aachen   50.768098,6.088472' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var PAAC = new L.marker(new L.LatLng(50.756751,6.149202),{ 
+            var PAAC480 = new L.marker(new L.LatLng(50.756751,6.149202),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3302,12 +3312,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'PAAC Polizeipräsidium Aachen   50.756751,6.149202' ,
-                    }).addTo(fg).bindPopup('PAAC Polizeipräsidium Aachen   50.756751,6.149202' );                        
+                title: 'PAAC480 Polizeipräsidium Aachen   50.756751,6.149202' ,
+                    }).addTo(fg).bindPopup('PAAC480 Polizeipräsidium Aachen   50.756751,6.149202' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var RWTH = new L.marker(new L.LatLng(50.776318,6.043778),{ 
+            var RWTH481 = new L.marker(new L.LatLng(50.776318,6.043778),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3317,12 +3327,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'RWTH Uni Klinik RWTH   50.776318,6.043778' ,
-                    }).addTo(fg).bindPopup('RWTH Uni Klinik RWTH   50.776318,6.043778' );                        
+                title: 'RWTH481 Uni Klinik RWTH   50.776318,6.043778' ,
+                    }).addTo(fg).bindPopup('RWTH481 Uni Klinik RWTH   50.776318,6.043778' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWAAC1 = new L.marker(new L.LatLng(50.7771,6.11679),{ 
+            var FWAAC1484 = new L.marker(new L.LatLng(50.7771,6.11679),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3332,12 +3342,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWAAC1 Feuerwache Aachen   50.7771,6.11679' ,
-                    }).addTo(fg).bindPopup('FWAAC1 Feuerwache Aachen   50.7771,6.11679' );                        
+                title: 'FWAAC1484 Feuerwache Aachen   50.7771,6.11679' ,
+                    }).addTo(fg).bindPopup('FWAAC1484 Feuerwache Aachen   50.7771,6.11679' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWAAC2 = new L.marker(new L.LatLng(50.728695,6.175038),{ 
+            var FWAAC2485 = new L.marker(new L.LatLng(50.728695,6.175038),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3347,12 +3357,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWAAC2 Feuerwache 2  Aachen   50.728695,6.175038' ,
-                    }).addTo(fg).bindPopup('FWAAC2 Feuerwache 2  Aachen   50.728695,6.175038' );                        
+                title: 'FWAAC2485 Feuerwache 2  Aachen   50.728695,6.175038' ,
+                    }).addTo(fg).bindPopup('FWAAC2485 Feuerwache 2  Aachen   50.728695,6.175038' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var FWAAC3 = new L.marker(new L.LatLng(50.789039,6.047787),{ 
+            var FWAAC3486 = new L.marker(new L.LatLng(50.789039,6.047787),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3362,12 +3372,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'FWAAC3 Feuerwache 3 Aachen   50.789039,6.047787' ,
-                    }).addTo(fg).bindPopup('FWAAC3 Feuerwache 3 Aachen   50.789039,6.047787' );                        
+                title: 'FWAAC3486 Feuerwache 3 Aachen   50.789039,6.047787' ,
+                    }).addTo(fg).bindPopup('FWAAC3486 Feuerwache 3 Aachen   50.789039,6.047787' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGACMIT = new L.marker(new L.LatLng(50.786317,6.135769),{ 
+            var LGACMIT487 = new L.marker(new L.LatLng(50.786317,6.135769),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3377,12 +3387,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGACMIT Gerätehaus Mitte   50.786317,6.135769' ,
-                    }).addTo(fg).bindPopup('LGACMIT Gerätehaus Mitte   50.786317,6.135769' );                        
+                title: 'LGACMIT487 Gerätehaus Mitte   50.786317,6.135769' ,
+                    }).addTo(fg).bindPopup('LGACMIT487 Gerätehaus Mitte   50.786317,6.135769' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGLAU = new L.marker(new L.LatLng(50.798014,6.060472),{ 
+            var LGLAU488 = new L.marker(new L.LatLng(50.798014,6.060472),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3392,12 +3402,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGLAU Gerätehaus Laurensberg   50.798014,6.060472' ,
-                    }).addTo(fg).bindPopup('LGLAU Gerätehaus Laurensberg   50.798014,6.060472' );                        
+                title: 'LGLAU488 Gerätehaus Laurensberg   50.798014,6.060472' ,
+                    }).addTo(fg).bindPopup('LGLAU488 Gerätehaus Laurensberg   50.798014,6.060472' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGBRA = new L.marker(new L.LatLng(50.747453,6.163663),{ 
+            var LGBRA489 = new L.marker(new L.LatLng(50.747453,6.163663),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3407,12 +3417,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGBRA Gerätehaus Brand   50.747453,6.163663' ,
-                    }).addTo(fg).bindPopup('LGBRA Gerätehaus Brand   50.747453,6.163663' );                        
+                title: 'LGBRA489 Gerätehaus Brand   50.747453,6.163663' ,
+                    }).addTo(fg).bindPopup('LGBRA489 Gerätehaus Brand   50.747453,6.163663' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGRICH = new L.marker(new L.LatLng(50.814562,6.05599),{ 
+            var LGRICH490 = new L.marker(new L.LatLng(50.814562,6.05599),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3422,12 +3432,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGRICH Gerätehaus Richterich   50.814562,6.05599' ,
-                    }).addTo(fg).bindPopup('LGRICH Gerätehaus Richterich   50.814562,6.05599' );                        
+                title: 'LGRICH490 Gerätehaus Richterich   50.814562,6.05599' ,
+                    }).addTo(fg).bindPopup('LGRICH490 Gerätehaus Richterich   50.814562,6.05599' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSIEF = new L.marker(new L.LatLng(50.694817,6.146472),{ 
+            var LGSIEF491 = new L.marker(new L.LatLng(50.694817,6.146472),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3437,12 +3447,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSIEF Gerätehaus Sief   50.694817,6.146472' ,
-                    }).addTo(fg).bindPopup('LGSIEF Gerätehaus Sief   50.694817,6.146472' );                        
+                title: 'LGSIEF491 Gerätehaus Sief   50.694817,6.146472' ,
+                    }).addTo(fg).bindPopup('LGSIEF491 Gerätehaus Sief   50.694817,6.146472' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGEILD = new L.marker(new L.LatLng(50.77656,6.149927),{ 
+            var LGEILD492 = new L.marker(new L.LatLng(50.77656,6.149927),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3452,12 +3462,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGEILD Gerätehaus Eilendorf   50.77656,6.149927' ,
-                    }).addTo(fg).bindPopup('LGEILD Gerätehaus Eilendorf   50.77656,6.149927' );                        
+                title: 'LGEILD492 Gerätehaus Eilendorf   50.77656,6.149927' ,
+                    }).addTo(fg).bindPopup('LGEILD492 Gerätehaus Eilendorf   50.77656,6.149927' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHAAR = new L.marker(new L.LatLng(50.797582,6.123783),{ 
+            var LGHAAR493 = new L.marker(new L.LatLng(50.797582,6.123783),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3467,12 +3477,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHAAR Gerätehaus Haaren   50.797582,6.123783' ,
-                    }).addTo(fg).bindPopup('LGHAAR Gerätehaus Haaren   50.797582,6.123783' );                        
+                title: 'LGHAAR493 Gerätehaus Haaren   50.797582,6.123783' ,
+                    }).addTo(fg).bindPopup('LGHAAR493 Gerätehaus Haaren   50.797582,6.123783' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGVERL = new L.marker(new L.LatLng(50.797933,6.152941),{ 
+            var LGVERL494 = new L.marker(new L.LatLng(50.797933,6.152941),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3482,12 +3492,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGVERL Gerätehaus Verlautenheide   50.797933,6.152941' ,
-                    }).addTo(fg).bindPopup('LGVERL Gerätehaus Verlautenheide   50.797933,6.152941' );                        
+                title: 'LGVERL494 Gerätehaus Verlautenheide   50.797933,6.152941' ,
+                    }).addTo(fg).bindPopup('LGVERL494 Gerätehaus Verlautenheide   50.797933,6.152941' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var HSLE = new L.marker(new L.LatLng(50.533379,6.48691),{ 
+            var HSLE496 = new L.marker(new L.LatLng(50.533379,6.48691),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3497,12 +3507,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'HSLE Krankenhaus Schleiden   50.533379,6.48691' ,
-                    }).addTo(fg).bindPopup('HSLE Krankenhaus Schleiden   50.533379,6.48691' );                        
+                title: 'HSLE496 Krankenhaus Schleiden   50.533379,6.48691' ,
+                    }).addTo(fg).bindPopup('HSLE496 Krankenhaus Schleiden   50.533379,6.48691' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSLE = new L.marker(new L.LatLng(50.532139,6.479103),{ 
+            var LGSLE497 = new L.marker(new L.LatLng(50.532139,6.479103),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3512,12 +3522,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSLE Gerätehaus Schleiden   50.532139,6.479103' ,
-                    }).addTo(fg).bindPopup('LGSLE Gerätehaus Schleiden   50.532139,6.479103' );                        
+                title: 'LGSLE497 Gerätehaus Schleiden   50.532139,6.479103' ,
+                    }).addTo(fg).bindPopup('LGSLE497 Gerätehaus Schleiden   50.532139,6.479103' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGGEMU = new L.marker(new L.LatLng(50.560923,6.497772),{ 
+            var LGGEMU498 = new L.marker(new L.LatLng(50.560923,6.497772),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3527,12 +3537,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGGEMU Gerätehaus Gemuend   50.560923,6.497772' ,
-                    }).addTo(fg).bindPopup('LGGEMU Gerätehaus Gemuend   50.560923,6.497772' );                        
+                title: 'LGGEMU498 Gerätehaus Gemuend   50.560923,6.497772' ,
+                    }).addTo(fg).bindPopup('LGGEMU498 Gerätehaus Gemuend   50.560923,6.497772' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGOBER1 = new L.marker(new L.LatLng(50.512222,6.465568),{ 
+            var LGOBER1499 = new L.marker(new L.LatLng(50.512222,6.465568),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3542,12 +3552,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGOBER1 Gerätehaus Oberhausen   50.512222,6.465568' ,
-                    }).addTo(fg).bindPopup('LGOBER1 Gerätehaus Oberhausen   50.512222,6.465568' );                        
+                title: 'LGOBER1499 Gerätehaus Oberhausen   50.512222,6.465568' ,
+                    }).addTo(fg).bindPopup('LGOBER1499 Gerätehaus Oberhausen   50.512222,6.465568' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHER = new L.marker(new L.LatLng(50.554778,6.457676),{ 
+            var LGHER500 = new L.marker(new L.LatLng(50.554778,6.457676),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3557,12 +3567,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHER Gerätehaus Herhahn   50.554778,6.457676' ,
-                    }).addTo(fg).bindPopup('LGHER Gerätehaus Herhahn   50.554778,6.457676' );                        
+                title: 'LGHER500 Gerätehaus Herhahn   50.554778,6.457676' ,
+                    }).addTo(fg).bindPopup('LGHER500 Gerätehaus Herhahn   50.554778,6.457676' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGHARP = new L.marker(new L.LatLng(50.518637,6.406335),{ 
+            var LGHARP506 = new L.marker(new L.LatLng(50.518637,6.406335),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3572,8 +3582,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGHARP Gerätehaus Harperscheid   50.518637,6.406335' ,
-                    }).addTo(fg).bindPopup('LGHARP Gerätehaus Harperscheid   50.518637,6.406335' );                        
+                title: 'LGHARP506 Gerätehaus Harperscheid   50.518637,6.406335' ,
+                    }).addTo(fg).bindPopup('LGHARP506 Gerätehaus Harperscheid   50.518637,6.406335' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3592,7 +3602,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGSCHM = new L.marker(new L.LatLng(50.657598,6.398873),{ 
+            var LGSCHM508 = new L.marker(new L.LatLng(50.657598,6.398873),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3602,8 +3612,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGSCHM Gerätehaus Schmidt   50.657598,6.398873' ,
-                    }).addTo(fg).bindPopup('LGSCHM Gerätehaus Schmidt   50.657598,6.398873' );                        
+                title: 'LGSCHM508 Gerätehaus Schmidt   50.657598,6.398873' ,
+                    }).addTo(fg).bindPopup('LGSCHM508 Gerätehaus Schmidt   50.657598,6.398873' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3652,7 +3662,7 @@ var map = L.map('map', {
          
                 $('fire'._icon).addClass('firemrkr');
             
-            var LGGEMU = new L.marker(new L.LatLng(50.560923,6.497772),{ 
+            var LGGEMU511 = new L.marker(new L.LatLng(50.560923,6.497772),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3662,8 +3672,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/fire.png', iconSize: [32, 34]}),
-                title: 'LGGEMU Gerätehaus Gemnd   50.560923,6.497772' ,
-                    }).addTo(fg).bindPopup('LGGEMU Gerätehaus Gemnd   50.560923,6.497772' );                        
+                title: 'LGGEMU511 Gerätehaus Gemnd   50.560923,6.497772' ,
+                    }).addTo(fg).bindPopup('LGGEMU511 Gerätehaus Gemnd   50.560923,6.497772' );                        
          
                 $('fire'._icon).addClass('firemrkr');
             
@@ -3697,7 +3707,7 @@ var map = L.map('map', {
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var FWRW6 = new L.marker(new L.LatLng(50.780334,6.097386),{ 
+            var FWRW6525 = new L.marker(new L.LatLng(50.780334,6.097386),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3707,12 +3717,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'FWRW6 Rettungswache 6   50.780334,6.097386' ,
-                    }).addTo(fg).bindPopup('FWRW6 Rettungswache 6   50.780334,6.097386' );                        
+                title: 'FWRW6525 Rettungswache 6   50.780334,6.097386' ,
+                    }).addTo(fg).bindPopup('FWRW6525 Rettungswache 6   50.780334,6.097386' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var FWRW5 = new L.marker(new L.LatLng(50.78098,6.12967),{ 
+            var FWRW5526 = new L.marker(new L.LatLng(50.78098,6.12967),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3722,12 +3732,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'FWRW5 Rettungswache 5   50.78098,6.12967' ,
-                    }).addTo(fg).bindPopup('FWRW5 Rettungswache 5   50.78098,6.12967' );                        
+                title: 'FWRW5526 Rettungswache 5   50.78098,6.12967' ,
+                    }).addTo(fg).bindPopup('FWRW5526 Rettungswache 5   50.78098,6.12967' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var FWRW4 = new L.marker(new L.LatLng(50.781304,6.134702),{ 
+            var FWRW4527 = new L.marker(new L.LatLng(50.781304,6.134702),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3737,12 +3747,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'FWRW4 Rettungswache 4   50.781304,6.134702' ,
-                    }).addTo(fg).bindPopup('FWRW4 Rettungswache 4   50.781304,6.134702' );                        
+                title: 'FWRW4527 Rettungswache 4   50.781304,6.134702' ,
+                    }).addTo(fg).bindPopup('FWRW4527 Rettungswache 4   50.781304,6.134702' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var LMH = new L.marker(new L.LatLng(38.979225,-95.248259),{ 
+            var LMH145 = new L.marker(new L.LatLng(38.979225,-95.248259),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3752,12 +3762,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'LMH Lawrence Memorial Hospital  ACT staffs this location in emergencies  38.979225,-95.248259' ,
-                    }).addTo(fg).bindPopup('LMH Lawrence Memorial Hospital  ACT staffs this location in emergencies  38.979225,-95.248259' );                        
+                title: 'LMH145 Lawrence Memorial Hospital  ACT staffs this location in emergencies  38.979225,-95.248259' ,
+                    }).addTo(fg).bindPopup('LMH145 Lawrence Memorial Hospital  ACT staffs this location in emergencies  38.979225,-95.248259' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var HSIM = new L.marker(new L.LatLng(50.604692,6.301457),{ 
+            var HSIM408 = new L.marker(new L.LatLng(50.604692,6.301457),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3767,8 +3777,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'HSIM Eifel Clinic St. Brigida   50.604692,6.301457' ,
-                    }).addTo(fg).bindPopup('HSIM Eifel Clinic St. Brigida   50.604692,6.301457' );                        
+                title: 'HSIM408 Eifel Clinic St. Brigida   50.604692,6.301457' ,
+                    }).addTo(fg).bindPopup('HSIM408 Eifel Clinic St. Brigida   50.604692,6.301457' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
@@ -3862,7 +3872,7 @@ var map = L.map('map', {
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var HESCH = new L.marker(new L.LatLng(50.818443,6.264238),{ 
+            var HESCH448 = new L.marker(new L.LatLng(50.818443,6.264238),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3872,12 +3882,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'HESCH St._Antonius_Hospital   50.818443,6.264238' ,
-                    }).addTo(fg).bindPopup('HESCH St._Antonius_Hospital   50.818443,6.264238' );                        
+                title: 'HESCH448 St._Antonius_Hospital   50.818443,6.264238' ,
+                    }).addTo(fg).bindPopup('HESCH448 St._Antonius_Hospital   50.818443,6.264238' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var MARIEN = new L.marker(new L.LatLng(50.762088,6.095381),{ 
+            var MARIEN482 = new L.marker(new L.LatLng(50.762088,6.095381),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3887,12 +3897,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'MARIEN Marienhospital   50.762088,6.095381' ,
-                    }).addTo(fg).bindPopup('MARIEN Marienhospital   50.762088,6.095381' );                        
+                title: 'MARIEN482 Marienhospital   50.762088,6.095381' ,
+                    }).addTo(fg).bindPopup('MARIEN482 Marienhospital   50.762088,6.095381' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var LUISEN = new L.marker(new L.LatLng(50.767613,6.076744),{ 
+            var LUISEN483 = new L.marker(new L.LatLng(50.767613,6.076744),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3902,12 +3912,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'LUISEN Luisenhospital   50.767613,6.076744' ,
-                    }).addTo(fg).bindPopup('LUISEN Luisenhospital   50.767613,6.076744' );                        
+                title: 'LUISEN483 Luisenhospital   50.767613,6.076744' ,
+                    }).addTo(fg).bindPopup('LUISEN483 Luisenhospital   50.767613,6.076744' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var FWWEST = new L.marker(new L.LatLng(50.769338,6.056529),{ 
+            var FWWEST495 = new L.marker(new L.LatLng(50.769338,6.056529),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3917,12 +3927,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
-                title: 'FWWEST Rettungswache West   50.769338,6.056529' ,
-                    }).addTo(fg).bindPopup('FWWEST Rettungswache West   50.769338,6.056529' );                        
+                title: 'FWWEST495 Rettungswache West   50.769338,6.056529' ,
+                    }).addTo(fg).bindPopup('FWWEST495 Rettungswache West   50.769338,6.056529' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
             
-            var BATES = new L.marker(new L.LatLng(38.2498,-94.3432),{ 
+            var BATES1 = new L.marker(new L.LatLng(38.2498,-94.3432),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3932,12 +3942,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'BATES BATES COUNTY HOSPITAL  KCHEART 38.2498,-94.3432' ,
-                    }).addTo(fg).bindPopup('BATES BATES COUNTY HOSPITAL  KCHEART 38.2498,-94.3432' );                        
+                title: 'BATES1 BATES COUNTY HOSPITAL  KCHEART 38.2498,-94.3432' ,
+                    }).addTo(fg).bindPopup('BATES1 BATES COUNTY HOSPITAL  KCHEART 38.2498,-94.3432' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var BOTHWL = new L.marker(new L.LatLng(38.6993,-93.2208),{ 
+            var BOTHWL2 = new L.marker(new L.LatLng(38.6993,-93.2208),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3947,12 +3957,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'BOTHWL BOTHWELL REGIONAL HEALTH CENTER   38.6993,-93.2208' ,
-                    }).addTo(fg).bindPopup('BOTHWL BOTHWELL REGIONAL HEALTH CENTER   38.6993,-93.2208' );                        
+                title: 'BOTHWL2 BOTHWELL REGIONAL HEALTH CENTER   38.6993,-93.2208' ,
+                    }).addTo(fg).bindPopup('BOTHWL2 BOTHWELL REGIONAL HEALTH CENTER   38.6993,-93.2208' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var BRMC = new L.marker(new L.LatLng(38.8158,-94.5033),{ 
+            var BRMC3 = new L.marker(new L.LatLng(38.8158,-94.5033),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3962,12 +3972,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'BRMC Research Belton Hospital   38.8158,-94.5033' ,
-                    }).addTo(fg).bindPopup('BRMC Research Belton Hospital   38.8158,-94.5033' );                        
+                title: 'BRMC3 Research Belton Hospital   38.8158,-94.5033' ,
+                    }).addTo(fg).bindPopup('BRMC3 Research Belton Hospital   38.8158,-94.5033' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var CARROL = new L.marker(new L.LatLng(39.3762,-93.494),{ 
+            var CARROL4 = new L.marker(new L.LatLng(39.3762,-93.494),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3977,12 +3987,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CARROL CARROLL COUNTY HOSPITAL   39.3762,-93.494' ,
-                    }).addTo(fg).bindPopup('CARROL CARROLL COUNTY HOSPITAL   39.3762,-93.494' );                        
+                title: 'CARROL4 CARROLL COUNTY HOSPITAL   39.3762,-93.494' ,
+                    }).addTo(fg).bindPopup('CARROL4 CARROLL COUNTY HOSPITAL   39.3762,-93.494' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var CASS = new L.marker(new L.LatLng(38.6645,-94.3725),{ 
+            var CASS5 = new L.marker(new L.LatLng(38.6645,-94.3725),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -3992,12 +4002,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CASS Cass Medical Center   38.6645,-94.3725' ,
-                    }).addTo(fg).bindPopup('CASS Cass Medical Center   38.6645,-94.3725' );                        
+                title: 'CASS5 Cass Medical Center   38.6645,-94.3725' ,
+                    }).addTo(fg).bindPopup('CASS5 Cass Medical Center   38.6645,-94.3725' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var CMH = new L.marker(new L.LatLng(39.852,-943.74),{ 
+            var CMH6 = new L.marker(new L.LatLng(39.852,-943.74),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4007,12 +4017,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CMH Childrens Mercy Hospital   39.852,-943.74' ,
-                    }).addTo(fg).bindPopup('CMH Childrens Mercy Hospital   39.852,-943.74' );                        
+                title: 'CMH6 Childrens Mercy Hospital   39.852,-943.74' ,
+                    }).addTo(fg).bindPopup('CMH6 Childrens Mercy Hospital   39.852,-943.74' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var CMHS = new L.marker(new L.LatLng(38.9302,-94.6613),{ 
+            var CMHS7 = new L.marker(new L.LatLng(38.9302,-94.6613),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4022,12 +4032,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CMHS Childrens Mercy Hospital South   38.9302,-94.6613' ,
-                    }).addTo(fg).bindPopup('CMHS Childrens Mercy Hospital South   38.9302,-94.6613' );                        
+                title: 'CMHS7 Childrens Mercy Hospital South   38.9302,-94.6613' ,
+                    }).addTo(fg).bindPopup('CMHS7 Childrens Mercy Hospital South   38.9302,-94.6613' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var CUSHNG = new L.marker(new L.LatLng(39.3072,-94.9185),{ 
+            var CUSHNG8 = new L.marker(new L.LatLng(39.3072,-94.9185),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4037,12 +4047,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CUSHNG Cushing Memorial Hospital   39.3072,-94.9185' ,
-                    }).addTo(fg).bindPopup('CUSHNG Cushing Memorial Hospital   39.3072,-94.9185' );                        
+                title: 'CUSHNG8 Cushing Memorial Hospital   39.3072,-94.9185' ,
+                    }).addTo(fg).bindPopup('CUSHNG8 Cushing Memorial Hospital   39.3072,-94.9185' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var DCEC = new L.marker(new L.LatLng(39.862,-94.576),{ 
+            var DCEC9 = new L.marker(new L.LatLng(39.862,-94.576),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4052,12 +4062,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DCEC Metro Regional Healthcare Coord. Ctr   39.862,-94.576' ,
-                    }).addTo(fg).bindPopup('DCEC Metro Regional Healthcare Coord. Ctr   39.862,-94.576' );                        
+                title: 'DCEC9 Metro Regional Healthcare Coord. Ctr   39.862,-94.576' ,
+                    }).addTo(fg).bindPopup('DCEC9 Metro Regional Healthcare Coord. Ctr   39.862,-94.576' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var EXSPR = new L.marker(new L.LatLng(39.3568,-94.237),{ 
+            var EXSPR10 = new L.marker(new L.LatLng(39.3568,-94.237),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4067,12 +4077,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'EXSPR Excelsior Springs Medical Center   39.3568,-94.237' ,
-                    }).addTo(fg).bindPopup('EXSPR Excelsior Springs Medical Center   39.3568,-94.237' );                        
+                title: 'EXSPR10 Excelsior Springs Medical Center   39.3568,-94.237' ,
+                    }).addTo(fg).bindPopup('EXSPR10 Excelsior Springs Medical Center   39.3568,-94.237' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var FITZ = new L.marker(new L.LatLng(39.928,-93.2143),{ 
+            var FITZ11 = new L.marker(new L.LatLng(39.928,-93.2143),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4082,12 +4092,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'FITZ FITZGIBBON HOSPITAL   39.928,-93.2143' ,
-                    }).addTo(fg).bindPopup('FITZ FITZGIBBON HOSPITAL   39.928,-93.2143' );                        
+                title: 'FITZ11 FITZGIBBON HOSPITAL   39.928,-93.2143' ,
+                    }).addTo(fg).bindPopup('FITZ11 FITZGIBBON HOSPITAL   39.928,-93.2143' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var GVMH = new L.marker(new L.LatLng(38.3892,-93.7702),{ 
+            var GVMH12 = new L.marker(new L.LatLng(38.3892,-93.7702),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4097,12 +4107,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'GVMH GOLDEN VALLEY MEMORIAL HOSPITAL   38.3892,-93.7702' ,
-                    }).addTo(fg).bindPopup('GVMH GOLDEN VALLEY MEMORIAL HOSPITAL   38.3892,-93.7702' );                        
+                title: 'GVMH12 GOLDEN VALLEY MEMORIAL HOSPITAL   38.3892,-93.7702' ,
+                    }).addTo(fg).bindPopup('GVMH12 GOLDEN VALLEY MEMORIAL HOSPITAL   38.3892,-93.7702' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var I70 = new L.marker(new L.LatLng(38.9783,-93.4162),{ 
+            var I7013 = new L.marker(new L.LatLng(38.9783,-93.4162),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4112,12 +4122,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'I70 I_70 MEDICAL CENTER   38.9783,-93.4162' ,
-                    }).addTo(fg).bindPopup('I70 I_70 MEDICAL CENTER   38.9783,-93.4162' );                        
+                title: 'I7013 I_70 MEDICAL CENTER   38.9783,-93.4162' ,
+                    }).addTo(fg).bindPopup('I7013 I_70 MEDICAL CENTER   38.9783,-93.4162' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var KC0CBC = new L.marker(new L.LatLng(39.537,-94.5865),{ 
+            var KC0CBC14 = new L.marker(new L.LatLng(39.537,-94.5865),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4127,12 +4137,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KC0CBC Kansas City Blood Bank   39.537,-94.5865' ,
-                    }).addTo(fg).bindPopup('KC0CBC Kansas City Blood Bank   39.537,-94.5865' );                        
+                title: 'KC0CBC14 Kansas City Blood Bank   39.537,-94.5865' ,
+                    }).addTo(fg).bindPopup('KC0CBC14 Kansas City Blood Bank   39.537,-94.5865' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var KCVA = new L.marker(new L.LatLng(39.672,-94.5282),{ 
+            var KCVA15 = new L.marker(new L.LatLng(39.672,-94.5282),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4142,12 +4152,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCVA Veterans Affairs Medical Center   39.672,-94.5282' ,
-                    }).addTo(fg).bindPopup('KCVA Veterans Affairs Medical Center   39.672,-94.5282' );                        
+                title: 'KCVA15 Veterans Affairs Medical Center   39.672,-94.5282' ,
+                    }).addTo(fg).bindPopup('KCVA15 Veterans Affairs Medical Center   39.672,-94.5282' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var KINDRD = new L.marker(new L.LatLng(38.968,-94.5745),{ 
+            var KINDRD16 = new L.marker(new L.LatLng(38.968,-94.5745),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4157,12 +4167,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KINDRD Kindred Hospital Kansas City   38.968,-94.5745' ,
-                    }).addTo(fg).bindPopup('KINDRD Kindred Hospital Kansas City   38.968,-94.5745' );                        
+                title: 'KINDRD16 Kindred Hospital Kansas City   38.968,-94.5745' ,
+                    }).addTo(fg).bindPopup('KINDRD16 Kindred Hospital Kansas City   38.968,-94.5745' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var KU0MED = new L.marker(new L.LatLng(39.557,-94.6102),{ 
+            var KU0MED17 = new L.marker(new L.LatLng(39.557,-94.6102),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4172,12 +4182,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KU0MED University of Kansas Hospital   39.557,-94.6102' ,
-                    }).addTo(fg).bindPopup('KU0MED University of Kansas Hospital   39.557,-94.6102' );                        
+                title: 'KU0MED17 University of Kansas Hospital   39.557,-94.6102' ,
+                    }).addTo(fg).bindPopup('KU0MED17 University of Kansas Hospital   39.557,-94.6102' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var LIBRTY = new L.marker(new L.LatLng(39.274,-94.4233),{ 
+            var LIBRTY18 = new L.marker(new L.LatLng(39.274,-94.4233),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4187,8 +4197,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'LIBRTY Liberty Hospital   39.274,-94.4233' ,
-                    }).addTo(fg).bindPopup('LIBRTY Liberty Hospital   39.274,-94.4233' );                        
+                title: 'LIBRTY18 Liberty Hospital   39.274,-94.4233' ,
+                    }).addTo(fg).bindPopup('LIBRTY18 Liberty Hospital   39.274,-94.4233' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
@@ -4207,7 +4217,7 @@ var map = L.map('map', {
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var LRHC = new L.marker(new L.LatLng(39.1893,-93.8768),{ 
+            var LRHC20 = new L.marker(new L.LatLng(39.1893,-93.8768),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4217,12 +4227,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'LRHC LAFAYETTE REGIONAL HEALTH CENTER   39.1893,-93.8768' ,
-                    }).addTo(fg).bindPopup('LRHC LAFAYETTE REGIONAL HEALTH CENTER   39.1893,-93.8768' );                        
+                title: 'LRHC20 LAFAYETTE REGIONAL HEALTH CENTER   39.1893,-93.8768' ,
+                    }).addTo(fg).bindPopup('LRHC20 LAFAYETTE REGIONAL HEALTH CENTER   39.1893,-93.8768' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var LSMED = new L.marker(new L.LatLng(38.9035,-94.3327),{ 
+            var LSMED21 = new L.marker(new L.LatLng(38.9035,-94.3327),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4232,12 +4242,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'LSMED Lee Summit Medical Center   38.9035,-94.3327' ,
-                    }).addTo(fg).bindPopup('LSMED Lee Summit Medical Center   38.9035,-94.3327' );                        
+                title: 'LSMED21 Lee Summit Medical Center   38.9035,-94.3327' ,
+                    }).addTo(fg).bindPopup('LSMED21 Lee Summit Medical Center   38.9035,-94.3327' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var MENORA = new L.marker(new L.LatLng(38.9107,-94.6512),{ 
+            var MENORA22 = new L.marker(new L.LatLng(38.9107,-94.6512),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4247,12 +4257,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'MENORA Menorah Medical Center   38.9107,-94.6512' ,
-                    }).addTo(fg).bindPopup('MENORA Menorah Medical Center   38.9107,-94.6512' );                        
+                title: 'MENORA22 Menorah Medical Center   38.9107,-94.6512' ,
+                    }).addTo(fg).bindPopup('MENORA22 Menorah Medical Center   38.9107,-94.6512' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var NORKC = new L.marker(new L.LatLng(39.1495,-94.5513),{ 
+            var NORKC23 = new L.marker(new L.LatLng(39.1495,-94.5513),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4262,12 +4272,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'NORKC North Kansas City Hospital   39.1495,-94.5513' ,
-                    }).addTo(fg).bindPopup('NORKC North Kansas City Hospital   39.1495,-94.5513' );                        
+                title: 'NORKC23 North Kansas City Hospital   39.1495,-94.5513' ,
+                    }).addTo(fg).bindPopup('NORKC23 North Kansas City Hospital   39.1495,-94.5513' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var OMC = new L.marker(new L.LatLng(38.853,-94.8235),{ 
+            var OMC24 = new L.marker(new L.LatLng(38.853,-94.8235),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4277,12 +4287,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'OMC Olathe Medical Center, Inc.   38.853,-94.8235' ,
-                    }).addTo(fg).bindPopup('OMC Olathe Medical Center, Inc.   38.853,-94.8235' );                        
+                title: 'OMC24 Olathe Medical Center, Inc.   38.853,-94.8235' ,
+                    }).addTo(fg).bindPopup('OMC24 Olathe Medical Center, Inc.   38.853,-94.8235' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var OPR = new L.marker(new L.LatLng(39.9372,-94.7262),{ 
+            var OPR25 = new L.marker(new L.LatLng(39.9372,-94.7262),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4292,12 +4302,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'OPR Overland Park RMC   39.9372,-94.7262' ,
-                    }).addTo(fg).bindPopup('OPR Overland Park RMC   39.9372,-94.7262' );                        
+                title: 'OPR25 Overland Park RMC   39.9372,-94.7262' ,
+                    }).addTo(fg).bindPopup('OPR25 Overland Park RMC   39.9372,-94.7262' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var PETTIS = new L.marker(new L.LatLng(38.6973,-93.2163),{ 
+            var PETTIS26 = new L.marker(new L.LatLng(38.6973,-93.2163),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4307,12 +4317,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'PETTIS PETTIS Co Health Dept   38.6973,-93.2163' ,
-                    }).addTo(fg).bindPopup('PETTIS PETTIS Co Health Dept   38.6973,-93.2163' );                        
+                title: 'PETTIS26 PETTIS Co Health Dept   38.6973,-93.2163' ,
+                    }).addTo(fg).bindPopup('PETTIS26 PETTIS Co Health Dept   38.6973,-93.2163' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var PMC = new L.marker(new L.LatLng(39.127,-94.7865),{ 
+            var PMC27 = new L.marker(new L.LatLng(39.127,-94.7865),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4322,12 +4332,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'PMC Providence Medical Center   39.127,-94.7865' ,
-                    }).addTo(fg).bindPopup('PMC Providence Medical Center   39.127,-94.7865' );                        
+                title: 'PMC27 Providence Medical Center   39.127,-94.7865' ,
+                    }).addTo(fg).bindPopup('PMC27 Providence Medical Center   39.127,-94.7865' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var RAYCO = new L.marker(new L.LatLng(39.2587,-93.9543),{ 
+            var RAYCO28 = new L.marker(new L.LatLng(39.2587,-93.9543),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4337,12 +4347,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RAYCO RAY COUNTY HOSPITAL   39.2587,-93.9543' ,
-                    }).addTo(fg).bindPopup('RAYCO RAY COUNTY HOSPITAL   39.2587,-93.9543' );                        
+                title: 'RAYCO28 RAY COUNTY HOSPITAL   39.2587,-93.9543' ,
+                    }).addTo(fg).bindPopup('RAYCO28 RAY COUNTY HOSPITAL   39.2587,-93.9543' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var RESRCH = new L.marker(new L.LatLng(39.167,-94.6682),{ 
+            var RESRCH29 = new L.marker(new L.LatLng(39.167,-94.6682),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4352,12 +4362,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RESRCH Research Medical Center   39.167,-94.6682' ,
-                    }).addTo(fg).bindPopup('RESRCH Research Medical Center   39.167,-94.6682' );                        
+                title: 'RESRCH29 Research Medical Center   39.167,-94.6682' ,
+                    }).addTo(fg).bindPopup('RESRCH29 Research Medical Center   39.167,-94.6682' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var RMCBKS = new L.marker(new L.LatLng(39.8,-94.5778),{ 
+            var RMCBKS30 = new L.marker(new L.LatLng(39.8,-94.5778),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4367,12 +4377,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RMCBKS Research Medical Center_ Brookside   39.8,-94.5778' ,
-                    }).addTo(fg).bindPopup('RMCBKS Research Medical Center_ Brookside   39.8,-94.5778' );                        
+                title: 'RMCBKS30 Research Medical Center_ Brookside   39.8,-94.5778' ,
+                    }).addTo(fg).bindPopup('RMCBKS30 Research Medical Center_ Brookside   39.8,-94.5778' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var SMMC = new L.marker(new L.LatLng(38.9955,-94.6908),{ 
+            var SMMC31 = new L.marker(new L.LatLng(38.9955,-94.6908),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4382,12 +4392,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'SMMC Shawnee Mission Medical Center   38.9955,-94.6908' ,
-                    }).addTo(fg).bindPopup('SMMC Shawnee Mission Medical Center   38.9955,-94.6908' );                        
+                title: 'SMMC31 Shawnee Mission Medical Center   38.9955,-94.6908' ,
+                    }).addTo(fg).bindPopup('SMMC31 Shawnee Mission Medical Center   38.9955,-94.6908' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STJOHN = new L.marker(new L.LatLng(39.2822,-94.9058),{ 
+            var STJOHN32 = new L.marker(new L.LatLng(39.2822,-94.9058),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4397,12 +4407,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STJOHN Saint John Hospital   39.2822,-94.9058' ,
-                    }).addTo(fg).bindPopup('STJOHN Saint John Hospital   39.2822,-94.9058' );                        
+                title: 'STJOHN32 Saint John Hospital   39.2822,-94.9058' ,
+                    }).addTo(fg).bindPopup('STJOHN32 Saint John Hospital   39.2822,-94.9058' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STJOMC = new L.marker(new L.LatLng(38.9362,-94.6037),{ 
+            var STJOMC33 = new L.marker(new L.LatLng(38.9362,-94.6037),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4412,12 +4422,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STJOMC Saint Joseph Medical Center   38.9362,-94.6037' ,
-                    }).addTo(fg).bindPopup('STJOMC Saint Joseph Medical Center   38.9362,-94.6037' );                        
+                title: 'STJOMC33 Saint Joseph Medical Center   38.9362,-94.6037' ,
+                    }).addTo(fg).bindPopup('STJOMC33 Saint Joseph Medical Center   38.9362,-94.6037' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STLEAS = new L.marker(new L.LatLng(38.9415,-94.3813),{ 
+            var STLEAS34 = new L.marker(new L.LatLng(38.9415,-94.3813),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4427,12 +4437,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STLEAS Saint Lukes East_Lees Summit   38.9415,-94.3813' ,
-                    }).addTo(fg).bindPopup('STLEAS Saint Lukes East_Lees Summit   38.9415,-94.3813' );                        
+                title: 'STLEAS34 Saint Lukes East_Lees Summit   38.9415,-94.3813' ,
+                    }).addTo(fg).bindPopup('STLEAS34 Saint Lukes East_Lees Summit   38.9415,-94.3813' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STLPLZ = new L.marker(new L.LatLng(39.477,-94.5895),{ 
+            var STLPLZ35 = new L.marker(new L.LatLng(39.477,-94.5895),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4442,12 +4452,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STLPLZ Saint Lukes Hospital Plaza   39.477,-94.5895' ,
-                    }).addTo(fg).bindPopup('STLPLZ Saint Lukes Hospital Plaza   39.477,-94.5895' );                        
+                title: 'STLPLZ35 Saint Lukes Hospital Plaza   39.477,-94.5895' ,
+                    }).addTo(fg).bindPopup('STLPLZ35 Saint Lukes Hospital Plaza   39.477,-94.5895' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STLSMI = new L.marker(new L.LatLng(39.3758,-94.5807),{ 
+            var STLSMI36 = new L.marker(new L.LatLng(39.3758,-94.5807),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4457,12 +4467,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STLSMI Saint Lukes Smithville Campus   39.3758,-94.5807' ,
-                    }).addTo(fg).bindPopup('STLSMI Saint Lukes Smithville Campus   39.3758,-94.5807' );                        
+                title: 'STLSMI36 Saint Lukes Smithville Campus   39.3758,-94.5807' ,
+                    }).addTo(fg).bindPopup('STLSMI36 Saint Lukes Smithville Campus   39.3758,-94.5807' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STLUBR = new L.marker(new L.LatLng(39.2482,-94.6487),{ 
+            var STLUBR37 = new L.marker(new L.LatLng(39.2482,-94.6487),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4472,12 +4482,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STLUBR Saint Lukes Barry Road Campus   39.2482,-94.6487' ,
-                    }).addTo(fg).bindPopup('STLUBR Saint Lukes Barry Road Campus   39.2482,-94.6487' );                        
+                title: 'STLUBR37 Saint Lukes Barry Road Campus   39.2482,-94.6487' ,
+                    }).addTo(fg).bindPopup('STLUBR37 Saint Lukes Barry Road Campus   39.2482,-94.6487' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STLUSO = new L.marker(new L.LatLng(38.904,-94.6682),{ 
+            var STLUSO38 = new L.marker(new L.LatLng(38.904,-94.6682),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4487,12 +4497,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STLUSO Saint Lukes South Hospital   38.904,-94.6682' ,
-                    }).addTo(fg).bindPopup('STLUSO Saint Lukes South Hospital   38.904,-94.6682' );                        
+                title: 'STLUSO38 Saint Lukes South Hospital   38.904,-94.6682' ,
+                    }).addTo(fg).bindPopup('STLUSO38 Saint Lukes South Hospital   38.904,-94.6682' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var STM = new L.marker(new L.LatLng(39.263,-94.2627),{ 
+            var STM39 = new L.marker(new L.LatLng(39.263,-94.2627),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4502,12 +4512,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'STM Saint Marys Medical Center   39.263,-94.2627' ,
-                    }).addTo(fg).bindPopup('STM Saint Marys Medical Center   39.263,-94.2627' );                        
+                title: 'STM39 Saint Marys Medical Center   39.263,-94.2627' ,
+                    }).addTo(fg).bindPopup('STM39 Saint Marys Medical Center   39.263,-94.2627' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var TRLKWD = new L.marker(new L.LatLng(38.9745,-94.3915),{ 
+            var TRLKWD40 = new L.marker(new L.LatLng(38.9745,-94.3915),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4517,12 +4527,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'TRLKWD Truman Lakewood   38.9745,-94.3915' ,
-                    }).addTo(fg).bindPopup('TRLKWD Truman Lakewood   38.9745,-94.3915' );                        
+                title: 'TRLKWD40 Truman Lakewood   38.9745,-94.3915' ,
+                    }).addTo(fg).bindPopup('TRLKWD40 Truman Lakewood   38.9745,-94.3915' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var TRUHH = new L.marker(new L.LatLng(39.853,-94.5737),{ 
+            var TRUHH41 = new L.marker(new L.LatLng(39.853,-94.5737),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4532,12 +4542,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'TRUHH Truman Medical Center_Hospital Hill   39.853,-94.5737' ,
-                    }).addTo(fg).bindPopup('TRUHH Truman Medical Center_Hospital Hill   39.853,-94.5737' );                        
+                title: 'TRUHH41 Truman Medical Center_Hospital Hill   39.853,-94.5737' ,
+                    }).addTo(fg).bindPopup('TRUHH41 Truman Medical Center_Hospital Hill   39.853,-94.5737' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var W0CPT = new L.marker(new L.LatLng(39.5,-94.3483),{ 
+            var W0CPT42 = new L.marker(new L.LatLng(39.5,-94.3483),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4547,12 +4557,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'W0CPT Centerpoint Medical Center   39.5,-94.3483' ,
-                    }).addTo(fg).bindPopup('W0CPT Centerpoint Medical Center   39.5,-94.3483' );                        
+                title: 'W0CPT42 Centerpoint Medical Center   39.5,-94.3483' ,
+                    }).addTo(fg).bindPopup('W0CPT42 Centerpoint Medical Center   39.5,-94.3483' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var WEMO = new L.marker(new L.LatLng(38.7667,-93.7217),{ 
+            var WEMO43 = new L.marker(new L.LatLng(38.7667,-93.7217),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4562,12 +4572,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'WEMO WESTERN MISSOURI MEDICAL CENTER   38.7667,-93.7217' ,
-                    }).addTo(fg).bindPopup('WEMO WESTERN MISSOURI MEDICAL CENTER   38.7667,-93.7217' );                        
+                title: 'WEMO43 WESTERN MISSOURI MEDICAL CENTER   38.7667,-93.7217' ,
+                    }).addTo(fg).bindPopup('WEMO43 WESTERN MISSOURI MEDICAL CENTER   38.7667,-93.7217' );                        
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var PTPOLICE1925 = new L.marker(new L.LatLng(48.11464,-122.77136),{ 
+            var PTPOLICE1925279 = new L.marker(new L.LatLng(48.11464,-122.77136),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4577,12 +4587,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'PTPOLICE1925 PT POLICE   48.11464,-122.77136' ,
-                    }).addTo(fg).bindPopup('PTPOLICE1925 PT POLICE   48.11464,-122.77136' );                        
+                title: 'PTPOLICE1925279 PT POLICE   48.11464,-122.77136' ,
+                    }).addTo(fg).bindPopup('PTPOLICE1925279 PT POLICE   48.11464,-122.77136' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var FPD93721 = new L.marker(new L.LatLng(36.737611,-119.78787),{ 
+            var FPD93721130 = new L.marker(new L.LatLng(36.737611,-119.78787),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4592,12 +4602,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'FPD93721 Fresno Police Department   36.737611,-119.78787' ,
-                    }).addTo(fg).bindPopup('FPD93721 Fresno Police Department   36.737611,-119.78787' );                        
+                title: 'FPD93721130 Fresno Police Department   36.737611,-119.78787' ,
+                    }).addTo(fg).bindPopup('FPD93721130 Fresno Police Department   36.737611,-119.78787' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var NRTPD = new L.marker(new L.LatLng(39.183487,-94.605311),{ 
+            var NRTPD132 = new L.marker(new L.LatLng(39.183487,-94.605311),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4607,12 +4617,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'NRTPD Northmoor Police Department   39.183487,-94.605311' ,
-                    }).addTo(fg).bindPopup('NRTPD Northmoor Police Department   39.183487,-94.605311' );                        
+                title: 'NRTPD132 Northmoor Police Department   39.183487,-94.605311' ,
+                    }).addTo(fg).bindPopup('NRTPD132 Northmoor Police Department   39.183487,-94.605311' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var RVRSPD = new L.marker(new L.LatLng(39.175239,-94.616458),{ 
+            var RVRSPD133 = new L.marker(new L.LatLng(39.175239,-94.616458),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4622,12 +4632,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'RVRSPD Riverside City Police Department   39.175239,-94.616458' ,
-                    }).addTo(fg).bindPopup('RVRSPD Riverside City Police Department   39.175239,-94.616458' );                        
+                title: 'RVRSPD133 Riverside City Police Department   39.175239,-94.616458' ,
+                    }).addTo(fg).bindPopup('RVRSPD133 Riverside City Police Department   39.175239,-94.616458' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var PKVLPD = new L.marker(new L.LatLng(39.207055,-94.683832),{ 
+            var PKVLPD135 = new L.marker(new L.LatLng(39.207055,-94.683832),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4637,12 +4647,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'PKVLPD Parkville Police Department   39.207055,-94.683832' ,
-                    }).addTo(fg).bindPopup('PKVLPD Parkville Police Department   39.207055,-94.683832' );                        
+                title: 'PKVLPD135 Parkville Police Department   39.207055,-94.683832' ,
+                    }).addTo(fg).bindPopup('PKVLPD135 Parkville Police Department   39.207055,-94.683832' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var LKWKPD = new L.marker(new L.LatLng(39.227468,-94.634039),{ 
+            var LKWKPD136 = new L.marker(new L.LatLng(39.227468,-94.634039),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4652,12 +4662,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'LKWKPD Lake Waukomis Police Department   39.227468,-94.634039' ,
-                    }).addTo(fg).bindPopup('LKWKPD Lake Waukomis Police Department   39.227468,-94.634039' );                        
+                title: 'LKWKPD136 Lake Waukomis Police Department   39.227468,-94.634039' ,
+                    }).addTo(fg).bindPopup('LKWKPD136 Lake Waukomis Police Department   39.227468,-94.634039' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var GSTNPD = new L.marker(new L.LatLng(39.221477,-94.57198),{ 
+            var GSTNPD137 = new L.marker(new L.LatLng(39.221477,-94.57198),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4667,12 +4677,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'GSTNPD Gladstone Police Department   39.221477,-94.57198' ,
-                    }).addTo(fg).bindPopup('GSTNPD Gladstone Police Department   39.221477,-94.57198' );                        
+                title: 'GSTNPD137 Gladstone Police Department   39.221477,-94.57198' ,
+                    }).addTo(fg).bindPopup('GSTNPD137 Gladstone Police Department   39.221477,-94.57198' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var NKCPD = new L.marker(new L.LatLng(39.143363,-94.573404),{ 
+            var NKCPD138 = new L.marker(new L.LatLng(39.143363,-94.573404),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4682,12 +4692,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'NKCPD North Kansas City Police Department   39.143363,-94.573404' ,
-                    }).addTo(fg).bindPopup('NKCPD North Kansas City Police Department   39.143363,-94.573404' );                        
+                title: 'NKCPD138 North Kansas City Police Department   39.143363,-94.573404' ,
+                    }).addTo(fg).bindPopup('NKCPD138 North Kansas City Police Department   39.143363,-94.573404' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var COMOPD = new L.marker(new L.LatLng(39.197769,-94.5038),{ 
+            var COMOPD139 = new L.marker(new L.LatLng(39.197769,-94.5038),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4697,12 +4707,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'COMOPD Claycomo Police Department   39.197769,-94.5038' ,
-                    }).addTo(fg).bindPopup('COMOPD Claycomo Police Department   39.197769,-94.5038' );                        
+                title: 'COMOPD139 Claycomo Police Department   39.197769,-94.5038' ,
+                    }).addTo(fg).bindPopup('COMOPD139 Claycomo Police Department   39.197769,-94.5038' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var KCNPPD = new L.marker(new L.LatLng(39.291975,-94.684958),{ 
+            var KCNPPD140 = new L.marker(new L.LatLng(39.291975,-94.684958),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4712,12 +4722,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'KCNPPD Kansas City Police North Patrol   39.291975,-94.684958' ,
-                    }).addTo(fg).bindPopup('KCNPPD Kansas City Police North Patrol   39.291975,-94.684958' );                        
+                title: 'KCNPPD140 Kansas City Police North Patrol   39.291975,-94.684958' ,
+                    }).addTo(fg).bindPopup('KCNPPD140 Kansas City Police North Patrol   39.291975,-94.684958' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var PLTCTYPD = new L.marker(new L.LatLng(39.370039,-94.77987),{ 
+            var PLTCTYPD141 = new L.marker(new L.LatLng(39.370039,-94.77987),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4727,12 +4737,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'PLTCTYPD Platte City Police Department   39.370039,-94.77987' ,
-                    }).addTo(fg).bindPopup('PLTCTYPD Platte City Police Department   39.370039,-94.77987' );                        
+                title: 'PLTCTYPD141 Platte City Police Department   39.370039,-94.77987' ,
+                    }).addTo(fg).bindPopup('PLTCTYPD141 Platte City Police Department   39.370039,-94.77987' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
-            var KSZS = new L.marker(new L.LatLng(50.598817,6.289012),{ 
+            var KSZS404 = new L.marker(new L.LatLng(50.598817,6.289012),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -4742,8 +4752,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'KSZS Katastrophenschutzzentrum   50.598817,6.289012' ,
-                    }).addTo(fg).bindPopup('KSZS Katastrophenschutzzentrum   50.598817,6.289012' );                        
+                title: 'KSZS404 Katastrophenschutzzentrum   50.598817,6.289012' ,
+                    }).addTo(fg).bindPopup('KSZS404 Katastrophenschutzzentrum   50.598817,6.289012' );                        
          
                 $('police'._icon).addClass('polmrkr');
             
@@ -5032,7 +5042,7 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DB0QA = new L.marker(new L.LatLng(50.875067,6.16656),{ 
+            var DB0QA528 = new L.marker(new L.LatLng(50.875067,6.16656),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5042,12 +5052,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' ,
-                    }).addTo(fg).bindPopup('DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' );                        
+                title: 'DB0QA528 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' ,
+                    }).addTo(fg).bindPopup('DB0QA528 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DJ2UB = new L.marker(new L.LatLng(50.756536,6.158414),{ 
+            var DJ2UB529 = new L.marker(new L.LatLng(50.756536,6.158414),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5057,12 +5067,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' ,
-                    }).addTo(fg).bindPopup('DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' );                        
+                title: 'DJ2UB529 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' ,
+                    }).addTo(fg).bindPopup('DJ2UB529 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DB0NIS = new L.marker(new L.LatLng(50.65722,6.398236),{ 
+            var DB0NIS530 = new L.marker(new L.LatLng(50.65722,6.398236),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5072,12 +5082,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' ,
-                    }).addTo(fg).bindPopup('DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' );                        
+                title: 'DB0NIS530 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' ,
+                    }).addTo(fg).bindPopup('DB0NIS530 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var ON0RBO = new L.marker(new L.LatLng(50.653178,6.168431),{ 
+            var ON0RBO531 = new L.marker(new L.LatLng(50.653178,6.168431),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5087,12 +5097,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'ON0RBO 70cm Petergensfeld    50.653178,6.168431' ,
-                    }).addTo(fg).bindPopup('ON0RBO 70cm Petergensfeld    50.653178,6.168431' );                        
+                title: 'ON0RBO531 70cm Petergensfeld    50.653178,6.168431' ,
+                    }).addTo(fg).bindPopup('ON0RBO531 70cm Petergensfeld    50.653178,6.168431' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DB0SE = new L.marker(new L.LatLng(50.477617,6.52308),{ 
+            var DB0SE532 = new L.marker(new L.LatLng(50.477617,6.52308),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5102,12 +5112,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' ,
-                    }).addTo(fg).bindPopup('DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' );                        
+                title: 'DB0SE532 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' ,
+                    }).addTo(fg).bindPopup('DB0SE532 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GS = new L.marker(new L.LatLng(33.9137001,-79.04519653),{ 
+            var W4GS280 = new L.marker(new L.LatLng(33.9137001,-79.04519653),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5117,12 +5127,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GS W4GS  145.11 PL 85.4 OFFSET - 33.9137001,-79.04519653' ,
-                    }).addTo(fg).bindPopup('W4GS W4GS  145.11 PL 85.4 OFFSET - 33.9137001,-79.04519653' );                        
+                title: 'W4GS280 W4GS  145.11 PL 85.4 OFFSET - 33.9137001,-79.04519653' ,
+                    }).addTo(fg).bindPopup('W4GS280 W4GS  145.11 PL 85.4 OFFSET - 33.9137001,-79.04519653' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KT4TF = new L.marker(new L.LatLng(34.99580002,-80.85500336),{ 
+            var KT4TF281 = new L.marker(new L.LatLng(34.99580002,-80.85500336),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5132,12 +5142,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KT4TF KT4TF  145.11 PL 110.9 OFFSET - 34.99580002,-80.85500336' ,
-                    }).addTo(fg).bindPopup('KT4TF KT4TF  145.11 PL 110.9 OFFSET - 34.99580002,-80.85500336' );                        
+                title: 'KT4TF281 KT4TF  145.11 PL 110.9 OFFSET - 34.99580002,-80.85500336' ,
+                    }).addTo(fg).bindPopup('KT4TF281 KT4TF  145.11 PL 110.9 OFFSET - 34.99580002,-80.85500336' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4DV = new L.marker(new L.LatLng(33.4734993,-82.01049805),{ 
+            var W4DV282 = new L.marker(new L.LatLng(33.4734993,-82.01049805),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5147,12 +5157,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4DV W4DV  145.11 PL 71.9 OFFSET - 33.4734993,-82.01049805' ,
-                    }).addTo(fg).bindPopup('W4DV W4DV  145.11 PL 71.9 OFFSET - 33.4734993,-82.01049805' );                        
+                title: 'W4DV282 W4DV  145.11 PL 71.9 OFFSET - 33.4734993,-82.01049805' ,
+                    }).addTo(fg).bindPopup('W4DV282 W4DV  145.11 PL 71.9 OFFSET - 33.4734993,-82.01049805' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4BFT = new L.marker(new L.LatLng(32.39139938,-80.74849701),{ 
+            var W4BFT283 = new L.marker(new L.LatLng(32.39139938,-80.74849701),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5162,12 +5172,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4BFT W4BFT  145.13 PL 88.5 OFFSET - 32.39139938,-80.74849701' ,
-                    }).addTo(fg).bindPopup('W4BFT W4BFT  145.13 PL 88.5 OFFSET - 32.39139938,-80.74849701' );                        
+                title: 'W4BFT283 W4BFT  145.13 PL 88.5 OFFSET - 32.39139938,-80.74849701' ,
+                    }).addTo(fg).bindPopup('W4BFT283 W4BFT  145.13 PL 88.5 OFFSET - 32.39139938,-80.74849701' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KM4ABW = new L.marker(new L.LatLng(33.68700027,-80.21170044),{ 
+            var KM4ABW284 = new L.marker(new L.LatLng(33.68700027,-80.21170044),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5177,12 +5187,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KM4ABW KM4ABW  145.15 PL 91.5 OFFSET - 33.68700027,-80.21170044' ,
-                    }).addTo(fg).bindPopup('KM4ABW KM4ABW  145.15 PL 91.5 OFFSET - 33.68700027,-80.21170044' );                        
+                title: 'KM4ABW284 KM4ABW  145.15 PL 91.5 OFFSET - 33.68700027,-80.21170044' ,
+                    }).addTo(fg).bindPopup('KM4ABW284 KM4ABW  145.15 PL 91.5 OFFSET - 33.68700027,-80.21170044' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4TWX = new L.marker(new L.LatLng(34.88339996,-82.70739746),{ 
+            var W4TWX285 = new L.marker(new L.LatLng(34.88339996,-82.70739746),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5192,12 +5202,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4TWX W4TWX  145.17 PL 162.2 OFFSET - 34.88339996,-82.70739746' ,
-                    }).addTo(fg).bindPopup('W4TWX W4TWX  145.17 PL 162.2 OFFSET - 34.88339996,-82.70739746' );                        
+                title: 'W4TWX285 W4TWX  145.17 PL 162.2 OFFSET - 34.88339996,-82.70739746' ,
+                    }).addTo(fg).bindPopup('W4TWX285 W4TWX  145.17 PL 162.2 OFFSET - 34.88339996,-82.70739746' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4LMD = new L.marker(new L.LatLng(33.203402,-80.799942),{ 
+            var K4LMD286 = new L.marker(new L.LatLng(33.203402,-80.799942),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5207,12 +5217,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4LMD K4LMD  145.21 PL 100 OFFSET - 33.203402,-80.799942' ,
-                    }).addTo(fg).bindPopup('K4LMD K4LMD  145.21 PL 100 OFFSET - 33.203402,-80.799942' );                        
+                title: 'K4LMD286 K4LMD  145.21 PL 100 OFFSET - 33.203402,-80.799942' ,
+                    }).addTo(fg).bindPopup('K4LMD286 K4LMD  145.21 PL 100 OFFSET - 33.203402,-80.799942' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(33.58100128,-79.98899841),{ 
+            var W4APE287 = new L.marker(new L.LatLng(33.58100128,-79.98899841),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5222,12 +5232,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  145.23 PL 123 OFFSET - 33.58100128,-79.98899841' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  145.23 PL 123 OFFSET - 33.58100128,-79.98899841' );                        
+                title: 'W4APE287 W4APE  145.23 PL 123 OFFSET - 33.58100128,-79.98899841' ,
+                    }).addTo(fg).bindPopup('W4APE287 W4APE  145.23 PL 123 OFFSET - 33.58100128,-79.98899841' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4WD = new L.marker(new L.LatLng(34.88100052,-83.09889984),{ 
+            var K4WD288 = new L.marker(new L.LatLng(34.88100052,-83.09889984),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5237,12 +5247,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4WD K4WD  145.29 PL 162.2 OFFSET - 34.88100052,-83.09889984' ,
-                    }).addTo(fg).bindPopup('K4WD K4WD  145.29 PL 162.2 OFFSET - 34.88100052,-83.09889984' );                        
+                title: 'K4WD288 K4WD  145.29 PL 162.2 OFFSET - 34.88100052,-83.09889984' ,
+                    }).addTo(fg).bindPopup('K4WD288 K4WD  145.29 PL 162.2 OFFSET - 34.88100052,-83.09889984' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4CHR = new L.marker(new L.LatLng(34.68790054,-81.17980194),{ 
+            var W4CHR289 = new L.marker(new L.LatLng(34.68790054,-81.17980194),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5252,12 +5262,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4CHR W4CHR  145.31 PL 167.9 OFFSET - 34.68790054,-81.17980194' ,
-                    }).addTo(fg).bindPopup('W4CHR W4CHR  145.31 PL 167.9 OFFSET - 34.68790054,-81.17980194' );                        
+                title: 'W4CHR289 W4CHR  145.31 PL 167.9 OFFSET - 34.68790054,-81.17980194' ,
+                    }).addTo(fg).bindPopup('W4CHR289 W4CHR  145.31 PL 167.9 OFFSET - 34.68790054,-81.17980194' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4IAR = new L.marker(new L.LatLng(32.21630096,-80.75260162),{ 
+            var W4IAR290 = new L.marker(new L.LatLng(32.21630096,-80.75260162),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5267,12 +5277,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4IAR W4IAR  145.31 PL 100 OFFSET - 32.21630096,-80.75260162' ,
-                    }).addTo(fg).bindPopup('W4IAR W4IAR  145.31 PL 100 OFFSET - 32.21630096,-80.75260162' );                        
+                title: 'W4IAR290 W4IAR  145.31 PL 100 OFFSET - 32.21630096,-80.75260162' ,
+                    }).addTo(fg).bindPopup('W4IAR290 W4IAR  145.31 PL 100 OFFSET - 32.21630096,-80.75260162' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var NE4SC = new L.marker(new L.LatLng(33.75859833,-79.72820282),{ 
+            var NE4SC291 = new L.marker(new L.LatLng(33.75859833,-79.72820282),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5282,12 +5292,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'NE4SC NE4SC  145.31 PL 123 OFFSET - 33.75859833,-79.72820282' ,
-                    }).addTo(fg).bindPopup('NE4SC NE4SC  145.31 PL 123 OFFSET - 33.75859833,-79.72820282' );                        
+                title: 'NE4SC291 NE4SC  145.31 PL 123 OFFSET - 33.75859833,-79.72820282' ,
+                    }).addTo(fg).bindPopup('NE4SC291 NE4SC  145.31 PL 123 OFFSET - 33.75859833,-79.72820282' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WB4TGK = new L.marker(new L.LatLng(33.29710007,-81.03479767),{ 
+            var WB4TGK292 = new L.marker(new L.LatLng(33.29710007,-81.03479767),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5297,12 +5307,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WB4TGK WB4TGK  145.33 PL 156.7 OFFSET - 33.29710007,-81.03479767' ,
-                    }).addTo(fg).bindPopup('WB4TGK WB4TGK  145.33 PL 156.7 OFFSET - 33.29710007,-81.03479767' );                        
+                title: 'WB4TGK292 WB4TGK  145.33 PL 156.7 OFFSET - 33.29710007,-81.03479767' ,
+                    }).addTo(fg).bindPopup('WB4TGK292 WB4TGK  145.33 PL 156.7 OFFSET - 33.29710007,-81.03479767' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N2ZZ = new L.marker(new L.LatLng(33.57089996,-81.76309967),{ 
+            var N2ZZ293 = new L.marker(new L.LatLng(33.57089996,-81.76309967),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5312,12 +5322,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N2ZZ N2ZZ  145.35 PL 156.7 OFFSET - 33.57089996,-81.76309967' ,
-                    }).addTo(fg).bindPopup('N2ZZ N2ZZ  145.35 PL 156.7 OFFSET - 33.57089996,-81.76309967' );                        
+                title: 'N2ZZ293 N2ZZ  145.35 PL 156.7 OFFSET - 33.57089996,-81.76309967' ,
+                    }).addTo(fg).bindPopup('N2ZZ293 N2ZZ  145.35 PL 156.7 OFFSET - 33.57089996,-81.76309967' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(34.94060135,-82.41059875),{ 
+            var WR4SC294 = new L.marker(new L.LatLng(34.94060135,-82.41059875),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5327,12 +5337,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  145.37 PL 123 OFFSET - 34.94060135,-82.41059875' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  145.37 PL 123 OFFSET - 34.94060135,-82.41059875' );                        
+                title: 'WR4SC294 WR4SC  145.37 PL 123 OFFSET - 34.94060135,-82.41059875' ,
+                    }).addTo(fg).bindPopup('WR4SC294 WR4SC  145.37 PL 123 OFFSET - 34.94060135,-82.41059875' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KG4BZN = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
+            var KG4BZN295 = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5342,12 +5352,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KG4BZN KG4BZN  145.39 PL  OFFSET - 32.90520096,-80.66680145' ,
-                    }).addTo(fg).bindPopup('KG4BZN KG4BZN  145.39 PL  OFFSET - 32.90520096,-80.66680145' );                        
+                title: 'KG4BZN295 KG4BZN  145.39 PL  OFFSET - 32.90520096,-80.66680145' ,
+                    }).addTo(fg).bindPopup('KG4BZN295 KG4BZN  145.39 PL  OFFSET - 32.90520096,-80.66680145' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KJ4BWK = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
+            var KJ4BWK296 = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5357,12 +5367,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KJ4BWK KJ4BWK  145.4 PL  OFFSET - 34.0007019,-81.03479767' ,
-                    }).addTo(fg).bindPopup('KJ4BWK KJ4BWK  145.4 PL  OFFSET - 34.0007019,-81.03479767' );                        
+                title: 'KJ4BWK296 KJ4BWK  145.4 PL  OFFSET - 34.0007019,-81.03479767' ,
+                    }).addTo(fg).bindPopup('KJ4BWK296 KJ4BWK  145.4 PL  OFFSET - 34.0007019,-81.03479767' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4USN = new L.marker(new L.LatLng(32.58060074,-80.15969849),{ 
+            var WA4USN297 = new L.marker(new L.LatLng(32.58060074,-80.15969849),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5372,12 +5382,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4USN WA4USN  145.41 PL 123 OFFSET - 32.58060074,-80.15969849' ,
-                    }).addTo(fg).bindPopup('WA4USN WA4USN  145.41 PL 123 OFFSET - 32.58060074,-80.15969849' );                        
+                title: 'WA4USN297 WA4USN  145.41 PL 123 OFFSET - 32.58060074,-80.15969849' ,
+                    }).addTo(fg).bindPopup('WA4USN297 WA4USN  145.41 PL 123 OFFSET - 32.58060074,-80.15969849' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KE4MDP = new L.marker(new L.LatLng(35.0461998,-81.58930206),{ 
+            var KE4MDP298 = new L.marker(new L.LatLng(35.0461998,-81.58930206),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5387,12 +5397,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KE4MDP KE4MDP  145.43 PL 162.2 OFFSET - 35.0461998,-81.58930206' ,
-                    }).addTo(fg).bindPopup('KE4MDP KE4MDP  145.43 PL 162.2 OFFSET - 35.0461998,-81.58930206' );                        
+                title: 'KE4MDP298 KE4MDP  145.43 PL 162.2 OFFSET - 35.0461998,-81.58930206' ,
+                    }).addTo(fg).bindPopup('KE4MDP298 KE4MDP  145.43 PL 162.2 OFFSET - 35.0461998,-81.58930206' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GL = new L.marker(new L.LatLng(33.96319962,-80.40219879),{ 
+            var W4GL299 = new L.marker(new L.LatLng(33.96319962,-80.40219879),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5402,12 +5412,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GL W4GL  145.43 PL 156.7 OFFSET - 33.96319962,-80.40219879' ,
-                    }).addTo(fg).bindPopup('W4GL W4GL  145.43 PL 156.7 OFFSET - 33.96319962,-80.40219879' );                        
+                title: 'W4GL299 W4GL  145.43 PL 156.7 OFFSET - 33.96319962,-80.40219879' ,
+                    }).addTo(fg).bindPopup('W4GL299 W4GL  145.43 PL 156.7 OFFSET - 33.96319962,-80.40219879' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA0QFJ = new L.marker(new L.LatLng(39.273172,-94.663137),{ 
+            var WA0QFJ44 = new L.marker(new L.LatLng(39.273172,-94.663137),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5417,12 +5427,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' ,
-                    }).addTo(fg).bindPopup('WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' );                        
+                title: 'WA0QFJ44 PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' ,
+                    }).addTo(fg).bindPopup('WA0QFJ44 PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4HRS = new L.marker(new L.LatLng(32.78419876,-79.94499969),{ 
+            var W4HRS300 = new L.marker(new L.LatLng(32.78419876,-79.94499969),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5432,12 +5442,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4HRS W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' ,
-                    }).addTo(fg).bindPopup('W4HRS W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' );                        
+                title: 'W4HRS300 W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' ,
+                    }).addTo(fg).bindPopup('W4HRS300 W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA0KHP = new L.marker(new L.LatLng(39.36392,-94.584721),{ 
+            var WA0KHP45 = new L.marker(new L.LatLng(39.36392,-94.584721),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5447,12 +5457,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' ,
-                    }).addTo(fg).bindPopup('WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' );                        
+                title: 'WA0KHP45 Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' ,
+                    }).addTo(fg).bindPopup('WA0KHP45 Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4ZKM = new L.marker(new L.LatLng(33.26150131,-81.65670013),{ 
+            var W4ZKM301 = new L.marker(new L.LatLng(33.26150131,-81.65670013),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5462,12 +5472,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4ZKM W4ZKM  145.45 PL 123 OFFSET - 33.26150131,-81.65670013' ,
-                    }).addTo(fg).bindPopup('W4ZKM W4ZKM  145.45 PL 123 OFFSET - 33.26150131,-81.65670013' );                        
+                title: 'W4ZKM301 W4ZKM  145.45 PL 123 OFFSET - 33.26150131,-81.65670013' ,
+                    }).addTo(fg).bindPopup('W4ZKM301 W4ZKM  145.45 PL 123 OFFSET - 33.26150131,-81.65670013' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K9OH = new L.marker(new L.LatLng(35.10570145,-82.62760162),{ 
+            var K9OH302 = new L.marker(new L.LatLng(35.10570145,-82.62760162),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5477,12 +5487,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K9OH K9OH  145.47 PL 91.5 OFFSET - 35.10570145,-82.62760162' ,
-                    }).addTo(fg).bindPopup('K9OH K9OH  145.47 PL 91.5 OFFSET - 35.10570145,-82.62760162' );                        
+                title: 'K9OH302 K9OH  145.47 PL 91.5 OFFSET - 35.10570145,-82.62760162' ,
+                    }).addTo(fg).bindPopup('K9OH302 K9OH  145.47 PL 91.5 OFFSET - 35.10570145,-82.62760162' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(34.19979858,-79.23249817),{ 
+            var W4APE303 = new L.marker(new L.LatLng(34.19979858,-79.23249817),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5492,12 +5502,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  145.47 PL 123 OFFSET - 34.19979858,-79.23249817' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  145.47 PL 123 OFFSET - 34.19979858,-79.23249817' );                        
+                title: 'W4APE303 W4APE  145.47 PL 123 OFFSET - 34.19979858,-79.23249817' ,
+                    }).addTo(fg).bindPopup('W4APE303 W4APE  145.47 PL 123 OFFSET - 34.19979858,-79.23249817' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(34.74810028,-79.84259796),{ 
+            var W4APE304 = new L.marker(new L.LatLng(34.74810028,-79.84259796),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5507,12 +5517,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  145.49 PL 123 OFFSET - 34.74810028,-79.84259796' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  145.49 PL 123 OFFSET - 34.74810028,-79.84259796' );                        
+                title: 'W4APE304 W4APE  145.49 PL 123 OFFSET - 34.74810028,-79.84259796' ,
+                    }).addTo(fg).bindPopup('W4APE304 W4APE  145.49 PL 123 OFFSET - 34.74810028,-79.84259796' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4HRS = new L.marker(new L.LatLng(33.19889832,-80.00689697),{ 
+            var W4HRS305 = new L.marker(new L.LatLng(33.19889832,-80.00689697),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5522,12 +5532,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4HRS W4HRS  145.49 PL 103.5 OFFSET - 33.19889832,-80.00689697' ,
-                    }).addTo(fg).bindPopup('W4HRS W4HRS  145.49 PL 103.5 OFFSET - 33.19889832,-80.00689697' );                        
+                title: 'W4HRS305 W4HRS  145.49 PL 103.5 OFFSET - 33.19889832,-80.00689697' ,
+                    }).addTo(fg).bindPopup('W4HRS305 W4HRS  145.49 PL 103.5 OFFSET - 33.19889832,-80.00689697' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4DV = new L.marker(new L.LatLng(33.68489838,-81.92639923),{ 
+            var W4DV306 = new L.marker(new L.LatLng(33.68489838,-81.92639923),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5537,12 +5547,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4DV W4DV  145.49 PL 71.9 OFFSET - 33.68489838,-81.92639923' ,
-                    }).addTo(fg).bindPopup('W4DV W4DV  145.49 PL 71.9 OFFSET - 33.68489838,-81.92639923' );                        
+                title: 'W4DV306 W4DV  145.49 PL 71.9 OFFSET - 33.68489838,-81.92639923' ,
+                    }).addTo(fg).bindPopup('W4DV306 W4DV  145.49 PL 71.9 OFFSET - 33.68489838,-81.92639923' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4ONF = new L.marker(new L.LatLng(32.4276903,-81.0087199),{ 
+            var KK4ONF307 = new L.marker(new L.LatLng(32.4276903,-81.0087199),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5552,12 +5562,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4ONF KK4ONF  146.06 PL 123 OFFSET + 32.4276903,-81.0087199' ,
-                    }).addTo(fg).bindPopup('KK4ONF KK4ONF  146.06 PL 123 OFFSET + 32.4276903,-81.0087199' );                        
+                title: 'KK4ONF307 KK4ONF  146.06 PL 123 OFFSET + 32.4276903,-81.0087199' ,
+                    }).addTo(fg).bindPopup('KK4ONF307 KK4ONF  146.06 PL 123 OFFSET + 32.4276903,-81.0087199' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4KNJ = new L.marker(new L.LatLng(34.28580093,-79.24590302),{ 
+            var K4KNJ308 = new L.marker(new L.LatLng(34.28580093,-79.24590302),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5567,12 +5577,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4KNJ K4KNJ  146.535 PL CSQ OFFSET x 34.28580093,-79.24590302' ,
-                    }).addTo(fg).bindPopup('K4KNJ K4KNJ  146.535 PL CSQ OFFSET x 34.28580093,-79.24590302' );                        
+                title: 'K4KNJ308 K4KNJ  146.535 PL CSQ OFFSET x 34.28580093,-79.24590302' ,
+                    }).addTo(fg).bindPopup('K4KNJ308 K4KNJ  146.535 PL CSQ OFFSET x 34.28580093,-79.24590302' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KW4BET = new L.marker(new L.LatLng(33.8420316,-78.6400437),{ 
+            var KW4BET309 = new L.marker(new L.LatLng(33.8420316,-78.6400437),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5582,12 +5592,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KW4BET KW4BET  146.58 PL D023 OFFSET x 33.8420316,-78.6400437' ,
-                    }).addTo(fg).bindPopup('KW4BET KW4BET  146.58 PL D023 OFFSET x 33.8420316,-78.6400437' );                        
+                title: 'KW4BET309 KW4BET  146.58 PL D023 OFFSET x 33.8420316,-78.6400437' ,
+                    }).addTo(fg).bindPopup('KW4BET309 KW4BET  146.58 PL D023 OFFSET x 33.8420316,-78.6400437' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4NYK = new L.marker(new L.LatLng(35.05569839,-82.7845993),{ 
+            var W4NYK310 = new L.marker(new L.LatLng(35.05569839,-82.7845993),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5597,12 +5607,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4NYK W4NYK  146.61 PL  OFFSET - 35.05569839,-82.7845993' ,
-                    }).addTo(fg).bindPopup('W4NYK W4NYK  146.61 PL  OFFSET - 35.05569839,-82.7845993' );                        
+                title: 'W4NYK310 W4NYK  146.61 PL  OFFSET - 35.05569839,-82.7845993' ,
+                    }).addTo(fg).bindPopup('W4NYK310 W4NYK  146.61 PL  OFFSET - 35.05569839,-82.7845993' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4BRK = new L.marker(new L.LatLng(33.19599915,-80.01309967),{ 
+            var W4BRK311 = new L.marker(new L.LatLng(33.19599915,-80.01309967),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5612,12 +5622,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4BRK W4BRK  146.61 PL 123 OFFSET - 33.19599915,-80.01309967' ,
-                    }).addTo(fg).bindPopup('W4BRK W4BRK  146.61 PL 123 OFFSET - 33.19599915,-80.01309967' );                        
+                title: 'W4BRK311 W4BRK  146.61 PL 123 OFFSET - 33.19599915,-80.01309967' ,
+                    }).addTo(fg).bindPopup('W4BRK311 W4BRK  146.61 PL 123 OFFSET - 33.19599915,-80.01309967' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GL = new L.marker(new L.LatLng(33.92039871,-80.34149933),{ 
+            var W4GL312 = new L.marker(new L.LatLng(33.92039871,-80.34149933),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5627,12 +5637,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GL W4GL  146.64 PL 156.7 OFFSET - 33.92039871,-80.34149933' ,
-                    }).addTo(fg).bindPopup('W4GL W4GL  146.64 PL 156.7 OFFSET - 33.92039871,-80.34149933' );                        
+                title: 'W4GL312 W4GL  146.64 PL 156.7 OFFSET - 33.92039871,-80.34149933' ,
+                    }).addTo(fg).bindPopup('W4GL312 W4GL  146.64 PL 156.7 OFFSET - 33.92039871,-80.34149933' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4BFT = new L.marker(new L.LatLng(32.41880035,-80.68859863),{ 
+            var W4BFT313 = new L.marker(new L.LatLng(32.41880035,-80.68859863),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5642,12 +5652,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4BFT W4BFT  146.655 PL  OFFSET - 32.41880035,-80.68859863' ,
-                    }).addTo(fg).bindPopup('W4BFT W4BFT  146.655 PL  OFFSET - 32.41880035,-80.68859863' );                        
+                title: 'W4BFT313 W4BFT  146.655 PL  OFFSET - 32.41880035,-80.68859863' ,
+                    }).addTo(fg).bindPopup('W4BFT313 W4BFT  146.655 PL  OFFSET - 32.41880035,-80.68859863' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var AD4U = new L.marker(new L.LatLng(33.66490173,-80.7779007),{ 
+            var AD4U314 = new L.marker(new L.LatLng(33.66490173,-80.7779007),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5657,12 +5667,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'AD4U AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' ,
-                    }).addTo(fg).bindPopup('AD4U AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' );                        
+                title: 'AD4U314 AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' ,
+                    }).addTo(fg).bindPopup('AD4U314 AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WB4YXZ = new L.marker(new L.LatLng(34.90100098,-82.65930176),{ 
+            var WB4YXZ570 = new L.marker(new L.LatLng(34.90100098,-82.65930176),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5672,12 +5682,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WB4YXZ WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' ,
-                    }).addTo(fg).bindPopup('WB4YXZ WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' );                        
+                title: 'WB4YXZ570 WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' ,
+                    }).addTo(fg).bindPopup('WB4YXZ570 WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(34.28020096,-79.74279785),{ 
+            var WR4SC315 = new L.marker(new L.LatLng(34.28020096,-79.74279785),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5687,12 +5697,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.685 PL 91.5 OFFSET - 34.28020096,-79.74279785' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.685 PL 91.5 OFFSET - 34.28020096,-79.74279785' );                        
+                title: 'WR4SC315 WR4SC  146.685 PL 91.5 OFFSET - 34.28020096,-79.74279785' ,
+                    }).addTo(fg).bindPopup('WR4SC315 WR4SC  146.685 PL 91.5 OFFSET - 34.28020096,-79.74279785' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4ZBE = new L.marker(new L.LatLng(32.83229828,-79.82839966),{ 
+            var KK4ZBE316 = new L.marker(new L.LatLng(32.83229828,-79.82839966),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5702,12 +5712,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4ZBE KK4ZBE  146.685 PL 162.2 OFFSET - 32.83229828,-79.82839966' ,
-                    }).addTo(fg).bindPopup('KK4ZBE KK4ZBE  146.685 PL 162.2 OFFSET - 32.83229828,-79.82839966' );                        
+                title: 'KK4ZBE316 KK4ZBE  146.685 PL 162.2 OFFSET - 32.83229828,-79.82839966' ,
+                    }).addTo(fg).bindPopup('KK4ZBE316 KK4ZBE  146.685 PL 162.2 OFFSET - 32.83229828,-79.82839966' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4USC = new L.marker(new L.LatLng(34.72969818,-81.63749695),{ 
+            var K4USC317 = new L.marker(new L.LatLng(34.72969818,-81.63749695),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5717,12 +5727,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4USC K4USC  146.685 PL  OFFSET - 34.72969818,-81.63749695' ,
-                    }).addTo(fg).bindPopup('K4USC K4USC  146.685 PL  OFFSET - 34.72969818,-81.63749695' );                        
+                title: 'K4USC317 K4USC  146.685 PL  OFFSET - 34.72969818,-81.63749695' ,
+                    }).addTo(fg).bindPopup('K4USC317 K4USC  146.685 PL  OFFSET - 34.72969818,-81.63749695' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4HRS = new L.marker(new L.LatLng(33.37939835,-79.28469849),{ 
+            var W4HRS318 = new L.marker(new L.LatLng(33.37939835,-79.28469849),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5732,12 +5742,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4HRS W4HRS  146.7 PL 123 OFFSET - 33.37939835,-79.28469849' ,
-                    }).addTo(fg).bindPopup('W4HRS W4HRS  146.7 PL 123 OFFSET - 33.37939835,-79.28469849' );                        
+                title: 'W4HRS318 W4HRS  146.7 PL 123 OFFSET - 33.37939835,-79.28469849' ,
+                    }).addTo(fg).bindPopup('W4HRS318 W4HRS  146.7 PL 123 OFFSET - 33.37939835,-79.28469849' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4PAX = new L.marker(new L.LatLng(34.72040176,-80.77089691),{ 
+            var W4PAX319 = new L.marker(new L.LatLng(34.72040176,-80.77089691),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5747,12 +5757,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4PAX W4PAX  146.7 PL 123 OFFSET - 34.72040176,-80.77089691' ,
-                    }).addTo(fg).bindPopup('W4PAX W4PAX  146.7 PL 123 OFFSET - 34.72040176,-80.77089691' );                        
+                title: 'W4PAX319 W4PAX  146.7 PL 123 OFFSET - 34.72040176,-80.77089691' ,
+                    }).addTo(fg).bindPopup('W4PAX319 W4PAX  146.7 PL 123 OFFSET - 34.72040176,-80.77089691' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WT4F = new L.marker(new L.LatLng(34.88339996,-82.70739746),{ 
+            var WT4F320 = new L.marker(new L.LatLng(34.88339996,-82.70739746),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5762,12 +5772,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WT4F WT4F  146.7 PL 107.2 OFFSET - 34.88339996,-82.70739746' ,
-                    }).addTo(fg).bindPopup('WT4F WT4F  146.7 PL 107.2 OFFSET - 34.88339996,-82.70739746' );                        
+                title: 'WT4F320 WT4F  146.7 PL 107.2 OFFSET - 34.88339996,-82.70739746' ,
+                    }).addTo(fg).bindPopup('WT4F320 WT4F  146.7 PL 107.2 OFFSET - 34.88339996,-82.70739746' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(33.9496994,-79.1085968),{ 
+            var WR4SC321 = new L.marker(new L.LatLng(33.9496994,-79.1085968),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5777,12 +5787,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.715 PL 162.2 OFFSET - 33.9496994,-79.1085968' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.715 PL 162.2 OFFSET - 33.9496994,-79.1085968' );                        
+                title: 'WR4SC321 WR4SC  146.715 PL 162.2 OFFSET - 33.9496994,-79.1085968' ,
+                    }).addTo(fg).bindPopup('WR4SC321 WR4SC  146.715 PL 162.2 OFFSET - 33.9496994,-79.1085968' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(34.11859894,-80.93689728),{ 
+            var WR4SC322 = new L.marker(new L.LatLng(34.11859894,-80.93689728),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5792,12 +5802,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.715 PL 91.5 OFFSET - 34.11859894,-80.93689728' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.715 PL 91.5 OFFSET - 34.11859894,-80.93689728' );                        
+                title: 'WR4SC322 WR4SC  146.715 PL 91.5 OFFSET - 34.11859894,-80.93689728' ,
+                    }).addTo(fg).bindPopup('WR4SC322 WR4SC  146.715 PL 91.5 OFFSET - 34.11859894,-80.93689728' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
+            var WR4SC323 = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5807,12 +5817,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.715 PL 123 OFFSET - 32.90520096,-80.66680145' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.715 PL 123 OFFSET - 32.90520096,-80.66680145' );                        
+                title: 'WR4SC323 WR4SC  146.715 PL 123 OFFSET - 32.90520096,-80.66680145' ,
+                    }).addTo(fg).bindPopup('WR4SC323 WR4SC  146.715 PL 123 OFFSET - 32.90520096,-80.66680145' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4NAB = new L.marker(new L.LatLng(33.50180054,-81.96510315),{ 
+            var K4NAB324 = new L.marker(new L.LatLng(33.50180054,-81.96510315),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5822,12 +5832,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4NAB K4NAB  146.73 PL  OFFSET - 33.50180054,-81.96510315' ,
-                    }).addTo(fg).bindPopup('K4NAB K4NAB  146.73 PL  OFFSET - 33.50180054,-81.96510315' );                        
+                title: 'K4NAB324 K4NAB  146.73 PL  OFFSET - 33.50180054,-81.96510315' ,
+                    }).addTo(fg).bindPopup('K4NAB324 K4NAB  146.73 PL  OFFSET - 33.50180054,-81.96510315' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4HRS = new L.marker(new L.LatLng(32.97570038,-80.07230377),{ 
+            var W4HRS325 = new L.marker(new L.LatLng(32.97570038,-80.07230377),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5837,12 +5847,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4HRS W4HRS  146.73 PL 123 OFFSET - 32.97570038,-80.07230377' ,
-                    }).addTo(fg).bindPopup('W4HRS W4HRS  146.73 PL 123 OFFSET - 32.97570038,-80.07230377' );                        
+                title: 'W4HRS325 W4HRS  146.73 PL 123 OFFSET - 32.97570038,-80.07230377' ,
+                    }).addTo(fg).bindPopup('W4HRS325 W4HRS  146.73 PL 123 OFFSET - 32.97570038,-80.07230377' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4UKX = new L.marker(new L.LatLng(34.73709869,-82.25430298),{ 
+            var WA4UKX326 = new L.marker(new L.LatLng(34.73709869,-82.25430298),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5852,12 +5862,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4UKX WA4UKX  146.73 PL 100 OFFSET - 34.73709869,-82.25430298' ,
-                    }).addTo(fg).bindPopup('WA4UKX WA4UKX  146.73 PL 100 OFFSET - 34.73709869,-82.25430298' );                        
+                title: 'WA4UKX326 WA4UKX  146.73 PL 100 OFFSET - 34.73709869,-82.25430298' ,
+                    }).addTo(fg).bindPopup('WA4UKX326 WA4UKX  146.73 PL 100 OFFSET - 34.73709869,-82.25430298' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4PDE = new L.marker(new L.LatLng(34.3689003,-79.32839966),{ 
+            var W4PDE327 = new L.marker(new L.LatLng(34.3689003,-79.32839966),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5867,12 +5877,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4PDE W4PDE  146.745 PL 82.5 OFFSET - 34.3689003,-79.32839966' ,
-                    }).addTo(fg).bindPopup('W4PDE W4PDE  146.745 PL 82.5 OFFSET - 34.3689003,-79.32839966' );                        
+                title: 'W4PDE327 W4PDE  146.745 PL 82.5 OFFSET - 34.3689003,-79.32839966' ,
+                    }).addTo(fg).bindPopup('W4PDE327 W4PDE  146.745 PL 82.5 OFFSET - 34.3689003,-79.32839966' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4FTK = new L.marker(new L.LatLng(34.188721,-81.404594),{ 
+            var W4FTK328 = new L.marker(new L.LatLng(34.188721,-81.404594),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5882,12 +5892,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4FTK W4FTK  146.745 PL D315 OFFSET - 34.188721,-81.404594' ,
-                    }).addTo(fg).bindPopup('W4FTK W4FTK  146.745 PL D315 OFFSET - 34.188721,-81.404594' );                        
+                title: 'W4FTK328 W4FTK  146.745 PL D315 OFFSET - 34.188721,-81.404594' ,
+                    }).addTo(fg).bindPopup('W4FTK328 W4FTK  146.745 PL D315 OFFSET - 34.188721,-81.404594' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(32.92440033,-79.69940186),{ 
+            var WR4SC329 = new L.marker(new L.LatLng(32.92440033,-79.69940186),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5897,12 +5907,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.76 PL 123 OFFSET - 32.92440033,-79.69940186' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.76 PL 123 OFFSET - 32.92440033,-79.69940186' );                        
+                title: 'WR4SC329 WR4SC  146.76 PL 123 OFFSET - 32.92440033,-79.69940186' ,
+                    }).addTo(fg).bindPopup('WR4SC329 WR4SC  146.76 PL 123 OFFSET - 32.92440033,-79.69940186' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4FTK = new L.marker(new L.LatLng(34.715431,-81.019479),{ 
+            var W4FTK330 = new L.marker(new L.LatLng(34.715431,-81.019479),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5912,12 +5922,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4FTK W4FTK  146.76 PL D315 OFFSET - 34.715431,-81.019479' ,
-                    }).addTo(fg).bindPopup('W4FTK W4FTK  146.76 PL D315 OFFSET - 34.715431,-81.019479' );                        
+                title: 'W4FTK330 W4FTK  146.76 PL D315 OFFSET - 34.715431,-81.019479' ,
+                    }).addTo(fg).bindPopup('W4FTK330 W4FTK  146.76 PL D315 OFFSET - 34.715431,-81.019479' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRHCV = new L.marker(new L.LatLng(38.8648222,-94.7789944),{ 
+            var KCRHCV75 = new L.marker(new L.LatLng(38.8648222,-94.7789944),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5927,12 +5937,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRHCV Kansas City Room Host #28952  Hosts the Kansas City Room #28952 38.8648222,-94.7789944' ,
-                    }).addTo(fg).bindPopup('KCRHCV Kansas City Room Host #28952  Hosts the Kansas City Room #28952 38.8648222,-94.7789944' );                        
+                title: 'KCRHCV75 Kansas City Room Host #28952  Hosts the Kansas City Room #28952 38.8648222,-94.7789944' ,
+                    }).addTo(fg).bindPopup('KCRHCV75 Kansas City Room Host #28952  Hosts the Kansas City Room #28952 38.8648222,-94.7789944' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4CAE = new L.marker(new L.LatLng(34.05509949,-80.8321991),{ 
+            var W4CAE331 = new L.marker(new L.LatLng(34.05509949,-80.8321991),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5942,12 +5952,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4CAE W4CAE  146.775 PL 156.7 OFFSET - 34.05509949,-80.8321991' ,
-                    }).addTo(fg).bindPopup('W4CAE W4CAE  146.775 PL 156.7 OFFSET - 34.05509949,-80.8321991' );                        
+                title: 'W4CAE331 W4CAE  146.775 PL 156.7 OFFSET - 34.05509949,-80.8321991' ,
+                    }).addTo(fg).bindPopup('W4CAE331 W4CAE  146.775 PL 156.7 OFFSET - 34.05509949,-80.8321991' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRKW1 = new L.marker(new L.LatLng(38.9879167,-94.67075),{ 
+            var KCRKW176 = new L.marker(new L.LatLng(38.9879167,-94.67075),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5957,12 +5967,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' ,
-                    }).addTo(fg).bindPopup('KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' );                        
+                title: 'KCRKW176 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' ,
+                    }).addTo(fg).bindPopup('KCRKW176 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4USN = new L.marker(new L.LatLng(32.79059982,-79.90809631),{ 
+            var WA4USN332 = new L.marker(new L.LatLng(32.79059982,-79.90809631),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5972,12 +5982,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4USN WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' ,
-                    }).addTo(fg).bindPopup('WA4USN WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' );                        
+                title: 'WA4USN332 WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' ,
+                    }).addTo(fg).bindPopup('WA4USN332 WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRJCRAC1 = new L.marker(new L.LatLng(39.0106639,-94.7212972),{ 
+            var KCRJCRAC177 = new L.marker(new L.LatLng(39.0106639,-94.7212972),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -5987,12 +5997,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' ,
-                    }).addTo(fg).bindPopup('KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' );                        
+                title: 'KCRJCRAC177 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' ,
+                    }).addTo(fg).bindPopup('KCRJCRAC177 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N4AW = new L.marker(new L.LatLng(35.06480026,-82.77739716),{ 
+            var N4AW333 = new L.marker(new L.LatLng(35.06480026,-82.77739716),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6002,12 +6012,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N4AW N4AW  146.79 PL  OFFSET - 35.06480026,-82.77739716' ,
-                    }).addTo(fg).bindPopup('N4AW N4AW  146.79 PL  OFFSET - 35.06480026,-82.77739716' );                        
+                title: 'N4AW333 N4AW  146.79 PL  OFFSET - 35.06480026,-82.77739716' ,
+                    }).addTo(fg).bindPopup('N4AW333 N4AW  146.79 PL  OFFSET - 35.06480026,-82.77739716' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRJCRAC2 = new L.marker(new L.LatLng(38.9252611,-94.6553389),{ 
+            var KCRJCRAC278 = new L.marker(new L.LatLng(38.9252611,-94.6553389),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6017,12 +6027,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' ,
-                    }).addTo(fg).bindPopup('KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' );                        
+                title: 'KCRJCRAC278 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' ,
+                    }).addTo(fg).bindPopup('KCRJCRAC278 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GS = new L.marker(new L.LatLng(33.55099869,-79.04139709),{ 
+            var W4GS334 = new L.marker(new L.LatLng(33.55099869,-79.04139709),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6032,12 +6042,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GS W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' ,
-                    }).addTo(fg).bindPopup('W4GS W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' );                        
+                title: 'W4GS334 W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' ,
+                    }).addTo(fg).bindPopup('W4GS334 W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRKW2 = new L.marker(new L.LatLng(38.5861611,-94.6204139),{ 
+            var KCRKW279 = new L.marker(new L.LatLng(38.5861611,-94.6204139),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6047,12 +6057,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' ,
-                    }).addTo(fg).bindPopup('KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' );                        
+                title: 'KCRKW279 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' ,
+                    }).addTo(fg).bindPopup('KCRKW279 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KJ4QLH = new L.marker(new L.LatLng(33.53,-80.82),{ 
+            var KJ4QLH335 = new L.marker(new L.LatLng(33.53,-80.82),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6062,12 +6072,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KJ4QLH KJ4QLH  146.805 PL 156.7 OFFSET - 33.53,-80.82' ,
-                    }).addTo(fg).bindPopup('KJ4QLH KJ4QLH  146.805 PL 156.7 OFFSET - 33.53,-80.82' );                        
+                title: 'KJ4QLH335 KJ4QLH  146.805 PL 156.7 OFFSET - 33.53,-80.82' ,
+                    }).addTo(fg).bindPopup('KJ4QLH335 KJ4QLH  146.805 PL 156.7 OFFSET - 33.53,-80.82' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRWW = new L.marker(new L.LatLng(39.0465806,-94.5874444),{ 
+            var KCRWW80 = new L.marker(new L.LatLng(39.0465806,-94.5874444),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6077,12 +6087,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRWW N0WW  Keith Little NØWW 39.0465806,-94.5874444' ,
-                    }).addTo(fg).bindPopup('KCRWW N0WW  Keith Little NØWW 39.0465806,-94.5874444' );                        
+                title: 'KCRWW80 N0WW  Keith Little NØWW 39.0465806,-94.5874444' ,
+                    }).addTo(fg).bindPopup('KCRWW80 N0WW  Keith Little NØWW 39.0465806,-94.5874444' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4NYK = new L.marker(new L.LatLng(34.94120026,-82.41069794),{ 
+            var W4NYK336 = new L.marker(new L.LatLng(34.94120026,-82.41069794),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6092,12 +6102,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4NYK W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' ,
-                    }).addTo(fg).bindPopup('W4NYK W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' );                        
+                title: 'W4NYK336 W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' ,
+                    }).addTo(fg).bindPopup('W4NYK336 W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRROO = new L.marker(new L.LatLng(39.2819722,-94.9058889),{ 
+            var KCRROO81 = new L.marker(new L.LatLng(39.2819722,-94.9058889),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6107,12 +6117,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' ,
-                    }).addTo(fg).bindPopup('KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' );                        
+                title: 'KCRROO81 Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' ,
+                    }).addTo(fg).bindPopup('KCRROO81 Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KI4RAX = new L.marker(new L.LatLng(34.20999908,-80.69000244),{ 
+            var KI4RAX337 = new L.marker(new L.LatLng(34.20999908,-80.69000244),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6122,12 +6132,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KI4RAX KI4RAX  146.82 PL 91.5 OFFSET - 34.20999908,-80.69000244' ,
-                    }).addTo(fg).bindPopup('KI4RAX KI4RAX  146.82 PL 91.5 OFFSET - 34.20999908,-80.69000244' );                        
+                title: 'KI4RAX337 KI4RAX  146.82 PL 91.5 OFFSET - 34.20999908,-80.69000244' ,
+                    }).addTo(fg).bindPopup('KI4RAX337 KI4RAX  146.82 PL 91.5 OFFSET - 34.20999908,-80.69000244' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRHAM2 = new L.marker(new L.LatLng(38.9084722,-94.4548056),{ 
+            var KCRHAM282 = new L.marker(new L.LatLng(38.9084722,-94.4548056),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6137,12 +6147,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' ,
-                    }).addTo(fg).bindPopup('KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' );                        
+                title: 'KCRHAM282 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' ,
+                    }).addTo(fg).bindPopup('KCRHAM282 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KA4GDW = new L.marker(new L.LatLng(33.35114,-80.68542),{ 
+            var KA4GDW338 = new L.marker(new L.LatLng(33.35114,-80.68542),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6152,12 +6162,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KA4GDW KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' ,
-                    }).addTo(fg).bindPopup('KA4GDW KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' );                        
+                title: 'KA4GDW338 KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' ,
+                    }).addTo(fg).bindPopup('KA4GDW338 KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRHAM3 = new L.marker(new L.LatLng(39.0922333,-94.9453528),{ 
+            var KCRHAM383 = new L.marker(new L.LatLng(39.0922333,-94.9453528),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6167,12 +6177,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' ,
-                    }).addTo(fg).bindPopup('KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' );                        
+                title: 'KCRHAM383 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' ,
+                    }).addTo(fg).bindPopup('KCRHAM383 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4ILT = new L.marker(new L.LatLng(33.18619919,-80.57939911),{ 
+            var K4ILT339 = new L.marker(new L.LatLng(33.18619919,-80.57939911),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6182,12 +6192,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4ILT K4ILT  146.835 PL 103.5 OFFSET - 33.18619919,-80.57939911' ,
-                    }).addTo(fg).bindPopup('K4ILT K4ILT  146.835 PL 103.5 OFFSET - 33.18619919,-80.57939911' );                        
+                title: 'K4ILT339 K4ILT  146.835 PL 103.5 OFFSET - 33.18619919,-80.57939911' ,
+                    }).addTo(fg).bindPopup('K4ILT339 K4ILT  146.835 PL 103.5 OFFSET - 33.18619919,-80.57939911' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRQFJ = new L.marker(new L.LatLng(39.2731222,-94.6629583),{ 
+            var KCRQFJ84 = new L.marker(new L.LatLng(39.2731222,-94.6629583),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6197,12 +6207,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' ,
-                    }).addTo(fg).bindPopup('KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' );                        
+                title: 'KCRQFJ84 Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' ,
+                    }).addTo(fg).bindPopup('KCRQFJ84 Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4EC = new L.marker(new L.LatLng(33.7942009,-81.89029694),{ 
+            var WR4EC340 = new L.marker(new L.LatLng(33.7942009,-81.89029694),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6212,12 +6222,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4EC WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' ,
-                    }).addTo(fg).bindPopup('WR4EC WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' );                        
+                title: 'WR4EC340 WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' ,
+                    }).addTo(fg).bindPopup('WR4EC340 WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRMED = new L.marker(new L.LatLng(39.0562778,-94.6095),{ 
+            var KCRMED85 = new L.marker(new L.LatLng(39.0562778,-94.6095),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6227,12 +6237,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' ,
-                    }).addTo(fg).bindPopup('KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' );                        
+                title: 'KCRMED85 Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' ,
+                    }).addTo(fg).bindPopup('KCRMED85 Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4ULH = new L.marker(new L.LatLng(34.28020096,-79.74279785),{ 
+            var W4ULH341 = new L.marker(new L.LatLng(34.28020096,-79.74279785),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6242,12 +6252,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4ULH W4ULH  146.85 PL 123 OFFSET - 34.28020096,-79.74279785' ,
-                    }).addTo(fg).bindPopup('W4ULH W4ULH  146.85 PL 123 OFFSET - 34.28020096,-79.74279785' );                        
+                title: 'W4ULH341 W4ULH  146.85 PL 123 OFFSET - 34.28020096,-79.74279785' ,
+                    }).addTo(fg).bindPopup('W4ULH341 W4ULH  146.85 PL 123 OFFSET - 34.28020096,-79.74279785' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRHAM4 = new L.marker(new L.LatLng(39.2611111,-95.6558333),{ 
+            var KCRHAM486 = new L.marker(new L.LatLng(39.2611111,-95.6558333),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6257,12 +6267,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' ,
-                    }).addTo(fg).bindPopup('KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' );                        
+                title: 'KCRHAM486 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' ,
+                    }).addTo(fg).bindPopup('KCRHAM486 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N2OBS = new L.marker(new L.LatLng(32.9856987,-80.10980225),{ 
+            var N2OBS342 = new L.marker(new L.LatLng(32.9856987,-80.10980225),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6272,12 +6282,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N2OBS N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' ,
-                    }).addTo(fg).bindPopup('N2OBS N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' );                        
+                title: 'N2OBS342 N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' ,
+                    }).addTo(fg).bindPopup('N2OBS342 N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KCRCNC = new L.marker(new L.LatLng(38.1788722,-93.3541889),{ 
+            var KCRCNC87 = new L.marker(new L.LatLng(38.1788722,-93.3541889),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6287,12 +6297,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' ,
-                    }).addTo(fg).bindPopup('KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' );                        
+                title: 'KCRCNC87 Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' ,
+                    }).addTo(fg).bindPopup('KCRCNC87 Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KD4HLH = new L.marker(new L.LatLng(34.57160187,-82.11209869),{ 
+            var KD4HLH343 = new L.marker(new L.LatLng(34.57160187,-82.11209869),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6302,12 +6312,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KD4HLH KD4HLH  146.865 PL 107.2 OFFSET - 34.57160187,-82.11209869' ,
-                    }).addTo(fg).bindPopup('KD4HLH KD4HLH  146.865 PL 107.2 OFFSET - 34.57160187,-82.11209869' );                        
+                title: 'KD4HLH343 KD4HLH  146.865 PL 107.2 OFFSET - 34.57160187,-82.11209869' ,
+                    }).addTo(fg).bindPopup('KD4HLH343 KD4HLH  146.865 PL 107.2 OFFSET - 34.57160187,-82.11209869' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4NYR = new L.marker(new L.LatLng(35.12120056,-81.51589966),{ 
+            var W4NYR344 = new L.marker(new L.LatLng(35.12120056,-81.51589966),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6317,12 +6327,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4NYR W4NYR  146.88 PL  OFFSET - 35.12120056,-81.51589966' ,
-                    }).addTo(fg).bindPopup('W4NYR W4NYR  146.88 PL  OFFSET - 35.12120056,-81.51589966' );                        
+                title: 'W4NYR344 W4NYR  146.88 PL  OFFSET - 35.12120056,-81.51589966' ,
+                    }).addTo(fg).bindPopup('W4NYR344 W4NYR  146.88 PL  OFFSET - 35.12120056,-81.51589966' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(33.54309845,-80.82420349),{ 
+            var WR4SC345 = new L.marker(new L.LatLng(33.54309845,-80.82420349),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6332,12 +6342,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  146.88 PL 123 OFFSET - 33.54309845,-80.82420349' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  146.88 PL 123 OFFSET - 33.54309845,-80.82420349' );                        
+                title: 'WR4SC345 WR4SC  146.88 PL 123 OFFSET - 33.54309845,-80.82420349' ,
+                    }).addTo(fg).bindPopup('WR4SC345 WR4SC  146.88 PL 123 OFFSET - 33.54309845,-80.82420349' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(34.74850082,-80.41680145),{ 
+            var W4APE346 = new L.marker(new L.LatLng(34.74850082,-80.41680145),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6347,12 +6357,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  146.895 PL 123 OFFSET - 34.74850082,-80.41680145' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  146.895 PL 123 OFFSET - 34.74850082,-80.41680145' );                        
+                title: 'W4APE346 W4APE  146.895 PL 123 OFFSET - 34.74850082,-80.41680145' ,
+                    }).addTo(fg).bindPopup('W4APE346 W4APE  146.895 PL 123 OFFSET - 34.74850082,-80.41680145' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4DEW = new L.marker(new L.LatLng(34.00149918,-81.77200317),{ 
+            var W4DEW347 = new L.marker(new L.LatLng(34.00149918,-81.77200317),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6362,12 +6372,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4DEW W4DEW  146.91 PL 123 OFFSET - 34.00149918,-81.77200317' ,
-                    }).addTo(fg).bindPopup('W4DEW W4DEW  146.91 PL 123 OFFSET - 34.00149918,-81.77200317' );                        
+                title: 'W4DEW347 W4DEW  146.91 PL 123 OFFSET - 34.00149918,-81.77200317' ,
+                    }).addTo(fg).bindPopup('W4DEW347 W4DEW  146.91 PL 123 OFFSET - 34.00149918,-81.77200317' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4SJS = new L.marker(new L.LatLng(32.7118988,-80.68170166),{ 
+            var WA4SJS348 = new L.marker(new L.LatLng(32.7118988,-80.68170166),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6377,12 +6387,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4SJS WA4SJS  146.91 PL 156.7 OFFSET - 32.7118988,-80.68170166' ,
-                    }).addTo(fg).bindPopup('WA4SJS WA4SJS  146.91 PL 156.7 OFFSET - 32.7118988,-80.68170166' );                        
+                title: 'WA4SJS348 WA4SJS  146.91 PL 156.7 OFFSET - 32.7118988,-80.68170166' ,
+                    }).addTo(fg).bindPopup('WA4SJS348 WA4SJS  146.91 PL 156.7 OFFSET - 32.7118988,-80.68170166' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(34.29270172,-80.33760071),{ 
+            var W4APE349 = new L.marker(new L.LatLng(34.29270172,-80.33760071),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6392,12 +6402,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  146.925 PL 123 OFFSET - 34.29270172,-80.33760071' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  146.925 PL 123 OFFSET - 34.29270172,-80.33760071' );                        
+                title: 'W4APE349 W4APE  146.925 PL 123 OFFSET - 34.29270172,-80.33760071' ,
+                    }).addTo(fg).bindPopup('W4APE349 W4APE  146.925 PL 123 OFFSET - 34.29270172,-80.33760071' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4IQQ = new L.marker(new L.LatLng(34.8526001,-82.39399719),{ 
+            var W4IQQ350 = new L.marker(new L.LatLng(34.8526001,-82.39399719),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6407,12 +6417,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4IQQ W4IQQ  146.94 PL 107.2 OFFSET - 34.8526001,-82.39399719' ,
-                    }).addTo(fg).bindPopup('W4IQQ W4IQQ  146.94 PL 107.2 OFFSET - 34.8526001,-82.39399719' );                        
+                title: 'W4IQQ350 W4IQQ  146.94 PL 107.2 OFFSET - 34.8526001,-82.39399719' ,
+                    }).addTo(fg).bindPopup('W4IQQ350 W4IQQ  146.94 PL 107.2 OFFSET - 34.8526001,-82.39399719' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4USN = new L.marker(new L.LatLng(32.9939003,-80.26999664),{ 
+            var WA4USN351 = new L.marker(new L.LatLng(32.9939003,-80.26999664),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6422,12 +6432,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4USN WA4USN  146.94 PL 123 OFFSET - 32.9939003,-80.26999664' ,
-                    }).addTo(fg).bindPopup('WA4USN WA4USN  146.94 PL 123 OFFSET - 32.9939003,-80.26999664' );                        
+                title: 'WA4USN351 WA4USN  146.94 PL 123 OFFSET - 32.9939003,-80.26999664' ,
+                    }).addTo(fg).bindPopup('WA4USN351 WA4USN  146.94 PL 123 OFFSET - 32.9939003,-80.26999664' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N4AW = new L.marker(new L.LatLng(34.51079941,-82.64679718),{ 
+            var N4AW352 = new L.marker(new L.LatLng(34.51079941,-82.64679718),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6437,12 +6447,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N4AW N4AW  146.97 PL 127.3 OFFSET - 34.51079941,-82.64679718' ,
-                    }).addTo(fg).bindPopup('N4AW N4AW  146.97 PL 127.3 OFFSET - 34.51079941,-82.64679718' );                        
+                title: 'N4AW352 N4AW  146.97 PL 127.3 OFFSET - 34.51079941,-82.64679718' ,
+                    }).addTo(fg).bindPopup('N4AW352 N4AW  146.97 PL 127.3 OFFSET - 34.51079941,-82.64679718' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KB4RRC = new L.marker(new L.LatLng(34.19910049,-79.76779938),{ 
+            var KB4RRC353 = new L.marker(new L.LatLng(34.19910049,-79.76779938),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6452,12 +6462,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KB4RRC KB4RRC  146.97 PL 167.9 OFFSET - 34.19910049,-79.76779938' ,
-                    }).addTo(fg).bindPopup('KB4RRC KB4RRC  146.97 PL 167.9 OFFSET - 34.19910049,-79.76779938' );                        
+                title: 'KB4RRC353 KB4RRC  146.97 PL 167.9 OFFSET - 34.19910049,-79.76779938' ,
+                    }).addTo(fg).bindPopup('KB4RRC353 KB4RRC  146.97 PL 167.9 OFFSET - 34.19910049,-79.76779938' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W1GRE = new L.marker(new L.LatLng(32.96580124,-80.15750122),{ 
+            var W1GRE354 = new L.marker(new L.LatLng(32.96580124,-80.15750122),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6467,12 +6477,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W1GRE W1GRE  146.985 PL 123 OFFSET - 32.96580124,-80.15750122' ,
-                    }).addTo(fg).bindPopup('W1GRE W1GRE  146.985 PL 123 OFFSET - 32.96580124,-80.15750122' );                        
+                title: 'W1GRE354 W1GRE  146.985 PL 123 OFFSET - 32.96580124,-80.15750122' ,
+                    }).addTo(fg).bindPopup('W1GRE354 W1GRE  146.985 PL 123 OFFSET - 32.96580124,-80.15750122' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KO4L = new L.marker(new L.LatLng(34.06060028,-79.3125),{ 
+            var KO4L355 = new L.marker(new L.LatLng(34.06060028,-79.3125),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6482,12 +6492,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KO4L KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' ,
-                    }).addTo(fg).bindPopup('KO4L KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' );                        
+                title: 'KO4L355 KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' ,
+                    }).addTo(fg).bindPopup('KO4L355 KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GL = new L.marker(new L.LatLng(33.8810997,-80.27059937),{ 
+            var W4GL357 = new L.marker(new L.LatLng(33.8810997,-80.27059937),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6497,12 +6507,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GL W4GL  147.015 PL 156.7 OFFSET + 33.8810997,-80.27059937' ,
-                    }).addTo(fg).bindPopup('W4GL W4GL  147.015 PL 156.7 OFFSET + 33.8810997,-80.27059937' );                        
+                title: 'W4GL357 W4GL  147.015 PL 156.7 OFFSET + 33.8810997,-80.27059937' ,
+                    }).addTo(fg).bindPopup('W4GL357 W4GL  147.015 PL 156.7 OFFSET + 33.8810997,-80.27059937' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4BQ = new L.marker(new L.LatLng(33.18780136,-81.39689636),{ 
+            var KK4BQ358 = new L.marker(new L.LatLng(33.18780136,-81.39689636),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6512,12 +6522,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4BQ KK4BQ  147.03 PL 156.7 OFFSET + 33.18780136,-81.39689636' ,
-                    }).addTo(fg).bindPopup('KK4BQ KK4BQ  147.03 PL 156.7 OFFSET + 33.18780136,-81.39689636' );                        
+                title: 'KK4BQ358 KK4BQ  147.03 PL 156.7 OFFSET + 33.18780136,-81.39689636' ,
+                    }).addTo(fg).bindPopup('KK4BQ358 KK4BQ  147.03 PL 156.7 OFFSET + 33.18780136,-81.39689636' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KJ4YLP = new L.marker(new L.LatLng(34.88249969,-83.09750366),{ 
+            var KJ4YLP359 = new L.marker(new L.LatLng(34.88249969,-83.09750366),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6527,12 +6537,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KJ4YLP KJ4YLP  147.03 PL 123 OFFSET - 34.88249969,-83.09750366' ,
-                    }).addTo(fg).bindPopup('KJ4YLP KJ4YLP  147.03 PL 123 OFFSET - 34.88249969,-83.09750366' );                        
+                title: 'KJ4YLP359 KJ4YLP  147.03 PL 123 OFFSET - 34.88249969,-83.09750366' ,
+                    }).addTo(fg).bindPopup('KJ4YLP359 KJ4YLP  147.03 PL 123 OFFSET - 34.88249969,-83.09750366' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4YTZ = new L.marker(new L.LatLng(34.83969879,-81.01860046),{ 
+            var K4YTZ360 = new L.marker(new L.LatLng(34.83969879,-81.01860046),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6542,12 +6552,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4YTZ K4YTZ  147.03 PL 88.5 OFFSET - 34.83969879,-81.01860046' ,
-                    }).addTo(fg).bindPopup('K4YTZ K4YTZ  147.03 PL 88.5 OFFSET - 34.83969879,-81.01860046' );                        
+                title: 'K4YTZ360 K4YTZ  147.03 PL 88.5 OFFSET - 34.83969879,-81.01860046' ,
+                    }).addTo(fg).bindPopup('K4YTZ360 K4YTZ  147.03 PL 88.5 OFFSET - 34.83969879,-81.01860046' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4ILT = new L.marker(new L.LatLng(33.17359924,-80.57389832),{ 
+            var K4ILT361 = new L.marker(new L.LatLng(33.17359924,-80.57389832),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6557,12 +6567,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4ILT K4ILT  147.045 PL 103.5 OFFSET + 33.17359924,-80.57389832' ,
-                    }).addTo(fg).bindPopup('K4ILT K4ILT  147.045 PL 103.5 OFFSET + 33.17359924,-80.57389832' );                        
+                title: 'K4ILT361 K4ILT  147.045 PL 103.5 OFFSET + 33.17359924,-80.57389832' ,
+                    }).addTo(fg).bindPopup('K4ILT361 K4ILT  147.045 PL 103.5 OFFSET + 33.17359924,-80.57389832' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4ONF = new L.marker(new L.LatLng(32.28710175,-81.08070374),{ 
+            var KK4ONF362 = new L.marker(new L.LatLng(32.28710175,-81.08070374),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6572,12 +6582,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4ONF KK4ONF  147.06 PL 123 OFFSET + 32.28710175,-81.08070374' ,
-                    }).addTo(fg).bindPopup('KK4ONF KK4ONF  147.06 PL 123 OFFSET + 32.28710175,-81.08070374' );                        
+                title: 'KK4ONF362 KK4ONF  147.06 PL 123 OFFSET + 32.28710175,-81.08070374' ,
+                    }).addTo(fg).bindPopup('KK4ONF362 KK4ONF  147.06 PL 123 OFFSET + 32.28710175,-81.08070374' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4FTK = new L.marker(new L.LatLng(33.854465,-80.529466),{ 
+            var W4FTK363 = new L.marker(new L.LatLng(33.854465,-80.529466),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6587,12 +6597,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4FTK W4FTK  147.06 PL D315 OFFSET + 33.854465,-80.529466' ,
-                    }).addTo(fg).bindPopup('W4FTK W4FTK  147.06 PL D315 OFFSET + 33.854465,-80.529466' );                        
+                title: 'W4FTK363 W4FTK  147.06 PL D315 OFFSET + 33.854465,-80.529466' ,
+                    }).addTo(fg).bindPopup('W4FTK363 W4FTK  147.06 PL D315 OFFSET + 33.854465,-80.529466' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KJ4QLH = new L.marker(new L.LatLng(33.52,-81.08),{ 
+            var KJ4QLH364 = new L.marker(new L.LatLng(33.52,-81.08),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6602,12 +6612,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KJ4QLH KJ4QLH  147.09 PL 156.7 OFFSET + 33.52,-81.08' ,
-                    }).addTo(fg).bindPopup('KJ4QLH KJ4QLH  147.09 PL 156.7 OFFSET + 33.52,-81.08' );                        
+                title: 'KJ4QLH364 KJ4QLH  147.09 PL 156.7 OFFSET + 33.52,-81.08' ,
+                    }).addTo(fg).bindPopup('KJ4QLH364 KJ4QLH  147.09 PL 156.7 OFFSET + 33.52,-81.08' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(34.88639832,-81.82080078),{ 
+            var WR4SC365 = new L.marker(new L.LatLng(34.88639832,-81.82080078),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6617,12 +6627,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  147.09 PL 162.2 OFFSET + 34.88639832,-81.82080078' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  147.09 PL 162.2 OFFSET + 34.88639832,-81.82080078' );                        
+                title: 'WR4SC365 WR4SC  147.09 PL 162.2 OFFSET + 34.88639832,-81.82080078' ,
+                    }).addTo(fg).bindPopup('WR4SC365 WR4SC  147.09 PL 162.2 OFFSET + 34.88639832,-81.82080078' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(32.80220032,-80.02359772),{ 
+            var WR4SC366 = new L.marker(new L.LatLng(32.80220032,-80.02359772),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6632,12 +6642,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  147.105 PL 123 OFFSET + 32.80220032,-80.02359772' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  147.105 PL 123 OFFSET + 32.80220032,-80.02359772' );                        
+                title: 'WR4SC366 WR4SC  147.105 PL 123 OFFSET + 32.80220032,-80.02359772' ,
+                    }).addTo(fg).bindPopup('WR4SC366 WR4SC  147.105 PL 123 OFFSET + 32.80220032,-80.02359772' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GS = new L.marker(new L.LatLng(33.68909836,-78.88670349),{ 
+            var W4GS367 = new L.marker(new L.LatLng(33.68909836,-78.88670349),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6647,12 +6657,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GS W4GS  147.12 PL 85.4 OFFSET + 33.68909836,-78.88670349' ,
-                    }).addTo(fg).bindPopup('W4GS W4GS  147.12 PL 85.4 OFFSET + 33.68909836,-78.88670349' );                        
+                title: 'W4GS367 W4GS  147.12 PL 85.4 OFFSET + 33.68909836,-78.88670349' ,
+                    }).addTo(fg).bindPopup('W4GS367 W4GS  147.12 PL 85.4 OFFSET + 33.68909836,-78.88670349' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4CCC = new L.marker(new L.LatLng(34.74860001,-79.84140015),{ 
+            var K4CCC368 = new L.marker(new L.LatLng(34.74860001,-79.84140015),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6662,12 +6672,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4CCC K4CCC  147.135 PL 123 OFFSET + 34.74860001,-79.84140015' ,
-                    }).addTo(fg).bindPopup('K4CCC K4CCC  147.135 PL 123 OFFSET + 34.74860001,-79.84140015' );                        
+                title: 'K4CCC368 K4CCC  147.135 PL 123 OFFSET + 34.74860001,-79.84140015' ,
+                    }).addTo(fg).bindPopup('K4CCC368 K4CCC  147.135 PL 123 OFFSET + 34.74860001,-79.84140015' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KG4BZN = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
+            var KG4BZN369 = new L.marker(new L.LatLng(32.90520096,-80.66680145),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6677,12 +6687,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KG4BZN KG4BZN  147.135 PL  OFFSET + 32.90520096,-80.66680145' ,
-                    }).addTo(fg).bindPopup('KG4BZN KG4BZN  147.135 PL  OFFSET + 32.90520096,-80.66680145' );                        
+                title: 'KG4BZN369 KG4BZN  147.135 PL  OFFSET + 32.90520096,-80.66680145' ,
+                    }).addTo(fg).bindPopup('KG4BZN369 KG4BZN  147.135 PL  OFFSET + 32.90520096,-80.66680145' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GWD = new L.marker(new L.LatLng(34.37239838,-82.1678009),{ 
+            var W4GWD370 = new L.marker(new L.LatLng(34.37239838,-82.1678009),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6692,12 +6702,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GWD W4GWD  147.165 PL 107.2 OFFSET + 34.37239838,-82.1678009' ,
-                    }).addTo(fg).bindPopup('W4GWD W4GWD  147.165 PL 107.2 OFFSET + 34.37239838,-82.1678009' );                        
+                title: 'W4GWD370 W4GWD  147.165 PL 107.2 OFFSET + 34.37239838,-82.1678009' ,
+                    }).addTo(fg).bindPopup('W4GWD370 W4GWD  147.165 PL 107.2 OFFSET + 34.37239838,-82.1678009' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4HNK = new L.marker(new L.LatLng(33.14189911,-80.35079956),{ 
+            var W4HNK371 = new L.marker(new L.LatLng(33.14189911,-80.35079956),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6707,12 +6717,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4HNK W4HNK  147.18 PL 123 OFFSET + 33.14189911,-80.35079956' ,
-                    }).addTo(fg).bindPopup('W4HNK W4HNK  147.18 PL 123 OFFSET + 33.14189911,-80.35079956' );                        
+                title: 'W4HNK371 W4HNK  147.18 PL 123 OFFSET + 33.14189911,-80.35079956' ,
+                    }).addTo(fg).bindPopup('W4HNK371 W4HNK  147.18 PL 123 OFFSET + 33.14189911,-80.35079956' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4APE = new L.marker(new L.LatLng(34.24779892,-79.81109619),{ 
+            var W4APE372 = new L.marker(new L.LatLng(34.24779892,-79.81109619),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6722,12 +6732,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4APE W4APE  147.195 PL 123 OFFSET + 34.24779892,-79.81109619' ,
-                    }).addTo(fg).bindPopup('W4APE W4APE  147.195 PL 123 OFFSET + 34.24779892,-79.81109619' );                        
+                title: 'W4APE372 W4APE  147.195 PL 123 OFFSET + 34.24779892,-79.81109619' ,
+                    }).addTo(fg).bindPopup('W4APE372 W4APE  147.195 PL 123 OFFSET + 34.24779892,-79.81109619' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WX4PG = new L.marker(new L.LatLng(34.9009497,-82.6592992),{ 
+            var WX4PG373 = new L.marker(new L.LatLng(34.9009497,-82.6592992),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6737,12 +6747,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WX4PG WX4PG  147.195 PL 141.3 OFFSET + 34.9009497,-82.6592992' ,
-                    }).addTo(fg).bindPopup('WX4PG WX4PG  147.195 PL 141.3 OFFSET + 34.9009497,-82.6592992' );                        
+                title: 'WX4PG373 WX4PG  147.195 PL 141.3 OFFSET + 34.9009497,-82.6592992' ,
+                    }).addTo(fg).bindPopup('WX4PG373 WX4PG  147.195 PL 141.3 OFFSET + 34.9009497,-82.6592992' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4FTK = new L.marker(new L.LatLng(33.969955,-79.03414),{ 
+            var W4FTK374 = new L.marker(new L.LatLng(33.969955,-79.03414),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6752,12 +6762,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4FTK W4FTK  147.21 PL D315 OFFSET + 33.969955,-79.03414' ,
-                    }).addTo(fg).bindPopup('W4FTK W4FTK  147.21 PL D315 OFFSET + 33.969955,-79.03414' );                        
+                title: 'W4FTK374 W4FTK  147.21 PL D315 OFFSET + 33.969955,-79.03414' ,
+                    }).addTo(fg).bindPopup('W4FTK374 W4FTK  147.21 PL D315 OFFSET + 33.969955,-79.03414' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(34.19630051,-81.41230011),{ 
+            var WR4SC375 = new L.marker(new L.LatLng(34.19630051,-81.41230011),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6767,12 +6777,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  147.21 PL 156.7 OFFSET + 34.19630051,-81.41230011' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  147.21 PL 156.7 OFFSET + 34.19630051,-81.41230011' );                        
+                title: 'WR4SC375 WR4SC  147.21 PL 156.7 OFFSET + 34.19630051,-81.41230011' ,
+                    }).addTo(fg).bindPopup('WR4SC375 WR4SC  147.21 PL 156.7 OFFSET + 34.19630051,-81.41230011' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4NMW = new L.marker(new L.LatLng(33.01300049,-80.25800323),{ 
+            var WA4NMW376 = new L.marker(new L.LatLng(33.01300049,-80.25800323),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6782,12 +6792,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4NMW WA4NMW  147.225 PL 123 OFFSET + 33.01300049,-80.25800323' ,
-                    }).addTo(fg).bindPopup('WA4NMW WA4NMW  147.225 PL 123 OFFSET + 33.01300049,-80.25800323' );                        
+                title: 'WA4NMW376 WA4NMW  147.225 PL 123 OFFSET + 33.01300049,-80.25800323' ,
+                    }).addTo(fg).bindPopup('WA4NMW376 WA4NMW  147.225 PL 123 OFFSET + 33.01300049,-80.25800323' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4FTK  = new L.marker(new L.LatLng(34.92490005,-81.02510071),{ 
+            var W4FTK377 = new L.marker(new L.LatLng(34.92490005,-81.02510071),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6797,12 +6807,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4FTK  W4FTK   147.225 PL 110.9 OFFSET + 34.92490005,-81.02510071' ,
-                    }).addTo(fg).bindPopup('W4FTK  W4FTK   147.225 PL 110.9 OFFSET + 34.92490005,-81.02510071' );                        
+                title: 'W4FTK377 W4FTK   147.225 PL 110.9 OFFSET + 34.92490005,-81.02510071' ,
+                    }).addTo(fg).bindPopup('W4FTK377 W4FTK   147.225 PL 110.9 OFFSET + 34.92490005,-81.02510071' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4IAR = new L.marker(new L.LatLng(32.21630096,-80.75260162),{ 
+            var W4IAR378 = new L.marker(new L.LatLng(32.21630096,-80.75260162),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6812,12 +6822,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4IAR W4IAR  147.24 PL 100 OFFSET + 32.21630096,-80.75260162' ,
-                    }).addTo(fg).bindPopup('W4IAR W4IAR  147.24 PL 100 OFFSET + 32.21630096,-80.75260162' );                        
+                title: 'W4IAR378 W4IAR  147.24 PL 100 OFFSET + 32.21630096,-80.75260162' ,
+                    }).addTo(fg).bindPopup('W4IAR378 W4IAR  147.24 PL 100 OFFSET + 32.21630096,-80.75260162' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4GS = new L.marker(new L.LatLng(33.70660019,-78.87419891),{ 
+            var W4GS379 = new L.marker(new L.LatLng(33.70660019,-78.87419891),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6827,12 +6837,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4GS W4GS  147.24 PL 85.4 OFFSET + 33.70660019,-78.87419891' ,
-                    }).addTo(fg).bindPopup('W4GS W4GS  147.24 PL 85.4 OFFSET + 33.70660019,-78.87419891' );                        
+                title: 'W4GS379 W4GS  147.24 PL 85.4 OFFSET + 33.70660019,-78.87419891' ,
+                    }).addTo(fg).bindPopup('W4GS379 W4GS  147.24 PL 85.4 OFFSET + 33.70660019,-78.87419891' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KB4RRC = new L.marker(new L.LatLng(34.24750137,-79.81719971),{ 
+            var KB4RRC380 = new L.marker(new L.LatLng(34.24750137,-79.81719971),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6842,12 +6852,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KB4RRC KB4RRC  147.255 PL 162.2 OFFSET + 34.24750137,-79.81719971' ,
-                    }).addTo(fg).bindPopup('KB4RRC KB4RRC  147.255 PL 162.2 OFFSET + 34.24750137,-79.81719971' );                        
+                title: 'KB4RRC380 KB4RRC  147.255 PL 162.2 OFFSET + 34.24750137,-79.81719971' ,
+                    }).addTo(fg).bindPopup('KB4RRC380 KB4RRC  147.255 PL 162.2 OFFSET + 34.24750137,-79.81719971' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4RRC = new L.marker(new L.LatLng(33.91289902,-81.52559662),{ 
+            var W4RRC381 = new L.marker(new L.LatLng(33.91289902,-81.52559662),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6857,12 +6867,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4RRC W4RRC  147.255 PL 123 OFFSET + 33.91289902,-81.52559662' ,
-                    }).addTo(fg).bindPopup('W4RRC W4RRC  147.255 PL 123 OFFSET + 33.91289902,-81.52559662' );                        
+                title: 'W4RRC381 W4RRC  147.255 PL 123 OFFSET + 33.91289902,-81.52559662' ,
+                    }).addTo(fg).bindPopup('W4RRC381 W4RRC  147.255 PL 123 OFFSET + 33.91289902,-81.52559662' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4ANK = new L.marker(new L.LatLng(33.14369965,-80.35639954),{ 
+            var W4ANK382 = new L.marker(new L.LatLng(33.14369965,-80.35639954),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6872,12 +6882,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4ANK W4ANK  147.27 PL 123 OFFSET + 33.14369965,-80.35639954' ,
-                    }).addTo(fg).bindPopup('W4ANK W4ANK  147.27 PL 123 OFFSET + 33.14369965,-80.35639954' );                        
+                title: 'W4ANK382 W4ANK  147.27 PL 123 OFFSET + 33.14369965,-80.35639954' ,
+                    }).addTo(fg).bindPopup('W4ANK382 W4ANK  147.27 PL 123 OFFSET + 33.14369965,-80.35639954' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WA4JRJ = new L.marker(new L.LatLng(34.68569946,-82.95320129),{ 
+            var WA4JRJ383 = new L.marker(new L.LatLng(34.68569946,-82.95320129),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6887,12 +6897,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WA4JRJ WA4JRJ  147.27 PL 91.5 OFFSET + 34.68569946,-82.95320129' ,
-                    }).addTo(fg).bindPopup('WA4JRJ WA4JRJ  147.27 PL 91.5 OFFSET + 34.68569946,-82.95320129' );                        
+                title: 'WA4JRJ383 WA4JRJ  147.27 PL 91.5 OFFSET + 34.68569946,-82.95320129' ,
+                    }).addTo(fg).bindPopup('WA4JRJ383 WA4JRJ  147.27 PL 91.5 OFFSET + 34.68569946,-82.95320129' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N4HRS = new L.marker(new L.LatLng(34.99430084,-81.24199677),{ 
+            var N4HRS384 = new L.marker(new L.LatLng(34.99430084,-81.24199677),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6902,12 +6912,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N4HRS N4HRS  147.27 PL 110.9 OFFSET + 34.99430084,-81.24199677' ,
-                    }).addTo(fg).bindPopup('N4HRS N4HRS  147.27 PL 110.9 OFFSET + 34.99430084,-81.24199677' );                        
+                title: 'N4HRS384 N4HRS  147.27 PL 110.9 OFFSET + 34.99430084,-81.24199677' ,
+                    }).addTo(fg).bindPopup('N4HRS384 N4HRS  147.27 PL 110.9 OFFSET + 34.99430084,-81.24199677' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N4ADM = new L.marker(new L.LatLng(33.5603981,-81.71959686),{ 
+            var N4ADM385 = new L.marker(new L.LatLng(33.5603981,-81.71959686),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6917,12 +6927,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N4ADM N4ADM  147.285 PL 100 OFFSET + 33.5603981,-81.71959686' ,
-                    }).addTo(fg).bindPopup('N4ADM N4ADM  147.285 PL 100 OFFSET + 33.5603981,-81.71959686' );                        
+                title: 'N4ADM385 N4ADM  147.285 PL 100 OFFSET + 33.5603981,-81.71959686' ,
+                    }).addTo(fg).bindPopup('N4ADM385 N4ADM  147.285 PL 100 OFFSET + 33.5603981,-81.71959686' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K2PJ = new L.marker(new L.LatLng(34.08570099,-79.07150269),{ 
+            var K2PJ386 = new L.marker(new L.LatLng(34.08570099,-79.07150269),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6932,12 +6942,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K2PJ K2PJ  147.285 PL 85.4 OFFSET + 34.08570099,-79.07150269' ,
-                    }).addTo(fg).bindPopup('K2PJ K2PJ  147.285 PL 85.4 OFFSET + 34.08570099,-79.07150269' );                        
+                title: 'K2PJ386 K2PJ  147.285 PL 85.4 OFFSET + 34.08570099,-79.07150269' ,
+                    }).addTo(fg).bindPopup('K2PJ386 K2PJ  147.285 PL 85.4 OFFSET + 34.08570099,-79.07150269' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4B = new L.marker(new L.LatLng(33.39550018,-79.95809937),{ 
+            var KK4B387 = new L.marker(new L.LatLng(33.39550018,-79.95809937),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6947,12 +6957,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4B KK4B  147.3 PL 162.2 OFFSET + 33.39550018,-79.95809937' ,
-                    }).addTo(fg).bindPopup('KK4B KK4B  147.3 PL 162.2 OFFSET + 33.39550018,-79.95809937' );                        
+                title: 'KK4B387 KK4B  147.3 PL 162.2 OFFSET + 33.39550018,-79.95809937' ,
+                    }).addTo(fg).bindPopup('KK4B387 KK4B  147.3 PL 162.2 OFFSET + 33.39550018,-79.95809937' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4JLA = new L.marker(new L.LatLng(34.88639832,-81.82080078),{ 
+            var K4JLA388 = new L.marker(new L.LatLng(34.88639832,-81.82080078),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6962,12 +6972,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4JLA K4JLA  147.315 PL 123 OFFSET + 34.88639832,-81.82080078' ,
-                    }).addTo(fg).bindPopup('K4JLA K4JLA  147.315 PL 123 OFFSET + 34.88639832,-81.82080078' );                        
+                title: 'K4JLA388 K4JLA  147.315 PL 123 OFFSET + 34.88639832,-81.82080078' ,
+                    }).addTo(fg).bindPopup('K4JLA388 K4JLA  147.315 PL 123 OFFSET + 34.88639832,-81.82080078' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4CAE = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
+            var W4CAE389 = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6977,12 +6987,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4CAE W4CAE  147.33 PL 156.7 OFFSET + 34.0007019,-81.03479767' ,
-                    }).addTo(fg).bindPopup('W4CAE W4CAE  147.33 PL 156.7 OFFSET + 34.0007019,-81.03479767' );                        
+                title: 'W4CAE389 W4CAE  147.33 PL 156.7 OFFSET + 34.0007019,-81.03479767' ,
+                    }).addTo(fg).bindPopup('W4CAE389 W4CAE  147.33 PL 156.7 OFFSET + 34.0007019,-81.03479767' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var WR4SC = new L.marker(new L.LatLng(33.40499878,-81.83750153),{ 
+            var WR4SC390 = new L.marker(new L.LatLng(33.40499878,-81.83750153),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -6992,12 +7002,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WR4SC WR4SC  147.345 PL 91.5 OFFSET + 33.40499878,-81.83750153' ,
-                    }).addTo(fg).bindPopup('WR4SC WR4SC  147.345 PL 91.5 OFFSET + 33.40499878,-81.83750153' );                        
+                title: 'WR4SC390 WR4SC  147.345 PL 91.5 OFFSET + 33.40499878,-81.83750153' ,
+                    }).addTo(fg).bindPopup('WR4SC390 WR4SC  147.345 PL 91.5 OFFSET + 33.40499878,-81.83750153' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var W4ANK = new L.marker(new L.LatLng(32.77659988,-79.93090057),{ 
+            var W4ANK391 = new L.marker(new L.LatLng(32.77659988,-79.93090057),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7007,12 +7017,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'W4ANK W4ANK  147.345 PL 123 OFFSET + 32.77659988,-79.93090057' ,
-                    }).addTo(fg).bindPopup('W4ANK W4ANK  147.345 PL 123 OFFSET + 32.77659988,-79.93090057' );                        
+                title: 'W4ANK391 W4ANK  147.345 PL 123 OFFSET + 32.77659988,-79.93090057' ,
+                    }).addTo(fg).bindPopup('W4ANK391 W4ANK  147.345 PL 123 OFFSET + 32.77659988,-79.93090057' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var K4HI = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
+            var K4HI392 = new L.marker(new L.LatLng(34.0007019,-81.03479767),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7022,12 +7032,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'K4HI K4HI  147.36 PL 100 OFFSET + 34.0007019,-81.03479767' ,
-                    }).addTo(fg).bindPopup('K4HI K4HI  147.36 PL 100 OFFSET + 34.0007019,-81.03479767' );                        
+                title: 'K4HI392 K4HI  147.36 PL 100 OFFSET + 34.0007019,-81.03479767' ,
+                    }).addTo(fg).bindPopup('K4HI392 K4HI  147.36 PL 100 OFFSET + 34.0007019,-81.03479767' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KK4BQ = new L.marker(new L.LatLng(33.2448733,-81.3587177),{ 
+            var KK4BQ393 = new L.marker(new L.LatLng(33.2448733,-81.3587177),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7037,12 +7047,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KK4BQ KK4BQ  147.375 PL 91.5 OFFSET + 33.2448733,-81.3587177' ,
-                    }).addTo(fg).bindPopup('KK4BQ KK4BQ  147.375 PL 91.5 OFFSET + 33.2448733,-81.3587177' );                        
+                title: 'KK4BQ393 KK4BQ  147.375 PL 91.5 OFFSET + 33.2448733,-81.3587177' ,
+                    }).addTo(fg).bindPopup('KK4BQ393 KK4BQ  147.375 PL 91.5 OFFSET + 33.2448733,-81.3587177' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var NE4SC = new L.marker(new L.LatLng(33.44609833,-79.28469849),{ 
+            var NE4SC394 = new L.marker(new L.LatLng(33.44609833,-79.28469849),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7052,12 +7062,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'NE4SC NE4SC  147.375 PL 123 OFFSET + 33.44609833,-79.28469849' ,
-                    }).addTo(fg).bindPopup('NE4SC NE4SC  147.375 PL 123 OFFSET + 33.44609833,-79.28469849' );                        
+                title: 'NE4SC394 NE4SC  147.375 PL 123 OFFSET + 33.44609833,-79.28469849' ,
+                    }).addTo(fg).bindPopup('NE4SC394 NE4SC  147.375 PL 123 OFFSET + 33.44609833,-79.28469849' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var KA4FEC = new L.marker(new L.LatLng(33.98149872,-81.23619843),{ 
+            var KA4FEC395 = new L.marker(new L.LatLng(33.98149872,-81.23619843),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7067,12 +7077,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'KA4FEC KA4FEC  147.39 PL 156.7 OFFSET + 33.98149872,-81.23619843' ,
-                    }).addTo(fg).bindPopup('KA4FEC KA4FEC  147.39 PL 156.7 OFFSET + 33.98149872,-81.23619843' );                        
+                title: 'KA4FEC395 KA4FEC  147.39 PL 156.7 OFFSET + 33.98149872,-81.23619843' ,
+                    }).addTo(fg).bindPopup('KA4FEC395 KA4FEC  147.39 PL 156.7 OFFSET + 33.98149872,-81.23619843' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var N1RCW = new L.marker(new L.LatLng(32.256,-80.9581),{ 
+            var N1RCW396 = new L.marker(new L.LatLng(32.256,-80.9581),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7082,12 +7092,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'N1RCW N1RCW  147.435 PL 88.5 OFFSET x 32.256,-80.9581' ,
-                    }).addTo(fg).bindPopup('N1RCW N1RCW  147.435 PL 88.5 OFFSET x 32.256,-80.9581' );                        
+                title: 'N1RCW396 N1RCW  147.435 PL 88.5 OFFSET x 32.256,-80.9581' ,
+                    }).addTo(fg).bindPopup('N1RCW396 N1RCW  147.435 PL 88.5 OFFSET x 32.256,-80.9581' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var ACT = new L.marker(new L.LatLng(38.896175,-95.174838),{ 
+            var ACT143 = new L.marker(new L.LatLng(38.896175,-95.174838),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7097,12 +7107,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'ACT Douglas County Emergency Management  147.03+ 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' ,
-                    }).addTo(fg).bindPopup('ACT Douglas County Emergency Management  147.03+ 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' );                        
+                title: 'ACT143 Douglas County Emergency Management  147.03+ 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' ,
+                    }).addTo(fg).bindPopup('ACT143 Douglas County Emergency Management  147.03+ 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DCARC = new L.marker(new L.LatLng(38.896175,-95.174838),{ 
+            var DCARC144 = new L.marker(new L.LatLng(38.896175,-95.174838),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7112,12 +7122,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DCARC Douglas County Amateur Radio Club  146.76- 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' ,
-                    }).addTo(fg).bindPopup('DCARC Douglas County Amateur Radio Club  146.76- 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' );                        
+                title: 'DCARC144 Douglas County Amateur Radio Club  146.76- 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' ,
+                    }).addTo(fg).bindPopup('DCARC144 Douglas County Amateur Radio Club  146.76- 88.5 Narrow band 2.5KHz UFN 38.896175,-95.174838' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DB0AVR = new L.marker(new L.LatLng(50.764271,6.218675),{ 
+            var DB0AVR402 = new L.marker(new L.LatLng(50.764271,6.218675),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7127,12 +7137,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' ,
-                    }).addTo(fg).bindPopup('DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' );                        
+                title: 'DB0AVR402 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' ,
+                    }).addTo(fg).bindPopup('DB0AVR402 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var SAXRPTR = new L.marker(new L.LatLng(39.3641,-93.48071),{ 
+            var SAXRPTR147 = new L.marker(new L.LatLng(39.3641,-93.48071),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7142,12 +7152,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'SAXRPTR N0SAX   39.3641,-93.48071' ,
-                    }).addTo(fg).bindPopup('SAXRPTR N0SAX   39.3641,-93.48071' );                        
+                title: 'SAXRPTR147 N0SAX   39.3641,-93.48071' ,
+                    }).addTo(fg).bindPopup('SAXRPTR147 N0SAX   39.3641,-93.48071' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var DB0WA = new L.marker(new L.LatLng(50.745647,6.043222),{ 
+            var DB0WA403 = new L.marker(new L.LatLng(50.745647,6.043222),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7157,8 +7167,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' ,
-                    }).addTo(fg).bindPopup('DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' );                        
+                title: 'DB0WA403 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' ,
+                    }).addTo(fg).bindPopup('DB0WA403 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -7252,7 +7262,7 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var RFH_533 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
+            var RFH_533567 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7262,8 +7272,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'RFH_533 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_533 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' );                        
+                title: 'RFH_533567 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' ,
+                    }).addTo(fg).bindPopup('RFH_533567 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' );                        
          
                 $('rfhole'._icon).addClass('aviationmrkr');
             
@@ -7312,7 +7322,7 @@ var map = L.map('map', {
          
                 $('sheriff'._icon).addClass('polmrkr');
             
-            var CCSHERIFF = new L.marker(new L.LatLng(39.245231,-94.41976),{ 
+            var CCSHERIFF48 = new L.marker(new L.LatLng(39.245231,-94.41976),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7322,12 +7332,12 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'CCSHERIFF Clay County Sheriff   39.245231,-94.41976' ,
-                    }).addTo(fg).bindPopup('CCSHERIFF Clay County Sheriff   39.245231,-94.41976' );                        
+                title: 'CCSHERIFF48 Clay County Sheriff   39.245231,-94.41976' ,
+                    }).addTo(fg).bindPopup('CCSHERIFF48 Clay County Sheriff   39.245231,-94.41976' );                        
          
                 $('sheriff'._icon).addClass('polmrkr');
             
-            var NARESEOC = new L.marker(new L.LatLng(39.245231,-94.41976),{ 
+            var NARESEOC131 = new L.marker(new L.LatLng(39.245231,-94.41976),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
                 opacity: 0.75,
@@ -7337,8 +7347,8 @@ var map = L.map('map', {
                     callback: circleKoords}],
                          
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
-                title: 'NARESEOC Clay County Sheriff & KCNARES EOC   39.245231,-94.41976' ,
-                    }).addTo(fg).bindPopup('NARESEOC Clay County Sheriff & KCNARES EOC   39.245231,-94.41976' );                        
+                title: 'NARESEOC131 Clay County Sheriff & KCNARES EOC   39.245231,-94.41976' ,
+                    }).addTo(fg).bindPopup('NARESEOC131 Clay County Sheriff & KCNARES EOC   39.245231,-94.41976' );                        
          
                 $('sheriff'._icon).addClass('polmrkr');
             
@@ -7507,7 +7517,7 @@ var map = L.map('map', {
          
                 $('state'._icon).addClass('govmrkr');
            ;
-var aviationList = L.layerGroup([HMSPH, RAAB, MCI, SVBPT, KCI, PTIACPT]);;var EOCList = L.layerGroup([W0KCN4, W0KCN3, HCES239, EOC399]);;var fireList = L.layerGroup([FFD198, LFS197, MCVF196, CFKHB, KFPD194, LGWER, WCFD192, LGDON, HFD190, CCFRWHQ189, FFD199, MFFS212, SVFD208, RDVFD207, LGGRE, MRFSUSFS205, CFS204, PFD209, CDFMFS210, FVFDCH201, CFICC200, CFWS211, HFD202, CFCCFS188, CCFR187, AFD173, LGATS, SPFD171, HBFS2, HBFS5, HBFS3, HBFS4, HBFS1, LGSMIT, RESCH, PESCH, AFD174, AFD175, CFPOBFS, KFD34, KFD35, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, FWESCH, KSZW, FIRE11252, LGLAM, LGROL, LGRUR, LGSIM, LGSTE, LGSTR, LGWOF, RMON, PMON, FIRE12253, FIRE13254, FIRE14255, RSIM, PSIM, LGEIC, LGEIN, LGERK, LGDED, LGHAM, LGKES, FIRE16257, FIRE15256, LGMON, LGHOE1, LHROH, WGVF223, KVFDFS222, LGVIC, GFPD220, CDFGF219, SCVFD218, WFS2217, CFTFS216, BVFD215, PVFD214, LGZWE, LGBRE, LGVEN, LGMOE, LGKAL, RROE, PROE, LGROE, LGROT, RSTO, PSTO, HSTO, FWSTO, MVFD213, RVRSDEFD, LGSET, RALS, PALS, LGALS, LGHOE, LGBET, RAAC, PAAC, RWTH, FWAAC1, FWAAC2, LGOID, LGBEG, LGBAES, W0KCN15, LGBAR, LGBROI, RBAES, LGWMIT, RHER, UEHER, FWHER, LGMER, LGKOH, PBAES, FWAAC3, LGACMIT,]);;var hospitalList = L.layerGroup([FWRW5, FWRW6, HESCH, LUISEN, LMH, FWRW4, HSIM, SJH160, FWWEST, MARIEN, JCC259, JCC260, SCH165, TH164, JPCH163, RMH162, MRCH161]);;var KCHEARTList = L.layerGroup([BATES, MENORA, SMMC, RMCBKS, RESRCH, RAYCO, PMC, PETTIS, OPR, OMC, NORKC, LSMED, STJOHN, STJOMC, WEMO, W0CPT, TRUHH, TRLKWD, STM, STLUSO, STLUBR, STLSMI, STLPLZ, STLEAS, LRHC, LCHD19, CUSHNG, CMHS, CMH, CASS, CARROL, BRMC, BOTHWL, DCEC, EXSPR, FITZ, LIBRTY, KU0MED, KINDRD, KCVA, KC0CBC, I70, GVMH]);;var policeList = L.layerGroup([HTP235, PLTCTYPD, KCNPPD, COMOPD, NKCPD, BLPD236, LKWKPD, RVRSPD, PKVLPD, RDPD234, HSUCP233, APD231, FPD230, FPD229, EPD228, CHPGS227, USFSMRRDO206, LTRD193, LTRDUSFS191, HPA172, TPD232, NRTPD, FPD93721, CDFW250, CHPDC237, PTPOLICE1925, KSZS, GSTNPD]);;var repeaterList = L.layerGroup([KM4ABW, DB0AVR, W4BFT, W4GS, DB0WA, AA7MI270, AA7MI269, KT4TF, PRATT241, MP243, HH244, HORSE246, ROGERS248, RAINBOW249, W7JCR268, W4DV, KCRMED, KCRJCRAC1, KCRKW1, KCRHCV, WA0KHP, WA0QFJ, W4IAR, DB0QA, DJ2UB, DB0NIS, ON0RBO, KCRJCRAC2, WB4YXZ, KCRWW, SAXRPTR, DCARC, ACT, KCRKW2, KCRCNC, KCRHAM4, KCRQFJ, KCRHAM3, KCRHAM2, KCRROO, DB0SE, W4DEW, W4CAE, W4FTK, WR4SC, W4FTK, W4PDE, WA4UKX, W4HRS, K4NAB, WR4SC, WR4SC, WR4SC, WT4F, W4PAX, WA4USN, N4AW, W4APE, WR4SC, W4NYR, KD4HLH, N2OBS, W4ULH, WR4EC, K4ILT, KA4GDW, KI4RAX, W4NYK, KJ4QLH, W4GS, W4HRS, K4USC, KK4ZBE, W4HRS, W4GL, KE4MDP, WA4USN, KJ4BWK, KG4BZN, WR4SC, N2ZZ, WB4TGK, NE4SC, K4LMD, W4CHR, K4WD, W4ZKM, K9OH, WR4SC, AD4U, W4BFT, W4GL, W4BRK, W4NYK, KW4BET, K4KNJ, KK4ONF, W4DV, W4HRS, W4APE, W4APE, W4APE, WA4SJS, WR4SC, N4HRS, WA4JRJ, W4RRC, KB4RRC, W4GS, W4IAR, W4FTK , WA4NMW, W4FTK, WX4PG, W4APE, N4ADM, K2PJ, W4TWX, N1RCW, KA4FEC, NE4SC, KK4BQ, K4HI, W4ANK, WR4SC, W4CAE, K4JLA, KK4B, W4HNK, W4GWD, KG4BZN, KK4ONF, K4ILT, K4YTZ, KJ4YLP, KK4BQ, W4GL, KO4L, W]);;var RFHoleList = L.layerGroup([RFH_533, RFH_568, RFH_569]);;var sheriffList = L.layerGroup([Sheriff401, Sheriff398, NARESEOC, HCSOMS225, HCSO224, Fire400, HCCH245, CCSHERIFF, JCSHRFF267, SC242, SPM247, HCSDGS226]);;var skywarnList = L.layerGroup([NWS240]);;var stateList = L.layerGroup([RGSP221]);;
+var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PTIACPT273, W0KCN446, W0KCN347, HCES239, EOC399, FFD198, LFS197, MCVF196, CFKHB195, KFPD194, LGWER442, WCFD192, LGDON443, HFD190, CCFRWHQ189, FFD199, MFFS212, SVFD208, RDVFD207, LGGRE441, MRFSUSFS205, CFS204, PFD209, CDFMFS210, FVFDCH201, CFICC200, CFWS211, HFD202, CFCCFS188, CCFR187, AFD173, LGATS444, SPFD171, HBFS2170, HBFS5169, HBFS3168, HBFS4167, HBFS1166, LGSMIT445, RESCH446, PESCH447, AFD174, AFD175, CFPOBFS186, KFD34185, KFD35184, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, FWESCH449, KSZW405, FIRE11252, LGLAM415, LGROL416, LGRUR417, LGSIM418, LGSTE419, LGSTR420, LGWOF421, RMON422, PMON423, FIRE12253, FIRE13254, FIRE14255, RSIM406, PSIM407, LGEIC409, LGEIN410, LGERK411, LGDED412, LGHAM413, LGKES414, FIRE16257, FIRE15256, LGMON424, LGHOE1425, LHROH426, WGVF223, KVFDFS222, LGVIC440, GFPD220, CDFGF219, SCVFD218, WFS2217, CFTFS216, BVFD215, PVFD214, LGZWE439, LGBRE438, LGVEN437, LGMOE427, LGKAL428, RROE429, PROE430, LGROE431, LGROT432]);;
     
     //=======================================================================
     //======================= Station Markers ===============================
