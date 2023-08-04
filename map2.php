@@ -259,8 +259,8 @@ var map = L.map('map', {
 // ================================================================================================
 
     // Add what3words, shows w3w in a control
-    var w = new L.Control.w3w();
-	    w.addTo(map);
+    var ww = new L.Control.w3w();
+	    ww.addTo(map);
         map.on('click', function(e) {
 		console.log(e);
 		w.setCoordinates(e);

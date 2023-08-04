@@ -4,6 +4,7 @@
     Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
 
 <!-- This version 2021-10-16 -->
+<!-- This version 2023-08-03 -->
 
 
   
@@ -26,20 +27,15 @@
     
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
-    <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
-    <!-- <script src="js/geolet.js"></script> -->
-    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
-    <!--<script src="js/L.Control.MousePosition.js"></script>-->
-     
-    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
+    <script src="js/L.Grid.js"></script>     
+
     <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
-    
-    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
     
     <script src="js/hamgridsquare.js"></script>
     
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
     <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
+    
     <!-- Allows for rotating markers when more than one at the same place -->
     <script src="js/leaflet.rotatedMarker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
@@ -48,7 +44,6 @@
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
     
     
-     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
@@ -68,7 +63,7 @@
      <!-- ******************************** Style Sheets *************************************** -->
     <link rel="stylesheet" href="css/leaflet_numbered_markers.css" />
     <link rel="stylesheet" href="css/L.Grid.css" />   
-    <!--<link rel="stylesheet" href="css/L.Control.MousePosition.css" /> -->
+
     <link rel="stylesheet" href="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.css">
     <link rel="stylesheet" href="css/control.w3w.css" />
     
@@ -77,12 +72,13 @@
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
         
-    <!-- What 3 Words -->
+    <!-- ******************************** What 3 Words *************************************** -->
     <script src="js/control.w3w.js"></script>
 
     
     <!-- circleKoords is the javascript program that caluclates the number of rings and the distance between them -->
     <script src="js/circleKoords.js"></script>    
+    
     
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
@@ -92,25 +88,18 @@
     		left: 10px;
     		padding-bottom: 40px;
         }
+        
         .leaflet-container{
             line-height: 1;
         }
         
         .leaflet-control-w3w-locationText {
-    	/*	position: fixed; */
     	    position: fixed;
     		font-size: 14pt;
-    	/*	top: 275px;
-    		right: 17px; */
-    	/*	bottom: 475px; */
-    		
     		top: 94%;
     		left: 32px;  /* was 110 */
     		border: none;
-    	/*	border: 1px solid #8AC007; */
-		/*    z-index: 400; */
 		    text-decoration: none;
-		/*    background-color: white; */
 		    width: 30%; 
 		    background-color: inherit;
 		    color: rgb(182,7,7);
@@ -118,17 +107,8 @@
 		}
 	</style>
 	
-	<!-- Experiment to add beautifyl markers -->
-	<!--
-    <link rel="stylesheet"BeautifyMarker-master/leaflet/fontawesome.min.css" />"
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="BeautifyMarker-master/leaflet-beautify-marker-icon.css" />
-    <script src="BeautifyMarker-master/leaflet-beautify-marker-icon.js"></script>
-    -->
-
 	
 </head>
-
 <body>
     
     <!-- the map div holds the map -->
@@ -138,17 +118,19 @@
     <!-- Under the banner in the upper left corner -->
     <div id="stations"> 
 		<b style="color:red; text-decoration: underline;">
-		    <b>W0KCN</b><br><a class='rowno' id='marker_1' href='#'>1 _KD0NBH</a><br><a class='rowno' id='marker_2' href='#'>2 _AA0DV</a><br><a class='rowno' id='marker_3' href='#'>3 _K0RGB</a><br><a class='rowno' id='marker_4' href='#'>4 _W4XJ</a><br><a class='rowno' id='marker_5' href='#'>5 _WA0TJT</a><br><a class='rowno' id='marker_6' href='#'>6 _KE0UXE</a><br><a class='rowno' id='marker_7' href='#'>7 _KF0MEZ</a><br><a class='rowno' id='marker_8' href='#'>8 _N0SMC</a><br><a class='rowno' id='marker_9' href='#'>9 _AB0GD</a><br><a class='rowno' id='marker_10' href='#'>10 _KF0DFC</a><br><a class='rowno' id='marker_11' href='#'>11 _N0UYN</a><br><a class='rowno' id='marker_12' href='#'>12 _N0BKE</a><br><a class='rowno' id='marker_13' href='#'>13 _KF0BQY</a><br><a class='rowno' id='marker_14' href='#'>14 _WY0O</a><br><a class='rowno' id='marker_15' href='#'>15 _KA0OTL</a><br><a class='rowno' id='marker_16' href='#'>16 _K0KEX</a><br>	</div>
+		    <b>MODES</b><br><a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br><a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br><a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br><a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br><a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br><a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br><a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br><a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br><a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
 
     <!-- The title banner -->
     <div id="activity" class="activity">
     	<img src="images/NCM.png" alt="NCM" style="width: 35px; padding-left: 10px; padding-top: 5px;">
-    	W0KCN Net #9630 KCNARES Weather     </div>
+    	MODES Net #9657 Missouri Digital Emergency Service Weekly Net     </div>
     
 
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
+    
 // This function can be used to connect the object markers together with a line
+// Object markers come from the TimeLog unlike the rest that come from NetLog
 function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
@@ -160,7 +142,7 @@ function connectTheDots(data){
 }
 
     
-// Define the map
+// Define the beginning map
 var map = L.map('map', {
 	drawControl: true,
 	zoom: 12
@@ -221,10 +203,6 @@ var map = L.map('map', {
           Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
             
-            // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
- // vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
-  //  apiKey
-  //});
    
     const baseMaps = {  
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
@@ -234,10 +212,11 @@ var map = L.map('map', {
                      
                   
 // =========  ADD Things to the Map ===============================================================
+// ================================================================================================
 
     // Add what3words, shows w3w in a control
-    var w = new L.Control.w3w();
-	    w.addTo(map);
+    var ww = new L.Control.w3w();
+	    ww.addTo(map);
         map.on('click', function(e) {
 		console.log(e);
 		w.setCoordinates(e);
@@ -253,10 +232,12 @@ var map = L.map('map', {
     // Show imperial or metric distances. Values: 'metres', 'landmiles', 'nauticalmiles'           
     L.control.polylineMeasure ({position:'topright', unit:'landmiles', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo (map);
     
-    // Change the position of the Zoom Control to a newly created placeholder.
+    // Change the position of the Zoom Control to a created placeholder.
     map.zoomControl.setPosition('topright');
+    
     // Define the Plus and Minus for zooming and its location
-    map.scrollWheelZoom.disable();  // prevents the map from zooming with the mouse wheel
+    // prevents the map from zooming with the mouse wheel
+    map.scrollWheelZoom.disable();  
     
     // Distance scale 
     L.control.scale({position: 'bottomright'}).addTo(map);  
@@ -291,10 +272,6 @@ var map = L.map('map', {
 
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
-    
-    // https://github.com/rhlt/leaflet-geolet
-    //L.geolet({ position: 'bottomleft' }).addTo(map);
-    
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 
@@ -308,6 +285,7 @@ var map = L.map('map', {
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
+        rfhole        = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
@@ -316,25 +294,25 @@ var map = L.map('map', {
         
     
     // These are the markers that will appear on the map
-    // Bring in the station markers to appear on the map
+    // Bring in the station and poi markers to appear on the map
     
-			var _KD0NBH = new L.marker(new L.latLng(39.2154688,-94.599025),{ 
+			var _KD0FIWH = new L.marker(new L.latLng(39.2720374,-93.832865),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedDivIcon({number: '1' }),
+				icon: new L.NumberedGreenDivIcon({number: '1' }),
 				title:`marker_1` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>1<br><b>Tactical: NBH<br>KD0NBH</b><br> ID: #001812<br>John Britton<br>Clay Co., MO Dist: A<br>39.2154688, -94.599025<br>EM29QF<br><a href='https://what3words.com/workflow.ships.derivative?maptype=osm' target='_blank'>///workflow.ships.derivative</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2154688&lon=-94.599025&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>1<br><b>Tactical: FIW/H<br>KD0FIW/H</b><br> ID: #000683<br>Paul Hayes<br>Ray Co., MO Dist: A<br>39.2720374, -93.832865<br>EM39CG<br><a href='https://what3words.com/simpler.blackberry.dull?maptype=osm' target='_blank'>///simpler.blackberry.dull</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2720374&lon=-93.832865&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KD0NBH`._icon).addClass(`bluemrkr`);
-                stationMarkers.push(_KD0NBH);
+				$(`_KD0FIWH`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KD0FIWH);
 				
-			var _AA0DV = new L.marker(new L.latLng(39.2628465,-94.569978),{ 
+			var _AD0TU = new L.marker(new L.latLng(39.7941892,-93.583108),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -343,30 +321,30 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '2' }),
 				title:`marker_2` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>2<br><b>Tactical: DV<br>AA0DV</b><br> ID: #000003<br>Everett Jenkins<br>Clay Co., MO Dist: G<br>39.2628465, -94.569978<br>EM29RG<br><a href='https://what3words.com/thankfully.sweetened.remains?maptype=osm' target='_blank'>///thankfully.sweetened.remains</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2628465&lon=-94.569978&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>2<br><b>Tactical: TU<br>AD0TU</b><br> ID: #000231<br>Craig Myers<br>Livingston Co., MO Dist: H<br>39.7941892, -93.583108<br>EM39FT<br><a href='https://what3words.com/events.armpit.craft?maptype=osm' target='_blank'>///events.armpit.craft</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.7941892&lon=-93.583108&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_AA0DV`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_AA0DV);
+				$(`_AD0TU`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_AD0TU);
 				
-			var _K0RGB = new L.marker(new L.latLng(39.4172253,-94.568527),{ 
+			var _KD0NBHA = new L.marker(new L.latLng(39.2154688,-94.599025),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedGreenDivIcon({number: '3' }),
+				icon: new L.NumberedDivIcon({number: '3' }),
 				title:`marker_3` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>3<br><b>Tactical: RGB<br>K0RGB</b><br> ID: #004898<br>Russ Bryan<br>Clay  Co., MO Dist: G<br>39.4172253, -94.568527<br>EM29RK<br><a href='https://what3words.com/billiard.distort.rails?maptype=osm' target='_blank'>///billiard.distort.rails</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4172253&lon=-94.568527&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>3<br><b>Tactical: NBH/A<br>KD0NBH/A</b><br> ID: #001812<br>John Britton<br>Clay Co., MO Dist: A<br>39.2154688, -94.599025<br>EM29QF<br><a href='https://what3words.com/workflow.ships.derivative?maptype=osm' target='_blank'>///workflow.ships.derivative</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2154688&lon=-94.599025&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_K0RGB`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_K0RGB);
+				$(`_KD0NBHA`._icon).addClass(`bluemrkr`);
+                stationMarkers.push(_KD0NBHA);
 				
-			var _W4XJ = new L.marker(new L.latLng(39.2148975,-94.633957),{ 
+			var _W0WTS = new L.marker(new L.latLng(39.3710869,-93.547969),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -375,30 +353,30 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '4' }),
 				title:`marker_4` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>4<br><b>Tactical: XJ<br>W4XJ</b><br> ID: #002648<br>Randy Sly<br>Platte  Co., MO Dist: A<br>39.2148975, -94.633957<br>EM29QF<br><a href='https://what3words.com/unintended.jeeps.panel?maptype=osm' target='_blank'>///unintended.jeeps.panel</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2148975&lon=-94.633957&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>4<br><b>Tactical: WTS<br>W0WTS</b><br> ID: #000237<br>Bill Sweeney<br>Carroll  Co., MO Dist: A<br>39.3710869, -93.547969<br>EM39FI<br><a href='https://what3words.com/grouping.native.citrus?maptype=osm' target='_blank'>///grouping.native.citrus</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3710869&lon=-93.547969&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_W4XJ`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_W4XJ);
+				$(`_W0WTS`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_W0WTS);
 				
-			var _WA0TJT = new L.marker(new L.latLng(39.2028965,-94.602876),{ 
+			var _K0OG = new L.marker(new L.latLng(37.9574854,-91.750868),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedDivIcon({number: '5' }),
+				icon: new L.NumberedGreenDivIcon({number: '5' }),
 				title:`marker_5` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>5<br><b>Tactical: TJT<br>WA0TJT</b><br> ID: #000013<br>Keith Kaiser<br>Platte  Co., MO Dist: A<br>39.2028965, -94.602876<br>EM29QE<br><a href='https://what3words.com/guiding.confusion.towards?maptype=osm' target='_blank'>///guiding.confusion.towards</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2028965&lon=-94.602876&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>5<br><b>Tactical: OG<br>K0OG</b><br> ID: #000238<br>Joseph Counsil<br>Phelps Co., MO Dist: I<br>37.9574854, -91.750868<br>EM47CW<br><a href='https://what3words.com/chef.order.influencing?maptype=osm' target='_blank'>///chef.order.influencing</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=37.9574854&lon=-91.750868&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_WA0TJT`._icon).addClass(`bluemrkr`);
-                stationMarkers.push(_WA0TJT);
+				$(`_K0OG`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_K0OG);
 				
-			var _KE0UXE = new L.marker(new L.latLng(39.4244507,-94.896258),{ 
+			var _K0KEXA = new L.marker(new L.latLng(39.4197989,-94.658092),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -407,14 +385,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '6' }),
 				title:`marker_6` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>6<br><b>Tactical: UXE<br>KE0UXE</b><br> ID: #000950<br>Dave Garrison<br>Platte Co., MO Dist: A<br>39.4244507, -94.896258<br>EM29NK<br><a href='https://what3words.com/affirms.redefined.whiplash?maptype=osm' target='_blank'>///affirms.redefined.whiplash</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4244507&lon=-94.896258&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>6<br><b>Tactical: KEX/A<br>K0KEX/A</b><br> ID: #000029<br>Rick Smith<br>Platte  Co., MO Dist: A<br>39.4197989, -94.658092<br>EM29QK<br><a href='https://what3words.com/hers.parrot.legions?maptype=osm' target='_blank'>///hers.parrot.legions</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4197989&lon=-94.658092&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KE0UXE`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KE0UXE);
+				$(`_K0KEXA`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_K0KEXA);
 				
-			var _KF0MEZ = new L.marker(new L.latLng(39.21816,-94.7307),{ 
+			var _N0SAXF = new L.marker(new L.latLng(39.3763041,-93.497272),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -423,14 +401,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '7' }),
 				title:`marker_7` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>7<br><b>Tactical: MEZ<br>KF0MEZ</b><br> ID: #039024<br>Bob Ebb<br>Platte Co., MO Dist: A<br>39.21816, -94.7307<br>EM29PF<br><a href='https://what3words.com/ingredients.settle.wept?maptype=osm' target='_blank'>///ingredients.settle.wept</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.21816&lon=-94.7307&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>7<br><b>Tactical: SAX/F<br>N0SAX/F</b><br> ID: #000229<br>Jack Vantrump<br>Carroll Co., MO Dist: A<br>39.3763041, -93.497272<br>EM39GJ<br><a href='https://what3words.com/tonality.spearing.company?maptype=osm' target='_blank'>///tonality.spearing.company</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3763041&lon=-93.497272&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KF0MEZ`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KF0MEZ);
+				$(`_N0SAXF`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_N0SAXF);
 				
-			var _N0SMC = new L.marker(new L.latLng(39.2519092,-94.571180),{ 
+			var _W0NRPA = new L.marker(new L.latLng(38.8732866,-94.303351),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -439,30 +417,30 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '8' }),
 				title:`marker_8` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>8<br><b>Tactical: SMC<br>N0SMC</b><br> ID: #000901<br>Jose Lopez<br>Clay Co., MO Dist: G<br>39.2519092, -94.571180<br>EM29rg10<br><a href='https://what3words.com/scandalous.acquaint.evaded?maptype=osm' target='_blank'>///scandalous.acquaint.evaded</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2519092&lon=-94.571180&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>8<br><b>Tactical: NRP/A<br>W0NRP/A</b><br> ID: #000820<br>Neil Preston<br>Jackson Co., MO Dist: A<br>38.8732866, -94.303351<br>EM28UU<br><a href='https://what3words.com/monday.butterflies.humans?maptype=osm' target='_blank'>///monday.butterflies.humans</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.8732866&lon=-94.303351&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_N0SMC`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_N0SMC);
+				$(`_W0NRPA`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_W0NRPA);
 				
-			var _AB0GD = new L.marker(new L.latLng(39.3476289,-94.768086),{ 
+			var _WA0TJT = new L.marker(new L.latLng(39.2028965,-94.602876),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedGreenDivIcon({number: '9' }),
+				icon: new L.NumberedDivIcon({number: '9' }),
 				title:`marker_9` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>9<br><b>Tactical: GD<br>AB0GD</b><br> ID: #000079<br>Gregg Duryea<br>Platte  Co., MO Dist: A<br>39.3476289, -94.768086<br>EM29OI<br><a href='https://what3words.com/enjoyable.chains.square?maptype=osm' target='_blank'>///enjoyable.chains.square</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3476289&lon=-94.768086&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>9<br><b>Tactical: Net<br>WA0TJT</b><br> ID: #000013<br>Keith Kaiser<br>Platte  Co., MO Dist: A<br>39.2028965, -94.602876<br>EM29QE<br><a href='https://what3words.com/guiding.confusion.towards?maptype=osm' target='_blank'>///guiding.confusion.towards</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2028965&lon=-94.602876&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_AB0GD`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_AB0GD);
+				$(`_WA0TJT`._icon).addClass(`bluemrkr`);
+                stationMarkers.push(_WA0TJT);
 				
-			var _KF0DFC = new L.marker(new L.latLng(39.0815025,-94.582671),{ 
+			var _W0JWT = new L.marker(new L.latLng(38.9127244,-94.351836),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -471,125 +449,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '10' }),
 				title:`marker_10` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>10<br><b>Tactical: DFC<br>KF0DFC</b><br> ID: #003586<br>John Jespersen<br>Jackson  Co., MO Dist: A<br>39.0815025, -94.582671<br>EM29RB<br><a href='https://what3words.com/device.formed.round?maptype=osm' target='_blank'>///device.formed.round</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.0815025&lon=-94.582671&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>10<br><b>Tactical: JWT<br>W0JWT</b><br> ID: #000363<br>John Totzke<br>Jackson Co., MO Dist: A<br>38.9127244, -94.351836<br>EM28TV<br><a href='https://what3words.com/rips.tested.remit?maptype=osm' target='_blank'>///rips.tested.remit</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.9127244&lon=-94.351836&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KF0DFC`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KF0DFC);
-				
-			var _N0UYN = new L.marker(new L.latLng(39.2762919,-94.582776),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '11' }),
-				title:`marker_11` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>11<br><b>Tactical: UYN<br>N0UYN</b><br> ID: #000005<br>Dennis Crawford<br>Clay Co., MO Dist: G<br>39.2762919, -94.582776<br>EM29RG<br><a href='https://what3words.com/planet.overall.giggled?maptype=osm' target='_blank'>///planet.overall.giggled</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2762919&lon=-94.582776&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_N0UYN`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_N0UYN);
-				
-			var _N0BKE = new L.marker(new L.latLng(39.220224,-94.518254),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '12' }),
-				title:`marker_12` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>12<br><b>Tactical: BKE<br>N0BKE</b><br> ID: #000006<br>Mark Dickerson<br>Clay Co., MO Dist: G<br>39.220224, -94.518254<br>EM29RF<br><a href='https://what3words.com/sockets.charity.submerge?maptype=osm' target='_blank'>///sockets.charity.submerge</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.220224&lon=-94.518254&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_N0BKE`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_N0BKE);
-				
-			var _KF0BQY = new L.marker(new L.latLng(39.4763031,-94.340813),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '13' }),
-				title:`marker_13` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>13<br><b>Tactical: BQY<br>KF0BQY</b><br> ID: #003004<br>Brian Hansen<br>Clinton Co., MO Dist: H<br>39.4763031, -94.340813<br>EM29TL<br><a href='https://what3words.com/laundry.monks.conforms?maptype=osm' target='_blank'>///laundry.monks.conforms</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4763031&lon=-94.340813&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_KF0BQY`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KF0BQY);
-				
-			var _WY0O = new L.marker(new L.latLng(39.3582891,-94.638113),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '14' }),
-				title:`marker_14` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>14<br><b>Tactical: O<br>WY0O</b><br> ID: #010076<br>Nick Foster<br>Platte  Co., MO Dist: <br>39.3582891, -94.638113<br>EM29QI<br><a href='https://what3words.com/acutely.pundits.adopts?maptype=osm' target='_blank'>///acutely.pundits.adopts</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3582891&lon=-94.638113&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_WY0O`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_WY0O);
-				
-			var _KA0OTL = new L.marker(new L.latLng(39.233196,-94.642213),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedDivIcon({number: '15' }),
-				title:`marker_15` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>15<br><b>Tactical: W0KCN<br>KA0OTL</b><br> ID: #000025<br>Jeff Libby<br>Platte Co., MO Dist: A<br>39.233196, -94.642213<br>EM29QF<br><a href='https://what3words.com/protester.hopeful.splits?maptype=osm' target='_blank'>///protester.hopeful.splits</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.233196&lon=-94.642213&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_KA0OTL`._icon).addClass(`bluemrkr`);
-                stationMarkers.push(_KA0OTL);
-				
-			var _K0KEX = new L.marker(new L.latLng(39.4197989,-94.658092),{ 
-			    rotationAngle: 0,
-			    rotationOrigin: 'bottom',
-    			contextmenu: true,
-			    contextmenuWidth: 140,
-			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
-			                 
-				icon: new L.NumberedGreenDivIcon({number: '16' }),
-				title:`marker_16` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>16<br><b>Tactical: KEX<br>K0KEX</b><br> ID: #000029<br>Rick Smith<br>Platte  Co., MO Dist: A<br>39.4197989, -94.658092<br>EM29QK<br><a href='https://what3words.com/hers.parrot.legions?maptype=osm' target='_blank'>///hers.parrot.legions</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4197989&lon=-94.658092&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
-                `).openPopup();
-				
-				$(`_K0KEX`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_K0KEX);
+				$(`_W0JWT`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_W0JWT);
 			;
 
-            var NWS240 = new L.marker(new L.LatLng(40.81001,-124.15964),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'NWS240 National Weather Service  Amatuer Radio Station 40.81001,-124.15964' ,
-                    }).addTo(fg).bindPopup('NWS240 National Weather Service  Amatuer Radio Station 40.81001,-124.15964' );                        
-         
-                $('amatuer radio station'._icon).addClass('flagmrkr');
-            
             var MCI = new L.marker(new L.LatLng(39.3003,-94.72721),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -674,26 +541,11 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
+                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
                 title: 'RAAB Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' ,
                     }).addTo(fg).bindPopup('RAAB Rohnerville Air Attack Base  Cal Fire Fixed Wing Air Attack Base 40.5555,-124.13204' );                        
          
-                $('cal fire fixed wing air attack base'._icon).addClass('flagmrkr');
-            
-            var WA0KHP = new L.marker(new L.LatLng(39.36392,-94.584721),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' ,
-                    }).addTo(fg).bindPopup('WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' );                        
-         
-                $('clay co. repeater club'._icon).addClass('flagmrkr');
+                $('aviation'._icon).addClass('aviationmrkr');
             
             var W0KCN4 = new L.marker(new L.LatLng(39.3721733,-94.780929),{ 
                 rotationAngle: 0,
@@ -722,6 +574,36 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'images/markers/eoc.png', iconSize: [32, 34]}),
                 title: 'W0KCN3 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' ,
                     }).addTo(fg).bindPopup('W0KCN3 Northland ARES Platte Co. Resource Center   39.2859182,-94.667236' );                        
+         
+                $('eoc'._icon).addClass('eocmrkr');
+            
+            var EOC399 = new L.marker(new L.LatLng(34.248206,-80.606327),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/eoc.png', iconSize: [32, 34]}),
+                title: 'EOC399 A EOC  Kershaw County EOC 34.248206,-80.606327' ,
+                    }).addTo(fg).bindPopup('EOC399 A EOC  Kershaw County EOC 34.248206,-80.606327' );                        
+         
+                $('eoc'._icon).addClass('eocmrkr');
+            
+            var HCES239 = new L.marker(new L.LatLng(40.803,-124.16221),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/eoc.png', iconSize: [32, 34]}),
+                title: 'HCES239 Humboldt County Emergency Services  Humboldt County CERT AuxComm 40.803,-124.16221' ,
+                    }).addTo(fg).bindPopup('HCES239 Humboldt County Emergency Services  Humboldt County CERT AuxComm 40.803,-124.16221' );                        
          
                 $('eoc'._icon).addClass('eocmrkr');
             
@@ -3890,6 +3772,36 @@ var map = L.map('map', {
          
                 $('hospital'._icon).addClass('hosmrkr');
             
+            var SJH160 = new L.marker(new L.LatLng(40.7841,-124.1422),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
+                title: 'SJH160 St Joseph Hospital  Level 3 Trauma Center, Helipad 40.7841,-124.1422' ,
+                    }).addTo(fg).bindPopup('SJH160 St Joseph Hospital  Level 3 Trauma Center, Helipad 40.7841,-124.1422' );                        
+         
+                $('hospital'._icon).addClass('hosmrkr');
+            
+            var MRCH161 = new L.marker(new L.LatLng(40.8963,-124.0917),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/firstaid.png', iconSize: [32, 34]}),
+                title: 'MRCH161 Mad River Community Hospital  Level 4 Trauma Center, Helipad 40.8963,-124.0917' ,
+                    }).addTo(fg).bindPopup('MRCH161 Mad River Community Hospital  Level 4 Trauma Center, Helipad 40.8963,-124.0917' );                        
+         
+                $('hospital'._icon).addClass('hosmrkr');
+            
             var RMH162 = new L.marker(new L.LatLng(40.5823,-124.1364),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -4009,261 +3921,6 @@ var map = L.map('map', {
                     }).addTo(fg).bindPopup('FWWEST Rettungswache West   50.769338,6.056529' );                        
          
                 $('hospital'._icon).addClass('hosmrkr');
-            
-            var TANEY210 = new L.marker(new L.LatLng(39.144788,-94.558242),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'TANEY210 KK1 _ Taney Ave on 210 Highway  HT Compatable 39.144788,-94.558242' ,
-                    }).addTo(fg).bindPopup('TANEY210 KK1 _ Taney Ave on 210 Highway  HT Compatable 39.144788,-94.558242' );                        
-         
-                $('ht compatable'._icon).addClass('flagmrkr');
-            
-            var CTEAUELV = new L.marker(new L.LatLng(39.150823,-94.523884),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'CTEAUELV KK2 _ Chouteau Elevator  HT Compatible w/static 39.150823,-94.523884' ,
-                    }).addTo(fg).bindPopup('CTEAUELV KK2 _ Chouteau Elevator  HT Compatible w/static 39.150823,-94.523884' );                        
-         
-                $('ht compatible w/static'._icon).addClass('flagmrkr');
-            
-            var HWY291on210 = new L.marker(new L.LatLng(39.18423,-94.396235),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'HWY291on210 KK3 _ Highway 210 @ Highway 291  HT Compatible w/static 39.18423,-94.396235' ,
-                    }).addTo(fg).bindPopup('HWY291on210 KK3 _ Highway 210 @ Highway 291  HT Compatible w/static 39.18423,-94.396235' );                        
-         
-                $('ht compatible w/static'._icon).addClass('flagmrkr');
-            
-            var Non291Hwy = new L.marker(new L.LatLng(39.236328,-94.221919),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'Non291Hwy KK4 _ Supplemental Route N on Hwy 291  HT Not compatible at this location 39.236328,-94.221919' ,
-                    }).addTo(fg).bindPopup('Non291Hwy KK4 _ Supplemental Route N on Hwy 291  HT Not compatible at this location 39.236328,-94.221919' );                        
-         
-                $('ht not compatible at this location'._icon).addClass('flagmrkr');
-            
-            var XSPRINGS = new L.marker(new L.LatLng(39.339163,-94.223569),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'XSPRINGS KK5 _ Excelsior Springs  HT Not compatible at this location 39.339163,-94.223569' ,
-                    }).addTo(fg).bindPopup('XSPRINGS KK5 _ Excelsior Springs  HT Not compatible at this location 39.339163,-94.223569' );                        
-         
-                $('ht not compatible at this location'._icon).addClass('flagmrkr');
-            
-            var SWSKOL = new L.marker(new L.LatLng(39.433538,-94.207032),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'SWSKOL KK6 _Southwest Elementary School  HT Not compatible at this location 39.433538,-94.207032' ,
-                    }).addTo(fg).bindPopup('SWSKOL KK6 _Southwest Elementary School  HT Not compatible at this location 39.433538,-94.207032' );                        
-         
-                $('ht not compatible at this location'._icon).addClass('flagmrkr');
-            
-            var SUNNYSIDE = new L.marker(new L.LatLng(39.34506,-94.22949),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'SUNNYSIDE KK8 _ Sunnyside Park  HT Not compatible at this location 39.34506,-94.22949' ,
-                    }).addTo(fg).bindPopup('SUNNYSIDE KK8 _ Sunnyside Park  HT Not compatible at this location 39.34506,-94.22949' );                        
-         
-                $('ht not compatible at this location'._icon).addClass('flagmrkr');
-            
-            var WATKINSMILL = new L.marker(new L.LatLng(39.4022,-94.26212),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'WATKINSMILL KK9 _ Watkins Mill State Park Beach  HT Not compatible at this location 39.4022,-94.26212' ,
-                    }).addTo(fg).bindPopup('WATKINSMILL KK9 _ Watkins Mill State Park Beach  HT Not compatible at this location 39.4022,-94.26212' );                        
-         
-                $('ht not compatible at this location'._icon).addClass('flagmrkr');
-            
-            var HCES239 = new L.marker(new L.LatLng(40.803,-124.16221),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'HCES239 Humboldt County Emergency Services  Humboldt County CERT AuxComm 40.803,-124.16221' ,
-                    }).addTo(fg).bindPopup('HCES239 Humboldt County Emergency Services  Humboldt County CERT AuxComm 40.803,-124.16221' );                        
-         
-                $('humboldt county cert auxcomm'._icon).addClass('flagmrkr');
-            
-            var KCRJCRAC1 = new L.marker(new L.LatLng(39.0106639,-94.7212972),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' ,
-                    }).addTo(fg).bindPopup('KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' );                        
-         
-                $('jcrac club repeater'._icon).addClass('flagmrkr');
-            
-            var KCRJCRAC2 = new L.marker(new L.LatLng(38.9252611,-94.6553389),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' ,
-                    }).addTo(fg).bindPopup('KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' );                        
-         
-                $('jcrac club repeater'._icon).addClass('flagmrkr');
-            
-            var KCRKW1 = new L.marker(new L.LatLng(38.9879167,-94.67075),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' ,
-                    }).addTo(fg).bindPopup('KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
-            
-            var KCRKW2 = new L.marker(new L.LatLng(38.5861611,-94.6204139),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' ,
-                    }).addTo(fg).bindPopup('KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
-            
-            var KCRHAM2 = new L.marker(new L.LatLng(38.9084722,-94.4548056),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' ,
-                    }).addTo(fg).bindPopup('KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
-            
-            var KCRHAM3 = new L.marker(new L.LatLng(39.0922333,-94.9453528),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' ,
-                    }).addTo(fg).bindPopup('KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
-            
-            var KCRMED = new L.marker(new L.LatLng(39.0562778,-94.6095),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' ,
-                    }).addTo(fg).bindPopup('KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
-            
-            var KCRHAM4 = new L.marker(new L.LatLng(39.2611111,-95.6558333),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' ,
-                    }).addTo(fg).bindPopup('KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' );                        
-         
-                $('jerry dixon kcøkw'._icon).addClass('flagmrkr');
             
             var BATES = new L.marker(new L.LatLng(38.2498,-94.3432),{ 
                 rotationAngle: 0,
@@ -4910,261 +4567,6 @@ var map = L.map('map', {
          
                 $('kcheart'._icon).addClass('flagmrkr');
             
-            var KCRCNC = new L.marker(new L.LatLng(38.1788722,-93.3541889),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' ,
-                    }).addTo(fg).bindPopup('KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' );                        
-         
-                $('kd0cnc'._icon).addClass('flagmrkr');
-            
-            var KCRWW = new L.marker(new L.LatLng(39.0465806,-94.5874444),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRWW Kansas City Room, N0WW  Keith Little NØWW 39.0465806,-94.5874444' ,
-                    }).addTo(fg).bindPopup('KCRWW Kansas City Room, N0WW  Keith Little NØWW 39.0465806,-94.5874444' );                        
-         
-                $('keith little nøww'._icon).addClass('flagmrkr');
-            
-            var EOC399 = new L.marker(new L.LatLng(34.248206,-80.606327),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'EOC399 A EOC  Kershaw County EOC 34.248206,-80.606327' ,
-                    }).addTo(fg).bindPopup('EOC399 A EOC  Kershaw County EOC 34.248206,-80.606327' );                        
-         
-                $('kershaw county eoc'._icon).addClass('flagmrkr');
-            
-            var Fire400 = new L.marker(new L.LatLng(34.245217,-80.602271),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'Fire400 Kershaw FD1  Kershaw County Fire / Sheriff 34.245217,-80.602271' ,
-                    }).addTo(fg).bindPopup('Fire400 Kershaw FD1  Kershaw County Fire / Sheriff 34.245217,-80.602271' );                        
-         
-                $('kershaw county fire / sheriff'._icon).addClass('flagmrkr');
-            
-            var KCRROO = new L.marker(new L.LatLng(39.2819722,-94.9058889),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' ,
-                    }).addTo(fg).bindPopup('KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' );                        
-         
-                $('leavenworth club repeater'._icon).addClass('flagmrkr');
-            
-            var LecRestStop = new L.marker(new L.LatLng(38.994852,-95.399612),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'LecRestStop Lecompton Rest Stop  Lecompton Rest Stop  38.994852,-95.399612' ,
-                    }).addTo(fg).bindPopup('LecRestStop Lecompton Rest Stop  Lecompton Rest Stop  38.994852,-95.399612' );                        
-         
-                $('lecompton rest stop '._icon).addClass('flagmrkr');
-            
-            var SJH160 = new L.marker(new L.LatLng(40.7841,-124.1422),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'SJH160 St Joseph Hospital  Level 3 Trauma Center, Helipad 40.7841,-124.1422' ,
-                    }).addTo(fg).bindPopup('SJH160 St Joseph Hospital  Level 3 Trauma Center, Helipad 40.7841,-124.1422' );                        
-         
-                $('level 3 trauma center, helipad'._icon).addClass('flagmrkr');
-            
-            var MRCH161 = new L.marker(new L.LatLng(40.8963,-124.0917),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'MRCH161 Mad River Community Hospital  Level 4 Trauma Center, Helipad 40.8963,-124.0917' ,
-                    }).addTo(fg).bindPopup('MRCH161 Mad River Community Hospital  Level 4 Trauma Center, Helipad 40.8963,-124.0917' );                        
-         
-                $('level 4 trauma center, helipad'._icon).addClass('flagmrkr');
-            
-            var BROADWAY = new L.marker(new L.LatLng(39.34261,-94.22378),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'BROADWAY KK7 _ Down Town  No Known Repeater Available 39.34261,-94.22378' ,
-                    }).addTo(fg).bindPopup('BROADWAY KK7 _ Down Town  No Known Repeater Available 39.34261,-94.22378' );                        
-         
-                $('no known repeater available'._icon).addClass('flagmrkr');
-            
-            var DB0QA = new L.marker(new L.LatLng(50.875067,6.16656),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' ,
-                    }).addTo(fg).bindPopup('DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' );                        
-         
-                $('operator db9kn max'._icon).addClass('flagmrkr');
-            
-            var DB0WA = new L.marker(new L.LatLng(50.745647,6.043222),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' ,
-                    }).addTo(fg).bindPopup('DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' );                        
-         
-                $('operator df1vb jochen'._icon).addClass('flagmrkr');
-            
-            var DB0AVR = new L.marker(new L.LatLng(50.764271,6.218675),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' ,
-                    }).addTo(fg).bindPopup('DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' );                        
-         
-                $('operator dh6kq andreas'._icon).addClass('flagmrkr');
-            
-            var DJ2UB = new L.marker(new L.LatLng(50.756536,6.158414),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' ,
-                    }).addTo(fg).bindPopup('DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' );                        
-         
-                $('operator dj2un uli'._icon).addClass('flagmrkr');
-            
-            var DB0SE = new L.marker(new L.LatLng(50.477617,6.52308),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' ,
-                    }).addTo(fg).bindPopup('DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' );                        
-         
-                $('operator dl8kbx klaus'._icon).addClass('flagmrkr');
-            
-            var DB0NIS = new L.marker(new L.LatLng(50.65722,6.398236),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' ,
-                    }).addTo(fg).bindPopup('DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' );                        
-         
-                $('operator dl8kcs werner'._icon).addClass('flagmrkr');
-            
-            var WA0QFJ = new L.marker(new L.LatLng(39.273172,-94.663137),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' ,
-                    }).addTo(fg).bindPopup('WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' );                        
-         
-                $('pcarg club repeater'._icon).addClass('flagmrkr');
-            
-            var KCRQFJ = new L.marker(new L.LatLng(39.2731222,-94.6629583),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' ,
-                    }).addTo(fg).bindPopup('KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' );                        
-         
-                $('pcarg club repeater'._icon).addClass('flagmrkr');
-            
             var PTPOLICE1925 = new L.marker(new L.LatLng(48.11464,-122.77136),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -5630,6 +5032,51 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var DB0QA = new L.marker(new L.LatLng(50.875067,6.16656),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' ,
+                    }).addTo(fg).bindPopup('DB0QA 70cm Alsdorf  Operator DB9KN Max 50.875067,6.16656' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var DJ2UB = new L.marker(new L.LatLng(50.756536,6.158414),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' ,
+                    }).addTo(fg).bindPopup('DJ2UB 70cm Aachen Brand  Operator DJ2UN Uli 50.756536,6.158414' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var DB0NIS = new L.marker(new L.LatLng(50.65722,6.398236),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' ,
+                    }).addTo(fg).bindPopup('DB0NIS 70cm Nideggen_Schmidt  Operator DL8KCS Werner 50.65722,6.398236' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var ON0RBO = new L.marker(new L.LatLng(50.653178,6.168431),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -5642,6 +5089,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'ON0RBO 70cm Petergensfeld    50.653178,6.168431' ,
                     }).addTo(fg).bindPopup('ON0RBO 70cm Petergensfeld    50.653178,6.168431' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var DB0SE = new L.marker(new L.LatLng(50.477617,6.52308),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' ,
+                    }).addTo(fg).bindPopup('DB0SE 70cm Kall  Operator DL8KBX Klaus 50.477617,6.52308' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -5945,6 +5407,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var WA0QFJ = new L.marker(new L.LatLng(39.273172,-94.663137),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' ,
+                    }).addTo(fg).bindPopup('WA0QFJ PCARG Repeater (147.330MHz T:151.4/444.550MHz )  PCARG club repeater 39.273172,-94.663137' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var W4HRS = new L.marker(new L.LatLng(32.78419876,-79.94499969),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -5957,6 +5434,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'W4HRS W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' ,
                     }).addTo(fg).bindPopup('W4HRS W4HRS  145.45 PL 123 OFFSET - 32.78419876,-79.94499969' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var WA0KHP = new L.marker(new L.LatLng(39.36392,-94.584721),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' ,
+                    }).addTo(fg).bindPopup('WA0KHP Clay Co Repeater Club / KC Northland ARES Repeater (146.79Mhz T:107.2 )  Clay Co. Repeater Club 39.36392,-94.584721' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6167,6 +5659,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'AD4U AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' ,
                     }).addTo(fg).bindPopup('AD4U AD4U  146.67 PL 156.7 OFFSET - 33.66490173,-80.7779007' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var WB4YXZ = new L.marker(new L.LatLng(34.90100098,-82.65930176),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'WB4YXZ WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' ,
+                    }).addTo(fg).bindPopup('WB4YXZ WB4YXZ  147 PL 151.4 OFFSET 34.90100098,-82.65930176' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6440,6 +5947,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRKW1 = new L.marker(new L.LatLng(38.9879167,-94.67075),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' ,
+                    }).addTo(fg).bindPopup('KCRKW1 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9879167,-94.67075' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var WA4USN = new L.marker(new L.LatLng(32.79059982,-79.90809631),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6452,6 +5974,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'WA4USN WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' ,
                     }).addTo(fg).bindPopup('WA4USN WA4USN  146.79 PL 123 OFFSET - 32.79059982,-79.90809631' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRJCRAC1 = new L.marker(new L.LatLng(39.0106639,-94.7212972),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' ,
+                    }).addTo(fg).bindPopup('KCRJCRAC1 Kansas City Room, W0ERH  JCRAC club repeater 39.0106639,-94.7212972' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6470,6 +6007,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRJCRAC2 = new L.marker(new L.LatLng(38.9252611,-94.6553389),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' ,
+                    }).addTo(fg).bindPopup('KCRJCRAC2 Kansas City Room, W0ERH  JCRAC club repeater 38.9252611,-94.6553389' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var W4GS = new L.marker(new L.LatLng(33.55099869,-79.04139709),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6482,6 +6034,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'W4GS W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' ,
                     }).addTo(fg).bindPopup('W4GS W4GS  146.805 PL 85.4 OFFSET - 33.55099869,-79.04139709' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRKW2 = new L.marker(new L.LatLng(38.5861611,-94.6204139),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' ,
+                    }).addTo(fg).bindPopup('KCRKW2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.5861611,-94.6204139' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6500,6 +6067,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRWW = new L.marker(new L.LatLng(39.0465806,-94.5874444),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRWW N0WW  Keith Little NØWW 39.0465806,-94.5874444' ,
+                    }).addTo(fg).bindPopup('KCRWW N0WW  Keith Little NØWW 39.0465806,-94.5874444' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var W4NYK = new L.marker(new L.LatLng(34.94120026,-82.41069794),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6512,6 +6094,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'W4NYK W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' ,
                     }).addTo(fg).bindPopup('W4NYK W4NYK  146.82 PL  OFFSET - 34.94120026,-82.41069794' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRROO = new L.marker(new L.LatLng(39.2819722,-94.9058889),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' ,
+                    }).addTo(fg).bindPopup('KCRROO Kansas City Room, W0ROO  Leavenworth club repeater 39.2819722,-94.9058889' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6530,6 +6127,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRHAM2 = new L.marker(new L.LatLng(38.9084722,-94.4548056),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' ,
+                    }).addTo(fg).bindPopup('KCRHAM2 Kansas City Room, K0HAM  Jerry Dixon KCØKW 38.9084722,-94.4548056' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var KA4GDW = new L.marker(new L.LatLng(33.35114,-80.68542),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6542,6 +6154,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'KA4GDW KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' ,
                     }).addTo(fg).bindPopup('KA4GDW KA4GDW  146.835 PL 179.9 OFFSET - 33.35114,-80.68542' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRHAM3 = new L.marker(new L.LatLng(39.0922333,-94.9453528),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' ,
+                    }).addTo(fg).bindPopup('KCRHAM3 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.0922333,-94.9453528' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6560,6 +6187,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRQFJ = new L.marker(new L.LatLng(39.2731222,-94.6629583),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' ,
+                    }).addTo(fg).bindPopup('KCRQFJ Kansas City Room, WA0QFJ  PCARG Club Repeater 39.2731222,-94.6629583' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var WR4EC = new L.marker(new L.LatLng(33.7942009,-81.89029694),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6572,6 +6214,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'WR4EC WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' ,
                     }).addTo(fg).bindPopup('WR4EC WR4EC  146.85 PL 91.5 OFFSET - 33.7942009,-81.89029694' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRMED = new L.marker(new L.LatLng(39.0562778,-94.6095),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' ,
+                    }).addTo(fg).bindPopup('KCRMED Kansas City Room, Ku0MED  Jerry Dixon KCØKW 39.0562778,-94.6095' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6590,6 +6247,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var KCRHAM4 = new L.marker(new L.LatLng(39.2611111,-95.6558333),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' ,
+                    }).addTo(fg).bindPopup('KCRHAM4 Kansas City Room, K0HAM  Jerry Dixon KCØKW 39.2611111,-95.6558333' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var N2OBS = new L.marker(new L.LatLng(32.9856987,-80.10980225),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -6602,6 +6274,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'N2OBS N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' ,
                     }).addTo(fg).bindPopup('N2OBS N2OBS  146.865 PL 123 OFFSET - 32.9856987,-80.10980225' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var KCRCNC = new L.marker(new L.LatLng(38.1788722,-93.3541889),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' ,
+                    }).addTo(fg).bindPopup('KCRCNC Kansas City Room, KD0CNC  KD0CNC 38.1788722,-93.3541889' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -6797,21 +6484,6 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'KO4L KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' ,
                     }).addTo(fg).bindPopup('KO4L KO4L  147 PL 91.5 OFFSET - 34.06060028,-79.3125' );                        
-         
-                $('repeater'._icon).addClass('rptmrkr');
-            
-            var WB4YXZ = new L.marker(new L.LatLng(34.90100098,-82.65930176),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
-                title: 'WB4YXZ WB4YXZ  147 PL 151.4 OFFSET - 34.90100098,-82.65930176' ,
-                    }).addTo(fg).bindPopup('WB4YXZ WB4YXZ  147 PL 151.4 OFFSET - 34.90100098,-82.65930176' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -7445,6 +7117,21 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
+            var DB0AVR = new L.marker(new L.LatLng(50.764271,6.218675),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' ,
+                    }).addTo(fg).bindPopup('DB0AVR 70cm Stolberg  Operator DH6KQ Andreas 50.764271,6.218675' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
             var SAXRPTR = new L.marker(new L.LatLng(39.3641,-93.48071),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -7457,6 +7144,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
                 title: 'SAXRPTR N0SAX   39.3641,-93.48071' ,
                     }).addTo(fg).bindPopup('SAXRPTR N0SAX   39.3641,-93.48071' );                        
+         
+                $('repeater'._icon).addClass('rptmrkr');
+            
+            var DB0WA = new L.marker(new L.LatLng(50.745647,6.043222),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'markers/repeater.png', iconSize: [32, 34]}),
+                title: 'DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' ,
+                    }).addTo(fg).bindPopup('DB0WA 2m Aachen  Operator DF1VB Jochen 50.745647,6.043222' );                        
          
                 $('repeater'._icon).addClass('rptmrkr');
             
@@ -7559,11 +7261,11 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RFH_533 RF_HoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_533 RF_HoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' );                        
+                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
+                title: 'RFH_533 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' ,
+                    }).addTo(fg).bindPopup('RFH_533 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' );                        
          
-                $('rf_hole'._icon).addClass('flagmrkr');
+                $('rfhole'._icon).addClass('aviationmrkr');
             
             var RFH_568 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
                 rotationAngle: 0,
@@ -7574,11 +7276,11 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RFH_568 RF_HoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_568 RF_HoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' );                        
+                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
+                title: 'RFH_568 RFHoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' ,
+                    }).addTo(fg).bindPopup('RFH_568 RFHoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' );                        
          
-                $('rf_hole'._icon).addClass('flagmrkr');
+                $('rfhole'._icon).addClass('aviationmrkr');
             
             var RFH_569 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
                 rotationAngle: 0,
@@ -7589,11 +7291,11 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'RFH_569 RF_HoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_569 RF_HoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' );                        
+                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
+                title: 'RFH_569 RFHoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' ,
+                    }).addTo(fg).bindPopup('RFH_569 RFHoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' );                        
          
-                $('rf_hole'._icon).addClass('flagmrkr');
+                $('rfhole'._icon).addClass('aviationmrkr');
             
             var JCSHRFF267 = new L.marker(new L.LatLng(48.024051,-122.763807),{ 
                 rotationAngle: 0,
@@ -7652,6 +7354,21 @@ var map = L.map('map', {
                 icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
                 title: 'Sheriff398 A Sheriff   34.226835,-80.680747' ,
                     }).addTo(fg).bindPopup('Sheriff398 A Sheriff   34.226835,-80.680747' );                        
+         
+                $('sheriff'._icon).addClass('polmrkr');
+            
+            var Fire400 = new L.marker(new L.LatLng(34.245217,-80.602271),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
+                title: 'Fire400 Kershaw FD1  Kershaw County Fire / Sheriff 34.245217,-80.602271' ,
+                    }).addTo(fg).bindPopup('Fire400 Kershaw FD1  Kershaw County Fire / Sheriff 34.245217,-80.602271' );                        
          
                 $('sheriff'._icon).addClass('polmrkr');
             
@@ -7730,21 +7447,6 @@ var map = L.map('map', {
          
                 $('sheriff'._icon).addClass('polmrkr');
             
-            var SPM247 = new L.marker(new L.LatLng(41.03856,-123.74792),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
-                title: 'SPM247 Sugar Pine Mountain  Sheriff Backup: Solar Generator 41.03856,-123.74792' ,
-                    }).addTo(fg).bindPopup('SPM247 Sugar Pine Mountain  Sheriff Backup: Solar Generator 41.03856,-123.74792' );                        
-         
-                $('sheriff backup: solar generator'._icon).addClass('flagmrkr');
-            
             var HCCH245 = new L.marker(new L.LatLng(40.803,-124.16221),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -7754,11 +7456,41 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/blue_50_flag.png', iconSize: [32, 34]}),
+                icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
                 title: 'HCCH245 Humboldt County Court House  Sheriff, Public Work  40.803,-124.16221' ,
                     }).addTo(fg).bindPopup('HCCH245 Humboldt County Court House  Sheriff, Public Work  40.803,-124.16221' );                        
          
-                $('sheriff, public work '._icon).addClass('flagmrkr');
+                $('sheriff'._icon).addClass('polmrkr');
+            
+            var SPM247 = new L.marker(new L.LatLng(41.03856,-123.74792),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/police.png', iconSize: [32, 34]}),
+                title: 'SPM247 Sugar Pine Mountain  Sheriff Backup: Solar Generator 41.03856,-123.74792' ,
+                    }).addTo(fg).bindPopup('SPM247 Sugar Pine Mountain  Sheriff Backup: Solar Generator 41.03856,-123.74792' );                        
+         
+                $('sheriff'._icon).addClass('polmrkr');
+            
+            var NWS240 = new L.marker(new L.LatLng(40.81001,-124.15964),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/skywarn.png', iconSize: [32, 34]}),
+                title: 'NWS240 National Weather Service  Amatuer Radio Station 40.81001,-124.15964' ,
+                    }).addTo(fg).bindPopup('NWS240 National Weather Service  Amatuer Radio Station 40.81001,-124.15964' );                        
+         
+                $('skywarn'._icon).addClass('skymrkr');
             
             var RGSP221 = new L.marker(new L.LatLng(40.01975,-123.79269),{ 
                 rotationAngle: 0,
@@ -7774,47 +7506,14 @@ var map = L.map('map', {
                     }).addTo(fg).bindPopup('RGSP221 Richardson Grove State Park   40.01975,-123.79269' );                        
          
                 $('state'._icon).addClass('govmrkr');
-           
-var StationList = L.layerGroup([NWS240]);
-
-var aviationList = L.layerGroup([KCI, MCI, PTIACPT, HMSPH, SVBPT]);
-
-
-var EOCList = L.layerGroup([W0KCN3, W0KCN4]);
-
-var fireList = L.layerGroup([FFD199, FFD198, LFS197, MCVF196, CFKHB, KFPD194, PESCH, PVFD214, WCFD192, SVFD208, CFICC200, RDVFD207, RESCH, MRFSUSFS205, PFD209, CDFMFS210, CFWS211, CFS204, MFFS212, MVFD213, HFD202, FVFDCH201, HFD190, CCFRWHQ189, CFCCFS188, FWESCH, SPFD171, HBFS2, HBFS5, HBFS3, HBFS4, HBFS1, LGBOH, LGWEI, LGDUE, CFPOBFS, LGLOH, AFD173, AFD174, CCFR187, KFD34, KFD35, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, AFD175, CARROLFD, BVFD215, RSIM, LGSTR, FIRE16257, FIRE15256, FIRE14255, FIRE13254, FIRE12253, FIRE11252, LGWOF, RMON, PMON, LGMON, LGSTE, LGSIM, PSIM, LGEIC, LGEIN, LGERK, LGDED, LGHAM, LGKES, LGLAM, LGROL, KSZW, LGRUR, LGHOE1, LHROH, LGMOE, LGGRE, LGWER, LGDON, LGATS, WGVF223, KVFDFS222, LGSMIT, GFPD220, CDFGF219, SCVFD218, WFS2217, LGVIC, LGZWE, LGKAL, RROE, PROE, LGROE, LGROT, RSTO, PSTO, HSTO, FWSTO, LGVEN, LGBRE, CFTFS216, LHKIN, KCMOFS8, LGSET, RALS, PALS, LGALS, LGHOE, LGBET, RAAC, PAAC, RWTH, FWAAC1, FWAAC2, LGOID, LGBEG, LGBAES, KCMOFS7, KCMOFS6, KCMOFS5, KCMOFS4, KCMOFS3, KCMOFS1]);
-
-var hospitalList = L.layerGroup([JCC260, HSIM, SCH165, FWRW5, JPCH163, RMH162, FWRW4, JCC259, LMH, FWRW6, MARIEN, FWWEST, LUISEN, HESCH, TH164]);
-
-
-var AuxCommList = L.layerGroup([HCES239]);
-
-var repeaterList = L.layerGroup([KCRJCRAC1, KCRJCRAC2]);
-
-var KCØKWList = L.layerGroup([KCRKW1, KCRHAM4, KCRKW2, KCRHAM3, KCRMED, KCRHAM2]);
-
-var KCHEARTList = L.layerGroup([NORKC, SMMC, RMCBKS, RESRCH, RAYCO, PMC, PETTIS, OMC, MENORA, LSMED, STJOHN, STJOMC, STLEAS, WEMO, W0CPT, TRUHH, TRLKWD, STM, STLUSO, STLUBR, STLSMI, STLPLZ, LRHC, LCHD19, DCEC, CUSHNG, CMHS, CMH, CASS, CARROL, BRMC, BOTHWL, BATES, OPR, EXSPR, FITZ, GVMH, I70, KC0CBC, KCVA, LIBRTY, KU0MED, KINDRD]);
-
-
-var policeList = L.layerGroup([EPD228, CHPGS227, USFSMRRDO206, CDFW250, FPD229, APD231, TPD232, RDPD234, HTP235, BLPD236, CHPDC237, PTPOLICE1925, FPD230, LTRD193, LTRDUSFS191, LKWKPD, FPD93721, RVRSPD, COMOPD, NRTPD, HSUCP233, GSTNPD, NKCPD, PKVLPD, KCNPPD, PLTCTYPD, KSZS, HPA172]);
-
-var repeaterList = L.layerGroup([W4GS, KT4TF, W4DV, W4BFT, KM4ABW, W4CHR, K4LMD, K4WD, ON0RBO, W4APE, AA7MI270, ACT, DCARC, SAXRPTR, WT4F, W4GS, KCRHCV, PRATT241, MP243, HH244, HORSE246, ROGERS248, RAINBOW249, W7JCR268, AA7MI269, W4TWX, WA4SJS, N4AW, WA4USN, W4CAE, W4FTK, WR4SC, W4FTK, W4PDE, WA4UKX, W4HRS, K4NAB, WR4SC, WR4SC, W4GS, KJ4QLH, W4DEW, W4APE, WR4SC, W4NYR, KD4HLH, N2OBS, W4ULH, WR4EC, K4ILT, KA4GDW, KI4RAX, W4NYK, WR4SC, W4PAX, W4HRS, W4APE, K9OH, W4ZKM, W4HRS, W4GL, KE4MDP, WA4USN, KJ4BWK, KG4BZN, WR4SC, N2ZZ, WB4TGK, W4APE, W4HRS, K4USC, KK4ZBE, WR4SC, AD4U, W4BFT, W4GL, W4BRK, W4NYK, KW4BET, K4KNJ, KK4ONF, W4DV, NE4SC, W4APE, W4IAR, WA4JRJ, W4ANK, W4RRC, KB4RRC, W4IAR, W4FTK , WA4NMW, WR4SC, W4FTK, WX4PG, W4APE, N4HRS, N4ADM, N1RCW, KA4FEC, NE4SC, KK4BQ, K4HI, W4ANK, WR4SC, W4CAE, K4JLA, KK4B, K2PJ, W4HNK, W4GWD, KG4BZN, W4FTK, W1GRE, KK4ONF, K4ILT, K4YTZ, KO4L, KJ4YLP, WB4YXZ, KK4BQ, KB4RRC, KJ4QLH, K4CCC, W4GS, W4IQQ, WA4USN, WR4SC, N4AW, WR4SC, W4GL]);
-
-var RF_HoleList = L.layerGroup([RFH_533, RFH_568, RFH_569]);
-
-var sheriffList = L.layerGroup([CCSHERIFF, HCSDGS226, HCSOMS225, HCSO224, Sheriff401, Sheriff398, JCSHRFF267, SC242, NARESEOC]);
-
-var GeneratorList = L.layerGroup([SPM247]);
-
-
-
-var stateList = L.layerGroup([RGSP221]);
+           ;
+var aviationList = L.layerGroup([HMSPH, RAAB, MCI, SVBPT, KCI, PTIACPT]);;var EOCList = L.layerGroup([W0KCN4, W0KCN3, HCES239, EOC399]);;var fireList = L.layerGroup([FFD198, LFS197, MCVF196, CFKHB, KFPD194, LGWER, WCFD192, LGDON, HFD190, CCFRWHQ189, FFD199, MFFS212, SVFD208, RDVFD207, LGGRE, MRFSUSFS205, CFS204, PFD209, CDFMFS210, FVFDCH201, CFICC200, CFWS211, HFD202, CFCCFS188, CCFR187, AFD173, LGATS, SPFD171, HBFS2, HBFS5, HBFS3, HBFS4, HBFS1, LGSMIT, RESCH, PESCH, AFD174, AFD175, CFPOBFS, KFD34, KFD35, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, FWESCH, KSZW, FIRE11252, LGLAM, LGROL, LGRUR, LGSIM, LGSTE, LGSTR, LGWOF, RMON, PMON, FIRE12253, FIRE13254, FIRE14255, RSIM, PSIM, LGEIC, LGEIN, LGERK, LGDED, LGHAM, LGKES, FIRE16257, FIRE15256, LGMON, LGHOE1, LHROH, WGVF223, KVFDFS222, LGVIC, GFPD220, CDFGF219, SCVFD218, WFS2217, CFTFS216, BVFD215, PVFD214, LGZWE, LGBRE, LGVEN, LGMOE, LGKAL, RROE, PROE, LGROE, LGROT, RSTO, PSTO, HSTO, FWSTO, MVFD213, RVRSDEFD, LGSET, RALS, PALS, LGALS, LGHOE, LGBET, RAAC, PAAC, RWTH, FWAAC1, FWAAC2, LGOID, LGBEG, LGBAES, W0KCN15, LGBAR, LGBROI, RBAES, LGWMIT, RHER, UEHER, FWHER, LGMER, LGKOH, PBAES, FWAAC3, LGACMIT,]);;var hospitalList = L.layerGroup([FWRW5, FWRW6, HESCH, LUISEN, LMH, FWRW4, HSIM, SJH160, FWWEST, MARIEN, JCC259, JCC260, SCH165, TH164, JPCH163, RMH162, MRCH161]);;var KCHEARTList = L.layerGroup([BATES, MENORA, SMMC, RMCBKS, RESRCH, RAYCO, PMC, PETTIS, OPR, OMC, NORKC, LSMED, STJOHN, STJOMC, WEMO, W0CPT, TRUHH, TRLKWD, STM, STLUSO, STLUBR, STLSMI, STLPLZ, STLEAS, LRHC, LCHD19, CUSHNG, CMHS, CMH, CASS, CARROL, BRMC, BOTHWL, DCEC, EXSPR, FITZ, LIBRTY, KU0MED, KINDRD, KCVA, KC0CBC, I70, GVMH]);;var policeList = L.layerGroup([HTP235, PLTCTYPD, KCNPPD, COMOPD, NKCPD, BLPD236, LKWKPD, RVRSPD, PKVLPD, RDPD234, HSUCP233, APD231, FPD230, FPD229, EPD228, CHPGS227, USFSMRRDO206, LTRD193, LTRDUSFS191, HPA172, TPD232, NRTPD, FPD93721, CDFW250, CHPDC237, PTPOLICE1925, KSZS, GSTNPD]);;var repeaterList = L.layerGroup([KM4ABW, DB0AVR, W4BFT, W4GS, DB0WA, AA7MI270, AA7MI269, KT4TF, PRATT241, MP243, HH244, HORSE246, ROGERS248, RAINBOW249, W7JCR268, W4DV, KCRMED, KCRJCRAC1, KCRKW1, KCRHCV, WA0KHP, WA0QFJ, W4IAR, DB0QA, DJ2UB, DB0NIS, ON0RBO, KCRJCRAC2, WB4YXZ, KCRWW, SAXRPTR, DCARC, ACT, KCRKW2, KCRCNC, KCRHAM4, KCRQFJ, KCRHAM3, KCRHAM2, KCRROO, DB0SE, W4DEW, W4CAE, W4FTK, WR4SC, W4FTK, W4PDE, WA4UKX, W4HRS, K4NAB, WR4SC, WR4SC, WR4SC, WT4F, W4PAX, WA4USN, N4AW, W4APE, WR4SC, W4NYR, KD4HLH, N2OBS, W4ULH, WR4EC, K4ILT, KA4GDW, KI4RAX, W4NYK, KJ4QLH, W4GS, W4HRS, K4USC, KK4ZBE, W4HRS, W4GL, KE4MDP, WA4USN, KJ4BWK, KG4BZN, WR4SC, N2ZZ, WB4TGK, NE4SC, K4LMD, W4CHR, K4WD, W4ZKM, K9OH, WR4SC, AD4U, W4BFT, W4GL, W4BRK, W4NYK, KW4BET, K4KNJ, KK4ONF, W4DV, W4HRS, W4APE, W4APE, W4APE, WA4SJS, WR4SC, N4HRS, WA4JRJ, W4RRC, KB4RRC, W4GS, W4IAR, W4FTK , WA4NMW, W4FTK, WX4PG, W4APE, N4ADM, K2PJ, W4TWX, N1RCW, KA4FEC, NE4SC, KK4BQ, K4HI, W4ANK, WR4SC, W4CAE, K4JLA, KK4B, W4HNK, W4GWD, KG4BZN, KK4ONF, K4ILT, K4YTZ, KJ4YLP, KK4BQ, W4GL, KO4L, W]);;var RFHoleList = L.layerGroup([RFH_533, RFH_568, RFH_569]);;var sheriffList = L.layerGroup([Sheriff401, Sheriff398, NARESEOC, HCSOMS225, HCSO224, Fire400, HCCH245, CCSHERIFF, JCSHRFF267, SC242, SPM247, HCSDGS226]);;var skywarnList = L.layerGroup([NWS240]);;var stateList = L.layerGroup([RGSP221]);;
     
     //=======================================================================
     //======================= Station Markers ===============================
     //=======================================================================
         
-    var Stations = L.layerGroup([_KD0NBH,_AA0DV,_K0RGB,_W4XJ,_WA0TJT,_KE0UXE,_KF0MEZ,_N0SMC,_AB0GD,_KF0DFC,_N0UYN,_N0BKE,_KF0BQY,_WY0O,_KA0OTL,_K0KEX]);
+    var Stations = L.layerGroup([_KD0FIWH,_AD0TU,_KD0NBHA,_W0WTS,_K0OG,_K0KEXA,_N0SAXF,_W0NRPA,_WA0TJT,_W0JWT]);
     // WA0TJT,W0DLK,KD0NBH,KC0YT,AA0JX,AA0DV
 
     // Add the stationmarkers to the map
@@ -7822,10 +7521,10 @@ var stateList = L.layerGroup([RGSP221]);
     
     // ???
     // I don't know what this does but without it the POI menu items don't show
-    map.fitBounds([[[39.2154688,-94.599025],[39.2628465,-94.569978],[39.4172253,-94.568527],[39.2148975,-94.633957],[39.2028965,-94.602876],[39.4244507,-94.896258],[39.21816,-94.7307],[39.2519092,-94.571180],[39.3476289,-94.768086],[39.0815025,-94.582671],[39.2762919,-94.582776],[39.220224,-94.518254],[39.4763031,-94.340813],[39.3582891,-94.638113],[39.233196,-94.642213],[39.4197989,-94.658092]]]);
+    map.fitBounds([[[39.2720374,-93.832865],[39.7941892,-93.583108],[39.2154688,-94.599025],[39.3710869,-93.547969],[37.9574854,-91.750868],[39.4197989,-94.658092],[39.3763041,-93.497272],[38.8732866,-94.303351],[39.2028965,-94.602876],[38.9127244,-94.351836]]]);
 
-    var bounds = L.latLngBounds([[[39.2154688,-94.599025],[39.2628465,-94.569978],[39.4172253,-94.568527],[39.2148975,-94.633957],[39.2028965,-94.602876],[39.4244507,-94.896258],[39.21816,-94.7307],[39.2519092,-94.571180],[39.3476289,-94.768086],[39.0815025,-94.582671],[39.2762919,-94.582776],[39.220224,-94.518254],[39.4763031,-94.340813],[39.3582891,-94.638113],[39.233196,-94.642213],[39.4197989,-94.658092]]]);
-        //console.log('@371 bounds= '+JSON.stringify(bounds)); 
+    var bounds = L.latLngBounds([[[39.2720374,-93.832865],[39.7941892,-93.583108],[39.2154688,-94.599025],[39.3710869,-93.547969],[37.9574854,-91.750868],[39.4197989,-94.658092],[39.3763041,-93.497272],[38.8732866,-94.303351],[39.2028965,-94.602876],[38.9127244,-94.351836]]]);
+        console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
 
 
     // find the corners and middle of the stationmarkers
@@ -7835,6 +7534,7 @@ var stateList = L.layerGroup([RGSP221]);
     var nw = padit.getNorthWest();
     var ne = padit.getNorthEast();
     var se = padit.getSouthEast();
+    
 
     //=======================================================================
     //======================= Station Marker Corners ========================
@@ -7874,10 +7574,11 @@ var stateList = L.layerGroup([RGSP221]);
     // ================== End Station Marker Corners =======================
     //======================================================================
     
+    
      //=================================================================================
     //================ APRS Like Object Marker Corners and all the Objects =============
     // ======= These are Objects created by APRS or W3W from the TimeLog table =========
-    //==================================================================================
+    //====================== THERE MAY NOT BE ANY TO REPORT ============================
     
     
     // Object markers here
@@ -7889,8 +7590,8 @@ var stateList = L.layerGroup([RGSP221]);
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
        
-       // uniqueCallList is needed to so we can count how many color changes we need, always < 8
-   var uniqueCallList = [];  
+    // uniqueCallList is needed to so we can count how many color changes we need, always < 8
+    var uniqueCallList = [];  
     
     const newColor = "";
     const colorwheel = ["#00f900","#932092","#ff9200","#00fcff","#98989d","#fefb00","#000000","#ff2600"];
@@ -7901,39 +7602,30 @@ var stateList = L.layerGroup([RGSP221]);
         		return {
         			color: colorwheel[i],
         			weight: 3,
-        			opacity: 2,
+        			opacity: 2, 
         		};
         }  // end for loop
     } // end of style 
         
-     var polyline = new L.Polyline([  ],{style: style}).addTo(map);
-     
-     /*
-     var markerBounds = L.featureGroup(objmarkers).getBounds();
-            console.log('markerBounds: '+markerBounds);
-        
-        map.fitBounds(markerBounds);
-    */
-     
-     //console.log('@404');
-     //console.log(polyline);
+    var polyline = new L.Polyline([  ],{style: style}).addTo(map);
 
     
     //====================================================================== 
     //====================== Points of Interest ============================
-    //======================================================================    
+    //======================================================================   
+    //====================== THERE MAY NOT BE ANY TO REPORT ================
+        
     // The classList is the list of POI types.
-
-    var classList = 'Amatuer Radio StationL,aviationL,Cal Fire Fixed Wing Air Attack BaseL,Clay Co. Repeater ClubL,EOCL,fireL,hospitalL,HT CompatableL,HT Compatible w/staticL,HT Not compatible at this locationL,Humboldt County CERT AuxCommL,JCRAC club repeaterL,Jerry Dixon KCØKWL,KCHEARTL,KD0CNCL,Keith Little NØWWL,Kershaw County EOCL,Kershaw County Fire / SheriffL,Leavenworth club repeaterL,Lecompton Rest Stop L,Level 3 Trauma Center, HelipadL,Level 4 Trauma Center, HelipadL,No Known Repeater AvailableL,Operator DB9KN MaxL,Operator DF1VB JochenL,Operator DH6KQ AndreasL,Operator DJ2UN UliL,Operator DL8KBX KlausL,Operator DL8KCS WernerL,PCARG club repeaterL,policeL,repeaterL,RF_HoleL,Sheriff Backup: Solar GeneratorL,Sheriff, Public Work L,sheriffL,stateL, CornerL, ObjectL;'.split(',');
-       console.log('@414 in map.php classList= '+classList);
+    var classList = 'aviationL,EOCL,fireL,hospitalL,KCHEARTL,policeL,repeaterL,RFHoleL,sheriffL,skywarnL,stateL, CornerL, ObjectL;'.split(',');
+       console.log('In map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
-    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
-    var y = {...station};
+    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
+    var y = {...station}; 
     var x;
-   // $var_a = $var_b = $same_var = $var_d = $some_var = 'A';
+
     for (x of classList) {
         
         if (x == 'AviationL') {
@@ -7977,7 +7669,7 @@ var stateList = L.layerGroup([RGSP221]);
             y = {...y, ...SkyWarn};    
             
         }else if (x == 'StateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' />                 <span class='polmarker'>State</span>":  SheriffList};
+            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
             y = {...y, ...State};
             
         }else if (x == 'townhallL') {
@@ -7985,6 +7677,10 @@ var stateList = L.layerGroup([RGSP221]);
             y = {...y, ...TownHall};       
             
         }else if (x == 'ObjectL') {
+            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
+            y = {...y, ...Objects}; 
+            
+        }else if (x == 'RFHoleL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
             y = {...y, ...Objects}; 
             
@@ -8032,15 +7728,6 @@ var stateList = L.layerGroup([RGSP221]);
             console.log(e);
             lastLayer = e.relatedTarget; 
         });
-        
-        /*
-        var markerBounds = L.featureGroup(objmarkers).getBounds();
-            console.log('markerBounds: '+markerBounds);
-        
-        map.fitBounds(markerBounds);
-        */
-
-	    
 
 </script>   <!-- End of javascript holding the map stuff -->
 
