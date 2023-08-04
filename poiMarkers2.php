@@ -61,15 +61,16 @@
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
         $sql = ("SELECT 
-                    GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackList,
-                    CONCAT(
-                        'var ', class, 'List = L.layerGroup([',
-                        GROUP_CONCAT(CONCAT('\'', REPLACE(tactical, '-', ''), '\'') SEPARATOR ', '),
-                        '])'
-                    ) AS MarkerList
-                FROM poi 
-                GROUP BY class
-                ORDER BY class;
+    GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackList,
+    CONCAT(
+        'var ', class, 'List = L.layerGroup([',
+        GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', '),
+        '])'
+    ) AS MarkerList
+FROM poi 
+GROUP BY class
+ORDER BY class;
+
                ");
             foreach($db_found->query($sql) as $row) {
                 $POIMarkerList .= "$row[MarkerList];";
