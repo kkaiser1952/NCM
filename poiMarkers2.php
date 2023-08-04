@@ -60,12 +60,16 @@
             
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
-        $sql = ("SELECT GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
-                        CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
-                   FROM  poi 
-                   /*$whereClause*/
-             	 GROUP BY class
-                 ORDER BY class
+        $sql = ("SELECT 
+                    GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackList,
+                    CONCAT(
+                        'var ', class, 'List = L.layerGroup([',
+                        GROUP_CONCAT(CONCAT('\'', REPLACE(tactical, '-', ''), '\'') SEPARATOR ', '),
+                        '])'
+                    ) AS MarkerList
+                FROM poi 
+                GROUP BY class
+                ORDER BY class;
                ");
             foreach($db_found->query($sql) as $row) {
                 $POIMarkerList .= "$row[MarkerList];";
@@ -250,9 +254,9 @@
     $poiBounds  = substr($poiBounds, 0, -1)."]"; 
         //echo ("poiBounds= <br>$poiBounds<br><br>");
         
-        echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
-    $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        
         //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
+    $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        
+        //cho ("POIMarkerList= <br>$POIMarkerList<br><br>");
         
     $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 
         //echo ("poiMarkers= <br>$poiMarkers<br><br>");

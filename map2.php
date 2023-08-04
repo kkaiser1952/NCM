@@ -447,7 +447,7 @@ var map = L.map('map', {
         		return {
         			color: colorwheel[i],
         			weight: 3,
-        			opacity: 2,
+        			opacity: 2, 
         		};
         }  // end for loop
     } // end of style 
@@ -468,7 +468,7 @@ var map = L.map('map', {
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
     // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
-    var y = {...station};
+    var y = {...station}; 
     var x;
 
     for (x of classList) {
