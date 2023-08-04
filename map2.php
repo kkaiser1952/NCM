@@ -529,18 +529,23 @@ var map = L.map('map', {
             let RFhole = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList};
             y = {...y, ...RFhole}; 
             
-        }else if (x == ' CornerL') {
+        }else if (x == 'CornerL') {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
             y = {...y, ...Corners};
         }}; // End of for loop
         
         
         // Here we add the station object with the merged y objects from above
+        // overlayMaps = {...y }; is used to merge objects
     var overlayMaps = {...y }; 
     
     // This must stay here to properly display on the map
     // The collapsed: true makes the POI's compress into a 'Markers' icon
-    L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map); 
+    //L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map);
+    
+    //console.log(overlayMaps); 
+    
+    L.control.layers(baseMaps, overlayMaps, {position:'bottomright'}).addTo(map);
     
    $('.leaflet-control-attribution').hide()
     

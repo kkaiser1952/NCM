@@ -25,7 +25,6 @@
     
     $sql = ("SELECT tactical, latitude, COUNT(latitude)
                FROM poi
-               /*$whereClause */
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -43,7 +42,6 @@
         // This is the list needed for overlaymaps
         $sql = ("SELECT GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
-                   /*$whereClause*/
                   GROUP BY class
                   ORDER BY class  
                ");
