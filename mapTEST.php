@@ -118,17 +118,7 @@
     <!-- Under the banner in the upper left corner -->
     <div id="stations"> 
 		<b style="color:red; text-decoration: underline;">
-		    <b>MODES</b><br>
-		    <a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br>
-		    <a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br>
-		    <a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br>
-		    <a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br>
-		    <a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br>
-		    <a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br>
-		    <a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br>
-		    <a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br>
-		    <a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br>
-		    <a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
+		    <b>MODES</b><br><a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br><a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br><a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br><a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br><a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br><a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br><a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br><a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br><a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
 
     <!-- The title banner -->
     <div id="activity" class="activity">
@@ -225,8 +215,8 @@ var map = L.map('map', {
 // ================================================================================================
 
     // Add what3words, shows w3w in a control
-    var ww = new L.Control.w3w();
-	    ww.addTo(map);
+    var w = new L.Control.w3w();
+	    w.addTo(map);
         map.on('click', function(e) {
 		console.log(e);
 		w.setCoordinates(e);
@@ -7626,7 +7616,7 @@ var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PT
     //====================== THERE MAY NOT BE ANY TO REPORT ================
         
     // The classList is the list of POI types.
-    var classList = 'aviationL,EOCL,fireL,hospitalL,KCHEARTL,policeL,repeaterL,RFHoleL,sheriffL,skywarnL,stateL, CornerL, ObjectL;'.split(',');
+    var classList = 'aviationL,eocL,fireL,hospitalL,KCHEARTL,policeL,repeaterL,RFHoleL,sheriffL,skywarnL,stateL, CornerL, ObjectL;'.split(',');
        console.log('In map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};

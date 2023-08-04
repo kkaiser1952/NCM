@@ -262,16 +262,16 @@
         
         //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
     $$POIMarkerList = substr($POIMarkerList, 0, -1)."]);\n";        
-        //cho ("POIMarkerList= <br>$POIMarkerList<br><br>");
+        //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
         
     $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 
         //echo ("poiMarkers= <br>$poiMarkers<br><br>");
         
     $listofMarkers = substr($listofMarkers, 0, -1)."";              
-        // * echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
+        //echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
         
     $overlayListNames = substr($overlayListNames, 0, -1)."";        
-        // * echo ("overlayListNames= <br>$overlayListNames<br><br>"); // two commas by RFH
+        //echo ("overlayListNames= <br>$overlayListNames<br><br>"); // two commas by RFH
   
 ?>
 

@@ -259,8 +259,8 @@ var map = L.map('map', {
 // ================================================================================================
 
     // Add what3words, shows w3w in a control
-    var ww = new L.Control.w3w();
-	    ww.addTo(map);
+    var w = new L.Control.w3w();
+	    w.addTo(map);
         map.on('click', function(e) {
 		console.log(e);
 		w.setCoordinates(e);
@@ -526,8 +526,8 @@ var map = L.map('map', {
             y = {...y, ...Objects}; 
             
         }else if (x == 'RFHoleL') {
-            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
-            y = {...y, ...Objects}; 
+            let RFhole = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList};
+            y = {...y, ...RFhole}; 
             
         }else if (x == ' CornerL') {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
