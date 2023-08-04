@@ -459,7 +459,7 @@ var map = L.map('map', {
     //====================== Points of Interest ============================
     //======================================================================   
     //====================== THERE MAY NOT BE ANY TO REPORT ================
-         
+        
     // The classList is the list of POI types.
     var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
        console.log('In map.php classList= '+classList);
