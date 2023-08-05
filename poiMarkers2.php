@@ -39,20 +39,23 @@
         $listofMarkers = "";
         $classList     = "";  // The rest come from the poi table
     
-        // This is the list needed for overlaymaps
-        $sql = ("SELECT GROUP_CONCAT(DISTINCT CONCAT('var ', class, 'List = L.layerGroup([', column_names_here, ']);') SEPARATOR ' ') AS classList
-           FROM poi
-          GROUP BY class
-          ORDER BY class  
-       ");
-    //echo "<br>$sql<br>";
-    foreach($db_found->query($sql) as $row) {
-    $classList .= $row['classList'] . ' ';
-    }
+        /// This is the list needed for overlaymaps
+        $sql = ("SELECT 
+                    GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
+                   FROM poi
+
+              $whereClause
+                  GROUP BY class
+                  ORDER BY class  
+                ");
+    //echo "$sql";
+            foreach($db_found->query($sql) as $row) {
+                $classList .= "$row[class],";
+            }
             
         //$classList .= "$classList,ObjectL,";
         $classList = rtrim($classList, ',');
-        echo "classList:<br> $classList";
+        //echo "classList:<br> $classList";
 
         
         //echo "<br>$classList<br>";  // issue with split RF-Hole check it out
@@ -81,7 +84,7 @@
                 $listofMarkers .= "$row[tackList],"; 
             }; // End foreach
             
-            echo "<br>$POIMarkerList<br><br>$listofMarkers";
+            //echo "<br>$POIMarkerList<br><br>$listofMarkers";
             
   // ===========================================
   
@@ -264,7 +267,7 @@
         //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
         
     $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 
-        //echo ("poiMarkers= <br>$poiMarkers<br><br>");
+        echo ("poiMarkers= <br>$poiMarkers<br><br>");
         
     $listofMarkers = substr($listofMarkers, 0, -1)."";              
         //echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH

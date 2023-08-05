@@ -473,48 +473,48 @@ var map = L.map('map', {
 
     for (x of classList) {
         if (x == 'aviationL') {
-            let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
-            Object.assign(y, Aviation);
+            let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": aviationList};
+            Object.assign(y, aviation);
             console.log('ObjectL List:', y);
         } else if (x == 'chpL') {
-            let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            Object.assign(y, CHP);
+            let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  sheriffList};
+            Object.assign(y, chp);
         } else if (x == 'eocL') {
-            let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
-            Object.assign(y, EOC);
+            let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": eocList};
+            Object.assign(y, eoc);
         } else if (x == 'federalL') {
-            let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            Object.assign(y, Federal);
+            let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  federalList};
+            Object.assign(y, federal);
         } else if (x == 'fireL') {
-            let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
-            Object.assign(y, Fire);
+            let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": fireList};
+            Object.assign(y, fire);
         } else if (x == 'hospitalL') {
-            let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList};
-            Object.assign(y, Hospital);
+            let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": hospitalList};
+            Object.assign(y, hospital);
         } else if (x == 'policeL') {
-            let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList};
-            Object.assign(y, Police);
+            let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": sheriffList};
+            Object.assign(y, police);
         } else if (x == 'repeaterL') {
-            let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList};
-            Object.assign(y, Repeater);
+            let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": repeaterList};
+            Object.assign(y, repeater);
         } else if (x == 'sheriffL') {
-            let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            Object.assign(y, Sheriff);
+            let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  sheriffList};
+            Object.assign(y, sheriff);
         } else if (x == 'skywarnL') {
-            let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
-            Object.assign(y, SkyWarn);
+            let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": skyWarnList};
+            Object.assign(y, skywarn);
         } else if (x == 'stateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
-            Object.assign(y, State);
+            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  sheriffList};
+            Object.assign(y, state);
         } else if (x == 'townhallL') {
             let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
-            Object.assign(y, TownHall);
+            Object.assign(y, townHall);
         } else if (x == 'objectL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
             Object.assign(y, Objects);
         } else if (x == 'rfholeL') {
             let RFhole = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList};
-            Object.assign(y, RFhole);
+            Object.assign(y, rfhole);
             console.log('ObjectL List:', y);
         } else if (x == 'cornerL') {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
