@@ -50,6 +50,8 @@
                 $classList .= "$row[class],";
                // echo "$classList<br>";
     }
+    
+    echo "$classlist";
             
         //$classList .= "$classList,ObjectL,";
         $classList = "$classList";

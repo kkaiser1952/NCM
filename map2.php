@@ -468,72 +468,62 @@ var map = L.map('map', {
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
     // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
-    var y = {...station}; 
+    var y = Object.assign({}, station);
     var x;
 
     for (x of classList) {
-        
-        if (x == 'AviationL') {
+        if (x == 'aviationL') {
             let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
-            y = {...y, ...Aviation}; 
-            
-        }else if (x == 'CHPL') {
+            Object.assign(y, Aviation);
+            console.log('ObjectL List:', y);
+        } else if (x == 'chpL') {
             let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y, ...CHP}; 
-            
-        }else if (x == 'EOCL') {
+            Object.assign(y, CHP);
+        } else if (x == 'eocL') {
             let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
-            y = {...y, ...EOC};
-            
-        }else if (x == 'FederalL') {
+            Object.assign(y, EOC);
+        } else if (x == 'federalL') {
             let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            y = {...y, ...Federal};
-            
-        }else if (x == 'FireL') {
+            Object.assign(y, Federal);
+        } else if (x == 'fireL') {
             let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
-            y = {...y, ...Fire};
-            
-        }else if (x == 'HospitalL') {
+            Object.assign(y, Fire);
+        } else if (x == 'hospitalL') {
             let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList};
-            y = {...y, ...Hospital};
-            
-        }else if (x == 'PoliceL') {
+            Object.assign(y, Hospital);
+        } else if (x == 'policeL') {
             let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList};
-            y = {...y, ...Police};
-            
-        }else if (x == 'RepeaterL') {
+            Object.assign(y, Police);
+        } else if (x == 'repeaterL') {
             let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList};
-            y = {...y, ...Repeater};
-            
-        }else if (x == 'SheriffL') {
+            Object.assign(y, Repeater);
+        } else if (x == 'sheriffL') {
             let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y, ...Sheriff};
-            
-        }else if (x == 'SkyWarnL') {
+            Object.assign(y, Sheriff);
+        } else if (x == 'skywarnL') {
             let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
-            y = {...y, ...SkyWarn};    
-            
-        }else if (x == 'StateL') {
+            Object.assign(y, SkyWarn);
+        } else if (x == 'stateL') {
             let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
-            y = {...y, ...State};
-            
-        }else if (x == 'townhallL') {
+            Object.assign(y, State);
+        } else if (x == 'townhallL') {
             let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
-            y = {...y, ...TownHall};       
-            
-        }else if (x == 'ObjectL') {
+            Object.assign(y, TownHall);
+        } else if (x == 'objectL') {
             let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
-            y = {...y, ...Objects}; 
-            
-        }else if (x == 'RFHoleL') {
+            Object.assign(y, Objects);
+        } else if (x == 'rfholeL') {
             let RFhole = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList};
-            y = {...y, ...RFhole}; 
-            
-        }else if (x == 'CornerL') {
+            Object.assign(y, RFhole);
+            console.log('ObjectL List:', y);
+        } else if (x == 'cornerL') {
             let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
-            y = {...y, ...Corners};
-        }}; // End of for loop
-        
+            Object.assign(y, Corners);
+        }
+    } // End of for loop
+    
+    console.log(y);
+
         
         // Here we add the station object with the merged y objects from above
         // overlayMaps = {...y }; is used to merge objects
