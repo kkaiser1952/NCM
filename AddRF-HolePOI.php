@@ -255,7 +255,7 @@ select[name="type"] option {
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
         <h2>Welcome to the RF Hole POI <br> Submission Form</h2>
-        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
+        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. All RF Hole POI's will expire in 90 days. Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
     </div>
     
     <!-- Container for the form (left-justified) -->
@@ -284,7 +284,7 @@ select[name="type"] option {
             
             <div class="form-group">
                 <label for="frequencies">List Tested Repeater Frequencies, comma seperated:</label>
-                <input type="text" name="band" id="band" placeholder="Enter one or more repeater frequencies (e.g., xx.xxx, xxx.xxx)" required>
+                <input type="text" name="band" id="band" placeholder="Enter one or more repeater frequencies (e.g., 53.850, 146.330, 444.850)" required>
             </div>
             
             <br>

@@ -40,21 +40,20 @@
         $classList     = "";  // The rest come from the poi table
     
         // This is the list needed for overlaymaps
-        $sql = ("SELECT GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
-                   FROM poi
-                  GROUP BY class
-                  ORDER BY class  
-               ");
+        $sql = ("SELECT GROUP_CONCAT(DISTINCT CONCAT('var ', class, 'List = L.layerGroup([', column_names_here, ']);') SEPARATOR ' ') AS classList
+           FROM poi
+          GROUP BY class
+          ORDER BY class  
+       ");
     //echo "<br>$sql<br>";
     foreach($db_found->query($sql) as $row) {
-                $classList .= "$row[class],";
-               // echo "$classList<br>";
+    $classList .= $row['classList'] . ' ';
     }
-    
-    echo "$classlist";
             
         //$classList .= "$classList,ObjectL,";
-        $classList = "$classList";
+        $classList = rtrim($classList, ',');
+        echo "classList:<br> $classList";
+
         
         //echo "<br>$classList<br>";  // issue with split RF-Hole check it out
             
@@ -82,7 +81,7 @@
                 $listofMarkers .= "$row[tackList],"; 
             }; // End foreach
             
-            //echo "<br>$POIMarkerList<br><br>$listofMarkers";
+            echo "<br>$POIMarkerList<br><br>$listofMarkers";
             
   // ===========================================
   
