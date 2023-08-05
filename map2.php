@@ -516,30 +516,30 @@ const classMap = {};
 var y = {};
 
 // Helper function to add the category to the classMap if the variable exists
-function addToClassMap(category, variable) {
+function addToClassMap(category, variable, imageName) {
   if (window.hasOwnProperty(variable)) {
     classMap[category] = {
-      [`<img src='images/markers/${category}.png' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
+      [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
     };
   }
 }
 
 // Call the helper function for each category
-addToClassMap('aviationL', 'aviationList');
-addToClassMap('chpL', 'sheriffList');
-addToClassMap('eocL', 'eocList');
-addToClassMap('federalL', 'federalList');
-addToClassMap('hospitalL', 'hospitalList');
-addToClassMap('fireL', 'fireList');
-addToClassMap('policeL', 'sheriffList');
-addToClassMap('repeaterL', 'repeaterList');
-addToClassMap('sheriffL', 'sheriffList');
-addToClassMap('skyWarnL', 'skyWarnList');
-addToClassMap('stateL', 'sheriffList');
-addToClassMap('townhallL', 'townhallList');
-addToClassMap('rfholeL', 'rfholeList');
-addToClassMap('objectsL', 'ObjectList');
-addToClassMap('cornersL', 'CornerList');
+addToClassMap('aviationL', 'aviationList', 'aviation.png');
+addToClassMap('chpL', 'sheriffList', 'police.png');
+addToClassMap('eocL', 'eocList', 'eoc.png');
+addToClassMap('federalL', 'federalList', 'gov.png');
+addToClassMap('hospitalL', 'hospitalList', 'firstaid.png');
+addToClassMap('fireL', 'fireList', 'fire.png');
+addToClassMap('policeL', 'sheriffList', 'police.png');
+addToClassMap('repeaterL', 'repeaterList', 'repeater.png');
+addToClassMap('sheriffL', 'sheriffList', 'police.png');
+addToClassMap('skyWarnL', 'skyWarnList', 'skywarn.png');
+addToClassMap('stateL', 'sheriffList', 'gov.png');
+addToClassMap('townhallL', 'townhallList', 'gov.png');
+addToClassMap('rfholeL', 'rfholeList', 'aviation.png');
+addToClassMap('objectsL', 'ObjectList', 'marker00.png');
+addToClassMap('cornersL', 'CornerList', 'red_50_flag.png');
 
 console.log('ObjectL List:', classMap);
     
