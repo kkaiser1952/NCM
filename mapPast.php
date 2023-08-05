@@ -4,7 +4,6 @@
     Primary maping program, also uses poiMarkers.php, objMarkers.php and stationMarkers.php -->
 
 <!-- This version 2021-10-16 -->
-<!-- This version 2023-08-03 -->
 
 <?php 
 	
@@ -17,24 +16,23 @@
     require_once "config.php";
     require_once "config2.php";
     
+    
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     //$q = 8523; 
     //$q = 6066;
-    $q = 9657;
-    //  $q = 9630;
+    //$q = 9327;
+    //$q = 9630;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
-    $sql="SELECT MAX(latitude) as maxlat,
-                 MIN(latitude) as minlat,
-                 MAX(longitude) as maxlon,
-                 MIN(longitude) as minlon
-            FROM NetLog 
-           WHERE netID = $q AND latitude <> ''
-          ";
-          //echo "$sql";
-        $stmt = $db_found->prepare($sql);
+    $stmt = $db_found->prepare("SELECT MAX(latitude) as maxlat,
+                                       MIN(latitude) as minlat,
+                                       MAX(longitude) as maxlon,
+                                       MIN(longitude) as minlon
+                                  FROM NetLog 
+                                WHERE netID = $q AND latitude <> '';
+                               ");
         $stmt->execute();
     	$result = $stmt->fetch();
     		$maxlat = $result[maxlat];
@@ -42,12 +40,11 @@
     		$maxlon = $result[maxlon];
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
-    
-    // Loads the programs that create the station, poi, and object markers
-	include "stationMarkers.php";
-    include "poiMarkers2.php";    
-    include "objMarkers.php";
-
+    	       
+	// Loads the programs that create the station, poi, and object markers
+	require_once "stationMarkers.php";
+    //require_once "poiMarker.php";    
+    require_once "objMarkers.php"; 
 ?>
 
 <html lang="en">
@@ -58,7 +55,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" >
-	<link rel="shortcut icon" type="image/x-icon" href="favicons/apple-icon.png">
 
      <!-- ******************************** Load LEAFLET from CDN *********************************** -->
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
@@ -69,15 +65,20 @@
     
     <!-- Various additional Leaflet javascripts -->
     <script src="js/leaflet_numbered_markers.js"></script>
-    <script src="js/L.Grid.js"></script>     
-
+    <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
+    <!-- <script src="js/geolet.js"></script> -->
+    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!--<script src="js/L.Control.MousePosition.js"></script>-->
+     
+    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
     <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
+    
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
     
     <script src="js/hamgridsquare.js"></script>
     
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
     <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
-    
     <!-- Allows for rotating markers when more than one at the same place -->
     <script src="js/leaflet.rotatedMarker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
@@ -86,6 +87,7 @@
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
     
     
+     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
@@ -105,7 +107,7 @@
      <!-- ******************************** Style Sheets *************************************** -->
     <link rel="stylesheet" href="css/leaflet_numbered_markers.css" />
     <link rel="stylesheet" href="css/L.Grid.css" />   
-
+    <!--<link rel="stylesheet" href="css/L.Control.MousePosition.css" /> -->
     <link rel="stylesheet" href="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.css">
     <link rel="stylesheet" href="css/control.w3w.css" />
     
@@ -113,14 +115,15 @@
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
+    
+    
         
-    <!-- ******************************** What 3 Words *************************************** -->
+    <!-- What 3 Words -->
     <script src="js/control.w3w.js"></script>
 
     
     <!-- circleKoords is the javascript program that caluclates the number of rings and the distance between them -->
     <script src="js/circleKoords.js"></script>    
-    
     
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
@@ -130,18 +133,25 @@
     		left: 10px;
     		padding-bottom: 40px;
         }
-        
         .leaflet-container{
             line-height: 1;
         }
         
         .leaflet-control-w3w-locationText {
+    	/*	position: fixed; */
     	    position: fixed;
     		font-size: 14pt;
+    	/*	top: 275px;
+    		right: 17px; */
+    	/*	bottom: 475px; */
+    		
     		top: 94%;
     		left: 32px;  /* was 110 */
     		border: none;
+    	/*	border: 1px solid #8AC007; */
+		/*    z-index: 400; */
 		    text-decoration: none;
+		/*    background-color: white; */
 		    width: 30%; 
 		    background-color: inherit;
 		    color: rgb(182,7,7);
@@ -149,8 +159,17 @@
 		}
 	</style>
 	
+	<!-- Experiment to add beautifyl markers -->
+	<!--
+    <link rel="stylesheet"BeautifyMarker-master/leaflet/fontawesome.min.css" />"
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="BeautifyMarker-master/leaflet-beautify-marker-icon.css" />
+    <script src="BeautifyMarker-master/leaflet-beautify-marker-icon.js"></script>
+    -->
+
 	
 </head>
+
 <body>
     
     <!-- the map div holds the map -->
@@ -172,9 +191,7 @@
 
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
-    
 // This function can be used to connect the object markers together with a line
-// Object markers come from the TimeLog unlike the rest that come from NetLog
 function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
@@ -186,7 +203,7 @@ function connectTheDots(data){
 }
 
     
-// Define the beginning map
+// Define the map
 var map = L.map('map', {
 	drawControl: true,
 	zoom: 12
@@ -247,6 +264,10 @@ var map = L.map('map', {
           Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
             
+            // the L.esri.Vector.vectorBasemapLayer basemap enum defaults to 'ArcGIS:Streets' if omitted
+ // vectorTiles.Default = L.esri.Vector.vectorBasemapLayer(null, {
+  //  apiKey
+  //});
    
     const baseMaps = {  
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
@@ -256,7 +277,6 @@ var map = L.map('map', {
                      
                   
 // =========  ADD Things to the Map ===============================================================
-// ================================================================================================
 
     // Add what3words, shows w3w in a control
     var w = new L.Control.w3w();
@@ -276,12 +296,10 @@ var map = L.map('map', {
     // Show imperial or metric distances. Values: 'metres', 'landmiles', 'nauticalmiles'           
     L.control.polylineMeasure ({position:'topright', unit:'landmiles', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo (map);
     
-    // Change the position of the Zoom Control to a created placeholder.
+    // Change the position of the Zoom Control to a newly created placeholder.
     map.zoomControl.setPosition('topright');
-    
     // Define the Plus and Minus for zooming and its location
-    // prevents the map from zooming with the mouse wheel
-    map.scrollWheelZoom.disable();  
+    map.scrollWheelZoom.disable();  // prevents the map from zooming with the mouse wheel
     
     // Distance scale 
     L.control.scale({position: 'bottomright'}).addTo(map);  
@@ -316,6 +334,10 @@ var map = L.map('map', {
 
     // adds the lat/lon grid lines, read them on the top and on the left
     L.grid().addTo(map);  
+    
+    // https://github.com/rhlt/leaflet-geolet
+    //L.geolet({ position: 'bottomleft' }).addTo(map);
+    
 
     var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
 
@@ -329,7 +351,6 @@ var map = L.map('map', {
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-        rfhole        = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
@@ -338,7 +359,7 @@ var map = L.map('map', {
         
     
     // These are the markers that will appear on the map
-    // Bring in the station and poi markers to appear on the map
+    // Bring in the station markers to appear on the map
     <?php
         echo ("$stationMarkers");   // All the checked in stations   
         echo ("$poiMarkers");       // The Points of Interest Markers
@@ -361,7 +382,7 @@ var map = L.map('map', {
     map.fitBounds([<?php echo "$fitBounds"?>]);
 
     var bounds = L.latLngBounds([<?php echo "$fitBounds"?>]);
-        console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
+        //console.log('@371 bounds= '+JSON.stringify(bounds)); 
 
 
     // find the corners and middle of the stationmarkers
@@ -371,7 +392,6 @@ var map = L.map('map', {
     var nw = padit.getNorthWest();
     var ne = padit.getNorthEast();
     var se = padit.getSouthEast();
-    
 
     //=======================================================================
     //======================= Station Marker Corners ========================
@@ -411,11 +431,10 @@ var map = L.map('map', {
     // ================== End Station Marker Corners =======================
     //======================================================================
     
-    
      //=================================================================================
     //================ APRS Like Object Marker Corners and all the Objects =============
     // ======= These are Objects created by APRS or W3W from the TimeLog table =========
-    //====================== THERE MAY NOT BE ANY TO REPORT ============================
+    //==================================================================================
     
     <?php   
            echo "$objBounds" ;
@@ -435,8 +454,8 @@ var map = L.map('map', {
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
        
-    // uniqueCallList is needed to so we can count how many color changes we need, always < 8
-    <?php echo "$uniqueCallList"; ?>  
+       // uniqueCallList is needed to so we can count how many color changes we need, always < 8
+   <?php echo "$uniqueCallList"; ?>  
     
     const newColor = "";
     const colorwheel = ["#00f900","#932092","#ff9200","#00fcff","#98989d","#fefb00","#000000","#ff2600"];
@@ -447,124 +466,110 @@ var map = L.map('map', {
         		return {
         			color: colorwheel[i],
         			weight: 3,
-        			opacity: 2, 
+        			opacity: 2,
         		};
         }  // end for loop
     } // end of style 
         
-    var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+     var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+     
+     /*
+     var markerBounds = L.featureGroup(objmarkers).getBounds();
+            console.log('markerBounds: '+markerBounds);
+        
+        map.fitBounds(markerBounds);
+    */
+     
+     //console.log('@404');
+     //console.log(polyline);
 
     
     //====================================================================== 
     //====================== Points of Interest ============================
-    //======================================================================   
-    //====================== THERE MAY NOT BE ANY TO REPORT ================
-        
-       // was classList now classNames to avoid a JS conflict of names
-    // The classNames is the list of POI types.
-     var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
-       console.log('In map.php classNames= '+classNames);
+    //======================================================================    
+    // The classList is the list of POI types.
+    //var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
+    var classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
+       console.log('@414 in map.php classList= '+classList);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
-    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
-    
-    // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
-    
-    // Define a mapping object with key-value pairs for each class
-    
-/*
-const classMap = {
-  aviationL: {
-    "<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": aviationList,
-  },
-  chpL: {
-    "<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": sheriffList,
-  },
-  eocL: {
-    "<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": eocList,
-  },
-  federalL: {
-    "<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>": federalList,
-  },
-  hospitalL:{"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": hospitalList,
-  },
-  fireL: {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": fireList,
-  },
-  policeL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": sheriffList,  
-  },
-  repeaterL: {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": repeaterList,
-  },
-  sheriffL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  sheriffList,
-  },
-  skyWarnL: {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": skyWarnList,
-  },
-  stateL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  sheriffList,
-  },
-  townhallL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList,
-  },
-  rfholeL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList,
-  },
-  objectsL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList,
-  },
-  cornersL: {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList,
-  }
-}*/
-
-const classMap = {};
-var y = {};
-
-// Helper function to add the category to the classMap if the variable exists
-function addToClassMap(category, variable, imageName) {
-  if (window.hasOwnProperty(variable)) {
-    classMap[category] = {
-      [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
-    };
-  }
-}
-
-// Call the helper function for each category
-addToClassMap('aviationL', 'aviationList', 'aviation.png');
-addToClassMap('chpL', 'sheriffList', 'police.png');
-addToClassMap('eocL', 'eocList', 'eoc.png');
-addToClassMap('federalL', 'federalList', 'gov.png');
-addToClassMap('hospitalL', 'hospitalList', 'firstaid.png');
-addToClassMap('fireL', 'fireList', 'fire.png');
-addToClassMap('policeL', 'sheriffList', 'police.png');
-addToClassMap('repeaterL', 'repeaterList', 'repeater.png');
-addToClassMap('sheriffL', 'sheriffList', 'police.png');
-addToClassMap('skyWarnL', 'skyWarnList', 'skywarn.png');
-addToClassMap('stateL', 'sheriffList', 'gov.png');
-addToClassMap('townhallL', 'townhallList', 'gov.png');
-addToClassMap('rfholeL', 'rfholeList', 'aviation.png');
-addToClassMap('objectsL', 'ObjectList', 'marker00.png');
-addToClassMap('cornersL', 'CornerList', 'red_50_flag.png');
-
-console.log('ObjectL List:', classMap);
-    
-    // Loop through classNames and assign the corresponding object to y
-for (x of classNames) {
-  if (classMap.hasOwnProperty(x)) {
-    Object.assign(y, classMap[x]);
-  }
-}
-
-console.log('ObjectL List:', y);
-
-// Here we add the station object with the merged y objects from above
-var overlayMaps = Object.assign({}, y);
-
+    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class
+    var y = {...station};
+    var x;
+   // $var_a = $var_b = $same_var = $var_d = $some_var = 'A';
+    for (x of classList) {
+        
+        if (x == 'AviationL') {
+            let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
+            y = {...y, ...Aviation}; 
+            
+        }else if (x == 'CHPL') {
+            let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
+            y = {...y, ...CHP}; 
+            
+        }else if (x == 'EOCL') {
+            let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
+            y = {...y, ...EOC};
+            
+        }else if (x == 'FederalL') {
+            let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
+            y = {...y, ...Federal};
+            
+        }else if (x == 'FireL') {
+            let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
+            y = {...y, ...Fire};
+            
+        }else if (x == 'HospitalL') {
+            let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList};
+            y = {...y, ...Hospital};
+            
+        }else if (x == 'PoliceL') {
+            let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList};
+            y = {...y, ...Police};
+            
+        }else if (x == 'RepeaterL') {
+            let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList};
+            y = {...y, ...Repeater};
+            
+        }else if (x == 'SheriffL') {
+            let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
+            y = {...y, ...Sheriff};
+            
+        }else if (x == 'SkyWarnL') {
+            let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
+            y = {...y, ...SkyWarn};    
+            
+        }else if (x == 'StateL') {
+            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' />                 <span class='polmarker'>State</span>":  SheriffList};
+            y = {...y, ...State};
+            
+        }else if (x == 'townhallL') {
+            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
+            y = {...y, ...TownHall};       
+            
+        }else if (x == 'ObjectL') {
+            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
+            y = {...y, ...Objects}; 
+            
+        }else if (x == ' CornerL') {
+            let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
+            y = {...y, ...Corners};
+        }}; // End of for loop
+        
+        
+        // Here we add the station object with the merged y objects from above
+    var overlayMaps = {...y }; 
     
     // This must stay here to properly display on the map
     // The collapsed: true makes the POI's compress into a 'Markers' icon
-    L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map);
-    
+    L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map); 
     
    $('.leaflet-control-attribution').hide()
     
 
-        function markerFunction(id){
+    function markerFunction(id){
 	        for (var i in stationMarkers){
 	            var markerID = stationMarkers[i].options.title;
 	            if (markerID == id){
@@ -592,6 +597,15 @@ var overlayMaps = Object.assign({}, y);
             console.log(e);
             lastLayer = e.relatedTarget; 
         });
+        
+        /*
+        var markerBounds = L.featureGroup(objmarkers).getBounds();
+            console.log('markerBounds: '+markerBounds);
+        
+        map.fitBounds(markerBounds);
+        */
+
+	    
 
 </script>   <!-- End of javascript holding the map stuff -->
 
