@@ -43,8 +43,6 @@
         $sql = ("SELECT 
                     GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
-
-              $whereClause
                   GROUP BY class
                   ORDER BY class  
                 ");
@@ -56,28 +54,19 @@
         //$classList .= "$classList,ObjectL,";
         $classList = rtrim($classList, ',');
         //echo "classList:<br> $classList";
+        // classList:
+        //aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL
 
-        
-        //echo "<br>$classList<br>";  // issue with split RF-Hole check it out
             
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
         // Fix this when we upgrade MySQL to v8
         $sql = ("SELECT 
-                    GROUP_CONCAT(tackListChunk SEPARATOR ', ') AS tackList,
-                    CONCAT(
-                        'var ', class, 'List = L.layerGroup([',
-                        GROUP_CONCAT(tackListChunk SEPARATOR ', '),
-                        ']);'
-                    ) AS MarkerList
-                FROM (
-                    SELECT
-                        class,
-                        GROUP_CONCAT(REPLACE(tactical, '-', '') SEPARATOR ', ') AS tackListChunk
-                    FROM poi
-                    GROUP BY class
-                ) AS subquery
-                ORDER BY class;
+                GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
+                CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
+                  FROM  poi 
+             	 GROUP BY class
+                 ORDER BY class
                ");
             foreach($db_found->query($sql) as $row) {
                 $POIMarkerList .= "$row[MarkerList];";
@@ -267,7 +256,7 @@
         //echo ("POIMarkerList= <br>$POIMarkerList<br><br>");
         
     $poiMarkers = substr($poiMarkers, 0, -1).";\n";                 
-        echo ("poiMarkers= <br>$poiMarkers<br><br>");
+        //echo ("poiMarkers= <br>$poiMarkers<br><br>");
         
     $listofMarkers = substr($listofMarkers, 0, -1)."";              
         //echo ("listofMarkers= <br>$listofMarkers<br><br>"); // issue with RFH
