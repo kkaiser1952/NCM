@@ -37,7 +37,7 @@
 		
 		$POIMarkerList = "";
         $listofMarkers = "";
-        $classList     = "";  // The rest come from the poi table
+        $classNames     = "";  // The rest come from the poi table
     
         /// This is the list needed for overlaymaps
         $sql = ("SELECT 
@@ -48,13 +48,13 @@
                 ");
     //echo "$sql";
             foreach($db_found->query($sql) as $row) {
-                $classList .= "$row[class],";
+                $classNames .= "$row[class],";
             }
             
-        //$classList .= "$classList,ObjectL,";
-        $classList = rtrim($classList, ',');
-        //echo "classList:<br> $classList";
-        // classList:
+        //$classNames .= "$classNames,ObjectL,";
+        $classNames = rtrim($classNames, ',');
+        echo "classNames:<br> $classNames";
+        // classNames:
         //aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL
 
             

@@ -460,10 +460,10 @@ var map = L.map('map', {
     //======================================================================   
     //====================== THERE MAY NOT BE ANY TO REPORT ================
         
-        <?php echo "classList: $classList <br>" ?>
-    // The classList is the list of POI types.
-     classList = '<?php echo "$classList CornerL, ObjectL;"; ?>'.split(',');
-       console.log('In map.php classList= '+classList);
+       // was classList now classNames to avoid a JS conflict of names
+    // The classNames is the list of POI types.
+     var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
+       console.log('In map.php classNames= '+classNames);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
@@ -472,7 +472,7 @@ var map = L.map('map', {
     var y = Object.assign({}, station);
     var x;
 
-    for (x of classList) {
+    for (x of classNames) {
         if (x == 'aviationL') {
             let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
             Object.assign(y, Aviation);
