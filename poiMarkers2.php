@@ -77,7 +77,7 @@
                 $listofMarkers .= "$row[tackList],"; 
             }; // End foreach
             
-            //echo "<br>$POIMarkerList<br><br>$listofMarkers";
+           // echo "<br>$POIMarkerList<br>";
             
   // ===========================================
   

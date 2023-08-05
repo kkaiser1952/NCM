@@ -470,112 +470,79 @@ var map = L.map('map', {
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
     // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
     
+    // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
+    
     // Define a mapping object with key-value pairs for each class
+    
+/*
 const classMap = {
   aviationL: {
-    "<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList,
+    "<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": aviationList,
   },
   chpL: {
-    "<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList,
+    "<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": sheriffList,
   },
   eocL: {
-    "<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList,
+    "<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": eocList,
   },
   federalL: {
-    "<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>": FederalList,
+    "<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>": federalList,
   },
-  hospitalL:{"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList,
+  hospitalL:{"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": hospitalList,
   },
-  fireL: {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList,
+  fireL: {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": fireList,
   },
-  policeL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList,  
+  policeL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": sheriffList,  
   },
-  repeaterL: {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList,
+  repeaterL: {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": repeaterList,
   },
-  sheriffL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList,
+  sheriffL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  sheriffList,
   },
-  skyWarnL: {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList,
+  skyWarnL: {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": skyWarnList,
   },
-  stateL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList,
+  stateL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  sheriffList,
   },
   townhallL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList,
   },
-  rfholeL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": RFHoleList,
+  rfholeL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": rfholeList,
   },
   objectsL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList,
   },
   cornersL: {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList,
   }
-}
+}*/
 
-console.log('ObjectL List:', y);
+const classMap = {};
+var y = {};
 
-// Loop through classNames and assign the corresponding object to y
-for (x of classNames) {
-  if (classMap.hasOwnProperty(x)) {
-    Object.assign(y, classMap[x]);
+// Helper function to add the category to the classMap if the variable exists
+function addToClassMap(category, variable) {
+  if (window.hasOwnProperty(variable)) {
+    classMap[category] = {
+      [`<img src='images/markers/${category}.png' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
+    };
   }
 }
 
-console.log('ObjectL List:', y);
+// Call the helper function for each category
+addToClassMap('aviationL', 'aviationList');
+addToClassMap('chpL', 'sheriffList');
+addToClassMap('eocL', 'eocList');
+addToClassMap('federalL', 'federalList');
+addToClassMap('hospitalL', 'hospitalList');
+addToClassMap('fireL', 'fireList');
+addToClassMap('policeL', 'sheriffList');
+addToClassMap('repeaterL', 'repeaterList');
+addToClassMap('sheriffL', 'sheriffList');
+addToClassMap('skyWarnL', 'skyWarnList');
+addToClassMap('stateL', 'sheriffList');
+addToClassMap('townhallL', 'townhallList');
+addToClassMap('rfholeL', 'rfholeList');
+addToClassMap('objectsL', 'ObjectList');
+addToClassMap('cornersL', 'CornerList');
 
+console.log('ObjectL List:', classMap);
     
-/*    var y = Object.assign({}, station);
-    var x;
-
-    for (x of classNames) {
-        if (x == 'aviationL') {
-            let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
-            Object.assign(y, Aviation);
-            console.log('ObjectL List:', y);
-        } else if (x == 'chpL') {
-            let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            Object.assign(y, CHP);
-        } else if (x == 'eocL') {
-            let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
-            Object.assign(y, EOC);
-        } else if (x == 'federalL') {
-            let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            Object.assign(y, Federal);
-        } else if (x == 'fireL') {
-            let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
-            Object.assign(y, Fire);
-        } else if (x == 'hospitalL') {
-            let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList};
-            Object.assign(y, Hospital);
-        } else if (x == 'policeL') {
-            let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList};
-            Object.assign(y, Police);
-        } else if (x == 'repeaterL') {
-            let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList};
-            Object.assign(y, Repeater);
-        } else if (x == 'sheriffL') {
-            let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            Object.assign(y, Sheriff);
-        } else if (x == 'skywarnL') {
-            let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
-            Object.assign(y, SkyWarn);
-        } else if (x == 'stateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
-            Object.assign(y, State);
-        } else if (x == 'townhallL') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
-            Object.assign(y, TownHall);
-        } else if (x == 'rfholeL') {
-            let RFhole = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": RFHoleList};
-            Object.assign(y, RFhole);
-            console.log('ObjectL List:', y);
-        } else if (x == 'objectL') {
-            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
-            Object.assign(y, Objects);
-        } else if (x == 'cornerL') {
-            let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
-            Object.assign(y, Corners);
-        }
-    } // End of for loop
-    
-    console.log(y);
-*/     
     // Loop through classNames and assign the corresponding object to y
 for (x of classNames) {
   if (classMap.hasOwnProperty(x)) {
