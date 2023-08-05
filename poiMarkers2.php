@@ -53,7 +53,7 @@
             
         //$classNames .= "$classNames,ObjectL,";
         $classNames = rtrim($classNames, ',');
-        echo "classNames:<br> $classNames";
+        //echo "classNames:<br> $classNames";
         // classNames:
         //aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL
 
@@ -61,6 +61,10 @@
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
         // Fix this when we upgrade MySQL to v8
+        // SQL to extend the length of output allowed by GROUP_CONCAT
+        $max_len_value = 10000; // Set the desired maximum length
+            $db_found->exec("SET SESSION group_concat_max_len = $max_len_value");
+   
         $sql = ("SELECT 
                 GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
                 CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
@@ -79,6 +83,9 @@
   
         $class = "";
         $overlayListNames = "";
+        
+        $max_len_value = 10000; // Set the desired maximum length
+            $db_found->exec("SET SESSION group_concat_max_len = $max_len_value");
   
         $sql = ("SELECT class, 
                         GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList                     

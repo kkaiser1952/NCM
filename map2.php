@@ -469,7 +469,58 @@ var map = L.map('map', {
 
     // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
     // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
-    var y = Object.assign({}, station);
+    
+    // Define a mapping object with key-value pairs for each class
+const classMap = {
+  aviationL: {
+    "<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList,
+  },
+  chpL: {
+    "<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList,
+  },
+  eocL: {
+    "<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList,
+  },
+  federalL: {
+    "<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>": FederalList,
+  },
+  hospitalL:{"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList,
+  },
+  fireL: {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList,
+  },
+  policeL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList,  
+  },
+  repeaterL: {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList,
+  },
+  sheriffL: {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList,
+  },
+  skyWarnL: {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList,
+  },
+  stateL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList,
+  },
+  townhallL: {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList,
+  },
+  rfholeL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": RFHoleList,
+  },
+  objectsL: {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList,
+  },
+  cornersL: {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList,
+  }
+}
+
+console.log('ObjectL List:', y);
+
+// Loop through classNames and assign the corresponding object to y
+for (x of classNames) {
+  if (classMap.hasOwnProperty(x)) {
+    Object.assign(y, classMap[x]);
+  }
+}
+
+console.log('ObjectL List:', y);
+
+    
+/*    var y = Object.assign({}, station);
     var x;
 
     for (x of classNames) {
@@ -524,9 +575,18 @@ var map = L.map('map', {
     } // End of for loop
     
     console.log(y);
-     
-        // Here we add the station object with the merged y objects from above
-    var overlayMaps = Object.assign({}, y);
+*/     
+    // Loop through classNames and assign the corresponding object to y
+for (x of classNames) {
+  if (classMap.hasOwnProperty(x)) {
+    Object.assign(y, classMap[x]);
+  }
+}
+
+console.log('ObjectL List:', y);
+
+// Here we add the station object with the merged y objects from above
+var overlayMaps = Object.assign({}, y);
 
     
     // This must stay here to properly display on the map
