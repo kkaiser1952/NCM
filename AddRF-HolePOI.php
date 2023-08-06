@@ -60,13 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $grid = gridsquare($latitude, $longitude);
 
-            // Set the current date (date only) in the 'Notes' column
-            $currentDate = date('Y-m-d');
+            // Set the 'Notes' column from the form
+            //$currentDate = date('Y-m-d');
             $notes = isset($_POST['notes']) ? $_POST['notes'] : '';
-            $notesWithDate = "Created: " . $currentDate . ' -- ' . $notes;
+            //$notesWithDate = "Created: " . $currentDate . ' -- ' . $notes;
+            
 
             // Prepare and bind the SQL statement to insert the data
-            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class, band) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :Notes, :latitude, :longitude, :city, :country, :grid, :class, :band)");
+            $stmt = $db_found->prepare("INSERT INTO poi (callsign, radius, w3w, type, name, tactical, Notes, latitude, longitude, city, country, grid, class, band, dttm) VALUES (:callsign, :radius, :w3w, :type, :name, :tactical, :Notes, :latitude, :longitude, :city, :country, :grid, :class, :band, NOW())
+            ");
 
             // Bind the values to the named placeholders
             $stmt->bindValue(':callsign', $callsign);
@@ -78,9 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':city', $city);
             $stmt->bindValue(':country', $country);
             $stmt->bindValue(':grid', $grid);
-            $stmt->bindValue(':class', 'RFHole');
+            $stmt->bindValue(':class', 'rfhole');
             $stmt->bindValue(':band', $band);
-            $stmt->bindValue(':Notes', $notesWithDate); // Update ':notes' to ':Notes'
+            $stmt->bindValue(':Notes', $notes); // Update ':notes' to ':Notes'
 
             // Get the latest ID from the table 'poi'
             $query = "SELECT id FROM poi ORDER BY id DESC LIMIT 1";
@@ -255,7 +257,7 @@ select[name="type"] option {
     <!-- Container for the title (left-justified) -->
     <div class="title-container">
         <h2>Welcome to the RF Hole POI <br> Submission Form</h2>
-        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. This RF Hole POI will expire in 90 days. Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
+        <h3 id="instructions">Please fill out the form below to submit details for a RF Hole POI:<br>The purpose of this form is to collect data about RF Holes in your community. We define an RF Hole as a dead spots where you can't hear/hit a repeater. This RF Hole POI will expire in 120 days. Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
     </div>
     
     <!-- Container for the form (left-justified) -->
