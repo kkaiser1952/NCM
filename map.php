@@ -118,8 +118,8 @@
     <script src="js/control.w3w.js"></script>
 
     
-    <!-- circleKoords is the javascript program that caluclates the number of rings and the distance between them -->
-    <script src="js/circleKoords.js"></script>    
+    <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
+    <script src="js/circleKoords2.js"></script>    
     
     
     <!-- override from leaflet.mousecoordinate.css -->
