@@ -118,12 +118,12 @@
     <!-- Under the banner in the upper left corner -->
     <div id="stations"> 
 		<b style="color:red; text-decoration: underline;">
-		    <b>MODES</b><br><a class='rowno' id='marker_1' href='#'>1 _KD0FIWH</a><br><a class='rowno' id='marker_2' href='#'>2 _AD0TU</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0NBHA</a><br><a class='rowno' id='marker_4' href='#'>4 _W0WTS</a><br><a class='rowno' id='marker_5' href='#'>5 _K0OG</a><br><a class='rowno' id='marker_6' href='#'>6 _K0KEXA</a><br><a class='rowno' id='marker_7' href='#'>7 _N0SAXF</a><br><a class='rowno' id='marker_8' href='#'>8 _W0NRPA</a><br><a class='rowno' id='marker_9' href='#'>9 _WA0TJT</a><br><a class='rowno' id='marker_10' href='#'>10 _W0JWT</a><br>	</div>
+		    <b>NR0AD</b><br><a class='rowno' id='marker_1' href='#'>1 _K0RGB</a><br><a class='rowno' id='marker_2' href='#'>2 _N0BKE</a><br><a class='rowno' id='marker_3' href='#'>3 _KD0NBH</a><br><a class='rowno' id='marker_4' href='#'>4 _N0UYN</a><br><a class='rowno' id='marker_5' href='#'>5 _KF0BQY</a><br><a class='rowno' id='marker_6' href='#'>6 _KC0RYF</a><br><a class='rowno' id='marker_7' href='#'>7 _KC0RRS</a><br><a class='rowno' id='marker_8' href='#'>8 _W0JSH</a><br><a class='rowno' id='marker_9' href='#'>9 _KF0MEZ</a><br><a class='rowno' id='marker_10' href='#'>10 _KE0UXE</a><br><a class='rowno' id='marker_11' href='#'>11 _KF0AWZ</a><br><a class='rowno' id='marker_12' href='#'>12 _K2SCT</a><br><a class='rowno' id='marker_13' href='#'>13 _KF0DFC</a><br><a class='rowno' id='marker_14' href='#'>14 _AB0GD</a><br><a class='rowno' id='marker_15' href='#'>15 _K0KEX</a><br>	</div>
 
     <!-- The title banner -->
     <div id="activity" class="activity">
     	<img src="images/NCM.png" alt="NCM" style="width: 35px; padding-left: 10px; padding-top: 5px;">
-    	MODES Net #9657 Missouri Digital Emergency Service Weekly Net     </div>
+    	NR0AD Net #9648 PCARG Weekly 2 Meter Voice     </div>
     
 
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
@@ -296,39 +296,39 @@ var map = L.map('map', {
     // These are the markers that will appear on the map
     // Bring in the station and poi markers to appear on the map
     
-			var _KD0FIWH = new L.marker(new L.latLng(39.2720374,-93.832865),{ 
+			var _K0RGB = new L.marker(new L.latLng(39.4172253,-94.568527),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedGreenDivIcon({number: '1' }),
+				icon: new L.NumberedDivIcon({number: '1' }),
 				title:`marker_1` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>1<br><b>Tactical: FIW/H<br>KD0FIW/H</b><br> ID: #000683<br>Paul Hayes<br>Ray Co., MO Dist: A<br>39.2720374, -93.832865<br>EM39CG<br><a href='https://what3words.com/simpler.blackberry.dull?maptype=osm' target='_blank'>///simpler.blackberry.dull</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2720374&lon=-93.832865&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>1<br><b>Tactical: Net<br>K0RGB</b><br> ID: #004898<br>Russ Bryan<br>Clay  Co., MO Dist: G<br>39.4172253, -94.568527<br>EM29RK<br><a href='https://what3words.com/billiard.distort.rails?maptype=osm' target='_blank'>///billiard.distort.rails</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4172253&lon=-94.568527&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KD0FIWH`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_KD0FIWH);
+				$(`_K0RGB`._icon).addClass(`bluemrkr`);
+                stationMarkers.push(_K0RGB);
 				
-			var _AD0TU = new L.marker(new L.latLng(39.7941892,-93.583108),{ 
+			var _N0BKE = new L.marker(new L.latLng(39.220224,-94.518254),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedGreenDivIcon({number: '2' }),
+				icon: new L.NumberedDivIcon({number: '2' }),
 				title:`marker_2` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>2<br><b>Tactical: TU<br>AD0TU</b><br> ID: #000231<br>Craig Myers<br>Livingston Co., MO Dist: H<br>39.7941892, -93.583108<br>EM39FT<br><a href='https://what3words.com/events.armpit.craft?maptype=osm' target='_blank'>///events.armpit.craft</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.7941892&lon=-93.583108&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>2<br><b>Tactical: BKE<br>N0BKE</b><br> ID: #000006<br>Mark Dickerson<br>Clay Co., MO Dist: G<br>39.220224, -94.518254<br>EM29RF<br><a href='https://what3words.com/sockets.charity.submerge?maptype=osm' target='_blank'>///sockets.charity.submerge</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.220224&lon=-94.518254&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_AD0TU`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_AD0TU);
+				$(`_N0BKE`._icon).addClass(`bluemrkr`);
+                stationMarkers.push(_N0BKE);
 				
-			var _KD0NBHA = new L.marker(new L.latLng(39.2154688,-94.599025),{ 
+			var _KD0NBH = new L.marker(new L.latLng(39.2154688,-94.599025),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -337,14 +337,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedDivIcon({number: '3' }),
 				title:`marker_3` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>3<br><b>Tactical: NBH/A<br>KD0NBH/A</b><br> ID: #001812<br>John Britton<br>Clay Co., MO Dist: A<br>39.2154688, -94.599025<br>EM29QF<br><a href='https://what3words.com/workflow.ships.derivative?maptype=osm' target='_blank'>///workflow.ships.derivative</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>3<br><b>Tactical: NBH<br>KD0NBH</b><br> ID: #001812<br>John Britton<br>Clay Co., MO Dist: A<br>39.2154688, -94.599025<br>EM29QF<br><a href='https://what3words.com/workflow.ships.derivative?maptype=osm' target='_blank'>///workflow.ships.derivative</a></div><br><br>
 				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2154688&lon=-94.599025&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_KD0NBHA`._icon).addClass(`bluemrkr`);
-                stationMarkers.push(_KD0NBHA);
+				$(`_KD0NBH`._icon).addClass(`bluemrkr`);
+                stationMarkers.push(_KD0NBH);
 				
-			var _W0WTS = new L.marker(new L.latLng(39.3710869,-93.547969),{ 
+			var _N0UYN = new L.marker(new L.latLng(39.2762919,-94.582776),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -353,14 +353,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '4' }),
 				title:`marker_4` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>4<br><b>Tactical: WTS<br>W0WTS</b><br> ID: #000237<br>Bill Sweeney<br>Carroll  Co., MO Dist: A<br>39.3710869, -93.547969<br>EM39FI<br><a href='https://what3words.com/grouping.native.citrus?maptype=osm' target='_blank'>///grouping.native.citrus</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3710869&lon=-93.547969&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>4<br><b>Tactical: UYN<br>N0UYN</b><br> ID: #000005<br>Dennis Crawford<br>Clay Co., MO Dist: G<br>39.2762919, -94.582776<br>EM29RG<br><a href='https://what3words.com/planet.overall.giggled?maptype=osm' target='_blank'>///planet.overall.giggled</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2762919&lon=-94.582776&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_W0WTS`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_W0WTS);
+				$(`_N0UYN`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_N0UYN);
 				
-			var _K0OG = new L.marker(new L.latLng(37.9574854,-91.750868),{ 
+			var _KF0BQY = new L.marker(new L.latLng(39.4763031,-94.340813),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -369,15 +369,15 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '5' }),
 				title:`marker_5` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>5<br><b>Tactical: OG<br>K0OG</b><br> ID: #000238<br>Joseph Counsil<br>Phelps Co., MO Dist: I<br>37.9574854, -91.750868<br>EM47CW<br><a href='https://what3words.com/chef.order.influencing?maptype=osm' target='_blank'>///chef.order.influencing</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=37.9574854&lon=-91.750868&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>5<br><b>Tactical: BQY<br>KF0BQY</b><br> ID: #003004<br>Brian Hansen<br>Clinton Co., MO Dist: H<br>39.4763031, -94.340813<br>EM29TL<br><a href='https://what3words.com/laundry.monks.conforms?maptype=osm' target='_blank'>///laundry.monks.conforms</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4763031&lon=-94.340813&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_K0OG`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_K0OG);
+				$(`_KF0BQY`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KF0BQY);
 				
-			var _K0KEXA = new L.marker(new L.latLng(39.4197989,-94.658092),{ 
-			    rotationAngle: 0,
+			var _KC0RYF = new L.marker(new L.latLng(38.9683231,-95.283432),{ 
+			    rotationAngle: 45,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
@@ -385,15 +385,15 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '6' }),
 				title:`marker_6` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>6<br><b>Tactical: KEX/A<br>K0KEX/A</b><br> ID: #000029<br>Rick Smith<br>Platte  Co., MO Dist: A<br>39.4197989, -94.658092<br>EM29QK<br><a href='https://what3words.com/hers.parrot.legions?maptype=osm' target='_blank'>///hers.parrot.legions</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4197989&lon=-94.658092&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>6<br><b>Tactical: RYF<br>KC0RYF</b><br> ID: #000064<br>Debbie Liddel<br>Douglas Co., KS Dist: 1<br>38.9683231, -95.283432<br>EM28IX<br><a href='https://what3words.com/bill.saying.spray?maptype=osm' target='_blank'>///bill.saying.spray</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.9683231&lon=-95.283432&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_K0KEXA`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_K0KEXA);
+				$(`_KC0RYF`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KC0RYF);
 				
-			var _N0SAXF = new L.marker(new L.latLng(39.3763041,-93.497272),{ 
-			    rotationAngle: 0,
+			var _KC0RRS = new L.marker(new L.latLng(38.9683231,-95.283432),{ 
+			    rotationAngle: 90,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
@@ -401,14 +401,14 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '7' }),
 				title:`marker_7` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>7<br><b>Tactical: SAX/F<br>N0SAX/F</b><br> ID: #000229<br>Jack Vantrump<br>Carroll Co., MO Dist: A<br>39.3763041, -93.497272<br>EM39GJ<br><a href='https://what3words.com/tonality.spearing.company?maptype=osm' target='_blank'>///tonality.spearing.company</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3763041&lon=-93.497272&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>7<br><b>Tactical: RRS<br>KC0RRS</b><br> ID: #000063<br>Bruce Liddel<br>Douglas Co., KS Dist: 1<br>38.9683231, -95.283432<br>EM28IX<br><a href='https://what3words.com/bill.saying.spray?maptype=osm' target='_blank'>///bill.saying.spray</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.9683231&lon=-95.283432&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_N0SAXF`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_N0SAXF);
+				$(`_KC0RRS`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KC0RRS);
 				
-			var _W0NRPA = new L.marker(new L.latLng(38.8732866,-94.303351),{ 
+			var _W0JSH = new L.marker(new L.latLng(39.333585,-94.761493),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -417,30 +417,30 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '8' }),
 				title:`marker_8` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>8<br><b>Tactical: NRP/A<br>W0NRP/A</b><br> ID: #000820<br>Neil Preston<br>Jackson Co., MO Dist: A<br>38.8732866, -94.303351<br>EM28UU<br><a href='https://what3words.com/monday.butterflies.humans?maptype=osm' target='_blank'>///monday.butterflies.humans</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.8732866&lon=-94.303351&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>8<br><b>Tactical: JSH<br>W0JSH</b><br> ID: #000052<br>John Heavener<br>Platte Co., MO Dist: A<br>39.333585, -94.761493<br>EM29OI<br><a href='https://what3words.com/ties.beams.tamed?maptype=osm' target='_blank'>///ties.beams.tamed</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.333585&lon=-94.761493&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_W0NRPA`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_W0NRPA);
+				$(`_W0JSH`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_W0JSH);
 				
-			var _WA0TJT = new L.marker(new L.latLng(39.2028965,-94.602876),{ 
+			var _KF0MEZ = new L.marker(new L.latLng(39.21816,-94.7307),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
 			    contextmenuWidth: 140,
 			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
 			                 
-				icon: new L.NumberedDivIcon({number: '9' }),
+				icon: new L.NumberedGreenDivIcon({number: '9' }),
 				title:`marker_9` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>9<br><b>Tactical: Net<br>WA0TJT</b><br> ID: #000013<br>Keith Kaiser<br>Platte  Co., MO Dist: A<br>39.2028965, -94.602876<br>EM29QE<br><a href='https://what3words.com/guiding.confusion.towards?maptype=osm' target='_blank'>///guiding.confusion.towards</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2028965&lon=-94.602876&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>9<br><b>Tactical: MEZ<br>KF0MEZ</b><br> ID: #039024<br>Bob Ebb<br>Platte Co., MO Dist: A<br>39.21816, -94.7307<br>EM29PF<br><a href='https://what3words.com/ingredients.settle.wept?maptype=osm' target='_blank'>///ingredients.settle.wept</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.21816&lon=-94.7307&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_WA0TJT`._icon).addClass(`bluemrkr`);
-                stationMarkers.push(_WA0TJT);
+				$(`_KF0MEZ`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KF0MEZ);
 				
-			var _W0JWT = new L.marker(new L.latLng(38.9127244,-94.351836),{ 
+			var _KE0UXE = new L.marker(new L.latLng(39.4244507,-94.896258),{ 
 			    rotationAngle: 0,
 			    rotationOrigin: 'bottom',
     			contextmenu: true,
@@ -449,12 +449,92 @@ var map = L.map('map', {
 			                 
 				icon: new L.NumberedGreenDivIcon({number: '10' }),
 				title:`marker_10` }).addTo(fg).bindPopup(`
-				<div class='cc' style='text-transform:uppercase;'>10<br><b>Tactical: JWT<br>W0JWT</b><br> ID: #000363<br>John Totzke<br>Jackson Co., MO Dist: A<br>38.9127244, -94.351836<br>EM28TV<br><a href='https://what3words.com/rips.tested.remit?maptype=osm' target='_blank'>///rips.tested.remit</a></div><br><br>
-				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=38.9127244&lon=-94.351836&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+				<div class='cc' style='text-transform:uppercase;'>10<br><b>Tactical: UXE<br>KE0UXE</b><br> ID: #000950<br>Dave Garrison<br>Platte Co., MO Dist: A<br>39.4244507, -94.896258<br>EM29NK<br><a href='https://what3words.com/affirms.redefined.whiplash?maptype=osm' target='_blank'>///affirms.redefined.whiplash</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4244507&lon=-94.896258&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
                 `).openPopup();
 				
-				$(`_W0JWT`._icon).addClass(`greenmrkr`);
-                stationMarkers.push(_W0JWT);
+				$(`_KE0UXE`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KE0UXE);
+				
+			var _KF0AWZ = new L.marker(new L.latLng(39.2894807,-94.480841),{ 
+			    rotationAngle: 0,
+			    rotationOrigin: 'bottom',
+    			contextmenu: true,
+			    contextmenuWidth: 140,
+			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
+			                 
+				icon: new L.NumberedGreenDivIcon({number: '11' }),
+				title:`marker_11` }).addTo(fg).bindPopup(`
+				<div class='cc' style='text-transform:uppercase;'>11<br><b>Tactical: AWZ<br>KF0AWZ</b><br> ID: #004603<br>Mike Deperalta<br>Clay  Co., MO Dist: G<br>39.2894807, -94.480841<br>EM29SG<br><a href='https://what3words.com/output.samples.relates?maptype=osm' target='_blank'>///output.samples.relates</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.2894807&lon=-94.480841&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+                `).openPopup();
+				
+				$(`_KF0AWZ`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KF0AWZ);
+				
+			var _K2SCT = new L.marker(new L.latLng(39.3012431,-94.823484),{ 
+			    rotationAngle: 0,
+			    rotationOrigin: 'bottom',
+    			contextmenu: true,
+			    contextmenuWidth: 140,
+			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
+			                 
+				icon: new L.NumberedGreenDivIcon({number: '12' }),
+				title:`marker_12` }).addTo(fg).bindPopup(`
+				<div class='cc' style='text-transform:uppercase;'>12<br><b>Tactical: SCT<br>K2SCT</b><br> ID: #003855<br>Scott Gardner<br>Platte Co., MO Dist: A<br>39.3012431, -94.823484<br>EM29OH<br><a href='https://what3words.com/shallower.embedding.silently?maptype=osm' target='_blank'>///shallower.embedding.silently</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3012431&lon=-94.823484&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+                `).openPopup();
+				
+				$(`_K2SCT`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_K2SCT);
+				
+			var _KF0DFC = new L.marker(new L.latLng(39.0815025,-94.582671),{ 
+			    rotationAngle: 0,
+			    rotationOrigin: 'bottom',
+    			contextmenu: true,
+			    contextmenuWidth: 140,
+			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
+			                 
+				icon: new L.NumberedGreenDivIcon({number: '13' }),
+				title:`marker_13` }).addTo(fg).bindPopup(`
+				<div class='cc' style='text-transform:uppercase;'>13<br><b>Tactical: DFC<br>KF0DFC</b><br> ID: #003586<br>John Jespersen<br>Jackson  Co., MO Dist: A<br>39.0815025, -94.582671<br>EM29RB<br><a href='https://what3words.com/device.formed.round?maptype=osm' target='_blank'>///device.formed.round</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.0815025&lon=-94.582671&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+                `).openPopup();
+				
+				$(`_KF0DFC`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_KF0DFC);
+				
+			var _AB0GD = new L.marker(new L.latLng(39.3476289,-94.768086),{ 
+			    rotationAngle: 0,
+			    rotationOrigin: 'bottom',
+    			contextmenu: true,
+			    contextmenuWidth: 140,
+			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
+			                 
+				icon: new L.NumberedGreenDivIcon({number: '14' }),
+				title:`marker_14` }).addTo(fg).bindPopup(`
+				<div class='cc' style='text-transform:uppercase;'>14<br><b>Tactical: GD<br>AB0GD</b><br> ID: #000079<br>Gregg Duryea<br>Platte  Co., MO Dist: A<br>39.3476289, -94.768086<br>EM29OI<br><a href='https://what3words.com/enjoyable.chains.square?maptype=osm' target='_blank'>///enjoyable.chains.square</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.3476289&lon=-94.768086&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+                `).openPopup();
+				
+				$(`_AB0GD`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_AB0GD);
+				
+			var _K0KEX = new L.marker(new L.latLng(39.4197989,-94.658092),{ 
+			    rotationAngle: 0,
+			    rotationOrigin: 'bottom',
+    			contextmenu: true,
+			    contextmenuWidth: 140,
+			    contextmenuItems: [{ text: 'Click here to add mileage circles', callback: circleKoords}],  
+			                 
+				icon: new L.NumberedGreenDivIcon({number: '15' }),
+				title:`marker_15` }).addTo(fg).bindPopup(`
+				<div class='cc' style='text-transform:uppercase;'>15<br><b>Tactical: KEX<br>K0KEX</b><br> ID: #000029<br>Rick Smith<br>Platte  Co., MO Dist: A<br>39.4197989, -94.658092<br>EM29QK<br><a href='https://what3words.com/hers.parrot.legions?maptype=osm' target='_blank'>///hers.parrot.legions</a></div><br><br>
+				<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=39.4197989&lon=-94.658092&cnt=10' target='_blank'>Nearby APRS stations</a></div><br><br>
+                `).openPopup();
+				
+				$(`_K0KEX`._icon).addClass(`greenmrkr`);
+                stationMarkers.push(_K0KEX);
 			;
 
             var MCI271 = new L.marker(new L.LatLng(39.3003,-94.72721),{ 
@@ -7252,36 +7332,6 @@ var map = L.map('map', {
          
                 $('repeater'._icon).addClass('rptmrkr');
             
-            var RFH_533567 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'RFH_533567 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_533567 RFHoleK1 533  Created: 2023-08-03 -- First RF Hole POI entry 39.202849,-94.602862' );                        
-         
-                $('rfhole'._icon).addClass('aviationmrkr');
-            
-            var RFH_568 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
-                rotationAngle: 0,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
-                title: 'RFH_568 RFHoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' ,
-                    }).addTo(fg).bindPopup('RFH_568 RFHoleK1 568  Created: 2023-08-03 -- test for new modal 39.202849,-94.602862' );                        
-         
-                $('rfhole'._icon).addClass('aviationmrkr');
-            
             var RFH_569 = new L.marker(new L.LatLng(39.202849,-94.602862),{ 
                 rotationAngle: 0,
                 rotationOrigin: 'bottom',
@@ -7291,9 +7341,24 @@ var map = L.map('map', {
                 contextmenuItems: [{ text: 'Click here to add mileage circles',
                     callback: circleKoords}],
                          
-                icon: L.icon({iconUrl: 'images/markers/aviation.png', iconSize: [32, 34]}),
+                icon: L.icon({iconUrl: 'images/markers/hole.png', iconSize: [32, 34]}),
                 title: 'RFH_569 RFHoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' ,
                     }).addTo(fg).bindPopup('RFH_569 RFHoleK1 569  Created: 2023-08-03 -- test the modal 2 39.202849,-94.602862' );                        
+         
+                $('rfhole'._icon).addClass('aviationmrkr');
+            
+            var RFH_571 = new L.marker(new L.LatLng(39.183309,-94.383817),{ 
+                rotationAngle: 0,
+                rotationOrigin: 'bottom',
+                opacity: 0.75,
+                contextmenu: true, 
+                contextmenuWidth: 140,
+                contextmenuItems: [{ text: 'Click here to add mileage circles',
+                    callback: circleKoords}],
+                         
+                icon: L.icon({iconUrl: 'images/markers/hole.png', iconSize: [32, 34]}),
+                title: 'RFH_571 RFHoleK1 571  Created: 2023-08-05 -- Another test of the new RF Holes POI 39.183309,-94.383817' ,
+                    }).addTo(fg).bindPopup('RFH_571 RFHoleK1 571  Created: 2023-08-05 -- Another test of the new RF Holes POI 39.183309,-94.383817' );                        
          
                 $('rfhole'._icon).addClass('aviationmrkr');
             
@@ -7507,13 +7572,13 @@ var map = L.map('map', {
          
                 $('state'._icon).addClass('govmrkr');
            ;
-var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PTIACPT273, W0KCN446, W0KCN347, HCES239, EOC399, FFD198, LFS197, MCVF196, CFKHB195, KFPD194, LGWER442, WCFD192, LGDON443, HFD190, CCFRWHQ189, FFD199, MFFS212, SVFD208, RDVFD207, LGGRE441, MRFSUSFS205, CFS204, PFD209, CDFMFS210, FVFDCH201, CFICC200, CFWS211, HFD202, CFCCFS188, CCFR187, AFD173, LGATS444, SPFD171, HBFS2170, HBFS5169, HBFS3168, HBFS4167, HBFS1166, LGSMIT445, RESCH446, PESCH447, AFD174, AFD175, CFPOBFS186, KFD34185, KFD35184, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, FWESCH449, KSZW405, FIRE11252, LGLAM415, LGROL416, LGRUR417, LGSIM418, LGSTE419, LGSTR420, LGWOF421, RMON422, PMON423, FIRE12253, FIRE13254, FIRE14255, RSIM406, PSIM407, LGEIC409, LGEIN410, LGERK411, LGDED412, LGHAM413, LGKES414, FIRE16257, FIRE15256, LGMON424, LGHOE1425, LHROH426, WGVF223, KVFDFS222, LGVIC440, GFPD220, CDFGF219, SCVFD218, WFS2217, CFTFS216, BVFD215, PVFD214, LGZWE439, LGBRE438, LGVEN437, LGMOE427, LGKAL428, RROE429, PROE430, LGROE431, LGROT432]);;
+var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PTIACPT273]);var eocList = L.layerGroup([W0KCN446, W0KCN347, HCES239, EOC399]);var fireList = L.layerGroup([FFD198, LFS197, MCVF196, CFKHB195, KFPD194, LGWER442, WCFD192, LGDON443, HFD190, CCFRWHQ189, FFD199, MFFS212, SVFD208, RDVFD207, LGGRE441, MRFSUSFS205, CFS204, PFD209, CDFMFS210, FVFDCH201, CFICC200, CFWS211, HFD202, CFCCFS188, CCFR187, AFD173, LGATS444, SPFD171, HBFS2170, HBFS5169, HBFS3168, HBFS4167, HBFS1166, LGSMIT445, RESCH446, PESCH447, AFD174, AFD175, CFPOBFS186, KFD34185, KFD35184, CFTVS183, YFD182, OVFD181, CFTFFS180, TFD179, WVFD178, FFD177, BLFD176, FWESCH449, KSZW405, FIRE11252, LGLAM415, LGROL416, LGRUR417, LGSIM418, LGSTE419, LGSTR420, LGWOF421, RMON422, PMON423, FIRE12253, FIRE13254, FIRE14255, RSIM406, PSIM407, LGEIC409, LGEIN410, LGERK411, LGDED412, LGHAM413, LGKES414, FIRE16257, FIRE15256, LGMON424, LGHOE1425, LHROH426, WGVF223, KVFDFS222, LGVIC440, GFPD220, CDFGF219, SCVFD218, WFS2217, CFTFS216, BVFD215, PVFD214, LGZWE439, LGBRE438, LGVEN437, LGMOE427, LGKAL428, RROE429, PROE430, LGROE431, LGROT432, RSTO433, PSTO434, HSTO435, FWSTO436, MVFD213, RVRSDEFD89, LGSET473, RALS474, PALS475, LGALS476, LGHOE477, LGBET478, RAAC479, PAAC480, RWTH481, FWAAC1484, FWAAC2485, LGOID472, LGBEG471, LGBAES470, W0KCN1588, LGBAR460, LGBROI461, LGKOH467, LGWMIT462, RHER463, UEHER464, FWHER465, LGMER466, RBAES468, PBAES469, FWAAC3486, LGACMIT487, LGLAU488, LGOBER512, LGHARP514, LGDREI515, LGWAL517, LGOBER518, LGMAUS519, LGIMGE520, LGMALT521, LGPUFF522, LGLOVE523, LGBEGG524, LGGEMU511, LGSCHM508, LGHARP506, LGBRA489, LGRICH490, LGSIEF491, LGEILD492, LGHAAR493, LGVERL494, HSLE496, LGSLE497, LGGEMU498, LGOBER1499, LGHER500, CARROLFD148, BRVRCOFR2990, LGBOH450, KCMOFS44126, KCMOFS43125, KCMOFS42124, KCMOFS41123, KCMOFS40122, KCMOFS39121, KCMOFS38120, KCMOFS37119, KCMOFS36118, KCMOFS45127, KCMOFS47128, KCMOFS14129, LGWEI451, LGDUE452, LGLOH453, LHKIN454, LGROE1455, RVRSFD134, RWUER456, PWUER457, FWWUER459, HRMK458, KCMOFS35117, TFESS1291, KCMOFS16104, KCMOFS10103, KCMOFS8102, KCMOFS7101, KCMOFS6100, KCMOFS599, KCMOFS498, KCMOFS397, KCMOFS196, GNSVFS192, KCMOFS17105, KCMOFS18106, KCMOFS33115, KCMOFS29113, KCMOFS28112, KCMOFS27111, KCMOFS25110, KCMOFS24109, KCMOFS34116, KCMOFS30114, KCMOFS19107, KCMOFS23108]);var hospitalList = L.layerGroup([FWRW5526, FWRW6525, HESCH448, LUISEN483, LMH145, FWRW4527, HSIM408, SJH160, FWWEST495, MARIEN482, JCC259, JCC260, SCH165, TH164, JPCH163, RMH162, MRCH161]);var kcheartList = L.layerGroup([BATES1, NORKC23, SMMC31, RMCBKS30, RESRCH29, RAYCO28, PMC27, PETTIS26, OPR25, MENORA22, LSMED21, STJOHN32, STJOMC33, STLEAS34, WEMO43, W0CPT42, TRUHH41, TRLKWD40, STM39, STLUSO38, STLUBR37, STLSMI36, STLPLZ35, LRHC20, LCHD19, LIBRTY18, CUSHNG8, CMHS7, CMH6, CASS5, CARROL4, BRMC3, BOTHWL2, OMC24, DCEC9, EXSPR10, FITZ11, KINDRD16, KU0MED17, KCVA15, KC0CBC14, I7013, GVMH12]);var policeList = L.layerGroup([USFSMRRDO206, LTRD193, LTRDUSFS191, HPA172, PLTCTYPD141, KCNPPD140, NKCPD138, GSTNPD137, PKVLPD135, LKWKPD136, EPD228, FPD229, FPD230, CHPGS227, BLPD236, CHPDC237, CDFW250, PTPOLICE1925279, KSZS404, RDPD234, HSUCP233, TPD232, APD231, HTP235, RVRSPD133, COMOPD139, FPD93721130, NRTPD132]);var repeaterList = L.layerGroup([DJ2UB529, W7JCR268, DB0NIS530, RAINBOW249, ROGERS248, HORSE246, MP243, PRATT241, HH244, AA7MI269, AA7MI270, DB0AVR402, DB0WA403, DB0SE532, KM4ABW284, W4BFT283, W4DV282, KT4TF281, W4GS280, ON0RBO531, DB0QA528, W4CHR289, KCRHAM383, KCRMED85, SAXRPTR147, DCARC144, ACT143, KCRQFJ84, KCRHAM486, KCRWW80, KCRHAM282, KCRROO81, W4FTK377, WB4YXZ570, WA0QFJ44, WA0KHP45, KCRHCV75, KCRKW176, KCRJCRAC177, KCRJCRAC278, KCRKW279, KCRCNC87, W4DEW347, W4CAE331, W4FTK330, WR4SC329, W4FTK328, W4PDE327, WA4UKX326, W4HRS325, K4NAB324, WR4SC323, WR4SC322, WR4SC321, WT4F320, W4PAX319, WA4USN332, N4AW333, W4APE346, WR4SC345, W4NYR344, KD4HLH343, N2OBS342, W4ULH341, WR4EC340, K4ILT339, KA4GDW338, KI4RAX337, W4NYK336, KJ4QLH335, W4GS334, W4HRS318, K4USC317, KK4ZBE316, W4HRS300, W4GL299, KE4MDP298, WA4USN297, KJ4BWK296, KG4BZN295, WR4SC294, N2ZZ293, WB4TGK292, NE4SC291, W4IAR290, K4LMD286, K4WD288, W4ZKM301, K9OH302, WR4SC315, AD4U314, W4BFT313, W4GL312, W4BRK311, W4NYK310, KW4BET309, K4KNJ308, KK4ONF307, W4DV306, W4HRS305, W4APE304, W4APE303, W4APE287, W4FTK374, N4HRS384, WA4JRJ383, W4RRC381, KB4RRC380, W4GS379, W4IAR378, WA4NMW376, WR4SC375, WX4PG373, W4APE372, W4HNK371, N4ADM385, K2PJ386, W4TWX285, N1RCW396, KA4FEC395, NE4SC394, KK4BQ393, K4HI392, W4ANK391, WR4SC390, W4CAE389, K4JLA388, KK4B387, W4GWD370, KG4BZN369, K4YTZ360, WA4USN351, N4AW352, KK4ONF362, KB4RRC353, K4ILT361, W1GRE354, KO4L355, KJ4YLP359, W4GL357, W4FTK363, W4IQQ350, W4ANK382, WA4SJS348, W4APE349, K4CCC368, W4GS367, WR4SC366, WR4SC365, KJ4QLH364, KK4BQ358]);var rfholeList = L.layerGroup([RFH_569, RFH_571]);var sheriffList = L.layerGroup([JCSHRFF267, HCSO224, Fire400, Sheriff401, Sheriff398, NARESEOC131, SC242, HCSOMS225, HCCH245, SPM247, CCSHERIFF48, HCSDGS226]);var skywarnList = L.layerGroup([NWS240]);var stateList = L.layerGroup([RGSP221]);
     
     //=======================================================================
     //======================= Station Markers ===============================
     //=======================================================================
         
-    var Stations = L.layerGroup([_KD0FIWH,_AD0TU,_KD0NBHA,_W0WTS,_K0OG,_K0KEXA,_N0SAXF,_W0NRPA,_WA0TJT,_W0JWT]);
+    var Stations = L.layerGroup([_K0RGB,_N0BKE,_KD0NBH,_N0UYN,_KF0BQY,_KC0RYF,_KC0RRS,_W0JSH,_KF0MEZ,_KE0UXE,_KF0AWZ,_K2SCT,_KF0DFC,_AB0GD,_K0KEX]);
     // WA0TJT,W0DLK,KD0NBH,KC0YT,AA0JX,AA0DV
 
     // Add the stationmarkers to the map
@@ -7521,9 +7586,9 @@ var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PT
     
     // ???
     // I don't know what this does but without it the POI menu items don't show
-    map.fitBounds([[[39.2720374,-93.832865],[39.7941892,-93.583108],[39.2154688,-94.599025],[39.3710869,-93.547969],[37.9574854,-91.750868],[39.4197989,-94.658092],[39.3763041,-93.497272],[38.8732866,-94.303351],[39.2028965,-94.602876],[38.9127244,-94.351836]]]);
+    map.fitBounds([[[39.4172253,-94.568527],[39.220224,-94.518254],[39.2154688,-94.599025],[39.2762919,-94.582776],[39.4763031,-94.340813],[38.9683231,-95.283432],[38.9683231,-95.283432],[39.333585,-94.761493],[39.21816,-94.7307],[39.4244507,-94.896258],[39.2894807,-94.480841],[39.3012431,-94.823484],[39.0815025,-94.582671],[39.3476289,-94.768086],[39.4197989,-94.658092]]]);
 
-    var bounds = L.latLngBounds([[[39.2720374,-93.832865],[39.7941892,-93.583108],[39.2154688,-94.599025],[39.3710869,-93.547969],[37.9574854,-91.750868],[39.4197989,-94.658092],[39.3763041,-93.497272],[38.8732866,-94.303351],[39.2028965,-94.602876],[38.9127244,-94.351836]]]);
+    var bounds = L.latLngBounds([[[39.4172253,-94.568527],[39.220224,-94.518254],[39.2154688,-94.599025],[39.2762919,-94.582776],[39.4763031,-94.340813],[38.9683231,-95.283432],[38.9683231,-95.283432],[39.333585,-94.761493],[39.21816,-94.7307],[39.4244507,-94.896258],[39.2894807,-94.480841],[39.3012431,-94.823484],[39.0815025,-94.582671],[39.3476289,-94.768086],[39.4197989,-94.658092]]]);
         console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
 
 
@@ -7615,92 +7680,68 @@ var aviationList = L.layerGroup([HMSPH274, RAAB203, MCI271, SVBPT275, KCI272, PT
     //======================================================================   
     //====================== THERE MAY NOT BE ANY TO REPORT ================
         
-    // The classList is the list of POI types.
-    var classList = 'aviationL,eocL,fireL,hospitalL,KCHEARTL,policeL,repeaterL,RFHoleL,sheriffL,skywarnL,stateL, CornerL, ObjectL;'.split(',');
-       console.log('In map.php classList= '+classList);
+       // was classList now classNames to avoid a JS conflict of names
+    // The classNames is the list of POI types.
+     var classNames = 'aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL CornerL, ObjectL;'.split(',');
+       console.log('In map.php classNames= '+classNames);
     
     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
-    // Each test below if satisfied creates a javascript object, each one connects the previous to the next 
-    // THE FULL LIST (not in order):  TownHall, Hospital ,Repeater ,EOC ,Sheriff ,SkyWarn ,Fire ,CHP ,State ,Federal ,Aviation ,Police ,class, RFhole
-    var y = {...station}; 
-    var x;
+    // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
+    
+    const classMap = {};
+    var y = {};
+    
+    // Helper function to add the category to the classMap if the variable exists
+    function addToClassMap(category, variable, imageName) {
+      if (window.hasOwnProperty(variable)) {
+        classMap[category] = {
+          [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
+        };
+      }
+    }
+    
+    // Call the helper function for each category
+    addToClassMap('aviationL', 'aviationList', 'aviation.png');
+    addToClassMap('chpL', 'sheriffList', 'police.png');
+    addToClassMap('eocL', 'eocList', 'eoc.png');
+    addToClassMap('federalL', 'federalList', 'gov.png');
+    addToClassMap('hospitalL', 'hospitalList', 'firstaid.png');
+    addToClassMap('fireL', 'fireList', 'fire.png');
+    addToClassMap('policeL', 'sheriffList', 'police.png');
+    addToClassMap('repeaterL', 'repeaterList', 'repeater.png');
+    addToClassMap('sheriffL', 'sheriffList', 'police.png');
+    addToClassMap('skyWarnL', 'skyWarnList', 'skywarn.png');
+    addToClassMap('stateL', 'sheriffList', 'gov.png');
+    addToClassMap('townhallL', 'townhallList', 'gov.png');
+    addToClassMap('rfholeL', 'rfholeList', 'hole.png');
+    addToClassMap('objectsL', 'ObjectList', 'marker00.png');
+    addToClassMap('cornersL', 'CornerList', 'red_50_flag.png');
+    
+    console.log('ObjectL List:', classMap);
+        
+        // Loop through classNames and assign the corresponding object to y
+    for (x of classNames) {
+      if (classMap.hasOwnProperty(x)) {
+        Object.assign(y, classMap[x]);
+      }
+    }
+    
+    console.log('ObjectL List:', y);
+    
+    // Here we add the station object with the merged y objects from above
+    var overlayMaps = Object.assign({}, y);
 
-    for (x of classList) {
-        
-        if (x == 'AviationL') {
-            let Aviation = {"<img src='images/markers/aviation.png' width='32' align='middle' /> <span class='aviation'>Aviation</span>": AviationList};
-            y = {...y, ...Aviation}; 
-            
-        }else if (x == 'CHPL') {
-            let CHP = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y, ...CHP}; 
-            
-        }else if (x == 'EOCL') {
-            let EOC = {"<img src='images/markers/eoc.png' align='middle' /> <span class='eocmarker'>EOC</span>": EOCList};
-            y = {...y, ...EOC};
-            
-        }else if (x == 'FederalL') {
-            let Federal = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='gov'>Fed</span>":  FederalList};
-            y = {...y, ...Federal};
-            
-        }else if (x == 'FireL') {
-            let Fire = {"<img src='images/markers/fire.png' align='middle' /> <span class='firemarker'>Fire Station</span>": FireList};
-            y = {...y, ...Fire};
-            
-        }else if (x == 'HospitalL') {
-            let Hospital = {"<img src='images/markers/firstaid.png' align='middle' /> <span class='hosmarker'>Hospitals</span>": HospitalList};
-            y = {...y, ...Hospital};
-            
-        }else if (x == 'PoliceL') {
-            let Police = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>": SheriffList};
-            y = {...y, ...Police};
-            
-        }else if (x == 'RepeaterL') {
-            let Repeater = {"<img src='images/markers/repeater.png' align='middle' /> <span class='rptmarker'>Repeaters</span>": RepeaterList};
-            y = {...y, ...Repeater};
-            
-        }else if (x == 'SheriffL') {
-            let Sheriff = {"<img src='images/markers/police.png' width='32' height='37' align='middle' /> <span class='polmarker'>Police</span>":  SheriffList};
-            y = {...y, ...Sheriff};
-            
-        }else if (x == 'SkyWarnL') {
-            let SkyWarn = {"<img src='images/markers/skywarn.png' align='middle' /> <span class='skymarker'>SkyWarn</span>": SkyWarnList};
-            y = {...y, ...SkyWarn};    
-            
-        }else if (x == 'StateL') {
-            let State = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='polmarker'>State</span>":  SheriffList};
-            y = {...y, ...State};
-            
-        }else if (x == 'townhallL') {
-            let TownHall = {"<img src='images/markers/gov.png' width='32' height='37' align='middle' /> <span class='townhall'>Town Halls</span>":  townhallList};
-            y = {...y, ...TownHall};       
-            
-        }else if (x == 'ObjectL') {
-            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
-            y = {...y, ...Objects}; 
-            
-        }else if (x == 'RFHoleL') {
-            let Objects = {"<img src='images/markers/marker00.png' align='middle' /> <span class='objmrkrs'>Objects</span>": ObjectList};
-            y = {...y, ...Objects}; 
-            
-        }else if (x == ' CornerL') {
-            let Corners = {"<img src='images/markers/red_50_flag.png' align='middle' /> <span class='corners'>Corners</span>": CornerList};
-            y = {...y, ...Corners};
-        }}; // End of for loop
-        
-        
-        // Here we add the station object with the merged y objects from above
-    var overlayMaps = {...y }; 
     
     // This must stay here to properly display on the map
     // The collapsed: true makes the POI's compress into a 'Markers' icon
-    L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map); 
+    L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map);
+    
     
    $('.leaflet-control-attribution').hide()
     
 
-    function markerFunction(id){
+        function markerFunction(id){
 	        for (var i in stationMarkers){
 	            var markerID = stationMarkers[i].options.title;
 	            if (markerID == id){
