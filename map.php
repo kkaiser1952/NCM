@@ -240,7 +240,9 @@ var map = L.map('map', {
             apikey: esriapi}).addTo(map),
           Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
             apikey: esriapi}).addTo(map),
-          Standard  = L.esri.Vector.vectorBasemapLayer('ArcGIS:StreetRelief', {
+          Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
+            apikey: esriapi}).addTo(map),
+          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:Standard', {
             apikey: esriapi}).addTo(map),
           Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
@@ -249,6 +251,7 @@ var map = L.map('map', {
     const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
                        "<span style='color: blue; font-weight: bold;'>Topo": Topo,
+                       "<span style='color: blue; font-weight: bold;'>Imagery": Imagery,
                        "<span style='color: blue; font-weight: bold;'>Standard": Standard,
                        "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
@@ -323,7 +326,7 @@ var map = L.map('map', {
     var firstaidicon  = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
         eocicon       = new PoiIconClass({iconUrl: 'images/markers/eoc.png'}),
         policeicon    = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
-        sherifficon    = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
+        sherifficon   = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
         skywarnicon   = new PoiIconClass({iconUrl: 'images/markers/skywarn.png'}),
         fireicon      = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
@@ -465,12 +468,12 @@ var map = L.map('map', {
      var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
        console.log('In map.php classNames= '+classNames);
     
-    let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
+     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
-    // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
+     // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
     
-    const classMap = {};
-    var y = {};
+     const classMap = {};
+     var y = {};
     
     // Helper function to add the category to the classMap if the variable exists
     function addToClassMap(category, variable, imageName) {
@@ -551,7 +554,6 @@ var map = L.map('map', {
         });
 
 </script>   <!-- End of javascript holding the map stuff -->
-
 
 </body>
 </html>
