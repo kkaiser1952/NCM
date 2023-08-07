@@ -234,22 +234,21 @@ var map = L.map('map', {
 	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
 	   
 	   //alert (esriapi);
-          //Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
-            //apikey: esriapi}).addTo(map),
-          Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
-            //apikey: esriapi}).addTo(map),
-          //Imagery   = L.esri.Vector.vectorBasemapLayer('ArcGIS:Imagery', {
-            //apikey: esriapi}).addTo(map),
-          //Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+          Community = L.esri.Vector.vectorBasemapLayer('ArcGIS:Community', {
             apikey: esriapi}).addTo(map),
-          Standard  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
+          Streets   = L.esri.Vector.vectorBasemapLayer('OSM:Streets', {
+            apikey: esriapi}).addTo(map),
+          Topo      = L.esri.Vector.vectorBasemapLayer('ArcGIS:Topographic', {
+            apikey: esriapi}).addTo(map),
+          Standard  = L.esri.Vector.vectorBasemapLayer('ArcGIS:StreetRelief', {
             apikey: esriapi}).addTo(map),
           Default  = L.esri.Vector.vectorBasemapLayer('OSM:StandardRelief', {
             apikey: esriapi}).addTo(map);
             
    
-    const baseMaps = {  
+    const baseMaps = { "<span style='color: blue; font-weight: bold;'>Community": Community,
                        "<span style='color: blue; font-weight: bold;'>Streets": Streets,
+                       "<span style='color: blue; font-weight: bold;'>Topo": Topo,
                        "<span style='color: blue; font-weight: bold;'>Standard": Standard,
                        "<span style='color: blue; font-weight: bold;'>Default": Default                                
                      };
@@ -324,12 +323,13 @@ var map = L.map('map', {
     var firstaidicon  = new PoiIconClass({iconUrl: 'images/markers/firstaid.png'}),
         eocicon       = new PoiIconClass({iconUrl: 'images/markers/eoc.png'}),
         policeicon    = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
+        sherifficon    = new PoiIconClass({iconUrl: 'images/markers/police.png'}),
         skywarnicon   = new PoiIconClass({iconUrl: 'images/markers/skywarn.png'}),
         fireicon      = new PoiIconClass({iconUrl: 'images/markers/fire.png'}),
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-        rfhole        = new PoiIconClass({iconUrl: 'markers/gov.png'}),
+        rfhole        = new PoiIconClass({iconUrl: 'markers/hole.png'}),
         
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
@@ -482,21 +482,21 @@ var map = L.map('map', {
     }
     
     // Call the helper function for each category
-    addToClassMap('aviationL', 'aviationList', 'aviation.png');
-    addToClassMap('chpL', 'sheriffList', 'police.png');
-    addToClassMap('eocL', 'eocList', 'eoc.png');
-    addToClassMap('federalL', 'federalList', 'gov.png');
-    addToClassMap('hospitalL', 'hospitalList', 'firstaid.png');
-    addToClassMap('fireL', 'fireList', 'fire.png');
-    addToClassMap('policeL', 'sheriffList', 'police.png');
-    addToClassMap('repeaterL', 'repeaterList', 'repeater.png');
-    addToClassMap('sheriffL', 'sheriffList', 'police.png');
-    addToClassMap('skyWarnL', 'skyWarnList', 'skywarn.png');
-    addToClassMap('stateL', 'sheriffList', 'gov.png');
-    addToClassMap('townhallL', 'townhallList', 'gov.png');
-    addToClassMap('rfholeL', 'rfholeList', 'hole.png');
-    addToClassMap('objectsL', 'ObjectList', 'marker00.png');
-    addToClassMap('cornersL', 'CornerList', 'red_50_flag.png');
+    addToClassMap('aviationL',  'aviationList', 'aviation.png');
+    addToClassMap('chpL',       'chpList',      'police.png');
+    addToClassMap('eocL',       'eocList',      'eoc.png');
+    addToClassMap('federalL',   'federalList',  'gov.png');
+    addToClassMap('hospitalL',  'hospitalList', 'firstaid.png');
+    addToClassMap('fireL',      'fireList',     'fire.png');
+    addToClassMap('policeL',    'policeList',   'police.png');
+    addToClassMap('repeaterL',  'repeaterList', 'repeater.png');
+    addToClassMap('sheriffL',   'sheriffList',  'police.png');
+    addToClassMap('skyWarnL',   'skyWarnList',  'skywarn.png');
+    addToClassMap('stateL',     'stateList',    'gov.png');
+    addToClassMap('townhallL',  'townhallList', 'gov.png');
+    addToClassMap('rfholeL',    'rfholeList',   'hole.png');
+    addToClassMap('objectsL',   'ObjectList',   'marker00.png');
+    addToClassMap('cornersL',   'CornerList',   'red_50_flag.png');
     
     console.log('ObjectL List:', classMap);
         
