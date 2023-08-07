@@ -22,7 +22,7 @@
     //$q = 8523; 
     //$q = 6066;
     //$q = 9657;
-    //$q = 9657;
+    $q = 9677;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -478,26 +478,36 @@ var map = L.map('map', {
     // Helper function to add the category to the classMap if the variable exists
     function addToClassMap(category, variable, imageName) {
       if (window.hasOwnProperty(variable)) {
-        classMap[category] = {
-          [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>${category}</span>`]: window[variable],
-        };
+        const bounds = map.getBounds(); // Assuming 'map' is the Leaflet map object you defined earlier in map.php
+    
+        // Check if the POI is within the visible bounds of the map
+        if (bounds.contains(window[variable])) {
+          classMap[category] = {
+            [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>
+            ${category}</span>`]: window[variable],
+          };
+        }
       }
-    }
+}
+ // End addToClassMap function
     
     // Call the helper function for each category
     addToClassMap('aviationL',  'aviationList', 'aviation.png');
-    addToClassMap('chpL',       'chpList',      'police.png');
     addToClassMap('eocL',       'eocList',      'eoc.png');
-    addToClassMap('federalL',   'federalList',  'gov.png');
-    addToClassMap('hospitalL',  'hospitalList', 'firstaid.png');
     addToClassMap('fireL',      'fireList',     'fire.png');
+    addToClassMap('hospitalL',  'hospitalList', 'firstaid.png');
     addToClassMap('policeL',    'policeList',   'police.png');
     addToClassMap('repeaterL',  'repeaterList', 'repeater.png');
-    addToClassMap('sheriffL',   'sheriffList',  'police.png');
-    addToClassMap('skyWarnL',   'skyWarnList',  'skywarn.png');
-    addToClassMap('stateL',     'stateList',    'gov.png');
-    addToClassMap('townhallL',  'townhallList', 'gov.png');
     addToClassMap('rfholeL',    'rfholeList',   'hole.png');
+    addToClassMap('sheriffL',   'sheriffList',  'police.png');
+    addToClassMap('stateL',     'stateList',    'gov.png');
+    
+    
+    addToClassMap('chpL',       'chpList',      'police.png');
+    addToClassMap('federalL',   'federalList',  'gov.png');
+    addToClassMap('skyWarnL',   'skyWarnList',  'skywarn.png');
+    addToClassMap('townhallL',  'townhallList', 'gov.png');
+    
     addToClassMap('objectsL',   'ObjectList',   'marker00.png');
     addToClassMap('cornersL',   'CornerList',   'red_50_flag.png');
     
