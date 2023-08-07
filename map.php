@@ -22,7 +22,7 @@
     //$q = 8523; 
     //$q = 6066;
     //$q = 9657;
-    $q = 9677;
+    //$q = 9657;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -477,19 +477,14 @@ var map = L.map('map', {
     
     // Helper function to add the category to the classMap if the variable exists
     function addToClassMap(category, variable, imageName) {
+        //console.log(category + variable + imageName);
       if (window.hasOwnProperty(variable)) {
-        const bounds = map.getBounds(); // Assuming 'map' is the Leaflet map object you defined earlier in map.php
-    
-        // Check if the POI is within the visible bounds of the map
-        if (bounds.contains(window[variable])) {
-          classMap[category] = {
-            [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>
-            ${category}</span>`]: window[variable],
-          };
-        }
+        classMap[category] = {
+          [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>
+          ${category}</span>`]: window[variable],
+        };
       }
-}
- // End addToClassMap function
+    } // End addToClassMap function
     
     // Call the helper function for each category
     addToClassMap('aviationL',  'aviationList', 'aviation.png');
@@ -501,7 +496,6 @@ var map = L.map('map', {
     addToClassMap('rfholeL',    'rfholeList',   'hole.png');
     addToClassMap('sheriffL',   'sheriffList',  'police.png');
     addToClassMap('stateL',     'stateList',    'gov.png');
-    
     
     addToClassMap('chpL',       'chpList',      'police.png');
     addToClassMap('federalL',   'federalList',  'gov.png');
