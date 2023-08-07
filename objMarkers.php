@@ -3,6 +3,8 @@
     ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
+$q = 9678;
+			
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
     // Now lets add the what3words words from the W3W geocoder
@@ -34,7 +36,7 @@
               ORDER BY callsign, timestamp
           ");
           
-          //echo "First sql:<br> $sql <br><br>";
+          echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";
@@ -85,7 +87,7 @@
                 $alltheKoords .= $row[allKoords].';';
             }
              
-     //echo "alltheKoords:<br>$alltheKoords<br><br>";
+     echo "alltheKoords:<br>$alltheKoords<br><br>";
       
         $sql = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
@@ -108,7 +110,7 @@
               ORDER BY callsign, timestamp ) s         
           ");
           
-        //echo "3rd sql:<br> $sql <br><br>";
+        echo "3rd sql:<br> $sql <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -121,7 +123,7 @@ foreach($db_found->query($sql) as $row) {
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
     
-    //echo "$comment<br><br>";
+    echo "objType: $objType, comment: $comment<br><br>";
                
     //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
     //$pos1 = $pos2 = 0;

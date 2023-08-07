@@ -505,7 +505,7 @@ var map = L.map('map', {
     addToClassMap('objectsL',   'ObjectList',   'marker00.png');
     addToClassMap('cornersL',   'CornerList',   'red_50_flag.png');
     
-    console.log('ObjectL List:', classMap);
+    //console.log('ObjectL List:', classMap);
         
         // Loop through classNames and assign the corresponding object to y
     for (x of classNames) {
@@ -514,7 +514,7 @@ var map = L.map('map', {
       }
     }
     
-    console.log('ObjectL List:', y);
+    //console.log('ObjectL List:', y);
     
     // Here we add the station object with the merged y objects from above
     var overlayMaps = Object.assign({}, y);
