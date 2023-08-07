@@ -1,13 +1,8 @@
-<!doctype html>
-<!-- This is the RF Hole Report report -->
-<!-- 2023-08-07 -->
-<!-- RF Hole  poi's are not stored by netID so i will ask for a center point to give all POI's within 25 miles of that location -->
-
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
-require_once "dbConnectDtls.php";
+require_once "dbConnectDtls.php"; 
 require_once "ENV_SETUP.php";      // API's
 require_once "GridSquare.php";
 
@@ -23,35 +18,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                        grid, tactical, Notes, radius, w3w, band
                                   FROM poi
                                  WHERE class = 'rfhole'
-                                   AND grid in( :grid )
-                                 ORDER BY band  
+                                   AND grid IN (" . implode(',', array_fill(0, count(explode(',', $grid)), '?')) . ")
+                             ORDER BY band   
                                ");
-            // Bind the values to the named placeholders            
-            $stmt->bindValue(':grid', $grid);
+    // Bind the values to the named placeholders
+    $stmt->execute(explode(',', $grid));
 
-            // Execute the prepared statement
-            if ($stmt->execute()) {
-                // Fetch all rows as an associative array
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
-                // Perform the foreach loop to process each row
-                foreach ($result as $row) {
-                    // Access individual columns using keys in the $row associative array
-                    $column1Value = $row['column1']; 
-                    $column2Value = $row['column2']; 
-                        // Do whatever you need to do with the retrieved data
-                        // For example, you could echo the values or perform further operations
-                        echo "Column 1: $column1Value, Column 2: $column2Value<br>";
-                    } // End foreach
-                } // End if stmt
-                  else {
-                    // Handle the case when the statement execution fails
-                    echo "Error executing the statement.";
-                  } // End else
-} // End if $_server 
+}
+
+function generateReportContent($data) {
+    $content = "<h2>RF Hole Report</h2>";
+    foreach ($data as $row) {
+        $content .= "<p>ID: " . $row['id'] . "</p>";
+        $content .= "<p>Class: " . $row['class'] . "</p>";
+        // Add more fields as needed...
+        $content .= "<hr>"; // Add a horizontal line to separate entries
+    }
+    return $content;
+}
 ?>
 
-   
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,180 +46,138 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="Keith Kaiser" content="Graham" />
     <link href='https://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- ******************************** Style Sheets *************************************** -->
+    <link rel="stylesheet" href="css/rfpoi.css" /> 
+    
+    <style>
+        /* Modal styles here */
+        .modal {
+            display: block;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
 
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
 
-<style>
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 18pt;
-    background-color: #f7f7f7; /* Optional: Add a background color for better visibility */
-}
+        .close-btn {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
 
-.container {
-    width: 60%; /* Adjust the width as per your requirement */
-    max-width: 1000px; /* Add a max-width for larger screens */
-}
+        .modal-header h3 {
+            margin: 0;
+        }
 
-/* Center the title and instructions */
-.title-container {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
+        .modal-body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
 
-.instructions {
-    max-width: 100%; /* Allow instructions to take full width */
-    font-size: 14pt;
-    color: #5a8bff; /* Set the desired text color */
-    -webkit-text-fill-color: #5a8bff; /* For Safari */
-    -webkit-opacity: 1; /* For Safari */
-}
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 10px;
+        }
 
-/* Container for the form */
-.form-container {
-    text-align: left;
-}
-
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input[type="text"],
-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    font-size: inherit;
-}
-
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    font-size: inherit;
-    font-weight: bold;
-}
-
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-/* Style the select element */
-select[name="type"] {
-    font-size: 16pt; /* Adjust the font size as per your requirement */
-}
-
-/* Style the options within the dropdown */
-select[name="type"] option {
-    font-size: 16pt; /* Adjust the font size as per your requirement */
-}
-
-/* CSS to horizontally align checkboxes and match style with select */
-.checkbox-container {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-.checkbox-container input[type="checkbox"] {
-    margin-right: 12px;
-}
-
-.checkbox-container label {
-    font-size: 16pt;
-    margin-right: 10px; /* Add more space between the label and checkbox */
-}
-
-/* Position the link on the right side and style it */
-.list-pois-link {
-    font-size: 18px;
-    float: right;
-    margin-top: 10px;
-    color: #5a8bff;
-}
-
-/* Add some spacing between the buttons and the link */
-#poiForm {
-    margin-bottom: 20px;
-}
-
-/* Center the form horizontally */
-.form-container {
-    margin: 0 auto;
-}
-
-        
-</style>
-
+        .modal-footer button {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-    <!-- Container for the title (left-justified) -->
-    <div class="title-container">
-        <h2>Welcome to the RF Hole Report Program</h2>
-        <h3 id="instructions">Please fill out this form to submit the<br> grid square(s) (e.g. EM29, EM29qe) to <br>identify the location of RF Holes. <br>Seperate multiple grids with a comma.<br> Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
-    </div>
-    
-    <!-- Container for the form (left-justified) -->
-    <div class="form-container">
-        <!-- ... -->
-        <form id="poiForm" method="post">
-            <label for="callsign">Enter one or more maidenhead grid square(s):</label>
-            <input type="text" name="callsign" id="callsign" placeholder="(e.g., EM29, EM29qe, EM29qe78)" required>
-                
-            <input type="submit" id="submitBtn" value="Request Report">
-            <input type="button" value="Cancel" onclick="resetForm()">
-            
-            <!-- Link to List All PoIs -->
-            <a href="https://net-control.us/listAllPOIs.php" class="list-pois-link">List All PoI's</a>
-        </form>
-    </div> <!-- End of div at class="form-container" -->
-</div> <!-- End of div at class="container" -->
-    
-<script>
+        <!-- Container for the title (left-justified) -->
+        <div class="title-container">
+            <h2>Welcome to the RF Hole Report Program</h2>
+            <h3 id="instructions">Please fill out this form to submit the<br> grid square(s) (e.g. EM29, EM29qe) to <br>identify the location of RF Holes. <br>Separate multiple grids with a comma.<br> Additional help can be found at;<br> <a href="https://net-control.us/help.php" target="_blank">https://net-control.us/help.php</a> </h3>
+        </div>
 
-</script>
+        <!-- Container for the form (left-justified) -->
+        <div class="form-container">
+            <!-- ... -->
+            <form id="poiForm" method="post">
+                <label for="grid">Enter one or more maidenhead grid square(s), comma-separated:</label>
+                <input type="text" name="grid" id="grid" placeholder="(e.g., EM29, EM29qe, EM29qe78)" required>
 
+                <input type="submit" id="submitBtn" value="Request Report">
+                <input type="button" value="Cancel" onclick="resetForm()">
 
-<script>
-    function resetForm() {
-        document.getElementById("poiForm").reset();
-    }
+                <!-- Link to List All PoIs -->
+                <a href="https://net-control.us/listAllPOIs.php" class="list-pois-link">List All PoI's</a>
+            </form>
+        </div> <!-- End of div at class="form-container" -->
+    </div> <!-- End of div at class="container" -->
 
-    $(document).ready(function() {
-        $('#poiForm').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'RF-HoleReport.php',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    alert(response);
-                    resetForm(); // Reset the form after successful submission
-                }
+    <script>
+        function resetForm() {
+            document.getElementById("poiForm").reset();
+        }
+
+        $(document).ready(function () {
+            $('#poiForm').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'RF-HoleReport.php',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        showModal('RF Hole Report', response);
+                        resetForm(); // Reset the form after successful submission
+                    },
+                });
             });
         });
-    });
-</script>
 
-<script>
-  // Get the input element
-  const inputElement = document.getElementById('infield');
+        function showModal(title, content) {
+            const modal = document.createElement('div');
+            modal.classList.add('modal');
 
-  // Add a click event listener to the input field
-  inputElement.addEventListener('click', function() {
-    // Clear the value when clicked
-    inputElement.value = '';
-  });
-</script>
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal()">&times;</span>
+                    <div class="modal-header">
+                        <h3>${title}</h3>
+                    </div>
+                    <div class="modal-body">
+                        ${content}
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="printReport()">Print</button>
+                    </div>
+                </div>
+            `;
 
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal');
+            document.body.removeChild(modal);
+        }
+
+        function printReport() {
+            const content = document.querySelector('.modal-body').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.open();
+            printWindow.document.write(`<html><head><title>Print Report</title></head><body>${content}</body></html>`);
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+        }
+    </script>
 </body>
 </html>
