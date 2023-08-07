@@ -128,7 +128,7 @@
 /* Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721 0 Ft. */
         
         // Pull detail data FROM  poi table
-        $sql = ("SELECT id, name, address, Notes, 
+        $sql = ("SELECT id, class, name, address, Notes, 
                         LOWER(class) as class, 
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
@@ -177,7 +177,7 @@
                              $markername = "markers/repeater.png";  
                              $poimrkr = "rptmrkr";  break;
                              
-            case "sheriff":  $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "sheriff":  $X = $X+1;  $iconName = "policeicon"; $markNO = "X$X";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break;
                              
@@ -193,7 +193,7 @@
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
-            case "chp":      $P = $P+1;  $iconName = "policeicon"; $markNO = "P$P";  
+            case "chp":      $C = $C+1;  $iconName = "policeicon"; $markNO = "P$P";  
                              $markername = "images/markers/police.png";    
                              $poimrkr = "polmrkr";  break; 
                              
@@ -213,7 +213,7 @@
                              $markername = "images/markers/aviation.png";    
                              $poimrkr = "aviationmrkr";  break;     
                              
-            case "rfhole":  $K = $K+1;  $iconName = "holeicon"; $markNO = "K$K";
+            case "rfhole":   $K = $K+1;  $iconName = "holeicon"; $markNO = "K$K";
                              $markername = "images/markers/hole.png";    
                              $poimrkr = "aviationmrkr";  break;
                                                              
@@ -221,7 +221,7 @@
                              $markername = "images/markers/blue_50_flag.png";
                              $poimrkr = "flagmrkr";
     
-    } // End of switch
+        } // End of switch
     
     //echo "$iconName,  $markNO,  $markername,  $poimrkr<br>";
        
@@ -251,7 +251,7 @@
             ";
  // End of $poiMarkers build
                      
-    }; // End of foreach for poi markers
+     }; // End of foreach for poi markers
         
     //echo "<br>$poiMarkers<br>";
    
