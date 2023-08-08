@@ -119,7 +119,7 @@
 
     
     <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
-    <script src="js/circleKoords.js"></script>    
+    <script src="js/circleKoords2.js"></script>    
     
     
     <!-- override from leaflet.mousecoordinate.css -->
