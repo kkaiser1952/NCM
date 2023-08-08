@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- This is the RF Hole Report report -->
 <!-- 2023-08-07 -->
-<!-- RF Hole  poi's are not stored by netID so i will ask for a center point to give all POI's within 25 miles of that location -->
+<!-- RF Hole  poi's are not stored by netID so i will ask for grid square locations -->
 
 <?php
 ini_set('display_errors', 1);
@@ -9,12 +9,14 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
 
-$grid = "em29oi,em29te";
+//$grid = "em29oi,em29te";
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the values from the form submission
     $grid = $_POST['grid'];
+    
+    //var_dump($_POST); returned: //array(1) { ["grid"]=> string(13) "em29oi,em29te" }
 
     // Prepare and bind the SQL statement to insert the data
     $sql = "
@@ -38,18 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Execute the statement
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        echo "SQL Error: " . $stmt->errorInfo()[2]; // Display the error message
+    }
     
-    function generateReportContent($data) {
-    $content = "<h2>RF Hole Report</h2>";
-    foreach ($data as $row) {
-            $content .= "<p>ID: " . $row['id'] . "</p>";
-            $content .= "<p>Class: " . $row['class'] . "</p>";
-            // Add more fields as needed...
-            $content .= "<hr>"; // Add a horizontal line to separate entries
-        }
-        return $content;
-    } // End function
 } // End if server
 ?>
 
@@ -96,23 +90,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
 $(document).ready(function () {
+    // Define the function to generate report content
+    function generateReportContent(data) {
+        let content = "<h2>RF Hole Report</h2>";
+        data.forEach(row => {
+            content += "<p>ID: " + row['id'] + "</p>";
+            content += "<p>Class: " + row['class'] + "</p>";
+            // Add more fields as needed...
+            content += "<hr>"; // Add a horizontal line to separate entries
+        });
+        return content;
+    }
+    
     $('#poiForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
             url: window.location.href,
             method: 'POST',
             data: $(this).serialize(),
-            dataType: 'html', // Set the data type to HTML
+            dataType: 'json', // Set the data type to HTML
             success: function (response) {
-                showModal('RF Hole Report', response);
+                const reportContent = generateReportContent(response);
+                showModal('RF Hole Report', reportContent);
                 resetForm(); // Reset the form after successful submission
             },
             error: function (xhr, status, error) {
+                console.error(error); // Log the error details to the browser console
                 alert("An error occurred while fetching the report.");
             }
         }); // End ajax
     }); // End poiform
 }); // End document
+
 
 function showModal(title, content) {
     const modal = document.createElement('div');
