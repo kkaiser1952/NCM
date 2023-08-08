@@ -8,32 +8,51 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
-require_once "ENV_SETUP.php";      // API's
-require_once "GridSquare.php";
 
-$w3wApiKey = getenv('w3wapikey');
+$grid = "em29oi,em29te";
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the values from the form submission
     $grid = $_POST['grid'];
 
-            
     // Prepare and bind the SQL statement to insert the data
-    // Prepare and bind the SQL statement to insert the data
-$stmt = $db_found->prepare("SELECT id, class, Type, name, city, latitude, longitude,
-                                   grid, tactical, Notes, radius, w3w, band
-                              FROM poi
-                             WHERE class = 'rfhole'
-                               AND grid IN (" . implode(',', array_fill(0, count(explode(',', $grid)), '?')) . ")
-                             ORDER BY band  
-                           "); 
-                           
-        // Bind the values to the named placeholders
-        $stmt->execute(explode(',', $grid));    
+    $sql = "
+        SELECT id, class, Type, name, city, latitude, longitude,
+               grid, tactical, Notes, radius, w3w, band
+        FROM poi
+        WHERE class = 'rfhole'
+        AND grid IN (" . implode(',', array_fill(0, count(explode(',', $grid)), '?')) . ")
+        ORDER BY band
+    ";
+    
+    //echo "SQL Query: $sql"; // Print the SQL query for debugging
+
+    // Prepare the statement
+    $stmt = $db_found->prepare($sql);
+
+    // Bind the values to the named placeholders
+    $gridValues = explode(',', $grid);
+    foreach ($gridValues as $index => $value) {
+        $stmt->bindValue($index + 1, $value);
+    }
+
+    // Execute the statement
+    $stmt->execute();
+    
+    function generateReportContent($data) {
+    $content = "<h2>RF Hole Report</h2>";
+    foreach ($data as $row) {
+            $content .= "<p>ID: " . $row['id'] . "</p>";
+            $content .= "<p>Class: " . $row['class'] . "</p>";
+            // Add more fields as needed...
+            $content .= "<hr>"; // Add a horizontal line to separate entries
+        }
+        return $content;
+    } // End function
+} // End if server
 ?>
 
-   
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,14 +99,17 @@ $(document).ready(function () {
     $('#poiForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
-            url: 'RF-HoleReport.php',
+            url: window.location.href,
             method: 'POST',
             data: $(this).serialize(),
+            dataType: 'html', // Set the data type to HTML
             success: function (response) {
-                // Display the report in a modal
                 showModal('RF Hole Report', response);
                 resetForm(); // Reset the form after successful submission
-            }, // End success
+            },
+            error: function (xhr, status, error) {
+                alert("An error occurred while fetching the report.");
+            }
         }); // End ajax
     }); // End poiform
 }); // End document
@@ -97,19 +119,16 @@ function showModal(title, content) {
     modal.classList.add('modal');
 
     modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-header">
-                <h3>${title}</h3>
-            </div>
-            <div class="modal-body">
-                ${content}
-            </div>
-            <div class="modal-footer">
-                <button onclick="printReport()">Print</button>
-            </div>
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+            <h3>${title}</h3>
         </div>
-    `;
+        <div class="modal-body">
+            ${content}
+        </div>
+    </div>
+`;
 
     document.body.appendChild(modal);
 } // End function showModal
@@ -133,25 +152,18 @@ function printReport() {
 
 <script>
   // Get the input element
-  const inputElement = document.getElementById('infield');
+  const inputElement = document.getElementById('grid');
 
-  // Add a click event listener to the input field
-  inputElement.addEventListener('click', function() {
-    // Clear the value when clicked
-    inputElement.value = '';
+  // Add a keydown event listener to prevent form submission on Enter key
+  inputElement.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            // Optionally, you can trigger your AJAX request here
+        }
   });
 
 
-function generateReportContent($data) {
-                $content = "<h2>RF Hole Report</h2>";
-                foreach ($data as $row) {
-                        $content .= "<p>ID: " . $row['id'] . "</p>";
-                        $content .= "<p>Class: " . $row['class'] . "</p>";
-                        // Add more fields as needed...
-                        $content .= "<hr>"; // Add a horizontal line to separate entries
-                    }
-                    return $content;
-            } // End function
+
 </script>
 </body>
 </html>
