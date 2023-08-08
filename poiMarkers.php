@@ -138,7 +138,8 @@
                         
                         REPLACE(tactical,'-','') AS tactical, 
                         callsign,
-                        CONCAT(class,id) as altTactical
+                        CONCAT(class,id) as altTactical,
+                        dttm
                   FROM poi 
                  ORDER BY class 
                ");            
@@ -245,7 +246,7 @@
                          
                 icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
                 title: '$row[tactical] $row[name]  $row[Notes] $row[koords]' ,
-                    }).addTo(fg).bindPopup('$row[tactical] $row[name]  $row[Notes] $row[koords]' );                        
+                    }).addTo(fg).bindPopup('$row[tactical]<br> $row[name] <br> $row[Notes]<br> $row[koords]<br>Created: $row[dttm]' );                        
          
                 $('{$row['class']}'._icon).addClass('$poimrkr');
             ";
