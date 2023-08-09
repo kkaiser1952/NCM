@@ -3,8 +3,6 @@
     ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
 			
-//$q = 9678;
-			
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
     // Now lets add the what3words words from the W3W geocoder
@@ -20,43 +18,32 @@
 
    $q = 9678;
       
-   $sql = (" SELECT callsign, 
-                    CONCAT(callsign,'OBJ') as callOBJ,
-                    COUNT(callsign) as numofcs, 
-                    CONCAT ('var ',callsign,'OBJ = L.latLngBounds( [' , GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8) ,']'),']);') as objBounds,
-                    
-                    CONCAT (' [', GROUP_CONCAT('[',SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8),']'),'],') as arrBounds,
-                    
-                    CONCAT (callsign,'arr') as allnameBounds
-               FROM TimeLog 
-              WHERE netID = $q 
-                AND callsign <> 'GENCOMM'
-                AND comment LIKE '%OBJ::%' /* or comment LIKE '%COM::%' */
-              GROUP BY callsign
-              ORDER BY callsign, timestamp
+   $sql = (" SELECT
+    callsign,
+    CONCAT(callsign, 'OBJ') AS callOBJ,
+    COUNT(callsign) AS numofcs,
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+    CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+    CONCAT(callsign, 'arr') AS allnameBounds
+FROM (
+    SELECT callsign, comment
+    FROM TimeLog
+    WHERE netID = $q AND callsign <> 'GENCOMM'
+        AND comment LIKE '%OBJ::%' /* or comment LIKE '%COM::%' */
+) AS filtered_data
+GROUP BY callsign
+ORDER BY callsign, dttm;
+
           ");
           
-          echo "First sql:<br> $sql <br><br>";
-          
-            // Prepare the statement
-            $stmt = $db->prepare($sql);
-            
-            // Bind the parameters and execute the query
-            $stmt->execute([
-                ':netID' => $q,
-                ':comment' => '%OBJ::%',
-            ]);
-            
-            // Fetch the results
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+         echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";
         $allPoints = "";
         $oByersCnt = 0;
         
-     // Loop through the results
-     foreach ($results as $row) {
+     foreach($db_found->query($sql) as $row) {
          $objBounds .= "$row[objBounds]";    
          $oByersCnt  = $oByersCnt + 1;
          
@@ -71,8 +58,6 @@
          $objSE     .= "var $row[callsign]padit  = $row[callsign]PAD.getSouthEast();";
          
      } // end of foreach loop 
-     
-     echo "<br>objBounds: $objBounds<br>"
      
      $oByers = "var oByers = $oByersCnt";
      
@@ -102,7 +87,7 @@
                 $alltheKoords .= $row[allKoords].';';
             }
              
-     echo "alltheKoords:<br>$alltheKoords<br><br>";
+     //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
         $sql = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
@@ -125,7 +110,7 @@
               ORDER BY callsign, timestamp ) s         
           ");
           
-        echo "3rd sql:<br> $sql <br><br>";
+        //echo "3rd sql:<br> $sql <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -138,7 +123,7 @@ foreach($db_found->query($sql) as $row) {
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
     
-    echo "objType: $objType, comment: $comment<br><br>";
+    //echo "$comment<br><br>";
                
     //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
     //$pos1 = $pos2 = 0;
@@ -219,6 +204,8 @@ foreach($db_found->query($sql) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
+        
+        //echo "<br>gs: $gs <br>";
                 
         $icon = "";
         
@@ -296,7 +283,7 @@ foreach($db_found->query($sql) as $row) {
                ORDER BY callsign
            ");
            
-    echo "<br>Fourth sql:<br> $sql <br>";
+    //echo "<br>Fourth sql:<br> $sql <br>";
           
     $thecall = "";
 
