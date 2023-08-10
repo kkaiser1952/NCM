@@ -189,7 +189,7 @@ foreach($db_found->query($sql) as $row) {
     */
         
     $dup = 0;
-        if(id==144) {$dup =50;}
+        //if(id==144) {$dup =50;}
         
         $markNO     = ''; // the marker number (might be alpha)
         

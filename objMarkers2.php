@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 9678;
+   //$q = 9678;
       
    $sql = ("
     SELECT
@@ -36,7 +36,7 @@
     ORDER BY callsign, timestamp;
 ");
           
-         //echo "First sql:<br> $sql <br><br>";
+        //echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";
@@ -59,7 +59,13 @@
          
      } // end of foreach loop 
      
+     //echo "objSW: $objSW"; // with two callsigns
+     //objSW: var W0DLKpadit = W0DLKPAD.getSouthWest();
+     //       var WA0TJTpadit = WA0TJTPAD.getSouthWest();
+     
+     // Count of number of callsigns
      $oByers = "var oByers = $oByersCnt";
+     //echo "oByers: $oByers";
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
@@ -88,7 +94,8 @@
                 $alltheKoords .= $row[allKoords].';';
             }
              
-     //echo "alltheKoords:<br>$alltheKoords<br><br>";
+             // all the cords for each callsign
+        //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
         $sql = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
@@ -148,13 +155,6 @@ foreach($db_found->query($sql) as $row) {
         break;
     } // end switch
     
-
-    //$pos1 = strpos($comment, 'OBJ::') + 5;
-    //$pos2 = strpos($comment, ' & ');
-    
-    //$aprs_call = substr($comment, $pos1, $pos2 - $pos1);
-    //echo "aprs_call: $aprs_call <br><br>";
-    
     $variableArray = [];
     $startPos = $pos2 + 3;
     $index = 1;
@@ -173,26 +173,27 @@ foreach($db_found->query($sql) as $row) {
     }
     
     // Output the variables
-    /*
-    echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
+    
+ /*   echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
     echo "comm1: $comm1 <br>";          // Entered comment
     echo "comm2: $comm2 <br>";          // From APRS comment 
     echo "comm3: $comm3 <br>";          // What3Words
     echo "comm4: $comm4 <br>";          // Crossroad
     echo "comm5: $comm5 <br>";          // koords
     echo "<br>";
-    */
-    /*
+ */   
+ /* Smple output of above echo
     aprs_call: 1134 WA0TJT-1 
-    comm1: harden 
-    comm2: Keith and Deb from KCMO 
-    comm3: ///chum.hamstrings.conspire 
-    comm4: N Harden St & NW 58th St 
-    comm5: 39.19900,-94.60667; 
-    */
-        
+    comm1: harden                       // location give by station
+    comm2: Keith and Deb from KCMO      // output by D700 radio
+    comm3: ///chum.hamstrings.conspire  // API output of W3W from lat/lng
+    comm4: N Harden St & NW 58th St     // Cross streets from API
+    comm5: 39.19900,-94.60667;          // Latitude by APRS from beacon
+ */
+    // this will be the count of markers at the same lat/lng for tilting
+    // the marker on the map for duplicates   the rotational angle 
     $dup = 0;
-        if(id==144) {$dup =50;}
+        //if(id==144) {$dup =50;} // what is this?
         
         $markNO     = ''; // the marker number (might be alpha)
         
@@ -205,12 +206,11 @@ foreach($db_found->query($sql) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
-        
-        //echo "<br>gs: $gs <br>";
                 
         $icon = "";
         
         $OBJMarkerList .= "$objmrkr,";  
+        //echo "objmarkerlist: $OBJMarkerList";
        
         $comment = "$row[comment]";
  
@@ -300,29 +300,30 @@ foreach($db_found->query($sql) as $row) {
     $maninthemiddlecolor = array("greenmanInTheMiddle", "bluemanInTheMiddle", "orangemanInTheMiddle", "plummanInTheMiddle", "lightbluemanInTheMiddle","graymanInTheMiddle", "goldmanInTheMiddle","blackmanInTheMiddle",
         "greenmanInTheMiddle","lightbluemanInTheMiddle","goldmanInTheMiddle", "orangemanInTheMiddle", "plummanInTheMiddle", "lightbluemanInTheMiddle","graymanInTheMiddle", "blackmanInTheMiddle",);
     
-    $cmn = 0;
+    // cmn = Color Marker Count
+    $cmn = 0; 
     $uniqueCallList = "";
     
     foreach($db_found->query($sql) as $row) {
            $callsign = $row[callsign];      
                                 
+           // The 0.25 is to make the square every so little bigger.
     	   $minLat = $row[minLat]-0.25;     ////echo "minLat= $minLat";
     	   $maxLat = $row[maxLat]+0.25;     ////echo "maxLat= $maxLat";
     	   $minLng = $row[minLng]+0.25;     ////echo "minLng= $minLng";
     	   $maxLng = $row[maxLng]-0.25;     ////echo "maxLng= $maxLng";
 
 
-          // It takes 5 sets to complete the square a to b, b to c, c to d, d to e, e back to a
-          //           NorthWest              NorthEast           SouthEast            SouthWest              same as first
-          //       [[$maxLat, $maxLng],    [$maxLat, $minLng ], [$minLat, $minLng ], [$minLat, $maxLng ],  [$maxLat, $maxLng]]";  
+          // It takes 5 sets to complete the square 
+          // a to b, b to c, c to d, d to e, e back to a  
            
-          
           // in ob5 I use $row[callsign]OBJ instead of PAD because there is no padding on the center, its the center       
         if ($thecall <> '$row[callsign]') {	
             $uniqueCallList .= "'$row[callsign]',";
            // $uniqueCallList .= CONCAT('$row[callsign]', 'latlngs');
            //var uniqueCallList = ['W0DLKlatlngs', 'WA0TJTlatlngs'];
             
+            // Add 1 to the counter
             $cmn++;
             	
     		$cornerMarkers .=
@@ -375,7 +376,9 @@ foreach($db_found->query($sql) as $row) {
     $cmn++;
     }; // end foreach loop
     
-    //echo objMarkers:<br> "$objMarkers";
+    //echo "KornerList: $KornerList";
+    
+    //echo "objMarkers: "$objMarkers";
       
     $allPoints = rtrim($allPoints,",");
        //echo "allPoints:<br> $allPoints";
