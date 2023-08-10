@@ -32,7 +32,7 @@ FROM (
         AND comment LIKE '%OBJ::%' /* or comment LIKE '%COM::%' */
 ) AS filtered_data
 GROUP BY callsign
-ORDER BY callsign, dttm;
+ORDER BY callsign, timestamp;
 
           ");
           
