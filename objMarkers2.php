@@ -18,25 +18,25 @@
 
    $q = 9678;
       
-   $sql = (" SELECT
-    callsign,
-    CONCAT(callsign, 'OBJ') AS callOBJ,
-    COUNT(callsign) AS numofcs,
-    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-    CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
-    CONCAT(callsign, 'arr') AS allnameBounds
-FROM (
-    SELECT callsign, comment
-    FROM TimeLog
-    WHERE netID = $q AND callsign <> 'GENCOMM'
-        AND comment LIKE '%OBJ::%' /* or comment LIKE '%COM::%' */
-) AS filtered_data
-GROUP BY callsign
-ORDER BY callsign, timestamp;
-
-          ");
+   $sql = ("
+    SELECT
+        callsign,
+        CONCAT(callsign, 'OBJ') AS callOBJ,
+        COUNT(callsign) AS numofcs,
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+        CONCAT(callsign, 'arr') AS allnameBounds
+    FROM (
+        SELECT callsign, comment, timestamp
+        FROM TimeLog
+        WHERE netID = $q AND callsign <> 'GENCOMM'
+            AND comment LIKE '%OBJ::%' /* or comment LIKE '%W3W::%' */
+    ) AS filtered_data
+    GROUP BY callsign
+    ORDER BY callsign, timestamp;
+");
           
-         echo "First sql:<br> $sql <br><br>";
+         //echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";
@@ -82,6 +82,7 @@ ORDER BY callsign, timestamp;
                 ");
                 
         //echo "sqlk:<br> $sqlk <br><br>";
+            //var WA0TJTlatlngs = [[39.20283,-94.6025].....]]
                 
             foreach($db_found->query($sqlk) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -398,4 +399,3 @@ foreach($db_found->query($sql) as $row) {
      //echo "$OBJMarkerList";
         
 ?>
-  
