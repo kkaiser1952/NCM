@@ -228,6 +228,10 @@
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
 	    
 	    <a href="https://vhf.dxview.org" id="mapdxView" target="_blank">DXView Propagation Map</a>
+	    
+	    <a href="https://www.swpc.noaa.gov" id="noaaSWX" target="_blank">NOAA Space Weather</a>
+	    
+	    <a href="https://spaceweather.com" id="SpaceWX" target="_blank">Space Weather</a>
  
 	    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
 		<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>

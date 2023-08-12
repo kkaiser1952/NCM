@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 9678;
+   //$q = 9678;
       
    $sql = ("
     SELECT
