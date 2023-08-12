@@ -185,73 +185,70 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";  // Access to MySQL
 
+// Function to format time in hours:minutes:seconds format
+function formatTime($seconds) {
+    $hours = floor($seconds / 3600);
+    $minutes = floor(($seconds % 3600) / 60);
+    $seconds = $seconds % 60;
+    return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+}
+
 // Your SQL query
 $sql = $db_found->prepare("
-SELECT netID, logdate, netcall, 
-       count,
-       pb,
-       logclosedtime, 
-       testnet,
-       
-       (CASE
-          WHEN pb = '0' THEN ''
-          WHEN pb = '1' THEN 'blue-bg'
-          ELSE ''
-       END) AS PBcss,
-
-       (CASE
-          WHEN logclosedtime IS NOT NULL THEN ''
-          WHEN logclosedtime IS NULL THEN 'green-bg'
-          ELSE ''
-       END) AS LCTcss,
-
-       (CASE
-          WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
-          ELSE ''
-       END) AS TNcss,
-
-       (SELECT COUNT(DISTINCT netID)
-        FROM NetLog
-        WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
-
-       CONCAT(
-            LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
-            LPAD(FLOOR(MOD(timeonduty_total, 3600) / 60), 2, '0'), ':',
-            LPAD(MOD(timeonduty_total, 60), 2, '0')
-       ) AS Volunteer_Time,
-
-       (CASE
-          WHEN count = 1 THEN 'red-bg'
-          ELSE ''
-       END) AS ccss,
-
-       CONCAT(
-            LPAD(FLOOR(total_timeonduty_sum / 3600), 2, '0'), ':',
-            LPAD(FLOOR(MOD(total_timeonduty_sum, 3600) / 60), 2, '0'), ':',
-            LPAD(MOD(total_timeonduty_sum, 60), 2, '0')
-       ) AS Total_Time  -- Display total_timeonduty_sum as hours:minutes:seconds
-
+SELECT
+    netID,
+    logdate,
+    netcall,
+    count,
+    pb,
+    logclosedtime,
+    testnet,
+    timeonduty_total,
+    total_timeonduty_sum
 FROM (
-    SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty,
-           SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
+    -- Subquery to calculate aggregate data
+    SELECT
+        netID,
+        logdate,
+        netcall,
+        COUNT(*) AS count,
+        pb,
+        logclosedtime,
+        testnet,
+        timeonduty,
+        SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
     FROM NetLog
     WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     GROUP BY netID
 ) AS Subquery,
-
-(SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
- FROM NetLog
- WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+(
+    -- Subquery to calculate total timeonduty_sum
+    SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
+    FROM NetLog
+    WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
 ) AS TotalTimeQuery
-
+-- Group and order results
 GROUP BY netID, total_timeonduty_sum
-
 ORDER BY netID DESC;
 ");
 
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($rows as $row) {
+    // Calculate CSS classes in PHP
+    $PBcss = ($row['pb'] === '1') ? 'blue-bg' : '';
+    $LCTcss = (is_null($row['logclosedtime'])) ? 'green-bg' : '';
+    $TNcss = (in_array($row['netcall'], ['TEST', 'TE0ST', 'TEOST', 'TE0ST'])) ? 'purple-bg' : '';
+    $ccss = ($row['count'] === 1) ? 'red-bg' : '';
+
+    // Format timeonduty_total and total_timeonduty_sum in PHP
+    $volunteerTime = formatTime($row['timeonduty_total']);
+    $totalTime = formatTime($row['total_timeonduty_sum']);
+
+    // Now you can output the data and generated CSS classes as needed
+}
 
 // Print the title
 if (!empty($result)) {
