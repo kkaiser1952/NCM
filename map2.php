@@ -22,7 +22,7 @@
     //$q = 8523; 
     //$q = 6066;
     //$q = 9657;
-    $q = 9678;
+    //$q = 9678;
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
