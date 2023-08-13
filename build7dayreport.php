@@ -194,19 +194,8 @@ function formatTime($seconds) {
 }
 
 // Your SQL query
-$sql = $db_found->prepare("
-SELECT
-    netID,
-    logdate,
-    netcall,
-    count,
-    pb,
-    logclosedtime,
-    testnet,
-    timeonduty_total,
-    total_timeonduty_sum
-FROM (
-    -- Subquery to calculate aggregate data
+// Query to retrieve data for each netID
+$sqlNetData = $db_found->prepare("
     SELECT
         netID,
         logdate,
@@ -220,35 +209,39 @@ FROM (
     FROM NetLog
     WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     GROUP BY netID
-) AS Subquery,
-(
-    -- Subquery to calculate total timeonduty_sum
+    ORDER BY netID DESC
+");
+
+// Query to retrieve total_timeonduty_sum
+$sqlTotalTime = $db_found->prepare("
     SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
     FROM NetLog
     WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-) AS TotalTimeQuery
--- Group and order results
-GROUP BY netID, total_timeonduty_sum
-ORDER BY netID DESC;
 ");
 
-// Execute the SQL query and store the result in $result variable
-$sql->execute();
-$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+// Execute the SQL queries
+$sqlNetData->execute();
+$sqlTotalTime->execute();
 
-foreach ($rows as $row) {
-    // Calculate CSS classes in PHP
+// Fetch the results
+$netDataResult = $sqlNetData->fetchAll(PDO::FETCH_ASSOC);
+$totalTimeResult = $sqlTotalTime->fetch(PDO::FETCH_ASSOC);
+
+// Calculate the total timeonduty_sum
+$total_timeonduty_sum = $totalTimeResult['total_timeonduty_sum'];
+
+// Process the netDataResult
+foreach ($netDataResult as $row) {
+    // Calculate CSS classes and format time in PHP
     $PBcss = ($row['pb'] === '1') ? 'blue-bg' : '';
     $LCTcss = (is_null($row['logclosedtime'])) ? 'green-bg' : '';
     $TNcss = (in_array($row['netcall'], ['TEST', 'TE0ST', 'TEOST', 'TE0ST'])) ? 'purple-bg' : '';
     $ccss = ($row['count'] === 1) ? 'red-bg' : '';
-
-    // Format timeonduty_total and total_timeonduty_sum in PHP
     $volunteerTime = formatTime($row['timeonduty_total']);
-    $totalTime = formatTime($row['total_timeonduty_sum']);
 
-    // Now you can output the data and generated CSS classes as needed
+    // Now you can output or process the calculated data as needed
 }
+
 
 // Print the title
 if (!empty($result)) {
