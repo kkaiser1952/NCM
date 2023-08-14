@@ -361,7 +361,7 @@ if (!empty($result)) {
         //echo ($netcall, $CCss, $THEcss);
         
         // The Test for a netID and its CSS settings
-        if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
+        //if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -369,14 +369,14 @@ if (!empty($result)) {
              
             if ($currentDate !== $date) {
                 echo '<tr class="date-row ">';
-                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')
-                Total Time: ' . $row[Total_Time] .  '</td>';
+                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ') </td>';
+                
                 
                 echo '</tr>';
                 $currentDate = $date;
             }
             
-            // The column color if there is one
+            // The row color if there is one
             echo '<tr class="' . $THEcss . '">'; 
             
             // Column data you don't want to see
@@ -390,8 +390,7 @@ if (!empty($result)) {
             echo '</tr>'; 
 } // End foreach
         // End the table
-        echo '</table>';
-        
+        echo '</table>';     
     } else {
         echo 'No results found.';
     } 
