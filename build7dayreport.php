@@ -209,15 +209,15 @@ SELECT netID, logdate, netcall,
           WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
           ELSE ''
        END) AS TNcss,
-
-       (SELECT COUNT(DISTINCT netID)
-          FROM NetLog
-         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
-         
-         (CASE
+       
+       (CASE
           WHEN count = 1 THEN 'red-bg'
           ELSE ''
        END) AS CCss,
+
+       (SELECT COUNT(DISTINCT netID)
+          FROM NetLog
+         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,       
 
        CONCAT(
             LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
@@ -360,11 +360,8 @@ if (!empty($result)) {
         
         //echo ($netcall, $CCss, $THEcss);
         
-        // The Test
+        // The Test for a netID and its CSS settings
         if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
-        
-        // Output each column value in a table row with the correct class attribute
-       // echo '<tr class="' . $THEcss . '">';
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
