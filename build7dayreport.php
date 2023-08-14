@@ -368,13 +368,16 @@ if (!empty($result)) {
         $dayOfWeek = date('l', strtotime($date));        
              
             if ($currentDate !== $date) {
-                echo '<tr class="date-row">';
+                echo '<tr class="date-row ">';
                 echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ')
                 Total Time: ' . $row[Total_Time] .  '</td>';
                 
                 echo '</tr>';
                 $currentDate = $date;
             }
+            
+            // The column color if there is one
+            echo '<tr class="' . $THEcss . '">'; 
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
