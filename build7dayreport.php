@@ -212,18 +212,18 @@ SELECT netID, logdate, netcall,
 
        (SELECT COUNT(DISTINCT netID)
           FROM NetLog
-         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)) AS netID_count,
+         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,
+         
+         (CASE
+          WHEN count = 1 THEN 'red-bg'
+          ELSE ''
+       END) AS CCss,
 
        CONCAT(
             LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
             LPAD(FLOOR(MOD(timeonduty_total, 3600) / 60), 2, '0'), ':',
             LPAD(MOD(timeonduty_total, 60), 2, '0')
        ) AS Volunteer_Time,
-
-       (CASE
-          WHEN count = 1 THEN 'red-bg'
-          ELSE ''
-       END) AS ccss,
 
        CONCAT(
             LPAD(FLOOR(total_timeonduty_sum / 3600), 2, '0'), ':',
@@ -235,13 +235,13 @@ FROM (
     SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty,
            SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
     FROM NetLog
-    WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)
+    WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     GROUP BY netID
 ) AS Subquery,
 
 (SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
  FROM NetLog
- WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)
+ WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
 ) AS TotalTimeQuery
 
 GROUP BY netID, total_timeonduty_sum
@@ -308,7 +308,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'ccss' && $column !== 'Total_Time') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Total_Time') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -321,22 +321,22 @@ if (!empty($result)) {
         $PBcss = $row['PBcss'];
         $LCTcss = $row['LCTcss'];
         $TNcss = $row['TNcss'];
-        $ccss = $row['ccss'];
+        $CCss = $row['CCss'];
         
         // style every other row
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
     
-        if (!empty($PBcss) && !empty($TNcss) && !empty($ccss)) {
-            // ALL LCTcss and TNcss and ccss are set
+        if (!empty($PBcss) && !empty($TNcss) && !empty($CCss)) {
+            // ALL LCTcss and TNcss and CCss are set
             $THEcss = 'combo-bg';
-        } elseif (!empty($PBcss) && !empty($ccss)) {
-            // Both PBcss and ccss are set
+        } elseif (!empty($PBcss) && !empty($CCss)) {
+            // Both PBcss and CCss are set
             $THEcss = 'redblue-bg';
-        } elseif (!empty($LCTcss) && !empty($ccss)) {
-            // Both LCTcss and ccss are set
+        } elseif (!empty($LCTcss) && !empty($CCss)) {
+            // Both LCTcss and CCss are set
             $THEcss = 'redgreen-bg';
-        } elseif (!empty($TNcss) && !empty($ccss)) {
-            // Both TNcss and ccss are set
+        } elseif (!empty($TNcss) && !empty($CCss)) {
+            // Both TNcss and CCss are set
             $THEcss = 'redpurple-bg';
         } elseif (!empty($LCTcss) && !empty($TNcss)) {
             // Both LCTcss and TNcss are set
@@ -353,16 +353,18 @@ if (!empty($result)) {
         } elseif (!empty($TNcss)) {
             // Only TNcss is set
             $THEcss = $TNcss;
-        } elseif (!empty($ccss)) {
-            // Only ccss is set
-            $THEcss = $ccss;
+        } elseif (!empty($CCss)) {
+            // Only CCss is set
+            $THEcss = $CCss;
         } 
         
+        //echo ($netcall, $CCss, $THEcss);
+        
         // The Test
-        if ($row[netID] == 9606 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss;}
+        if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
         
         // Output each column value in a table row with the correct class attribute
-        echo '<tr class="' . $THEcss . '">';
+       // echo '<tr class="' . $THEcss . '">';
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -379,7 +381,7 @@ if (!empty($result)) {
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'ccss' OR $column === 'Total_Time') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Total_Time') {
                     continue;
                 }
                     echo '<td>' . $columnValue . '</td>';
