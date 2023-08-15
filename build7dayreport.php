@@ -173,6 +173,11 @@
             .form-row:last-child input {
               max-width: calc(100% - 120px); /* 100% minus the label width */
             }
+            
+            /* Define the CSS rules for centering the content */
+            .centered {
+                text-align: center;
+            }
         </style>
     </head>
 <body>
@@ -370,6 +375,7 @@ if (!empty($result)) {
             if ($currentDate !== $date) {
                 echo '<tr class="date-row ">';
                 echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ') </td>';
+                //echo '<td colspan="' . (count($row) + 1) . '"> cnt here </td>'; 
                 
                 
                 echo '</tr>';
@@ -384,7 +390,8 @@ if (!empty($result)) {
                 if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Total_Time') {
                     continue;
                 }
-                    echo '<td>' . $columnValue . '</td>';
+                    //echo '<td>' . $columnValue . '</td>';
+                    echo '<td class="centered">' . $columnValue . '</td>';
             } // End foreach
     
             echo '</tr>'; 
@@ -403,6 +410,7 @@ $(document).ready(function() {
     // Find the second <th> element using :eq(1) selector (index starts from 0)
     var secondHeader = $("th:eq(1)");
     var fourthHeader = $("th:eq(4)");
+    var sixthHeader  = $("th:eq(6)");
 
     // Append the word using .append() method
     secondHeader.append(" UTC");
