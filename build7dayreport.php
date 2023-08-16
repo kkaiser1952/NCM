@@ -250,7 +250,6 @@ FROM (
 ) AS TotalTimeQuery
 
 GROUP BY netID, total_timeonduty_sum
-
 ORDER BY netID DESC;
 ");
 
