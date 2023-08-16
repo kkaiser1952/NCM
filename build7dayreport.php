@@ -205,10 +205,10 @@ SELECT netID, logdate, netcall,
        END) AS PBcss,
 
        (CASE
-          WHEN logclosedtime IS NOT NULL THEN ''
-          WHEN logclosedtime IS NULL THEN 'green-bg'
-          ELSE ''
-       END) AS LCTcss,
+            WHEN logclosedtime IS NOT NULL THEN ''
+            WHEN logclosedtime IS NULL THEN 'green-bg'
+            ELSE ''
+        END) AS LCTcss,
 
        (CASE
           WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
