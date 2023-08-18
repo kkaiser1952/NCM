@@ -339,7 +339,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Total_Time') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Volunteer_Time') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -418,7 +418,7 @@ if (!empty($result)) {
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Total_Time') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time') {
                     continue;
                 }
                     //echo '<td>' . $columnValue . '</td>';
