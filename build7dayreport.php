@@ -206,6 +206,30 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";  // Access to MySQL
 
+// Summation SQL
+$sql = $db_found->prepare("
+SELECT count(callsign) as all_callsigns, 
+       sum(firstLogIn) as ttl_1st_logins
+   FROM NetLog
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
+");
+$sql->execute();
+$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// After executing the query
+if (!$sql) {
+    echo "Query failed: " . $db_found->errorInfo();
+}
+
+// After fetching the result
+print_r($result);
+
+/*
+    $ttl_callsigns  = $result[0]['all_callsigns'];
+    $ttl_stations   = $result[1]['ttl_1st_logins'];
+    
+        echo ($all_callsigns <br> $all_callsigns);
+*/
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT 
@@ -359,10 +383,10 @@ if (!empty($result)) {
     $currentDate = null;
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
-        $PBcss = $row['PBcss'];     // Prebuilt
-        $LCTcss = $row['LCTcss'];   //
-        $TNcss = $row['TNcss'];     // Test Nets
-        $CCss = $row['CCss'];       // 
+        $PBcss = $row['PBcss'];     // Blue:    Prebuilt
+        $LCTcss = $row['LCTcss'];   // Green:   Log Closed Time (its an open net) 
+        $TNcss = $row['TNcss'];     // Purple:  Test Nets
+        $CCss = $row['CCss'];       // Closed
         
         // style every other row
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
