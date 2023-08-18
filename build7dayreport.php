@@ -199,71 +199,82 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT 
-    netID,
-    logdate,
-    netcall,
-    count,
-    pb,
+    nl.netID,
+    nl.logdate,
+    nl.netcall,
+    nl.stations,
+    nl.pb,
     
     CASE
-        WHEN logclosedtime IS NULL THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-        WHEN logclosedtime = '' THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-        ELSE logclosedtime
+        WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+        WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+        ELSE nl.logclosedtime
     END AS logclosedtime,
     
-    testnet,
+    nl.testnet,
     
     CASE
-        WHEN pb = '0' THEN ''
-        WHEN pb = '1' THEN 'blue-bg'
+        WHEN nl.pb = '0' THEN ''
+        WHEN nl.pb = '1' THEN 'blue-bg'
         ELSE ''
     END AS PBcss,
     
     CASE
-        WHEN logclosedtime IS NOT NULL THEN ''
-        WHEN logclosedtime IS NULL THEN 'green-bg'
+        WHEN nl.logclosedtime IS NOT NULL THEN ''
+        WHEN nl.logclosedtime IS NULL THEN 'green-bg'
         ELSE ''
     END AS LCTcss,
     
     CASE
-        WHEN netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') 
-          OR netcall LIKE '%test%' THEN 'purple-bg'
+        WHEN nl.netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') 
+          OR nl.netcall LIKE '%test%' THEN 'purple-bg'
         ELSE ''
     END AS TNcss,
     
     CASE
-        WHEN count = 1 THEN 'red-bg'
+        WHEN nl.stations = 1 THEN 'red-bg'
         ELSE ''
     END AS CCss,
     
-    SUM(firstLogin) AS First_Logins,
+    subquery.First_Login,
     
-    (SELECT COUNT(DISTINCT netID) FROM NetLog WHERE (DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) OR logclosedtime IS NULL OR logclosedtime = '')) AS netID_count,
-    SEC_TO_TIME(SUM(TIME_TO_SEC(timeonduty))) AS Volunteer_Time,
-    SEC_TO_TIME(SUM(TIME_TO_SEC(total_timeonduty_sum))) AS Total_Time
+    (
+        SELECT 
+            COUNT(DISTINCT netID) 
+        FROM NetLog 
+        WHERE (
+            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        )
+    ) AS netID_count,
+    
+    SEC_TO_TIME(SUM(TIME_TO_SEC(nl.timeonduty))) AS Volunteer_Time,
+    SEC_TO_TIME(subquery.total_timeonduty_sum) AS Total_Time
 FROM (
     SELECT 
         netID,
         logdate,
         netcall,
-        COUNT(*) AS count, 
+        COUNT(*) AS stations, 
         pb,
         logclosedtime,
         testnet,
-        timeonduty,
-        firstLogin
+        timeonduty
     FROM NetLog
     WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
-) AS Subquery,
-(
-    SELECT 
+) AS nl
+LEFT JOIN (
+    SELECT
+        netID,
+        SUM(firstLogin) AS First_Login,
         IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
     WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
-) AS TotalTimeQuery
-GROUP BY netID
-ORDER BY netID DESC
+    GROUP BY netID
+) AS subquery ON nl.netID = subquery.netID
+GROUP BY nl.netID
+ORDER BY nl.netID DESC;
+
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -272,8 +283,11 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-    $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
-     Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
+  //  $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+  //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
+     
+    $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
+        . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
         <div class="report-container">     
