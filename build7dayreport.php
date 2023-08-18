@@ -194,6 +194,15 @@
             .centered {
                 text-align: center;
             }
+            
+            /* Style for the new sum row */
+            .sum-row {
+                background-color: lightgray;
+                font-weight: bold;
+                font-size; 16pt;
+                
+            }
+
         </style>
     </head>
 <body>
@@ -206,30 +215,24 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";  // Access to MySQL
 
-// Summation SQL
+// Grand totals SQL
 $sql = $db_found->prepare("
 SELECT count(callsign) as all_callsigns, 
-       sum(firstLogIn) as ttl_1st_logins
+       sum(firstLogIn) as ttl_1st_logins,
+       SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
    FROM NetLog
   WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-// After executing the query
-if (!$sql) {
-    echo "Query failed: " . $db_found->errorInfo();
-}
-
-// After fetching the result
-print_r($result);
-
-/*
-    $ttl_callsigns  = $result[0]['all_callsigns'];
-    $ttl_stations   = $result[1]['ttl_1st_logins'];
+    $ttl_callsigns = $result[0]['all_callsigns'];
+    $ttl_first_logins = $result[0]['ttl_1st_logins'];
+    $time_on_duty = $result[0]['time_on_duty'];
     
-        echo ($all_callsigns <br> $all_callsigns);
-*/
+        
+        echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
+
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT 
@@ -377,7 +380,19 @@ if (!empty($result)) {
             echo '<th>' . $column . '</th>';
         }
     }
+    
     echo '</tr>'; // end for Table header
+    
+    // Create the grand total row under the headers
+    echo '<tr class="sum-row">';
+    echo '<td class="centered">' . '</td>';
+    echo '<td class="centered">' . '</td>';
+    echo '<td colspan="1" style="text-align: right; color:blue;">Grand Totals:</td>';
+    echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_callsigns . '</td>';
+    echo '<td colspan="1" style="text-align: right; color:blue;">Total First Logins:</td>';
+    echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_first_logins . '</td>';
+    echo '<td class="centered">' . $time_on_duty . '</td>';
+    echo '</tr>';
 
     // Table rows
     $currentDate = null;
@@ -432,6 +447,7 @@ if (!empty($result)) {
         
         // The Test for a netID and its CSS settings
         //if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
+        
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
