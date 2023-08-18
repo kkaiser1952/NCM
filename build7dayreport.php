@@ -88,13 +88,23 @@
             }
             
             /* Style for the third column (gradient) */
-            .redblue-bg td:nth-child(3) {
+            .redblue-bg td:nth-child(4) {
               background-image: linear-gradient(to right, red, blue);
               color: white;
             }
             
             /* Style for the last three columns (blue) */
-            .redblue-bg td:nth-last-child(-n + 3) {
+            .redblue-bg td:nth-last-child(-n + 4) {
+              background-color: blue;
+              color: white;
+            }
+            
+            .bluegreen-bg td:nth-child(4) {
+              background-image: linear-gradient(to right, blue, green);
+              color: white;
+            }
+            
+            .bluegreen-bg td:nth-last-child(-n + 4) {
               background-color: blue;
               color: white;
             }
@@ -109,13 +119,13 @@
             }
             
             /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(3) {
+            .redpurple-bg td:nth-child(4) {
               background-image: linear-gradient(to right, red, purple);
               color: white;
             }
             
             /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 3) {
+            .redpurple-bg td:nth-last-child(-n + 4) {
               background-color: purple;
               color: white;
             }
@@ -125,19 +135,19 @@
            
             /* Style for 1 record and open net */
             /* Style for the first two columns (red) */
-            .redgreen-bg td:nth-child(-n + 2) {
+            .redgreen-bg td:nth-child(-n + 4) {
               background-color: red;
               color: white;
             }
             
             /* Style for the third column (gradient) */
-            .redgreen-bg td:nth-child(3) {
+            .redgreen-bg td:nth-child(4) {
               background-image: linear-gradient(to right, red, green);
               color: white;
             }
             
             /* Style for the last three columns (green) */
-            .redgreen-bg td:nth-last-child(-n + 3) {
+            .redgreen-bg td:nth-last-child(-n + 4) {
               background-color: green;
               color: white;
             }
@@ -349,10 +359,10 @@ if (!empty($result)) {
     $currentDate = null;
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
-        $PBcss = $row['PBcss'];
-        $LCTcss = $row['LCTcss'];
-        $TNcss = $row['TNcss'];
-        $CCss = $row['CCss'];
+        $PBcss = $row['PBcss'];     // Prebuilt
+        $LCTcss = $row['LCTcss'];   //
+        $TNcss = $row['TNcss'];     // Test Nets
+        $CCss = $row['CCss'];       // 
         
         // style every other row
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
