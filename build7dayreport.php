@@ -81,6 +81,12 @@
               color: white;
             }
             
+            /* Style for a net with at least one first time stations */
+            .yellow-bg {
+              background-color: yellow;
+              color: blue;
+            }
+            
             /* Style for the third column (gradient) */
             .redblue-bg td:nth-child(3) {
               background-image: linear-gradient(to right, red, blue);
@@ -198,30 +204,40 @@ SELECT
     netcall,
     count,
     pb,
+    
     CASE
         WHEN logclosedtime IS NULL THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
         WHEN logclosedtime = '' THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
         ELSE logclosedtime
     END AS logclosedtime,
+    
     testnet,
+    
     CASE
         WHEN pb = '0' THEN ''
         WHEN pb = '1' THEN 'blue-bg'
         ELSE ''
     END AS PBcss,
+    
     CASE
         WHEN logclosedtime IS NOT NULL THEN ''
         WHEN logclosedtime IS NULL THEN 'green-bg'
         ELSE ''
     END AS LCTcss,
+    
     CASE
-        WHEN netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
+        WHEN netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') 
+          OR netcall LIKE '%test%' THEN 'purple-bg'
         ELSE ''
     END AS TNcss,
+    
     CASE
         WHEN count = 1 THEN 'red-bg'
         ELSE ''
     END AS CCss,
+    
+    SUM(firstLogin) AS First_Logins,
+    
     (SELECT COUNT(DISTINCT netID) FROM NetLog WHERE (DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) OR logclosedtime IS NULL OR logclosedtime = '')) AS netID_count,
     SEC_TO_TIME(SUM(TIME_TO_SEC(timeonduty))) AS Volunteer_Time,
     SEC_TO_TIME(SUM(TIME_TO_SEC(total_timeonduty_sum))) AS Total_Time
@@ -230,11 +246,12 @@ FROM (
         netID,
         logdate,
         netcall,
-        COUNT(*) AS count,
+        COUNT(*) AS count, 
         pb,
         logclosedtime,
         testnet,
-        timeonduty
+        timeonduty,
+        firstLogin
     FROM NetLog
     WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
