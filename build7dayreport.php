@@ -192,65 +192,61 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 
 // Your SQL query
 $sql = $db_found->prepare("
-SELECT netID, logdate, netcall, 
-       count,
-       pb,
-       logclosedtime, 
-       testnet,
-       
-       (CASE
-          WHEN pb = '0' THEN ''
-          WHEN pb = '1' THEN 'blue-bg'
-          ELSE ''
-       END) AS PBcss,
-
-       (CASE
-            WHEN logclosedtime IS NOT NULL THEN ''
-            WHEN logclosedtime IS NULL THEN 'green-bg'
-            ELSE ''
-        END) AS LCTcss,
-
-       (CASE
-          WHEN netcall in('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
-          ELSE ''
-       END) AS TNcss,
-       
-       (CASE
-          WHEN count = 1 THEN 'red-bg'
-          ELSE ''
-       END) AS CCss,
-
-       (SELECT COUNT(DISTINCT netID)
-          FROM NetLog
-         WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)) AS netID_count,       
-
-       CONCAT(
-            LPAD(FLOOR(timeonduty_total / 3600), 2, '0'), ':',
-            LPAD(FLOOR(MOD(timeonduty_total, 3600) / 60), 2, '0'), ':',
-            LPAD(MOD(timeonduty_total, 60), 2, '0')
-       ) AS Volunteer_Time,
-
-       CONCAT(
-            LPAD(FLOOR(total_timeonduty_sum / 3600), 2, '0'), ':',
-            LPAD(FLOOR(MOD(total_timeonduty_sum, 3600) / 60), 2, '0'), ':',
-            LPAD(MOD(total_timeonduty_sum, 60), 2, '0')
-       ) AS Total_Time  -- Display total_timeonduty_sum as hours:minutes:seconds
-
+SELECT 
+    netID,
+    logdate,
+    netcall,
+    count,
+    pb,
+    CASE
+        WHEN logclosedtime IS NULL THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+        WHEN logclosedtime = '' THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+        ELSE logclosedtime
+    END AS logclosedtime,
+    testnet,
+    CASE
+        WHEN pb = '0' THEN ''
+        WHEN pb = '1' THEN 'blue-bg'
+        ELSE ''
+    END AS PBcss,
+    CASE
+        WHEN logclosedtime IS NOT NULL THEN ''
+        WHEN logclosedtime IS NULL THEN 'green-bg'
+        ELSE ''
+    END AS LCTcss,
+    CASE
+        WHEN netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') THEN 'purple-bg'
+        ELSE ''
+    END AS TNcss,
+    CASE
+        WHEN count = 1 THEN 'red-bg'
+        ELSE ''
+    END AS CCss,
+    (SELECT COUNT(DISTINCT netID) FROM NetLog WHERE (DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) OR logclosedtime IS NULL OR logclosedtime = '')) AS netID_count,
+    SEC_TO_TIME(SUM(TIME_TO_SEC(timeonduty))) AS Volunteer_Time,
+    SEC_TO_TIME(SUM(TIME_TO_SEC(total_timeonduty_sum))) AS Total_Time
 FROM (
-    SELECT netID, logdate, netcall, COUNT(*) AS count, pb, logclosedtime, testnet, timeonduty,
-           SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS timeonduty_total
+    SELECT 
+        netID,
+        logdate,
+        netcall,
+        COUNT(*) AS count,
+        pb,
+        logclosedtime,
+        testnet,
+        timeonduty
     FROM NetLog
-    WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
 ) AS Subquery,
-
-(SELECT SUM(CASE WHEN logdate > 0 THEN timeonduty ELSE 0 END) AS total_timeonduty_sum
- FROM NetLog
- WHERE DATE(logclosedtime) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+(
+    SELECT 
+        IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
+    FROM NetLog
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
 ) AS TotalTimeQuery
-
-GROUP BY netID, total_timeonduty_sum
-ORDER BY netID DESC;
+GROUP BY netID
+ORDER BY netID DESC
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -345,6 +341,11 @@ if (!empty($result)) {
         } elseif (!empty($LCTcss) && !empty($TNcss)) {
             // Both LCTcss and TNcss are set
             $THEcss = 'greenpurple-bg';
+            
+         } elseif (!empty($LCTcss) && !empty($PBcss)) {
+            // Both LCTcss and TNcss are set
+            $THEcss = 'greenblue-bg';
+            
         } elseif (!empty($PBcss) && !empty($TNcss)) {
             // Both LCTcss and TNcss are set
             $THEcss = 'bluepurple-bg';
