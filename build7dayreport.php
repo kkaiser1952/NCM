@@ -81,7 +81,7 @@
               color: white;
             }
             
-            /* Style for a net with at least one first time stations */
+            /* Style for Facility Nets */
             .yellow-bg {
               background-color: yellow;
               color: blue;
@@ -198,9 +198,10 @@
             /* Style for the new sum row */
             .sum-row {
                 background-color: lightgray;
+                color:blue;
                 font-weight: bold;
-                font-size; 16pt;
-                
+                font-size; 18pt;
+                text-align: center;
             }
 
         </style>
@@ -272,6 +273,11 @@ SELECT
         WHEN nl.stations = 1 THEN 'red-bg'
         ELSE ''
     END AS CCss,
+    
+    CASE 
+        WHEN nl.facility <> '' THEN 'yellow-bg'
+        ELSE ''
+    END as FNcss,
     
     subquery.First_Login,
     
@@ -355,6 +361,15 @@ if (!empty($result)) {
           
           <!-- Third line -->
           <div class="form-row">
+            <div class="form-column">
+              <label for="facility">Facility Nets:</label>
+              <input type="text" id="facility" name="facility" class="yellow-bg" value="">
+            </div>
+            
+          </div>
+          
+          <!-- Fourth line -->
+          <div class="form-row">
             <label for="combo">Combo Nets:</label>
             <input type="text" id="combo" name="combo" class="combo-bg" value="" style="width: 300px;">
           </div>
@@ -385,13 +400,13 @@ if (!empty($result)) {
     
     // Create the grand total row under the headers
     echo '<tr class="sum-row">';
-    echo '<td class="centered">' . '</td>';
-    echo '<td class="centered">' . '</td>';
-    echo '<td colspan="1" style="text-align: right; color:blue;">Grand Totals:</td>';
-    echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_callsigns . '</td>';
-    echo '<td colspan="1" style="text-align: right; color:blue;">Total First Logins:</td>';
-    echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_first_logins . '</td>';
-    echo '<td class="centered" style="text-align: center; color:blue;">' . $time_on_duty . '</td>';
+    echo '<td class="" >' . $result[0]['netID_count'] . '</td>';
+    echo '<td class="" > All Days are UTC' . '</td>';
+    echo '<td colspan="1" style="text-align: right;">Grand Totals:</td>';
+    echo '<td class="" >' . $ttl_callsigns . '</td>';
+    echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
+    echo '<td class="" >' . $ttl_first_logins . '</td>';
+    echo '<td class="" >' . $time_on_duty . '</td>';
     echo '</tr>';
 
     // Table rows
