@@ -231,7 +231,7 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
     $time_on_duty = $result[0]['time_on_duty'];
     
         
-        echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
+        //echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
 
 // Your SQL query
 $sql = $db_found->prepare("
