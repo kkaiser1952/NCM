@@ -240,7 +240,7 @@ SELECT count(callsign) as all_callsigns,
        sum(firstLogIn) as ttl_1st_logins,
        SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
    FROM NetLog
-  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -255,7 +255,10 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT 
-    nl.netID,
+    CASE
+        WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID, ' cayenne-bg')
+        ELSE nl.netID
+    END AS netID,
     nl.logdate,
     nl.netcall,
     nl.stations,
@@ -295,7 +298,12 @@ SELECT
     CASE 
         WHEN nl.facility <> '' THEN 'yellow-bg'
         ELSE ''
-    END as FNcss,
+    END as FNcss,   
+    
+    CASE
+        WHEN nl.subNetOfID <> 0 THEN 'cayenne-bg'
+        ELSE ''
+    END AS SNcss,
     
     subquery.First_Login,
     
@@ -304,7 +312,7 @@ SELECT
             COUNT(DISTINCT netID) 
         FROM NetLog 
         WHERE (
-            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH)
         )
     ) AS netID_count,
     
@@ -313,6 +321,7 @@ SELECT
 FROM (
     SELECT 
         netID,
+        subNetOfID,
         logdate,
         netcall,
         COUNT(*) AS stations, 
@@ -322,7 +331,7 @@ FROM (
         timeonduty,
         facility
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH))
     GROUP BY netID
 ) AS nl
 LEFT JOIN (
@@ -331,7 +340,7 @@ LEFT JOIN (
         SUM(firstLogin) AS First_Login,
         IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH))
     GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY nl.netID
@@ -345,10 +354,10 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-  //  $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+  //  $title = "Past 2 MONTHs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
   //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
      
-    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
+    $title = "Past 2 MONTHs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
         . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
@@ -409,7 +418,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Volunteer_Time' && $column !== 'FNcss') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column !== 'CCss' && $column !== 'Volunteer_Time' && $column !== 'FNcss' && $column !== 'SNcss') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -436,6 +445,7 @@ if (!empty($result)) {
         $TNcss  = $row['TNcss'];     // Purple:  Test Nets
         $CCss   = $row['CCss'];      // Closed
         $FNcss  = $row['FNcss'];     // Yellow:  Facility Nets
+        $SNcss  = $row['SNcss'];     // Ceyenne: Sub Nets
         
         // style every other row
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
@@ -479,12 +489,14 @@ if (!empty($result)) {
         } elseif (!empty($FNcss)) {
             // Only FNcss is set
             $THEcss = $FNcss;
+        } elseif (!empty($SNcss)) {
+            // Only FNcss is set
+            $THEcss = $SNcss;
         }
         
         
         // The Test for a netID and its CSS settings
-        //if ($row[netID] == 8978 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss;}
-        
+        if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -505,7 +517,7 @@ if (!empty($result)) {
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
                     continue;
                 }
                     //echo '<td>' . $columnValue . '</td>';
