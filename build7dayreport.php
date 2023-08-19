@@ -391,7 +391,7 @@ if (!empty($result)) {
     echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_callsigns . '</td>';
     echo '<td colspan="1" style="text-align: right; color:blue;">Total First Logins:</td>';
     echo '<td class="centered" style="text-align: center; color:blue;">' . $ttl_first_logins . '</td>';
-    echo '<td class="centered">' . $time_on_duty . '</td>';
+    echo '<td class="centered" style="text-align: center; color:blue;">' . $time_on_duty . '</td>';
     echo '</tr>';
 
     // Table rows
