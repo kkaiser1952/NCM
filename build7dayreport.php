@@ -109,6 +109,16 @@
               color: white;
             }
             
+            .blueyellow-bg td:nth-child(4) {
+              background-image: linear-gradient(to right, blue, yellow);
+              color: white;
+            }
+            
+            .blueyellow-bg td:nth-last-child(-n + 4) {
+              background-color: blue;
+              color: white;
+            }
+            
              /* ---- */
             
             /* Style for 1 record and test net */
@@ -159,6 +169,7 @@
             .combo-bg {
               background-image: linear-gradient(to right, red 0%, green 25%, blue 60%, purple 75%);
               width: 300px;
+              color: white;
             }
             
             /* Apply some general styling to the form rows and columns */
@@ -222,7 +233,7 @@ SELECT count(callsign) as all_callsigns,
        sum(firstLogIn) as ttl_1st_logins,
        SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
    FROM NetLog
-  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -286,7 +297,7 @@ SELECT
             COUNT(DISTINCT netID) 
         FROM NetLog 
         WHERE (
-            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY)
         )
     ) AS netID_count,
     
@@ -301,9 +312,10 @@ FROM (
         pb,
         logclosedtime,
         testnet,
-        timeonduty
+        timeonduty,
+        facility
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY))
     GROUP BY netID
 ) AS nl
 LEFT JOIN (
@@ -312,7 +324,7 @@ LEFT JOIN (
         SUM(firstLogin) AS First_Login,
         IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY))
     GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY nl.netID
@@ -326,10 +338,10 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-  //  $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+  //  $title = "Past 200 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
   //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
      
-    $title = "Past 7 days NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
+    $title = "Past 200 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
         . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
@@ -365,7 +377,6 @@ if (!empty($result)) {
               <label for="facility">Facility Nets:</label>
               <input type="text" id="facility" name="facility" class="yellow-bg" value="">
             </div>
-            
           </div>
           
           <!-- Fourth line -->
@@ -391,7 +402,7 @@ if (!empty($result)) {
     
     // Add the headers 
     foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Volunteer_Time') {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column != 'CCss' && $column !== 'Volunteer_Time' && $column !== 'FNcss') {
             echo '<th>' . $column . '</th>';
         }
     }
@@ -413,55 +424,61 @@ if (!empty($result)) {
     $currentDate = null;
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
-        $PBcss = $row['PBcss'];     // Blue:    Prebuilt
-        $LCTcss = $row['LCTcss'];   // Green:   Log Closed Time (its an open net) 
-        $TNcss = $row['TNcss'];     // Purple:  Test Nets
-        $CCss = $row['CCss'];       // Closed
+        $PBcss  = $row['PBcss'];     // Blue:    Prebuilt
+        $LCTcss = $row['LCTcss'];    // Green:   Log Closed Time (its an open net) 
+        $TNcss  = $row['TNcss'];     // Purple:  Test Nets
+        $CCss   = $row['CCss'];      // Closed
+        $FNcss  = $row['FNcss'];     // Yellow:  Facility Nets
         
         // style every other row
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
     
-        if (!empty($PBcss) && !empty($TNcss) && !empty($CCss)) {
-            // ALL LCTcss and TNcss and CCss are set
-            $THEcss = 'combo-bg';
-        } elseif (!empty($PBcss) && !empty($CCss)) {
-            // Both PBcss and CCss are set
-            $THEcss = 'redblue-bg';
-        } elseif (!empty($LCTcss) && !empty($CCss)) {
-            // Both LCTcss and CCss are set
-            $THEcss = 'redgreen-bg';
-        } elseif (!empty($TNcss) && !empty($CCss)) {
-            // Both TNcss and CCss are set
-            $THEcss = 'redpurple-bg';
-        } elseif (!empty($LCTcss) && !empty($TNcss)) {
-            // Both LCTcss and TNcss are set
-            $THEcss = 'greenpurple-bg';
-            
-         } elseif (!empty($LCTcss) && !empty($PBcss)) {
-            // Both LCTcss and TNcss are set
-            $THEcss = 'greenblue-bg';
-            
-        } elseif (!empty($PBcss) && !empty($TNcss)) {
-            // Both LCTcss and TNcss are set
-            $THEcss = 'bluepurple-bg';
-        } elseif (!empty($PBcss)) {
-            // Only PBcss is set
-            $THEcss = $PBcss;
-        } elseif (!empty($LCTcss)) {
-            // Only LCTcss is set
-            $THEcss = $LCTcss;
-        } elseif (!empty($TNcss)) {
-            // Only TNcss is set
-            $THEcss = $TNcss;
-        } elseif (!empty($CCss)) {
-            // Only CCss is set
-            $THEcss = $CCss;
-        } 
+        if (!empty($LCTcss) && !empty($TNcss) && !empty($CCss)) {
+    // ALL LCTcss and TNcss and CCss are set
+    $THEcss = 'combo-bg';
+} elseif (!empty($FNcss) && !empty($PBcss)) {
+    // Both FNcss and PBcss are set
+    $THEcss = 'blueyellow-bg';
+} elseif (!empty($LCTcss) && !empty($TNcss)) {
+    // Both LCTcss and TNcss are set
+    $THEcss = 'greenpurple-bg';
+} elseif (!empty($LCTcss) && !empty($CCss)) {
+    // Both LCTcss and CCss are set
+    $THEcss = 'redgreen-bg';
+} elseif (!empty($TNcss) && !empty($CCss)) {
+    // Both TNcss and CCss are set
+    $THEcss = 'redpurple-bg';
+} elseif (!empty($PBcss) && !empty($CCss)) {
+    // Both PBcss and CCss are set
+    $THEcss = 'redblue-bg';
+} elseif (!empty($TNcss) && !empty($PBcss)) {
+    // Both TNcss and PBcss are set
+    $THEcss = 'bluepurple-bg';
+} elseif (!empty($LCTcss) && !empty($PBcss)) {
+    // Both LCTcss and PBcss are set
+    $THEcss = 'greenblue-bg';
+} elseif (!empty($LCTcss)) {
+    // Only LCTcss is set
+    $THEcss = $LCTcss;
+} elseif (!empty($TNcss)) {
+    // Only TNcss is set
+    $THEcss = $TNcss;
+} elseif (!empty($CCss)) {
+    // Only CCss is set
+    $THEcss = $CCss;
+} elseif (!empty($PBcss)) {
+    // Only PBcss is set
+    $THEcss = $PBcss;
+} elseif (!empty($FNcss)) {
+    // Only FNcss is set
+    $THEcss = $FNcss;
+}
+ 
         
         //echo ($netcall, $CCss, $THEcss);
         
         // The Test for a netID and its CSS settings
-        //if ($row[netID] == 9735 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' THEcss: ' . $THEcss . ' CCss: ' . $CCss;}
+        if ($row[netID] == 8978 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss;}
         
     
         // Output the date and day of the week in a separate row for the start of a new day
@@ -483,7 +500,7 @@ if (!empty($result)) {
             
             // Column data you don't want to see
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss') {
                     continue;
                 }
                     //echo '<td>' . $columnValue . '</td>';
