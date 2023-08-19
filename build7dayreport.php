@@ -62,6 +62,12 @@
                 font-weight: bold;
             }
             
+            /* Style for Facility Nets */
+            .yellow-bg {
+              background-color: yellow;
+              color: blue;
+            }
+            
             
             label {
               font-weight: bold;
@@ -69,22 +75,15 @@
             
             .date-row {
               font-weight: bold;
-              font-size: 16pt;
+              font-size: 18pt;
               color: darkgreen;
             }
-            
-           
+                  
             /* Style for 1 record and pre-built net */
             /* Style for the first two columns (red) */
             .redblue-bg {
               background-color: red;
               color: white;
-            }
-            
-            /* Style for Facility Nets */
-            .yellow-bg {
-              background-color: yellow;
-              color: blue;
             }
             
             /* Style for the third column (gradient) */
@@ -109,16 +108,26 @@
               color: white;
             }
             
+            /* Style for 1 record and pre-built net */
+            /* Style for the first column (blue) */
+            .blueyellow-bg td:nth-child(-n + 4) {
+              background-color: blue;
+              color: white;
+            }
+            
+            /* Style for the third column (gradient) */
             .blueyellow-bg td:nth-child(4) {
               background-image: linear-gradient(to right, blue, yellow);
               color: white;
             }
             
+            /* Style for the last three columns (green) */
             .blueyellow-bg td:nth-last-child(-n + 4) {
-              background-color: blue;
+              background-color: yellow;
               color: white;
             }
-            
+
+          
              /* ---- */
             
             /* Style for 1 record and test net */
@@ -143,7 +152,6 @@
             
             /* ---- */
            
-            /* Style for 1 record and open net */
             /* Style for the first two columns (red) */
             .redgreen-bg td:nth-child(-n + 4) {
               background-color: red;
@@ -161,7 +169,6 @@
               background-color: green;
               color: white;
             }
-            /* END: Style for 1 record and open net */
             
             /* ---- */
             
@@ -175,7 +182,7 @@
             /* Apply some general styling to the form rows and columns */
             .report-container {
               max-width: 600px; /* Adjust the width as needed */
-              margin-left: 100;
+              margin-left: 100px;
             }
             
             /* Apply some general styling to the form rows and columns */
@@ -211,7 +218,7 @@
                 background-color: lightgray;
                 color:blue;
                 font-weight: bold;
-                font-size; 18pt;
+                font-size: 16pt;
                 text-align: center;
             }
 
@@ -233,7 +240,7 @@ SELECT count(callsign) as all_callsigns,
        sum(firstLogIn) as ttl_1st_logins,
        SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
    FROM NetLog
-  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY)); 
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -297,7 +304,7 @@ SELECT
             COUNT(DISTINCT netID) 
         FROM NetLog 
         WHERE (
-            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY)
+            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
         )
     ) AS netID_count,
     
@@ -315,7 +322,7 @@ FROM (
         timeonduty,
         facility
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
 ) AS nl
 LEFT JOIN (
@@ -324,7 +331,7 @@ LEFT JOIN (
         SUM(firstLogin) AS First_Login,
         IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 200 DAY))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY nl.netID
@@ -338,10 +345,10 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-  //  $title = "Past 200 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+  //  $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
   //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
      
-    $title = "Past 200 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
+    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
         . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
@@ -434,51 +441,49 @@ if (!empty($result)) {
         $THEcss = $rowIndex % 2 === 0 ? 'even-row' : 'odd-row';
     
         if (!empty($LCTcss) && !empty($TNcss) && !empty($CCss)) {
-    // ALL LCTcss and TNcss and CCss are set
-    $THEcss = 'combo-bg';
-} elseif (!empty($FNcss) && !empty($PBcss)) {
-    // Both FNcss and PBcss are set
-    $THEcss = 'blueyellow-bg';
-} elseif (!empty($LCTcss) && !empty($TNcss)) {
-    // Both LCTcss and TNcss are set
-    $THEcss = 'greenpurple-bg';
-} elseif (!empty($LCTcss) && !empty($CCss)) {
-    // Both LCTcss and CCss are set
-    $THEcss = 'redgreen-bg';
-} elseif (!empty($TNcss) && !empty($CCss)) {
-    // Both TNcss and CCss are set
-    $THEcss = 'redpurple-bg';
-} elseif (!empty($PBcss) && !empty($CCss)) {
-    // Both PBcss and CCss are set
-    $THEcss = 'redblue-bg';
-} elseif (!empty($TNcss) && !empty($PBcss)) {
-    // Both TNcss and PBcss are set
-    $THEcss = 'bluepurple-bg';
-} elseif (!empty($LCTcss) && !empty($PBcss)) {
-    // Both LCTcss and PBcss are set
-    $THEcss = 'greenblue-bg';
-} elseif (!empty($LCTcss)) {
-    // Only LCTcss is set
-    $THEcss = $LCTcss;
-} elseif (!empty($TNcss)) {
-    // Only TNcss is set
-    $THEcss = $TNcss;
-} elseif (!empty($CCss)) {
-    // Only CCss is set
-    $THEcss = $CCss;
-} elseif (!empty($PBcss)) {
-    // Only PBcss is set
-    $THEcss = $PBcss;
-} elseif (!empty($FNcss)) {
-    // Only FNcss is set
-    $THEcss = $FNcss;
-}
- 
+            // ALL LCTcss and TNcss and CCss are set
+            $THEcss = 'combo-bg';
+        } elseif (!empty($FNcss) && !empty($PBcss)) {
+            // Both FNcss and PBcss are set
+            $THEcss = 'blueyellow-bg';
+        } elseif (!empty($LCTcss) && !empty($TNcss)) {
+            // Both LCTcss and TNcss are set
+            $THEcss = 'greenpurple-bg';
+        } elseif (!empty($LCTcss) && !empty($CCss)) {
+            // Both LCTcss and CCss are set
+            $THEcss = 'redgreen-bg';
+        } elseif (!empty($TNcss) && !empty($CCss)) {
+            // Both TNcss and CCss are set
+            $THEcss = 'redpurple-bg';
+        } elseif (!empty($PBcss) && !empty($CCss)) {
+            // Both PBcss and CCss are set
+            $THEcss = 'redblue-bg';
+        } elseif (!empty($TNcss) && !empty($PBcss)) {
+            // Both TNcss and PBcss are set
+            $THEcss = 'bluepurple-bg';
+        } elseif (!empty($LCTcss) && !empty($PBcss)) {
+            // Both LCTcss and PBcss are set
+            $THEcss = 'greenblue-bg';
+        } elseif (!empty($LCTcss)) {
+            // Only LCTcss is set
+            $THEcss = $LCTcss;
+        } elseif (!empty($TNcss)) {
+            // Only TNcss is set
+            $THEcss = $TNcss;
+        } elseif (!empty($CCss)) {
+            // Only CCss is set
+            $THEcss = $CCss;
+        } elseif (!empty($PBcss)) {
+            // Only PBcss is set
+            $THEcss = $PBcss;
+        } elseif (!empty($FNcss)) {
+            // Only FNcss is set
+            $THEcss = $FNcss;
+        }
         
-        //echo ($netcall, $CCss, $THEcss);
         
         // The Test for a netID and its CSS settings
-        if ($row[netID] == 8978 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss;}
+        //if ($row[netID] == 8978 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss;}
         
     
         // Output the date and day of the week in a separate row for the start of a new day
@@ -528,6 +533,7 @@ $(document).ready(function() {
     // Append the word using .append() method
     secondHeader.append(" UTC");
     fourthHeader.append(" UTC");
+    sixthHeader.append(" H:M:S");
 });
 
 </script>
