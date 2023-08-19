@@ -68,6 +68,11 @@
               color: blue;
             }
             
+            .cayenne-bg {
+                background-color: #941100;
+                color: white;
+                font-weight: bold;
+            }
             
             label {
               font-weight: bold;
@@ -240,7 +245,7 @@ SELECT count(callsign) as all_callsigns,
        sum(firstLogIn) as ttl_1st_logins,
        SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
    FROM NetLog
-  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH)); 
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -256,7 +261,7 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 $sql = $db_found->prepare("
 SELECT 
     CASE
-        WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID, ' cayenne-bg')
+        WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID)
         ELSE nl.netID
     END AS netID,
     nl.logdate,
@@ -312,7 +317,7 @@ SELECT
             COUNT(DISTINCT netID) 
         FROM NetLog 
         WHERE (
-            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH)
+            DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
         )
     ) AS netID_count,
     
@@ -331,7 +336,7 @@ FROM (
         timeonduty,
         facility
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
 ) AS nl
 LEFT JOIN (
@@ -340,7 +345,7 @@ LEFT JOIN (
         SUM(firstLogin) AS First_Login,
         IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH))
+    WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY nl.netID
@@ -354,10 +359,10 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-  //  $title = "Past 2 MONTHs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
+  //  $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
   //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
      
-    $title = "Past 2 MONTHs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
+    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
         . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
@@ -392,6 +397,10 @@ if (!empty($result)) {
             <div class="form-column">
               <label for="facility">Facility Nets:</label>
               <input type="text" id="facility" name="facility" class="yellow-bg" value="">
+            </div>
+          <div class="form-column">
+              <label for="test">Sub Nets:</label>
+              <input type="text" id="test" name="test" class="cayenne-bg" value="">
             </div>
           </div>
           
