@@ -256,6 +256,13 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
     
         
         //echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
+/*
+    // This snipit of code can pick up the personwho opened the Net on NCM
+    SELECT netID, callsign , comment
+      FROM TimeLog 
+     WHERE comment like '%Opened the%' 
+       ABD netID > 9770
+    */
 
 // Your SQL query
 $sql = $db_found->prepare("
