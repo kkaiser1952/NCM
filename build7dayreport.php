@@ -179,7 +179,7 @@
             
             /* Style for combination label */
             .combo-bg {
-              background-image: linear-gradient(to right, red 0%, green 25%, blue 60%, purple 75%);
+              background-image: linear-gradient(to right, red, yellow, green, purple, blue, #941100 );
               width: 300px;
               color: white;
             }
