@@ -226,6 +226,11 @@
                 font-size: 16pt;
                 text-align: center;
             }
+            
+            tr:first-child {
+              border-bottom: 2px solid red;
+            }
+            
 
         </style>
     </head>
@@ -243,7 +248,12 @@ require_once "dbConnectDtls.php";  // Access to MySQL
 $sql = $db_found->prepare("
 SELECT count(callsign) as all_callsigns, 
        sum(firstLogIn) as ttl_1st_logins,
-       SEC_TO_TIME(sum(`timeonduty`)) as time_on_duty
+       CONCAT(
+        FLOOR(SUM(`timeonduty`) / 86400), ' days ',
+        LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
+        LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
+        LPAD(SUM(`timeonduty`) % 60, 2, '0')
+    ) AS time_on_duty
    FROM NetLog
   WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
 ");
@@ -429,19 +439,8 @@ if (!empty($result)) {
     // Start the table
     echo '<table>';
 
-    // Start the Table header
-    echo '<tr>';
     
-    // Add the headers 
-    foreach (array_keys($result[0]) as $column) {
-        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column !== 'CCss' && $column !== 'Volunteer_Time' && $column !== 'FNcss' && $column !== 'SNcss') {
-            echo '<th>' . $column . '</th>';
-        }
-    }
-    
-    echo '</tr>'; // end for Table header
-    
-    // Create the grand total row under the headers
+    // Create the grand total row over the headers
     echo '<tr class="sum-row">';
     echo '<td class="" >' . $result[0]['netID_count'] . '</td>';
     echo '<td class="" > All Days are UTC' . '</td>';
@@ -451,6 +450,20 @@ if (!empty($result)) {
     echo '<td class="" >' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . $time_on_duty . '</td>';
     echo '</tr>';
+    echo '<tr>';
+    
+    // Start the Table header
+    // Add the headers 
+    foreach (array_keys($result[0]) as $column) {
+        if ($column !== 'netID_count' && $column !== 'pb' && $column !== 'testnet' && $column !== 'PBcss' && $column !== 'LCTcss' && $column !== 'TNcss' && $column !== 'CCss' && $column !== 'Volunteer_Time' && $column !== 'FNcss' && $column !== 'SNcss') {
+        
+            echo '<th>' . $column . '</th>';
+        }
+    }
+    
+    echo '</tr>'; // end for Table header
+    
+    
 
     // Table rows
     $currentDate = null;
@@ -554,14 +567,27 @@ if (!empty($result)) {
 $(document).ready(function() {
     // Adding a word to one of the header <th> values
     // Find the second <th> element using :eq(1) selector (index starts from 0)
-    var secondHeader = $("th:eq(1)");
-    var fourthHeader = $("th:eq(4)");
-    var sixthHeader  = $("th:eq(6)");
+    var firstHeader    = $("th:eq(0)"); // netID
+    var secondHeader   = $("th:eq(1)"); // logdate
+    var thirdHeader    = $("th:eq(2)"); // netcall
+    var fourthHeader   = $("th:eq(3)"); // station count
+    var fifthhHeader   = $("th:eq(4)"); // logclosedtime
+    var sixthHeader    = $("th:eq(5)"); // first login count
+    var seventhHeader  = $("th:eq(6)");
 
     // Append the word using .append() method
-    secondHeader.append(" UTC");
-    fourthHeader.append(" UTC");
-    sixthHeader.append(" H:M:S");
+    //secondHeader.append(" UTC");
+    //fourthHeader.append(" UTC");
+    //sixthHeader.append(" H:M:S");
+    
+    firstHeader.text("Net ID");
+    secondHeader.text("Log Date UTC");
+    thirdHeader.text("Net Call");
+    fourthHeader.text("Stations");
+    fifthhHeader.text("Closed Time UTC");
+    sixthHeader.text("1st Logins");
+    seventhHeader.text("H:M:S");
+
 });
 
 </script>
