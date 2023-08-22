@@ -128,7 +128,7 @@
 /* Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721 0 Ft. */
         
         // Pull detail data FROM  poi table
-        $sql = ("SELECT id, class, name, address, Notes, 
+        $sql = "SELECT id, class, name, address, Notes, 
                         LOWER(class) as class, 
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
@@ -141,16 +141,21 @@
                         CONCAT(class,id) as altTactical,
                         dttm
                   FROM poi 
-                 ORDER BY class 
-               ");            
+                  ORDER BY class 
+               ";            
               
-        //echo "<br><br>$sql<br>";
-      
-      $rowno = 0;
-      foreach($db_found->query($sql) as $row) {
-        $rowno    = $rowno + 1;
-        $tactical = $row[tactical]; 
-           if ($row[tactical] === "" ) {$tactical = $row[altTactical];}   
+      // Prepare the statement
+$stmt = $db_found->prepare($sql);
+$stmt->execute(); // Execute the prepared statement
+
+$rowno = 0;
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $rowno = $rowno + 1;
+    $tactical = $row['tactical'];
+    
+    if ($row['tactical'] === "") {
+        $tactical = $row['altTactical'];
+    }   
             //echo "$row[altTactical]";}
             
         // Calculates the grdsquare
@@ -235,21 +240,14 @@
       //  Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721,  0 Ft.
        
          $poiMarkers .= "
-            var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}),{ 
-                rotationAngle: $dup,
-                rotationOrigin: 'bottom',
-                opacity: 0.75,
-                contextmenu: true, 
-                contextmenuWidth: 140,
-                contextmenuItems: [{ text: 'Click here to add mileage circles',
-                    callback: circleKoords}],
-                         
-                icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                title: '$row[tactical] $row[name]  $row[Notes] $row[koords]' ,
-                    }).addTo(fg).bindPopup('$row[tactical]<br> $row[name] <br> $row[Notes]<br> $row[koords]<br>Created: $row[dttm]' );                        
-         
-                $('{$row['class']}'._icon).addClass('$poimrkr');
-            ";
+        var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}), { 
+            // ... other properties
+            icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+            title: '{$row['tactical']} {$row['name']}  {$row['Notes']} {$row['koords']}' ,
+        }).addTo(fg).bindPopup('{$row['tactical']}<br> {$row['name']} <br> {$row['Notes']}<br> {$row['koords']}<br>Created: {$row['dttm']}');
+        
+        $('{$row['class_lower']}'._icon).addClass('$poimrkr');
+    ";
  // End of $poiMarkers build
                      
      }; // End of foreach for poi markers
