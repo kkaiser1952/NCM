@@ -526,7 +526,7 @@ if (!empty($result)) {
         
         
         // The Test for a netID and its CSS settings
-        if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
+      //  if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
     
         // Output the date and day of the week in a separate row for the start of a new day
         $date = substr($row['logdate'], 0, 10);
@@ -536,8 +536,7 @@ if (!empty($result)) {
                 echo '<tr class="date-row ">';
                 echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ') </td>';
                 //echo '<td colspan="' . (count($row) + 1) . '"> cnt here </td>'; 
-                
-                
+            
                 echo '</tr>';
                 $currentDate = $date;
             }
