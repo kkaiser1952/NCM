@@ -12,7 +12,7 @@
           });
           
           function net_by_number(value) {
-            alert("You clicked the first table cell with value: " + value);
+            //alert("You clicked the first table cell with value: " + value);
             // Perform any other desired actions using the value
           }
 
@@ -549,11 +549,19 @@ if (!empty($result)) {
                 if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
                     continue;
                 }
-                    //echo '<td>' . $columnValue . '</td>';
-                    echo '<td class="centered">' . $columnValue . '</td>';
+                   
+                    //echo '<td class="centered">' . $columnValue . '</td>';
+                    echo '<td class="centered">';
+                    if ($column === 'netID') {
+                        $netID = $columnValue;
+                        echo '<a href="https://net-control.us/map.php?NetID=' . $netID . '" target="_blank" rel="noopener noreferrer">' . $netID . '</a>';
+                    } else {
+                        echo $columnValue;
+                    }
             } // End foreach
     
-            echo '</tr>'; 
+                echo '</tr>'; 
+                
 } // End foreach
         // End the table
         echo '</table>';     
