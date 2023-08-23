@@ -240,14 +240,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //  Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721,  0 Ft.
        
          $poiMarkers .= "
-        var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}), { 
-            // ... other properties
-            icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-            title: '{$row['tactical']} {$row['name']}  {$row['Notes']} {$row['koords']}' ,
-        }).addTo(fg).bindPopup('{$row['tactical']}<br> {$row['name']} <br> {$row['Notes']}<br> {$row['koords']}<br>Created: {$row['dttm']}');
-        
-        $('{$row['class_lower']}'._icon).addClass('$poimrkr');
-    ";
+    var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}), { 
+        // ... other properties
+        icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+        title: " . json_encode("{$row['tactical']} {$row['name']}  {$row['Notes']} {$row['koords']}") . ",
+    }).addTo(fg).bindPopup(" . json_encode("{$row['tactical']}<br> {$row['name']} <br> {$row['Notes']}<br> {$row['koords']}<br>Created: {$row['dttm']}") . ");
+    
+    $('{$row['class_lower']}'._icon).addClass('$poimrkr');
+";
+
  // End of $poiMarkers build
                      
      }; // End of foreach for poi markers
