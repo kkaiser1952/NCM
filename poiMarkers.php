@@ -220,7 +220,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                              $poimrkr = "aviationmrkr";  break;     
                              
             case "rfhole":   $K = $K+1;  $iconName = "holeicon"; $markNO = "K$K";
-                             $markername = "images/markers/hole.png";    
+                             $markername = "images/markers/hole.svg";    
                              $poimrkr = "aviationmrkr";  break;
                                                              
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
