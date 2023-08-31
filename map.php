@@ -354,7 +354,7 @@ var map = L.map('map', {
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-        rfhole        = new PoiIconClass({iconUrl: 'markers/hole.png'}),
+        rfhole        = new PoiIconClass({iconUrl: 'BRKMarkers/hole.svg'}),
         
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
     
@@ -490,7 +490,7 @@ var map = L.map('map', {
      var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
        console.log('In map.php classNames= '+classNames);
     
-     let station = {"<img src='markers/green_marker_hole.png' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
+     let station = {"<img src='markers/green_marker_hole.svg' class='greenmarker' alt='green_marker_hole' align='middle' /><span class='biggreenmarker'> Stations</span>": Stations};
 
      // The values i.e. aviationList, federalList ... are created in the poiMarkers.php @ about line 66 but it appears not all are being picked up
     
@@ -515,7 +515,7 @@ var map = L.map('map', {
     addToClassMap('hospitalL',  'hospitalList', 'firstaid.png');
     addToClassMap('policeL',    'policeList',   'police.png');
     addToClassMap('repeaterL',  'repeaterList', 'repeater.png');
-    addToClassMap('rfholeL',    'rfholeList',   'hole.png');
+    addToClassMap('rfholeL',    'rfholeList',   'hole.svg');
     addToClassMap('sheriffL',   'sheriffList',  'police.png');
     addToClassMap('stateL',     'stateList',    'gov.png');
     
