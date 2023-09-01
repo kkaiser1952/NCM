@@ -1,3 +1,6 @@
+<?php 
+	require_once "NCMStats.php";			
+?>
 </DOCTYPE html>
 <html>
     <head>
@@ -382,6 +385,11 @@ if (!empty($result)) {
      
     $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
         . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
+        	 
+				echo "As of Today: --><br>   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries,
+					 <br> $volHours of Volunteer Time";
+			
+		
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
         <div class="report-container">     
