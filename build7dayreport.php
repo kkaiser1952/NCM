@@ -139,7 +139,7 @@
           
              /* ---- */
             
-            /* Style for 1 record and test net */
+           
             /* Style for the first two columns (red) */
             .redpurple-bg {
               background-color: red;
@@ -171,6 +171,22 @@
             }
             
             .greenpurple-bg td:nth-last-child(-n + 4) {
+              background-color: purple;
+              color: white;
+            }
+            
+            /* Style for an pre-built test net */
+            .bluepurple-bg td:nth-child(-n + 4) {
+              background-color: blue;
+              color: white;
+            }
+            
+            .bluepurple-bg td:nth-child(4) {
+              background-image: linear-gradient(to right, blue, purple);
+              color: white;
+            }
+            
+            .bluepurple-bg td:nth-last-child(-n + 4) {
               background-color: purple;
               color: white;
             }
@@ -494,8 +510,6 @@ if (!empty($result)) {
     }
     
     echo '</tr>'; // end for Table header
-    
-    
 
     // Table rows
     $currentDate = null;
