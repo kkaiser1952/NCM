@@ -159,6 +159,22 @@
             }
             /* END: Style for 1 record and test net */
             
+            /* Style for an open test net */
+            .greenpurple-bg td:nth-child(-n + 4) {
+              background-color: green;
+              color: white;
+            }
+            
+            .greenpurple-bg td:nth-child(4) {
+              background-image: linear-gradient(to right, green, purple);
+              color: white;
+            }
+            
+            .greenpurple-bg td:nth-last-child(-n + 4) {
+              background-color: purple;
+              color: white;
+            }
+            
             /* ---- */
            
             /* Style for the first two columns (red) */
@@ -393,7 +409,7 @@ if (!empty($result)) {
    // echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
  
 	//echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
-    echo '$netcall' . ' Groups, ' . $cscount . ' Unique Stations, ' . $netCnt . ' Nets, ' . $records . ' Entries, <br>' . $volHours . ' of Volunteer Time</div>';
+    echo '<div class=\'reportTitle\';>' . $netcall . ' Groups, ' . $cscount . ' Unique Stations, ' . $netCnt . ' Nets, ' . $records . ' Entries, <br>' . $volHours . ' of Volunteer Time</div>';
 		 
     $title = "Today is: " . date("l") . ', ' . date('Y/m/d') .
     "<br>Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
@@ -611,8 +627,17 @@ $(document).ready(function() {
     sixthHeader.text("1st Logins");
     seventhHeader.text("H:M:S");
 
-});
+        $('tr').each(function () {
+            var $row = $(this);
+            var backgroundColor = $row.css('background-color');
+            var netIDCell = $row.find('td:first-child');
 
+            if (backgroundColor !== 'rgb(255, 255, 255)' && backgroundColor !== 'rgb(240, 240, 240)' && netIDCell.find('a').length > 0) {
+                // Check if the row's background color is not white or off-white and the netID cell contains a link
+                netIDCell.find('a').css('color', 'white');
+            }
+        });
+});
 </script>
 
 </body>
