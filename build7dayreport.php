@@ -178,6 +178,11 @@
               color: white;
             }
             
+            .reportTitle {
+                font-size: 18pt;
+                margin-left: 100px;
+            }
+            
             /* ---- */
             
             /* Style for combination label */
@@ -380,16 +385,13 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Print the title
 if (!empty($result)) {
-  //  $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>
-  //   Today is: " . date("l") .", " . date("Y/m/d") . "<br>";
-     
-    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>"
-        . "Today is: " . date("l") . ", " . date("Y/m/d") . "<br>";
-        	 
-	echo "<h2 style='margin-left:100;'>As of Today: --> <br>   $netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries,
-		 <br> $volHours of Volunteer Time</h2>";
-			
-		
+            	 
+    // top of the report, before the day 7 stuff 
+ 
+	echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
+	'$netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries, <br> $volHours of Volunteer Time</div>';
+		 
+    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
         <div class="report-container">     
