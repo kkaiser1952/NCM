@@ -1,6 +1,7 @@
-<?php 
-	require_once "NCMStats.php";			
-?>
+	<?php 
+	//require_once "NCMStats.php";		
+	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";	
+?>		
 </DOCTYPE html>
 <html>
     <head>
@@ -245,12 +246,14 @@
 <body>
 
 <?php
+require_once "NCMStats.php";		
+	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
 // The purpose of this page/program is to send a daily report of NCM to my messages
 // Written: 2023-06-21, first day of summer	
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
-require_once "dbConnectDtls.php";  // Access to MySQL
+//require_once "dbConnectDtls.php";  // Access to MySQL is in the NCMStats.php 
 
 // Grand totals SQL
 $sql = $db_found->prepare("
@@ -387,11 +390,13 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 if (!empty($result)) {
             	 
     // top of the report, before the day 7 stuff 
+   // echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
  
-	echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
-	'$netcall Groups, $cscount Unique Stations, $netCnt Nets, $records Entries, <br> $volHours of Volunteer Time</div>';
+	//echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
+    echo '$netcall' . ' Groups, ' . $cscount . ' Unique Stations, ' . $netCnt . ' Nets, ' . $records . ' Entries, <br>' . $volHours . ' of Volunteer Time</div>';
 		 
-    $title = "Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
+    $title = "Today is: " . date("l") . ', ' . date('Y/m/d') .
+    "<br>Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
     
     echo '<h1 style="margin-left:100;">' . $title . '</h1>
         <div class="report-container">     
