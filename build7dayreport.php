@@ -321,7 +321,8 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 // Your SQL query
 $sql = $db_found->prepare("
 SELECT 
-    CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) ELSE nl.netID END AS netID,
+    CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) 
+            ELSE nl.netID END AS netID,
     nl.logdate,
     nl.netcall,
     nl.stations,
