@@ -323,8 +323,8 @@ $sql = $db_found->prepare("
 SELECT 
     CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) 
             ELSE nl.netID END AS netID,
-    CASE WHEN nl.logdate <> 0 THEN nl.logdate
-         ELSE (SELECT MAX(dttm) FROM NetLog) END AS logdate,
+    CASE WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
+            ELSE (SELECT MAX(dttm) FROM NetLog) END AS logdate,
     nl.netcall,
     nl.stations,
     nl.pb,
@@ -348,7 +348,8 @@ SELECT
     subquery.First_Login,
     (SELECT COUNT(DISTINCT netID) 
        FROM NetLog 
-      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))) AS netID_count,
+      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    ) AS netID_count,
     SEC_TO_TIME(SUM(TIME_TO_SEC(nl.timeonduty))) AS Volunteer_Time,
     SEC_TO_TIME(subquery.total_timeonduty_sum) AS Total_Time
 FROM (
@@ -365,7 +366,6 @@ LEFT JOIN (
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY netID
 ORDER BY netID DESC;
-
 
 ");
 
