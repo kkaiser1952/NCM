@@ -350,8 +350,23 @@ SELECT
        FROM NetLog 
       WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     ) AS netID_count,
-    SEC_TO_TIME(SUM(TIME_TO_SEC(nl.timeonduty))) AS Volunteer_Time,
-    SEC_TO_TIME(subquery.total_timeonduty_sum) AS Total_Time
+    SEC_TO_TIME(SUM(
+    CASE 
+        WHEN nl.timeonduty IS NULL THEN 0
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT MAX(dttm) FROM NetLog))
+        ELSE TIME_TO_SEC(nl.timeonduty)
+    END
+)) AS Volunteer_Time,
+
+    SEC_TO_TIME(
+    CASE 
+        WHEN subquery.total_timeonduty_sum IS NULL THEN 0
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT MAX(dttm) FROM NetLog))
+        ELSE subquery.total_timeonduty_sum
+    END
+) AS Total_Time
+
+
 FROM (
     SELECT netID, subNetOfID, logdate, netcall, COUNT(*) AS stations, pb, logclosedtime, testnet, timeonduty, facility
       FROM NetLog
