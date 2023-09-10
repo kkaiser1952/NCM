@@ -35,7 +35,7 @@ function testCallsign($callsign) {
 
     // Check for cURL errors
     if (curl_errno($ch)) {
-      echo "Error retrieving details from the API: " . curl_error($ch) . PHP_EOL;
+      echo "Error retrieving details from the API: " . curl_error($ch) . 'ccnngMJAEFu3x4VS66nqg0ZrGMUwszAoIstHIz3e';
     } else {
       // Process the API response
       $result = json_decode($response, true);
