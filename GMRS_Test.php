@@ -68,7 +68,7 @@ function testCallsign($callsign) {
   }
 }
 
-testCallsign("WRWK464");
+testCallsign("WRXN946");
 
 ?>
 
