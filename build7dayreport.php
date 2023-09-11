@@ -580,6 +580,7 @@ if (!empty($result)) {
 } // End foreach
         // End the table
         echo '</table>';     
+        echo '<br><br>build7dayreport.php';
     } else {
         echo 'No results found.';
     } 
