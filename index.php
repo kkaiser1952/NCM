@@ -131,12 +131,12 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
+    	<!-- <a href="#cc" rel="modal:open" id="version2">v8.03.11 -->
+    	<a href="https://groups.io/g/NCM" target="_blank">About</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
         -->
-	
     </span> <!-- End of id version -->
 </div> 
 
