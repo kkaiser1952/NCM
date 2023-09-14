@@ -4,10 +4,10 @@
 
 require_once "dbConnectDtls.php";
 require_once "geocode.php";     // Replace with your actual file name
-
+require_once "GridSquare.php";  // Replace with your actual file name 
  
 // Define the batch size (e.g., 100 records at a time)
-$batchSize = 100;
+$batchSize = 2;
 
 $sql = "
 SELECT a.fccid,
@@ -42,6 +42,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $count = 0; 
 
+// Start profiling
+$startTime = microtime(true);   echo "$startTime";
+
 // Process the records in batches
 for ($i = 0; $i < count($rows); $i += $batchSize) {
     $batch = array_slice($rows, $i, $batchSize);
@@ -63,13 +66,13 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             $county = $koords[2];
             $state  = $koords[3];
         
-            //echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state;
+            echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state . " start: " . $startTime;
             
         if ($state == '') {
             $state = $row['State'];
         }
         
-        require_once "GridSquare.php";  // Replace with your actual file name
+       // require_once "GridSquare.php";  // Replace with your actual file name
 
         $gridd = gridsquare($latitude, $longitude);
             $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
@@ -77,7 +80,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             //echo " gridd: " . $gridd . " grid: " . $grid;   
             //echo "<br>1: " . $yn[1] . " 2: " . $yn[2] . " 3: " . $yn[3];
                 //gridd: FN13HA grid: FN13HA    
-                
+       /*         
         // Prepare the SQL statement with placeholders
         $sql2 = "UPDATE stations SET 
              Fname = :Fname,
@@ -110,6 +113,12 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         $stmt2->bindValue(':longitude', $longitude);
         $stmt2->bindValue(':latlng', "POINT($latitude $longitude)");
         $stmt2->bindValue(':callsign', $row['callsign']);
+        
+        // Add debugging output
+        echo "Processed callsign: " . $row['callsign'] . "<br>";
+        
+        // Add debugging output
+        echo "Executing query for callsign: " . $row['callsign'] . "<br>";
     
         // Execute the prepared statement
         if ($stmt2->execute()) {
@@ -117,12 +126,11 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
         }
-    
-
-    $updateQuery .= implode(',', $values);
-
-    // Execute the batch update
-    $db_found->exec($updateQuery);
+        
+        
+        // Add debugging output
+    echo "Processed batch #" . ($i / $batchSize) . "<br>";
+ */   
     $count += count($batch);
 }
 }
