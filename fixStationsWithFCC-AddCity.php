@@ -9,83 +9,115 @@ require_once "dbConnectDtls.php";
 require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
+// Define the batch size (e.g., 100 records at a time)
+$batchSize = 100;
+
 $sql = "
-SELECT a.fccid, a.full_name,
-	   a.first, a.middle, a.last,
-       a.address1, a.city, a.state, 
-       a.zip, a.callsign,
-       CONCAT_WS(' ', a.address1, a.city, a.state, a.zip) as address
-  FROM fcc_amateur.en a
-   
- INNER JOIN (
-    SELECT a.callsign, MAX(a.fccid) fccid, c.callsign as ccall
-      FROM fcc_amateur.en a
-     GROUP BY a.callsign ) b
-        ON a.callsign = b.callsign 
-       AND a.fccid = b.fccid
-       AND callsign = 'wa0tjt'
-    /*   AND LEFT(b.callsign, 3) = 'wz1' */
-";
+SELECT a.fccid,
+       CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
+       CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
+       a.address1 AS address,
+       CONCAT(UCASE(LEFT(a.city, 1)), LCASE(SUBSTRING(a.city, 2))) AS City,
+       CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
+       LEFT(a.zip, 5) AS zip,
+       a.callsign
+FROM fcc_amateur.en a
+INNER JOIN (
+    SELECT a.callsign, MAX(a.fccid) as fccid, a.callsign as ccall
+    FROM fcc_amateur.en a
+    GROUP BY a.callsign
+) b
+ON a.callsign = b.callsign 
+AND a.fccid = b.fccid
+INNER JOIN ncm.stations s
+ON a.callsign = s.callsign
+WHERE a.city <> s.city
+   OR a.state <> s.state
+   OR a.first <> s.Fname
+   OR a.last <> s.Lname
+;";
 
-//echo "$sql"; 
+// Count the total number of records in the query
+$totalRecords = $db_found->query($sql)->rowCount();
 
-$count = 0;		
-foreach($db_found->query($sql) as $row) {
-$count++;
+// Calculate the number of iterations needed
+$numIterations = ceil($totalRecords / $batchSize);
 
-	$address = $row[address];
-	$city    = $row[city];
-	$fccid   = $row[fccid];
-	 
-	$koords  = geocode("$address");
-	
-	//echo "<br>4: $koords[4];";
-		$latitude  = $koords[0];
-		$longitude = $koords[1];
-	
-		$county	   = $koords[2];
-		$state	   = $koords[3];
-			if ($state == '') {
-				$state = $row[state];
-			}
+$count = 0;
 
-		$gridd 	   = gridsquare($latitude, $longitude);
-		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
+for ($iteration = 0; $iteration < $numIterations; $iteration++) {
+    // Calculate the offset for the current batch
+    $offset = $iteration * $batchSize;
 
-//echo "<br><br>count: $count";
-echo "<br><br>$count ==> $row[callsign]: $fccid, $address, $county, $state, $city";
+    // Fetch a batch of records with LIMIT and OFFSET
+    $batchSql = $sql . " LIMIT $batchSize OFFSET $offset";
+    $stmt = $db_found->query($batchSql);
 
-//UPDATE stations SET latlng = GeomFromText(POINT(39.791869,-93.549968)) WHERE callsign = 'kf0evg';
+    foreach ($stmt as $row) {
+        $count++;
 
-// to update all the latlng values do this
-// UPDATE stations SET latlng = GeomFromText(CONCAT('POINT(',latitude,' ',longitude,')'));
+        $address = $row['address'];
+        $city    = $row['City']; // Proper-cased
+        $fccid   = $row['fccid'];
 
-// to update only one latlng value tod this
-// UPDATE stations SET latlng = POINT(latitude, longitude) WHERE id = 'xxxxxxx';
+        $koords  = geocode("$address");
 
-$sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
-             Lname      = \"$row[last]\" ,
-             grid       = '$grid' ,
-             county     = '$county' ,
-             state      = '$state' ,
-             city       = '$city' ,
-             home       = '$latitude,$longitude,$grid,$county,$state,$city' ,
-             fccid      = $row[fccid] ,
-             dttm       = NOW() ,
-             latitude   = $latitude , 
-             longitude  = $longitude ,
-             latlng     = GeomFromText('POINT($latitude $longitude)'),
-             comment    = 'Updated via fixStationsWithFCC-AddCity.php'
-          WHERE id = $row[callsign];         
-";
+        $latitude  = $koords[0];
+        $longitude = $koords[1];
 
+        $county    = $koords[2];
+        $state     = $koords[3];
+        if ($state == '') {
+            $state = $row['State']; // Proper-cased
+        }
 
-echo("<br><br>$sql2");
+        $gridd     = gridsquare($latitude, $longitude);
+        $grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
 
-// uncomment below to do the update
-$db_found->exec($sql2); 
+        echo "<br><br>$count ==> {$row['callsign']}: $fccid, $address, $county, $state, $city";
 
+        // Prepare the SQL statement with placeholders
+        $sql2 = "UPDATE stations SET 
+                     Fname = :first,
+                     Lname = :last,
+                     grid = :grid,
+                     county = :county,
+                     state = :state,
+                     city = :city,
+                     home = :home,
+                     fccid = :fccid,
+                     dttm = NOW(),
+                     latitude = :latitude,
+                     longitude = :longitude,
+                     latlng = GeomFromText(:latlng),
+                     comment = 'Updated via fixStationsWithFCC-AddCity.php'
+                  WHERE id = :callsign";
 
-} // End foreach
+        // Prepare the SQL statement
+        $stmt2 = $db_found->prepare($sql2);
+
+        // Assign values to placeholders
+        $stmt2->bindValue(':first', $row['Fname']);
+        $stmt2->bindValue(':last', $row['Lname']);
+        $stmt2->bindValue(':grid', $grid);
+        $stmt2->bindValue(':county', $county);
+        $stmt2->bindValue(':state', $state);
+        $stmt2->bindValue(':city', $city);
+        $stmt2->bindValue(':home', "$latitude,$longitude,$grid,$county,$state,$city");
+        $stmt2->bindValue(':fccid', $fccid);
+        $stmt2->bindValue(':latitude', $latitude);
+        $stmt2->bindValue(':longitude', $longitude);
+        $stmt2->bindValue(':latlng', "POINT($latitude $longitude)");
+        $stmt2->bindValue(':callsign', $row['callsign']);
+    
+        // Execute the prepared statement
+        if ($stmt2->execute()) {
+            echo "<br><br>Update successful for callsign: " . $row['callsign'];
+        } else {
+            echo "<br><br>Error updating callsign: " . $row['callsign'];
+        }
+    }
+}
+
 echo "<br><br>Done --> Count= $count";
 ?>
