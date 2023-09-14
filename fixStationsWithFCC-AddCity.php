@@ -4,7 +4,7 @@
 
 require_once "dbConnectDtls.php";
 require_once "geocode.php";     // Replace with your actual file name
-require_once "GridSquare.php";  // Replace with your actual file name
+
 
 // Define the batch size (e.g., 100 records at a time)
 $batchSize = 100;
@@ -40,7 +40,7 @@ WHERE a.city <> s.city
 $stmt = $db_found->query($sql);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$count = 0;
+$count = 0; 
 
 // Process the records in batches
 for ($i = 0; $i < count($rows); $i += $batchSize) {
@@ -52,22 +52,30 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
 
     foreach ($batch as $row) {
         $address = $row['address'];
-        $city = $row['City'];
-        $fccid = $row['fccid'];
+        $city    = $row['City'];
+        $fccid   = $row['fccid'];
 
-        $koords = geocode("$address");
+        $koords  = geocode("$address");
 
-        $latitude = $koords[0];
-        $longitude = $koords[1];
-
-        $county = $koords[2];
-        $state = $koords[3];
+            $latitude  = $koords[0];
+            $longitude = $koords[1];
+            
+            $county = $koords[2];
+            $state  = $koords[3];
+        
+            //echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state;
+            
         if ($state == '') {
             $state = $row['State'];
         }
+        
+        require_once "GridSquare.php";  // Replace with your actual file name
 
         $gridd = gridsquare($latitude, $longitude);
-        $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
+            $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
+        
+            echo " gridd: " . $gridd . " grid: " . $grid;   
+                //gridd: FN13HA grid: FN13HA        
 
         // Build the SET clause for the update
         $values[] = "(

@@ -64,5 +64,9 @@ $ycalc[2] = $lat +  90;
 //echo "$gs<br>";
 //echo "$gs[0], $gs[1]...$gs[5]<br>";
 //print_r("$gs");
-
+/*
+    EM29QE
+E, M...E
+EM29QE
+*/
 ?>
