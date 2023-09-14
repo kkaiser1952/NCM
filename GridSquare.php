@@ -53,7 +53,10 @@ $ycalc[2] = $lat +  90;
             $yn[$y] = $ylp;
 		}
 	} 
+	    
   		$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+  		
+  		//Notice: String offset cast occurred in /var/www/html/GridSquare.php on line 56
   		
     	return $yqth;
 } /* end of the gridsquare function */
