@@ -27,7 +27,7 @@ SELECT a.fccid, a.full_name,
     /*   AND LEFT(b.callsign, 3) = 'wz1' */
 ";
 
-echo "$sql"; 
+//echo "$sql"; 
 
 $count = 0;		
 foreach($db_found->query($sql) as $row) {
@@ -74,7 +74,8 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
              dttm       = NOW() ,
              latitude   = $latitude , 
              longitude  = $longitude ,
-             latlng     = GeomFromText('POINT($latitude $longitude)')    
+             latlng     = GeomFromText('POINT($latitude $longitude)'),
+             comment    = 'Updated via fixStationsWithFCC-AddCity.php'
           WHERE id = $row[callsign];         
 ";
 
@@ -82,9 +83,9 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
 echo("<br><br>$sql2");
 
 // uncomment below to do the update
-//$db_found->exec($sql2); 
+$db_found->exec($sql2); 
 
 
 } // End foreach
-//echo "<br><br>Done --> Count= $count";
+echo "<br><br>Done --> Count= $count";
 ?>
