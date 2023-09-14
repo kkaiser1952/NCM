@@ -1,55 +1,43 @@
 <?php
-    
-// fixStationsWithFCC-AddCity.php
-// Use this program to compare NCM.stations with fcc_amateur.en and to 
-// update NCM.stations when there is a difference
-// Written: 2022-12-13 as an update to fixStationsWithFCC.php 
+    error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
+
 
 require_once "dbConnectDtls.php";
-require_once "geocode.php";     /* added 2017-09-03 */
-require_once "GridSquare.php";  /* added 2017-09-03 */
+require_once "geocode.php";
+require_once "GridSquare.php";
 
-// Define the batch size (e.g., 100 records at a time)
 $batchSize = 100;
 
-$sql = "
-SELECT a.fccid,
-       CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
-       CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
-       a.address1 AS address,
-       CONCAT(UCASE(LEFT(a.city, 1)), LCASE(SUBSTRING(a.city, 2))) AS City,
-       CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
-       LEFT(a.zip, 5) AS zip,
-       a.callsign
-FROM fcc_amateur.en a
-INNER JOIN (
-    SELECT a.callsign, MAX(a.fccid) as fccid, a.callsign as ccall
-    FROM fcc_amateur.en a
-    GROUP BY a.callsign
-) b
-ON a.callsign = b.callsign 
-AND a.fccid = b.fccid
-INNER JOIN ncm.stations s
-ON a.callsign = s.callsign
-WHERE a.city <> s.city
-   OR a.state <> s.state
-   OR a.first <> s.Fname
-   OR a.last <> s.Lname
-;";
+$sql = "SELECT a.fccid, CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
+                CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
+                a.address1 AS address,
+                CONCAT(UCASE(LEFT(a.city, 1)), LCASE(SUBSTRING(a.city, 2))) AS City,
+                CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
+                LEFT(a.zip, 5) AS zip,
+                a.callsign
+        FROM (
+            SELECT a.callsign, MAX(a.fccid) AS max_fccid
+            FROM fcc_amateur.en a
+            GROUP BY a.callsign
+        ) AS max_fccids
+        INNER JOIN fcc_amateur.en a
+        ON max_fccids.callsign = a.callsign
+           AND max_fccids.max_fccid = a.fccid
+        INNER JOIN ncm.stations s
+        ON a.callsign = s.callsign
+        WHERE a.city <> s.city
+           OR a.state <> s.state
+           OR a.first <> s.Fname
+           OR a.last <> s.Lname
+           OR a.fccid <> s.fccid;";
 
-// Count the total number of records in the query
 $totalRecords = $db_found->query($sql)->rowCount();
-
-// Calculate the number of iterations needed
 $numIterations = ceil($totalRecords / $batchSize);
-
 $count = 0;
 
 for ($iteration = 0; $iteration < $numIterations; $iteration++) {
-    // Calculate the offset for the current batch
     $offset = $iteration * $batchSize;
-
-    // Fetch a batch of records with LIMIT and OFFSET
     $batchSql = $sql . " LIMIT $batchSize OFFSET $offset";
     $stmt = $db_found->query($batchSql);
 
@@ -57,26 +45,30 @@ for ($iteration = 0; $iteration < $numIterations; $iteration++) {
         $count++;
 
         $address = $row['address'];
-        $city    = $row['City']; // Proper-cased
+        $city    = $row['City'];
         $fccid   = $row['fccid'];
 
         $koords  = geocode("$address");
-
         $latitude  = $koords[0];
         $longitude = $koords[1];
-
         $county    = $koords[2];
         $state     = $koords[3];
+
         if ($state == '') {
-            $state = $row['State']; // Proper-cased
+            $state = $row['State'];
         }
 
         $gridd     = gridsquare($latitude, $longitude);
         $grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
 
         echo "<br><br>$count ==> {$row['callsign']}: $fccid, $address, $county, $state, $city";
+        
+        echo "Comparing: a.city = '{$row['city']}' <> s.city = '{$row['City']}'<br>";
+        echo "Comparing: a.state = '{$row['state']}' <> s.state = '{$row['State']}'<br>";
+        echo "Comparing: a.first = '{$row['first']}' <> s.Fname = '{$row['Fname']}'<br>";
+        echo "Comparing: a.last = '{$row['last']}' <> s.Lname = '{$row['Lname']}'<br>";
+        echo "Comparing: a.fccid = '{$row['fccid']}' <> s.fccid = '{$row['fccid']}'<br>";
 
-        // Prepare the SQL statement with placeholders
         $sql2 = "UPDATE stations SET 
                      Fname = :first,
                      Lname = :last,
@@ -92,11 +84,14 @@ for ($iteration = 0; $iteration < $numIterations; $iteration++) {
                      latlng = GeomFromText(:latlng),
                      comment = 'Updated via fixStationsWithFCC-AddCity.php'
                   WHERE id = :callsign";
-
-        // Prepare the SQL statement
+        
         $stmt2 = $db_found->prepare($sql2);
+        
+        // Close the cursor for the previous query (if there's any)
+        if ($stmt !== false) {
+            $stmt->closeCursor();
+        }
 
-        // Assign values to placeholders
         $stmt2->bindValue(':first', $row['Fname']);
         $stmt2->bindValue(':last', $row['Lname']);
         $stmt2->bindValue(':grid', $grid);
@@ -110,7 +105,6 @@ for ($iteration = 0; $iteration < $numIterations; $iteration++) {
         $stmt2->bindValue(':latlng', "POINT($latitude $longitude)");
         $stmt2->bindValue(':callsign', $row['callsign']);
     
-        // Execute the prepared statement
         if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'];
         } else {
