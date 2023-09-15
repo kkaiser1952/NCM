@@ -9,6 +9,7 @@ require_once "GridSquare.php";  // Replace with your actual file name
 // Define the batch size (e.g., 100 records at a time)
 $batchSize = 100;
 
+// The below SQL is also in Notes-->NCM-->Special SQL Runs with additions
 $sql = "
 SELECT a.fccid,
        CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
@@ -30,8 +31,8 @@ SELECT a.fccid,
           ON a.callsign = s.callsign
        WHERE a.city  <> s.city
           OR a.state <> s.state
-          OR a.last  <> s.Lname 
-          OR a.fccid <> s.fccid
+       /*   OR a.last  <> s.Lname 
+          OR a.fccid <> s.fccid */
 ;";
 
 // Fetch all records that need to be updated
