@@ -324,13 +324,13 @@ SELECT
     CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) 
             ELSE nl.netID END AS netID,
     CASE WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
-            ELSE (SELECT MAX(dttm) FROM NetLog) END AS logdate,
+            ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
     nl.netcall,
     nl.stations,
     nl.pb,
     nl.testnet,
-    CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-         WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT MAX(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+    CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+         WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
             ELSE nl.logclosedtime END AS logclosedtime, 
     CASE WHEN nl.pb = '0' THEN '' WHEN nl.pb = '1' THEN 'blue-bg' 
             ELSE '' END AS PBcss,
@@ -353,7 +353,7 @@ SELECT
     SEC_TO_TIME(SUM(
     CASE 
         WHEN nl.timeonduty IS NULL THEN 0
-        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT MAX(dttm) FROM NetLog))
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
         ELSE TIME_TO_SEC(nl.timeonduty)
     END
 )) AS Volunteer_Time,
@@ -361,14 +361,17 @@ SELECT
     SEC_TO_TIME(
     CASE 
         WHEN subquery.total_timeonduty_sum IS NULL THEN 0
-        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT MAX(dttm) FROM NetLog))
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
         ELSE subquery.total_timeonduty_sum
     END
 ) AS Total_Time
 
 
 FROM (
-    SELECT netID, subNetOfID, logdate, netcall, COUNT(*) AS stations, pb, logclosedtime, testnet, timeonduty, facility
+    SELECT netID, subNetOfID, 
+    CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
+            ELSE (SELECT max(dttm) FROM NetLog) END AS logdate, 
+    netcall, COUNT(*) AS stations, pb, logclosedtime, testnet, timeonduty, facility
       FROM NetLog
      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
      GROUP BY netID
