@@ -12,6 +12,7 @@ require_once "GridSquare.php";  // Replace with your actual file name
 $batchSize = 25;
 
 // The below SQL is also in Notes-->NCM-->Special SQL Runs with additions
+/*
 $sql = "
 SELECT a.fccid,
        CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
@@ -31,10 +32,44 @@ SELECT a.fccid,
          AND max_fccids.max_fccid = a.fccid
   INNER JOIN ncm.stations s
           ON a.callsign = s.callsign
-       WHERE /*a.city  <> s.city
+       WHERE a.city  <> s.city
           OR a.state <> s.state
-          OR a.last  <> s.Lname */
-           a.fccid <> s.fccid 
+          OR a.last  <> s.Lname 
+          OR a.fccid <> s.fccid 
+;"; */
+
+$sql = "
+SELECT a.fccid,
+	  CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
+       CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
+       a.address1 AS address,
+       CONCAT(UCASE(LEFT(a.city,  1)), LCASE(SUBSTRING(a.city,  2))) AS City,
+       CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
+       LEFT(a.zip, 5) AS zip,
+       a.callsign,
+       CASE
+           WHEN a.city  	<> s.city THEN 'City'
+           WHEN a.state	<> s.state THEN 'State'
+           WHEN a.last  	<> s.Lname THEN 'Last Name'
+           WHEN a.fccid 	<> s.fccid THEN 'FCCID'
+           ELSE 'No Match'
+       END AS TriggeredCondition
+FROM (
+    SELECT a.callsign,
+           MAX(a.fccid) AS max_fccid
+    FROM fcc_amateur.en a
+    GROUP BY a.callsign
+) AS max_fccids
+INNER JOIN fcc_amateur.en a
+    ON max_fccids.callsign = a.callsign
+    AND max_fccids.max_fccid = a.fccid
+INNER JOIN ncm.stations s
+    ON a.callsign = s.callsign
+WHERE a.city 	<> s.city
+   OR a.state 		<> s.state
+   OR a.last 			<> s.Lname
+   OR a.fccid 		<> s.fccid
+ORDER BY TriggeredCondition
 ;";
 
 // Fetch all records that need to be updated
