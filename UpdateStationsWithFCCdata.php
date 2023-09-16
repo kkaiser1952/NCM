@@ -1,4 +1,6 @@
 <?php
+    // Written 2023-09-16, also look at updateStationsinfo.php but this one should do it all
+    
     error_reporting(E_ALL);
     ini_set('display_errors', 'On');
 
@@ -7,7 +9,7 @@ require_once "geocode.php";     // Replace with your actual file name
 require_once "GridSquare.php";  // Replace with your actual file name 
  
 // Define the batch size (e.g., 100 records at a time)
-$batchSize = 100;
+$batchSize = 25;
 
 // The below SQL is also in Notes-->NCM-->Special SQL Runs with additions
 $sql = "
@@ -29,10 +31,10 @@ SELECT a.fccid,
          AND max_fccids.max_fccid = a.fccid
   INNER JOIN ncm.stations s
           ON a.callsign = s.callsign
-       WHERE a.city  <> s.city
+       WHERE /*a.city  <> s.city
           OR a.state <> s.state
-          OR a.last  <> s.Lname 
-          OR a.fccid <> s.fccid 
+          OR a.last  <> s.Lname */
+           a.fccid <> s.fccid 
 ;";
 
 // Fetch all records that need to be updated
