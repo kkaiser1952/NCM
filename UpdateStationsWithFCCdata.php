@@ -31,8 +31,8 @@ SELECT a.fccid,
           ON a.callsign = s.callsign
        WHERE a.city  <> s.city
           OR a.state <> s.state
-       /*   OR a.last  <> s.Lname 
-          OR a.fccid <> s.fccid */
+          OR a.last  <> s.Lname 
+          OR a.fccid <> s.fccid 
 ;";
 
 // Fetch all records that need to be updated
@@ -42,7 +42,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $count = 0; 
 
 // Start profiling
-$startTime = microtime(true);   echo "$startTime";
+$startTime = microtime(true);   //echo "$startTime";
 
 // Process the records in batches
 for ($i = 0; $i < count($rows); $i += $batchSize) {
@@ -65,7 +65,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             $county = $koords[2];
             $state  = $koords[3];
         
-            echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state . " start: " . $startTime;
+           // echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state . " start: " . $startTime;
             
         if ($state == '') {
             $state = $row['State'];
@@ -79,7 +79,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             //echo " gridd: " . $gridd . " grid: " . $grid;   
             //echo "<br>1: " . $yn[1] . " 2: " . $yn[2] . " 3: " . $yn[3];
                 //gridd: FN13HA grid: FN13HA    
-       /*         
+               
         // Prepare the SQL statement with placeholders
         $sql2 = "UPDATE stations SET 
              Fname = :Fname,
@@ -129,7 +129,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         
         // Add debugging output
     echo "Processed batch #" . ($i / $batchSize) . "<br>";
- */   
+   
     $count += count($batch);
 }
 }
