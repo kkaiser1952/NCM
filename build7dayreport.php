@@ -371,7 +371,9 @@ FROM (
     SELECT netID, subNetOfID, 
     CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
             ELSE (SELECT max(dttm) FROM NetLog) END AS logdate, 
-    netcall, COUNT(*) AS stations, pb, logclosedtime, testnet, timeonduty, facility
+    netcall, COUNT(*) AS stations, 
+    
+    pb, logclosedtime, testnet, timeonduty, facility
       FROM NetLog
      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
      GROUP BY netID
