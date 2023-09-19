@@ -385,7 +385,7 @@ LEFT JOIN (
      GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
 GROUP BY netID
-ORDER BY netID DESC;
+ORDER BY CAST(nl.netID AS SIGNED) DESC;  -- Specify which netID column to use for sorting
 
 ");
 
