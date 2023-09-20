@@ -8,6 +8,7 @@
     require_once "dbConnectDtls.php";
     
     $q = intval( $_GET["NetID"] );   //$q = 2916;
+    $q = 10016;
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
