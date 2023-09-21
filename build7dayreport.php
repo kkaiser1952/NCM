@@ -574,7 +574,15 @@ if (!empty($result)) {
                     echo '<td class="centered">';
                     if ($column === 'netID') {
                         $netID = $columnValue;
-                        echo '<a href="https://net-control.us/map.php?NetID=' . $netID . '" target="_blank" rel="noopener noreferrer">' . $netID . '</a>';
+                        echo '
+                        <div class="dropdown-on-NetID">
+                            <a href="https://net-control.us/map.php?NetID=' . $netID . '" target="_blank" rel="noopener noreferrer">' . $netID . '
+                            </a>
+                            <select class="dropdown-list" style="display: none;">
+                                <!-- Dropdown options will be added here dynamically -->
+                            </select>                        
+                        </div>
+                        ';
                     } else {
                         echo $columnValue;
                     }
