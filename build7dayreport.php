@@ -41,6 +41,7 @@
                 e.preventDefault(); // Prevent the default link behavior
 
                 // Show the dropdown below the link
+                select.css('z-index', '1000');
                 select.css('display', 'block');
                 select.css('position', 'absolute');
                     // Output position values to the console for debugging
@@ -76,11 +77,13 @@
             }
             
             .odd-row {
-                background-color: #F0F0F0;
+                background-color: #FFFFFF;
+                color: blue;
             }
             
             .even-row {
-                background-color: #FFFFFF;
+                background-color: #F0F0F0;
+                color: black;
             }
                         
             /* Style for nets with 1 entry */
@@ -630,14 +633,13 @@ if (!empty($result)) {
                     continue;
                 }
                    
-                    //echo '<td class="centered">' . $columnValue . '</td>';
                     echo '<td class="centered">';
                     if ($column === 'netID') {
                         $netID = $columnValue;
                         
                         // We are building a dropdown list when the NetID value is clicked
                         echo '<div class="dropdown-on-NetID">';
-                        echo '<a href="javascript:void(0);" class="dropdown-trigger" style="color: white;">' . $netID . '</a>';
+                        echo '<a href="javascript:void(0);" class="dropdown-trigger" style="color: blue;">' . $netID . '</a>';
                         echo '<select class="dropdown-list" style="display: none;">';
                         echo '<option disabled selected>Choose</option>';
                         
