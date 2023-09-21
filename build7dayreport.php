@@ -5,6 +5,9 @@
 </DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7 Day NCM Activity Report</title>
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
@@ -40,6 +43,10 @@
                 // Show the dropdown below the link
                 select.css('display', 'block');
                 select.css('position', 'absolute');
+                    // Output position values to the console for debugging
+                    console.log('Link top:', link.position().top);
+                    console.log('Link outerHeight:', link.outerHeight());
+
                 select.css('top', link.position().top + link.outerHeight() + 'px');
             });
 
