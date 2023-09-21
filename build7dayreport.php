@@ -30,16 +30,15 @@
         When the link is clicked, it prevents the default link behavior, displays the dropdown below the link, and calculates its position relative to the link.
         When an option is selected from the dropdown, it opens the URL associated with the selected option in a new window/tab.
     */
+
     $(document).ready(function() {
         $('.dropdown-on-NetID').each(function() {
             var container = $(this);
             var link = container.find('.dropdown-trigger');
             var select = container.find('.dropdown-list');
 
-            // Add a click event handler to the link
-            link.on('click', function(e) {
-                e.preventDefault(); // Prevent the default link behavior
-
+            // Add a mouseenter event handler to the link to show the dropdown
+            link.on('mouseenter', function() {
                 // Calculate the position of the dropdown relative to the link
                 var linkOffset = link.offset();
                 var linkHeight = link.outerHeight();
@@ -52,10 +51,12 @@
                     'top': linkOffset.top + linkHeight + 'px',
                     'left': linkOffset.left + 'px'
                 });
+            });
 
-                // Output position values to the console for debugging
-                console.log('Link offset top:', linkOffset.top);
-                console.log('Link offset left:', linkOffset.left);
+            // Add a mouseleave event handler to the container to hide the dropdown
+            container.on('mouseleave', function() {
+                // Hide the dropdown when the mouse leaves the container
+                select.css('display', 'none');
             });
 
             // Add a change event handler to the dropdown
@@ -67,10 +68,15 @@
                     // Open the URL in a new window/tab
                     window.open(url, '_blank');
                 }
+
+                // Hide the dropdown after a selection is made
+                select.css('display', 'none');
             });
         });
     });
 </script>
+
+
         
         <style>
             table {
@@ -331,6 +337,7 @@
                 background-color: white;
                 border: 1px solid #ccc;
                 padding: 5px;
+                font-size: 16pt;
             }
 
             
@@ -629,8 +636,10 @@ if (!empty($result)) {
             // Define an array of options and their corresponding URLs
             // add new options here and in the <options below
             $options = [
-                "Map Net" => "https://net-control.us/map.php?NetID=" . $netID,
+                "Map Net" => "https://net-control.us/map.php?NetID="    . $netID,
                 "ICS-214" => "https://net-control.us/ics214.php?NetID=" . $netID,
+                "ICS-209" => "https://net-control.us/ics309.php?NetID=" . $netID,
+                "ICS-205" => "https://net-control.us/ics205A.php?NetID=". $netID
                 // Add more options as needed
             ];
      
@@ -652,6 +661,9 @@ if (!empty($result)) {
                         // add new options here and in the $options above
                         echo '<option value="https://net-control.us/map.php?NetID=' . $netID . '">Map Net</option>';
                         echo '<option value="https://net-control.us/ics214.php?NetID=' . $netID . '">ICS-214</option>';
+                        echo '<option value="https://net-control.us/ics309.php?NetID=' . $netID . '">ICS-309</option>';
+                        echo '<option value="https://net-control.us/ics205A.php?NetID=' . $netID .
+                            '">ICS-205A</option>';
                         echo '</select>';
                         echo '</div>';
                                         
