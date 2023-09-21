@@ -19,8 +19,37 @@
             //alert("You clicked the first table cell with value: " + value);
             // Perform any other desired actions using the value
           }
-
         </script>
+        <script>
+    $(document).ready(function() {
+        $('.dropdown-on-NetID').each(function() {
+            var container = $(this);
+            var link = container.find('.dropdown-trigger');
+            var select = container.find('.dropdown-list');
+
+            // Add a click event handler to the link
+            link.on('click', function(e) {
+                e.preventDefault(); // Prevent the default link behavior
+
+                // Create the URL based on the value of the first option
+                var url = select.find('option:first').val();
+
+                // Open the URL in a new window/tab
+                window.open(url, '_blank');
+
+                // Close the dropdown
+                select.css('display', 'none');
+            });
+
+            // Show the dropdown immediately below the link
+            link.on('contextmenu', function(e) {
+                e.preventDefault(); // Prevent the default context menu
+                select.css('display', 'block');
+                select.css('top', link.position().top + link.outerHeight() + 'px');
+            });
+        });
+    });
+</script>
         
         <style>
             table {
@@ -271,6 +300,15 @@
             tr:first-child {
               border-bottom: 2px solid red;
             }
+            
+            /* Style the dropdown list for NetID */
+            .dropdown-list {
+                position: absolute;
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 5px;
+            }
+
             
 
         </style>
@@ -564,7 +602,13 @@ if (!empty($result)) {
             // The row color if there is one
             echo '<tr class="' . $THEcss . '">'; 
             
-            // Column data you don't want to see
+            // Define an array of options and their corresponding URLs
+            $options = [
+                "Map Net" => "https://net-control.us/map.php?NetID=" . $netID,
+                "ICS-214" => "https://net-control.us/ics214.php?NetID=" . $netID,
+                // Add more options as needed
+            ];
+     
             foreach ($row as $column => $columnValue) {
                 if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
                     continue;
@@ -574,21 +618,24 @@ if (!empty($result)) {
                     echo '<td class="centered">';
                     if ($column === 'netID') {
                         $netID = $columnValue;
-                        echo '
-                        <div class="dropdown-on-NetID">
-                            <a href="https://net-control.us/map.php?NetID=' . $netID . '" target="_blank" rel="noopener noreferrer">' . $netID . '
-                            </a>
-                            <select class="dropdown-list" style="display: none;">
-                                <!-- Dropdown options will be added here dynamically -->
-                            </select>                        
-                        </div>
-                        ';
+                        
+                        echo '<div class="dropdown-on-NetID">';
+                        echo '<a href="javascript:void(0);" class="dropdown-trigger">' . $netID . '</a>';
+                        echo '<select class="dropdown-list" style="display: none;">';
+                        
+                        foreach ($options as $optionText => $optionUrl) {
+                            echo '<option value="' . $optionUrl . '">' . $optionText . '</option>';
+                        }
+                        
+                        echo '</select></td>';
+                        echo '</div>';                        
+                        
                     } else {
                         echo $columnValue;
                     }
             } // End foreach
     
-                echo '</tr>'; 
+            echo '</tr>'; 
                 
 } // End foreach
         // End the table
