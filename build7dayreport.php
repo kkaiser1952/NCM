@@ -20,7 +20,13 @@
             // Perform any other desired actions using the value
           }
         </script>
-        <script>
+
+<script>
+    /*
+        It targets elements with the class dropdown-on-NetID and adds event handlers for the link with class dropdown-trigger and the dropdown select with class dropdown-list.
+        When the link is clicked, it prevents the default link behavior, displays the dropdown below the link, and calculates its position relative to the link.
+        When an option is selected from the dropdown, it opens the URL associated with the selected option in a new window/tab.
+    */
     $(document).ready(function() {
         $('.dropdown-on-NetID').each(function() {
             var container = $(this);
@@ -31,25 +37,26 @@
             link.on('click', function(e) {
                 e.preventDefault(); // Prevent the default link behavior
 
-                // Create the URL based on the value of the first option
-                var url = select.find('option:first').val();
-
-                // Open the URL in a new window/tab
-                window.open(url, '_blank');
-
-                // Close the dropdown
-                select.css('display', 'none');
+                // Show the dropdown below the link
+                select.css('display', 'block');
+                select.css('position', 'absolute');
+                select.css('top', link.position().top + link.outerHeight() + 'px');
             });
 
-            // Show the dropdown immediately below the link
-            link.on('contextmenu', function(e) {
-                e.preventDefault(); // Prevent the default context menu
-                select.css('display', 'block');
-                select.css('top', link.position().top + link.outerHeight() + 'px');
+            // Add a change event handler to the dropdown
+            select.on('change', function() {
+                var selectedOption = select.find('option:selected');
+                var url = selectedOption.val();
+
+                if (url) {
+                    // Open the URL in a new window/tab
+                    window.open(url, '_blank');
+                }
             });
         });
     });
 </script>
+
         
         <style>
             table {
@@ -302,6 +309,7 @@
             }
             
             /* Style the dropdown list for NetID */
+            /* CSS for the dropdown-trigger class */
             .dropdown-list {
                 position: absolute;
                 background-color: white;
@@ -603,6 +611,7 @@ if (!empty($result)) {
             echo '<tr class="' . $THEcss . '">'; 
             
             // Define an array of options and their corresponding URLs
+            // add new options here and in the <options below
             $options = [
                 "Map Net" => "https://net-control.us/map.php?NetID=" . $netID,
                 "ICS-214" => "https://net-control.us/ics214.php?NetID=" . $netID,
@@ -619,22 +628,25 @@ if (!empty($result)) {
                     if ($column === 'netID') {
                         $netID = $columnValue;
                         
+                        // We are building a dropdown list when the NetID value is clicked
                         echo '<div class="dropdown-on-NetID">';
-                        echo '<a href="javascript:void(0);" class="dropdown-trigger">' . $netID . '</a>';
+                        echo '<a href="javascript:void(0);" class="dropdown-trigger" style="color: white;">' . $netID . '</a>';
                         echo '<select class="dropdown-list" style="display: none;">';
+                        echo '<option disabled selected>Choose</option>';
                         
-                        foreach ($options as $optionText => $optionUrl) {
-                            echo '<option value="' . $optionUrl . '">' . $optionText . '</option>';
-                        }
-                        
-                        echo '</select></td>';
-                        echo '</div>';                        
-                        
+                        // add new options here and in the $options above
+                        echo '<option value="https://net-control.us/map.php?NetID=' . $netID . '">Map Net</option>';
+                        echo '<option value="https://net-control.us/ics214.php?NetID=' . $netID . '">ICS-214</option>';
+                        echo '</select>';
+                        echo '</div>';
+                                        
                     } else {
                         echo $columnValue;
                     }
+                        echo '</td>';
             } // End foreach
     
+            
             echo '</tr>'; 
                 
 } // End foreach
