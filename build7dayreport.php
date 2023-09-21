@@ -40,15 +40,22 @@
             link.on('click', function(e) {
                 e.preventDefault(); // Prevent the default link behavior
 
-                // Show the dropdown below the link
-                select.css('z-index', '1000');
-                select.css('display', 'block');
-                select.css('position', 'absolute');
-                    // Output position values to the console for debugging
-                    console.log('Link top:', link.position().top);
-                    console.log('Link outerHeight:', link.outerHeight());
+                // Calculate the position of the dropdown relative to the link
+                var linkOffset = link.offset();
+                var linkHeight = link.outerHeight();
 
-                select.css('top', link.position().top + link.outerHeight() + 'px');
+                // Set the dropdown's position below the link
+                select.css({
+                    'z-index': '1000', // Adjust z-index as needed
+                    'display': 'block',
+                    'position': 'absolute',
+                    'top': linkOffset.top + linkHeight + 'px',
+                    'left': linkOffset.left + 'px'
+                });
+
+                // Output position values to the console for debugging
+                console.log('Link offset top:', linkOffset.top);
+                console.log('Link offset left:', linkOffset.left);
             });
 
             // Add a change event handler to the dropdown
@@ -64,7 +71,6 @@
         });
     });
 </script>
-
         
         <style>
             table {
