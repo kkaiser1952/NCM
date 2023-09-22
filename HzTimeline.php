@@ -24,6 +24,9 @@
     <meta name="Revisit" content="1 month" >
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager" >
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
     
     <!-- =============== All above this should not be editied ====================== -->
@@ -47,6 +50,7 @@
         color: red;
     }
 </style>
+
 
 <script>
   window.console = window.console || function(t) {};
@@ -73,65 +77,25 @@ $sql = ("
       FROM NetLog
      WHERE netID = :netId
      LIMIT 0,1 ;
-");    
+");
 
-    $stmt = $db_found->prepare($sql);
-    $stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    // Fetch the results as an associative array
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if ($row) {
-            $activity = $row['activity'];
-            $frequency = $row['frequency'];
-            $netcall = $row['netcall'];
-            $dateofit = $row['DATE(logdate)'];
-        
-            // Look at output
-           // echo 'net: ' . $netID . '<br> act: ' . $activity . '<br> frq: ' . $frequency . '<br> net: ' . $netcall . '<br> dat: ' . $dateofit . '<br> END--END<br>';
-            
-            } else {
-                echo "No rows found.";
-            }
-    
-try {
-// Count how many unique minute by grouped minutes
-$sqlCreateTempTable = "
-    DROP TABLE IF EXISTS ncm.temp_hrmn;
-    
-    CREATE TABLE ncm.temp_hrmn    
+$stmt = $db_found->prepare($sql);
+$stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
+$stmt->execute();
 
-    SELECT  CONCAT(date_format(timestamp,'%m/%d/%y')) AS ymdx,
-    
-            CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
-                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) AS hrmn,
-                    
-           COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
-                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0))) AS hrmncount,
-           
-           timestamp
-           
-      FROM TimeLog
-     WHERE netID = :netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
-     GROUP BY CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
-                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
-             
-";
+// Fetch the results as an associative array
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-
-$stmtCreateTempTable = $db_found->prepare($sqlCreateTempTable);
-$stmtCreateTempTable->bindParam(':netId', $netID, PDO::PARAM_INT); 
-$stmtCreateTempTable->execute();
-
-} catch (PDOException $e) {
-    echo "Temp Table Error: " . $e->getMessage();
+if ($row) {
+    $activity = $row['activity'];
+    $frequency = $row['frequency'];
+    $netcall = $row['netcall'];
+    $dateofit = $row['DATE(logdate)'];
+} else {
+    echo "No rows found.";
 }
 
-//$db_found->exec($sql);
-
-// Get the number of rows in the temporary table
+// Corrected SQL query for calculating $callwidth
 $sqlRowCount = "SELECT COUNT(*) as cntr FROM ncm.temp_hrmn";
 $stmtRowCount = $db_found->prepare($sqlRowCount);
 $stmtRowCount->execute();
@@ -154,72 +118,62 @@ if ($rowcount <= 4) {
 } elseif ($rowcount > 9) {
     $mfactor = 10;
 }
+
+// Calculate callwidth without concatenation
 $callwidth = ($rowcount * $mfactor) . "px";
 
-echo "at the end; $callwidth";
-
-
-/* */
-/* Get the number of 5 minute intervals from the temp table above */
-$sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
-   $sql->execute();
-   $result = $sql->fetch();
-    
-        $rowcount = $result[0];  
-            if ($rowcount <= 4 ) {$mfactor = 135; }
-              //  else if ($rowcount == 5 || $rowcount == 6 ) {mfactor = 100;}
-                else if ($rowcount <= 5 ) {$mfactor = 100; }
-                else if ($rowcount = 6  ) {$mfactor = 65; }
-                else if ($rowcount = 7  ) {$mfactor = 46; }
-                else if ($rowcount = 8  ) {$mfactor = 30; }
-                else if ($rowcount = 9  ) {$mfactor = 20; }
-                else if ($rowcount >9   ) {$mfactor = 10; }
-        $callwidth = ($rowcount * $mfactor)."px";
-            //echo "::  $rowcount $mfactor  $callwidth";
-
-$sql = ("
-    SELECT 
-        callsign,
-     
-        CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
+// Update the SQL query to use named parameters for netID
+$sql = $db_found->prepare("SELECT 
+    callsign,
+    CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
         FROM_UNIXTIME(FLOOR(UNIX_timestamp(a.timestamp)/300)*300)),2,0)) AS a_hrmn,
-        
-        b.hrmn as b_hrmn,
-     
-        CONCAT('<li style=\" width: $callwidth\" >',date_format(a.timestamp,'%i'), ':', callsign,' > ',
-         CASE 
-			WHEN comment = 'Initial Log In' THEN 'Log In'
+    b.hrmn as b_hrmn,
+    CONCAT('<li style=\" width: $callwidth\" >',date_format(a.timestamp,'%i'), ':', callsign,' > ',
+        CASE 
+            WHEN comment = 'Initial Log In' THEN 'Log In'
             WHEN comment = 'First Log In'   THEN 'First Log'
             WHEN comment = 'No FCC Record'  THEN 'No FCC'
             WHEN comment LIKE '%Role Changed%' THEN CONCAT('Roll:',
-                                                           SUBSTRING_INDEX(comment,':',-1))
+                                                            SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%Status Change%' THEN CONCAT('Status:',SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%County Change%' THEN CONCAT( 'County:',
-                                                            SUBSTRING_INDEX(comment,':',-1))
+                                                             SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%Traffic set%' THEN CONCAT( 'Traffic:',
-                                                            SUBSTRING_INDEX(comment,':',-1))
+                                                             SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%The Call%'  THEN 'Deleted'
             WHEN comment LIKE '%Opened the net%' THEN 'OPENED'
             WHEN comment LIKE '%The log was closed%' THEN 'CLOSED'
             ELSE comment
-         END, '</li>') as combo,
-         
-         /* this code replaces the ul.timeline > li in the CSS */
-        CONCAT('<li style=\" width: calc( 100% /  $rowcount );\"><span class=\"hrmn\">',
+        END, '</li>') as combo,
+     CONCAT('<li style=\" width: $callwidth\" ><span class=\"hrmn\">',
             CONCAT(date_format(a.timestamp,\"%H\"),':',LPAD(MINUTE(
             FROM_UNIXTIME(FLOOR(UNIX_timestamp(a.timestamp)/300)*300)),2,0)),
             '</span><ul class=\"content\">') as firstlist,
-            
-        b.timestamp as starttime
+    b.timestamp as starttime
+FROM TimeLog a, temp_hrmn b
+WHERE netID = :netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
+    FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
+GROUP BY combo
+ORDER BY a.uniqueID");
 
-      FROM TimeLog a
-          ,temp_hrmn b
-     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
-       AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
-        FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
-     
-     GROUP BY combo
-     ORDER BY a.uniqueID  ");
+// Bind parameters
+$sql->bindParam(':netID', $netID, PDO::PARAM_INT);
+
+// Execute the prepared statement
+$sql->execute();
+
+// Fetch the results as an associative array
+$results = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+// Loop through the results
+foreach ($results as $row) {
+    // Your code to process each row goes here
+    echo $row['combo']; // Example output
+}
+
+// The rest of your code...
+
      
      $tmpArray = array();
      $rowno = 0;
@@ -268,12 +222,13 @@ $sql = ("
 <script>
 
     window.onload = function() {
-        var stuff = ('.hrmn').css('background');
-        //alert("stuff= " stuff);
+        var background = $('.hrmn').css('background');
+        //alert("background= " + background);
         alert("in the function");
     };
 
 </script>
+
   
 <script id="rendered-js" >
     (function() {
