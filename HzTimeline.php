@@ -51,7 +51,6 @@
     }
 </style>
 
-
 <script>
   window.console = window.console || function(t) {};
 
@@ -69,111 +68,118 @@
      $netID = intval( $_GET["NetID"] );   //$q = 2916;
      //$netID = 1000;
     
-    $netID = 10031;
+    //$netID = 3685;
     
 // Get some net info
 $sql = ("
     SELECT activity, frequency, netcall, DATE(logdate)
       FROM NetLog
-     WHERE netID = :netId
-     LIMIT 0,1 ;
-");
+     WHERE netID = $netID
+     LIMIT 0,1 
+");    
+
+//echo "$sql";
 
 $stmt = $db_found->prepare($sql);
-$stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
-$stmt->execute();
+	$stmt->execute();
+        $activity = $stmt->fetchColumn(0);
+    $stmt->execute();
+        $frequency = $stmt->fetchColumn(1);
+    $stmt->execute();
+        $netcall = $stmt->fetchColumn(2);
+    $stmt->execute();
+        $dateofit = $stmt->fetchColumn(3);
+        
+        //echo("<br><br><br>$activity, $frequency, $netcall, $dateofit");
 
-// Fetch the results as an associative array
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+// Count how many unique minute by grouped minutes
+$sql = (" 
+    
+    DROP TABLE IF EXISTS ncm.temp_hrmn;
+    
+    CREATE TABLE ncm.temp_hrmn    
 
-if ($row) {
-    $activity = $row['activity'];
-    $frequency = $row['frequency'];
-    $netcall = $row['netcall'];
-    $dateofit = $row['DATE(logdate)'];
-} else {
-    echo "No rows found.";
-}
+    SELECT  CONCAT(date_format(timestamp,'%m/%d/%y')) AS ymdx,
+    
+            CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
+                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) AS hrmn,
+                    
+           COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
+                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0))) AS hrmncount,
+           
+           timestamp
+           
+      FROM TimeLog
+     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+     GROUP BY CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
+                FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
+             
+");
 
-// Corrected SQL query for calculating $callwidth
-$sqlRowCount = "SELECT COUNT(*) as cntr FROM ncm.temp_hrmn";
-$stmtRowCount = $db_found->prepare($sqlRowCount);
-$stmtRowCount->execute();
-$resultRowCount = $stmtRowCount->fetch(PDO::FETCH_ASSOC);
-$rowcount = $resultRowCount['cntr'];
+$db_found->exec($sql);
 
-// Calculate $mfactor and $callwidth based on $rowcount
-if ($rowcount <= 4) {
-    $mfactor = 135;
-} elseif ($rowcount <= 5) {
-    $mfactor = 100;
-} elseif ($rowcount == 6) {
-    $mfactor = 65;
-} elseif ($rowcount == 7) {
-    $mfactor = 46;
-} elseif ($rowcount == 8) {
-    $mfactor = 30;
-} elseif ($rowcount == 9) {
-    $mfactor = 20;
-} elseif ($rowcount > 9) {
-    $mfactor = 10;
-}
 
-// Calculate callwidth without concatenation
-$callwidth = ($rowcount * $mfactor) . "px";
+/* Get the number of 5 minute intervals from the temp table above */
+$sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
+   $sql->execute();
+   $result = $sql->fetch();
+    
+        $rowcount = $result[0];  
+            if ($rowcount <= 4 ) {$mfactor = 135; }
+              //  else if ($rowcount == 5 || $rowcount == 6 ) {mfactor = 100;}
+                else if ($rowcount <= 5 ) {$mfactor = 100; }
+                else if ($rowcount = 6  ) {$mfactor = 65; }
+                else if ($rowcount = 7  ) {$mfactor = 46; }
+                else if ($rowcount = 8  ) {$mfactor = 30; }
+                else if ($rowcount = 9  ) {$mfactor = 20; }
+                else if ($rowcount >9   ) {$mfactor = 10; }
+        $callwidth = ($rowcount * $mfactor)."px";
+            //echo "::  $rowcount $mfactor  $callwidth";
 
-// Update the SQL query to use named parameters for netID
-$sql = $db_found->prepare("SELECT 
-    callsign,
-    CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
+$sql = ("
+    SELECT 
+        callsign,
+     
+        CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
         FROM_UNIXTIME(FLOOR(UNIX_timestamp(a.timestamp)/300)*300)),2,0)) AS a_hrmn,
-    b.hrmn as b_hrmn,
-    CONCAT('<li style=\" width: $callwidth\" >',date_format(a.timestamp,'%i'), ':', callsign,' > ',
-        CASE 
-            WHEN comment = 'Initial Log In' THEN 'Log In'
+        
+        b.hrmn as b_hrmn,
+     
+        CONCAT('<li style=\" width: $callwidth\" >',date_format(a.timestamp,'%i'), ':', callsign,' > ',
+         CASE 
+			WHEN comment = 'Initial Log In' THEN 'Log In'
             WHEN comment = 'First Log In'   THEN 'First Log'
             WHEN comment = 'No FCC Record'  THEN 'No FCC'
             WHEN comment LIKE '%Role Changed%' THEN CONCAT('Roll:',
-                                                            SUBSTRING_INDEX(comment,':',-1))
+                                                           SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%Status Change%' THEN CONCAT('Status:',SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%County Change%' THEN CONCAT( 'County:',
-                                                             SUBSTRING_INDEX(comment,':',-1))
+                                                            SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%Traffic set%' THEN CONCAT( 'Traffic:',
-                                                             SUBSTRING_INDEX(comment,':',-1))
+                                                            SUBSTRING_INDEX(comment,':',-1))
             WHEN comment LIKE '%The Call%'  THEN 'Deleted'
             WHEN comment LIKE '%Opened the net%' THEN 'OPENED'
             WHEN comment LIKE '%The log was closed%' THEN 'CLOSED'
             ELSE comment
-        END, '</li>') as combo,
-     CONCAT('<li style=\" width: $callwidth\" ><span class=\"hrmn\">',
+         END, '</li>') as combo,
+         
+         /* this code replaces the ul.timeline > li in the CSS */
+        CONCAT('<li style=\" width: calc( 100% /  $rowcount );\"><span class=\"hrmn\">',
             CONCAT(date_format(a.timestamp,\"%H\"),':',LPAD(MINUTE(
             FROM_UNIXTIME(FLOOR(UNIX_timestamp(a.timestamp)/300)*300)),2,0)),
             '</span><ul class=\"content\">') as firstlist,
-    b.timestamp as starttime
-FROM TimeLog a, temp_hrmn b
-WHERE netID = :netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
-AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
-    FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
-GROUP BY combo
-ORDER BY a.uniqueID");
+            
+        b.timestamp as starttime
 
-// Bind parameters
-$sql->bindParam(':netID', $netID, PDO::PARAM_INT);
-
-// Execute the prepared statement
-$sql->execute();
-
-// Fetch the results as an associative array
-$results = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-// Loop through the results
-foreach ($results as $row) {
-    // Your code to process each row goes here
-    echo $row['combo']; // Example output
-}
-
-// The rest of your code...
-
+      FROM TimeLog a
+          ,temp_hrmn b
+     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+       AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
+        FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
+     
+     GROUP BY combo
+     ORDER BY a.uniqueID  ");
      
      $tmpArray = array();
      $rowno = 0;
@@ -222,13 +228,12 @@ foreach ($results as $row) {
 <script>
 
     window.onload = function() {
-        var background = $('.hrmn').css('background');
-        //alert("background= " + background);
+        var stuff = ('.hrmn').css('background');
+        //alert("stuff= " stuff);
         alert("in the function");
     };
 
 </script>
-
   
 <script id="rendered-js" >
     (function() {
