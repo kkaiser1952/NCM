@@ -72,24 +72,32 @@ $sql = ("
     SELECT activity, frequency, netcall, DATE(logdate)
       FROM NetLog
      WHERE netID = :netId
-     LIMIT 0,1 
+     LIMIT 0,1 ;
 ");    
 
     $stmt = $db_found->prepare($sql);
-    $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    $stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
     $stmt->execute();
     
     // Fetch the results as an associative array
-    $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $activity = $stmt->fetchColumn(0);
-        $frequency = $stmt->fetchColumn(1);
-        $netcall = $stmt->fetchColumn(2);
-        $dateofit = $stmt->fetchColumn(3);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($row) {
+            $activity = $row['activity'];
+            $frequency = $row['frequency'];
+            $netcall = $row['netcall'];
+            $dateofit = $row['DATE(logdate)'];
+            
+            //$activity = 'Net: ' . $netID . ', ' . $activity;
         
+           // echo 'net: ' . $netID . ' act: ' . $activity . ' frq: ' . $frequency . ' net: ' . $netcall . ' dat: ' . $dateofit;
+            
+            } else {
+                echo "No rows found.";
+            }
     
 // Count how many unique minute by grouped minutes
-$sql = (" 
+$sql = " 
     DROP TABLE IF EXISTS ncm.temp_hrmn;
     
     CREATE TABLE ncm.temp_hrmn    
@@ -109,7 +117,7 @@ $sql = ("
      GROUP BY CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
              
-");
+";
 
 $db_found->exec($sql);
 
@@ -129,7 +137,7 @@ $sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
                 else if ($rowcount = 9  ) {$mfactor = 20; }
                 else if ($rowcount >9   ) {$mfactor = 10; }
         $callwidth = ($rowcount * $mfactor)."px";
-            echo "::  $rowcount $mfactor  $callwidth";
+            //echo "::  $rowcount $mfactor  $callwidth";
 
 $sql = ("
     SELECT 
