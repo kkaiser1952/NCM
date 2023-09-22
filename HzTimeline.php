@@ -66,31 +66,33 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     
      $netID = intval( $_GET["NetID"] );   //$q = 2916;
-     //$netID = 1000;
-    
-    //$netID = 3685;
+     $netID = 10032;
     
 // Get some net info
 $sql = ("
     SELECT activity, frequency, netcall, DATE(logdate)
       FROM NetLog
-     WHERE netID = $netID
+     WHERE netID = :netId
      LIMIT 0,1 
 ");    
 
-//echo "$sql";
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Fetch the results as an associative array
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $db_found->prepare($sql);
-	$stmt->execute();
-        $activity = $stmt->fetchColumn(0);
-    $stmt->execute();
-        $frequency = $stmt->fetchColumn(1);
-    $stmt->execute();
-        $netcall = $stmt->fetchColumn(2);
-    $stmt->execute();
-        $dateofit = $stmt->fetchColumn(3);
+    if ($row) {
+    	$$activity = $row['activity'];
+        $frequency = $row['frequency'];
+        $netcall = $row['netcall'];
+        $dateofit = $row['DATE(logdate)'];
         
-        //echo("<br><br><br>$activity, $frequency, $netcall, $dateofit");
+        //echo 'act: ' . $activity . ' frq: ' . $frequency . ' net: ' . $netcall . ' dat: ' . $dateofit;
+} else {
+    echo "No rows found.";
+}
 
     
 // Count how many unique minute by grouped minutes
@@ -105,10 +107,10 @@ $sql = ("
             CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) AS hrmn,
                     
-           COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
+            COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0))) AS hrmncount,
            
-           timestamp
+            timestamp
            
       FROM TimeLog
      WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
