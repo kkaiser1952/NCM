@@ -87,17 +87,17 @@ $sql = ("
             $frequency = $row['frequency'];
             $netcall = $row['netcall'];
             $dateofit = $row['DATE(logdate)'];
-            
-            //$activity = 'Net: ' . $netID . ', ' . $activity;
         
-           // echo 'net: ' . $netID . ' act: ' . $activity . ' frq: ' . $frequency . ' net: ' . $netcall . ' dat: ' . $dateofit;
+            // Look at output
+           // echo 'net: ' . $netID . '<br> act: ' . $activity . '<br> frq: ' . $frequency . '<br> net: ' . $netcall . '<br> dat: ' . $dateofit . '<br> END--END<br>';
             
             } else {
                 echo "No rows found.";
             }
     
+try {
 // Count how many unique minute by grouped minutes
-$sql = " 
+$sqlCreateTempTable = "
     DROP TABLE IF EXISTS ncm.temp_hrmn;
     
     CREATE TABLE ncm.temp_hrmn    
@@ -113,15 +113,53 @@ $sql = "
            timestamp
            
       FROM TimeLog
-     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+     WHERE netID = :netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
      GROUP BY CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
              
 ";
 
-$db_found->exec($sql);
 
 
+$stmtCreateTempTable = $db_found->prepare($sqlCreateTempTable);
+$stmtCreateTempTable->bindParam(':netId', $netID, PDO::PARAM_INT); 
+$stmtCreateTempTable->execute();
+
+} catch (PDOException $e) {
+    echo "Temp Table Error: " . $e->getMessage();
+}
+
+//$db_found->exec($sql);
+
+// Get the number of rows in the temporary table
+$sqlRowCount = "SELECT COUNT(*) as cntr FROM ncm.temp_hrmn";
+$stmtRowCount = $db_found->prepare($sqlRowCount);
+$stmtRowCount->execute();
+$resultRowCount = $stmtRowCount->fetch(PDO::FETCH_ASSOC);
+$rowcount = $resultRowCount['cntr'];
+
+// Calculate $mfactor and $callwidth based on $rowcount
+if ($rowcount <= 4) {
+    $mfactor = 135;
+} elseif ($rowcount <= 5) {
+    $mfactor = 100;
+} elseif ($rowcount == 6) {
+    $mfactor = 65;
+} elseif ($rowcount == 7) {
+    $mfactor = 46;
+} elseif ($rowcount == 8) {
+    $mfactor = 30;
+} elseif ($rowcount == 9) {
+    $mfactor = 20;
+} elseif ($rowcount > 9) {
+    $mfactor = 10;
+}
+$callwidth = ($rowcount * $mfactor) . "px";
+
+echo "at the end; $callwidth";
+
+
+/* */
 /* Get the number of 5 minute intervals from the temp table above */
 $sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
    $sql->execute();
