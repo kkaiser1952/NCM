@@ -639,8 +639,8 @@ if (!empty($result)) {
                 "Map Net" => "https://net-control.us/map.php?NetID="    . $netID,
                 "ICS-214" => "https://net-control.us/ics214.php?NetID=" . $netID,
                 "ICS-209" => "https://net-control.us/ics309.php?NetID=" . $netID,
-                "ICS-205" => "https://net-control.us/ics205A.php?NetID=". $netID
-                
+                "ICS-205" => "https://net-control.us/ics205A.php?NetID=". $netID,
+                "Time Line" => "https://net-control.us/HzTimeline.php?NetID=" . $netID
                 // https://net-control.us/buildUniqueCallList.php
                 // Add more options as needed
             ];
@@ -666,6 +666,8 @@ if (!empty($result)) {
                         echo '<option value="https://net-control.us/ics309.php?NetID=' . $netID . '">ICS-309</option>';
                         echo '<option value="https://net-control.us/ics205A.php?NetID=' . $netID .
                             '">ICS-205A</option>';
+                        echo '<option value="https://net-control.us/HzTimeline.php?NetID=' . $netID .
+                            '">TimeLine</option>';
                             
                         echo '</select>';
                         echo '</div>';

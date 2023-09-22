@@ -133,15 +133,7 @@ echo "
 	
 	$station_count = 0;
 	
-	$stmt = $db_found->prepare($sql);
-    //$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    // Fetch the results as an associative array
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-	
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+foreach($db_found->query($sql) as $row) {
     
     $station_count = $station_count + 1;
     
