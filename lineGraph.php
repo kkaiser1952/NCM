@@ -1,96 +1,62 @@
 <!DOCTYPE html>
-<!--
-<?php phpinfo(); ?>
--->
 <html>
 <head>
-    <title>Line Graph</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Line Graph with Google Charts</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <div class="container">
-        <canvas id="lineChart"></canvas>
+        <div id="lineChart"></div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Function to render the chart using Chart.js
-            function renderChart(data) {
-                const dates = data.map(item => item.logdate_date);
-                const counts = data.map(item => item.distinct_netID_count);
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-                const ctx = document.getElementById('lineChart').getContext('2d');
+        function drawChart() {
+            // Embed PHP data directly into JavaScript
+            var chartData = [
+                ['logdate_date', 'distinct_netID_count'],
+                <?php
+                // Include your database connection script (dbConnectDtls.php)
+                require_once "dbConnectDtls.php";
 
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: dates,
-                        datasets: [{
-                            label: 'Distinct NetID Count',
-                            data: counts,
-                            borderColor: 'blue',
-                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                type: 'time',
-                                time: {
-                                    unit: 'day' // Display labels by day
-                                }
-                            },
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
+                // SQL query with a condition to exclude '0000-00-00'
+                $sql = $db_found->prepare("
+                   SELECT DATE(logdate) AS logdate_date, 
+       COUNT(DISTINCT netID) AS distinct_netID_count
+FROM NetLog
+WHERE netID <> 0
+GROUP BY DATE(logdate)  
+HAVING logdate_date <> '0000-00-00'
+ORDER BY logdate_date;
+                ");
 
-            // Execute the SQL query using PDO in PHP
-            // Execute the SQL query using PDO in PHP
-// Execute the SQL query using PDO in PHP
-<?php
-// Include your database connection script (dbConnectDtls.php)
-require_once "dbConnectDtls.php";
+                // Execute the prepared query
+                $sql->execute();
 
+                // Fetch data and format it as JavaScript array
+                $data = array();
+                while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                    echo "['" . $row['logdate_date'] . "', " . $row['distinct_netID_count'] . "],";
+                }
+                ?>
+            ];
 
-// SQL query
-$sql = $db_found->prepare("
-    SELECT logdate, COUNT(DISTINCT netID) AS distinct_netID_count
-    FROM NetLog
-    GROUP BY logdate
-    ORDER BY logdate
-");
+            var data = google.visualization.arrayToDataTable(chartData);
 
-$sql->execute();
+            var options = {
+                title: 'Distinct NetID Count Over Time',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: { title: 'Log Date' },
+                vAxis: { title: 'Distinct NetID Count' }
+            };
 
-// Fetch data and format the date in ISO 8601 format in PHP
-$rows = $sql->fetchAll(PDO::FETCH_ASSOC);
-$data = array();
+            var chart = new google.visualization.LineChart(document.getElementById('lineChart'));
 
-foreach ($rows as $row) {
-    $iso8601Date = date('Y-m-d\TH:i:s', strtotime($row['logdate'])); // Format the date
-    $data[] = array(
-        'logdate_date' => $iso8601Date,
-        'distinct_netID_count' => $row['distinct_netID_count']
-    );
-}
-
-// Convert data to JSON
-$data = json_encode($data);
-?>
-
-
-
-            // Pass the fetched data to the JavaScript function for chart rendering
-            var chartData = <?php echo $data; ?>;
-            renderChart(chartData);
-        });
+            chart.draw(data, options);
+        }
     </script>
 </body>
 </html>
