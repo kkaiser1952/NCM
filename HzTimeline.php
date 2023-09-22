@@ -44,7 +44,7 @@
 <style>
     .title {
         position: absolute;
-        top: 25px;
+        top: 35px;
         left: 50px;
         font-size: 20pt;
         color: red;
@@ -66,7 +66,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     
      $netID = intval( $_GET["NetID"] );   //$q = 2916;
-     $netID = 10032;
+     //$netID = 10032;
     
 // Get some net info
 $sql = ("
@@ -76,6 +76,7 @@ $sql = ("
      LIMIT 0,1 
 ");    
 
+    // prepared statments
     $stmt = $db_found->prepare($sql);
     $stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
     $stmt->execute();
@@ -94,7 +95,7 @@ $sql = ("
     echo "No rows found.";
 }
 
-    
+    //echo "before $netID";
 // Count how many unique minute by grouped minutes
 $sql = (" 
     
@@ -118,6 +119,12 @@ $sql = ("
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
              
 ");
+    //$stmt = $db_found->prepare($sql);
+    //$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    //$stmt->execute();
+    
+    // Fetch the results as an associative array
+    //$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $db_found->exec($sql);
 
@@ -139,7 +146,7 @@ $sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
         $callwidth = ($rowcount * $mfactor)."px";
             //echo "::  $rowcount $mfactor  $callwidth";
 
-$sql = ("
+$sql = "
     SELECT 
         callsign,
      
@@ -176,16 +183,17 @@ $sql = ("
 
       FROM TimeLog a
           ,temp_hrmn b
-     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+     WHERE netID = $netID 
+       AND callsign NOT LIKE '%genc%' 
+       AND callsign NOT LIKE '%weather%'
        AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
         FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
      
      GROUP BY combo
-     ORDER BY a.uniqueID  ");
+     ORDER BY a.uniqueID  ";
      
      $tmpArray = array();
      $rowno = 0;
-
 ?>
 
 </head>
@@ -225,7 +233,6 @@ $sql = ("
   
   <p>HzTimeline.php</p>
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 
