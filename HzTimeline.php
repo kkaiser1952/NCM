@@ -65,34 +65,31 @@
      $netID = intval( $_GET["NetID"] );   //$q = 2916;
      //$netID = 1000;
     
-    //$netID = 3685;
+    $netID = 10031;
     
 // Get some net info
 $sql = ("
     SELECT activity, frequency, netcall, DATE(logdate)
       FROM NetLog
-     WHERE netID = $netID
+     WHERE netID = :netId
      LIMIT 0,1 
 ");    
 
-//echo "$sql";
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Fetch the results as an associative array
+    $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $db_found->prepare($sql);
-	$stmt->execute();
         $activity = $stmt->fetchColumn(0);
-    $stmt->execute();
         $frequency = $stmt->fetchColumn(1);
-    $stmt->execute();
         $netcall = $stmt->fetchColumn(2);
-    $stmt->execute();
         $dateofit = $stmt->fetchColumn(3);
         
-        //echo("<br><br><br>$activity, $frequency, $netcall, $dateofit");
-
     
 // Count how many unique minute by grouped minutes
 $sql = (" 
-    
     DROP TABLE IF EXISTS ncm.temp_hrmn;
     
     CREATE TABLE ncm.temp_hrmn    
