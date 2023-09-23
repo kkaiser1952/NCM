@@ -317,16 +317,7 @@
     <div><b style="color:red">*</b>Enter Your Call Sign:</div>   
     	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
 					
-<?php  require_once "buildThreeDropdowns_Proposed.php"; 
-    echo "<h2>Group Dropdown:</h2>";
-echo "<div>$groupList</div>";
-
-echo "<h2>Kind Dropdown:</h2>";
-echo "<div>$kindList</div>";
-
-echo "<h2>Frequency Dropdown:</h2>";
-echo "<div>$freqList</div>";
-?>
+<?php  require_once "buildThreeDropdowns_Proposed.php"; ?>
 			     
     <!-- ==== GROUP ======= -->
     <div><b style="color:red">*</b>Select Group or Call:&nbsp;
@@ -348,7 +339,7 @@ echo "<div>$freqList</div>";
                class="netGroup"  onkeyup="this.value = removeSpaces(this.value); filterFunction(0);" required />
         <div class='GroupDropdown-content hidden'>
             
-<?php echo $groupList;?>    <!-- Created in buildThreeDropdowns.php -->
+<?php echo $groupList;?>    <!-- Created in buildThreeDropdowns.php --> 
             
         </div> <!-- End GroupDropdown -->
     </div> <!-- End GroupDropdown-content -->
@@ -385,7 +376,7 @@ echo "<div>$freqList</div>";
                class="netGroup" onkeyup="filterFunction(2)"/>
         <div class='FreqDropdown-content hidden'>
             
-<?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php -->
+<?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php --> 
            
         </div> <!-- End FreqDropdown -->
     </div> <!-- End FreqDropdown-content -->
@@ -396,9 +387,9 @@ echo "<div>$freqList</div>";
      <select class="last3qs" id="satNet" title="Sub Net Selections" onfocus="blurFreqChoices(); ">
     	<option value="0" selected>None</option>
 
-<?php  require_once "buildSubNetCandidates.php"; ?>
+<?php  require_once "buildSubNetCandidates_Proposed.php"; ?>
 
-     </select>
+     </select> 
 				
 		<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
 		    <!-- doalert() & seecopyPB() in NetManager-p2.js -->
