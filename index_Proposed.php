@@ -302,7 +302,7 @@
         
 			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
-		</div>
+		</div> 
 		
 		<div id="makeNewNet" class="hidden" >	
     		<div style="color: red;">* Required Field</div>
@@ -312,12 +312,21 @@
     		   
             </label>
             -->
-            <br>
+            <br> 
             
     <div><b style="color:red">*</b>Enter Your Call Sign:</div>   
     	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
 					
-<?php  require_once "buildThreeDropdowns.php"; ?>
+<?php  require_once "buildThreeDropdowns_Proposed.php"; 
+    echo "<h2>Group Dropdown:</h2>";
+echo "<div>$groupList</div>";
+
+echo "<h2>Kind Dropdown:</h2>";
+echo "<div>$kindList</div>";
+
+echo "<h2>Frequency Dropdown:</h2>";
+echo "<div>$freqList</div>";
+?>
 			     
     <!-- ==== GROUP ======= -->
     <div><b style="color:red">*</b>Select Group or Call:&nbsp;
