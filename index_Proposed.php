@@ -310,14 +310,15 @@
             <label class="Testcontainer" for="testnet">Click if making a test net? &nbsp;&nbsp;&nbsp;
     		    <input id="testnet" type="checkbox" name="testnet" value="y" >
     		   
-            </label>
+            </label> 
             -->
             <br> 
             
     <div><b style="color:red">*</b>Enter Your Call Sign:</div>   
     	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
-					
-<?php  require_once "buildThreeDropdowns_Proposed.php"; ?>
+    	
+    	<!-- The require_once "buildThreeDropdowns_Proposed.php" goes here -->
+        <?php  require_once "buildThreeDropdowns_Proposed.php"; ?>
 			     
     <!-- ==== GROUP ======= -->
     <div><b style="color:red">*</b>Select Group or Call:&nbsp;
@@ -368,7 +369,7 @@
     </div> <!-- End KindDropdown -->
     </div> <!-- End KindDropdown-content -->
             
-    <!-- ==== FREQ ======= -->  
+    <!-- ==== FREQ ======= --> 
     <div><b style="color:red">*</b>Select the Frequency:</div>
     <div id="FreqDropdown" >
         <!-- showFreqChoices() & filterFunctions() at the bottom of index.php -->
@@ -379,15 +380,15 @@
 <?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php --> 
            
         </div> <!-- End FreqDropdown -->
-    </div> <!-- End FreqDropdown-content -->
+    </div> <!-- End FreqDropdown-content --> 
             
     <div class="last3qs">If this is a Sub Net select the<br>open primary net:</div>
 
     <!-- If any option is selected make the cb1 span (show linked nets) button appear using function showLinkedButton() -->
      <select class="last3qs" id="satNet" title="Sub Net Selections" onfocus="blurFreqChoices(); ">
     	<option value="0" selected>None</option>
-
-<?php  require_once "buildSubNetCandidates_Proposed.php"; ?>
+        <!-- The require_once "buildSubNetCandidates_Proposed.php" goes here -->
+        <?php  require_once "buildSubNetCandidates_Proposed.php"; ?>
 
      </select> 
 				
@@ -436,10 +437,11 @@
  
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
-<!-- PHP to build the list of nets from the last 10 days -->
-<?php  require_once "buildOptionsForSelect.php"; ?>
+            <!-- PHP to build the list of nets from the last 10 days -->
+            <!-- The require_once "buildOptionsForSelect_Proposed.php"; goes here -->
+            <?php  require_once "buildOptionsForSelect_Proposed.php"; ?>
         	
-        </select>  	<!-- End of ID: select1 -->
+        </select>  	<!-- End of ID: select1 --> 
 		
 		<div class="btn-group">
 			<button id="refbutton" class="btn btn-info btn-small hidden" >Refresh</button>
