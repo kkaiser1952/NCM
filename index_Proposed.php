@@ -51,7 +51,7 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-    require_once "NCMStats.php";       // Get some stats
+//    require_once "NCMStats.php";       // Get some stats
 ?>
 
 <html lang="en" >
@@ -385,11 +385,16 @@
     <div class="last3qs">If this is a Sub Net select the<br>open primary net:</div>
 
     <!-- If any option is selected make the cb1 span (show linked nets) button appear using function showLinkedButton() -->
+    
      <select class="last3qs" id="satNet" title="Sub Net Selections" onfocus="blurFreqChoices(); ">
     	<option value="0" selected>None</option>
         <!-- The require_once "buildSubNetCandidates_Proposed.php" goes here -->
-        <?php  require_once "buildSubNetCandidates_Proposed.php"; ?>
-
+  <!--      <?PHP 
+        echo "Line 292 in index: Before require_once 'buildSubNetCandidates_Proposed.php'";
+            //require_once "dbConnectDtls.php";
+            require_once "buildSubNetCandidates_Proposed.php";
+        echo "<br>After require_once 'buildSubNetCandidates_Proposed.php'";
+        ?> -->
      </select> 
 				
 		<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
