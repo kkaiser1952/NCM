@@ -245,8 +245,7 @@ $(document).ready(function()
 						break;
 						case "Capt": $nc = "Team Captain";
 						break;
-						case "   ": $nc = "Team Captain";
-						break;
+
 					}
 					
 					// fix creds if they exist by adding a comma after its name.
