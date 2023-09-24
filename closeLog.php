@@ -133,7 +133,7 @@
 				
 				// Set background row color based on some parameters
 					
-				$os = array("PRM", "2nd", "LSN", "Log", "PIO", "EM", "CMD", "TL"); // removed STB and EOC
+				$os = array("PRM", "2nd", "LSN", "Log", "PIO", "EM", "CMD", "TL", "======", 'Captain'); // removed STB and EOC
 				
 				// #1 Important, traffic turns it red
 				if ($row[traffic] == "Yes" ) {$bgcol = 'bgcolor="#ff9cc2"';}

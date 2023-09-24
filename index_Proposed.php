@@ -439,7 +439,7 @@
             
             <!-- PHP to build the list of nets from the last 10 days -->
             <!-- The require_once "buildOptionsForSelect_Proposed.php"; goes here -->
-            <?php require_once "buildOptionsForSelect_Proposed.php"; echo "BOFSP here"; ?>
+ <?php require_once "buildOptionsForSelect_Proposed.php"; ?>
         	
         </select>  	<!-- End of ID: select1 --> 
 		

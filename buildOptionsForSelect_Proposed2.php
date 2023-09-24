@@ -1,6 +1,6 @@
 <?php
 // Include your database connection code (e.g., dbConnectDtls.php) here
-//require_once "dbConnectDtls.php";
+require_once "dbConnectDtls.php";
 
 // Check if the database connection is valid
 if ($db_found) {
