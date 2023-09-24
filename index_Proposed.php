@@ -51,7 +51,7 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-//    require_once "NCMStats.php";       // Get some stats
+    require_once "NCMStats.php";       // Get some stats
 ?>
 
 <html lang="en" >
@@ -318,7 +318,7 @@
     	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
     	
     	<!-- The require_once "buildThreeDropdowns_Proposed.php" goes here -->
-        <?php  require_once "buildThreeDropdowns_Proposed.php"; ?>
+        <?php require_once "buildThreeDropdowns_Proposed.php"; ?>
 			     
     <!-- ==== GROUP ======= -->
     <div><b style="color:red">*</b>Select Group or Call:&nbsp;
@@ -377,7 +377,7 @@
                class="netGroup" onkeyup="filterFunction(2)"/>
         <div class='FreqDropdown-content hidden'>
             
-<?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php --> 
+        <?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php --> 
            
         </div> <!-- End FreqDropdown -->
     </div> <!-- End FreqDropdown-content --> 
@@ -389,12 +389,7 @@
      <select class="last3qs" id="satNet" title="Sub Net Selections" onfocus="blurFreqChoices(); ">
     	<option value="0" selected>None</option>
         <!-- The require_once "buildSubNetCandidates_Proposed.php" goes here -->
-  <!--      <?PHP 
-        echo "Line 292 in index: Before require_once 'buildSubNetCandidates_Proposed.php'";
-            //require_once "dbConnectDtls.php";
-            require_once "buildSubNetCandidates_Proposed.php";
-        echo "<br>After require_once 'buildSubNetCandidates_Proposed.php'";
-        ?> -->
+        <?PHP require_once "buildSubNetCandidates_Proposed.php"; ?> 
      </select> 
 				
 		<label class="radio-inline last3qs" for="pb">Click to create a Pre-Build Event &nbsp;&nbsp;&nbsp;
@@ -444,7 +439,7 @@
             
             <!-- PHP to build the list of nets from the last 10 days -->
             <!-- The require_once "buildOptionsForSelect_Proposed.php"; goes here -->
-            <?php  require_once "buildOptionsForSelect_Proposed.php"; ?>
+            <?php require_once "buildOptionsForSelect_Proposed.php"; echo "BOFSP here"; ?>
         	
         </select>  	<!-- End of ID: select1 --> 
 		
