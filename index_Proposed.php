@@ -51,7 +51,7 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-    require_once "NCMStats.php";       // Get some stats
+//    require_once "NCMStats.php";       // Get some stats
 ?>
 
 <html lang="en" >
