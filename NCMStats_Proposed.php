@@ -70,6 +70,6 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 $orgCnt = $row['orgCnt'];
 
- echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
+// echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
 
 ?>

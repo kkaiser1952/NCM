@@ -2,6 +2,15 @@
 // Include your database connection code (e.g., dbConnectDtls.php) here
 require_once "dbConnectDtls.php";
 
+
+//var_dump($db_found);
+
+if (!$db_found) {
+    $error_message = "Error: Database connection is not established. Check database credentials.";
+    error_log($error_message, 3, "error_log.txt"); // Log the error to a file
+    die($error_message);
+}
+
 // Check if the database connection is valid
 if ($db_found) {
     // Prepare the SQL statement with placeholders

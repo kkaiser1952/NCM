@@ -2,6 +2,10 @@
 // Include your database connection code (e.g., dbConnectDtls.php) here
 //require_once "dbConnectDtls.php";
 
+if (!$db_found) { require_once "dbConnectDtls.php";
+    //die("Error: Database connection is not established. Check database credentials. <-- From buildOptionsForSelect_Proposed.php");
+}
+
 // Check if the database connection is valid
 if ($db_found) {
     // Prepare the SQL statement with placeholders

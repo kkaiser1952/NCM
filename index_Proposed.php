@@ -51,7 +51,7 @@
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
-//    require_once "NCMStats.php";       // Get some stats
+    require_once "NCMStats_Proposed.php";       // Get some stats
 ?>
 
 <html lang="en" >
@@ -425,20 +425,21 @@
     		
     		<!-- switchClosed() in NetManager-p2.js -->
     		<!-- The tohide class is used by net_by_num() -->
-    		
+     		
     	<!--	<label for="select1">Or make a selection from this dropdown</label>  -->
     	
         <select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
-	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
-	        	
+	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed(); ">
+	       
 	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or Select From Past 10 Days Nets</option>
 	        
 	        <option class ="tohide opcolors" value="z" disabled>Open Nets are in green =================//================= Pre-built Nets are in blue</option>
- 
+  
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
             <!-- PHP to build the list of nets from the last 10 days -->
-            <!-- The require_once "buildOptionsForSelect_Proposed.php"; goes here -->
+            <!-- The require_once "buildOptionsForSelect_Proposed.php"; goes here -->  
+ 
  <?php require_once "buildOptionsForSelect_Proposed.php"; ?>
         	
         </select>  	<!-- End of ID: select1 --> 
@@ -784,7 +785,7 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
-
+ 
 </script>
 
 </body>
