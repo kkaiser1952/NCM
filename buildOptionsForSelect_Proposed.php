@@ -2,7 +2,7 @@
 // This program creates the dropdown for previous net selection
 // 2020-10-14
 
-//require_once "dbConnectDtls.php";
+require_once "dbConnectDtls.php";
 
 // read the time diff from UTC for the local time
 if (!isset($_COOKIE['tzdiff'])) {
