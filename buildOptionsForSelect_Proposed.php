@@ -2,9 +2,10 @@
 // This program creates the dropdown for previous net selection
 // 2020-10-14
 
-require_once "dbConnectDtls.php";
+//require_once "dbConnectDtls.php";
 
 // read the time diff from UTC for the local time
+
 if (!isset($_COOKIE['tzdiff'])) {
     $tzdiff = "-0:00";   // make no adjustment to the various time values
 } else {
@@ -14,12 +15,12 @@ if (!isset($_COOKIE['tzdiff'])) {
 
 // if (sessionStorage.getItem("tz_domain") == "UTC") { $tzdiff = "-0:00"; }
 
-$sql = "SELECT netID
+$stmt = $db_found->prepare("SELECT netID
                ,status 
                ,activity 
                ,netcall 
                ,frequency
-                /* 1 = colose, 0 = open */  
+                /* 1 = close, 0 = open */  
                ,MIN(status) AS minstat  
                ,MIN(CONVERT_TZ(dttm, '+00:00', :tzdiff)) AS mindttm 
                ,MIN(CONVERT_TZ(logdate, '+00:00', :tzdiff)) AS minlogdate
@@ -44,15 +45,16 @@ $sql = "SELECT netID
                        ELSE ''
                   END)  AS pbcolor   /* color for the open pre-built nets */
              FROM `NetLog` 
-            WHERE (CONVERT_TZ(dttm, '+00:00', :tzdiff) >= NOW() - INTERVAL 39 DAY AND pb = 1)
-               OR (CONVERT_TZ(logdate, '+00:00', :tzdiff) >= NOW() - INTERVAL 10 DAY AND pb = 0)
+            WHERE (CONVERT_TZ(dttm, '+00:00', $tzdiff) >= NOW() - INTERVAL 39 DAY AND pb = 1)
+               OR (CONVERT_TZ(logdate, '+00:00', $tzdiff) >= NOW() - INTERVAL 10 DAY AND pb = 0)
                                                      	
              GROUP BY netID
-             ORDER BY netID DESC";
+             ORDER BY netID DESC");
 
 try {
-    $stmt = $db_found->prepare($sql);
-    $stmt->bindParam(':tzdiff', $tzdiff, PDO::PARAM_STR);
+    //$stmt = $db_found->prepare($sql);
+  //  $stmt = $db_found->prepare($sql);
+    //$stmt->bindParam(':tzdiff', $tzdiff, PDO::PARAM_STR);
     $stmt->execute();
 
     $firstDate = true; // put date in list
@@ -117,8 +119,8 @@ try {
         // This is the part that gets selected
         echo ("<option data-net-status=\"" . $act['minstat'] . "\" value=\"" . $act['netID'] . "\" class=\" " . $pbcolor . " " . $spcl . "\">
             " . $act['netcall'] . ", Net #: " . $act['netID'] . " --> " . $activity . " " . $logdate . " </option>\n");  
-    } // End foreach
+    } // End while 
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "xError: " . $e->getMessage();
 }
 ?>
