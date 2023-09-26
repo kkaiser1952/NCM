@@ -2,6 +2,7 @@
     //require_once "dbConnectDtls.php";  // Access to MySQL
     //require_once "wx.php";			   // Makes the weather information available
     //require_once "NCMStats.php";       // Get some stats
+    // 2023-09-26
     
     // $db_found 
 

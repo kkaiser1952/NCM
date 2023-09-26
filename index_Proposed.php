@@ -422,7 +422,7 @@
         <div class="btn-toolbar" >
         
 		    <div class="form-group" id="form-group-1" title="form-group" >
-    		
+    		 
     		<!-- switchClosed() in NetManager-p2.js -->
     		<!-- The tohide class is used by net_by_num() -->
      		

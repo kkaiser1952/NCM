@@ -1,11 +1,13 @@
 <?php
+    
 // This program creates the dropdown for previous net selection
 // 2020-10-14
+// 2023-09-26 v2
 
+// uncomment the line below to run this code by itself without NCM, check the 'source' for output
 //require_once "dbConnectDtls.php";
 
 // read the time diff from UTC for the local time
-
 if (!isset($_COOKIE['tzdiff'])) {
     $tzdiff = "-0:00";   // make no adjustment to the various time values
 } else {
@@ -13,9 +15,7 @@ if (!isset($_COOKIE['tzdiff'])) {
     $tzdiff = "$tzdiff:1";    // echo("tzdiff= $tzdiff");
 }
 
-// if (sessionStorage.getItem("tz_domain") == "UTC") { $tzdiff = "-0:00"; }
-
-$stmt = $db_found->prepare("SELECT netID
+$sql = "SELECT netID
                ,status 
                ,activity 
                ,netcall 
@@ -45,16 +45,15 @@ $stmt = $db_found->prepare("SELECT netID
                        ELSE ''
                   END)  AS pbcolor   /* color for the open pre-built nets */
              FROM `NetLog` 
-            WHERE (CONVERT_TZ(dttm, '+00:00', $tzdiff) >= NOW() - INTERVAL 39 DAY AND pb = 1)
-               OR (CONVERT_TZ(logdate, '+00:00', $tzdiff) >= NOW() - INTERVAL 10 DAY AND pb = 0)
+            WHERE (CONVERT_TZ(dttm, '+00:00', :tzdiff) >= NOW() - INTERVAL 39 DAY AND pb = 1)
+               OR (CONVERT_TZ(logdate, '+00:00', :tzdiff) >= NOW() - INTERVAL 10 DAY AND pb = 0)
                                                      	
              GROUP BY netID
-             ORDER BY netID DESC");
+             ORDER BY netID DESC";
 
-try {
-    //$stmt = $db_found->prepare($sql);
-  //  $stmt = $db_found->prepare($sql);
-    //$stmt->bindParam(':tzdiff', $tzdiff, PDO::PARAM_STR);
+try { $stmt = '';
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':tzdiff', $tzdiff, PDO::PARAM_STR);
     $stmt->execute();
 
     $firstDate = true; // put date in list
@@ -119,8 +118,8 @@ try {
         // This is the part that gets selected
         echo ("<option data-net-status=\"" . $act['minstat'] . "\" value=\"" . $act['netID'] . "\" class=\" " . $pbcolor . " " . $spcl . "\">
             " . $act['netcall'] . ", Net #: " . $act['netID'] . " --> " . $activity . " " . $logdate . " </option>\n");  
-    } // End while 
+    } // End while  
 } catch (PDOException $e) {
     echo "xError: " . $e->getMessage();
-}
+} // end try
 ?>
