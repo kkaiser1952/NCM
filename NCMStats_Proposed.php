@@ -2,6 +2,10 @@
 // Used by help.php
 // 2023-09-26
 
+if (!$db_found) { require_once "dbConnectDtls.php";
+    //die("Error: Database connection is not established. Check database credentials. <-- From buildOptionsForSelect_Proposed.php");
+}
+
 function convertSecToTime($sec)
 {
     $date1 = new DateTime("@0");

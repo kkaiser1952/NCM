@@ -4,7 +4,9 @@
     //require_once "NCMStats.php";       // Get some stats
     // 2023-09-26
     
-    // $db_found 
+    if (!$db_found) { require_once "dbConnectDtls.php";
+    //die("Error: Database connection is not established. Check database credentials. <-- From buildOptionsForSelect_Proposed.php");
+    }
 
 try {
     //$db_found = new PDO("mysql:host=$host;dbname=$database", $username, $password);

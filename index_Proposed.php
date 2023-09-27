@@ -3,55 +3,51 @@
 <?php
 /***********************************************************************************************************
  
- Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
- document various net operations such as weather emergencies, club meetings, bike ride support and any other 
- logging and/or reporting intensive communications support and management needs. 
- A variety of reports can be created such as mapping stations locations and other DHS/FEMA needs. Including
- the ICS-214 and ICS-309 reports and access to all the many others.
+ Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to document various net operations such as weather emergencies, club meetings, bike ride support and any other logging and/or reporting intensive communications support and management needs. 
+  
+ A variety of reports can be created such as mapping stations locations and other DHS/FEMA needs. Including the ICS-214 and ICS-309 reports and access to all the many others.
  
  No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
  
- Extensive help is available by clicking Help in the upper right corner of the opening page.
+ Extensive help is available by clicking Help in the upper right corner of the opening page. Or visit https://net-control.us/help.php
 
- First written some time in late 2015 and in continous enhancment and upgrade since.
- copyright 2015-2023 by: Keith Kaiser, WA0TJT 
+ First written some time in early-mid 2015 and in continous enhancment and upgrade since.
+ 
+ copyright 2015-2024 by: Keith Kaiser, WA0TJT 
  Written by: Keith Kaiser, WA0TJT, with the help of many others. See the help file for more details.
  I can be reached at wa0tjt at gmail.com
  
  The version number. v7.03.04 for example means year 7 of use (2022), 03 means the month (March), 04 the day date.
  
  How NCM works (for the most part, sorta, kinda):
- If a net is selected from the dropdown
- 1) The list of nets is selected from #select1, the past 10 days only. Nets highlighted in green are open, blue are pre-built nets, no color are closed nets.
- 2) The selected net information is passed to the showActivities() function in NetManager.js
- 3) If this net is for logging custom contacts, the code is in NetManager.js @ showActivities()
- 3a) This extra code change the Name field to a custom field for logging purposes
- 4) It runs buildUpperRightCorner.php and getactivities.php to build the page
- 4a) buildUpperRightCorner.php is used to retrieve data and populate #ourfreqs in #rightCorner
- 4b) getactivities.php is used to retrieve the data of the selcted net and populate #actLog
+ If a net is selected from the dropdown:
+     1) The list of nets is selected from #select1, the past 10 days only. Nets highlighted in green are open, blue are pre-built nets, no color are closed nets.
+     2) The selected net information is passed to the showActivities() function in NetManager.js
+     3) If this net is for logging custom contacts, the code is in NetManager.js @ showActivities()
+     3a) This extra code change the Name field to a custom field for logging purposes
+     4) It runs buildUpperRightCorner.php and getactivities.php to build the page
+     4a) buildUpperRightCorner.php is used to retrieve data and populate #ourfreqs in #rightCorner
+     4b) getactivities.php is used to retrieve the data of the selcted net and populate #actLog
  
- If a new net is created
- 1) Each of the dropdowns supplies part of the information needed to start the new net
- 2) The callsign of the person starting the net is also ented into the new net
- 3) When that data is complete it is passed to the newNet() function in NetManager-p2.js 
- 4) NetManager-p2.js runs newNet.php to create, and populate NetLog and TimeLog appropriatly
+ If a new net is created:
+     1) Each of the dropdowns supplies part of the information needed to start the new net
+     2) The callsign of the person starting the net is also ented into the new net
+     3) When that data is complete it is passed to the newNet() function in NetManager-p2.js 
+     4) NetManager-p2.js runs newNet.php to create, and populate NetLog and TimeLog appropriatly
  
- 
- Reinforcement learning
- natural-language processing
- end-to-end learning
 *********************************************************************************************************/
 
     // phpinfo();
     // PHP Version 5.6.33-0+deb8u1 on v1 as of 2022-12-05
     // Will be PHP version: 7.4+76 soon
+    // MySQL v5.5 starting 06/15/2015
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 
-    require_once "dbConnectDtls.php";  // Access to MySQL
-    require_once "wx.php";			   // Makes the weather information available
-    require_once "NCMStats_Proposed.php";       // Get some stats
+    require_once "dbConnectDtls.php";       // Access to MySQL
+    require_once "wx.php";			        // Makes the weather information available
+    require_once "NCMStats_Proposed.php";   // Get some stats
 ?>
 
 <html lang="en" >
@@ -88,7 +84,7 @@
     <meta name="author" content="Keith Kaiser, WA0TJT" >
     <meta name="Rating" content="General" >
     <meta name="Revisit" content="1 month" >
-    <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control" >
+    <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager, Amateur Radio Net Control, Ham Radio Net Control, WA0TJT" >
     
     <!-- https://fonts.google.com -->
     <!-- Allerta is used to slash zeros so don't delete -->
@@ -101,6 +97,20 @@
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
     
     <!-- =============== All above this should not be editied ====================== -->
+    
+    <!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> 
+ 
+    <script src="https://cdn.jsdelivr.net/npm/jquery-freeze-table-header@0.0.1/index.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+	
+	
+	<!-- Some JS is at the bottom of the page -->
     
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
 	<link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
@@ -662,21 +672,11 @@
      <!-- All the quotes end here -->
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
+   
+    <!-- some JS libraries are in the head (at the top of the code) -->
 	
-    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
-    <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
- 
-	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
 	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
 	
-	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
-
 	<script src="bootstrap/js/bootstrap-select.min.js"></script>				<!-- v1.12.4 2018-1-18 -->
 	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
 
@@ -688,9 +688,6 @@
 	<script src="js/jquery.countdownTimer.js"></script>							<!-- 1.0.8 2018-1-18 -->
 	
 	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
-	
-	<!-- Updated from 1.12.1 on 3/21/22 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
 <!-- My javascript -->	
 	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->

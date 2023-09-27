@@ -4,6 +4,10 @@
 // 2020-10-14
 // 2023-09-26 v2
 
+if (!$db_found) { require_once "dbConnectDtls.php";
+    //die("Error: Database connection is not established. Check database credentials. <-- From buildOptionsForSelect_Proposed.php");
+}
+
 // uncomment the line below to run this code by itself without NCM, check the 'source' for output
 //require_once "dbConnectDtls.php";
 
