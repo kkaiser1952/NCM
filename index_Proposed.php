@@ -98,17 +98,7 @@
     
     <!-- =============== All above this should not be editied ====================== -->
     
-    <!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> 
- 
-    <script src="https://cdn.jsdelivr.net/npm/jquery-freeze-table-header@0.0.1/index.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-	
+   
 	
 	<!-- Some JS is at the bottom of the page -->
     
@@ -124,10 +114,6 @@
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
-	 
-<style>
-	
-</style>
 
 </head>
 
@@ -674,6 +660,18 @@
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
    
     <!-- some JS libraries are in the head (at the top of the code) -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
+    
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> 
+ 
+    <script src="https://cdn.jsdelivr.net/npm/jquery-freeze-table-header@0.0.1/index.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 	
 	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
 	
