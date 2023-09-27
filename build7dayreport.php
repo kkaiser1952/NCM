@@ -90,7 +90,7 @@
             
             .odd-row {
                 background-color: #FFFFFF;
-                color: blue;
+                color: black;
             }
             
             .even-row {
