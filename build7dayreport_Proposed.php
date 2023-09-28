@@ -442,11 +442,11 @@ SELECT
     MAX(CASE
         WHEN tl.comment LIKE '%Opened the%' THEN tl.callsign
         ELSE NULL
-    END) AS O,
+    END) AS Open,
     MAX(CASE
         WHEN tl.comment LIKE '%log was Closed%' THEN tl.callsign
         ELSE NULL
-    END) AS C
+    END) AS Close
 FROM (
     SELECT netID, subNetOfID, 
     CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
@@ -551,6 +551,8 @@ if (!empty($result)) {
     echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
     echo '<td class="" >' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . $time_on_duty . '</td>';
+    echo '<td class="" >' . $Open . '</td>';
+    echo '<td class="" >' . $Close . '</td>';
     echo '</tr>';
     echo '<tr>';
     
@@ -654,6 +656,11 @@ if (!empty($result)) {
                 // https://net-control.us/buildUniqueCallList.php
                 // Add more options as needed
             ];
+            
+            $columnOrder = array(
+                        'netID', 'netID_count', 'pb', 'testnet', 'PBcss', 'LCTcss', 'TNcss', 'CCss',
+                        'Volunteer_Time', 'FNcss', 'SNcss', 'Open', 'Close'
+                    );
      
             foreach ($row as $column => $columnValue) {
                 if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
@@ -661,6 +668,8 @@ if (!empty($result)) {
                 }
                    
                     echo '<td class="centered">';
+                    
+                    
                     if ($column === 'netID') {
                         $netID = $columnValue;
                         

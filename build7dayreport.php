@@ -379,12 +379,17 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         
         //echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
 /*
-    // This snipit of code can pick up the personwho opened the Net on NCM
-    SELECT netID, callsign , `comment`
-      FROM TimeLog 
-     WHERE comment like '%Opened the%' 
-       AND netID >= 9800  
-     ORDER BY `TimeLog`.`netID`  DESC
+    // This snipit of code can pick up the personwho opened & closed the Net on NCM
+SELECT netID, callsign, 
+  CASE
+    WHEN `comment` LIKE '%Opened the%' THEN 'open'
+    WHEN `comment` LIKE '%Closed%' THEN 'closed'
+    ELSE NULL 
+  END AS function
+FROM TimeLog
+WHERE (`comment` LIKE '%Opened the%' OR `comment` LIKE '%Closed%')
+  AND netID >= 10000  
+ORDER BY `TimeLog`.`netID` ASC
     */
 
 // Your SQL query
@@ -433,15 +438,20 @@ SELECT
         WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
         ELSE subquery.total_timeonduty_sum
     END
-) AS Total_Time
-
-
+) AS Total_Time,
+    MAX(CASE
+        WHEN tl.comment LIKE '%Opened the%' THEN tl.callsign
+        ELSE NULL
+    END) AS Open,
+    MAX(CASE
+        WHEN tl.comment LIKE '%log was Closed%' THEN tl.callsign
+        ELSE NULL
+    END) AS Close
 FROM (
     SELECT netID, subNetOfID, 
     CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
             ELSE (SELECT max(dttm) FROM NetLog) END AS logdate, 
     netcall, COUNT(*) AS stations, 
-    
     pb, logclosedtime, testnet, timeonduty, facility
       FROM NetLog
      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
@@ -453,9 +463,9 @@ LEFT JOIN (
      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
      GROUP BY netID
 ) AS subquery ON nl.netID = subquery.netID
+LEFT JOIN TimeLog tl ON nl.netID = tl.netID
 GROUP BY netID
-ORDER BY CAST(nl.netID AS SIGNED) DESC;  -- Specify which netID column to use for sorting
-
+ORDER BY CAST(nl.netID AS SIGNED) DESC;
 ");
 
 // Execute the SQL query and store the result in $result variable
@@ -541,6 +551,8 @@ if (!empty($result)) {
     echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
     echo '<td class="" >' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . $time_on_duty . '</td>';
+    echo '<td class="" >' . $Open . '</td>';
+    echo '<td class="" >' . $Close . '</td>';
     echo '</tr>';
     echo '<tr>';
     
@@ -644,6 +656,11 @@ if (!empty($result)) {
                 // https://net-control.us/buildUniqueCallList.php
                 // Add more options as needed
             ];
+            
+            $columnOrder = array(
+                        'netID', 'netID_count', 'pb', 'testnet', 'PBcss', 'LCTcss', 'TNcss', 'CCss',
+                        'Volunteer_Time', 'FNcss', 'SNcss', 'Open', 'Close'
+                    );
      
             foreach ($row as $column => $columnValue) {
                 if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
@@ -651,6 +668,8 @@ if (!empty($result)) {
                 }
                    
                     echo '<td class="centered">';
+                    
+                    
                     if ($column === 'netID') {
                         $netID = $columnValue;
                         
