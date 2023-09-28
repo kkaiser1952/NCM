@@ -154,42 +154,42 @@
             }
             
             /* Style for the third column (gradient) */
-            .redblue-bg td:nth-child(4) {
+            .redblue-bg td:nth-child(5) {
               background-image: linear-gradient(to right, red, blue);
               color: white;
             }
             
             /* Style for the last three columns (blue) */
-            .redblue-bg td:nth-last-child(-n + 4) {
+            .redblue-bg td:nth-last-child(-n + 5) {
               background-color: blue;
               color: white;
             }
             
-            .bluegreen-bg td:nth-child(4) {
+            .bluegreen-bg td:nth-child(5) {
               background-image: linear-gradient(to right, blue, green);
               color: white;
             }
             
-            .bluegreen-bg td:nth-last-child(-n + 4) {
+            .bluegreen-bg td:nth-last-child(-n + 5) {
               background-color: blue;
               color: white;
             }
             
             /* Style for 1 record and pre-built net */
             /* Style for the first column (blue) */
-            .blueyellow-bg td:nth-child(-n + 4) {
+            .blueyellow-bg td:nth-child(-n + 5) {
               background-color: blue;
               color: white;
             }
             
             /* Style for the third column (gradient) */
-            .blueyellow-bg td:nth-child(4) {
+            .blueyellow-bg td:nth-child(5) {
               background-image: linear-gradient(to right, blue, yellow);
               color: white;
             }
             
             /* Style for the last three columns (green) */
-            .blueyellow-bg td:nth-last-child(-n + 4) {
+            .blueyellow-bg td:nth-last-child(-n + 5) {
               background-color: yellow;
               color: white;
             }
@@ -204,47 +204,49 @@
               color: white;
             }
             
+            /* If you add a new column to the report change all the 5's to 6 to extend the gradient */
+            
             /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(4) {
+            .redpurple-bg td:nth-child(5) {
               background-image: linear-gradient(to right, red, purple);
               color: white;
             }
             
             /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 4) {
+            .redpurple-bg td:nth-last-child(-n + 5) {
               background-color: purple;
               color: white;
             }
             /* END: Style for 1 record and test net */
             
             /* Style for an open test net */
-            .greenpurple-bg td:nth-child(-n + 4) {
+            .greenpurple-bg td:nth-child(-n + 5) {
               background-color: green;
               color: white;
             }
             
-            .greenpurple-bg td:nth-child(4) {
+            .greenpurple-bg td:nth-child(5) {
               background-image: linear-gradient(to right, green, purple);
               color: white;
             }
             
-            .greenpurple-bg td:nth-last-child(-n + 4) {
+            .greenpurple-bg td:nth-last-child(-n + 5) {
               background-color: purple;
               color: white;
             }
             
             /* Style for an pre-built test net */
-            .bluepurple-bg td:nth-child(-n + 4) {
+            .bluepurple-bg td:nth-child(-n + 5) {
               background-color: blue;
               color: white;
             }
             
-            .bluepurple-bg td:nth-child(4) {
+            .bluepurple-bg td:nth-child(5) {
               background-image: linear-gradient(to right, blue, purple);
               color: white;
             }
             
-            .bluepurple-bg td:nth-last-child(-n + 4) {
+            .bluepurple-bg td:nth-last-child(-n + 5) {
               background-color: purple;
               color: white;
             }
@@ -252,26 +254,26 @@
             /* ---- */
            
             /* Style for the first two columns (red) */
-            .redgreen-bg td:nth-child(-n + 4) {
+            .redgreen-bg td:nth-child(-n + 5) {
               background-color: red;
               color: white;
             }
             
             /* Style for the third column (gradient) */
-            .redgreen-bg td:nth-child(4) {
+            .redgreen-bg td:nth-child(5) {
               background-image: linear-gradient(to right, red, green);
               color: white;
             }
             
             /* Style for the last three columns (green) */
-            .redgreen-bg td:nth-last-child(-n + 4) {
+            .redgreen-bg td:nth-last-child(-n + 5) {
               background-color: green;
               color: white;
             }
             
             .reportTitle {
                 font-size: 18pt;
-                margin-left: 100px;
+                margin-left: 300px;
             }
             
             /* ---- */
@@ -286,7 +288,7 @@
             /* Apply some general styling to the form rows and columns */
             .report-container {
               max-width: 600px; /* Adjust the width as needed */
-              margin-left: 100px;
+              margin-left: 300px;
             }
             
             /* Apply some general styling to the form rows and columns */
@@ -375,22 +377,6 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
     $ttl_callsigns = $result[0]['all_callsigns'];
     $ttl_first_logins = $result[0]['ttl_1st_logins'];
     $time_on_duty = $result[0]['time_on_duty'];
-    
-        
-        //echo ('<br>' . $ttl_callsigns . '<br>' . $ttl_first_logins . '<br>' . $time_on_duty);
-/*
-    // This snipit of code can pick up the personwho opened & closed the Net on NCM
-SELECT netID, callsign, 
-  CASE
-    WHEN `comment` LIKE '%Opened the%' THEN 'open'
-    WHEN `comment` LIKE '%Closed%' THEN 'closed'
-    ELSE NULL 
-  END AS function
-FROM TimeLog
-WHERE (`comment` LIKE '%Opened the%' OR `comment` LIKE '%Closed%')
-  AND netID >= 10000  
-ORDER BY `TimeLog`.`netID` ASC
-    */
 
 // Your SQL query
 $sql = $db_found->prepare("
@@ -484,7 +470,7 @@ if (!empty($result)) {
     $title = "Today is: " . date("l") . ', ' . date('Y/m/d') .
     "<br>Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
     
-    echo '<h1 style="margin-left:100;">' . $title . '</h1>
+    echo '<h1 style="margin-left:300;">' . $title . '</h1>
         <div class="report-container">     
         <form>
           <!-- First line -->
