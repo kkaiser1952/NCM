@@ -396,29 +396,49 @@ ORDER BY `TimeLog`.`netID` ASC
 $sql = $db_found->prepare("
 SELECT 
     CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) 
-            ELSE nl.netID END AS netID,
-    CASE WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
-            ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
+         ELSE nl.netID 
+    END AS netID,
+    CASE 
+        WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
+        WHEN nl.timeout IS NULL THEN (
+            SELECT MAX(dttm) FROM NetLog WHERE dttm IS NOT NULL
+        )
+        ELSE nl.timeout
+    END AS logdate,
     nl.netcall,
     nl.stations,
     nl.pb,
     nl.testnet,
-    CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-         WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-            ELSE nl.logclosedtime END AS logclosedtime, 
-    CASE WHEN nl.pb = '0' THEN '' WHEN nl.pb = '1' THEN 'blue-bg' 
-            ELSE '' END AS PBcss,
+    CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD(
+            (SELECT MAX(dttm) FROM NetLog WHERE dttm IS NOT NULL),
+            INTERVAL 30 MINUTE
+         )
+         WHEN nl.logclosedtime = '' THEN DATE_ADD(
+            (SELECT MAX(dttm) FROM NetLog WHERE dttm IS NOT NULL),
+            INTERVAL 30 MINUTE
+         )
+         ELSE nl.logclosedtime
+    END AS logclosedtime, 
+    CASE WHEN nl.pb = '0' THEN '' 
+         WHEN nl.pb = '1' THEN 'blue-bg' 
+         ELSE '' 
+    END AS PBcss,
     CASE WHEN nl.logclosedtime IS NOT NULL THEN '' 
          WHEN nl.logclosedtime IS NULL THEN 'green-bg' 
-            ELSE '' END AS LCTcss,
+         ELSE '' 
+    END AS LCTcss,
     CASE WHEN nl.netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') OR nl.netcall LIKE '%test%' THEN 'purple-bg' 
-            ELSE '' END AS TNcss,
+         ELSE '' 
+    END AS TNcss,
     CASE WHEN nl.stations = 1 THEN 'red-bg' 
-            ELSE '' END AS CCss,
+         ELSE '' 
+    END AS CCss,
     CASE WHEN nl.facility <> '' THEN 'yellow-bg' 
-            ELSE '' END as FNcss,
+         ELSE '' 
+    END AS FNcss,
     CASE WHEN nl.subNetOfID <> 0 THEN 'cayenne-bg' 
-            ELSE '' END AS SNcss,
+         ELSE '' 
+    END AS SNcss,
     subquery.First_Login,
     (SELECT COUNT(DISTINCT netID) 
        FROM NetLog 
@@ -427,7 +447,9 @@ SELECT
     SEC_TO_TIME(SUM(
     CASE 
         WHEN nl.timeonduty IS NULL THEN 0
-        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC(
+            (SELECT MAX(dttm) FROM NetLog WHERE dttm IS NOT NULL)
+         )
         ELSE TIME_TO_SEC(nl.timeonduty)
     END
 )) AS Volunteer_Time,
@@ -435,7 +457,9 @@ SELECT
     SEC_TO_TIME(
     CASE 
         WHEN subquery.total_timeonduty_sum IS NULL THEN 0
-        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC(
+            (SELECT MAX(dttm) FROM NetLog WHERE dttm IS NOT NULL)
+         )
         ELSE subquery.total_timeonduty_sum
     END
 ) AS Total_Time,
@@ -450,9 +474,10 @@ SELECT
 FROM (
     SELECT netID, subNetOfID, 
     CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
-            ELSE (SELECT max(dttm) FROM NetLog) END AS logdate, 
+         ELSE NULL -- Set it to NULL when both logdate and timeout are NULL
+    END AS logdate, 
     netcall, COUNT(*) AS stations, 
-    pb, logclosedtime, testnet, timeonduty, facility
+    pb, logclosedtime, testnet, timeonduty, facility, timeout -- Include 'timeout' in the subquery
       FROM NetLog
      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
      GROUP BY netID
@@ -466,6 +491,9 @@ LEFT JOIN (
 LEFT JOIN TimeLog tl ON nl.netID = tl.netID
 GROUP BY netID
 ORDER BY CAST(nl.netID AS SIGNED) DESC;
+
+
+
 ");
 
 // Execute the SQL query and store the result in $result variable
