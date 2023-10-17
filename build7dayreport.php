@@ -385,8 +385,7 @@ SELECT
             ELSE nl.netID END AS netID,
     CASE WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
             ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
-    CONCAT(nl.netcall, '<br>', nl.activity) as netcall,
-    nl.netcall, 
+    CONCAT(nl.netcall, '<br>', nl.activity) AS netcall_activity,
     nl.stations,
     nl.pb,
     nl.testnet,
