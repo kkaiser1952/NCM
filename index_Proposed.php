@@ -549,7 +549,7 @@
 			
 			<input id="timelinehide" type="submit" value="Hide TimeLine" class="timelinehide" onClick="HideTimeLine();" />
 			
-			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" >
+			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" />
 			
 			<button class="timelineBut3" type="button" id="runtls" 
 			style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black; "
