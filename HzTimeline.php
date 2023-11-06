@@ -49,6 +49,14 @@
         font-size: 20pt;
         color: red;
     }
+
+    .container {
+    /*    width: 100%;
+        overflow-x: auto;
+        white-space: nowrap; 
+        */
+    }
+    
 </style>
 
 <script>
