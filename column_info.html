@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #APRSDialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5in;
+      height: 4in;
+      padding: 10px;
+      background-color: #f2f2f2;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #APRSDialog h3 {
+      margin-top: 0;
+      color: blue;
+    }
+    
+    #APRSDialog h2 {
+      margin-top: 0;
+      color: red;
+      font-size: larger;
+    }
+
+    #APRSDialog .option-group {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    #APRSDialog .option-group input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    #APRSDialog .option-group label {
+      margin-right: 35px;
+    }
+
+    #APRSDialog textarea {
+      width: 100%;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <div id="APRSDialog">
+    <h2>Choose an option:</h2>
+    <h3>A comment is logged but not mapped.<br>Objects are always logged and mapped.</h3>
+    <div class="option-group">
+      <input type="radio" id="option1" name="option" value="option1">
+      <label for="option1">Comment</label>
+      <input type="radio" id="option2" name="option" value="option2" checked>
+      <label for="option2">Object</label>
+    </div>
+    <h3>Enter a comment:</h3>
+    <textarea id="comment" rows="8" cols="50"></textarea>
+  </div>
+</body>
+</html>

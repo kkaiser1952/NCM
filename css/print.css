@@ -1,0 +1,46 @@
+@media print {
+    		html {width: 100%;}
+    		.purpose {page-break-after: always;}
+			.helpfulhints {page-break-after: always;}
+			.startanet {page-break-before: always;}
+			.checkins {page-break-before: always;}
+			.misc {page-break-before: always;}
+			.defaultcolumnedits {page-break-before: always;}
+			.reports {page-break-before: always;}
+			.advancedtopics {page-break-before: always;}
+			.tactical {page-break-before: always;}
+			.additional {page-break-before: always;}
+			.somemore {page-break-before: always;}
+			.displays {page-break-before: always;}
+			.displays {page-break-after: always;}
+			.fema {page-break-before: always;}
+			.aprstt {page-break-before: always;}
+			.responsive {page-break-before: always;}
+			.helpfulhints {page-break-before: always;}
+			.status {page-break-before: always;}
+			#introduction {page-break-after: always;}
+			#HelpKey {page-break-after: always;}
+			.rightCorner {page-break-before: always;}
+			.openanet {}
+			
+			.gotoindex {
+    			display: none;
+			}
+        }
+        /*
+@media print {
+	 ol {
+                -moz-column-count: 2;
+                -moz-column-gap: 20px;
+                -webkit-column-count: 4;
+                -webkit-column-gap: 20px;
+                column-count: 2;
+                column-gap: 20px;
+            }}
+*/            
+@media print {
+    .topics {
+        	columns: 3;
+        	column-span: 3;
+    	}
+}

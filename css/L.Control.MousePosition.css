@@ -1,0 +1,13 @@
+.leaflet-container .leaflet-control-mouseposition {
+  top: 200px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px #bbb;
+  border: 3px solid #8AC007;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 16px/2 "Helvetica Neue", Arial, Helvetica, sans-serif;
+  z-index: 400;
+}
+

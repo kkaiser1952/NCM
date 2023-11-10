@@ -1,0 +1,157 @@
+/* used by both the RF Hole input form and the RF Hole report */
+/* 2023-08-07 */
+
+/* Modal styles here */
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close-btn {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.modal-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+}
+
+.modal-footer button {
+    cursor: pointer;
+}
+
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 18pt;
+    background-color: #f7f7f7; /* Optional: Add a background color for better visibility */
+}
+
+.container {
+    width: 60%; /* Adjust the width as per your requirement */
+    max-width: 1000px; /* Add a max-width for larger screens */
+}
+
+/* Center the title and instructions */
+.title-container {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.instructions {
+    max-width: 100%; /* Allow instructions to take full width */
+    font-size: 14pt;
+    color: #5a8bff; /* Set the desired text color */
+    -webkit-text-fill-color: #5a8bff; /* For Safari */
+    -webkit-opacity: 1; /* For Safari */
+}
+
+/* Container for the form */
+.form-container {
+    text-align: left;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: inherit;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: inherit;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style the select element */
+select[name="type"] {
+    font-size: 16pt; /* Adjust the font size as per your requirement */
+}
+
+/* Style the options within the dropdown */
+select[name="type"] option {
+    font-size: 16pt; /* Adjust the font size as per your requirement */
+}
+
+/* CSS to horizontally align checkboxes and match style with select */
+.checkbox-container {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 12px;
+}
+
+.checkbox-container label {
+    font-size: 16pt;
+    margin-right: 10px; /* Add more space between the label and checkbox */
+}
+
+/* Position the link on the right side and style it */
+.list-pois-link {
+    font-size: 18px;
+    float: right;
+    margin-top: 10px;
+    color: #5a8bff;
+}
+
+/* Add some spacing between the buttons and the link */
+#poiForm {
+    margin-bottom: 20px;
+}
+
+/* Center the form horizontally */
+.form-container {
+    margin: 0 auto;
+}
+
