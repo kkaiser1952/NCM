@@ -2,7 +2,7 @@
 //date_default_timezone_set("America/Chicago");
 require_once "dbConnectDtls.php";
 
-$q = $_REQUEST["q"]; 	//$q = "w";
+$q = $_REQUEST["q"]; 	//$q = "keith";
 
 /* This query pulls the last time this callsign logged on */
 /*
