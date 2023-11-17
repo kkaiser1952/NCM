@@ -20,22 +20,24 @@
       
    $sql = ("
     SELECT
-        callsign,
-        CONCAT(callsign, 'OBJ') AS callOBJ,
-        COUNT(callsign) AS numofcs,
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
-        CONCAT(callsign, 'arr') AS allnameBounds
-    FROM (
-        SELECT callsign, comment, timestamp
-        FROM TimeLog
-        WHERE netID = $q 
-            AND callsign <> 'GENCOMM'
-            AND latlng IS NOT NULL
-            AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
-    ) AS filtered_data
-    GROUP BY callsign
-    ORDER BY timestamp, callsign;
+    callsign,
+    CONCAT(callsign, 'OBJ') AS callOBJ,
+    COUNT(callsign) AS numofcs,
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+    CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+    CONCAT(callsign, 'arr') AS allnameBounds
+FROM (
+    SELECT callsign, comment, timestamp
+    FROM TimeLog
+    WHERE netID = $q
+        AND callsign <> 'GENCOMM'
+        AND latlng IS NOT NULL
+        AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
+    ORDER BY timestamp -- Add this line to order within each group
+) AS filtered_data
+GROUP BY callsign
+ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggregated timestamp for each group
+
 ");
           
         //echo "First sql:<br> $sql <br><br>";
