@@ -29,11 +29,13 @@
     FROM (
         SELECT callsign, comment, timestamp
         FROM TimeLog
-        WHERE netID = $q AND callsign <> 'GENCOMM'
-            AND comment LIKE '%OBJ::%' /* or comment LIKE '%W3W::%' */
+        WHERE netID = $q 
+            AND callsign <> 'GENCOMM'
+            AND latlng IS NOT NULL
+            AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
     ) AS filtered_data
     GROUP BY callsign
-    ORDER BY callsign, timestamp;
+    ORDER BY timestamp, callsign;
 ");
           
         //echo "First sql:<br> $sql <br><br>";
