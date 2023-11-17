@@ -119,7 +119,7 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
                 AND comment LIKE '%OBJ::%' 
-              ORDER BY callsign, timestamp ) s         
+              ORDER BY callsign, timestamp DESC) s         
           ");
           
         //echo "3rd sql:<br> $sql <br><br>";

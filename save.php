@@ -287,7 +287,7 @@
 			}
 			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', '$open', '$ipaddress')";
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), '$ipaddress')";
 		
 			$db_found->exec($sql);
 

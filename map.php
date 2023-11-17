@@ -43,7 +43,7 @@
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
     
-    // Loads the programs that create the station, poi, and object markers
+    // Loads the programs that create the station, poi,d object markers
 	include "stationMarkers.php";
     include "poiMarkers.php";    
     include "objMarkers2.php";
@@ -449,13 +449,13 @@ var map = L.map('map', {
     ?>
 
     // Object markers here
-    <?php echo "$objMarkers"; ?>
+    <?php  "$objMarkers"; ?>
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
-    <?php echo "$cornerMarkers"; ?>
+    <?php  "$cornerMarkers"; ?>
 
     // Object Marker List starts here
-    <?php echo "$OBJMarkerList"; ?>
+    <?php  "$OBJMarkerList"; ?>
 
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
