@@ -1,6 +1,7 @@
 <!doctype html>
 
 <?php
+    // Modified on 11/18/23 to fix the prepared by field in the report. The First name was correct the last name was not. 
 
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -8,7 +9,7 @@
     require_once "dbConnectDtls.php";
     
     $q = intval( $_GET["NetID"] );  //$q = 10016;
-    $q = 10418;
+    //$q = 10418;
     
         // Variable initialization
         $children = '';
@@ -60,22 +61,22 @@
     
     
     
-    $sql2 = "SELECT fname, lname
-               FROM NetLog
-              WHERE netID = :netId;
-                AND (netcontrol = 'PRM' OR netcontrol = 'LOG');
-            ";
-        $stmt = $db_found->prepare($sql2);
-        $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
-        $stmt->execute();
-    
-        // Fetch the results as an associative array
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-		//	$children = $stmt->fetchColumn(1); 
-			$fprep  = $stmt->fetchColumn(0); 
-			$lprep   = $stmt->fetchColumn(1); 
-			//$netcontrol = "Net Control Operator $fname $lname = $callsign";
+    $sql2 = "SELECT CONCAT(Fname, ' ', Lname) as LogPrep
+         FROM NetLog
+         WHERE netID = :netId
+           AND (netcontrol = 'PRM' OR netcontrol = 'LOG')
+         ORDER BY CASE WHEN netcontrol = 'PRM' THEN 1 ELSE 2 END
+         LIMIT 1";
+
+$stmt = $db_found->prepare($sql2);
+$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+$stmt->execute();
+
+// Fetch the results as a single column value
+$LogPrep = $stmt->fetchColumn(0);
+
+echo ($LogPrep);
+
 			
     $sql3 = "SELECT box4, box5, kindofnet
                FROM NetKind
@@ -401,7 +402,7 @@ echo "<tr style=\"height: 17pt\">
             <td class="box8" colspan="3">
                 <p class="box8s2p1">
 	                
-                    <b>8. Prepared by: </b><?php echo "$fprep $lprep" ?> , Net Control Operator <u></u>
+                    <b>8. Prepared by: </b><?php echo "$LogPrep" ?> , Net Control Operator <u></u>
                     
                 </p>
             </td>
