@@ -287,8 +287,8 @@
 			    $lng = $row['longitude'];
 			}
 			
-			//$message = "This is a log message.";
-            //error_log('lat and lng: ' $lat ... $lng);
+			//$message = "lat and lng: ".$lat ... $lng;
+            //error_log($message);
 
 			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latlng, ipaddress) 
