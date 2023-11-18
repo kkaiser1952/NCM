@@ -449,13 +449,13 @@ var map = L.map('map', {
     ?>
 
     // Object markers here
-    <?php  "$objMarkers"; ?>
+    <?php echo "$objMarkers"; ?>
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
-    <?php  "$cornerMarkers"; ?>
+    <?php echo "$cornerMarkers"; ?>
 
     // Object Marker List starts here
-    <?php  "$OBJMarkerList"; ?>
+    <?php echo "$OBJMarkerList"; ?>
 
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);

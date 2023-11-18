@@ -274,7 +274,7 @@
 		} // End of Band elseif
 		
 		elseif ($column == 'aprs_call' AND $value != '') {
-    		$sql = "SELECT ID, netID, callsign, aprs_call
+    		$sql = "SELECT ID, netID, callsign, aprs_call, latitude, longitude
 			          FROM NetLog 
 					WHERE recordID = '$recordID'";
 
@@ -284,10 +284,13 @@
 				$cs1   = $row['callsign'];
 				$aprs_call  = $row['aprs_call'];
 			//	$value = strtoupper($value);
+			    $latlng  = GeomFromText(POINT($row['latitude'] $row['longitude)']);
 			}
 			
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), '$ipaddress')";
+		//	latlng     = GeomFromText('POINT($latitude $longitude)')
+			
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latlng, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), '$latln, '$ipaddress')";
 		
 			$db_found->exec($sql);
 
