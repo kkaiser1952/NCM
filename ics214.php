@@ -8,6 +8,7 @@
     require_once "dbConnectDtls.php";
     
     $q = intval( $_GET["NetID"] );  //$q = 10016;
+    $q = 10418;
     
         // Variable initialization
         $children = '';
@@ -62,7 +63,7 @@
     $sql2 = "SELECT fname, lname
                FROM NetLog
               WHERE netID = :netId;
-                AND netcontrol = 'PRM'
+                AND (netcontrol = 'PRM' OR netcontrol = 'LOG');
             ";
         $stmt = $db_found->prepare($sql2);
         $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
@@ -72,8 +73,8 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
 		//	$children = $stmt->fetchColumn(1); 
-			$fname  = $stmt->fetchColumn(0); 
-			$lname   = $stmt->fetchColumn(1); 
+			$fprep  = $stmt->fetchColumn(0); 
+			$lprep   = $stmt->fetchColumn(1); 
 			//$netcontrol = "Net Control Operator $fname $lname = $callsign";
 			
     $sql3 = "SELECT box4, box5, kindofnet
@@ -400,7 +401,7 @@ echo "<tr style=\"height: 17pt\">
             <td class="box8" colspan="3">
                 <p class="box8s2p1">
 	                
-                    <b>8. Prepared by: </b><?php echo "$fname $lname" ?> , Net Control Operator <u></u>
+                    <b>8. Prepared by: </b><?php echo "$fprep $lprep" ?> , Net Control Operator <u></u>
                     
                 </p>
             </td>
