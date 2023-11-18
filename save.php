@@ -283,14 +283,13 @@
 				$ID	   = $row['ID'];
 				$cs1   = $row['callsign'];
 				$aprs_call  = $row['aprs_call'];
-			//	$value = strtoupper($value);
-			    $latlng  = GeomFromText(POINT($row['latitude'] $row['longitude)']);
+			    $lat = $row['latitude'];
+			    $lng = $row['longitude'];
 			}
 			
-		//	latlng     = GeomFromText('POINT($latitude $longitude)')
-			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latlng, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), '$latln, '$ipaddress')";
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), GeomFromText('POINT($lat $lng)'), '$ipaddress')";
+
 		
 			$db_found->exec($sql);
 
