@@ -287,6 +287,10 @@
 			    $lng = $row['longitude'];
 			}
 			
+			//$message = "This is a log message.";
+            //error_log('lat and lng: ' $lat ... $lng);
+
+			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latlng, ipaddress) 
         VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), GeomFromText('POINT($lat $lng)'), '$ipaddress')";
 
