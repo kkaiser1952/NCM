@@ -6,7 +6,7 @@
 <!-- This version 2021-10-16 -->
 <!-- This version 2023-08-03 -->
 
-<?php 
+<?php
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
