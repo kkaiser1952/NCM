@@ -1,8 +1,8 @@
 <?php
     // Written 2023-09-16, also look at updateStationsinfo.php but this one should do it all
     
-    error_reporting(E_ALL);
-    ini_set('display_errors', 'On');
+    //error_reporting(E_ALL);
+   // ini_set('display_errors', 'On');
 
 require_once "dbConnectDtls.php";
 require_once "geocode.php";     // Replace with your actual file name
@@ -158,7 +158,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
     
         // Execute the prepared statement
         if ($stmt2->execute()) {
-            echo "<br><br>Update successful for callsign: " . $row['callsign'];
+            echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
         }

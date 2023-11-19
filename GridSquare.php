@@ -54,7 +54,11 @@ $ycalc[2] = $lat +  90;
 		}
 	} 
 	    
-  		$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+	    // My attempt
+  		//$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+  		
+  		// chatGPT suggestion of 2023-11-19
+  		$yqth = $ychr[$yn[1]] . $ychr[$yn[4]] . $ynum[$yn[2]] . $ynum[$yn[5]] . $ychr[$yn[3]] . $ychr[$yn[6]];
   		
   		//Notice: String offset cast occurred in /var/www/html/GridSquare.php on line 56
   		
