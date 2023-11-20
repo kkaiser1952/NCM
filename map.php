@@ -197,7 +197,7 @@
     
 // This function can be used to connect the object markers together with a line
 // Object markers come from the TimeLog unlike the rest that come from NetLog
-function connectTheDots(data){
+/*function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
         var x = data._layers[i]._latlng.lat;
@@ -205,7 +205,7 @@ function connectTheDots(data){
         c.push([x, y]);
     }
     return c;
-}
+} */
 
     
 // Define the beginning map
@@ -477,7 +477,9 @@ var map = L.map('map', {
         }  // end for loop
     } // end of style 
         
-    var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+    // This adds lines between the objmarkers 
+    // commented out on 2023-11-19 
+    //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
 
     
     //====================================================================== 

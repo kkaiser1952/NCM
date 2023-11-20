@@ -89,10 +89,11 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
                    WHERE netID = $q
                      AND COMMENT LIKE '%OBJ::%'
                    GROUP BY callsign
+                   ORDER BY timestamp asc
                 ");
                 
-        //echo "sqlk:<br> $sqlk <br><br>";
-            //var WA0TJTlatlngs = [[39.20283,-94.6025].....]]
+        //echo var WA0TJTlatlngs = [[39.20300,-94.6028],[39.20283,-94.6026],[39.20200,-94.6021],[39.20100,-94.6015],[39.19767,-94.6020],[39.19950,-94.6045],[39.20283,-94.6026]]
+
                 
             foreach($db_found->query($sqlk) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -404,5 +405,6 @@ foreach($db_found->query($sql) as $row) {
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
      //echo "$OBJMarkerList";
+     //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>
