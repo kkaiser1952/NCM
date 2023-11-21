@@ -139,6 +139,8 @@
                                 AND comment NOT LIKE '%Mode set to:%'
                                 AND comment NOT LIKE '%Opened the  net from%'
 			        		  ORDER BY timestamp");
+			        		  
+			     echo "$sql";
 			/*
 			  
     			  SELECT DISTINCT time(timestamp) as timestamp, band, comment,
