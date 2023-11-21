@@ -47,7 +47,7 @@
 								  FROM NetLog 
 								  WHERE netID = $q )
 			");
-    	echo $sql1;		
+    	//echo $sql1;		
 			
     foreach($db_found->query($sql1) as $row) {
 	    
@@ -119,14 +119,7 @@
 			<tbody>
 				<?php
 	        
-			     /*   $sql = ("SELECT time(TIMESTAMP) as timestamp, 
-			                        ID, callsign, comment
-			        		   FROM TimeLog 
-			        		  WHERE netID = $q 
-			        		    AND comment <> 'Initial Log In'
-			        		    AND comment NOT LIKE 'this id was deleted'
-			        		  ORDER BY timestamp");
-			     */   		  
+			       		  
                     $sql = ("SELECT time(TIMESTAMP) as timestamp, 
 			                        ID, callsign, comment, uniqueID
 			        		   FROM TimeLog 
@@ -140,25 +133,8 @@
                                 AND comment NOT LIKE '%Opened the  net from%'
 			        		  ORDER BY timestamp");
 			        		  
-			     echo "$sql";
-			/*
-			  
-    			  SELECT DISTINCT time(timestamp) as timestamp, band, comment,
-	   TimeLog.callsign
-  FROM TimeLog, NetLog
- WHERE TimeLog.netID = 1274 
-   AND NetLog.netID = 1274
-   AND TimeLog.id = NetLog.id
- ORDER BY timestamp
-    			  
-    			  
-    			         $sql = ("SELECT time(t1.timestamp) as timestamp, t1.callsign, t2.band, t1.comment, t1.netID, t1.id
-FROM TimeLog t1 
-JOIN (SELECT band, netID, id FROM NetLog WHERE netID = 1274) t2 
-ON (t1.id = t2.id ) 
-WHERE t1.netID=1274 AND t2.netID = 1274
-GROUP BY band, callsign, timestamp
-ORDER by timestamp"); */
+			     //echo "$sql";
+
 						foreach($db_found->query($sql) as $row) {
 							
 							echo "<tr style=\"height: 17pt\">
