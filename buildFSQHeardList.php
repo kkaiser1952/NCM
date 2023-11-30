@@ -4,7 +4,7 @@
 // Updated: 2023-11-30
 
 // function to geocode address, it will return false if unable to geocode address
-require_once "dbConnectDtls.php";
+require_once "dbConnectDtls.php"; 
 
 //$netID = strip_tags($_POST["q"]);
 $netID = intval($_POST["q"]);
