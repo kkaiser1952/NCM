@@ -138,7 +138,7 @@ $netID = intval($_POST["q"]);
             </div>
                
             <div>
-            <div><p>allcall ncs final list of stations for net #$netID <br> $callList</p></div>
+            <div><p>$relaystation allcall ncs final list of stations for net #$netID <br> $callList</p></div>
                 <p class='p2'>===== Finals and closing =====<br>
         	       allcall NCS calling late and missed stations, call NCS now. <br>
         	       $allrelaystation NCS calling late and missed stations, call NCS now. <br><br>
