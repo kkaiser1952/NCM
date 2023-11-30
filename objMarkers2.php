@@ -33,7 +33,8 @@
             AND comment LIKE '%OBJ::%' /* or comment LIKE '%W3W::%' */
     ) AS filtered_data
     GROUP BY callsign
-    ORDER BY callsign, timestamp;
+
+    ORDER by timestamp, callsign;
 ");
           
         //echo "First sql:<br> $sql <br><br>";

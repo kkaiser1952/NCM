@@ -43,7 +43,7 @@
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
     
-    // Loads the programs that create the station, poi, and object markers
+    // Loads the programs that create the station, poi,d object markers
 	include "stationMarkers.php";
     include "poiMarkers.php";    
     include "objMarkers2.php";

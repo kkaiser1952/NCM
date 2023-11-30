@@ -1,6 +1,6 @@
 	<?php 
-	//require_once "NCMStats.php";		
-	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";	
+  require_once "dbConnectDtls.php";
+	require_once "NCMStats.php";		
 ?>		
 </DOCTYPE html>
 <html>
@@ -341,14 +341,12 @@
                 padding: 5px;
                 font-size: 16pt;
             }
-
-            
-
         </style>
     </head>
 <body>
 
 <?php
+// bring in the program to create the statistics.
 require_once "NCMStats.php";		
 	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
 // The purpose of this page/program is to send a daily report of NCM to my messages

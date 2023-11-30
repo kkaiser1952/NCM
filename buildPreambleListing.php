@@ -48,7 +48,7 @@
 		 else { $thewhere = "WHERE docType LIKE '%preamble%'
     		    AND domain like '%$domain%'
     		    AND (subdomain like '%$activity%' OR subdomain = '')
-			 	AND NOW() <= end
+			 	
 			 	";
 			  }
 
