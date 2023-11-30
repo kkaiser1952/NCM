@@ -157,11 +157,11 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         echo "Executing query for callsign: " . $row['callsign'] . "<br>";
     
         // Execute the prepared statement
-        if ($stmt2->execute()) {
+      /*  if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
-        }
+        } */
         
         
         // Add debugging output
