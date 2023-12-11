@@ -443,8 +443,8 @@ logclosedtime,
 testnet,
 timeonduty,
 facility,
-CASE WHEN CONVERT_TZ(logdate,'+00:00','-06:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(logdate,'+00:00','-06:00')
-ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
+CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
+                    ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
 FROM NetLog
 WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
 GROUP BY netID
