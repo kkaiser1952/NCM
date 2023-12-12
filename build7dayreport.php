@@ -473,6 +473,7 @@ if (!empty($result)) {
  
 	//echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
     echo '<div class=\'reportTitle\';>' . $netcall . ' Groups, ' . $cscount . ' Unique Stations, ' . $netCnt . ' Nets, ' . $records . ' Entries, <br>' . $volHours . ' of Volunteer Time</div>';
+    
 		 
     $title = "Today is: " . date("l") . ', ' . date('Y/m/d') .
     "<br>Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
@@ -721,12 +722,12 @@ $(document).ready(function() {
     //sixthHeader.append(" H:M:S");
     
     firstHeader.text("Net ID");
-    secondHeader.text("Log Date UTC");
+    secondHeader.text("Log Date");
     thirdHeader.text("Net Call");
     fourthHeader.text("Stations");
-    fifthhHeader.text("Closed Time UTC");
+    fifthhHeader.text("Closed Time");
     sixthHeader.text("1st Logins");
-    seventhHeader.text("H:M:S");
+    seventhHeader.text("TOD - H:M:S");
 
         $('tr').each(function () {
             var $row = $(this);
