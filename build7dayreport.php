@@ -664,7 +664,10 @@ if (!empty($result)) {
                    
                     // Add oncontextmenu or onclick to some column values
                     //echo '<td class="centered">'; // commented 2023-12-16
-                    echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="CallHistoryForWho()"' : '') . '>';      
+                    //echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="CallHistoryForWho()"' : '') . '>';      
+                    //echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="getCallHistory7Day(\'' . $columnValue . '\')"' : '') . '>';
+                    echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="getCallHistory7Day(\'' . $columnValue . '\')"' : '') . '>';
+
                     
                     if ($column === 'netID') {
                         $netID = $columnValue;
