@@ -33,6 +33,8 @@ function secondsToDHMS($seconds) {
           WHERE callsign = '$call'
          ";
          
+         //echo "$sql";
+         
     $stmt = $db_found->prepare($sql);
 	$stmt->execute(); 
 	$result = $stmt->fetch();
