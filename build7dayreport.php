@@ -546,8 +546,8 @@ if (!empty($result)) {
     echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
     echo '<td class="" >' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . $time_on_duty . '</td>';
-    echo '<td class="" onclick="getCallHistory()">' . $Open . '</td>';
-    echo '<td class="" onclick="getCallHistory()">' . $Close . '</td>';
+    echo '<td class="" >' . $OpenCall . '</td>';
+    echo '<td class="" >' . $CloseCall . '</td>';
     echo '</tr>';
     echo '<tr>';
     
@@ -662,8 +662,9 @@ if (!empty($result)) {
                     continue;
                 }
                    
-                    echo '<td class="centered">';
-                    
+                    // Add oncontextmenu or onclick to some column values
+                    //echo '<td class="centered">'; // commented 2023-12-16
+                    echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="CallHistoryForWho()"' : '') . '>';      
                     
                     if ($column === 'netID') {
                         $netID = $columnValue;
