@@ -9,7 +9,7 @@
     require_once "getCrossRoads.php";
   
     $call = $_GET['call']; 
-    $call = 'WA0TJT';
+    $call = 'w0dlk';
     
     //$recordID   = $_GET['id']; 
     $recordID = isset($_GET['id']) ? $_GET['id'] : 0;  
@@ -49,89 +49,121 @@ function secondsToDHMS($seconds) {
 
 	/* Added the class stuff on 2018-1-17 */
 	$sql2 = "
-	SELECT c.fccid
-	  ,c.callsign
-	  ,c.full_name
-	  ,c.address1
-      ,c.city
-      ,c.state
-      ,c.zip
-      ,b.class
-      	,CASE 
-         	WHEN b.class = 'A' then  'Advanced'
-         	WHEN b.class = 'E' then  'Extra'
-         	WHEN b.class = 'T' then  'Technician'
-         	WHEN b.class = 'N' then  'Novice'
-         	WHEN b.class = 'P' then  'Extra'
-         	WHEN b.class = 'G' then  'General'
-         		ELSE 'Club'
-         END AS hamclass
-  FROM fcc_amateur.en c
-      ,fcc_amateur.am b
- WHERE c.callsign = '$call'
-   AND b.callsign = c.callsign
-   AND c.fccid = b.fccid
- ORDER BY c.fccid DESC  /* new on 2019-04-29 */
- LIMIT 0,1
- ";
-
- 	$stmt3 = $db_found->prepare($sql2);
-	$stmt3->execute(); 
-	$result = $stmt3->fetch();	
-		$hamclass   = $result[hamclass]; /* result 25 is actually class in above SQL */
-			if (!$hamclass) {$hamclass = 'UNK';}
-		
-		$address	= $result[address1];  //echo "$address";
-		$city		= $result[city];  //echo "$city";
-		$state		= $result[state];
-		$zip		= $result[zip];  //echo "$zip";
-		$fullname   = $result[full_name];
-		
-         if ($name = ' ' ) { $name = trim($fullname); }
+        SELECT   c.fccid
+                ,c.callsign
+                ,c.full_name
+                ,c.address1
+                ,c.city
+                ,c.state
+                ,c.zip
+                ,b.class
+                ,CASE
+                WHEN b.class = 'A' then 'Advanced'
+                WHEN b.class = 'E' then 'Extra'
+                WHEN b.class = 'G' then 'General'
+                WHEN b.class = 'N' then 'Novice'
+                WHEN b.class = 'P' then 'Extra'
+                WHEN b.class = 'T' then 'Technician'           
+                    ELSE 'Club'
+                END AS  hamclass
+          FROM fcc_amateur.en c
+              ,fcc_amateur.am b
+         WHERE c.callsign = :call
+           AND b.callsign = c.callsign
+           AND c.fccid = b.fccid
+         ORDER BY c.fccid DESC /* new on 2019-04-29 */
+         LIMIT 0,1
+        ";
+        
+        echo $sql2;
+        
+        $stmt3 = $db_found->prepare($sql2);
+        $stmt3->bindParam(':call', $call, PDO::PARAM_STR);
+        $stmt3->execute();
+        $result = $stmt3->fetch();
+        $hamclass = $result['hamclass']; /* result 25 is actually class in above SQL */
+        if (!$hamclass) {$hamclass = 'UNK';}
+        $address = $result['address1']; //echo "$address";
+        $city = $result['city']; //echo "$city";
+        $state = $result['state'];
+        $zip = $result['zip']; //echo "$zip";
+        $fullname = $result['full_name'];
+        if ($name = ' ' ) { $name = trim($fullname); }
 
 $sql3 = "
 SELECT count(a.callsign) as logCount
-,max(a.tt) as tt
-,max(a.recordID) as recordID
-,MIN(a.logdate) as firstLogDte
-,MAX(a.logdate) as lastLogDte
-,MIN(a.netID) as minID
-,MAX(a.netID) as maxID
-,SUM(a.timeonduty) as TOD";
-$currentYear = date("Y"); // Get the current year
-for ($year = 2016; $year <= $currentYear; $year++) {
-$sql3 .= ", SUM(IF(YEAR(a.logdate) = '$year', 1, 0)) as y$year";
-}
-for ($year = 2016; $year <= $currentYear; $year++) {
-$sql3 .= ", SUM(IF(YEAR(a.logdate) = '$year', a.timeonduty, 0)) as h$year";
-}
-$sql3 .= "
-FROM ncm.NetLog a
-WHERE a.callsign = '$call'
-AND a.netID <> 0
-AND a.logdate <> 0
+         
+      ,max(a.tt) as tt
+      ,max(a.recordID) as recordID
+      
+      ,MIN(a.logdate) as firstLogDte 
+      ,MAX(a.logdate) as lastLogDte
+      
+      ,MIN(a.netID) as minID 
+	  ,MAX(a.netID) as maxID 
+      
+      ,SUM(a.timeonduty) as TOD
+      ,SUM(IF(YEAR(a.logdate) = '2016', 1,0)) as y2016
+	  ,SUM(IF(YEAR(a.logdate) = '2017', 1,0)) as y2017
+      ,SUM(IF(YEAR(a.logdate) = '2018', 1,0)) as y2018
+      ,SUM(IF(YEAR(a.logdate) = '2019', 1,0)) as y2019 
+      ,SUM(IF(YEAR(a.logdate) = '2020', 1,0)) as y2020 
+      ,SUM(IF(YEAR(a.logdate) = '2021', 1,0)) as y2021
+      ,SUM(IF(YEAR(a.logdate) = '2022', 1,0)) as y2022
+      ,SUM(IF(YEAR(a.logdate) = '2023', 1,0)) as y2023
+      ,SUM(IF(YEAR(a.logdate) = '2024', 1,0)) as y2024
+      
+      ,SUM(IF(YEAR(a.logdate) = '2016', a.timeonduty,0)) as h2016
+	  ,SUM(IF(YEAR(a.logdate) = '2017', a.timeonduty,0)) as h2017
+      ,SUM(IF(YEAR(a.logdate) = '2018', a.timeonduty,0)) as h2018
+      ,SUM(IF(YEAR(a.logdate) = '2019', a.timeonduty,0)) as h2019 
+      ,SUM(IF(YEAR(a.logdate) = '2020', a.timeonduty,0)) as h2020
+      ,SUM(IF(YEAR(a.logdate) = '2021', a.timeonduty,0)) as h2021
+      ,SUM(IF(YEAR(a.logdate) = '2022', a.timeonduty,0)) as h2022
+      ,SUM(IF(YEAR(a.logdate) = '2023', a.timeonduty,0)) as h2023
+      ,SUM(IF(YEAR(a.logdate) = '2024', a.timeonduty,0)) as h2024
+      
+   FROM ncm.NetLog a
+  WHERE a.callsign = '$call'
+    AND a.netID <> 0
+    AND a.logdate <> 0
 ";
-$stmt2 = $db_found->prepare($sql3);
-$stmt2->execute();
-$result = $stmt2->fetch();
-$logCount = $result['logCount'];
-$firstLogD = $result['firstLogDte'];
-$lastLogDte = $result['lastLogDte'];
-$minID = $result['minID'];
-$maxID = $result['maxID'];
-$activity = $result['activity'];
-$district = $result['district'];
-$TOD = $result['TOD'];
-$tt = $result['tt'];
-$recordID = $result['recordID'];
-$callsign = $result['callsign'];
-$years = array();
-for ($year = 2016; $year <= $currentYear; $year++) {
-$years["y$year"] = $result["y$year"];
-}
-for ($year = 2016; $year <= $currentYear; $year++) {
-$years["h$year"] = $result["h$year"];
-}
+
+	$stmt2 = $db_found->prepare($sql3);
+	$stmt2->execute();   
+
+	$result = $stmt2->fetch();
+	
+		$logCount	= $result[logCount];	    
+		$firstLogD	= $result[firstLogDte];		
+		
+		$lastLogDte	= $result[lastLogDte];	       
+	    $minID		= $result[minID];		
+		$maxID		= $result[maxID];
+		$activity	= $result[activity];	     
+		$district	= $result[district];		
+				
+		$TOD		    = $result[TOD];		
+		$tt			= $result[tt];			     
+		$recordID	= $result[recordID];	
+		$callsign	= $result[callsign];
+		
+		$years = array();
+        $currentYear = date("Y"); // Get the current year
+    
+		
+		$y2016		= $result[y2016];		     $y2017		= $result[y2017];  	
+		$y2018		= $result[y2018];		     $y2019		= $result[y2019];
+		$y2020		= $result[y2020];            $y2021		= $result[y2021];
+		$y2022		= $result[y2022];            $y2023		= $result[y2023];
+		$y2024		= $result[y2024];
+		
+		/* This is different than above */		
+		$h2016		= $result[h2016];		     $h2017		= $result[h2017];  	
+		$h2018		= $result[h2018];		     $h2019		= $result[h2019];
+		$h2020		= $result[h2020];            $h2021		= $result[h2021];         
+        $h2022		= $result[h2022];            $h2023		= $result[h2023]; 
+		$h2024		= $result[h2024];
 		
 		// Start what3word stuff
 		// ======================================
