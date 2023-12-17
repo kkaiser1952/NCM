@@ -8,8 +8,8 @@
     require_once "dbConnectDtls.php";
     require_once "getCrossRoads.php";
   
-    $call = $_GET['call']; 
-    $call = 'w0dlk';
+    $call = strtoupper($_GET['call']); 
+    $call = strtoupper('w0dlk');
     
     //$recordID   = $_GET['id']; 
     $recordID = isset($_GET['id']) ? $_GET['id'] : 0;  
@@ -27,6 +27,8 @@ function secondsToDHMS($seconds) {
           FROM stations  /* changed from NetLog to stations on 2021-08-09 */
           WHERE callsign = '$call'
          ";
+         
+         //echo $sql;
          
     $stmt = $db_found->prepare($sql);
 	$stmt->execute(); 
@@ -46,6 +48,8 @@ function secondsToDHMS($seconds) {
                
         $crossroads = "";
         $crossroads = getCrossRoads($result[latitude],$result[longitude]);
+        
+    //echo("$name, $grid, $crossroads");
 
 	/* Added the class stuff on 2018-1-17 */
 	$sql2 = "
@@ -75,7 +79,7 @@ function secondsToDHMS($seconds) {
          LIMIT 0,1
         ";
         
-        echo $sql2;
+        //echo $sql2;
         
         $stmt3 = $db_found->prepare($sql2);
         $stmt3->bindParam(':call', $call, PDO::PARAM_STR);
