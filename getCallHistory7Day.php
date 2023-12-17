@@ -10,9 +10,9 @@
   
     
     $call = $_GET['call']; 
-    //$call = 'WA0TJT';
+    //$call = strtoupper('WA0TJT');
 
-    $call       = strtoupper($call[0]); //echo "$call";
+    //$call       = strtoupper($call[0]); //echo "$call";
     
     //$recordID   = $_GET['id']; 
     $recordID = isset($_GET['id']) ? $_GET['id'] : 0;
