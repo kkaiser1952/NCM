@@ -9,7 +9,7 @@
     require_once "getCrossRoads.php";
   
     $call = strtoupper($_GET['call']); 
-    $call = strtoupper('w0dlk');
+    //$call = strtoupper('w0dlk');
     
     //$recordID   = $_GET['id']; 
     $recordID = isset($_GET['id']) ? $_GET['id'] : 0;  
