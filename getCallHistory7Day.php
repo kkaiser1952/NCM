@@ -28,7 +28,7 @@ function secondsToDHMS($seconds) {
           WHERE callsign = '$call'
          ";
          
-         //echo $sql;
+         
          
     $stmt = $db_found->prepare($sql);
 	$stmt->execute(); 
@@ -48,6 +48,8 @@ function secondsToDHMS($seconds) {
                
         $crossroads = "";
         $crossroads = getCrossRoads($result[latitude],$result[longitude]);
+        
+        //echo ("1 name: $name <br>");
         
     //echo("$name, $grid, $crossroads");
 
@@ -92,7 +94,10 @@ function secondsToDHMS($seconds) {
         $state = $result['state'];
         $zip = $result['zip']; //echo "$zip";
         $fullname = $result['full_name'];
-        if ($name = ' ' ) { $name = trim($fullname); }
+       // if ($name = ' ' ) { $name = trim($fullname); }
+        
+        
+        //echo ("name: $name");
 
 $sql3 = "
 SELECT count(a.callsign) as logCount
