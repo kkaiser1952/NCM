@@ -332,7 +332,7 @@ var map = L.map('map', {
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent("You clicked the map at:<br>" + e.latlng.toString() + "<br>"   )
+            .setContent("You clicked the map at::<br>" + e.latlng.toString() + "<br>"   )
             .openOn(map);
     }
     
