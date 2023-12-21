@@ -9,7 +9,7 @@ require_once "geocode.php";     // Replace with your actual file name
 require_once "GridSquare.php";  // Replace with your actual file name 
  
 // Define the batch size (e.g., 100 records at a time)
-$batchSize = 25
+$batchSize = 100;
 
 $sql = "
 SELECT 
