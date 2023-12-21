@@ -72,10 +72,10 @@ INNER JOIN
     ncm.stations s
     ON a.callsign = s.callsign
 WHERE 
-    (a.city <=> s.city OR (a.city IS NULL AND s.city IS NOT NULL) OR (a.city IS NOT NULL AND s.city IS NULL))
-    OR (a.state <=> s.state OR (a.state IS NULL AND s.state IS NOT NULL) OR (a.state IS NOT NULL AND s.state IS NULL))
-    OR (a.last <=> s.Lname OR (a.last IS NULL AND s.Lname IS NOT NULL) OR (a.last IS NOT NULL AND s.Lname IS NULL))
-    OR (a.fccid <=> s.fccid OR (a.fccid IS NULL AND s.fccid IS NOT NULL) OR (a.fccid IS NOT NULL AND s.fccid IS NULL))
+    (BINARY a.city <> BINARY s.city OR (a.city IS NOT NULL AND BINARY a.city <> BINARY s.city))
+    OR (BINARY a.state <> BINARY s.state OR (a.state IS NOT NULL AND BINARY a.state <> BINARY s.state))
+    OR (BINARY a.last <> BINARY s.Lname OR (a.last IS NOT NULL AND BINARY a.last <> BINARY s.Lname))
+    OR (BINARY a.fccid <> BINARY s.fccid OR (a.fccid IS NOT NULL AND BINARY a.fccid <> BINARY s.fccid))
 ORDER BY 
     TriggeredCondition;
 ;";
