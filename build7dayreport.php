@@ -361,16 +361,15 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 // Grand totals SQL
 $sql = $db_found->prepare("
-SELECT count(callsign) as all_callsigns,
-sum(firstLogIn) as ttl_1st_logins,
-CONCAT(
-FLOOR(SUM(`timeonduty`) / 86400), ' days ',
-LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
-LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
-LPAD(SUM(`timeonduty`) % 60, 2, '0')
-) AS time_on_duty
-FROM NetLog
-WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
+SELECT  count(callsign) as all_callsigns,
+        sum(firstLogIn) as ttl_1st_logins,
+        CONCAT(FLOOR(SUM(`timeonduty`) / 86400), ' days ',
+        LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
+        LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
+        LPAD(SUM(`timeonduty`) % 60, 2, '0')
+        ) AS time_on_duty
+  FROM NetLog
+ WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
