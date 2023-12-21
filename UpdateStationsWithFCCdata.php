@@ -39,37 +39,45 @@ SELECT a.fccid,
 ;"; */
 
 $sql = "
-SELECT a.fccid,
-	  CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
-       CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
-       a.address1 AS address,
-       CONCAT(UCASE(LEFT(a.city,  1)), LCASE(SUBSTRING(a.city,  2))) AS City,
-       CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
-       LEFT(a.zip, 5) AS zip,
-       a.callsign,
-       CASE
-           WHEN a.city  	<> s.city THEN 'City'
-           WHEN a.state	<> s.state THEN 'State'
-           WHEN a.last  	<> s.Lname THEN 'Last Name'
-           WHEN a.fccid 	<> s.fccid THEN 'FCCID'
-           ELSE 'No Match'
-       END AS TriggeredCondition
+SELECT 
+    a.fccid,
+    CONCAT(UCASE(LEFT(a.first, 1)), LCASE(SUBSTRING(a.first, 2))) AS Fname,
+    CONCAT(UCASE(LEFT(a.last, 1)), LCASE(SUBSTRING(a.last, 2))) AS Lname,
+    a.address1 AS address,
+    CONCAT(UCASE(LEFT(a.city, 1)), LCASE(SUBSTRING(a.city, 2))) AS City,
+    CONCAT(UCASE(LEFT(a.state, 1)), LCASE(SUBSTRING(a.state, 2))) AS State,
+    LEFT(a.zip, 5) AS zip,
+    a.callsign,
+    CASE
+        WHEN a.city <> s.city THEN 'City'
+        WHEN a.state <> s.state THEN 'State'
+        WHEN a.last <> s.Lname THEN 'Last Name'
+        WHEN a.fccid <> s.fccid THEN 'FCCID'
+        ELSE 'No Match'
+    END AS TriggeredCondition
 FROM (
-    SELECT a.callsign,
-           MAX(a.fccid) AS max_fccid
-    FROM fcc_amateur.en a
-    GROUP BY a.callsign
+    SELECT 
+        a.callsign,
+        MAX(a.fccid) AS max_fccid
+    FROM 
+        fcc_amateur.en a
+    GROUP BY 
+        a.callsign
 ) AS max_fccids
-INNER JOIN fcc_amateur.en a
+INNER JOIN 
+    fcc_amateur.en a
     ON max_fccids.callsign = a.callsign
     AND max_fccids.max_fccid = a.fccid
-INNER JOIN ncm.stations s
+INNER JOIN 
+    ncm.stations s
     ON a.callsign = s.callsign
-WHERE a.city 	<> s.city
-   OR a.state 		<> s.state
-   OR a.last 			<> s.Lname
-   OR a.fccid 		<> s.fccid
-ORDER BY TriggeredCondition
+WHERE 
+    (a.city <=> s.city OR (a.city IS NULL AND s.city IS NOT NULL) OR (a.city IS NOT NULL AND s.city IS NULL))
+    OR (a.state <=> s.state OR (a.state IS NULL AND s.state IS NOT NULL) OR (a.state IS NOT NULL AND s.state IS NULL))
+    OR (a.last <=> s.Lname OR (a.last IS NULL AND s.Lname IS NOT NULL) OR (a.last IS NOT NULL AND s.Lname IS NULL))
+    OR (a.fccid <=> s.fccid OR (a.fccid IS NULL AND s.fccid IS NOT NULL) OR (a.fccid IS NOT NULL AND s.fccid IS NULL))
+ORDER BY 
+    TriggeredCondition;
 ;";
 
 // Fetch all records that need to be updated
@@ -157,11 +165,11 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         echo "Executing query for callsign: " . $row['callsign'] . "<br>";
     
         // Execute the prepared statement
-      /*  if ($stmt2->execute()) {
+        if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
-        } */
+        }
         
         
         // Add debugging output
