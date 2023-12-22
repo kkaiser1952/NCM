@@ -51,8 +51,7 @@ WHERE
     OR (BINARY a.fccid <> BINARY s.fccid OR (a.fccid IS NOT NULL AND BINARY a.fccid <> BINARY s.fccid))
 ORDER BY 
     TriggeredCondition
-    LIMIT 100
-    ;
+    LIMIT 10
 ;";
 
 // Fetch all records that need to be updated
@@ -69,7 +68,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
     $batch = array_slice($rows, $i, $batchSize);
 
     // Build a single update query for the batch
-    $updateQuery = "UPDATE ncm.stations SET ";
+    //$updateQuery = "UPDATE ncm.stations SET ";
     $values = array();
 
     foreach ($batch as $row) {
@@ -78,6 +77,8 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         $fccid   = $row['fccid'];
 
         $koords  = geocode("$address");
+        echo "<br>foreach koords: $koords";
+       // 36.0275443, -94.4273168, Washington , AR
 
         $latitude  = $koords[0];
         $longitude = $koords[1];
@@ -88,11 +89,13 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         if ($state == '') {
             $state = $row['State'];
         }
+        
+        echo "<br>$address $city $state Update koords: $koords <br>";
 
         $gridd = gridsquare($latitude, $longitude);
         echo "gridd: $gridd";
         $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
-        echo "<br> $gridd[0].$gridd[1].$gridd[2].$gridd[3].$gridd[4].$gridd[5]";
+        //echo "<br> $gridd[0].$gridd[1].$gridd[2].$gridd[3].$gridd[4].$gridd[5]";
         echo "<br>Calculated grid: $grid";
 
         $sql2 = "UPDATE stations SET 
@@ -128,7 +131,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         $stmt2->bindValue(':callsign', $row['callsign']);
 
         // Add debugging output for SQL query and bound values
-        echo "Executing query for callsign: " . $row['callsign'] . "<br>";
+        echo "<br>Executing query for callsign: " . $row['callsign'] . "<br>";
         echo "SQL Query: $sql2<br>";
         echo "Bound Values: " . json_encode([
             ':Fname' => $row['Fname'],
@@ -146,15 +149,16 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             ':callsign' => $row['callsign']
         ]) . "<br>";
 
+/*
         // Execute the prepared statement
         if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
         }
-
+*/
         // Add debugging output
-        echo "Processed batch #" . ($i / $batchSize) . "<br>";
+        echo "Processed batch #" . ($i / $batchSize) . "<br><br>";
 
         $count += count($batch);
     }
