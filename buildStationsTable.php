@@ -3,6 +3,9 @@ require_once "dbConnectDtls.php";
 require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
+// laglng removed 2023-12-22
+// MARS based
+
 /* This program compares all the callsigns in the NetLog to callsigns in the FCC DB. For matches it creates 
    an entry for the stations table in the ncm DB. Several additonal columns are geocoded or API derived also.
    The IF condition in the select is explained here; 
@@ -83,8 +86,7 @@ $values = implode(",", $marsInserts);
 
 $Msql = "INSERT INTO stations (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
                               city, county, state, district, zip, email, phone, 
-                              creds, lastLogDT, firstLogDt, recordID, fccid, latlng,
-                              home) 
+                              creds, lastLogDT, firstLogDt, recordID, fccid, home) 
                     VALUES $values
         ";
         
@@ -142,7 +144,7 @@ echo "$row[ID] $row[callsign] $row[Fname] $row[Lname] $latitude $longitude $grid
    $inserts[] = "('$row[ID]', '$row[tempCall]', '$row[tactical]', '$row[Fname]', \"$row[Lname]\", '$latitude', '$longitude', '$grid',
                   \"$row[city]\", \"$county\", \"$row[state]\", '$district', '$row[zip]', '$row[email]', ' ',
                   '$row[creds]', '$row[lastLogDT]', '$row[firstLogDT]', '$row[recordID]', '$row[fccid]', 
-                   GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), \"$home\")<br><br>";                 
+                    \"$home\")<br><br>";                 
 		
 } // end foreach of fccsql query
 
@@ -153,8 +155,7 @@ $values = implode(",", $inserts);
 
 $sql = "INSERT INTO stations2 (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
                               city, county, state, district, zip, email, phone, 
-                              creds, lastLogDT, firstLogDt, recordID, fccid, latlng,
-                              home) 
+                              creds, lastLogDT, firstLogDt, recordID, fccid, home) 
                     VALUES $values
         ";
         

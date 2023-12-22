@@ -171,9 +171,9 @@ if ($obj == '' ) {
 $latlng = "$lat,$lng";
 
 
-	
-$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress, latlng) 
-					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress', GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')')) )";
+// removed latlng 2023-12-22
+$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress' ";
         
        //  echo "<br><br>sql2= $sql3"
    $db_found->exec($sql3);

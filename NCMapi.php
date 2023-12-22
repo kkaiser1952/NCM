@@ -126,6 +126,7 @@ if ($err) {
 } // end else of $err
 
     // Now we have everyting we need to update the stations table for this callsign
+    // removed latlng 2023-12-22
     $sql2 = "UPDATE stations SET 
                home      = '$latitude,$longitude,$grid,$county,$state',
                latitude  = '$latitude',
@@ -137,8 +138,7 @@ if ($err) {
                comment   = 'Update Stations w/Callsign Shortcut',
                dttm      = NOW(),
                zip       = '$zip',
-               country   = '$country',
-               latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')'))
+               country   = '$country'
               WHERE callsign = '$cs1' ";
     
         $stmt = $db_found->prepare($sql2);
