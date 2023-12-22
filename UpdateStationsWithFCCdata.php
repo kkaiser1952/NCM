@@ -51,7 +51,7 @@ WHERE
     OR (BINARY a.fccid <> BINARY s.fccid OR (a.fccid IS NOT NULL AND BINARY a.fccid <> BINARY s.fccid))
 ORDER BY 
     TriggeredCondition
-    LIMIT 10
+    LIMIT 20
 ;";
 
 // Fetch all records that need to be updated
@@ -69,15 +69,16 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
 
     // Build a single update query for the batch
     //$updateQuery = "UPDATE ncm.stations SET ";
-    $values = array();
+    //$values = array();
 
     foreach ($batch as $row) {
         $address = $row['address'];
         $city    = $row['City'];
         $fccid   = $row['fccid'];
-
-        $koords  = geocode("$address");
-        echo "<br>foreach koords: $koords";
+        $koords  = geocode("$address $city");
+        
+        //echo "<br>address: $address $city <br>fccid: $fccid <br>";
+        echo "<br>foreach address: " . implode(', ', $koords . "<br><br>");
        // 36.0275443, -94.4273168, Washington , AR
 
         $latitude  = $koords[0];
@@ -90,13 +91,12 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             $state = $row['State'];
         }
         
-        echo "<br>$address $city $state Update koords: $koords <br>";
+        echo "<br>$address $city $state <br>Update koords: " . implode(', ', $koords) . "<br>";
 
         $gridd = gridsquare($latitude, $longitude);
-        echo "gridd: $gridd";
         $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
         //echo "<br> $gridd[0].$gridd[1].$gridd[2].$gridd[3].$gridd[4].$gridd[5]";
-        echo "<br>Calculated grid: $grid";
+        echo "<br>Calculated grid: $grid <br>";
 
         $sql2 = "UPDATE stations SET 
              Fname = :Fname,
@@ -110,8 +110,8 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
              dttm = :dttm,
              latitude = :latitude,
              longitude = :longitude,
-             latlng = GeomFromText(:latlng),
-             comment = 'Updated via fixStationsWithFCC-AddCity.php'
+             latlng = POINT(:latitude, :longitude),
+             'comment' = 'Updated via fixStationsWithFCCdata.php'
           WHERE id = :callsign";    
 
         // Bind values to placeholders
@@ -147,16 +147,16 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             ':longitude' => $longitude,
             ':latlng' => "POINT($latitude $longitude)",
             ':callsign' => $row['callsign']
-        ]) . "<br>";
+        ]) . "<br>=========================";
 
-/*
+
         // Execute the prepared statement
         if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
         }
-*/
+
         // Add debugging output
         echo "Processed batch #" . ($i / $batchSize) . "<br><br>";
 
