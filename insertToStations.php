@@ -18,14 +18,17 @@ require_once "dbConnectDtls.php";
     	    $nextid = $stmt->fetchColumn(0);
     	    //echo("$nextid");
      
-     
-       $sql = "INSERT INTO stations (ID, callsign, Fname, Lname, grid, tactical, email, fccid,
-                                     latitude, longitude, creds, county, state, district, home, 
-                                     city, phone, zip, latlng, lastLogDT, firstLogDT )
+     // Removed latlng from insert on 2023-12-22
+       $sql = "INSERT INTO stations 
+                    (ID, callsign, Fname, Lname, grid, tactical,
+                     email, fccid, latitude, longitude, creds, county, 
+                     state, district, home, city, phone, zip, lastLogDT, 
+                     firstLogDT )
     
-	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid', '$tactical', '$email', '$fccid', 
-	                   '$latitude', '$longitude', '$creds', '$county', '$state', '$district', '$home', 
-                       '$city', ' ', '$zip', GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')')), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	           VALUES ('$nextid', '$csbase', '$Fname', '$Lname', '$grid',   
+	                   '$tactical', '$email', '$fccid', '$latitude', '$longitude', 
+	                   '$creds', '$county', '$state', '$district', '$home', 
+                       '$city', ' ', '$zip', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	          ";	      
 	        
 	   $stmt2 = $db_found->prepare($sql);

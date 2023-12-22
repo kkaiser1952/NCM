@@ -151,7 +151,7 @@ echo "$row[ID] $row[callsign] $row[Fname] $row[Lname] $latitude $longitude $grid
 
 $values = implode(",", $inserts);
 
-$sql = "INSERT INTO stations (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
+$sql = "INSERT INTO stations2 (ID, callsign, tactical, Fname, Lname, latitude, longitude, grid, 
                               city, county, state, district, zip, email, phone, 
                               creds, lastLogDT, firstLogDt, recordID, fccid, latlng,
                               home) 
