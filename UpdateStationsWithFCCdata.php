@@ -1,5 +1,5 @@
 <?php
-    // Written 2023-09-16, also look at updateStationsinfo.php but this one should do it all
+    // UpdateStationsWithFCCdata.php  Written 2023-09-16, also look at updateStationsinfo.php but this one should do it all
     
     //error_reporting(E_ALL);
    // ini_set('display_errors', 'On');
@@ -27,7 +27,8 @@ SELECT
         WHEN a.last <> s.Lname THEN 'Last Name'
         WHEN a.fccid <> s.fccid THEN 'FCCID'
         ELSE 'No Match'
-    END AS TriggeredCondition
+    END AS TriggeredCondition,
+    s.ID
 FROM (
     SELECT 
         a.callsign,
@@ -51,7 +52,7 @@ WHERE
     OR (BINARY a.fccid <> BINARY s.fccid OR (a.fccid IS NOT NULL AND BINARY a.fccid <> BINARY s.fccid))
 ORDER BY 
     TriggeredCondition
-    LIMIT 20
+    LIMIT 5
 ;";
 
 // Fetch all records that need to be updated
@@ -111,7 +112,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
              latitude = :latitude,
              longitude = :longitude,
              latlng = POINT(:latitude, :longitude),
-             'comment' = 'Updated via fixStationsWithFCCdata.php'
+             `comment` = 'Updated via fixStationsWithFCCdata.php'
           WHERE id = :callsign";    
 
         // Bind values to placeholders
