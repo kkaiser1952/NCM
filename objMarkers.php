@@ -17,6 +17,7 @@
     require_once "GridSquare.php";
 
    //$q = 9678;
+   //$q = 4743;
       
    $sql = (" SELECT callsign, 
                     CONCAT(callsign,'OBJ') as callOBJ,
@@ -34,7 +35,7 @@
               ORDER BY callsign, timestamp
           ");
           
-         // echo "First sql:<br> $sql <br><br>";
+          //echo "First sql:<br> $sql <br><br>";
           
     
         $allnameBounds = "";
