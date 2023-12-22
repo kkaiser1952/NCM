@@ -9,7 +9,7 @@ require_once "geocode.php";     // Replace with your actual file name
 require_once "GridSquare.php";  // Replace with your actual file name 
  
 // Define the batch size (e.g., 100 records at a time)
-$batchSize = 100;
+$batchSize = 25;
 
 $sql = "
 SELECT 
@@ -50,7 +50,9 @@ WHERE
     OR (BINARY a.last <> BINARY s.Lname OR (a.last IS NOT NULL AND BINARY a.last <> BINARY s.Lname))
     OR (BINARY a.fccid <> BINARY s.fccid OR (a.fccid IS NOT NULL AND BINARY a.fccid <> BINARY s.fccid))
 ORDER BY 
-    TriggeredCondition;
+    TriggeredCondition
+    LIMIT 100
+    ;
 ;";
 
 // Fetch all records that need to be updated
@@ -77,28 +79,22 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
 
         $koords  = geocode("$address");
 
-            $latitude  = $koords[0];
-            $longitude = $koords[1];
-            
-            $county = $koords[2];
-            $state  = $koords[3];
-        
-           // echo "lat: " . $latitude . " lon: " . $longitude . " Co. " . $county . " state: " . $state . " start: " . $startTime;
-            
+        $latitude  = $koords[0];
+        $longitude = $koords[1];
+
+        $county = $koords[2];
+        $state  = $koords[3];
+
         if ($state == '') {
             $state = $row['State'];
         }
-        
-       // require_once "GridSquare.php";  // Replace with your actual file name
 
         $gridd = gridsquare($latitude, $longitude);
-            $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
-            
-            //echo " gridd: " . $gridd . " grid: " . $grid;   
-            //echo "<br>1: " . $yn[1] . " 2: " . $yn[2] . " 3: " . $yn[3];
-                //gridd: FN13HA grid: FN13HA    
-               
-        // Prepare the SQL statement with placeholders
+        echo "gridd: $gridd";
+        $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";
+        echo "<br> $gridd[0].$gridd[1].$gridd[2].$gridd[3].$gridd[4].$gridd[5]";
+        echo "<br>Calculated grid: $grid";
+
         $sql2 = "UPDATE stations SET 
              Fname = :Fname,
              Lname = :Lname,
@@ -125,31 +121,43 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         $stmt2->bindValue(':city', $city);
         $stmt2->bindValue(':home', "$latitude,$longitude,$grid,$county,$state,$city");
         $stmt2->bindValue(':fccid', $fccid);
-        $stmt2->bindValue(':dttm', date('Y-m-d H:i:s')); // Add dttm value here
+        $stmt2->bindValue(':dttm', date('Y-m-d H:i:s'));
         $stmt2->bindValue(':latitude', $latitude);
         $stmt2->bindValue(':longitude', $longitude);
         $stmt2->bindValue(':latlng', "POINT($latitude $longitude)");
         $stmt2->bindValue(':callsign', $row['callsign']);
-        
-        // Add debugging output
-        echo "Processed callsign: " . $row['callsign'] . "<br>";
-        
-        // Add debugging output
+
+        // Add debugging output for SQL query and bound values
         echo "Executing query for callsign: " . $row['callsign'] . "<br>";
-    
+        echo "SQL Query: $sql2<br>";
+        echo "Bound Values: " . json_encode([
+            ':Fname' => $row['Fname'],
+            ':Lname' => $row['Lname'],
+            ':grid' => $grid,
+            ':county' => $county,
+            ':state' => $state,
+            ':city' => $city,
+            ':home' => "$latitude,$longitude,$grid,$county,$state,$city",
+            ':fccid' => $fccid,
+            ':dttm' => date('Y-m-d H:i:s'),
+            ':latitude' => $latitude,
+            ':longitude' => $longitude,
+            ':latlng' => "POINT($latitude $longitude)",
+            ':callsign' => $row['callsign']
+        ]) . "<br>";
+
         // Execute the prepared statement
         if ($stmt2->execute()) {
             echo "<br><br>Update successful for callsign: " . $row['callsign'] . " ";
         } else {
             echo "<br><br>Error updating callsign: " . $row['callsign'];
         }
-        
-        
+
         // Add debugging output
-    echo "Processed batch #" . ($i / $batchSize) . "<br>";
-   
-    $count += count($batch);
-}
+        echo "Processed batch #" . ($i / $batchSize) . "<br>";
+
+        $count += count($batch);
+    }
 }
 
 echo "<br><br>Done --> Count= $count";
