@@ -59,6 +59,8 @@ $sql = ("SELECT description, contact, callsign, id, dttm, start, end
 	      LIMIT 1
 		  ");
 		  
+		  //echo $sql;
+		  
     /*
         SELECT description, contact, callsign, id, dttm, start, end 
           FROM events 

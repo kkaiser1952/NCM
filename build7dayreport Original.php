@@ -23,7 +23,6 @@
             // Perform any other desired actions using the value
           }
         </script>
-        <script src="js/NetManager.js"></script>
 
 <script>
     /*
@@ -361,15 +360,16 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 // Grand totals SQL
 $sql = $db_found->prepare("
-SELECT  count(callsign) as all_callsigns,
-        sum(firstLogIn) as ttl_1st_logins,
-        CONCAT(FLOOR(SUM(`timeonduty`) / 86400), ' days ',
+SELECT count(callsign) as all_callsigns, 
+       sum(firstLogIn) as ttl_1st_logins,
+       CONCAT(
+        FLOOR(SUM(`timeonduty`) / 86400), ' days ',
         LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
         LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
         LPAD(SUM(`timeonduty`) % 60, 2, '0')
-        ) AS time_on_duty
-  FROM NetLog
- WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
+    ) AS time_on_duty
+   FROM NetLog
+  WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)); 
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -380,86 +380,87 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 // Your SQL query
 $sql = $db_found->prepare("
-    SELECT
-    CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID)
-    ELSE nl.netID END AS netID,
-    CASE WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(nl.logdate,'+00:00','-06:00')
-    ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
+SELECT 
+    CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID) 
+            ELSE nl.netID END AS netID,
+    CASE WHEN nl.logdate <> '0000-00-00 00:00:00' THEN nl.logdate
+            ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
     CONCAT(nl.netcall, '<br>', nl.activity) AS netcall_activity,
     nl.stations,
     nl.pb,
     nl.testnet,
     CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-    WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
-    ELSE nl.logclosedtime END AS logclosedtime,
-    CASE WHEN nl.pb = '0' THEN '' WHEN nl.pb = '1' THEN 'blue-bg'
-    ELSE '' END AS PBcss,
-    CASE WHEN nl.logclosedtime IS NOT NULL THEN ''
-    WHEN nl.logclosedtime IS NULL THEN 'green-bg'
-    ELSE '' END AS LCTcss,
-    CASE WHEN nl.netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') OR nl.netcall LIKE '%test%' THEN 'purple-bg'
-    ELSE '' END AS TNcss,
-    CASE WHEN nl.stations = 1 THEN 'red-bg'
-    ELSE '' END AS CCss,
-    CASE WHEN nl.facility <> '' THEN 'yellow-bg'
-    ELSE '' END as FNcss,
-    CASE WHEN nl.subNetOfID <> 0 THEN 'cayenne-bg'
-    ELSE '' END AS SNcss,
+         WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
+            ELSE nl.logclosedtime END AS logclosedtime, 
+    CASE WHEN nl.pb = '0' THEN '' WHEN nl.pb = '1' THEN 'blue-bg' 
+            ELSE '' END AS PBcss,
+    CASE WHEN nl.logclosedtime IS NOT NULL THEN '' 
+         WHEN nl.logclosedtime IS NULL THEN 'green-bg' 
+            ELSE '' END AS LCTcss,
+    CASE WHEN nl.netcall IN ('TEST', 'TE0ST', 'TEOST', 'TE0ST') OR nl.netcall LIKE '%test%' THEN 'purple-bg' 
+            ELSE '' END AS TNcss,
+    CASE WHEN nl.stations = 1 THEN 'red-bg' 
+            ELSE '' END AS CCss,
+    CASE WHEN nl.facility <> '' THEN 'yellow-bg' 
+            ELSE '' END as FNcss,
+    CASE WHEN nl.subNetOfID <> 0 THEN 'cayenne-bg' 
+            ELSE '' END AS SNcss,
     subquery.First_Login,
-    (SELECT COUNT(DISTINCT netID)
-    FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    (SELECT COUNT(DISTINCT netID) 
+       FROM NetLog 
+      WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     ) AS netID_count,
     SEC_TO_TIME(SUM(
-    CASE
-    WHEN nl.timeonduty IS NULL THEN 0
-    WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
-    ELSE TIME_TO_SEC(nl.timeonduty)
+    CASE 
+        WHEN nl.timeonduty IS NULL THEN 0
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+        ELSE TIME_TO_SEC(nl.timeonduty)
     END
-    )) AS Volunteer_Time,
+)) AS Volunteer_Time,
+
     SEC_TO_TIME(
-    CASE
-    WHEN subquery.total_timeonduty_sum IS NULL THEN 0
-    WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
-    ELSE subquery.total_timeonduty_sum
+    CASE 
+        WHEN subquery.total_timeonduty_sum IS NULL THEN 0
+        WHEN nl.logdate = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+        ELSE subquery.total_timeonduty_sum
     END
-    ) AS Total_Time,
+) AS Total_Time,
     MAX(CASE
-    WHEN tl.comment LIKE '%Opened the%' THEN tl.callsign
-    ELSE NULL
+        WHEN tl.comment LIKE '%Opened the%' THEN tl.callsign
+        ELSE NULL
     END) AS Open,
     MAX(CASE
-    WHEN tl.comment LIKE '%log was Closed%' THEN tl.callsign
-    ELSE NULL
+        WHEN tl.comment LIKE '%log was Closed%' THEN tl.callsign
+        ELSE NULL
     END) AS Close
-    FROM (
-    SELECT netID,
-    activity,
-    subNetOfID,
-    pb,
-    netcall,
-    COUNT(*) AS stations,
-    logclosedtime,
-    testnet,
-    timeonduty,
-    facility,
-    CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
-                        ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
-    FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
-    GROUP BY netID
-    ) AS nl
-    LEFT JOIN (
-    SELECT netID,
-    SUM(firstLogin) AS First_Login, IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
-    FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
-    GROUP BY netID
-    ) AS subquery ON nl.netID = subquery.netID
-    LEFT JOIN TimeLog tl ON nl.netID = tl.netID
-    GROUP BY netID
-    ORDER BY CAST(nl.netID AS SIGNED) DESC;
-    ");
+FROM (
+    SELECT netID, 
+           activity, 
+           subNetOfID, 
+           pb,
+           netcall, 
+           COUNT(*) AS stations, 
+           logclosedtime, 
+           testnet, 
+           timeonduty, 
+           facility,
+               CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
+                    ELSE (SELECT max(dttm) FROM NetLog) END AS logdate 
+      FROM NetLog
+     WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+     GROUP BY netID
+) AS nl
+LEFT JOIN (
+    SELECT netID, 
+           SUM(firstLogin) AS First_Login, IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
+      FROM NetLog
+     WHERE (DATE(logdate) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+     GROUP BY netID
+) AS subquery ON nl.netID = subquery.netID
+LEFT JOIN TimeLog tl ON nl.netID = tl.netID
+GROUP BY netID
+ORDER BY CAST(nl.netID AS SIGNED) DESC;
+");
 
 // Execute the SQL query and store the result in $result variable
 $sql->execute();
@@ -473,7 +474,6 @@ if (!empty($result)) {
  
 	//echo '<div class="reportTitle">' . 'Today is: ' . date('l') . ', ' . date('Y/m/d') . '<br>' .
     echo '<div class=\'reportTitle\';>' . $netcall . ' Groups, ' . $cscount . ' Unique Stations, ' . $netCnt . ' Nets, ' . $records . ' Entries, <br>' . $volHours . ' of Volunteer Time</div>';
-    
 		 
     $title = "Today is: " . date("l") . ', ' . date('Y/m/d') .
     "<br>Past 7 DAYs NCM Report for " . $result[0]['netID_count'] . " Nets <br>";		
@@ -539,14 +539,14 @@ if (!empty($result)) {
     // Create the grand total row over the headers
     echo '<tr class="sum-row">';
     echo '<td class="" >' . $result[0]['netID_count'] . '</td>';
-    echo '<td class="" > All Days are Local' . '</td>';
+    echo '<td class="" > All Days are UTC' . '</td>';
     echo '<td colspan="1" style="text-align: right;">Grand Totals:</td>';
     echo '<td class="" >' . $ttl_callsigns . '</td>';
     echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
     echo '<td class="" >' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . $time_on_duty . '</td>';
-    echo '<td class="" >' . $OpenCall . '</td>';
-    echo '<td class="" >' . $CloseCall . '</td>';
+    echo '<td class="" >' . $Open . '</td>';
+    echo '<td class="" >' . $Close . '</td>';
     echo '</tr>';
     echo '<tr>';
     
@@ -661,12 +661,8 @@ if (!empty($result)) {
                     continue;
                 }
                    
-                    // Add oncontextmenu or onclick to some column values
-                    //echo '<td class="centered">'; // commented 2023-12-16
-                    //echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="CallHistoryForWho()"' : '') . '>';      
-                    //echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="getCallHistory7Day(\'' . $columnValue . '\')"' : '') . '>';
-                    echo '<td class="centered" ' . ($column === 'Open' || $column === 'Close' ? 'oncontextmenu="getCallHistory7Day(\'' . $columnValue . '\')"' : '') . '>';
-
+                    echo '<td class="centered">';
+                    
                     
                     if ($column === 'netID') {
                         $netID = $columnValue;
@@ -726,12 +722,12 @@ $(document).ready(function() {
     //sixthHeader.append(" H:M:S");
     
     firstHeader.text("Net ID");
-    secondHeader.text("Log Date");
+    secondHeader.text("Log Date UTC");
     thirdHeader.text("Net Call");
     fourthHeader.text("Stations");
-    fifthhHeader.text("Closed Time");
+    fifthhHeader.text("Closed Time UTC");
     sixthHeader.text("1st Logins");
-    seventhHeader.text("TOD - H:M:S");
+    seventhHeader.text("H:M:S");
 
         $('tr').each(function () {
             var $row = $(this);

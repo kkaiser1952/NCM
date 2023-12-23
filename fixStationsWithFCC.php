@@ -55,14 +55,7 @@ $count++;
 		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
 
 //echo "<br>$count";
-//UPDATE stations SET latlng = GeomFromText(POINT(39.791869,-93.549968)) WHERE callsign = 'kf0evg';
-
-// to update all the latlng values do this
-// UPDATE stations SET latlng = GeomFromText(CONCAT('POINT(',latitude,' ',longitude,')'));
-
-// to update only one latlng value tod this
-// UPDATE stations SET latlng = POINT(latitude, longitude) WHERE id = 'xxxxxxx';
-
+// Removed latlng 2023-12-22
 $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
                              Lname      = \"$row[last]\" ,
                              grid       = '$grid' ,
@@ -72,8 +65,7 @@ $sql2 = "UPDATE stations SET Fname      = \"$row[first]\" ,
                              fccid      = $row[fccfccid] ,
                              dttm       = NOW() ,
                              latitude   = $latitude , 
-                             longitude  = $longitude ,
-                             latlng     = GeomFromText('POINT($latitude $longitude)')    
+                             longitude  = $longitude     
           WHERE id = $row[id];         
 ";
 

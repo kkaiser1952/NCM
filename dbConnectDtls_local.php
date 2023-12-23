@@ -46,7 +46,6 @@ function now($str_user_timezone = CONST_USER_TIMEZONE,
 
 $open  = now(CONST_USER_TIMEZONE,CONST_SERVER_TIMEZONE,CONST_SERVER_DATEFORMAT);
 
-//$strHostName = "144.202.63.195";
 $strHostName = "localhost";
 $strUserName = "ncm";
 $strPassword = "CvN9qLGMFxrMLOBh";

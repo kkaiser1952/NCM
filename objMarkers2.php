@@ -20,21 +20,24 @@
       
    $sql = ("
     SELECT
-        callsign,
-        CONCAT(callsign, 'OBJ') AS callOBJ,
-        COUNT(callsign) AS numofcs,
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
-        CONCAT(callsign, 'arr') AS allnameBounds
-    FROM (
-        SELECT callsign, comment, timestamp
-        FROM TimeLog
-        WHERE netID = $q AND callsign <> 'GENCOMM'
-            AND comment LIKE '%OBJ::%' /* or comment LIKE '%W3W::%' */
-    ) AS filtered_data
-    GROUP BY callsign
+    callsign,
+    CONCAT(callsign, 'OBJ') AS callOBJ,
+    COUNT(callsign) AS numofcs,
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+    CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+    CONCAT(callsign, 'arr') AS allnameBounds
+FROM (
+    SELECT callsign, comment, timestamp
+    FROM TimeLog
+    WHERE netID = $q
+        AND callsign <> 'GENCOMM'
+        AND latlng IS NOT NULL
+        AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
+    ORDER BY timestamp -- Add this line to order within each group
+) AS filtered_data
+GROUP BY callsign
+ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggregated timestamp for each group
 
-    ORDER by timestamp, callsign;
 ");
           
         //echo "First sql:<br> $sql <br><br>";
@@ -86,10 +89,11 @@
                    WHERE netID = $q
                      AND COMMENT LIKE '%OBJ::%'
                    GROUP BY callsign
+                   ORDER BY timestamp asc
                 ");
                 
-        //echo "sqlk:<br> $sqlk <br><br>";
-            //var WA0TJTlatlngs = [[39.20283,-94.6025].....]]
+        //echo var WA0TJTlatlngs = [[39.20300,-94.6028],[39.20283,-94.6026],[39.20200,-94.6021],[39.20100,-94.6015],[39.19767,-94.6020],[39.19950,-94.6045],[39.20283,-94.6026]]
+
                 
             foreach($db_found->query($sqlk) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -116,7 +120,7 @@
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
                 AND comment LIKE '%OBJ::%' 
-              ORDER BY callsign, timestamp ) s         
+              ORDER BY callsign, timestamp DESC) s         
           ");
           
         //echo "3rd sql:<br> $sql <br><br>";
@@ -401,5 +405,6 @@ foreach($db_found->query($sql) as $row) {
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
      //echo "$OBJMarkerList";
+     //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>

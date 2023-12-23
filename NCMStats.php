@@ -1,6 +1,6 @@
 <?php
 	
-	// Used by help.php
+	// Used by help.php and indes.php
 	
 function convertSecToTime($sec)
 {

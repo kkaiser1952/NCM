@@ -13,7 +13,7 @@
     
     //$netID = intval( $_GET["NetID"] ); 
     //$cs = strtoupper('KC1TVI');  // does not return address1
-   // $cs = 'wa0tjt';
+    $cs = 'KD9BKK';
  
 /*   
 st = stations table
@@ -119,7 +119,7 @@ $sql = ("
              ";
     } // end of foreach
     
-    
+    // removed latlng 2023-12-22
     $sql = "UPDATE stations SET
                 latitude  = '$latitude'
                ,longitude = '$longitude'
@@ -129,7 +129,6 @@ $sql = ("
                ,home      = '$home'
                ,fccid     = '$fccid'
                ,zip       = '$zip'
-               ,latlng    = GeomFromText(CONCAT('POINT (', $latitude, ' ', $longitude, ')'))
                ,dttm      = CURRENT_TIMESTAMP
                ,comment   = '$updated'
               Where callsign = '$cs';

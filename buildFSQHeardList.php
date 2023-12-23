@@ -1,10 +1,6 @@
 <?php
-// This code produces a list derived from the net that can be used by cut/paste into FSQ
-// Its a shortcut to typing it all.
-// Updated: 2023-11-30
-
 // function to geocode address, it will return false if unable to geocode address
-require_once "dbConnectDtls.php"; 
+require_once "dbConnectDtls.php";
 
 //$netID = strip_tags($_POST["q"]);
 $netID = intval($_POST["q"]);
@@ -37,6 +33,10 @@ $netID = intval($_POST["q"]);
                 		    WHEN netcontrol = 'SEC'   THEN 7 
                 		    ELSE logdate
                         END)
+                       
+                /*       (CASE 
+                            WHEN active IN('Out','OUT','In-Out','BRB','MISSING','Moved') THEN logdate 
+                        END) */
 		   ";
 		   
         $callList = '';
@@ -60,17 +60,14 @@ $netID = intval($_POST["q"]);
         	$callListwStat       .= "$row[callsign]   $row[netcontrol]   $row[act]<br>";
         	$callListwStatPound  .= "$row[callsign]#<br>";
 
-            // Ask for a SNR report
             $callListwSNR       .= "<tr><td>$relaystation $row[callsign]?
                                     </td>
                                     <td>$relaystation allcall $row[callsign] ack</td></tr>";
             
-            // Ask for a heard list report
             $callListwACK       .= "<tr><td>allcall $row[callsign]#
                                     </td>
                                     <td>$relaystation allcall $row[callsign] ack</td></tr>";
             
-            // Ask for a QTC report i.e. No Traffic
             $callListwTFK       .= "<tr><td>$relaystation $row[callsign]&
                                     </td>
                                     <td>$relaystation allcall $row[callsign] ack</td></tr>";

@@ -6,7 +6,7 @@
 <!-- This version 2021-10-16 -->
 <!-- This version 2023-08-03 -->
 
-<?php 
+<?php
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -197,7 +197,7 @@
     
 // This function can be used to connect the object markers together with a line
 // Object markers come from the TimeLog unlike the rest that come from NetLog
-function connectTheDots(data){
+/*function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
         var x = data._layers[i]._latlng.lat;
@@ -205,7 +205,7 @@ function connectTheDots(data){
         c.push([x, y]);
     }
     return c;
-}
+} */
 
     
 // Define the beginning map
@@ -332,7 +332,7 @@ var map = L.map('map', {
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent("You clicked the map at:<br>" + e.latlng.toString() + "<br>"   )
+            .setContent("You clicked the map at::<br>" + e.latlng.toString() + "<br>"   )
             .openOn(map);
     }
     
@@ -477,7 +477,9 @@ var map = L.map('map', {
         }  // end for loop
     } // end of style 
         
-    var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+    // This adds lines between the objmarkers 
+    // commented out on 2023-11-19 
+    //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
 
     
     //====================================================================== 
