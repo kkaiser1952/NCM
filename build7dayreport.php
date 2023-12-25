@@ -546,7 +546,7 @@ if (!empty($result)) {
     echo '<td class="" >' . $ttl_callsigns . '</td>';
     echo '<td class="" >';
     echo '<td colspan="1" style="text-align: center;"></td>';
-    echo '<td colspan="1" style="text-align: center;">New Logins:<br>' . $ttl_first_logins . '</td>';
+    echo '<td colspan="1" style="text-align: center;">First Logins:<br>' . $ttl_first_logins . '</td>';
     echo '<td class="" >' . 'TOD:<br>' . $time_on_duty . '</td>';
     echo '<td class="" >' . $OpenCall . '</td>';
     echo '<td class="" >' . $CloseCall . '</td>';
