@@ -716,9 +716,9 @@ $(document).ready(function() {
     // Find the second <th> element using :eq(1) selector (index starts from 0)
     var firstHeader     = $("th:eq(0)"); // netID
     var secondHeader    = $("th:eq(1)"); // logdate
-    var thirdHeader     = $("th:eq(2)"); // frequency
-    var fourthHeader    = $("th:eq(3)"); // netcall
-    var fiftheHeader    = $("th:eq(4)"); // station count
+    var thirdHeader     = $("th:eq(2)"); // netcall
+    var fourthHeader    = $("th:eq(3)"); // station count
+    var fiftheHeader    = $("th:eq(4)"); // frequency
     var sixthhHeader    = $("th:eq(5)"); // logclosedtime
     var seventhHeader   = $("th:eq(6)"); // first login count
     var eighthHeader    = $("th:eq(7)");
@@ -730,9 +730,9 @@ $(document).ready(function() {
     
     firstHeader.text("Net ID");
     secondHeader.text("Log Date");
-    thirdHeader.text("Frequency");
-    fourthHeader.text("Net Call");
-    fiftheHeader.text("Stations");
+    thirdHeader.text("Net Call");
+    fourthHeader.text("Stations");
+    fiftheHeader.text("Frequency");
     sixthhHeader.text("Closed Time");
     seventhHeader.text("1st Logins");
     eighthHeader.text("TOD - H:M:S");
