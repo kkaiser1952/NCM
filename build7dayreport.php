@@ -544,9 +544,10 @@ if (!empty($result)) {
     echo '<td class="" > All Days are Local' . '</td>';
     echo '<td colspan="1" style="text-align: right;">Grand Totals:</td>';
     echo '<td class="" >' . $ttl_callsigns . '</td>';
-    echo '<td colspan="1" style="text-align: right;">Total First Logins:</td>';
+    echo '<td class="" >';
+    echo '<td colspan="1" style="text-align: center;">First Logins:</td>';
     echo '<td class="" >' . $ttl_first_logins . '</td>';
-    echo '<td class="" >' . $time_on_duty . '</td>';
+    echo '<td class="" >' . 'TOD:<br>' . $time_on_duty . '</td>';
     echo '<td class="" >' . $OpenCall . '</td>';
     echo '<td class="" >' . $CloseCall . '</td>';
     echo '</tr>';
