@@ -443,6 +443,7 @@ $sql = $db_found->prepare("
     testnet,
     timeonduty,
     facility,
+    frequency,
     CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
                         ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
     FROM NetLog
