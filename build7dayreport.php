@@ -389,6 +389,7 @@ $sql = $db_found->prepare("
     nl.stations,
     nl.pb,
     nl.testnet,
+    nl.frequency,
     CASE WHEN nl.logclosedtime IS NULL THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
     WHEN nl.logclosedtime = '' THEN DATE_ADD((SELECT max(dttm) FROM NetLog), INTERVAL 30 MINUTE)
     ELSE nl.logclosedtime END AS logclosedtime,
@@ -653,12 +654,12 @@ if (!empty($result)) {
             ];
             
             $columnOrder = array(
-                        'netID', 'netID_count', 'pb', 'testnet', 'PBcss', 'LCTcss', 'TNcss', 'CCss',
+                        'netID',  'netID_count',  'pb', 'testnet', 'PBcss', 'LCTcss', 'TNcss', 'CCss',
                         'Volunteer_Time', 'FNcss', 'SNcss', 'Open', 'Close'
                     );
      
             foreach ($row as $column => $columnValue) {
-                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss') {
+                if ($column === 'netID_count' OR $column === 'pb' OR $column === 'testnet' OR $column === 'PBcss' OR $column === 'LCTcss' OR $column === 'TNcss' OR $column === 'CCss' OR $column === 'Volunteer_Time' OR $column === 'FNcss' OR $column === 'SNcss' ) {
                     continue;
                 }
                    
@@ -713,13 +714,14 @@ if (!empty($result)) {
 $(document).ready(function() {
     // Adding a word to one of the header <th> values
     // Find the second <th> element using :eq(1) selector (index starts from 0)
-    var firstHeader    = $("th:eq(0)"); // netID
-    var secondHeader   = $("th:eq(1)"); // logdate
-    var thirdHeader    = $("th:eq(2)"); // netcall
-    var fourthHeader   = $("th:eq(3)"); // station count
-    var fifthhHeader   = $("th:eq(4)"); // logclosedtime
-    var sixthHeader    = $("th:eq(5)"); // first login count
-    var seventhHeader  = $("th:eq(6)");
+    var firstHeader     = $("th:eq(0)"); // netID
+    var secondHeader    = $("th:eq(1)"); // logdate
+    var thirdHeader     = $("th:eq(2)"); // frequency
+    var fourthHeader    = $("th:eq(3)"); // netcall
+    var fiftheHeader    = $("th:eq(4)"); // station count
+    var sixthhHeader    = $("th:eq(5)"); // logclosedtime
+    var seventhHeader   = $("th:eq(6)"); // first login count
+    var eighthHeader    = $("th:eq(7)");
 
     // Append the word using .append() method
     //secondHeader.append(" UTC");
@@ -728,11 +730,12 @@ $(document).ready(function() {
     
     firstHeader.text("Net ID");
     secondHeader.text("Log Date");
-    thirdHeader.text("Net Call");
-    fourthHeader.text("Stations");
-    fifthhHeader.text("Closed Time");
-    sixthHeader.text("1st Logins");
-    seventhHeader.text("TOD - H:M:S");
+    thirdHeader.text("Frequency");
+    fourthHeader.text("Net Call");
+    fiftheHeader.text("Stations");
+    sixthhHeader.text("Closed Time");
+    seventhHeader.text("1st Logins");
+    eighthHeader.text("TOD - H:M:S");
 
         $('tr').each(function () {
             var $row = $(this);
