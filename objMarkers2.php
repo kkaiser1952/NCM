@@ -18,7 +18,7 @@
 
    $q = 10684;
       
-   $sql = ("
+   $sql1 = ("
     SELECT
         callsign,
         CONCAT(callsign, 'OBJ') AS callOBJ,
@@ -27,26 +27,26 @@
         CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
         CONCAT(callsign, 'arr') AS allnameBounds
       FROM (
-    SELECT callsign, comment, timestamp
-      FROM TimeLog
-     WHERE netID = $q
-        AND callsign <> 'GENCOMM'
-        AND latlng IS NOT NULL
-        AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
-     ORDER BY timestamp 
-        ) AS filtered_data
-     GROUP BY callsign
-     ORDER BY callsign, MAX(timestamp); 
+        SELECT callsign, comment, timestamp
+        FROM TimeLog
+        WHERE netID = $q
+            AND callsign <> 'GENCOMM'
+            AND latlng IS NOT NULL
+            AND comment LIKE '%LOC&#%'
+        ORDER BY timestamp 
+      ) AS filtered_data
+      GROUP BY callsign
+      ORDER BY callsign, MIN(timestamp); 
 ");
         
-        //echo "First sql:<br> $sql <br><br>";
+        echo "First sql:<br> $sql1 <br><br>";
           
     
         $allnameBounds = "";
         $allPoints = "";
         $oByersCnt = 0;
         
-     foreach($db_found->query($sql) as $row) {
+     foreach($db_found->query($sql1) as $row) {
          $objBounds .= "$row[objBounds]";    
          $oByersCnt .= $oByersCnt + 1;
          
@@ -68,7 +68,7 @@
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
-        $sqlk = ("SELECT CONCAT(
+        $sql2 = ("SELECT CONCAT(
                             'var ',
                             callsign,
                             'latlngs = [',
@@ -87,16 +87,16 @@
                    ORDER BY timestamp asc
                 ");
                 
-            //echo "Second sqlk:<br> $sqlk <br><br>";
+            //echo "Second sqlk:<br> $sql2 <br><br>";
                 
-            foreach($db_found->query($sqlk) as $row) {
+            foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
             }
              
              // all the cords for each callsign
         //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
-        $sql = ("SELECT callsign, timestamp, comment, counter,
+        $sql3 = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
                     	WHEN comment LIKE '%W3W OBJ::%'  THEN  'W3W'
                         WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
@@ -118,14 +118,14 @@
           ");
           
           // above working well
-        //echo "3rd sql:<br> $sql <br><br>";
+        //echo "3rd sql:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
           $allcallList      = "";
           $alllatlngs       = "";
           
-foreach($db_found->query($sql) as $row) {
+foreach($db_found->query($sql3) as $row) {
     $koords   = "$row[koords]";
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
@@ -272,7 +272,7 @@ foreach($db_found->query($sql) as $row) {
 
 
  // Create corner markers for each callsign that has objects.
-    $sql = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
+    $sql4 = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
 	                 MAX(SUBSTRING(comment, -18, 8)) as maxLat,
 	                 MIN(SUBSTRING(comment, -9, 8))  as minLng,
 	                 MAX(SUBSTRING(comment, -9, 8))  as maxLng,                 
@@ -304,7 +304,7 @@ foreach($db_found->query($sql) as $row) {
     $cmn = 0; 
     $uniqueCallList = "";
     
-    foreach($db_found->query($sql) as $row) {
+    foreach($db_found->query($sql4) as $row) {
            $callsign = $row[callsign];      
                                 
            // The 0.25 is to make the square every so little bigger.
