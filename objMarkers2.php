@@ -16,30 +16,29 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 9678;
+   $q = 10684;
       
    $sql = ("
     SELECT
-    callsign,
-    CONCAT(callsign, 'OBJ') AS callOBJ,
-    COUNT(callsign) AS numofcs,
-    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-    CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
-    CONCAT(callsign, 'arr') AS allnameBounds
-FROM (
+        callsign,
+        CONCAT(callsign, 'OBJ') AS callOBJ,
+        COUNT(callsign) AS numofcs,
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+        CONCAT(callsign, 'arr') AS allnameBounds
+      FROM (
     SELECT callsign, comment, timestamp
-    FROM TimeLog
-    WHERE netID = $q
+      FROM TimeLog
+     WHERE netID = $q
         AND callsign <> 'GENCOMM'
         AND latlng IS NOT NULL
         AND comment LIKE '%LOC&#%' /* or comment LIKE '%W3W::%' */
-    ORDER BY timestamp -- Add this line to order within each group
-) AS filtered_data
-GROUP BY callsign
-ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggregated timestamp for each group
-
+     ORDER BY timestamp 
+        ) AS filtered_data
+     GROUP BY callsign
+     ORDER BY callsign, MAX(timestamp); 
 ");
-          
+        
         //echo "First sql:<br> $sql <br><br>";
           
     
@@ -49,7 +48,7 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
         
      foreach($db_found->query($sql) as $row) {
          $objBounds .= "$row[objBounds]";    
-         $oByersCnt  = $oByersCnt + 1;
+         $oByersCnt .= $oByersCnt + 1;
          
          $allnameBounds .= "'$row[allnameBounds]',";
          $objMiddle .= "$row[callsign]OBJ.getCenter();";
@@ -63,11 +62,7 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
          
      } // end of foreach loop 
      
-     //echo "objSW: $objSW"; // with two callsigns
-     //objSW: var W0DLKpadit = W0DLKPAD.getSouthWest();
-     //       var WA0TJTpadit = WA0TJTPAD.getSouthWest();
-     
-     // Count of number of callsigns
+     // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
      //echo "oByers: $oByers";
      
@@ -87,13 +82,12 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
                         ) AS allKoords
                     FROM TimeLog
                    WHERE netID = $q
-                     AND COMMENT LIKE '%OBJ::%'
+                     AND COMMENT LIKE '%LOC&#%'
                    GROUP BY callsign
                    ORDER BY timestamp asc
                 ");
                 
-        //echo var WA0TJTlatlngs = [[39.20300,-94.6028],[39.20283,-94.6026],[39.20200,-94.6021],[39.20100,-94.6015],[39.19767,-94.6020],[39.19950,-94.6045],[39.20283,-94.6026]]
-
+            //echo "Second sqlk:<br> $sqlk <br><br>";
                 
             foreach($db_found->query($sqlk) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -119,10 +113,11 @@ ORDER BY callsign, MAX(timestamp); -- Use MAX(timestamp) to represent the aggreg
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
-                AND comment LIKE '%OBJ::%' 
+                AND comment LIKE '%LOC&#%' 
               ORDER BY callsign, timestamp DESC) s         
           ");
           
+          // above working well
         //echo "3rd sql:<br> $sql <br><br>";
           
           $objMarkers       = "";
