@@ -13,7 +13,7 @@
     
     //$netID = intval( $_GET["NetID"] ); 
     //$cs = strtoupper('KC1TVI');  // does not return address1
-    $cs = 'KD9BKK';
+    $cs = 'kn6cub';
  
 /*   
 st = stations table

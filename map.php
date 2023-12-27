@@ -46,7 +46,7 @@
     // Loads the programs that create the station, poi,d object markers
 	include "stationMarkers.php";
     include "poiMarkers.php";    
-    include "objMarkers2.php";
+    include "objMarkers.php";
 
 ?>
 
@@ -147,9 +147,11 @@
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
 		.leaflet-control-mouseCoordinate{
-    		background: #d0effa;
+    		display: flex;
+    		background-color: rgba(255, 255, 255, 0.5);
     		top: 80%;
     		left: 10px;
+    		width: 280px;
     		padding-bottom: 40px;
         }
         
@@ -197,7 +199,7 @@
     
 // This function can be used to connect the object markers together with a line
 // Object markers come from the TimeLog unlike the rest that come from NetLog
-/*function connectTheDots(data){
+function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
         var x = data._layers[i]._latlng.lat;
@@ -205,7 +207,7 @@
         c.push([x, y]);
     }
     return c;
-} */
+} 
 
     
 // Define the beginning map
