@@ -349,6 +349,9 @@ var map = L.map('map', {
     // Bring in the station and poi markers to appear on the map
     <?php
         echo ("$stationMarkers");   // All the checked in stations   
+    ?>
+    // Bring in the POI markers
+    <?php
         echo ("$poiMarkers");       // The Points of Interest Markers
         echo ("$POIMarkerList");    // The poi Markers list
     ?>

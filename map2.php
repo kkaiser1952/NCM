@@ -5,8 +5,9 @@
 
 <!-- This version 2021-10-16 -->
 <!-- This version 2023-08-03 -->
+<!-- This version 2023-12-27 -->
 
-<?php 
+<?php
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -19,10 +20,9 @@
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    //$q = 8523; 
-    //$q = 6066;
-    //$q = 9657;
-    $q = 9678;
+    
+    $q = 10684; 
+
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -43,7 +43,7 @@
     		$minlon = $result[minlon];
     //echo "$maxalt, $minalt";
     
-    // Loads the programs that create the station, poi, and object markers
+    // Loads the programs that create the station, poi,d object markers
 	include "stationMarkers.php";
     include "poiMarkers.php";    
     include "objMarkers.php";
@@ -61,8 +61,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicons/apple-icon.png">
 
      <!-- ******************************** Load LEAFLET from CDN *********************************** -->
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
-     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
      <!-- ********************************* End Load LEAFLET **************************************** -->
      
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -88,18 +88,33 @@
     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
-    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
-    crossorigin=""></script>
-
-  <!-- Load Esri Leaflet Vector from CDN -->
-  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
-    crossorigin=""></script>
-    
-    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
-    crossorigin=""></script>     
+  
+  <script
+  src="https://unpkg.com/esri-leaflet@3.0.11/dist/esri-leaflet.js"
+  integrity="sha512-qSE34Lz9JHdaPt3AZsi6L3dcqYHO9nnQEIxfrkgrRqqe+R0DPuAMu+j2vlb92zPka9O+XHZV4+9G5/rHT5ADsQ=="
+  crossorigin=""></script>
+ 
+  <script
+  src="https://unpkg.com/esri-leaflet-vector@4.1.0/dist/esri-leaflet-vector.js"
+  integrity="sha512-o4eWk+0ue3rnRHK50Sp5U3NbbkHZLJ89Ao/nH4f9ayMpasUwHVZfYqJC8hVYB2nriDxK+TFJ0UoAHPIaJn3UGA=="
+  crossorigin=""></script>   
+  
+  <script
+  src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js"
+  integrity="sha512-ODcrBUbBplqiGXL2S0tWNVYStUTTWYyQcSrCLjIW8vL+CEb758m7Dm0v5vyl8qrT8stBwKaYVWZTGymf7vj9jg=="
+  crossorigin=""></script>
+  
+    <!-- ******************************** What 3 Words *************************************** -->
+  <script src="js/control.w3w.js"></script>
+ 
+    <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
+  <script src="js/circleKoords.js"></script>  
+  
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-BkZKghR9DV2LpDgmb/Uvl8bdoQj9O6OkkgbfXVpFfHTGcrHGqJIk1J5t+ZY5E3peLfTBazzjScnBguwthKvC1g=="
+    crossorigin="" />
     <!-- ******************************** End ESRI LEAFLET ***************************************** -->
      
      <!-- ******************************** Style Sheets *************************************** -->
@@ -113,21 +128,14 @@
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
-        
-    <!-- ******************************** What 3 Words *************************************** -->
-    <script src="js/control.w3w.js"></script>
-
-    
-    <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
-    <script src="js/circleKoords2.js"></script>    
-    
-    
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
 		.leaflet-control-mouseCoordinate{
-    		background: #d0effa;
+    		box-sizing: border-box;
+    		background-color: rgba(255, 255, 255, 0.5);
     		top: 80%;
     		left: 10px;
+    		width: auto;
     		padding-bottom: 40px;
         }
         
@@ -138,11 +146,11 @@
         .leaflet-control-w3w-locationText {
     	    position: fixed;
     		font-size: 14pt;
-    		top: 94%;
+    		top: 93%;
     		left: 32px;  /* was 110 */
     		border: none;
 		    text-decoration: none;
-		    width: 30%; 
+		    width: auto; /*30%;*/ 
 		    background-color: inherit;
 		    color: rgb(182,7,7);
 		    
@@ -183,7 +191,7 @@ function connectTheDots(data){
         c.push([x, y]);
     }
     return c;
-}
+} 
 
     
 // Define the beginning map
@@ -227,9 +235,8 @@ var map = L.map('map', {
     const plummanInTheMiddle      = "BRKMarkers/plum_man.svg";
 
 	
-	// Define the layers for the map
-	
-	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
+	// Define the layers for the map	
+	//From: https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
 	   
 	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
 	   
@@ -310,7 +317,7 @@ var map = L.map('map', {
     function onMapClick(e) {
         popup
             .setLatLng(e.latlng)
-            .setContent("You clicked the map at:<br>" + e.latlng.toString() + "<br>"   )
+            .setContent("You clicked the map at::<br>" + e.latlng.toString() + "<br>"   )
             .openOn(map);
     }
     
@@ -332,10 +339,8 @@ var map = L.map('map', {
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-        rfhole        = new PoiIconClass({iconUrl: 'markers/hole.png'}),
-        
+        rfhole        = new PoiIconClass({iconUrl: 'BRKMarkers/hole.svg'}),    
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
-    
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
         greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
         
@@ -364,8 +369,7 @@ var map = L.map('map', {
     map.fitBounds([<?php echo "$fitBounds"?>]);
 
     var bounds = L.latLngBounds([<?php echo "$fitBounds"?>]);
-        console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
-
+        //console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
 
     // find the corners and middle of the stationmarkers
     var middle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
@@ -424,23 +428,25 @@ var map = L.map('map', {
            echo "$objBounds" ;
            echo "$objMiddle" ;
            echo "$objPadit";
-    ?>
-
+    
     // Object markers here
-    <?php echo "$objMarkers"; ?>
+     echo "$objMarkers"; 
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
-    <?php echo "$cornerMarkers"; ?>
+    echo "$cornerMarkers"; 
 
     // Object Marker List starts here
-    <?php echo "$OBJMarkerList"; ?>
+     echo "$OBJMarkerList"; 
+     
+      // uniqueCallList is needed to so we can count how many color changes we need, always < 8
+     echo "$uniqueCallList";
+        
+    ?>
 
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
        
-    // uniqueCallList is needed to so we can count how many color changes we need, always < 8
-    <?php echo "$uniqueCallList"; ?>  
-    
+    // The colorwheel changes the ring color when multiple rings are used
     const newColor = "";
     const colorwheel = ["#00f900","#932092","#ff9200","#00fcff","#98989d","#fefb00","#000000","#ff2600"];
              
@@ -455,7 +461,9 @@ var map = L.map('map', {
         }  // end for loop
     } // end of style 
         
-    var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+    // This connects the objmarkers with a line from APRS or W3W 
+    // commented out on 2023-11-19 
+    //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
 
     
     //====================================================================== 
@@ -463,7 +471,36 @@ var map = L.map('map', {
     //======================================================================   
     //====================== THERE MAY NOT BE ANY TO REPORT ================
         
-       // was classList now classNames to avoid a JS conflict of names
+    // Function to check if a marker is within the visible bounds
+    function isMarkerWithinBounds(marker, bounds) {
+        return bounds.contains(marker.getLatLng());
+    }
+    
+    // Create a layer group for POI markers
+    var poiMarkerLayer = L.layerGroup();
+    
+    map.on('moveend', function() {
+    // Get the current visible bounds of the map
+    var visibleBounds = map.getBounds();
+
+    // Clear the existing POI marker layer
+    poiMarkerLayer.clearLayers();
+
+    // Filter the POI markers based on visibility
+    POIMarkerList.eachLayer(function(marker) {
+        if (isMarkerWithinBounds(marker, visibleBounds)) {
+            // Marker is within bounds, add it to the POI marker layer
+            poiMarkerLayer.addLayer(marker);
+        }
+    });
+
+    // Add the POI marker layer to the map
+    poiMarkerLayer.addTo(map);
+});
+    
+    
+
+    // was classList now classNames to avoid a JS conflict of names
     // The classNames is the list of POI types.
      var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
        console.log('In map.php classNames= '+classNames);
@@ -477,30 +514,14 @@ var map = L.map('map', {
     
     // Helper function to add the category to the classMap if the variable exists
     function addToClassMap(category, variable, imageName) {
-        window[variable] = L.layerGroup(mapPoints[category].map(function (properties) {
-            // Extract latitude and longitude values from the properties object
-            var latLng = properties.LatLng;
-            if (!latLng || !Array.isArray(latLng) || latLng.length !== 2) {
-                // If LatLng is invalid, skip this marker
-                console.warn(`POI ${category} LatLng is invalid or undefined.`);
-                return;
-            }
-    
-            var m = new L.marker(latLng, {
-                icon: new L.icon({
-                    iconUrl: `https://www.example.com/images/${imageName}`,
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 20],
-                    popupAnchor: [0, -20]
-                })
-            });
-            m.on('click', function (e) {
-                // Some click event handling code here
-            });
-            return m;
-        }));
-        layerControl.addOverlay(window[variable], category);
-    }
+        //console.log(category + variable + imageName);
+      if (window.hasOwnProperty(variable)) {
+        classMap[category] = {
+          [`<img src='images/markers/${imageName}' width='32' align='middle' /> <span class='${category}'>
+          ${category}</span>`]: window[variable],
+        };
+      }
+    } // End addToClassMap function
     
     // Call the helper function for each category
     addToClassMap('aviationL',  'aviationList', 'aviation.png');
@@ -509,10 +530,9 @@ var map = L.map('map', {
     addToClassMap('hospitalL',  'hospitalList', 'firstaid.png');
     addToClassMap('policeL',    'policeList',   'police.png');
     addToClassMap('repeaterL',  'repeaterList', 'repeater.png');
-    addToClassMap('rfholeL',    'rfholeList',   'hole.png');
+    addToClassMap('rfholeL',    'rfholeList',   'hole.svg');
     addToClassMap('sheriffL',   'sheriffList',  'police.png');
     addToClassMap('stateL',     'stateList',    'gov.png');
-    
     
     addToClassMap('chpL',       'chpList',      'police.png');
     addToClassMap('federalL',   'federalList',  'gov.png');
@@ -522,29 +542,29 @@ var map = L.map('map', {
     addToClassMap('objectsL',   'ObjectList',   'marker00.png');
     addToClassMap('cornersL',   'CornerList',   'red_50_flag.png');
     
-    console.log('ObjectL List:', classMap);
+    //console.log('ObjectL List:', classMap);
         
-        // Loop through classNames and assign the corresponding object to y
+    // Loop through classNames and assign the corresponding object to y
     for (x of classNames) {
       if (classMap.hasOwnProperty(x)) {
         Object.assign(y, classMap[x]);
       }
     }
     
-    console.log('ObjectL List:', y);
+    //console.log('ObjectL List:', y);
     
     // Here we add the station object with the merged y objects from above
     var overlayMaps = Object.assign({}, y);
 
-    
     // This must stay here to properly display on the map
     // The collapsed: true makes the POI's compress into a 'Markers' icon
     L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map);
     
+    //====================== End Points of Interest ============================
+    
     
    $('.leaflet-control-attribution').hide()
     
-
         function markerFunction(id){
 	        for (var i in stationMarkers){
 	            var markerID = stationMarkers[i].options.title;
