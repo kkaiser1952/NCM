@@ -147,11 +147,12 @@
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
 		.leaflet-control-mouseCoordinate{
-    		display: flex;
+    		box-sizing: border-box;
     		background-color: rgba(255, 255, 255, 0.5);
     		top: 80%;
     		left: 10px;
-    		width: 280px;
+    	/*	width: 280px; */
+    		width: auto;
     		padding-bottom: 40px;
         }
         
