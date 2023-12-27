@@ -202,6 +202,7 @@ var map = L.map('map', {
 	zoom: 12
 }); 
 
+//https://github.com/ha8tks/Leaflet.Maidenhead
 L.maidenhead({
 	color : ' #008e00 '
 }).addTo(map);
