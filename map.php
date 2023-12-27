@@ -480,7 +480,7 @@ var map = L.map('map', {
         }  // end for loop
     } // end of style 
         
-    // This adds lines between the objmarkers 
+    // This adds lines between the objmarkers from APRS or W3W 
     // commented out on 2023-11-19 
     //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
 
