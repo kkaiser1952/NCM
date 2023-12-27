@@ -5,6 +5,7 @@
 
 <!-- This version 2021-10-16 -->
 <!-- This version 2023-08-03 -->
+<!-- This version 2023-12-27 -->
 
 <?php
 	
@@ -19,10 +20,9 @@
     
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
-    //$q = 8523; 
-    //$q = 6066;
-    //$q = 9657;
-    //$q = 9678;
+    
+    //$q = 10684; 
+
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
     // This should be changed to min and max longitude or the Americas vs. Europe etc.
@@ -88,35 +88,28 @@
     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
-<!--  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
-    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
-    crossorigin=""></script>
- -->   
+  
   <script
   src="https://unpkg.com/esri-leaflet@3.0.11/dist/esri-leaflet.js"
   integrity="sha512-qSE34Lz9JHdaPt3AZsi6L3dcqYHO9nnQEIxfrkgrRqqe+R0DPuAMu+j2vlb92zPka9O+XHZV4+9G5/rHT5ADsQ=="
   crossorigin=""></script>
-
-  <!-- Load Esri Leaflet Vector from CDN -->
-<!--  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
-    crossorigin=""></script>
- -->
  
   <script
   src="https://unpkg.com/esri-leaflet-vector@4.1.0/dist/esri-leaflet-vector.js"
   integrity="sha512-o4eWk+0ue3rnRHK50Sp5U3NbbkHZLJ89Ao/nH4f9ayMpasUwHVZfYqJC8hVYB2nriDxK+TFJ0UoAHPIaJn3UGA=="
   crossorigin=""></script>   
   
-    
-<!--    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
-    crossorigin=""></script>     
--->
   <script
   src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js"
   integrity="sha512-ODcrBUbBplqiGXL2S0tWNVYStUTTWYyQcSrCLjIW8vL+CEb758m7Dm0v5vyl8qrT8stBwKaYVWZTGymf7vj9jg=="
   crossorigin=""></script>
+  
+    <!-- ******************************** What 3 Words *************************************** -->
+  <script src="js/control.w3w.js"></script>
+ 
+    <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
+  <script src="js/circleKoords.js"></script>  
+  
   <link
     rel="stylesheet"
     href="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.css"
@@ -135,15 +128,6 @@
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
     
-        
-    <!-- ******************************** What 3 Words *************************************** -->
-    <script src="js/control.w3w.js"></script>
-
-    
-    <!-- circleKoords is the javascript program that calculates the number of rings and the distance between them -->
-    <script src="js/circleKoords.js"></script>    
-    
-    
     <!-- override from leaflet.mousecoordinate.css -->
 	<style>
 		.leaflet-control-mouseCoordinate{
@@ -151,7 +135,6 @@
     		background-color: rgba(255, 255, 255, 0.5);
     		top: 80%;
     		left: 10px;
-    	/*	width: 280px; */
     		width: auto;
     		padding-bottom: 40px;
         }
@@ -163,11 +146,11 @@
         .leaflet-control-w3w-locationText {
     	    position: fixed;
     		font-size: 14pt;
-    		top: 94%;
+    		top: 93%;
     		left: 32px;  /* was 110 */
     		border: none;
 		    text-decoration: none;
-		    width: 30%; 
+		    width: auto; /*30%;*/ 
 		    background-color: inherit;
 		    color: rgb(182,7,7);
 		    
@@ -252,9 +235,8 @@ var map = L.map('map', {
     const plummanInTheMiddle      = "BRKMarkers/plum_man.svg";
 
 	
-	// Define the layers for the map
-	
-	//https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
+	// Define the layers for the map	
+	//From: https://esri.github.io/esri-leaflet/examples/switching-basemaps.html
 	   
 	   esriapi = <?php  echo getenv(esriapi); ?>  // api for esri maps
 	   
@@ -357,10 +339,8 @@ var map = L.map('map', {
         repeatericon  = new PoiIconClass({iconUrl: 'markers/repeater.png'}),
         govicon       = new PoiIconClass({iconUrl: 'markers/gov.png'}),
         townhallicon  = new PoiIconClass({iconUrl: 'markers/gov.png'}),
-        rfhole        = new PoiIconClass({iconUrl: 'BRKMarkers/hole.svg'}),
-        
+        rfhole        = new PoiIconClass({iconUrl: 'BRKMarkers/hole.svg'}),    
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
-    
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
         greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
         
@@ -389,8 +369,7 @@ var map = L.map('map', {
     map.fitBounds([<?php echo "$fitBounds"?>]);
 
     var bounds = L.latLngBounds([<?php echo "$fitBounds"?>]);
-        console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
-
+        //console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
 
     // find the corners and middle of the stationmarkers
     var middle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
@@ -449,22 +428,26 @@ var map = L.map('map', {
            echo "$objBounds" ;
            echo "$objMiddle" ;
            echo "$objPadit";
-    ?>
+    
 
     // Object markers here
-    <?php echo "$objMarkers"; ?>
+     echo "$objMarkers"; 
     
     // Corner and center flags for the object markers, 5 for each callsign that has objects
-    <?php echo "$cornerMarkers"; ?>
+    echo "$cornerMarkers"; 
 
     // Object Marker List starts here
-    <?php echo "$OBJMarkerList"; ?>
+     echo "$OBJMarkerList"; 
+     
+      // uniqueCallList is needed to so we can count how many color changes we need, always < 8
+     echo "$uniqueCallList";
+        
+    ?>
 
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
        
-    // uniqueCallList is needed to so we can count how many color changes we need, always < 8
-    <?php echo "$uniqueCallList"; ?>  
+     
     
     const newColor = "";
     const colorwheel = ["#00f900","#932092","#ff9200","#00fcff","#98989d","#fefb00","#000000","#ff2600"];
