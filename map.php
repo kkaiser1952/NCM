@@ -429,7 +429,6 @@ var map = L.map('map', {
            echo "$objMiddle" ;
            echo "$objPadit";
     
-
     // Object markers here
      echo "$objMarkers"; 
     
@@ -447,8 +446,7 @@ var map = L.map('map', {
     // Add the OBJMarkerList to the map
     OBJMarkerList.addTo(map);
        
-     
-    
+    // The colorwheel changes the ring color when multiple rings are used
     const newColor = "";
     const colorwheel = ["#00f900","#932092","#ff9200","#00fcff","#98989d","#fefb00","#000000","#ff2600"];
              
@@ -463,7 +461,7 @@ var map = L.map('map', {
         }  // end for loop
     } // end of style 
         
-    // This adds lines between the objmarkers from APRS or W3W 
+    // This connects the objmarkers with a line from APRS or W3W 
     // commented out on 2023-11-19 
     //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
 
@@ -473,7 +471,7 @@ var map = L.map('map', {
     //======================================================================   
     //====================== THERE MAY NOT BE ANY TO REPORT ================
         
-       // was classList now classNames to avoid a JS conflict of names
+    // was classList now classNames to avoid a JS conflict of names
     // The classNames is the list of POI types.
      var classNames = '<?php echo "$classNames CornerL, ObjectL;"; ?>'.split(',');
        console.log('In map.php classNames= '+classNames);
@@ -517,7 +515,7 @@ var map = L.map('map', {
     
     //console.log('ObjectL List:', classMap);
         
-        // Loop through classNames and assign the corresponding object to y
+    // Loop through classNames and assign the corresponding object to y
     for (x of classNames) {
       if (classMap.hasOwnProperty(x)) {
         Object.assign(y, classMap[x]);
@@ -529,15 +527,15 @@ var map = L.map('map', {
     // Here we add the station object with the merged y objects from above
     var overlayMaps = Object.assign({}, y);
 
-    
     // This must stay here to properly display on the map
     // The collapsed: true makes the POI's compress into a 'Markers' icon
     L.control.layers(baseMaps, overlayMaps, {position:'bottomright', collapsed:true}).addTo(map);
     
+    //====================== End Points of Interest ============================
+    
     
    $('.leaflet-control-attribution').hide()
     
-
         function markerFunction(id){
 	        for (var i in stationMarkers){
 	            var markerID = stationMarkers[i].options.title;

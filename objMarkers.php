@@ -41,7 +41,6 @@
         
         //echo "First sql:<br> $sql1 <br><br>";
           
-    
         $allnameBounds = "";
         $allPoints = "";
         $oByersCnt = 0;
@@ -353,16 +352,16 @@ foreach($db_found->query($sql3) as $row) {
            text: 'Click here to add mileage circles', callback: circleKoords}],
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob4'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SE<br>'+$minLat+','+$minLng+'<br>The Objects SE Corner');
-                           
-        var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
-           contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
-           text: 'Click here to add mileage circles', callback: circleKoords}],   
-           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [200,200] }),     
-           title:'ob5'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]CT<br>'+$minLat+','+$minLng+'<br>The Objects Center Marker');
            
         var $row[callsign]ob6 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{
            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
            title:'ob6'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SW<br>'+$minLat+','+$maxLng+'<br>The Objects SW Corner');
+           
+         var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
+           contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
+           text: 'Click here to add object mileage circles', callback: circleKoords}],   
+           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [200,200] }),     
+           title:'ob5'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]CT<br>'+$minLat+','+$minLng+'<br>The Objects Center Marker');
            ";        
           
         $OBJCornerList .= "$row[callsign]ob1, $row[callsign]ob2, $row[callsign]ob3, $row[callsign]ob4, $row[callsign]ob5,";
