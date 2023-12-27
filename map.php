@@ -85,6 +85,8 @@
     
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
     
+    <script src="https://ha8tks.github.io/Leaflet.Maidenhead/src/L.Maidenhead.js"></script>
+    
     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
@@ -180,7 +182,7 @@
 
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
-    
+        
 // This function can be used to connect the object markers together with a line
 // Object markers come from the TimeLog unlike the rest that come from NetLog
 function connectTheDots(data){
@@ -199,6 +201,22 @@ var map = L.map('map', {
 	drawControl: true,
 	zoom: 12
 }); 
+
+L.maidenhead({
+	color : ' #008e00 '
+}).addTo(map);
+
+/*
+// https://leafletjs.com/plugins.html#overlay-data-formats
+ L.maidenhead({ precision: 6, polygonStyle: {
+		color: "black",
+		weight: 1.5,
+		fill: true,
+		fillColor: "transparent",
+		fillOpacity: 0,
+	},
+}).addTo(map);
+*/
 	
 	var stationMarkers = [];
     var fg = new L.featureGroup();
