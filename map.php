@@ -204,7 +204,7 @@ var map = L.map('map', {
 
 //https://github.com/ha8tks/Leaflet.Maidenhead
 var maidenheadLayer = L.maidenhead({
-  color: '#008e00'
+  color: '#ff7d78'
 }).addTo(map);
 /*
 L.maidenhead({
