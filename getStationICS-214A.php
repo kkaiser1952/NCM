@@ -162,7 +162,23 @@ $call = strip_tags($_POST["call"]); // The name of this new event
                   /*  width: 40%; */
                    }
                    
+                .highlight {
+                    background-color: yellow; 
+                }
+                   
             </style>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+    var tdContent = document.getElementById('highlightMe').innerHTML;
+    
+    // Check if the content contains the specified string
+    if (tdContent.includes('LOCΔ:APRS COM')) {
+        // Add the 'highlight' class to the <td> element
+        document.getElementById('highlightMe').classList.add('highlight');
+    }
+});
+            </script>
         </head>
         <body>   
    ';
