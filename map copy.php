@@ -21,7 +21,7 @@
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     
-    $q = 10684; 
+    //$q = 10684; 
 
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
@@ -157,14 +157,22 @@
 		    color: rgb(182,7,7);
 		    
 		}
+		
+		#customToggleMaidenhead {
+    		position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            font-weight: bold;
+            background-color: #ff7d78;
+		}
 	</style>
-	
 	
 </head>
 <body>
     
-     <!-- Add this button to your HTML, possibly inside the body tag -->
-     <button id="toggleMaidenhead">Toggle Maidenhead Grid</button>
+    <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+
     
     <!-- the map div holds the map -->
     <div id="map"></div>
@@ -207,99 +215,21 @@ var map = L.map('map', {
 	zoom: 12
 }); 
 
+
 //https://github.com/ha8tks/Leaflet.Maidenhead
 var maidenheadLayer = L.maidenhead({
   color: '#ff7d78'
 });
 
 // Add a button click event listener to toggle the Maidenhead layer
-document.getElementById('toggleMaidenhead').addEventListener('click', function () {
-  // Toggle the visibility of the Maidenhead grid layer
-  if (map.hasLayer(maidenheadLayer)) {
-    map.removeLayer(maidenheadLayer);
-  } else {
-    maidenheadLayer.addTo(map);
-  }
-}); // End document.getElementByID
-
-// Create a control and add it to the map
-var buttonContainer = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-buttonContainer.appendChild(document.getElementById('toggleMaidenhead'));
-
-L.control.custom = L.Control.extend({
-    options: {
-        position: 'bottomright'
-    },
-
-    onAdd: function () {
-        return buttonContainer;
-    }
-});
-
-var customControl = new L.control.custom();
-
-// Adjust the left position
-buttonContainer.style.left = '200px';
-
-customControl.addTo(map);
-/*
-// Create a control and add it to the map
-var buttonContainer = L.DomUtil.create('div', 'leaflet-bottom leaflet-right');
-buttonContainer.appendChild(document.getElementById('toggleMaidenhead'));
-
-// Create a control and add it to the map
-L.control.custom = L.Control.extend({
-    options: {
-        position: 'bottomright'
-    },
-
-    onAdd: function () {
-        return buttonContainer;
-    }
-});
-
-var customControl = new L.control.custom();
-
-// Adjust the left position
-customControl.getContainer().style.left = '200px';
-
-customControl.addTo(map);
-*/
-//(new L.control.custom()).addTo(map);
-
-/*
-// Create a custom control for toggling Maidenhead Grid
-var ToggleMaidenheadControl = L.Control.extend({
-    onAdd: function (map) {
-        var button = L.DomUtil.create('button');
-        button.innerHTML = 'Toggle Maidenhead Grid';
-        button.id = 'toggleMaidenhead';
-        L.DomEvent.on(button, 'click', function () {
-            toggleMaidenhead(); // Call the function to toggle Maidenhead Grid visibility
+document.getElementById('customToggleMaidenhead').addEventListener('click', function () {
+            // Toggle the visibility of the Maidenhead grid layer
+            if (map.hasLayer(maidenheadLayer)) {
+                map.removeLayer(maidenheadLayer);
+            } else {
+                maidenheadLayer.addTo(map);
+            }
         });
-        return button;
-    },
-
-    onRemove: function (map) {
-        // Nothing to do here
-    }
-});
-
-// Add the custom control to the map
-new ToggleMaidenheadControl({ position: 'bottomright' }).addTo(map);
-
-// Function to toggle Maidenhead Grid visibility
-function toggleMaidenhead() {
-    // Toggle the Maidenhead Grid visibility logic here
-    if (maidenheadLayer) {
-        if (map.hasLayer(maidenheadLayer)) {
-            map.removeLayer(maidenheadLayer);
-        } else {
-            maidenheadLayer.addTo(map);
-        }
-    }
-}
-*/
 	
 	var stationMarkers = [];
     var fg = new L.featureGroup();

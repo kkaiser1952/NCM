@@ -157,11 +157,23 @@
 		    color: rgb(182,7,7);
 		    
 		}
+		
+		/* The toggle grid on/off button */
+		#customToggleMaidenhead {
+    		position: absolute;
+            top: 70px;
+            right: 10px;
+            z-index: 1000;
+            font-weight: bold;
+            background-color: #ff7d78;
+		}
 	</style>
-	
 	
 </head>
 <body>
+    
+    <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+
     
     <!-- the map div holds the map -->
     <div id="map"></div>
@@ -179,7 +191,9 @@
     	<?php echo"$netcall Net #$logrow[netID] $logrow[activity] $logrow[logdate]" ?>
     </div>
     
+     <button id="toggleMaidenhead">Toggle Maidenhead Grid</button>
 
+</body>
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
         
@@ -202,22 +216,21 @@ var map = L.map('map', {
 	zoom: 12
 }); 
 
+
 //https://github.com/ha8tks/Leaflet.Maidenhead
 var maidenheadLayer = L.maidenhead({
   color: '#ff7d78'
-}).addTo(map);
+});
 
-/*
-// https://leafletjs.com/plugins.html#overlay-data-formats
- L.maidenhead({ precision: 6, polygonStyle: {
-		color: "black",
-		weight: 1.5,
-		fill: true,
-		fillColor: "transparent",
-		fillOpacity: 0,
-	},
-}).addTo(map);
-*/
+// Add a button click event listener to toggle the Maidenhead layer
+document.getElementById('customToggleMaidenhead').addEventListener('click', function () {
+            // Toggle the visibility of the Maidenhead grid layer
+            if (map.hasLayer(maidenheadLayer)) {
+                map.removeLayer(maidenheadLayer);
+            } else {
+                maidenheadLayer.addTo(map);
+            }
+        });
 	
 	var stationMarkers = [];
     var fg = new L.featureGroup();
@@ -589,5 +602,5 @@ var maidenheadLayer = L.maidenhead({
 
 </script>   <!-- End of javascript holding the map stuff -->
 
-</body>
+
 </html>
