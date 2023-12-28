@@ -203,9 +203,14 @@ var map = L.map('map', {
 }); 
 
 //https://github.com/ha8tks/Leaflet.Maidenhead
+var maidenheadLayer = L.maidenhead({
+  color: '#008e00'
+}).addTo(map);
+/*
 L.maidenhead({
 	color : ' #008e00 '
 }).addTo(map);
+*/
 
 /*
 // https://leafletjs.com/plugins.html#overlay-data-formats
