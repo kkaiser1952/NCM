@@ -56,6 +56,7 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" >
 	<link rel="shortcut icon" type="image/x-icon" href="favicons/apple-icon.png">
@@ -161,12 +162,40 @@
 		/* The toggle grid on/off button */
 		#customToggleMaidenhead {
     		position: absolute;
-            top: 70px;
+            top: 100px;
             right: 10px;
             z-index: 1000;
             font-weight: bold;
             background-color: #ff7d78;
 		}
+		
+		#Oactivity {
+			text-align: center;
+			color: red;
+			font-weight: bold;
+			font-size: 24pt;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			border: 2px solid green;
+			
+			background: transparent;
+			padding-right: 10px;
+			z-index: 1900;
+		}
+		
+		/* Media query for screens with a maximum width of 600px */
+        @media only screen and (max-width: 600px) {
+        #Oactivity {
+            font-size: 18pt; /* Adjust the font size for smaller screens */
+            padding: 5px; /* Adjust padding for smaller screens */
+        }
+        @media only screen and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2) {
+    /* Your styles for smaller screens */
+}
+
+        
+    }
 	</style>
 	
 </head>
@@ -186,12 +215,10 @@
 	</div>
 
     <!-- The title banner -->
-    <div id="activity" class="activity">
+    <div id="Oactivity" class="Oactivity">
     	<img src="images/NCM.png" alt="NCM" style="width: 35px; padding-left: 10px; padding-top: 5px;">
     	<?php echo"$netcall Net #$logrow[netID] $logrow[activity] $logrow[logdate]" ?>
     </div>
-    
-     <button id="toggleMaidenhead">Toggle Maidenhead Grid</button>
 
 </body>
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->

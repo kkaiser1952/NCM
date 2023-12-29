@@ -85,7 +85,7 @@
                    WHERE netID = $q
                      AND COMMENT LIKE '%LOC&#%'
                    GROUP BY callsign
-                   ORDER BY timestamp asc
+                   ORDER BY timestamp ASC
                 ");
                 
             //echo "Second sqlk:<br> $sql2 <br><br>";
