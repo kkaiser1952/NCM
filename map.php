@@ -173,7 +173,7 @@
 			text-align: center;
 			color: red;
 			font-weight: bold;
-			font-size: 24pt;
+			font-size: 20pt;
 			position: absolute;
 			top: 10px;
 			left: 10px;
