@@ -16,7 +16,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
+   $q = 10684;
       
    $sql1 = ("
     SELECT
@@ -283,7 +283,13 @@ foreach($db_found->query($sql3) as $row) {
                ORDER BY callsign
            ");
            
-    //echo "<br>Fourth sql:<br> $sql <br>";
+    //echo "<br>Fourth sql:<br> $sql4 <br>";
+    
+/*
+minLat      maxLat      minLng      maxLng      callsign
+39.19667    39.20283    -94.5990    -94.6031    WA0TJT
+*/
+
           
     $thecall = "";
 
