@@ -61,6 +61,8 @@
          
      } // end of foreach loop 
      
+     //echo $objMiddle;
+     
      // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
      //echo "oByers: $oByers";
@@ -98,7 +100,9 @@
         $sql3 = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
                     	WHEN comment LIKE '%W3W OBJ::%'  THEN  'W3W'
+                    	WHEN comment LIKE '%W3W COM::%'  THEN  'W3W'
                         WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
+                        WHEN comment LIKE '%APRS COM::%' THEN 'APRS' 
                     END AS 'objType',           
 	              
 	                SUBSTRING(comment, -18, 8) AS lat,
@@ -113,7 +117,7 @@
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
                 AND comment LIKE '%LOC&#%' 
-              ORDER BY callsign, timestamp DESC) s         
+              ORDER BY callsign, timestamp ASC) s         
           ");
           
           // above working well
