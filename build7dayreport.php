@@ -10,6 +10,7 @@
         <title>7 Day NCM Activity Report</title>
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        	
         <script>
           $(document).ready(function() {
               $('tr td:first-child').click(function() {
@@ -24,6 +25,7 @@
           }
         </script>
         <script src="js/NetManager.js"></script>
+        <script src="js/sortTable.js"></script>
 
 <script>
     /*
@@ -77,8 +79,6 @@
     });
 </script>
 
-
-        
         <style>
             table {
                 border-collapse: collapse;
@@ -532,11 +532,12 @@ if (!empty($result)) {
     echo 'No results found.';
 } // overall end of IF after Print the title
 
+
 // Check if there are any rows in the result set
 if (!empty($result)) {
     // Start the table
     echo '<table>';
-
+    echo '<tbody class= "sortable">';
     
     // Create the grand total row over the headers
     echo '<tr class="sum-row">';
@@ -703,7 +704,7 @@ if (!empty($result)) {
                 
 } // End foreach
         // End the table
-        echo '</table>';     
+        echo '</tbody></table>';     
         echo '<br><br>build7dayreport.php';
     } else {
         echo 'No results found.';
