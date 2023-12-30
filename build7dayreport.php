@@ -10,7 +10,6 @@
         <title>7 Day NCM Activity Report</title>
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        	
         <script>
           $(document).ready(function() {
               $('tr td:first-child').click(function() {
@@ -25,7 +24,6 @@
           }
         </script>
         <script src="js/NetManager.js"></script>
-        <script src="js/sortTable.js"></script>
 
 <script>
     /*
@@ -79,6 +77,8 @@
     });
 </script>
 
+
+        
         <style>
             table {
                 border-collapse: collapse;
@@ -532,14 +532,11 @@ if (!empty($result)) {
     echo 'No results found.';
 } // overall end of IF after Print the title
 
-
 // Check if there are any rows in the result set
 if (!empty($result)) {
     // Start the table
-    echo '<thead>';
-    echo '<table id="myTable2">';
-    echo '</thead>';
-    echo '<tbody class= " ">';
+    echo '<table>';
+
     
     // Create the grand total row over the headers
     echo '<tr class="sum-row">';
@@ -706,7 +703,7 @@ if (!empty($result)) {
                 
 } // End foreach
         // End the table
-        echo '</tbody></table>';     
+        echo '</table>';     
         echo '<br><br>build7dayreport.php';
     } else {
         echo 'No results found.';
@@ -714,93 +711,48 @@ if (!empty($result)) {
 ?>
 
 <script>
-    
-/* https://www.w3schools.com/howto/howto_js_sort_table.asp */
-
+/* The following function put UTC after logdate and logclosedtime column names in the title */
 $(document).ready(function() {
-    var headers = [
-        "Net ID",
-        "Log Date",
-        "Net Call",
-        "Stations",
-        "Frequency",
-        "Closed Time",
-        "1st Logins",
-        "TOD - H:M:S",
-        "Open",
-        "Close"
-    ];
+    // Adding a word to one of the header <th> values
+    // Find the second <th> element using :eq(1) selector (index starts from 0)
+    var firstHeader     = $("th:eq(0)"); // netID
+    var secondHeader    = $("th:eq(1)"); // logdate
+    var thirdHeader     = $("th:eq(2)"); // netcall
+    var fourthHeader    = $("th:eq(3)"); // station count
+    var fiftheHeader    = $("th:eq(4)"); // frequency
+    var sixthhHeader    = $("th:eq(5)"); // logclosedtime
+    var seventhHeader   = $("th:eq(6)"); // first login count
+    var eighthHeader    = $("th:eq(7)"); // Time on duty
+    //var nineththHeader    = $("th:eq(8)"); // Open (callsign)
+    //var tenththHeader    = $("th:eq(9)"); // Close (callsign)
 
-    // Loop through each th element and set the text and onclick attribute
-    $("th").each(function(index) {
-        $(this).text(headers[index]);
-        $(this).data("sort-index", index);
-        console.log('index= '+index);
-    });
+    // Append the word using .append() method
+    //secondHeader.append(" UTC");
+    //fourthHeader.append(" UTC");
+    //sixthHeader.append(" H:M:S");
+    
+    firstHeader.text("Net ID");
+    secondHeader.text("Log Date");
+    thirdHeader.text("Net Call");
+    fourthHeader.text("Stations");
+    fiftheHeader.text("Frequency");
+    sixthhHeader.text("Closed Time");
+    seventhHeader.text("1st Logins");
+    eighthHeader.text("TOD - H:M:S");
+    //ninethHeader.text("Open");
+    //tenthHeader.text("Close");
 
-    // Event delegation for th elements
-    $("table").on("click", "th", function() {
-        var columnIndex = $(this).data("sort-index");
-        sortTable(columnIndex);
-    });
+        $('tr').each(function () {
+            var $row = $(this);
+            var backgroundColor = $row.css('background-color');
+            var netIDCell = $row.find('td:first-child');
 
+            if (backgroundColor !== 'rgb(255, 255, 255)' && backgroundColor !== 'rgb(240, 240, 240)' && netIDCell.find('a').length > 0) {
+                // Check if the row's background color is not white or off-white and the netID cell contains a link
+                netIDCell.find('a').css('color', 'white');
+            }
+        });
 });
-
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("myTable2");
-  switching = true;
-  // Set the sorting direction to ascending:
-  dir = "asc"; 
-  /* Make a loop that will continue until
-  no switching has been done: */
-  while (switching) {
-    // Start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /* Loop through all table rows (except the
-    first, which contains table headers): */
-    for (i = 1; i < (rows.length - 1); i++) {
-      // Start by saying there should be no switching:
-      shouldSwitch = false;
-      /* Get the two elements you want to compare,
-      one from current row and one from the next: */
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /* Check if the two rows should switch place,
-      based on the direction, asc or desc: */
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /* If a switch has been marked, make the switch
-      and mark that a switch has been done: */
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      // Each time a switch is done, increase this count by 1:
-      switchcount ++; 
-    } else {
-      /* If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again. */
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-}
-
 </script>
 
 </body>
