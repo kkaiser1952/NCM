@@ -712,7 +712,7 @@ if (!empty($result)) {
 ?>
 
 <script>
-/* The following function put UTC after logdate and logclosedtime column names in the title */
+
 $(document).ready(function() {
     var headers = [
         "Net ID",
@@ -722,7 +722,9 @@ $(document).ready(function() {
         "Frequency",
         "Closed Time",
         "1st Logins",
-        "TOD - H:M:S"
+        "TOD - H:M:S",
+        "Open",
+        "Close"
     ];
 
     // Loop through each th element and set the text and onclick attribute
@@ -743,11 +745,13 @@ $(document).ready(function() {
 });
 
 function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    var table, rows, switching, x, y, shouldSwitch, dir, switchcount = 0;
     
-    console.log('i= '+i+' x= '+x+' y= '+y);
+    console.log('n= ' + n + ' x= ' + x + ' y= ' + y);
     
     table = document.getElementById("myTable2");
+    
+    console.log('table= '+table);
 
     if (!table) {
         console.error("Table not found!");
@@ -761,7 +765,7 @@ function sortTable(n) {
         switching = false;
         rows = table.rows;
 
-        for (i = 1; i < (rows.length - 1); i++) {
+        for (var i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("TD")[n];
             y = rows[i + 1].getElementsByTagName("TD")[n];
@@ -792,6 +796,7 @@ function sortTable(n) {
         }
     }
 }
+
 
 </script>
 
