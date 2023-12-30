@@ -536,7 +536,7 @@ if (!empty($result)) {
 // Check if there are any rows in the result set
 if (!empty($result)) {
     // Start the table
-    echo '<table>';
+    echo '<table id="myTable2">';
     echo '<tbody class= "sortable">';
     
     // Create the grand total row over the headers
@@ -714,42 +714,85 @@ if (!empty($result)) {
 <script>
 /* The following function put UTC after logdate and logclosedtime column names in the title */
 $(document).ready(function() {
-    // Adding a word to one of the header <th> values
-    // Find the second <th> element using :eq(1) selector (index starts from 0)
-    var firstHeader     = $("th:eq(0)"); // netID
-    var secondHeader    = $("th:eq(1)"); // logdate
-    var thirdHeader     = $("th:eq(2)"); // netcall
-    var fourthHeader    = $("th:eq(3)"); // station count
-    var fiftheHeader    = $("th:eq(4)"); // frequency
-    var sixthhHeader    = $("th:eq(5)"); // logclosedtime
-    var seventhHeader   = $("th:eq(6)"); // first login count
-    var eighthHeader    = $("th:eq(7)");
+    var headers = [
+        "Net ID",
+        "Log Date",
+        "Net Call",
+        "Stations",
+        "Frequency",
+        "Closed Time",
+        "1st Logins",
+        "TOD - H:M:S"
+    ];
 
-    // Append the word using .append() method
-    //secondHeader.append(" UTC");
-    //fourthHeader.append(" UTC");
-    //sixthHeader.append(" H:M:S");
-    
-    firstHeader.text("Net ID");
-    secondHeader.text("Log Date");
-    thirdHeader.text("Net Call");
-    fourthHeader.text("Stations");
-    fiftheHeader.text("Frequency");
-    sixthhHeader.text("Closed Time");
-    seventhHeader.text("1st Logins");
-    eighthHeader.text("TOD - H:M:S");
+    // Loop through each th element and set the text and onclick attribute
+    $("th").each(function(index) {
+        $(this).text(headers[index]);
+        $(this).attr("onclick", "sortTable(" + index + ")");
+    });
 
-        $('tr').each(function () {
-            var $row = $(this);
-            var backgroundColor = $row.css('background-color');
-            var netIDCell = $row.find('td:first-child');
+    $('tr').each(function () {
+        var $row = $(this);
+        var backgroundColor = $row.css('background-color');
+        var netIDCell = $row.find('td:first-child');
 
-            if (backgroundColor !== 'rgb(255, 255, 255)' && backgroundColor !== 'rgb(240, 240, 240)' && netIDCell.find('a').length > 0) {
-                // Check if the row's background color is not white or off-white and the netID cell contains a link
-                netIDCell.find('a').css('color', 'white');
-            }
-        });
+        if (backgroundColor !== 'rgb(255, 255, 255)' && backgroundColor !== 'rgb(240, 240, 240)' && netIDCell.find('a').length > 0) {
+            netIDCell.find('a').css('color', 'white');
+        }
+    });
 });
+
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    
+    console.log('i= '+i+' x= '+x+' y= '+y);
+    
+    table = document.getElementById("myTable2");
+
+    if (!table) {
+        console.error("Table not found!");
+        return;
+    }
+
+    switching = true;
+    dir = "asc";
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+
+            if (!x || !y) {
+                console.error("Invalid column index or row data");
+                return;
+            }
+
+            if (dir == "asc" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            } else if (dir == "desc" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount === 0 && dir === "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
 </script>
 
 </body>
