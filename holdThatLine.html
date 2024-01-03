@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Table Cell</title>
+  <style>
+    .editable {
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+  </style>
+  <script>
+    var isChecked = false;
+
+    function editTableCell(tdId) {
+      var checkbox = document.getElementById('myCheckbox');
+      var td = document.getElementById(tdId);
+
+      if (checkbox.checked) {
+        isChecked = true;
+        // If checkbox is checked, make the <td> content-editable
+        td.contentEditable = true;
+        td.focus();
+      } else if (isChecked) {
+        // If checkbox was checked before, append new lines without prompting
+        var newContent = prompt('Enter new content:');
+
+        if (newContent !== null) {
+          var newLine = document.createElement('div');
+          newLine.textContent = newContent;
+          td.appendChild(newLine);
+        }
+      } else {
+        // If checkbox is not checked and was not checked before, empty the content
+        td.innerHTML = '';
+      }
+    }
+
+    function blurTableCell(tdId) {
+      var td = document.getElementById(tdId);
+      td.contentEditable = false;
+      isChecked = false;
+    }
+  </script>
+</head>
+<body>
+
+<table border="1">
+  <tr>
+    <td class="editable editC c14" id="comments:153085" oncontextmenu="stationTimeLineList('KD0NBH:10684');return false;" onclick="editTableCell('comments:153085');" onblur="blurTableCell('comments:153085');" title="Comments, Click to edit...">
+      <input type="checkbox" id="myCheckbox" onclick="event.stopPropagation();"> Hold this line
+    </td>
+  </tr>
+  <!-- Add more rows as needed -->
+</table>
+
+</body>
+</html>
