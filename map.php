@@ -21,7 +21,7 @@
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     
-    //$q = 10684; 
+    //$q = 10748; 
 
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
