@@ -1792,8 +1792,13 @@ The information is propagated to the other location fields of NCM. They are inte
 <p>In the 'Reports' dropdown in the upper right corner you can select 'Map This Net'. When selected a map will appear with markers for each station logged into the net. In the lower right corner is a list of Points of Interest that will optionally display various public location that may be of interest to your net. The POIs must first be added to the system, to do this requires a CSV file which will be detailed below.
 </p><p>In addition to the POI's it is also possible to use any marker on the map as a center point to a series of expanding circles with bearing markers for distance and direction needs. To activate this right-click on any marker, two dialog boxes will open asking for the distance between circles and then how many. I suggest you accept the defaults, and adjust only if you don't like the results. See below for an example.
 </p>
-     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px;"  src="screenshots/map.png" alt="map" />
-     
+<p>
+     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px; width: 75%;" src="screenshots/map.png" alt="map" />
+</p>
+<p>
+    <br><br>
+<img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px; width: 75%;" src="screenshots/map2.png" alt="map" />
+</p>  
      
 <div class="flexcontainer">
 	<div style="">
@@ -1810,6 +1815,7 @@ The information is propagated to the other location fields of NCM. They are inte
             	<li>Clicking anywhere within the circles will hide the circles but leave in place the bearing and distance markers.</li>
             	<li>Simplex capabilities example on YouTube: <a href="https://www.youtube.com/watch?v=nsA9Hv6K_00" target="_blank">https://www.youtube.com/watch?v=nsA9Hv6K_00</a></li>
             	<li>A RF Hole is defined as a place where you can't hear your repeater or the coverage is poor, noisy, or in & out. To accomidate these transient location an entry form has been created <a href="https://net-control.us/AddRF-HolePOI.php" target="_blank">https://net-control.us/AddRF-HolePOI.php</a>. These are displayable from the Point of Interest list on the map. All RF Hole POI's will expire 120 days after there creation date.</li>
+            	<li>The second map illustrates how using APRS Call or What3Words will create a map similar to a bread crumb map. This would be appropriate for use during neighborhood assesments, search & rescue and other situations where one or more hams will be required to show multiple locations.<br>When this is in use each ham will have there own bread crumb map on the primary map.</li>
             </ol>
     	 <!-- End Features Include paragraph -->
 	</div> <!-- End  -->	
