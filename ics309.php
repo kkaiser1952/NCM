@@ -110,7 +110,7 @@
 		<table class = "table1">
 			<thead id="thead" style="text-align: center;">			
 				<tr> 
-					<th class="th1" colspan="1">	Time<br>(Local)</th>
+					<th class="th1" colspan="1">	Time<br>(UTC)</th>
 					<th class="th2" colspan="2">FROM:<br>Call Sign/ID | Msg #</th>
 					<th class="th3" colspan="2">TO:<br>Call Sign/ID | Msg #</th>
 					<th class="th4" colspan="1">Message</th>
