@@ -449,20 +449,21 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     // display within these markers with a little wiggle room
     
     // These are the corner markers of the extended bounds of the stations
+    // marker size was [220,220] 2024-01-12
     var mk1 = new L.marker(new L.latLng( sw ),{
-        icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+        icon: L.icon({iconUrl: blackmarkername , iconSize: [50,50] }),
         title:'mk1'}).addTo(map).bindPopup('MK1<br>The SW Corner<br>'+sw).openPopup();
     
     var mk2 = new L.marker(new L.latLng( nw ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [50,50] }),
        title:'mk2'}).addTo(map).bindPopup('MK2<br>The NW Corner<br>'+nw).openPopup();
     
     var mk3 = new L.marker(new L.latLng( ne ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [50,50] }),
        title:'mk3'}).addTo(map).bindPopup('MK3<br>The NE Corner<br>'+ne).openPopup();
     
     var mk4 = new L.marker(new L.latLng( se ),{
-       icon: L.icon({iconUrl: blackmarkername , iconSize: [220,220] }),
+       icon: L.icon({iconUrl: blackmarkername , iconSize: [50,50] }),
        title:'mk4'}).addTo(map).bindPopup('MK4<br>The SE Corner<br>'+se).openPopup();
 	
     // Add the temp center marker to the map here in the javascript code allows it to use the current map view,
@@ -470,7 +471,7 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     var mk5 = new L.marker(new L.latLng( middle ),{
         contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
         text: 'Click here to add mileage circles', callback: circleKoords}],   
-        icon: L.icon({iconUrl: blackmanInTheMiddle , iconSize: [220,220] }),     
+        icon: L.icon({iconUrl: blackmanInTheMiddle , iconSize: [225,225] }),     
         title:'mk5'}).addTo(map).bindPopup('MK5<br>The Center Marker<br>'+middle).openPopup();
     
     // Definition of the 5 markers above, corners plus middle    

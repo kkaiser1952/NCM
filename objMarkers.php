@@ -371,7 +371,7 @@ minLat      maxLat      minLng      maxLng      callsign
          var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add object mileage circles', callback: circleKoords}],   
-           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [50,50] }),     
+           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [225,225] }),     
            title:'ob5'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]CT<br>'+$minLat+','+$minLng+'<br>The Objects Center Marker');
            ";        
           
