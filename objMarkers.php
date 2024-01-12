@@ -335,6 +335,7 @@ minLat      maxLat      minLng      maxLng      callsign
             // Add 1 to the counter
             $cmn++;
             	
+            	// The colormarkername iconSize was [200,200] 2024-01-12
     		$cornerMarkers .=
         "var $row[callsign]ob1 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{   
     		contextmenu: true, 
@@ -342,35 +343,35 @@ minLat      maxLat      minLng      maxLng      callsign
     		contextmenuItems: [{ 
             text: 'Click here to add mileage circles', 
             callback: circleKoords}], 
-            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
+            icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [50,50] }),
             title:'ob1'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SW<br>'+$minLat+','+$maxLng+'<br>The Objects SW Corner');
                         
         var $row[callsign]ob2 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthWest() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], 
-           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
+           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [50,50] }),
            title:'ob2'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]NW<br>'+$maxLat+','+$maxLng+'<br>The Objects NW Corner');
                            
         var $row[callsign]ob3 = new L.marker(new L.latLng( $row[callsign]PAD.getNorthEast() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}], 
-           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
+           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [50,50] }),
            title:'ob3'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]NE<br>'+$maxLat+','+$minLng+'<br>The Objects NE Corner');
                            
         var $row[callsign]ob4 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthEast() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add mileage circles', callback: circleKoords}],
-           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
+           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [50,50] }),
            title:'ob4'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SE<br>'+$minLat+','+$minLng+'<br>The Objects SE Corner');
            
         var $row[callsign]ob6 = new L.marker(new L.latLng( $row[callsign]PAD.getSouthWest() ),{
-           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [200,200] }),
+           icon: L.icon({iconUrl: $colormarkername[$cmn] , iconSize: [50,50] }),
            title:'ob6'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]SW<br>'+$minLat+','+$maxLng+'<br>The Objects SW Corner');
            
          var $row[callsign]ob5 = new L.marker(new L.latLng( $row[callsign]PAD.getCenter() ),{
            contextmenu: true, contextmenuWidth: 140, contextmenuItems: [{ 
            text: 'Click here to add object mileage circles', callback: circleKoords}],   
-           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [200,200] }),     
+           icon: L.icon({iconUrl: $maninthemiddlecolor[$cmn] , iconSize: [50,50] }),     
            title:'ob5'}).addTo(map).bindPopup('OBJ:<br> $row[callsign]CT<br>'+$minLat+','+$minLng+'<br>The Objects Center Marker');
            ";        
           
