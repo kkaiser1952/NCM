@@ -487,6 +487,14 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     // ======= These are Objects created by APRS or W3W from the TimeLog table =========
     //====================== THERE MAY NOT BE ANY TO REPORT ============================
     
+    // find the corners and middle of the stationmarkers
+    var objMiddle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
+    var padit  = bounds.pad(.075);   // add a little bit to the corner bounding box
+    var objsw = padit.getSouthWest();   // get the SouthWest most point
+    var objnw = padit.getNorthWest();
+    var objne = padit.getNorthEast();
+    var objse = padit.getSouthEast();
+    
     <?php   
            echo "$objBounds" ;
            echo "$objMiddle" ;
