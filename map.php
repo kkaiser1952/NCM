@@ -159,25 +159,15 @@
 		    
 		}
 		
-		/* extraButtons covers both customTaggleMaidenhead and toggleObjectTrack */
-		#extraButtons {
+		/* The toggle grid on/off button */
+		#customToggleMaidenhead {
     		position: absolute;
             top: 100px;
             right: 10px;
             z-index: 1000;
             font-weight: bold;
-		}
-		
-		/* The toggle grid on/off button */
-		#customToggleMaidenhead {	
             background-color: #ff7d78;
 		}
-		
-		#toggleObjectTrack {
-    		background-color: #ff7d78;
-		}
-		
-		/* end extraButtons Influence */
 		
 		#Oactivity {
 			text-align: center;
@@ -210,14 +200,10 @@
 	
 </head>
 <body>
-    <div id="extraButtons">
+    
     <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
-    <br>
-    <!--
-    <button id="toggleObjectTrack" onclick="toggleObjectTrack()">Toggle Object Track</button>
-   -->
-    </div>
 
+    
     <!-- the map div holds the map -->
     <div id="map"></div>
     
@@ -237,6 +223,20 @@
 </body>
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
+        
+/* Moved to the bottom 2024-01-19
+// This function can be used to connect the object markers together with a line
+// Object markers come from the TimeLog unlike the rest that come from NetLog
+function connectTheDots(data){
+    var c = [];
+    for(i in data._layers) {
+        var x = data._layers[i]._latlng.lat;
+        var y = data._layers[i]._latlng.lng;
+        c.push([x, y]);
+    }
+    return c;
+} 
+*/
 
 // Define the beginning map
 var map = L.map('map', {
@@ -533,10 +533,15 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         }  // end for loop
     } // end of style 
         
+    //console.log('@530 OBJMarkerList= '+JSON.stringify(OBJMarkerList));    
+    //console.log('@230 in connectTheDots function '+JSON.stringify(data));
     // Add connecting lines between the object markers           
-    var objectKoords = connectTheDots(OBJMarkerList);  
-        console.log('@53 objectKoords: ', objectKoords);
+          var objectKoords = connectTheDots(OBJMarkerList);  
+                console.log('@539 objectKoords= '+objectKoords);
+/* the OBJMarkerList
 
+    */
+             objectLine = L.polyline(objectKoords,{color: colorwheel[1], weight: 4}).addTo(map);
 
     
     //====================================================================== 
@@ -650,25 +655,6 @@ function connectTheDots(data){
     return c;
 } 
 
-// Button Function to toggle the visibility of the polyline
-/*
-var objectLine;
-function toggleObjectTrack() {
-    if (objectKoords.length > 0) {
-        objectLine.removeFrom(map); // Remove the current polyline
-
-        // Toggle the visibility by checking if it's on the map
-        if (map.hasLayer(objectLine)) {
-            map.removeLayer(objectLine);
-        } else {
-            objectLine.addTo(map);
-        }
-    }
-}
-
-// Disable the button initially if OBJMarkerList is empty
-document.getElementById('toggleObjectTrack').disabled = OBJMarkerList.getLayers().length === 0;
-*/
 
 </script>   <!-- End of javascript holding the map stuff -->
 
