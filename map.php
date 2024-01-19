@@ -159,14 +159,22 @@
 		    
 		}
 		
-		/* The toggle grid on/off button */
-		#customToggleMaidenhead {
+		#extraButtons {
     		position: absolute;
             top: 100px;
             right: 10px;
             z-index: 1000;
-            font-weight: bold;
-            background-color: #ff7d78;
+    		font-weight: bold;
+            
+		}
+		
+		#toggleObjectLine {
+    		background-color: #ff7d78;
+		}
+		
+		/* The toggle grid on/off button */
+		#customToggleMaidenhead {
+    		background-color: #ff7d78;
 		}
 		
 		#Oactivity {
@@ -201,7 +209,11 @@
 </head>
 <body>
     
-    <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+    <div id="extraButtons">
+        <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+        <br>
+        <button id="toggleObjectLine">Toggle Object Line</button>
+    </div>
 
     
     <!-- the map div holds the map -->
