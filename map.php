@@ -227,6 +227,7 @@
 // This function can be used to connect the object markers together with a line
 // Object markers come from the TimeLog unlike the rest that come from NetLog
 function connectTheDots(data){
+    console.log('@230 in connectTheDots function '+data);
     var c = [];
     for(i in data._layers) {
         var x = data._layers[i]._latlng.lat;
@@ -532,9 +533,14 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         }  // end for loop
     } // end of style 
         
-    // This connects the objmarkers with a line from APRS or W3W 
-    // commented out on 2023-11-19 
-    //var polyline = new L.Polyline([ <?php echo "$allPoints" ?> ],{style: style}).addTo(map);
+    console.log('@530 OBJMarkerList= '+OBJMarkerList);    
+    // Add connecting lines between the object markers           
+          var objectKoords = connectTheDots(OBJMarkerList);  
+                console.log('@539 objectKoords= '+objectKoords);
+/* the OBJMarkerList
+
+    */
+             objectLine = L.polyline(objectKoords,{color: colorwheel[u], weight: 4}).addTo(map);
 
     
     //====================================================================== 
