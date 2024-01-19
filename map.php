@@ -159,15 +159,25 @@
 		    
 		}
 		
-		/* The toggle grid on/off button */
-		#customToggleMaidenhead {
+		/* extraButtons covers both customTaggleMaidenhead and toggleObjectTrack */
+		#extraButtons {
     		position: absolute;
             top: 100px;
             right: 10px;
             z-index: 1000;
             font-weight: bold;
+		}
+		
+		/* The toggle grid on/off button */
+		#customToggleMaidenhead {	
             background-color: #ff7d78;
 		}
+		
+		#toggleObjectTrack {
+    		background-color: #ff7d78;
+		}
+		
+		/* end extraButtons Influence */
 		
 		#Oactivity {
 			text-align: center;
@@ -200,9 +210,12 @@
 	
 </head>
 <body>
-    <div>
+    <div id="extraButtons">
     <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+    <br>
+    <!--
     <button id="toggleObjectTrack" onclick="toggleObjectTrack()">Toggle Object Track</button>
+   -->
     </div>
 
     <!-- the map div holds the map -->
@@ -522,7 +535,8 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         
     // Add connecting lines between the object markers           
     var objectKoords = connectTheDots(OBJMarkerList);  
-        //console.log('@539 objectKoords= '+objectKoords);
+        console.log('@53 objectKoords: ', objectKoords);
+
 
     
     //====================================================================== 
@@ -636,7 +650,9 @@ function connectTheDots(data){
     return c;
 } 
 
-// Function to toggle the visibility of the polyline
+// Button Function to toggle the visibility of the polyline
+/*
+var objectLine;
 function toggleObjectTrack() {
     if (objectKoords.length > 0) {
         objectLine.removeFrom(map); // Remove the current polyline
@@ -652,7 +668,7 @@ function toggleObjectTrack() {
 
 // Disable the button initially if OBJMarkerList is empty
 document.getElementById('toggleObjectTrack').disabled = OBJMarkerList.getLayers().length === 0;
-
+*/
 
 </script>   <!-- End of javascript holding the map stuff -->
 
