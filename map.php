@@ -200,10 +200,11 @@
 	
 </head>
 <body>
-    
+    <div>
     <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
+    <button id="toggleObjectTrack" onclick="toggleObjectTrack()">Toggle Object Track</button>
+    </div>
 
-    
     <!-- the map div holds the map -->
     <div id="map"></div>
     
@@ -223,21 +224,7 @@
 </body>
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
-        
-// This function can be used to connect the object markers together with a line
-// Object markers come from the TimeLog unlike the rest that come from NetLog
-function connectTheDots(data){
-    console.log('@230 in connectTheDots function '+data);
-    var c = [];
-    for(i in data._layers) {
-        var x = data._layers[i]._latlng.lat;
-        var y = data._layers[i]._latlng.lng;
-        c.push([x, y]);
-    }
-    return c;
-} 
 
-    
 // Define the beginning map
 var map = L.map('map', {
 	drawControl: true,
@@ -533,14 +520,9 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         }  // end for loop
     } // end of style 
         
-    console.log('@530 OBJMarkerList= '+OBJMarkerList);    
     // Add connecting lines between the object markers           
-          var objectKoords = connectTheDots(OBJMarkerList);  
-                console.log('@539 objectKoords= '+objectKoords);
-/* the OBJMarkerList
-
-    */
-             objectLine = L.polyline(objectKoords,{color: colorwheel[u], weight: 4}).addTo(map);
+    var objectKoords = connectTheDots(OBJMarkerList);  
+        //console.log('@539 objectKoords= '+objectKoords);
 
     
     //====================================================================== 
@@ -641,6 +623,36 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
             console.log(e);
             lastLayer = e.relatedTarget; 
         });
+        
+    // This function can be used to connect the object markers together with a line
+// Object markers come from the TimeLog unlike the rest that come from NetLog
+function connectTheDots(data){
+    var c = [];
+    for(i in data._layers) {
+        var x = data._layers[i]._latlng.lat;
+        var y = data._layers[i]._latlng.lng;
+        c.push([x, y]);
+    }
+    return c;
+} 
+
+// Function to toggle the visibility of the polyline
+function toggleObjectTrack() {
+    if (objectKoords.length > 0) {
+        objectLine.removeFrom(map); // Remove the current polyline
+
+        // Toggle the visibility by checking if it's on the map
+        if (map.hasLayer(objectLine)) {
+            map.removeLayer(objectLine);
+        } else {
+            objectLine.addTo(map);
+        }
+    }
+}
+
+// Disable the button initially if OBJMarkerList is empty
+document.getElementById('toggleObjectTrack').disabled = OBJMarkerList.getLayers().length === 0;
+
 
 </script>   <!-- End of javascript holding the map stuff -->
 

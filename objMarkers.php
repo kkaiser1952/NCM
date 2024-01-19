@@ -16,7 +16,7 @@ error_reporting (E_ALL ^ E_NOTICE);
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10748;
+   //$q = 10684;
       
    $sql1 = ("
     SELECT
@@ -388,7 +388,7 @@ minLat      maxLat      minLng      maxLng      callsign
     
     //echo "KornerList: $KornerList";
     
-    //echo "objMarkers: "$objMarkers";
+       //echo "objMarkers: "$objMarkers";
       
     $allPoints = rtrim($allPoints,",");
        //echo "allPoints:<br> $allPoints";
