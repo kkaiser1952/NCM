@@ -212,7 +212,7 @@
     <div id="extraButtons">
         <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
         <br>
-        <button id="toggleObjectLine">Toggle Object Line</button>
+    <!--    <button id="toggleObjectLine">Toggle Object Line</button> -->
     </div>
 
     
