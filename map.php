@@ -201,22 +201,19 @@
         }
         @media only screen and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2) {
     /* Your styles for smaller screens */
-}
-
-        
-    }
+        }}  /* End @media */
 	</style>
 	
 </head>
 <body>
     
+    <!-- Buttons go here -->
     <div id="extraButtons">
         <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
         <br>
         <button id="toggleObjectLine">Toggle Object Line</button>
     </div>
 
-    
     <!-- the map div holds the map -->
     <div id="map"></div>
     
