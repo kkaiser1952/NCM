@@ -212,7 +212,7 @@
     <div id="extraButtons">
         <button id="customToggleMaidenhead">Toggle Maidenhead Grid</button>
         <br>
-    <!--    <button id="toggleObjectLine">Toggle Object Line</button> -->
+        <button id="toggleObjectLine">Toggle Object Line</button>
     </div>
 
     
@@ -236,18 +236,27 @@
 <!-- Everything is inside a javascript, the script closing is near the end of the page -->
 <script> 
         
-/* Moved to the bottom 2024-01-19
-// This function can be used to connect the object markers together with a line
-// Object markers come from the TimeLog unlike the rest that come from NetLog
-function connectTheDots(data){
-    var c = [];
-    for(i in data._layers) {
-        var x = data._layers[i]._latlng.lat;
-        var y = data._layers[i]._latlng.lng;
-        c.push([x, y]);
+// Button Function to toggle the visibility of the polyline
+var objectLine;
+
+function toggleObjectLine() {
+    if (objectKoords.length > 0) {
+        if (objectLine) {
+            // Remove the current polyline if it exists
+            objectLine.removeFrom(map);
+            objectLine = null;
+        } else {
+            // Create and add the polyline to the map
+            objectLine = L.polyline(objectKoords, { color: colorwheel[1], weight: 4 }).addTo(map);
+        }
     }
-    return c;
-} 
+}
+/*
+// Disable the button initially if OBJMarkerList is empty
+document.getElementById('toggleObjectLine').disabled = OBJMarkerList.getLayers().length === 0;
+
+// Handle button click event
+document.getElementById('toggleObjectLine').addEventListener('click', toggleObjectTrack);
 */
 
 // Define the beginning map
