@@ -170,6 +170,7 @@
 		
 		#toggleObjectLine {
     		background-color: #ff7d78;
+    		display: none;
 		}
 		
 		/* The toggle grid on/off button */
@@ -251,13 +252,48 @@ function toggleObjectLine() {
         }
     }
 }
-/*
-// Disable the button initially if OBJMarkerList is empty
-document.getElementById('toggleObjectLine').disabled = OBJMarkerList.getLayers().length === 0;
 
-// Handle button click event
-document.getElementById('toggleObjectLine').addEventListener('click', toggleObjectTrack);
+// Begin handling of the toggleObjectLine stuff
+// Example latitude and longitude values
+var lat = 39.202170; 
+var lng = -94.601830; 
+
+// Initialize OBJMarkerList as a Leaflet layer group
+var OBJMarkerList = L.layerGroup();
+//console.log('@262 OBJMarkerList '+JSON.stringify(OBJMarkerList));
+
+// Add layers to OBJMarkerList (example)
+var marker = L.marker([lat, lng]).addTo(OBJMarkerList);
+
+// Function to update button state
+function updateButtonState() {
+    var button = document.getElementById('toggleObjectLine');
+    button.disabled = OBJMarkerList.getLayers().length === 0;
+    button.style.display = OBJMarkerList.getLayers().length === 0 ? 'none' : 'block';
+}
+
+// Update button state initially
+updateButtonState();
+
+// Now you can use the code you provided
+document.getElementById('toggleObjectLine').addEventListener('click', toggleObjectLine);
+
+/*
+// Example function to add a marker
+function addMarker() {
+    var newMarker = L.marker([lat, lng]).addTo(OBJMarkerList);
+    updateButtonState(); // Update button state after adding a marker
+}
+
+// Example function to remove a marker
+function removeMarker() {
+    OBJMarkerList.clearLayers();
+    updateButtonState(); // Update button state after removing all markers
+}
 */
+
+// End handling of the toggleObjectLine stuff
+/////////////////////////////////////////////
 
 // Define the beginning map
 var map = L.map('map', {
