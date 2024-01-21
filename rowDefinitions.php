@@ -245,9 +245,8 @@ echo ("
             id=\"aprs_call:$row[recordID]\" 
             style=\"text-transform:uppercase\"
             oncontextmenu=\"getAPRSLocations('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID]');return false; \"
-            onClick=\"empty('aprs_call:$row[recordID]');
-            \">
-            <div class='$class'> $row[aprs_call]	</div> 
+            onClick=\"empty('aprs_call:$row[recordID]');\">
+            <div class='$class'> $row[aprs_call] </div> 
         </td>
         
         <td $brbCols 

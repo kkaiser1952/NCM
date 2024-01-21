@@ -32,27 +32,29 @@ function convertW3WtoCoordinates($what3words) {
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$W3W_entered = $_GET["W3W_entered"];      // the three words entered into the field
-    $recordID   = $_GET["recordID"]; 
-    $CurrentLat = $_GET["CurrentLat"];        // the current latitude, usually home
-    $CurrentLng = $_GET["CurrentLng"];        // the current longitude, usually home
+	$W3W_entered = $_GET["W3W_entered"];      
+	$recordID   = $_GET["recordID"]; 
+    $CurrentLat = $_GET["CurrentLat"];       
+    $CurrentLng = $_GET["CurrentLng"];        
     $cs1        = $_GET["cs1"];               // callsign of row
     $nid        = $_GET["nid"];               // netID
     $objName    = $_GET["objName"];           // like car, truck, fallen tree
     
-    echo ("objName at top: $objName");
+    //echo ("objName at top: $objName");
     
-    echo "<br><u>W3W entered: $W3W_entered</u><br><br>";
+    //echo "<br><u>W3W entered: $W3W_entered</u><br><br>";
      
     include('config2.php');
     
     //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
     list($latitude, $longitude) = convertW3WtoCoordinates($W3W_entered);
-    echo "W3W Latitude: " . $latitude . "<br>";
-    echo "W3W Longitude: " . $longitude . "<br>";
+    
+    // Everything below here matches the locations_APRS.php
+    //echo "W3W Latitude: " . $latitude . "<br>";
+    //echo "W3W Longitude: " . $longitude . "<br>";
 
+    include('config2.php');
 
-/*
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 
     $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
@@ -75,7 +77,6 @@ function convertW3WtoCoordinates($what3words) {
     $aprs_comment    = $data['entries'][0]['comment'];
         //echo "aprs comment: {$aprs_comment};
         
-*/
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -107,20 +108,20 @@ function convertW3WtoCoordinates($what3words) {
     //echo "<br>Grid Square: {$grid}<br>";
     
     // Now lets add the what3words words from the W3W geocoder
-    //$w3w_api_key = $config['geocoder']['api_key'];
+    $w3w_api_key = $config['geocoder']['api_key'];
     
     // use What3words\Geocoder\Geocoder;
-    //require_once('Geocoder.php');
-    //$latx = (float) $data['entries'][0]['lat'];
+    require_once('Geocoder.php');
+    $latx = (float) $data['entries'][0]['lat'];
         //$lat = number_format($latx, 6);
-    //$lngx = (float) $data['entries'][0]['lng'];
+    $lngx = (float) $data['entries'][0]['lng'];
         //$lng = number_format($lngx, 6);
     //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
-    //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
+    $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
     // Get the what3words using lat lng
-    //$result = $api->convertTo3wa($lat, $lng);
+    $result = $api->convertTo3wa($lat, $lng);
     //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
         //print_r($result);
     
@@ -130,7 +131,7 @@ function convertW3WtoCoordinates($what3words) {
     //$southwest_lng = $result['square']['southwest']['lng'];
     //$northeast_lat = $result['square']['northeast']['lat'];
     //$northeast_lng = $result['square']['northeast']['lng'];
-    //$words = $result['words'];
+    $words = $result['words'];
     //$language = $result['language'];
     $map = $result['map'];
     //$place = $result['nearestPlace'];
@@ -167,7 +168,7 @@ function convertW3WtoCoordinates($what3words) {
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
+//echo $json;
 //echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
@@ -181,14 +182,14 @@ echo $json;
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$objName APRS Update<Confirmed'
+              ,comments     = '$objName : '
          WHERE recordID = $recordID;
        ";
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
        
-       //echo $sql;   
+       echo $sql;   
        //echo "\n\n";
        
        //Interpretation of the deltax variable;
@@ -209,7 +210,7 @@ echo $json;
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       echo $sql;
+       //echo $sql;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
