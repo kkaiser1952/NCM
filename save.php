@@ -76,23 +76,24 @@
 		    $column == "W3W" | $column == "cat" | $column == "section" ) {
     		    
             if ($column == 'tactical' AND $value != '') {
-    		$sql = "SELECT ID, netID, callsign, tactical
-			          FROM NetLog 
-					WHERE recordID = '$recordID'";
-
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row['netID'];
-				$ID	   = $row['ID'];
-				$cs1   = $row['callsign'];
-				$tactical  = $row['tactical'];
-			}
-			
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Tactical set to: $value', '$open', '$ipaddress')";
-		
-			$db_found->exec($sql);
+        		$sql = "SELECT ID, netID, callsign, tactical
+    			          FROM NetLog 
+    					WHERE recordID = '$recordID'";
+    
+    			foreach($db_found->query($sql) as $row) {
+    				$netID = $row['netID'];
+    				$ID	   = $row['ID'];
+    				$cs1   = $row['callsign'];
+    				$tactical  = $row['tactical'];
+    			}
+    			
+    			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+    					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Tactical set to: $value', '$open', '$ipaddress')";
+    		
+    			$db_found->exec($sql);
 
 		    } // end tactical
+		    
     		
     		if ($column == "cat") { 
         		$column = "TRFK-FOR"; 
