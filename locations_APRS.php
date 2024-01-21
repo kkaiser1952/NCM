@@ -3,7 +3,7 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 	
 	$aprs_call = $_GET["aprs_call"];      
-        $aprs_callsign = strtoupper($aprs_call);
+    $aprs_callsign = strtoupper($aprs_call);
     $recordID   = $_GET["recordID"]; 
     $CurrentLat = $_GET["CurrentLat"];
     $CurrentLng = $_GET["CurrentLng"];
@@ -11,8 +11,9 @@
     $nid        = $_GET["nid"]; // netID
     $objName    = $_GET["objName"]; // like car, truck, fallen tree
     
-    echo ("objName at top: $objName");
+    //echo ("objName at top: $objName");
     
+    // Everything below here matches the locations_W3W.php
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
      
@@ -130,7 +131,7 @@
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
+//echo $json;
 //echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
@@ -145,8 +146,6 @@ echo $json;
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
               ,comments     = '$objName : '
-          /*    ,comments     = '$objName : APRS Update<Confirmed' 
-              ,comments     = 'APRS Update : $objName :' */
          WHERE recordID = $recordID;
        ";
        

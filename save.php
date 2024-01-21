@@ -342,7 +342,7 @@
 			
 			// The code here fixes the issue of losing any comment with a tick (') in it, but the display in the
 			// Time Line Comments field still shows the backslash (\) used to escape the tick. YIKES!
-			$value = str_replace("'", "\'", $value);
+			$value = str_replace("'", "''", $value);
 			
 			// First we have to go get some more information about who updated the comment
 			$sql = "SELECT ID, netID, callsign, home
