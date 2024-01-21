@@ -257,14 +257,17 @@ var lng = -94.601830;
 
 // Initialize OBJMarkerList as a Leaflet layer group
 var OBJMarkerList = L.layerGroup();
+
+console.log(OBJMarkerList.getLayers());
+console.log('@260');
 //console.log('@262 OBJMarkerList '+JSON.stringify(OBJMarkerList));
 
 // Add layers to OBJMarkerList (example)
-var marker = L.marker([lat, lng]).addTo(OBJMarkerList);
+//var marker = L.marker([lat, lng]).addTo(OBJMarkerList);
 
 // Function to update button state
 function updateButtonState() {
-    var button = document.getElementById('toggleObjectLine');
+    var button = document.getElementById("toggleObjectLine");
     button.disabled = OBJMarkerList.getLayers().length === 0;
     button.style.display = OBJMarkerList.getLayers().length === 0 ? 'none' : 'block';
 }
