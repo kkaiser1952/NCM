@@ -72,8 +72,7 @@
 		// ALLOW UPDATE TO THESE FIELDS BUT TEST tactical for DELETE don't update for that 
 		if ($column == "county"     | $column == "state"     | $column == "grid" | 
 		    $column == "latitude"   | $column == "longitude" | $column == "district" |
-		    $column == "tactical" AND $value <> "DELETE" | $column == "team" | $column == 'aprs_call' |
-		    $column == "W3W" | $column == "cat" | $column == "section" ) {
+		    $column == "tactical" AND $value <> "DELETE" | $column == "team" | $column == 'aprs_call' | $column == "cat" | $column == "section" ) {
     		    
             if ($column == 'tactical' AND $value != '') {
         		$sql = "SELECT ID, netID, callsign, tactical
