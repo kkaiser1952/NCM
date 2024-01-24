@@ -1,4 +1,6 @@
 <?php
+    // Designed to work much like its counter part locations_W3W.php but with APRS_call from the APRSIS as input.
+    
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
