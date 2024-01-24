@@ -5,8 +5,8 @@
 	// Written 2019-03-29
 	// Modified 2019-05-26 --> Added the cross CrossRoads API
 	
-	ini_set('display_errors',1); 
-	error_reporting (E_ALL ^ E_NOTICE);
+	//ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
