@@ -29,20 +29,16 @@ function convertW3WtoCoordinates($what3words) {
     }
 }
     
-    ini_set('display_errors',1); 
-	error_reporting (E_ALL ^ E_NOTICE);
+    //ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
 	
 	$W3W_entered = $_GET["W3W_entered"];      
-	$recordID   = $_GET["recordID"]; 
-    $CurrentLat = $_GET["CurrentLat"];       
-    $CurrentLng = $_GET["CurrentLng"];        
-    $cs1        = $_GET["cs1"];               // callsign of row
-    $nid        = $_GET["nid"];               // netID
-    $objName    = $_GET["objName"];           // like car, truck, fallen tree
-    
-    //echo ("objName at top: $objName");
-    
-    //echo "<br><u>W3W entered: $W3W_entered</u><br><br>";
+	$recordID    = $_GET["recordID"]; 
+    $CurrentLat  = $_GET["CurrentLat"];       
+    $CurrentLng  = $_GET["CurrentLng"];        
+    $cs1         = $_GET["cs1"];  
+    $nid         = $_GET["nid"];   
+    $objName     = $_GET["objName"];              
      
     include('config2.php');
     

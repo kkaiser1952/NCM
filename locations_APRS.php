@@ -9,10 +9,10 @@
     $recordID   = $_GET["recordID"]; 
     $CurrentLat = $_GET["CurrentLat"];
     $CurrentLng = $_GET["CurrentLng"];
-    $cs1        = $_GET["cs1"]; // callsign of row
-    $nid        = $_GET["nid"]; // netID
-    $objName    = $_GET["objName"]; // like car, truck, fallen tree
-    
+    $cs1        = $_GET["cs1"]; 
+    $nid        = $_GET["nid"]; 
+    $objName    = $_GET["objName"]; 
+        
     //echo ("objName at top: $objName");
     
     // Everything below here matches the locations_W3W.php
