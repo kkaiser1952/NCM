@@ -185,7 +185,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        $stmt = $db_found->prepare($sql);
        $stmt->execute();
        
-       echo $sql;   
+       //echo $sql;   
        //echo "\n\n";
        
        //Interpretation of the deltax variable;
