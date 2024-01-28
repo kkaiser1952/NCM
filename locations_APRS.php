@@ -12,11 +12,14 @@
     $cs1        = $_GET["cs1"]; 
     $nid        = $_GET["nid"]; 
     $objName    = $_GET["objName"]; 
-        
-    //echo ("objName at top: $objName");
     
-    //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
-    //echo "<u>From The APRS API, part 1</u><br>";
+    echo ("aprs_call: $aprs_call <br>
+           recordID: $recordID <br>
+           CurrentLat: $CurrentLat <br>
+           CurrentLng: $CurrentLng <br>
+           cs1: $cs1 <br>
+           nid: $nid <br>
+           objName: $objName <br>");
      
     // security codes
     include('config2.php');
