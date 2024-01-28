@@ -15,10 +15,10 @@
         
     //echo ("objName at top: $objName");
     
-    // Everything below here matches the locations_W3W.php
     //echo "<br><u>For Callsign: $aprs_callsign</u><br><br>";
     //echo "<u>From The APRS API, part 1</u><br>";
      
+    // security codes
     include('config2.php');
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
