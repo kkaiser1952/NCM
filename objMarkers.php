@@ -19,13 +19,18 @@
     require_once "GridSquare.php";
 
    $q = 10684;
-      
+      // var W0DLKOBJ = L.latLngBounds([[20142,-9,.604845)]]);
+      // LOC&#916:W3W: suspend.sheltering.depend -> Cross Roads: NW 59th Ct &amp; N Bedford Ave (39.20142,-94.604845)
+      // LOC&#916:W3W: OBJ::suspend.sheltering.depend -> Cross Roads: NW 59th Ct &amp; N Bedford Ave (39.20142,-94.604845)
+      // LOC&#916:APRS OBJ::1204 WA0TJT-1 : A simple test for an old report. : Keith and Deb from KCMO : ///whilst.long.mistreated : N Ames Ave & NW 60th Ct : 39.20267,-94.60250
    $sql1 = ("
     SELECT
         callsign,
         CONCAT(callsign, 'OBJ') AS callOBJ,
         COUNT(callsign) AS numofcs,
+        
         CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
+        
         CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
         CONCAT(callsign, 'arr') AS allnameBounds
       FROM (
@@ -33,7 +38,7 @@
         FROM TimeLog
         WHERE netID = $q
             AND callsign <> 'GENCOMM'
-            AND latlng IS NOT NULL
+            
             AND comment LIKE '%LOC&#%'
             AND uniqueID <> 382982
         ORDER BY timestamp 
