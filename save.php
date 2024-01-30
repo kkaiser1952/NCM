@@ -273,6 +273,7 @@
 			$db_found->exec($sql);
 		} // End of Band elseif
 		
+		////////////// Update for aprs_call starts here
 		elseif ($column == 'aprs_call' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, aprs_call, latitude, longitude
 			          FROM NetLog 
@@ -286,18 +287,48 @@
 			    $lat = $row['latitude'];
 			    $lng = $row['longitude'];
 			}
-			
-			//$message = "lat and lng: ".$lat ... $lng;
-            //error_log($message);
-
-			
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latlng, ipaddress) 
-        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', NOW(), GeomFromText('POINT($lat $lng)'), '$ipaddress')";
-
-		
+				
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp,  
+			latitude, longitude
+			ipaddress) 
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', 
+        NOW(), 
+        GeomFromText('POINT($lat $lng)'), 
+        '$lat', '$lng', '$ipaddress')";
+	
 			$db_found->exec($sql);
 
-		} // End of aprs_call
+		} ///////////////// End of Update for aprs_call
+		
+		////////////// Update for W3W starts here
+		/////// NOT Sure WE Need This
+		/*
+		elseif ($column == 'W3W' AND $value != '') {
+    		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
+			          FROM NetLog 
+					WHERE recordID = '$recordID'";
+
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$w3w  = $row['W3W'];
+			    $lat = $row['latitude'];
+			    $lng = $row['longitude'];
+			}
+				
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp,  
+			latitude, longitude
+			ipaddress) 
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
+        NOW(), 
+        '$lat', '$lng', '$ipaddress')";
+	
+			$db_found->exec($sql);
+
+		} */
+		 ///////////////// End of Update for W3W
+		
 		
 		elseif ($column == 'team' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, team
