@@ -112,7 +112,7 @@
     			if($column == "grid")           {$deltaX = 'LOC&#916:Grid: '.$value.' This also changed LAT/LON values';} 
     			else if($column == "state")     {$deltaX = 'LOC&#916:State: '.$value;}
     			else if($column == "county")    {$deltaX = 'LOC&#916:County: '.$value;} 
-    			/*else if($column == "district")  {$deltaX = 'LOC&#916:District: '.$value;}*/
+    			else if($column == "district")  {$deltaX = 'LOC&#916:District: '.$value;}
     			else if($column == "latitude")  {$deltaX = 'LOC&#916:LAT: '.$value.' This also changed the grid value';}
     			else if($column == "longitude") {$deltaX = 'LOC&#916:LON: '.$value.' This also changed the grid value';}
 	

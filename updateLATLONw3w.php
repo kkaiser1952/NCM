@@ -12,7 +12,7 @@
     require_once "GridSquare.php";
     
     $recordID   = $_GET['recordID'];  //echo("recordID= $recordID<br><br>");
-   // $recordID = 24064;
+    $recordID = 152964;
     
 // ==============================================================
 // This part gets the w3w that was entered into the column in NCM
@@ -23,9 +23,9 @@
 		  FROM NetLog a
 		 WHERE a.recordID =  60749
     */
+// ///whilst.long.mistreated
 
-
-$sql = "SELECT w3w, callsign, netID, ID, recordID, team
+$sql = "SELECT SUBSTRING_INDEX(w3w, '<br>', 1) AS w3w, callsign, netID, ID, recordID, team
 		  FROM NetLog
 		 WHERE recordID =  $recordID
 	   ";
