@@ -38,7 +38,9 @@ function convertW3WtoCoordinates($what3words) {
     $CurrentLng  = $_GET["CurrentLng"];        
     $cs1         = $_GET["cs1"];  
     $nid         = $_GET["nid"];   
-    $objName     = $_GET["objName"];              
+    $objName     = $_GET["objName"];      
+    
+    echo("in locations_W3W.php:: $W3W_entered \n");        
      
     include('config2.php');
     
