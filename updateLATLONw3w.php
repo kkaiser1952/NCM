@@ -12,7 +12,7 @@
     require_once "GridSquare.php";
     
     $recordID   = $_GET['recordID'];  //echo("recordID= $recordID<br><br>");
-    $recordID = 152964;
+    //$recordID = 152964;
     
 // ==============================================================
 // This part gets the w3w that was entered into the column in NCM
