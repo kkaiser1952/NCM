@@ -164,8 +164,8 @@ function convertW3WtoCoordinates($what3words) {
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo $json;
-//echo "\n\n";
+echo $json;
+echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
     require_once "dbConnectDtls.php";

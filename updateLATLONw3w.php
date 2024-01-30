@@ -68,6 +68,7 @@ $sql = "SELECT w3w, callsign, netID, ID, recordID, team
 // Now get the lat/lon from W3W site
 // ====================================
 $curl = curl_init();
+echo "@71 curl= $curl";
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=5WHIM4GD&words=$w3w",
