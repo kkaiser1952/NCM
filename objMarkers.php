@@ -18,45 +18,31 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 10684;
-   
-   // LOC&#916:W3W: modern.unbeatable.translation -> Cross Roads: N Ames Ave &amp; NW 60th Ct (39.202849,-94.602758)
-   // LOC&#916:W3W: OBJ::suspend.sheltering.depend -> Cross Roads: NW 59th Ct &amp; N Bedford Ave (39.20142,-94.604845)
-   
-   // LOC&#916:APRS COM::1404 WA0TJT-1 : 6088 Ames : Keith and Deb from KCMO : ///dates.ritual.psychiatry : N Ames Ave & NW 60th Ct : 39.20217,-94.60250
-   
+   //$q = 10684;
       
-   $sql1 = ("SELECT
+   $sql1 = ("
+    SELECT
         callsign,
         CONCAT(callsign, 'OBJ') AS callOBJ,
         COUNT(callsign) AS numofcs,
-        CONCAT(
-        'var ', callsign, 'OBJ = L.latLngBounds([',
-        CASE
-        WHEN comment LIKE '%LOC&#916:APRS%' THEN GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']')
-        WHEN comment LIKE '%LOC&#916:W3W:%' THEN GROUP_CONCAT('[', SUBSTRING(comment, -20, 8), ',', SUBSTRING(comment, -11, 8), ']')
-        ELSE ''
-        END,
-        ']);'
-        ) AS objBounds,
-        
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
         CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
         CONCAT(callsign, 'arr') AS allnameBounds
-        FROM (
+      FROM (
         SELECT callsign, comment, timestamp
         FROM TimeLog
         WHERE netID = $q
-        AND callsign <> 'GENCOMM'
-        AND latlng IS NOT NULL
-        AND comment LIKE '%LOC&#%'
-        AND uniqueID <> 382982
-        ORDER BY timestamp
-        ) AS filtered_data
-        GROUP BY callsign
-        ORDER BY callsign, MIN(timestamp); 
-        ");
+            AND callsign <> 'GENCOMM'
+            AND latlng IS NOT NULL
+            AND comment LIKE '%LOC&#%'
+            AND uniqueID <> 382982
+        ORDER BY timestamp 
+      ) AS filtered_data
+      GROUP BY callsign
+      ORDER BY callsign, MIN(timestamp); 
+");
         
-        echo "@45 sql1:<br> $sql1 <br><br>";
+        //echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
