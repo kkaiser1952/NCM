@@ -18,7 +18,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
+   $q = 10684;
       
    $sql1 = ("
     SELECT
@@ -42,7 +42,7 @@
       ORDER BY callsign, MIN(timestamp); 
 ");
         
-        //echo "First sql:<br> $sql1 <br><br>";
+        echo "@45 sql1:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";

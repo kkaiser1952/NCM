@@ -12,18 +12,11 @@
     require_once "GridSquare.php";
     
     $recordID   = $_GET['recordID'];  //echo("recordID= $recordID<br><br>");
-    $recordID = 152964;
+    //$recordID = 152964;
     
 // ==============================================================
 // This part gets the w3w that was entered into the column in NCM
 // ==============================================================
-/*
-    SELECT a.w3w, a.callsign, a.netID, a.ID, a.recordID, a.team,
-	(SELECT b.recordID FROM NetLog b WHERE b.netID = a.netID AND b.team = a.team AND b.recordID <> a.recordID) as rID
-		  FROM NetLog a
-		 WHERE a.recordID =  60749
-    */
-// ///whilst.long.mistreated
 
 $sql = "SELECT SUBSTRING_INDEX(w3w, '<br>', 1) AS w3w, callsign, netID, ID, recordID, team
 		  FROM NetLog
@@ -53,13 +46,10 @@ $sql = "SELECT SUBSTRING_INDEX(w3w, '<br>', 1) AS w3w, callsign, netID, ID, reco
         $w3w = str_ireplace($splitarray, ".", $w3w);
         $prt = str_ireplace('/','',$w3w);
         
-        
-        
         $pieces = explode(".", $prt);
             $w3w = join(".", array_slice($pieces, 0, 3));
             $obj = join(" ", array_slice($pieces, 3));
-        
-        
+              
         $CrossRoads = 0;
 	
 	//echo("sql=<br>$sql<br><br>w3w= $w3w<br>call= $callsign<br>netID= $netID<br>ID= $ID<br>recordID= $recordID<br><br>");
@@ -108,7 +98,7 @@ if ($err) {
                    $grid   = gridsquare($lat, $lng);	 
                    $CrossRoads = 1;
                    
-        echo("<br><br>@111<br>lat= $lat<br> lng= $lng<br> grid= $grid<br> w3w= $w3w<br>call= $callsign<br>netID= $netID<br>ID= $ID<br>recordID= $recordID<br><br>");
+        echo("<br><br>@101<br>lat= $lat<br> lng= $lng<br> grid= $grid<br> w3w= $w3w<br>call= $callsign<br>netID= $netID<br>ID= $ID<br>recordID= $recordID<br><br>");
                    
 // =========================================================================================
 // Now lets get the nearest cross roads, notice that this CURL is inside the else loop above
@@ -150,7 +140,7 @@ if ($err) {
             } // end else of chkResponse from what3words curl 
 } // end else of what3words curl 
 
-//echo "@153 CrossRoads= $CrossRoads";
+echo "<br>@143 CrossRoads= $CrossRoads";
 
 // ====================================
 // Did we have good cross roads provided
@@ -172,17 +162,22 @@ if ($obj == '' ) {
     $delta = 'LOC&#916:W3W:';
 }else { $delta = 'LOC&#916:W3W:OBJ:'; }
 
+// Not using the geo any longer, so this value is just lat and lng together
 $latlng = "$lat,$lng";
+
+$ipaddress = '';
+
 
 
 // removed latlng 2023-12-22
 $sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
             VALUES ('$recordID', '$ID', '$netID', '$callsign', 
-                    '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress' ";
-       echo "@181 sql3<br>$sql3"; 
-   //$db_found->exec($sql3);
+                    '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress') 
+        ";
+                    
+       echo "<br>@177 sql3<br>$sql3"; 
     $stmt3 = $db_found->prepare($sql3);
-	//$stmt3 -> execute();
+	$stmt3 -> execute();
 
 // ===================================================================================
 // Update the NetLog table to reflect the error, so it will appear in the comments
@@ -194,7 +189,7 @@ $sql4 = "UPDATE NetLog
     $stmt4 = $db_found->prepare($sql4);
 	$stmt4 -> execute();
 
-//echo "sql4=<br> $sql4<br><br>recordID= $recordID<br>CrossRoads= $CrossRoads";
+echo "@191 sql4=<br> $sql4<br><br>recordID= $recordID<br>CrossRoads= $CrossRoads";
    
 }
 	
