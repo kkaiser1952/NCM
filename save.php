@@ -288,13 +288,10 @@
 			    $lng = $row['longitude'];
 			}
 				
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp,  
-			latitude, longitude
-			ipaddress) 
+		    // Updated 2024-01-31 to stop using column latlng		
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
         VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', 
-        NOW(), 
-        GeomFromText('POINT($lat $lng)'), 
-        '$lat', '$lng', '$ipaddress')";
+        NOW(), '$lat', '$lng', '$ipaddress')";
 	
 			$db_found->exec($sql);
 
@@ -317,9 +314,7 @@
 			    $lng = $row['longitude'];
 			}
 				
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp,  
-			latitude, longitude
-			ipaddress) 
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
         VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
         NOW(), 
         '$lat', '$lng', '$ipaddress')";

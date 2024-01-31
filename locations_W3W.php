@@ -1,5 +1,5 @@
 <?php
-    // Designed to work much like its counter part locations_APRS but with W3W as input
+    // locations_w3w.php is designed to work much like its counter part locations_APRS but with W3W as input by the logger.
 
 // Function to convert W3W into lat/long
 function convertW3WtoCoordinates($what3words) {
