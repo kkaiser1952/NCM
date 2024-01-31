@@ -1,5 +1,9 @@
 <?php
     // locations_w3w.php is designed to work much like its counter part locations_APRS but with W3W as input by the logger.
+    // It is called by the ajax() in NetManager-p2.js
+    
+    //ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
 
 // Function to convert W3W into lat/long
 function convertW3WtoCoordinates($what3words) {
@@ -27,10 +31,7 @@ function convertW3WtoCoordinates($what3words) {
     } else {
         echo "Request failed with status code: " . $httpCode;
     }
-}
-    
-    //ini_set('display_errors',1); 
-	//error_reporting (E_ALL ^ E_NOTICE);
+} // End of convertW3WtoCoordinates() function
 	
 	$W3W_entered = $_GET["W3W_entered"];      
 	$recordID    = $_GET["recordID"]; 
@@ -40,18 +41,28 @@ function convertW3WtoCoordinates($what3words) {
     $nid         = $_GET["nid"];   
     $objName     = $_GET["objName"];      
     
-    echo("in locations_W3W.php:: $W3W_entered \n");        
+    // This variable not needed for W3W, set to stay like locations_APRS.php
+    $aprs_callsign = ""; 
+    
+    echo("@44 in locations_W3W.php:: <br>
+        W3W entered: $W3W_entered <br>
+        recordID: $recordID <br>
+        CurrentLat: $CurrentLat <br>
+        CurrentLng: $CurrentLng <br>
+        cs1: $cs1 <br>
+        nid: $nid <br>
+        objName: $objName <br>");
      
+    // passcodes 
     include('config2.php');
     
     //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
     list($latitude, $longitude) = convertW3WtoCoordinates($W3W_entered);
     
-    // Everything below here matches the locations_APRS.php
-    //echo "W3W Latitude: " . $latitude . "<br>";
-    //echo "W3W Longitude: " . $longitude . "<br>";
+    echo "@60 W3W Latitude: " . $latitude . "<br>";
+    echo "@61 W3W Longitude: " . $longitude . "<br>";
 
-    include('config2.php');
+    // Everything below here matches the locations_APRS.php
 
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 
@@ -166,8 +177,8 @@ function convertW3WtoCoordinates($what3words) {
     );
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
-echo "\n\n";
+//echo $json;
+//echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
     require_once "dbConnectDtls.php";

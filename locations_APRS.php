@@ -1,28 +1,33 @@
 <?php
     // locations_APRS.php is designed to work much like its counter part locations_W3W.php but with APRS_call from the APRSIS as input.
+    // It is called by the ajax() in NetManager-p2.js
     
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call = $_GET["aprs_call"];      
-    $aprs_callsign = strtoupper($aprs_call);
-    $recordID   = $_GET["recordID"]; 
-    $CurrentLat = $_GET["CurrentLat"];
-    $CurrentLng = $_GET["CurrentLng"];
-    $cs1        = $_GET["cs1"]; 
-    $nid        = $_GET["nid"]; 
-    $objName    = $_GET["objName"]; 
+	$aprs_call      = $_GET["aprs_call"];      
+    $aprs_callsign  = strtoupper($aprs_call);
+    $recordID       = $_GET["recordID"]; 
+    $CurrentLat     = $_GET["CurrentLat"];
+    $CurrentLng     = $_GET["CurrentLng"];
+    $cs1            = $_GET["cs1"]; 
+    $nid            = $_GET["nid"]; 
+    $objName        = $_GET["objName"]; 
     
-    echo ("aprs_call: $aprs_call <br>
-           recordID: $recordID <br>
-           CurrentLat: $CurrentLat <br>
-           CurrentLng: $CurrentLng <br>
-           cs1: $cs1 <br>
-           nid: $nid <br>
-           objName: $objName <br>");
-     
-    // security codes
+    /*
+    echo ("@17 in locations_APRS.php:: <br>
+       aprs_call: $aprs_call <br>
+       recordID: $recordID <br>
+       CurrentLat: $CurrentLat <br>
+       CurrentLng: $CurrentLng <br>
+       cs1: $cs1 <br>
+       nid: $nid <br>
+       objName: $objName <br>");
+    */ 
+    // passcodes
     include('config2.php');
+    
+    // Everything below here matches the locations_W3W.php
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 

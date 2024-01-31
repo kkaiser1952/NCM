@@ -18,15 +18,15 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
+   $q = 10684;
       
    $sql1 = ("
     SELECT
         callsign,
         CONCAT(callsign, 'OBJ') AS callOBJ,
         COUNT(callsign) AS numofcs,
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS objBounds,
+        CONCAT(                                       '[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
         CONCAT(callsign, 'arr') AS allnameBounds
       FROM (
         SELECT callsign, comment, timestamp
@@ -42,7 +42,7 @@
       ORDER BY callsign, MIN(timestamp); 
 ");
         
-        //echo "First sql:<br> $sql1 <br><br>";
+        echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
