@@ -18,31 +18,34 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
-      
+   $q = 10684;
+      // this code seems to work for the arrBounds but not for the objBounds 
    $sql1 = ("
     SELECT
         callsign,
         CONCAT(callsign, 'OBJ') AS callOBJ,
         COUNT(callsign) AS numofcs,
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), ']);') AS objBounds,
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9, 8), ']'), '],') AS arrBounds,
-        CONCAT(callsign, 'arr') AS allnameBounds
+        CONCAT(callsign, 'arr') AS allnameBounds,
+        
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -21, 11), ',', SUBSTRING(comment, -11, 10), ']'), ']);') AS objBounds,
+        
+        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -21, 11), ',', SUBSTRING(comment, -11, 10), ']'), '],') AS arrBounds      
+        
       FROM (
         SELECT callsign, comment, timestamp
         FROM TimeLog
         WHERE netID = $q
             AND callsign <> 'GENCOMM'
-            
+            AND latlng IS NOT NULL
             AND comment LIKE '%LOC&#%'
-            
+            AND uniqueID <> 382982
         ORDER BY timestamp 
       ) AS filtered_data
       GROUP BY callsign
-      ORDER BY callsign, MIN(timestamp); 
+      ORDER BY callsign, MIN(timestamp);  
 ");
         
-        //echo "First sql:<br> $sql1 <br><br>";
+        echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -245,7 +248,7 @@ foreach($db_found->query($sql3) as $row) {
                     Station Comment:<br>$comm1
                  <br>
                  </div>
-                ";
+                ";          
                 
         $div2 = "<div class='cc'>
                     Full Comment:<br>".substr($comment,19)."
