@@ -211,7 +211,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
         Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
         Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
        */
-       $deltax = 'LOC&#916:W3W '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : '.$thislatlng;
+       $deltax = 'LOC&#916:W3W '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
        $sql = 
        "INSERT INTO TimeLog 

@@ -18,7 +18,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 10684;
+   //$q = 10684;
       // this code seems to work for the arrBounds but not for the objBounds 
    $sql1 = ("
     SELECT
@@ -27,9 +27,9 @@
         COUNT(callsign) AS numofcs,
         CONCAT(callsign, 'arr') AS allnameBounds,
         
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -21, 11), ',', SUBSTRING(comment, -11, 10), ']'), ']);') AS objBounds,
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), ']);') AS objBounds,
         
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -21, 11), ',', SUBSTRING(comment, -11, 10), ']'), '],') AS arrBounds      
+        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), '],') AS arrBounds      
         
       FROM (
         SELECT callsign, comment, timestamp
