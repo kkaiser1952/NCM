@@ -18,7 +18,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 10684;
+   //$q = 10684;
       
    $sql1 = ("
     SELECT
@@ -42,7 +42,7 @@
       ORDER BY callsign, MIN(timestamp); 
 ");
         
-        echo "First sql:<br> $sql1 <br><br>";
+        //echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -91,7 +91,7 @@
                    ORDER BY timestamp ASC
                 ");
                 
-            //echo "Second sqlk:<br> $sql2 <br><br>";
+            //echo "<br><br>Second sqlk:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -124,7 +124,7 @@
           ");
           
           // above working well
-        //echo "3rd sql:<br> $sql3 <br><br>";
+        //echo "<br><br>3rd sql:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -290,7 +290,7 @@ foreach($db_found->query($sql3) as $row) {
                ORDER BY callsign
            ");
            
-    //echo "<br>Fourth sql:<br> $sql4 <br>";
+    //echo "<br><br>Fourth sql:<br> $sql4 <br>";
     
 /*
 minLat      maxLat      minLng      maxLng      callsign
