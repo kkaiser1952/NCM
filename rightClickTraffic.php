@@ -36,7 +36,7 @@
                 IF (in_array($val, array('STANDBY','Question'))) {
     		        $value = "Resolved";
 
-    		    } ELSE IF (in_array($val, array('Traffic','Routine','Priority','Welfare','Emergency','Announcement','Bulletin','Comment'))) {
+    		    } ELSE IF (in_array($val, array('Traffic','Routine','Priority','Welfare','Emergency','Announcement','Bulletin','Comment','Image'))) {
     		        $value = "Sent";
 
                 } ELSE IF (in_array($val, array('Resolved','Sent',''))) {
