@@ -45,7 +45,7 @@
       ORDER BY callsign, MIN(timestamp);  
 ");
         
-        echo "First sql:<br> $sql1 <br><br>";
+        //echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
