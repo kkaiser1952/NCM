@@ -32,7 +32,7 @@
       FROM TimeLog
      WHERE netID = $q
        AND callsign <> 'GENCOMM'
-       AND comment LIKE 'LOC&#%'
+       AND comment LIKE ('LOC&#916%')
        AND RIGHT(comment, 1) = ')'
      ORDER BY timestamp
         ) AS filtered_data
