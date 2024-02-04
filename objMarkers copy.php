@@ -20,27 +20,34 @@
 
    $q = 10684;
       // this code seems to work for the arrBounds but not for the objBounds 
-   $sql1 = ("SELECT
-        callsign,
-        CONCAT(callsign, 'arr') AS allnameBounds,
+   $sql1 = ("SELECT callsign,
+    CONCAT(callsign, 'arr') AS allnameBounds,
+    
+    CONCAT('var ', callsign,
+        'OBJ = L.latLngBounds([',GROUP_CONCAT('[',
+            SUBSTRING_INDEX(SUBSTRING_INDEX(COMMENT, '(', -1),
+                ')',1),']'),']);') AS objBounds,
+    CONCAT('[',GROUP_CONCAT('[',
+            SUBSTRING_INDEX(
+                SUBSTRING_INDEX(COMMENT, '(', -1),
+                ')',1),']'),'],') AS arrBounds
+    FROM
+        (SELECT callsign, comment, timestamp
+           FROM TimeLog
+          WHERE netID = $q
+            AND RIGHT(COMMENT, 1) = ')'
+    	    AND callsign <> 'GENCOMM'
+            
+            AND (comment LIKE 'LOC&#916:W3W%' OR comment LIKE 'LOC&#916:APRS%')
+    	
+          ORDER BY
+            TIMESTAMP) AS filtered_data
+          GROUP BY callsign
+          ORDER BY callsign, MIN(TIMESTAMP)
+   "); // END sql1
         
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), ']);') AS objBounds,
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), '],') AS arrBounds
-        
-        FROM (
-    SELECT callsign, comment, timestamp
-      FROM TimeLog
-     WHERE netID = $q
-       AND callsign <> 'GENCOMM'
-       AND comment LIKE ('LOC&#916%')
-       AND RIGHT(comment, 1) = ')'
-     ORDER BY timestamp
-        ) AS filtered_data
-     GROUP BY callsign
-     ORDER BY callsign, MIN(timestamp);
-   ");
-        
-        echo "First sql:<br> $sql1 <br><br>";
+        // The output of this echo has LOCΔ instead of LOC&#916 but it works
+        // echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -62,7 +69,7 @@
          
      } // end of foreach loop 
      
-     //echo $objMiddle;
+     //echo "@72 objMiddle: $objMiddle <br> allPoints: $allPoints <br>objSE: $objSE";
      
      // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
@@ -86,8 +93,8 @@
                     FROM TimeLog
                     WHERE netID = $q
                     AND callsign <> 'GENCOMM'
-                           AND comment LIKE 'LOC&#%'
-                           AND RIGHT(comment, 1) = ')'
+                    AND RIGHT(comment, 1) = ')'
+                    AND (comment LIKE 'LOC&#916:W3W%' OR comment LIKE 'LOC&#916:APRS%')
                     GROUP BY callsign
                     ORDER BY timestamp ASC
         ");
