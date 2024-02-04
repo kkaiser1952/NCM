@@ -99,7 +99,8 @@
                     ORDER BY timestamp ASC
         ");
                 
-            echo "<br><br>sql2:<br> $sql2 <br><br>";
+            // The output of this echo has LOCΔ instead of LOC&#916 but it works
+            //echo "<br><br>sql2:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -107,34 +108,48 @@
              
              // all the cords for each callsign
         //echo "alltheKoords:<br>$alltheKoords<br><br>";
+        
+        /* Examples of comments being read
+            LOC&#916:W3W: mice.beak.glimmer -> Cross Roads: N Ames Ave &amp; NW 60th Ct (39.202822,-94.602654)
+            
+            LOC&#916:W3W: easily.hardest.ended -> Cross Roads: N Ames Ave &amp; NW 60th Ct (39.202903,-94.602897)
+            
+            LOC&#916:APRS OBJ:: Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267)
+            
+            LOC&#916:APRS COM:: Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267)
+        */
       
-        $sql3 = ("SELECT 
-        callsign, timestamp, comment, counter,
+        $sql3 = ("SELECT callsign, timestamp, comment, counter,
             CASE
-                WHEN  comment LIKE 'LOC&#916:W3W:%' THEN 'W3W'
-                WHEN  comment LIKE 'LOC&#916:APRS%' THEN 'APRS'
+                WHEN  (comment LIKE 'LOC&#916:W3W:%') THEN 'W3W'
+                WHEN  (comment LIKE 'LOC&#916:APRS%') THEN 'APRS'
                 ELSE null
             END AS 'objType',
-            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lat,
-            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lng,
-            CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1),',',SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1)) as koords
-            FROM (
-            SELECT callsign, timestamp, comment,
-            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lat_sub,
-            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lng_sub,
-            @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
-            @prev_c := callsign
-            FROM TimeLog, (select @counter := 0, @prev_c := null) init
+            
+                SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ',', 1) AS lat,
+                SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ',', -1)  AS lng,
+            
+                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) 
+                    AS koords
+            
+            FROM (SELECT callsign, timestamp, comment,
+                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lat_sub,
+                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lng_sub,
+                
+                @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
+                @prev_c := callsign
+                
+             FROM TimeLog, (select @counter := 0, @prev_c := null) init
             WHERE netID = $q 
               AND callsign <> 'GENCOMM'
-            AND comment LIKE '%LOC&#%'
-            AND comment LIKE '%)'
+              AND comment LIKE '%)'
+              AND (comment LIKE 'LOC&#916:W3W:%' OR comment LIKE 'LOC&#916:APRS%')
             ORDER BY callsign, timestamp ASC
             ) s         
           ");
           
-          // above working well
-        echo "<br><br>3rd sql:<br> $sql3 <br><br>";
+          // when seen in echo it comes out as LOCΔ:W3W instead of LOC&#916:W3W%
+        //echo "<br><br>3rd sql:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -146,11 +161,6 @@ foreach($db_found->query($sql3) as $row) {
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
-    
-    //echo "$comment<br><br>";
-               
-    //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
-    //$pos1 = $pos2 = 0;
     
     //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 : 1 Driveway : Keith and Deb from KCMO : ///mice.beak.glimmer & N Ames Ave & NW 60th Ct : 39.20283,-94.60267";
     
