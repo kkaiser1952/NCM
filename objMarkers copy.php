@@ -18,32 +18,25 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
+   $q = 10684;
       // this code seems to work for the arrBounds but not for the objBounds 
-   $sql1 = ("
-    SELECT
+   $sql1 = ("SELECT
         callsign,
-        CONCAT(callsign, 'OBJ') AS callOBJ,
-        COUNT(callsign) AS numofcs,
         CONCAT(callsign, 'arr') AS allnameBounds,
-        
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), ']);') AS objBounds,
-        
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), '],') AS arrBounds      
-        
-      FROM (
-        SELECT callsign, comment, timestamp
-        FROM TimeLog
-        WHERE netID = $q
-            AND callsign <> 'GENCOMM'
-            AND latlng IS NOT NULL
-            AND comment LIKE '%LOC&#%'
-            AND uniqueID <> 382982
-        ORDER BY timestamp 
-      ) AS filtered_data
-      GROUP BY callsign
-      ORDER BY callsign, MIN(timestamp);  
-");
+        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), ']);') AS objBounds,
+        CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), '],') AS arrBounds
+        FROM (
+    SELECT callsign, comment, timestamp
+      FROM TimeLog
+     WHERE netID = 10684
+       AND callsign <> 'GENCOMM'
+       AND comment LIKE '%LOC&#%'
+       AND RIGHT(comment, 1) = ')'
+     ORDER BY timestamp
+        ) AS filtered_data
+     GROUP BY callsign
+     ORDER BY callsign, MIN(timestamp);
+   ");
         
         //echo "First sql:<br> $sql1 <br><br>";
           
@@ -75,24 +68,23 @@
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
-        $sql2 = ("SELECT CONCAT(
-                            'var ',
-                            callsign,
-                            'latlngs = [',
-                            GROUP_CONCAT(
-                                CONCAT('[', SUBSTRING(comment, -18, 8),
-                                ',',
-                                SUBSTRING(comment, -9, 8),
-                                ']')
-                            ),
-                            ']'
-                        ) AS allKoords
-                    FROM TimeLog
-                   WHERE netID = $q
-                     AND COMMENT LIKE '%LOC&#%'
-                   GROUP BY callsign
-                   ORDER BY timestamp ASC
-                ");
+        $sql2 = ("SELECT
+            callsign,
+            CONCAT(callsign, 'arr') AS allnameBounds,
+            CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), ']);') AS objBounds,
+            CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), '],') AS arrBounds
+            FROM (
+            SELECT callsign, comment, timestamp
+            FROM TimeLog
+            WHERE netID = $q
+            AND callsign <> 'GENCOMM'
+            AND comment LIKE '%LOC&#%'
+            AND comment LIKE '%)'
+            ORDER BY timestamp
+            ) AS filtered_data
+            GROUP BY callsign
+            ORDER BY callsign, MIN(timestamp)
+        ");
                 
             //echo "<br><br>Second sqlk:<br> $sql2 <br><br>";
                 
@@ -103,31 +95,34 @@
              // all the cords for each callsign
         //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
-        $sql3 = ("SELECT callsign, timestamp, comment, counter,
-                	CASE 
-                    	WHEN comment LIKE '%W3W OBJ::%'  THEN  'W3W'
-                    	WHEN comment LIKE '%W3W COM::%'  THEN  'W3W'
-                        WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
-                        WHEN comment LIKE '%APRS COM::%' THEN 'APRS' 
-                    END AS 'objType',           
-	              
-	                SUBSTRING(comment, -18, 8) AS lat,
-                    SUBSTRING(comment, -9, 8) AS lng,
-                   
-                    CONCAT(SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8)) as koords         
-               FROM (
-             SELECT callsign, timestamp, comment,  
-              	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
-                        @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
-                        @prev_c := callsign
-               FROM TimeLog, (select @counter := 0, @prev_c := null) init
-              WHERE netID = $q
-                AND comment LIKE '%LOC&#%' 
-              ORDER BY callsign, timestamp ASC) s         
+        $sql3 = ("SELECT 
+        callsign, timestamp, comment, counter,
+            CASE
+            WHEN comment LIKE '%W3W OBJ::%' THEN 'W3W'
+            WHEN comment LIKE '%W3W COM::%' THEN 'W3W'
+            WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS'
+            WHEN comment LIKE '%APRS COM::%' THEN 'APRS'
+            END AS 'objType',
+            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lat,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lng,
+            CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1),',',SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1)) as koords
+            FROM (
+            SELECT callsign, timestamp, comment,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lat_sub,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lng_sub,
+            @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
+            @prev_c := callsign
+            FROM TimeLog, (select @counter := 0, @prev_c := null) init
+            WHERE netID = $q 
+              AND callsign <> 'GENCOMM'
+            AND comment LIKE '%LOC&#%'
+            AND comment LIKE '%)'
+            ORDER BY callsign, timestamp ASC
+            ) s         
           ");
           
           // above working well
-        //echo "<br><br>3rd sql:<br> $sql3 <br><br>";
+        echo "<br><br>3rd sql:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
