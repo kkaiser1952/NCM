@@ -23,14 +23,16 @@
    $sql1 = ("SELECT
         callsign,
         CONCAT(callsign, 'arr') AS allnameBounds,
+        
         CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), ']);') AS objBounds,
         CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), '],') AS arrBounds
+        
         FROM (
     SELECT callsign, comment, timestamp
       FROM TimeLog
-     WHERE netID = 10684
+     WHERE netID = $q
        AND callsign <> 'GENCOMM'
-       AND comment LIKE '%LOC&#%'
+       AND comment LIKE 'LOC&#%'
        AND RIGHT(comment, 1) = ')'
      ORDER BY timestamp
         ) AS filtered_data
@@ -38,7 +40,7 @@
      ORDER BY callsign, MIN(timestamp);
    ");
         
-        //echo "First sql:<br> $sql1 <br><br>";
+        echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -68,25 +70,29 @@
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
-        $sql2 = ("SELECT
-            callsign,
-            CONCAT(callsign, 'arr') AS allnameBounds,
-            CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), ']);') AS objBounds,
-            CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ']'), '],') AS arrBounds
-            FROM (
-            SELECT callsign, comment, timestamp
-            FROM TimeLog
-            WHERE netID = $q
-            AND callsign <> 'GENCOMM'
-            AND comment LIKE '%LOC&#%'
-            AND comment LIKE '%)'
-            ORDER BY timestamp
-            ) AS filtered_data
-            GROUP BY callsign
-            ORDER BY callsign, MIN(timestamp)
+        $sql2 = ("SELECT 
+                    CONCAT(
+                    'var ',
+                    callsign,
+                    'latlngs = [',
+                    GROUP_CONCAT(
+                    CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1),
+                    ',',
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(comment, ',', -1), ')', 1),
+                    ']')
+                    ),
+                    ']'
+                    ) AS allKoords
+                    FROM TimeLog
+                    WHERE netID = $q
+                    AND callsign <> 'GENCOMM'
+                           AND comment LIKE 'LOC&#%'
+                           AND RIGHT(comment, 1) = ')'
+                    GROUP BY callsign
+                    ORDER BY timestamp ASC
         ");
                 
-            //echo "<br><br>Second sqlk:<br> $sql2 <br><br>";
+            echo "<br><br>sql2:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -98,10 +104,8 @@
         $sql3 = ("SELECT 
         callsign, timestamp, comment, counter,
             CASE
-            WHEN comment LIKE '%W3W OBJ::%' THEN 'W3W'
-            WHEN comment LIKE '%W3W COM::%' THEN 'W3W'
-            WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS'
-            WHEN comment LIKE '%APRS COM::%' THEN 'APRS'
+                WHEN comment LIKE 'LOC&#916:W3W: ' THEN 'W3W'
+                WHEN comment LIKE 'LOC&#916:APRS: ' THEN 'APRS'
             END AS 'objType',
             SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lat,
             SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lng,
