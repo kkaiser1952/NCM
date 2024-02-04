@@ -104,8 +104,9 @@
         $sql3 = ("SELECT 
         callsign, timestamp, comment, counter,
             CASE
-                WHEN comment LIKE 'LOC&#916:W3W: ' THEN 'W3W'
-                WHEN comment LIKE 'LOC&#916:APRS: ' THEN 'APRS'
+                WHEN  comment LIKE 'LOC&#916:W3W:%' THEN 'W3W'
+                WHEN  comment LIKE 'LOC&#916:APRS%' THEN 'APRS'
+                ELSE null
             END AS 'objType',
             SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lat,
             SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) AS lng,
