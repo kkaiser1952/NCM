@@ -44,7 +44,7 @@ function convertW3WtoCoordinates($what3words) {
     // This variable not needed for W3W, set to stay like locations_APRS.php
     $aprs_callsign = ""; 
     
-    echo("@44 in locations_W3W.php:: <br>
+    echo("@47 in locations_W3W.php:: <br>
         W3W entered: $W3W_entered <br>
         recordID: $recordID <br>
         CurrentLat: $CurrentLat <br>
@@ -59,8 +59,8 @@ function convertW3WtoCoordinates($what3words) {
     //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
     list($latitude, $longitude) = convertW3WtoCoordinates($W3W_entered);
     
-    echo "@60 W3W Latitude: " . $latitude . "<br>";
-    echo "@61 W3W Longitude: " . $longitude . "<br>";
+    echo "@62 W3W Latitude: " . $latitude . "<br>";
+    echo "@63 W3W Longitude: " . $longitude . "<br>";
 
     // Everything below here matches the locations_APRS.php
 
