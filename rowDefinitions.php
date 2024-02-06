@@ -224,7 +224,7 @@ echo ("
         </td>
        --> 
     
-    
+    <!-- Commented on 2024-02-06, replaced by below
         <td $brbCols 
             class=\"editable W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
@@ -232,6 +232,14 @@ echo ("
             onClick=\"empty('w3w:$row[recordID]'); getAPRSLocations('$row[aprs_call], ,$row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\">
             <div class='$class'> $row[w3w]	</div> 
         </td> 
+    -->
+        <td $brbCols
+            class=\"editable W3W c24 cent\"
+            id=\"w3w:$row[recordID]\"
+            oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \"
+            onClick=\"empty('w3w:$row[recordID]');\">
+            <div class='$class'> $row[w3w] </div>
+        </td>
               
         <td $brbCols 
             class=\"editable editteam  c30 cent\" 
@@ -239,6 +247,7 @@ echo ("
             onClick=\"empty('team:$row[recordID]');\">
             <div class='$class'> $row[team]	</div> 
         </td>
+
         
         <td $brbCols 
             class=\"editable editaprs_call  c31 cent\" 
