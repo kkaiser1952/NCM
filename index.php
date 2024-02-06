@@ -693,6 +693,8 @@
 <!-- My javascript -->	
 	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
 	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+	<script src="js/NetManager-W3W-APRS.js"></script> <!-- Created on 2024-02-06 for W3W & APRS --> 
+	
 	
 	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
 	
