@@ -89,7 +89,7 @@
                         ) AS allKoords
                     FROM TimeLog
                    WHERE netID = $q
-                     AND COMMENT LIKE '%LOC&#%'
+                     AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
                    GROUP BY callsign
                    ORDER BY timestamp ASC
                 ");
@@ -122,7 +122,7 @@
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
-                AND comment LIKE '%LOC&#%' 
+                AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
               ORDER BY callsign, timestamp ASC) s         
           ");
           

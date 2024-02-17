@@ -492,7 +492,8 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         //console.log('fitBounds as bounds= '+JSON.stringify(bounds)); 
 
     // find the corners and middle of the stationmarkers
-    var middle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
+    var middle = bounds.getCenter();
+        console.log('@496 middle: '+middle);
     var padit  = bounds.pad(.075);   // add a little bit to the corner bounding box
     var sw = padit.getSouthWest();   // get the SouthWest most point
     var nw = padit.getNorthWest();
@@ -546,7 +547,8 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     //====================== THERE MAY NOT BE ANY TO REPORT ============================
     
     // find the corners and middle of the stationmarkers
-    var objMiddle = bounds.getCenter(); // alert(middle); //LatLng(-93.20448, 38.902475)
+    var objMiddle = bounds.getCenter(); 
+        console.log('@551 objMiddle: '+ objMiddle);
     var padit  = bounds.pad(.075);   // add a little bit to the corner bounding box
     var objsw = padit.getSouthWest();   // get the SouthWest most point
     var objnw = padit.getNorthWest();
