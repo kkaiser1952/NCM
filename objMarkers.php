@@ -37,7 +37,7 @@
         WHERE netID = $q
             AND callsign <> 'GENCOMM'
             AND latlng IS NOT NULL
-            AND comment LIKE 'LOC&#%'
+            AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
             AND uniqueID <> 382982
         ORDER BY timestamp 
       ) AS filtered_data
