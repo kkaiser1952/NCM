@@ -37,7 +37,7 @@
         WHERE netID = $q
             AND callsign <> 'GENCOMM'
             AND latlng IS NOT NULL
-            AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
+            AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
             AND uniqueID <> 382982
         ORDER BY timestamp 
       ) AS filtered_data
@@ -89,7 +89,7 @@
                         ) AS allKoords
                     FROM TimeLog
                    WHERE netID = $q
-                     AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
+                     AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
                    GROUP BY callsign
                    ORDER BY timestamp ASC
                 ");
@@ -122,7 +122,7 @@
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
               WHERE netID = $q
-                AND (comment LIKE 'LOC&#APRS%' OR comment LIKE 'LOC&#W3W%')
+                AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
               ORDER BY callsign, timestamp ASC) s         
           ");
           
