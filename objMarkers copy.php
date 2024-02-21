@@ -47,7 +47,7 @@
    "); // END sql1
         
         // The output of this echo has LOCΔ instead of LOC&#916 but it works
-        // echo "First sql:<br> $sql1 <br><br>";
+         echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
