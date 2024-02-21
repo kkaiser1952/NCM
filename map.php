@@ -88,6 +88,8 @@
     
     <script src="https://ha8tks.github.io/Leaflet.Maidenhead/src/L.Maidenhead.js"></script>
     
+    <script src="js/NetManager-W3W-APRS.js"></script>
+    
     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
      <!-- Load Esri Leaflet from CDN -->
