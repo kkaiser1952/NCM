@@ -108,10 +108,10 @@ ORDER BY callsign, MIN(timestamp);
                         WHEN comment LIKE '%APRS COM::%' THEN 'APRS' 
                     END AS 'objType',           
 	              
-	                SUBSTRING(comment, -18, 8) AS lat,
-                    SUBSTRING(comment, -9, 8) AS lng,
-                   
-                    CONCAT(SUBSTRING(comment, -18, 8),',',SUBSTRING(comment, -9, 8)) as koords         
+	                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1) AS lat,
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1) AS lng,
+                    CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1)) AS koords
+         
                FROM (
              SELECT callsign, timestamp, comment,  
               	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
@@ -124,7 +124,7 @@ ORDER BY callsign, MIN(timestamp);
           ");
           
           // above working well
-        //echo "<br><br>3rd sql:<br> $sql3 <br><br>";
+        echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -137,7 +137,7 @@ foreach($db_found->query($sql3) as $row) {
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
     
-    //echo "$comment<br><br>";
+    echo "$comment<br><br>$koords<br><br>$callsign<br><br>$objType";
                
     //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
     //$pos1 = $pos2 = 0;
@@ -212,6 +212,7 @@ foreach($db_found->query($sql3) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
+        $gs = gridsquare($row[koords]);
                 
         $icon = "";
         
