@@ -22,27 +22,24 @@
       // this code seems to work for the arrBounds but not for the objBounds 
    $sql1 = ("
     SELECT
-        callsign,
-        CONCAT(callsign, 'OBJ') AS callOBJ,
-        COUNT(callsign) AS numofcs,
-        CONCAT(callsign, 'arr') AS allnameBounds,
-        
-        CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), ']);') AS objBounds,
-        
-        CONCAT('[', GROUP_CONCAT('[', SUBSTRING(comment, -18, 8), ',', SUBSTRING(comment, -9), ']'), '],') AS arrBounds      
-        
-      FROM (
-        SELECT callsign, comment, timestamp
-        FROM TimeLog
-        WHERE netID = $q
-            AND callsign <> 'GENCOMM'
-            AND latlng IS NOT NULL
-            AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
-            AND uniqueID <> 382982
-        ORDER BY timestamp 
-      ) AS filtered_data
-      GROUP BY callsign
-      ORDER BY callsign, MIN(timestamp);  
+callsign,
+CONCAT(callsign, 'OBJ') AS callOBJ,
+COUNT(callsign) AS numofcs,
+CONCAT(callsign, 'arr') AS allnameBounds,
+CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ']'), ']);') AS objBounds,
+CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ']'), '],') AS arrBounds
+FROM (
+SELECT callsign, comment, timestamp
+FROM TimeLog
+WHERE netID = 10684
+AND callsign <> 'GENCOMM'
+AND latlng IS NOT NULL
+AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+AND uniqueID <> 382982
+ORDER BY timestamp
+) AS filtered_data
+GROUP BY callsign
+ORDER BY callsign, MIN(timestamp);  
 ");
         
         //echo "First sql:<br> $sql1 <br><br>";
