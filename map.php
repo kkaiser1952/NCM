@@ -69,6 +69,7 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <!-- Various additional Leaflet javascripts -->
+     
     <script src="js/leaflet_numbered_markers.js"></script>
     <script src="js/L.Grid.js"></script>     
 
@@ -88,7 +89,7 @@
     
     <script src="https://ha8tks.github.io/Leaflet.Maidenhead/src/L.Maidenhead.js"></script>
     
-    <script src="js/NetManager-W3W-APRS.js"></script>
+   
     
     
      <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
