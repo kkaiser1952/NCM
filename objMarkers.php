@@ -20,26 +20,46 @@
 
    //$q = 10684;
    
+   //REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
+   
    $sql1 = ("
-    SELECT
-callsign,
-CONCAT(callsign, 'OBJ') AS callOBJ,
-COUNT(callsign) AS numofcs,
-CONCAT(callsign, 'arr') AS allnameBounds,
-CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ']'), ']);') AS objBounds,
-CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ']'), '],') AS arrBounds
+SELECT
+    callsign,
+    CONCAT(callsign, 'OBJ') AS callOBJ,
+    COUNT(callsign) AS numofcs,
+    CONCAT(callsign, 'arr') AS allnameBounds,
+
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', 
+    GROUP_CONCAT(
+        '[', 
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', 1), 
+        ',', 
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', -1), 
+        ']'
+    ), ']);') AS objBounds,
+
+    CONCAT('[', 
+    GROUP_CONCAT(
+        '[', 
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', 1), 
+        ',', 
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', -1), 
+        ']'
+    ), ']') AS arrBounds
+
 FROM (
-SELECT callsign, comment, timestamp
-FROM TimeLog
-WHERE netID = $q
-AND callsign <> 'GENCOMM'
-AND latlng IS NOT NULL
-AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
-AND uniqueID <> 382982
-ORDER BY timestamp
+    SELECT callsign, comment, timestamp
+    FROM TimeLog
+    WHERE netID = $q
+    AND callsign <> 'GENCOMM'
+    AND latlng IS NOT NULL
+    AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+    AND uniqueID <> 382982
+    ORDER BY timestamp
 ) AS filtered_data
 GROUP BY callsign
-ORDER BY callsign, MIN(timestamp);  
+ORDER BY callsign, MIN(timestamp);
+
 ");
         
         //echo "First sql:<br> $sql1 <br><br>";
@@ -73,26 +93,29 @@ ORDER BY callsign, MIN(timestamp);
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
         $sql2 = ("SELECT CONCAT(
-                            'var ',
-                            callsign,
-                            'latlngs = [',
-                            GROUP_CONCAT(
-                                CONCAT('[', SUBSTRING(comment, -18, 8),
-                                ',',
-                                SUBSTRING(comment, -9, 8),
-                                ']')
-                            ),
-                            ']'
-                        ) AS allKoords
-                        
-                    FROM TimeLog
-                   WHERE netID = $q
-                     AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
-                   GROUP BY callsign
-                   ORDER BY timestamp ASC
+    'var ',
+    callsign,
+    'latlngs = [',
+    GROUP_CONCAT(
+        CONCAT(
+            '[',
+            SUBSTRING(REPLACE(SUBSTRING(comment, -18, 17), ')', ''), 2),
+            ',',
+            SUBSTRING(REPLACE(SUBSTRING(comment, -9, 8), ')', ''), 2),
+            ']'
+        )
+    ),
+    ']'
+) AS allKoords
+FROM TimeLog
+WHERE netID = $q
+AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+GROUP BY callsign
+ORDER BY timestamp ASC;
+
                 ");
                 
-            //echo "<br><br>Second sqlk:<br> $sql2 <br><br>";
+            //echo "<br><br>Second sql2:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -128,7 +151,7 @@ ORDER BY callsign, MIN(timestamp);
           ");
           
           // above working well
-        echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
+        //echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -143,8 +166,8 @@ foreach($db_found->query($sql3) as $row) {
     $lat      = "$row[lat];";
     $lng      = "$row[lng];";
     
-    echo "lat: $lat  lng: $lng<br>";
-    echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>/////////<br>";
+    //echo "lat: $lat  lng: $lng<br>";
+    //echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>/////////<br>";
     
     switch ($objType) {
     case "W3W":
@@ -216,7 +239,7 @@ foreach($db_found->query($sql3) as $row) {
         $gs = gridsquare($row[lat], $row[lng]); 
         //$gs = gridsquare($row[koords]);
         
-        echo "<br>gs: $gs<br>";
+        //echo "<br>gs: $gs<br>";
                 
         $icon = "";
         
@@ -283,14 +306,17 @@ foreach($db_found->query($sql3) as $row) {
 
 
  // Create corner markers for each callsign that has objects.
-    $sql4 = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
-	                 MAX(SUBSTRING(comment, -18, 8)) as maxLat,
-	                 MIN(SUBSTRING(comment, -9, 8))  as minLng,
-	                 MAX(SUBSTRING(comment, -9, 8))  as maxLng,                 
+    $sql4 = ("SELECT  
+                    MIN(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1)) AS minLat,
+                    MAX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1)) AS maxLat,
+	                
+                    MIN(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS minLat,
+                    MAX(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS maxLat,
+       
 	                 callsign
 	            FROM TimeLog
-	           WHERE netID = $q
-                 AND comment LIKE '%OBJ::%' 
+	           WHERE netID = $q 
+                 AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
                GROUP BY callsign
                ORDER BY callsign
            ");
