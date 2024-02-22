@@ -93,25 +93,25 @@ ORDER BY callsign, MIN(timestamp);
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
         $sql2 = ("SELECT CONCAT(
-    'var ',
-    callsign,
-    'latlngs = [',
-    GROUP_CONCAT(
-        CONCAT(
-            '[',
-            SUBSTRING(REPLACE(SUBSTRING(comment, -18, 17), ')', ''), 2),
-            ',',
-            SUBSTRING(REPLACE(SUBSTRING(comment, -9, 8), ')', ''), 2),
-            ']'
-        )
-    ),
-    ']'
-) AS allKoords
-FROM TimeLog
-WHERE netID = $q
-AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
-GROUP BY callsign
-ORDER BY timestamp ASC;
+                    'var ',
+                    callsign,
+                    'latlngs = [',
+                    GROUP_CONCAT(
+                        CONCAT(
+                            '[',
+                            SUBSTRING(REPLACE(SUBSTRING(comment, -18, 17), ')', ''), 2),
+                            ',',
+                            SUBSTRING(REPLACE(SUBSTRING(comment, -9, 8), ')', ''), 2),
+                            ']'
+                        )
+                    ),
+                    ']'
+                ) AS allKoords
+                FROM TimeLog
+                WHERE netID = $q
+                AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+                GROUP BY callsign
+                ORDER BY timestamp ASC;
 
                 ");
                 
