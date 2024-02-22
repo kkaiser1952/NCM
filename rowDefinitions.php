@@ -212,17 +212,6 @@ echo ("
             
             <div class='$class'> $row[district]	</div>			
         </td>   
-        
-      <!--
-        <td $brbCols class=\"editable editdist  c59 cent\" 
-            style=\"text-transform:uppercase\"
-            id=\"district:$row[recordID]\"  
-            sorttable_customkey=\"$row[district] $row[county] $row[state] \"
-            onClick=\" empty('district:$row[recordID]'); \" > 
-            
-            <div class='$class'> $row[district]	</div>	  					
-        </td>
-       --> 
     
   
         <td $brbCols 
@@ -233,15 +222,6 @@ echo ("
             <div class='$class'> $row[w3w]	</div> 
         </td> 
     
-    <!-- New version added 2024-02-06  But not yet working
-        <td $brbCols
-            class=\"editable W3W c24 cent\"
-            id=\"w3w:$row[recordID]\"
-            oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \"
-            onClick=\"empty('w3w:$row[recordID]');\">
-            <div class='$class'> $row[w3w] </div>
-        </td>
-    -->          
         <td $brbCo
             class=\"editable editteam  c30 cent\" 
             id=\"team:$row[recordID]\" 
