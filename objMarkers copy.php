@@ -18,7 +18,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 10684;
+   //$q = 10684;
       // this code seems to work for the arrBounds but not for the objBounds 
    $sql1 = ("SELECT callsign,
     CONCAT(callsign, 'arr') AS allnameBounds,
