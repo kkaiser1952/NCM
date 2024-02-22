@@ -19,7 +19,7 @@
     require_once "GridSquare.php";
 
    //$q = 10684;
-      // this code seems to work for the arrBounds but not for the objBounds 
+   
    $sql1 = ("
     SELECT
 callsign,
@@ -31,7 +31,7 @@ CONCAT('[', GROUP_CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1),
 FROM (
 SELECT callsign, comment, timestamp
 FROM TimeLog
-WHERE netID = 10684
+WHERE netID = $q
 AND callsign <> 'GENCOMM'
 AND latlng IS NOT NULL
 AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
@@ -84,6 +84,7 @@ ORDER BY callsign, MIN(timestamp);
                             ),
                             ']'
                         ) AS allKoords
+                        
                     FROM TimeLog
                    WHERE netID = $q
                      AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
@@ -109,9 +110,12 @@ ORDER BY callsign, MIN(timestamp);
                     END AS 'objType',           
 	              
 	                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1) AS lat,
-                    SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1) AS lng,
-                    CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1)) AS koords
-         
+	                
+                    REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
+                    
+                    CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', 
+                    REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS koords
+
                FROM (
              SELECT callsign, timestamp, comment,  
               	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
@@ -136,13 +140,11 @@ foreach($db_found->query($sql3) as $row) {
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
+    $lat      = "$row[lat];";
+    $lng      = "$row[lng];";
     
-    echo "$comment<br><br>$koords<br><br>$callsign<br><br>$objType";
-               
-    //$comm1 = $comm2 = $comm3 = $comm4 = $comm5 = '';
-    //$pos1 = $pos2 = 0;
-    
-    //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 : 1 Driveway : Keith and Deb from KCMO : ///mice.beak.glimmer & N Ames Ave & NW 60th Ct : 39.20283,-94.60267";
+    echo "lat: $lat  lng: $lng<br>";
+    echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>/////////<br>";
     
     switch ($objType) {
     case "W3W":
@@ -212,7 +214,9 @@ foreach($db_found->query($sql3) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
-        $gs = gridsquare($row[koords]);
+        //$gs = gridsquare($row[koords]);
+        
+        echo "<br>gs: $gs<br>";
                 
         $icon = "";
         
