@@ -128,7 +128,7 @@
 /* Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721 0 Ft. */
         
         // Pull detail data FROM  poi table
-        $sql = "SELECT id, class, name, address, Notes, 
+        $sql = "SELECT id,  name,  Notes, 
                         LOWER(class) as class, 
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
