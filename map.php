@@ -648,8 +648,8 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     
     addToClassMap('chpL',       'chpList',      'police.png');
     addToClassMap('federalL',   'federalList',  'gov.png');
-    addToClassMap('skywarnL',   'skyWarnList',  'skywarn.png');
-    addToClassMap('spotterL',   'skyWarnList',  'skywarn2.png');
+    addToClassMap('skywarnL',   'skywarnList',  'skywarn.png');
+    addToClassMap('spotterL',   'skywarnList',  'skywarn2.png');
     addToClassMap('townhallL',  'townhallList', 'gov.png');
     
     addToClassMap('objectsL',   'ObjectList',   'marker00.png');
