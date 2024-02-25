@@ -463,6 +463,7 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
         greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
+        spotter       = new ObjIconClass({iconUrl: 'images/markers/skywarn2.png'});
         
     
     // These are the markers that will appear on the map
@@ -647,7 +648,8 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
     
     addToClassMap('chpL',       'chpList',      'police.png');
     addToClassMap('federalL',   'federalList',  'gov.png');
-    addToClassMap('skyWarnL',   'skyWarnList',  'skywarn.png');
+    addToClassMap('skywarnL',   'skyWarnList',  'skywarn.png');
+    addToClassMap('spotterL',   'skyWarnList',  'skywarn2.png');
     addToClassMap('townhallL',  'townhallList', 'gov.png');
     
     addToClassMap('objectsL',   'ObjectList',   'marker00.png');

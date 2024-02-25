@@ -188,7 +188,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                              $poimrkr = "polmrkr";  break;
                              
             case "skywarn":  $S = $S+1;  $iconName = "skywarnicon"; $markNO = "S$S";  
-                             $markername = "images/markers/skywarn.png";   
+                             $markername = "images/markers/skywarn2.png";   
                              $poimrkr = "skymrkr";  break;
                              
             case "fire":     $F = $F+1;  $iconName = "fireicon"; $markNO = "F$F";  
