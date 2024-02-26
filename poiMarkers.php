@@ -238,6 +238,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // if ($tactical == " " ) {$tactical = "$row[class]-$row[id]";}
         
       //  Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721,  0 Ft.
+      
        
          $poiMarkers .= "
     var $tactical = new L.marker(new L.LatLng({$row['latitude']},{$row['longitude']}), { 
@@ -248,6 +249,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     
     $('{$row['class_lower']}'._icon).addClass('$poimrkr');
 ";
+
 
  // End of $poiMarkers build
                      
