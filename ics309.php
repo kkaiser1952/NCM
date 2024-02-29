@@ -140,15 +140,9 @@ WHERE
                     $sql = ("SELECT time(TIMESTAMP) as timestamp, 
 			                        ID, callsign, comment, uniqueID
 			        		   FROM TimeLog 
-			        		  WHERE netID = $q
-			        		    
-			        		    
-                               
+			        		  WHERE netID = $q  
                                 AND callsign NOT IN('GENCOMM', 'weather')
-                                
-                                
-                                
-                                AND comment NOT REGEXP 'Role changed|Opened the net from|Mode set to|this id was deleted|The log was closed|The log was re-opened|Initial|Status change|Band set to|Role Removed'
+                                AND comment NOT REGEXP 'Role changed|Opened the net from|Mode set to|this id was deleted|The log was closed|The log was re-opened|Initial|Status change|Band set to|Role Removed|ZOOM|unattended|not heard'
 			        		  ORDER BY timestamp");
 			        		  
 			     //echo "$sql";
@@ -159,7 +153,7 @@ WHERE
 									   <td class=\"box4td1\"  colspan=\"1\">	$row[timestamp]</td>
 									   <td class=\"box4td2\"  colspan=\"1\">	$row[callsign]</td>
 									   <td class=\"box4td3\"  colspan=\"1\">UNK</td>
-									   <td class=\"box4td4\"  colspan=\"1\">	NCO</td>
+									   <td class=\"box4td4\"  colspan=\"1\">	NET</td>
 									   <td class=\"box4td5\"  colspan=\"1\">$row[uniqueID]</td>
 									   <td class=\"box4td6\"  colspan=\"1\">	$row[comment]</td>
 								  </tr>";			
