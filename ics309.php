@@ -7,8 +7,8 @@
 
     require_once "dbConnectDtls.php";
     
-    //$q = intval($_GET["NetID"]);  
-    $q = 11148;
+    $q = intval($_GET["NetID"]);  
+    //$q = 11148;
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
@@ -28,25 +28,41 @@
 	//	echo "c= $children<br>";
     
     
-    $sql1 = ("SELECT min(a.logdate) AS minlog, 
-    				 DATE(min(a.logdate)) AS indate, 
-    				 TIME(min(a.logdate)) AS intime, 
-    				 DATE(max(a.timeout)) AS outdate, 
-    				 TIME(max(a.timeout)) AS outtime, 
-    				 a.activity, a.fname, a.lname, 
-    				 a.netcontrol, 
-    				 a.callsign, 
-    				 a.netcall,
-    				 b.kindofnet, b.box4, b.box5, a.subNetOfID,
-    				 a.frequency,
-    				 a.traffic
-    	       FROM NetLog  as a
-    	       	   ,NetKind as b
-    	       WHERE a.netcall = b.call
-			     AND netID = $q 
-			     AND logdate = (SELECT min(logdate) 
-								  FROM NetLog 
-								  WHERE netID = $q )
+    $sql1 = ("SELECT 
+    MIN(a.logdate) AS minlog, 
+    DATE_FORMAT(MIN(a.logdate), '%Y-%m-%d') AS indate, 
+    DATE_FORMAT(MIN(a.logdate), '%H:%i:%s') AS intime, 
+    DATE_FORMAT(MAX(a.timeout), '%Y-%m-%d') AS outdate, 
+    DATE_FORMAT(MAX(a.timeout), '%H:%i:%s') AS outtime, 
+    a.activity, 
+    a.fname, 
+    a.lname, 
+    a.netcontrol, 
+    a.callsign, 
+    a.netcall, 
+    b.kindofnet, 
+    b.box4, 
+    b.box5, 
+    a.subNetOfID, 
+    a.frequency, 
+    a.traffic 
+FROM 
+    NetLog AS a
+    INNER JOIN NetKind AS b ON a.netcall = b.call
+WHERE 
+    a.netID = $q
+    AND a.logdate IS NOT NULL AND a.logdate != '0000-00-00 00:00:00'
+    AND a.timeout IS NOT NULL AND a.timeout != '0000-00-00 00:00:00'
+    AND a.logdate = (
+        SELECT 
+            MIN(logdate) 
+        FROM 
+            NetLog 
+        WHERE 
+            netID = $q
+            AND logdate IS NOT NULL AND logdate != '0000-00-00 00:00:00'
+    );
+
 			");
     	//echo $sql1;		
 			
@@ -125,14 +141,14 @@
 			                        ID, callsign, comment, uniqueID
 			        		   FROM TimeLog 
 			        		  WHERE netID = $q
-			        		    AND comment <> 'Initial  Log In'
-			        		    AND comment NOT LIKE '%this id was deleted%'
-                                AND comment <> 'The log was closed, ICS-214 Created'
+			        		    
+			        		    
+                               
                                 AND callsign NOT IN('GENCOMM', 'weather')
-                                AND comment <> 'The log was re-opened'
-                                AND comment NOT LIKE '%Mode set to:%'
-                                AND comment NOT LIKE '%Opened the  net from%'
-                                AND comment NOT LIKE '%Role changed%'
+                                
+                                
+                                
+                                AND comment NOT REGEXP 'Role changed|Opened the net from|Mode set to|this id was deleted|The log was closed|The log was re-opened|Initial|Status change|Band set to|Role Removed'
 			        		  ORDER BY timestamp");
 			        		  
 			     //echo "$sql";
