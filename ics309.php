@@ -7,8 +7,8 @@
 
     require_once "dbConnectDtls.php";
     
-    $q = intval($_GET["NetID"]);  
-    //$q = 10431;
+    //$q = intval($_GET["NetID"]);  
+    $q = 11148;
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
@@ -38,7 +38,8 @@
     				 a.callsign, 
     				 a.netcall,
     				 b.kindofnet, b.box4, b.box5, a.subNetOfID,
-    				 a.frequency
+    				 a.frequency,
+    				 a.traffic
     	       FROM NetLog  as a
     	       	   ,NetKind as b
     	       WHERE a.netcall = b.call
@@ -131,6 +132,7 @@
                                 AND comment <> 'The log was re-opened'
                                 AND comment NOT LIKE '%Mode set to:%'
                                 AND comment NOT LIKE '%Opened the  net from%'
+                                AND comment NOT LIKE '%Role changed%'
 			        		  ORDER BY timestamp");
 			        		  
 			     //echo "$sql";
