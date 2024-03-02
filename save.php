@@ -298,7 +298,6 @@
 		} ///////////////// End of Update for aprs_call
 		
 		////////////// Update for W3W starts here
-		/////// NOT Sure WE Need This
 		
 		elseif ($column == 'W3W' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
