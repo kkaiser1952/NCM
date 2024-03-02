@@ -2,6 +2,15 @@
     // locations_w3w.php is designed to work much like its counter part locations_APRS but with W3W as input by the logger.
     // It is called by the ajax() in NetManager-p2.js
     
+    /*
+        GOALS:
+        1) Hold off on displaying the dialogbox until after the W3W three words are entered
+        2) Get the cross roads, post them under the just entered three words
+        3) Display the dialogbox
+        4) Clear current 'comments' field
+        5) Add comment info into 'comments' field 
+        */
+    
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 

@@ -299,7 +299,7 @@
 		
 		////////////// Update for W3W starts here
 		/////// NOT Sure WE Need This
-		/*
+		
 		elseif ($column == 'W3W' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
 			          FROM NetLog 
@@ -321,7 +321,7 @@
 	
 			$db_found->exec($sql);
 
-		} */
+		} 
 		 ///////////////// End of Update for W3W
 		
 		
