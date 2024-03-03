@@ -91,7 +91,7 @@ function convertW3WtoCoordinates($what3words) {
     $lng             = $data['entries'][0]['lng'];
     $altitude_meters = $data['entries'][0]['altitude'];
     $alt_feet        = $data['entries'][0]['altitude']*3.28084;
-        $altitude_feet   = number_format($alt_feet, 1);
+    $altitude_feet   = number_format($alt_feet, 1);
     $aprs_comment    = $data['entries'][0]['comment'];
         //echo "aprs comment: {$aprs_comment};
         
