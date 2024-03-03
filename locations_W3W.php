@@ -1,6 +1,6 @@
 <?php
-    // locations_w3w.php is designed to work much like its counter part locations_APRS but with W3W as input by the logger.
-    // It is called by the ajax() in NetManager-p2.js
+    // locations_w3w.php is designed to work much like its counter part locations_APRS.php but with W3W as input by the logger.
+    // It is called by the ajax() in NetManager-W3W-APRS.js
     
     /*
         GOALS:
@@ -72,6 +72,7 @@ function convertW3WtoCoordinates($what3words) {
     echo "@63 W3W Longitude: " . $longitude . "<br>";
 
     // Everything below here matches the locations_APRS.php
+    // ====================================================
 
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 
@@ -228,7 +229,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       //echo $sql;
+       echo $sql;
        
        $stmt = $db_found->prepare($sql);
        $stmt->execute();

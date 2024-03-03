@@ -1,7 +1,18 @@
 <?php
-    // locations_APRS.php is designed to work much like its counter part locations_W3W.php but with APRS_call from the APRSIS as input.
-    // It is called by the ajax() in NetManager-p2.js
+    // locations_APRS.php is designed to work much like its counter part locations_W3W.php but with APRS_call from the APRSIS as input. Done via right click on the field.
+    // It is called by the ajax() in NetManager-W3W-APRS.js
     
+    /*
+        GOALS:
+        1)
+        2)
+        3)
+        4)
+        5)
+         
+         
+        */
+        
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
@@ -28,6 +39,7 @@
     include('config2.php');
     
     // Everything below here matches the locations_W3W.php
+    // ===================================================
     
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
 
