@@ -9,18 +9,19 @@
         3) Display the dialogbox
         4) Clear current 'comments' field
         5) Add comment info into 'comments' field 
-        */
+    */
     
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
 	// Lets build the two queries we need to get and data and update the tables.
-/*/
+
+    
 // Get values from the NetLog table
 $sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
           FROM NetLog 
 		WHERE recordID = '$recordID'";
-echo "sql1: $sql1";
+//echo "sql1: $sql1";
 			foreach($db_found->query($sql) as $row) {
 				$netID = $row['netID'];
 				$ID	   = $row['ID'];
@@ -30,6 +31,7 @@ echo "sql1: $sql1";
 			    $lng = $row['longitude'];
 			}
 	
+/*
 // Update the TimeLog table			
 $sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
         VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
@@ -216,7 +218,6 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 //echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
-    require_once "dbConnectDtls.php";
     
        $sql1 = 
        "UPDATE NetLog 
@@ -232,7 +233,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        
        $stmt = $db_found->prepare($sql1);
        $stmt->execute();
-       
+       */
        //echo $sql;   
        //echo "\n\n";
        
@@ -248,12 +249,12 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        */
        $deltax = 'LOC&#916:W3W '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-       /*
+       
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
-       "; */
+       "; 
        
        // The recordID below is from the NetLog
        
