@@ -260,7 +260,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        $sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
                 VALUES ('$recordID', '$ID', '$nid', '$cs1', '$deltax', NOW(), '$lat', '$lng', '$ipaddress')";
        
-       //echo $sql2;
+       echo $sql2;
        
        $stmt = $db_found->prepare($sql2);
        $stmt->execute();

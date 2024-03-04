@@ -299,6 +299,7 @@
 		
 		////////////// Update for W3W starts here
 		
+		/* Commented on 2024-03-04, current code is at the bottom of locations_w3w.php
 		elseif ($column == 'W3W' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
 			          FROM NetLog 
@@ -322,6 +323,7 @@
 
 		} 
 		 ///////////////// End of Update for W3W
+		 */
 		
 		
 		elseif ($column == 'team' AND $value != '') {
