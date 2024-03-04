@@ -14,6 +14,7 @@
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 
+
 // Function to convert W3W into lat/long
 function convertW3WtoCoordinates($what3words) {
     $w3w_api_key = $config['geocoder']['api_key'];
@@ -106,14 +107,14 @@ function convertW3WtoCoordinates($what3words) {
     $thislatlng = "$lat,$lng";
     
     // Output the aprs supplied data
-    //echo "<u>From The APRS API part 2</u><br>";
-    //echo "Latitude: {$lat}<br>";
-    //echo "Longitude: {$lng}<br>";
-    //echo "Altitude: {$altitude}<br>";
-    //echo "First Time: {$firsttime} UTC<br>";
-    //echo "This Time: {$thistime} UTC<br>";
-    //echo "aprs comment: {$aprs_comment};
-    //echo "thislatlng: {$thislatlng}";
+    echo "<u>From The APRS API part 2</u><br>";
+    echo "Latitude: {$lat}<br>";
+    echo "Longitude: {$lng}<br>";
+    echo "Altitude: {$altitude}<br>";
+    echo "First Time: {$firsttime} UTC<br>";
+    echo "This Time: {$thistime} UTC<br>";
+    echo "aprs comment: {$aprs_comment} <br>";
+    echo "thislatlng: {$thislatlng} ";
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
