@@ -13,7 +13,31 @@
     
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
-
+	
+	// Lets build the two queries we need to get and data and update the tables.
+/*/
+// Get values from the NetLog table
+$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
+          FROM NetLog 
+		WHERE recordID = '$recordID'";
+echo "sql1: $sql1";
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$w3w  = $row['W3W'];
+			    $lat = $row['latitude'];
+			    $lng = $row['longitude'];
+			}
+	
+// Update the TimeLog table			
+$sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
+        NOW(), '$lat', '$lng', '$ipaddress')";
+	
+	echo "sql2: $sql2";
+    //$db_found->exec($sql);
+*/
 
 // Function to convert W3W into lat/long
 function convertW3WtoCoordinates($what3words) {
@@ -194,7 +218,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 // This SQL updates the NetLog with all the information we just created.
     require_once "dbConnectDtls.php";
     
-       $sql = 
+       $sql1 = 
        "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'
@@ -206,7 +230,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
          WHERE recordID = $recordID;
        ";
        
-       $stmt = $db_found->prepare($sql);
+       $stmt = $db_found->prepare($sql1);
        $stmt->execute();
        
        //echo $sql;   
@@ -224,15 +248,21 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        */
        $deltax = 'LOC&#916:W3W '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-       $sql = 
+       /*
+       $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
-       ";
+       "; */
        
-       echo $sql;
+       // The recordID below is from the NetLog
        
-       $stmt = $db_found->prepare($sql);
+       $sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
+                VALUES ('$recordID', '$ID', '$nid', '$cs1', '$deltax', NOW(), '$lat', '$lng', '$ipaddress')";
+       
+       //echo $sql2;
+       
+       $stmt = $db_found->prepare($sql2);
        $stmt->execute();
         
 ?>
