@@ -4,7 +4,7 @@
 //error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
-require_once "getCrossroads.php";
+require_once "getCrossRoads.php";
 
     // Select data from the poi table
     $sql = "SELECT id, latitude, longitude, Type
@@ -21,10 +21,11 @@ require_once "getCrossroads.php";
              $latitude = $row['latitude'];
              $longitude = $row['longitude'];
              $address = getCrossRoads($latitude, $longitude);
-             echo "$id, $latitude, $longitude, $address<br>";
+
+            // echo "$id, $latitude, $longitude, $address<br>";
              
          // Update the w3w column in the poi table
-       /*         $update_stmt = $db_found->prepare("
+                $update_stmt = $db_found->prepare("
                 UPDATE poi 
                    SET address = :ADDR_value 
                  WHERE id = :id 
@@ -32,7 +33,7 @@ require_once "getCrossroads.php";
                 $update_stmt->bindParam(':ADDR_value', $address);
                 $update_stmt->bindParam(':id', $id);
             $update_stmt->execute();
-       */     
+            
          }
            
 ?>
