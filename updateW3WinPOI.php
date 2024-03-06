@@ -6,9 +6,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";
 
     // Select data from the poi table
-    $sql = "SELECT id, latitude, longitude 
-              FROM poi
-             WHERE w3w = '' AND Type = 'TORNADO' ";
+    $sql = "SELECT id, latitude, longitude FROM poi
+             WHERE w3w = '' ";
     
         foreach($db_found->query($sql) as $row) {
             $id = $row["id"];
