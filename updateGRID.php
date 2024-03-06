@@ -13,8 +13,8 @@
     
 
 $sql = "SELECT latitude, longitude
-		  FROM NetLog
-		 WHERE recordID =  $recordID
+		  FROM poi
+		 WHERE Type = 'TORNADO'
 	   ";
     $stmt = $db_found->prepare($sql);
 	$stmt->execute();
@@ -26,9 +26,9 @@ $sql = "SELECT latitude, longitude
 			//echo "$lat $lon $grid";
 	 
 	 	   
-$sql2 = "UPDATE NetLog 
-		   SET grid = '$grid', delta = 'Y'
-		 WHERE recordID = $recordID";
+$sql2 = "UPDATE poi 
+		   SET grid = '$grid', dttm  = CURRENT_TIMESTAMP
+		 WHERE Type = 'TORNADO'";
 	
 	$stmt2 = $db_found->prepare($sql2);
 	$stmt2 -> execute();
