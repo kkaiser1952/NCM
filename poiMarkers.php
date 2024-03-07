@@ -25,6 +25,7 @@
     
     $sql = ("SELECT tactical, latitude, COUNT(latitude)
                FROM poi
+               WHERE Type <> 'TORNADO'
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -43,6 +44,7 @@
         $sql = ("SELECT 
                     GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
+                   WHERE Type <> 'TORNADO'
                   GROUP BY class
                   ORDER BY class  
                 ");
@@ -69,6 +71,7 @@
                 GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
                 CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
                   FROM  poi 
+                  WHERE Type <> 'TORNADO'
              	 GROUP BY class
                  ORDER BY class
                ");
@@ -90,6 +93,7 @@
         $sql = ("SELECT class, 
                         GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList                     
                    FROM  poi
+                   WHERE Type <> 'TORNADO'
                 /*$whereClause*/
 				  GROUP BY class
                   ORDER BY class
@@ -141,6 +145,7 @@
                         CONCAT(class,id) as altTactical,
                         dttm
                   FROM poi 
+                  WHERE Type <> 'TORNADO'
                   ORDER BY class 
                ";            
               

@@ -462,8 +462,10 @@ document.getElementById('customToggleMaidenhead').addEventListener('click', func
         rfhole        = new PoiIconClass({iconUrl: 'BRKMarkers/hole.svg'}),    
         objicon       = new ObjIconClass({iconURL: 'images/markers/marker00.png'}), //00 marker
         blueFlagicon  = new ObjIconClass({iconUrl: 'BRKMarkers/blue_flag.svg'}),
-        greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'});
-        spotter       = new ObjIconClass({iconUrl: 'images/markers/skywarn2.png'});
+        greenFlagicon = new ObjIconClass({iconUrl: 'BRKMarkers/green_flag.svg'}),
+        spotter       = new ObjIconClass({iconUrl: 'images/markers/skywarn2.png'})
+        ;
+        
         
     
     // These are the markers that will appear on the map
