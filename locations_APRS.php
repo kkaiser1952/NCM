@@ -24,8 +24,9 @@
     $cs1            = $_GET["cs1"]; 
     $nid            = $_GET["nid"]; 
     $objName        = $_GET["objName"]; 
+    $APRScomment    = $_GET["comment"];
     
-    /*
+    
     echo ("@17 in locations_APRS.php:: <br>
        aprs_call: $aprs_call <br>
        recordID: $recordID <br>
@@ -33,8 +34,9 @@
        CurrentLng: $CurrentLng <br>
        cs1: $cs1 <br>
        nid: $nid <br>
-       objName: $objName <br>");
-    */ 
+       objName: $objName <br>
+       APRScomment: $APRScomment <br>");
+    
     // passcodes
     include('config2.php');
     
@@ -167,7 +169,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$objName : '
+              ,comments     = '$APRScomment--<br>Via APRS'
          WHERE recordID = $recordID;
        ";
        
@@ -187,7 +189,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
         Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
         Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
        */
-       $deltax = 'LOC&#916:APRS '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+       $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
        $sql = 
        "INSERT INTO TimeLog 
