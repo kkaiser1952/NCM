@@ -75,7 +75,8 @@ function convertW3WtoCoordinates($what3words) {
     $CurrentLng  = $_GET["CurrentLng"];        
     $cs1         = $_GET["cs1"];  
     $nid         = $_GET["nid"];   
-    $objName     = $_GET["objName"];      
+    $objName     = $_GET["objName"];   
+    $W3Wcomment  = $_GET["comment"];   
     
     // This variable not needed for W3W, set to stay like locations_APRS.php
     $aprs_callsign = ""; 
@@ -87,7 +88,8 @@ function convertW3WtoCoordinates($what3words) {
         CurrentLng: $CurrentLng <br>
         cs1: $cs1 <br>
         nid: $nid <br>
-        objName: $objName <br>");
+        objName: $objName <br>
+        W3Wcomment: $W3Wcomment <br>");
      
     // passcodes 
     include('config2.php');
@@ -133,14 +135,14 @@ function convertW3WtoCoordinates($what3words) {
     $thislatlng = "$lat,$lng";
     
     // Output the aprs supplied data
-    echo "<u>From The APRS API part 2</u><br>";
-    echo "Latitude: {$lat}<br>";
-    echo "Longitude: {$lng}<br>";
-    echo "Altitude: {$altitude}<br>";
-    echo "First Time: {$firsttime} UTC<br>";
-    echo "This Time: {$thistime} UTC<br>";
-    echo "aprs comment: {$aprs_comment} <br>";
-    echo "thislatlng: {$thislatlng} ";
+    //echo "<u>From The APRS API part 2</u><br>";
+    //echo "Latitude: {$lat}<br>";
+    //echo "Longitude: {$lng}<br>";
+    //echo "Altitude: {$altitude}<br>";
+    //echo "First Time: {$firsttime} UTC<br>";
+    //echo "This Time: {$thistime} UTC<br>";
+    //echo "aprs comment: {$aprs_comment} <br>";
+    //echo "thislatlng: {$thislatlng} ";
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -227,7 +229,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$objName : '
+              ,comments     = '$W3Wcomment--<br>Via W3W'
          WHERE recordID = $recordID;
        ";
        
@@ -247,7 +249,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
         Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
         Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
        */
-       $deltax = 'LOC&#916:W3W '.$objName.' : '.$aprs_comment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+       $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
        
        $sql2 = 
@@ -258,10 +260,12 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        
        // The recordID below is from the NetLog
        
-       $sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
+       $sql2 = 
+       "INSERT INTO TimeLog 
+            (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
                 VALUES ('$recordID', '$ID', '$nid', '$cs1', '$deltax', NOW(), '$lat', '$lng', '$ipaddress')";
        
-       echo $sql2;
+       //echo $sql2;
        
        $stmt = $db_found->prepare($sql2);
        $stmt->execute();

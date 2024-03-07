@@ -26,8 +26,8 @@
     $objName        = $_GET["objName"]; 
     $APRScomment    = $_GET["comment"];
     
-    
-    echo ("@17 in locations_APRS.php:: <br>
+    /*
+    echo ("@30 in locations_APRS.php:: <br>
        aprs_call: $aprs_call <br>
        recordID: $recordID <br>
        CurrentLat: $CurrentLat <br>
@@ -36,6 +36,7 @@
        nid: $nid <br>
        objName: $objName <br>
        APRScomment: $APRScomment <br>");
+    */
     
     // passcodes
     include('config2.php');
