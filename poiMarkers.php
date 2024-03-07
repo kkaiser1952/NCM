@@ -122,6 +122,7 @@
 	    $G = 0;  // State / Federal / 
 	    $T = 0;  // Town Hall
 	    $K = 0;  // RF Holes 
+	    $Y = 0;  // Tornado (siren)
 	    
 	    
 	    $markNO     = ''; // the marker number (might be alpha)
@@ -143,7 +144,7 @@
                         CONCAT(name, ' ', address, ' ', Notes, ' ',
                         latitude, ', ', longitude, ' ', altitude, ' Ft.' ) as addr,
                         
-                        REPLACE(REPLACE(tactical,'-',''), '#', '') AS tactical,
+                        REPLACE(REPLACE(REPLACE(tactical,'-',''), '#', ''), '!', '') AS tactical,
 
                         callsign,
                         CONCAT(class,id) as altTactical,
@@ -233,7 +234,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                              $poimrkr = "aviationmrkr";  break;
                              
             case "siren":   $Y = $Y+1;  $iconName = "tornadoicon"; $markNO = "K$K";
-                             $markername = "images/markers/tornado.svg";    
+                             $markername = "images/markers/siren.png";    
                              $poimrkr = "sirenmrkr";  break;
                                                              
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
