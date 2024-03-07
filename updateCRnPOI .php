@@ -1,4 +1,7 @@
 <?php
+// updateCRinPOI.php
+
+// used to update the crossroads field
 
 //ini_set('display_errors', 1);
 //error_reporting(E_ALL ^ E_NOTICE);

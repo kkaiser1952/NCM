@@ -1,4 +1,7 @@
 <?php
+    
+    // poiMarkers.php
+    
     // This program selects from the DB/NetLog table all the data needed to create the marker points on a map ;
 			ini_set('display_errors',1); 
 			error_reporting (E_ALL ^ E_NOTICE);
@@ -25,7 +28,7 @@
     
     $sql = ("SELECT tactical, latitude, COUNT(latitude)
                FROM poi
-               WHERE Type <> 'TORNADO'
+                
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -44,7 +47,7 @@
         $sql = ("SELECT 
                     GROUP_CONCAT( DISTINCT CONCAT(class,'L') SEPARATOR ',') AS class
                    FROM poi
-                   WHERE Type <> 'TORNADO'
+                    
                   GROUP BY class
                   ORDER BY class  
                 ");
@@ -57,21 +60,21 @@
         $classNames = rtrim($classNames, ',');
         //echo "classNames:<br> $classNames";
         // classNames:
-        //aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL
+        //aviationL,eocL,fireL,hospitalL,kcheartL,policeL,repeaterL,rfholeL,sheriffL,skywarnL,stateL,sirenL
 
             
         // Create the leaflet LayerGroup for each type (class) of marker 
         // Problem here, perhaps with tackList
         // Fix this when we upgrade MySQL to v8
         // SQL to extend the length of output allowed by GROUP_CONCAT
-        $max_len_value = 10000; // Set the desired maximum length
+        $max_len_value = 1000000; // Set the desired maximum length
             $db_found->exec("SET SESSION group_concat_max_len = $max_len_value");
    
         $sql = ("SELECT 
                 GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList,
                 CONCAT('var ', class, 'List = L.layerGroup([', GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', '), '])') as MarkerList
                   FROM  poi 
-                  WHERE Type <> 'TORNADO'
+                   
              	 GROUP BY class
                  ORDER BY class
                ");
@@ -87,13 +90,13 @@
         $class = "";
         $overlayListNames = "";
         
-        $max_len_value = 10000; // Set the desired maximum length
+        $max_len_value = 10000000; // Set the desired maximum length
             $db_found->exec("SET SESSION group_concat_max_len = $max_len_value");
   
         $sql = ("SELECT class, 
                         GROUP_CONCAT( REPLACE(tactical,'-','') SEPARATOR ', ') as tackList                     
                    FROM  poi
-                   WHERE Type <> 'TORNADO'
+                    
                 /*$whereClause*/
 				  GROUP BY class
                   ORDER BY class
@@ -140,12 +143,13 @@
                         CONCAT(name, ' ', address, ' ', Notes, ' ',
                         latitude, ', ', longitude, ' ', altitude, ' Ft.' ) as addr,
                         
-                        REPLACE(tactical,'-','') AS tactical, 
+                        REPLACE(REPLACE(tactical,'-',''), '#', '') AS tactical,
+
                         callsign,
                         CONCAT(class,id) as altTactical,
                         dttm
                   FROM poi 
-                  WHERE Type <> 'TORNADO'
+                   
                   ORDER BY class 
                ";            
               
@@ -227,6 +231,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             case "rfhole":   $K = $K+1;  $iconName = "holeicon"; $markNO = "K$K";
                              $markername = "images/markers/hole.svg";    
                              $poimrkr = "aviationmrkr";  break;
+                             
+            case "siren":   $Y = $Y+1;  $iconName = "tornadoicon"; $markNO = "K$K";
+                             $markername = "images/markers/tornado.svg";    
+                             $poimrkr = "sirenmrkr";  break;
                                                              
             default:         $D = $D+1;  $iconName = "default";  $markNO = "D$D";
                              $markername = "images/markers/blue_50_flag.png";

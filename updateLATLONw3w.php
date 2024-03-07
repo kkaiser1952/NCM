@@ -1,4 +1,6 @@
 <?php
+    // updateLATLONw3w.php
+    
 	// this program calculates a new lat/lon anytime the what3words (w3w) column is changed. 
 	// It also find the nearest cross roads based on the lat lon using the GeoNames API
 	// It runs from the editLAT and editLON in CallEditFunction.js
