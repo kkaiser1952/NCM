@@ -16,7 +16,7 @@
 	
 	// Lets build the two queries we need to get and data and update the tables.
 
-    
+    // Test recordID = 159815
 // Get values from the NetLog table
 $sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
           FROM NetLog 
