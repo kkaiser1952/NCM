@@ -11,8 +11,8 @@ require_once "GridSquare.php";
     $sql = "SELECT id, latitude, longitude, Type, grid 
               FROM `poi`
              WHERE grid is NULL
-               AND city = 'Smithville'
-               AND Type = 'TORNADO' ";
+               AND class = 'siren'
+                ";
                
                echo ("$sql");
                
@@ -30,8 +30,8 @@ require_once "GridSquare.php";
                    SET GRID = :GRID_value 
                  WHERE id = :id 
                    AND grid is NULL
-                   AND city = 'Smithville'
-                   AND Type = 'TORNADO' ");
+                   AND class = 'siren'
+                    ");
                 $update_stmt->bindParam(':GRID_value', $grid);
                 $update_stmt->bindParam(':id', $id);
               echo "Attempting to execute update statement...";
