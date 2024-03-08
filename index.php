@@ -786,17 +786,24 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
+/*
+document.addEventListener('DOMContentLoaded', function() {
+        var tdElement = document.getElementById('c24:<?php echo $row['recordID']; ?>');
+        
+        // Left click event
+        tdElement.addEventListener('click', function(event) {
+            // Display dialog box here
+            // Example: showModalDialogBox();
+        });
 
-document.getElementById('w3w_content_<?php echo $row['recordID']; ?>').addEventListener('contextmenu', function(event) {
-        mapWhat3Words('<?php echo $row['w3w']; ?>');
-        event.preventDefault();
+        // Right click event
+        tdElement.addEventListener('contextmenu', function(event) {
+            // Run JavaScript function for right click action
+            mapWhat3Words('<?php echo $row['w3w']; ?>');
+            event.preventDefault(); // Prevent default right-click behavior
+        });
     });
-
-    document.getElementById('w3w_content_<?php echo $row['recordID']; ?>').addEventListener('click', function() {
-        empty('w3w:<?php echo $row['recordID']; ?>');
-        getAPRSLocations('<?php echo $row['aprs_call']; ?>', '<?php echo $row['recordID']; ?>', '<?php echo $row['latitude']; ?>', '<?php echo $row['longitude']; ?>', '<?php echo $row['callsign']; ?>', '<?php echo $row['netID']; ?>', 'W3W');
-    });
-
+*/
 
 </script>
 

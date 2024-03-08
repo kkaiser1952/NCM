@@ -212,13 +212,8 @@ echo ("
             
             <div class='$class'> $row[district]	</div>			
         </td>   
-    
- <!-- 
-        <td <?php echo $brbCols; ?> class=\"W3W c24 cent\" id=\"w3w:<?php echo $row['recordID']; ?>\" oncontextmenu=\"mapWhat3Words('<?php echo $row['w3w']; ?>'); return false;\" onclick=\"empty('w3w:<?php echo $row['recordID']; ?>'); getAPRSLocations('<?php echo $row['aprs_call']; ?>', '<?php echo $row['recordID']; ?>', '<?php echo $row['latitude']; ?>', '<?php echo $row['longitude']; ?>', '<?php echo $row['callsign']; ?>', '<?php echo $row['netID']; ?>', 'W3W');\" style=\"cursor: pointer;\">
-            <div class='<?php echo $class; ?>' contenteditable='false'><?php echo $row['w3w']; ?></div>
-        </td>
 
---> 
+  
         <td $brbCols 
             class=\" W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
@@ -227,8 +222,7 @@ echo ("
             style=\"cursor: pointer;\">
             <div class='$class' readonly> $row[w3w]	</div> 
         </td> 
-
-    
+      
         <td $brbCo
             class=\"editable editteam  c30 cent\" 
             id=\"team:$row[recordID]\" 
