@@ -272,6 +272,7 @@ foreach($db_found->query($sql3) as $row) {
                  <br>
                     Station Comment:<br>$comm1
                  <br>
+               
                  </div>
                 ";          
                 
@@ -281,6 +282,8 @@ foreach($db_found->query($sql3) as $row) {
                  </div>
                  <div class='xx'>
                     Captured:<br>$row[timestamp]
+                <br><br>
+                    objMarkers.php
                  </div>
                 ";       
                      

@@ -147,7 +147,7 @@
     		  
     		//  $div4 = "<div class='cc' >$cr</div>";
     		  
-    		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a></div>";
+    		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a><br><br>stationMarkers.php</div>";
     		  
     		  //echo ("$dup --> $callsign ");
     		  
@@ -168,8 +168,7 @@
 				$(`$callsign`._icon).addClass(`$logrow[classColor]`);
                 stationMarkers.push($callsign);
 				";
-				
-			
+						
         } // End $row[koords] test... is there a value     
         
         //$dup = $dup + 45;  //this is the rotation angle	   
