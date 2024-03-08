@@ -6,7 +6,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once "dbConnectDtls.php";
 
     // Select data from the poi table
-    $sql = "SELECT id, latitude, longitude FROM poi
+    $sql = "SELECT id, latitude, longitude 
+              FROM poi
              WHERE w3w = 'w3w' OR w3w = '' ";
     
         foreach($db_found->query($sql) as $row) {
@@ -38,7 +39,10 @@ require_once "dbConnectDtls.php";
             $w3w_value = $w3w["words"];
             
             // Update the w3w column in the poi table
-                $update_stmt = $db_found->prepare("UPDATE poi SET w3w = :w3w_value WHERE id = :id AND w3w = 'w3w' or w3w = '' ");
+                $update_stmt = $db_found->prepare("
+                    UPDATE poi
+                       SET w3w = :w3w_value 
+                     WHERE id = :id AND w3w = 'w3w' or w3w = '' ");
                 $update_stmt->bindParam(':w3w_value', $w3w_value);
                 $update_stmt->bindParam(':id', $id);
                 $update_stmt->execute();
