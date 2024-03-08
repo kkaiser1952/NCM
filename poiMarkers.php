@@ -259,10 +259,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // ... other properties
         icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
         title: " . json_encode("{$row['tactical']} {$row['name']}  {$row['Notes']} {$row['koords']}") . ",
-    }).addTo(fg).bindPopup(" . json_encode("{$row['tactical']}<br> {$row['name']} <br> {$row['Notes']}<br> {$row['koords']}<br>Created: {$row['dttm']}") . ");
+    }).addTo(fg).bindPopup(" . json_encode("{$row['tactical']}<br><br>Name: {$row['name']}<br><br>Crossroads: <b>{$row['address']}</b> <br><br> Grid: {$row[grid]}<br>{$row['Notes']}<br> {$row['koords']}<br><br>Created: {$row['dttm']}") . ");
     
     $('{$row['class_lower']}'._icon).addClass('$poimrkr');
-";
+    ";
 
 
  // End of $poiMarkers build

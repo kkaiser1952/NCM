@@ -160,7 +160,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 //echo "\n\n";
 
 // This SQL updates the NetLog with all the information we just created.
-    require_once "dbConnectDtls.php";
+    //require_once "dbConnectDtls.php";
     
        $sql = 
        "UPDATE NetLog 
