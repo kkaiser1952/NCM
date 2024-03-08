@@ -787,6 +787,17 @@ function removeSpaces(str) {
 }
 
 
+document.getElementById('w3w_content_<?php echo $row['recordID']; ?>').addEventListener('contextmenu', function(event) {
+        mapWhat3Words('<?php echo $row['w3w']; ?>');
+        event.preventDefault();
+    });
+
+    document.getElementById('w3w_content_<?php echo $row['recordID']; ?>').addEventListener('click', function() {
+        empty('w3w:<?php echo $row['recordID']; ?>');
+        getAPRSLocations('<?php echo $row['aprs_call']; ?>', '<?php echo $row['recordID']; ?>', '<?php echo $row['latitude']; ?>', '<?php echo $row['longitude']; ?>', '<?php echo $row['callsign']; ?>', '<?php echo $row['netID']; ?>', 'W3W');
+    });
+
+
 </script>
 
 </body>
