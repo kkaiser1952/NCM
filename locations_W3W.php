@@ -16,6 +16,24 @@
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
+	$recordID       = trim($_GET["recordID"]);
+    $CurrentLat     = trim($_GET["CurrentLat"]);
+    $CurrentLng     = trim($_GET["CurrentLng"]);
+    $cs1            = trim($_GET["cs1"]);
+    $nid            = trim($_GET["nid"]);
+    $objName        = trim($_GET["objName"]);
+    $APRScomment    = trim($_GET["comment"]);
+
+    
+    echo ("@27 in locations_W3W.php::   <br>
+       recordID: $recordID              <br>
+       CurrentLat: $CurrentLat          <br>
+       CurrentLng: $CurrentLng          <br>
+       cs1: $cs1                        <br>
+       nid: $nid                        <br>
+       objName: $objName                <br>
+       APRScomment: $APRScomment        <br>");
+	
 	// Lets build the two queries we need to get and data and update the tables.
 
     // Test recordID = 159815
@@ -23,7 +41,7 @@
 $sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
           FROM NetLog 
 		WHERE recordID = '$recordID'";
-//echo "sql1: $sql1";
+echo "sql1: $sql1";
 			foreach($db_found->query($sql) as $row) {
 				$netID = $row['netID'];
 				$ID	   = $row['ID'];
@@ -83,15 +101,15 @@ function convertW3WtoCoordinates($what3words) {
     // This variable not needed for W3W, set to stay like locations_APRS.php
     $aprs_callsign = ""; 
     
-    echo("@47 in locations_W3W.php:: <br>
-        W3W entered: $W3W_entered <br>
-        recordID: $recordID <br>
-        CurrentLat: $CurrentLat <br>
-        CurrentLng: $CurrentLng <br>
-        cs1: $cs1 <br>
-        nid: $nid <br>
-        objName: $objName <br>
-        W3Wcomment: $W3Wcomment <br>");
+    echo("@47 in locations_W3W.php::    <br>
+        W3W entered: $W3W_entered       <br>
+        recordID: $recordID             <br>
+        CurrentLat: $CurrentLat         <br>
+        CurrentLng: $CurrentLng         <br>
+        cs1: $cs1                       <br>
+        nid: $nid                       <br>
+        objName: $objName               <br>
+        W3Wcomment: $W3Wcomment         <br>");
      
     // passcodes 
     include('config2.php');
@@ -221,11 +239,11 @@ function convertW3WtoCoordinates($what3words) {
        
        echo "<br>deltax: $deltax<br>";
 
-
+/*
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo $json;
 echo "\n\n";
-
+*/
 
 // This SQL updates the NetLog with all the information we just created.
     
