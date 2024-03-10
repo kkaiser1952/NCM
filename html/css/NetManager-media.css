@@ -1,0 +1,153 @@
+
+
+/* These set CSS settings depending on screen size */
+/* Break #1 */
+
+@media (max-width: 1383px) { 
+	#genComments {
+		min-width: 35%;
+		border-style: hidden;
+		padding-bottom: 1px;
+		padding-top: 1px;
+		height: 18pt;
+		max-height: 18pt;
+		color: blue;
+	}
+	
+
+	#pgtitle {
+		font-size: 18px;
+	}
+	#cc {
+		font-size: 12px;
+	/*	background: transparent !important; */
+	}
+	#urcb {
+		visibility: visible;
+	}
+	#dttm2 {
+		font-size: 10px;
+	}
+}
+
+
+
+@media (max-width: 834px ) {
+	.btn-group {
+		font-size: 9pt;
+		padding: 5px 12px;
+	}
+	
+	#version {
+		visibility: hidden;
+	}
+}
+
+
+@media (max-width: 667px) {
+	#pgtitle::after {
+		content: "NCM";
+		font-size: 12pt;
+		visibility: visible;
+		display: block;
+		position: absolute;
+		top: 2px;
+	}
+	.weather-place {
+    	display: none !important;
+	}
+	
+}
+
+@media (max-width: 1010px ) {
+    .weather-place {
+    	display: none !important;
+	}
+	#pgtitle2 {
+    	
+    	visibility: hidden;
+	}
+	#version {
+		visibility: hidden;
+	}
+}
+
+
+@media (max-width: 1070px ) {
+    .upperRightCorner  {
+        display: none !important;
+           
+    }
+	
+}
+
+/* This seems like a dupe but is needed to hide 'Net Control Manager' and change it to NCM */
+@media (max-width: 667px ) {
+	#pgtitle {
+		visibility: hidden;
+	}
+}
+
+@media (max-width: 503px ) {
+	#pgtitle::after {
+		content: "";
+		visibility: hidden;
+	}
+	.weather-place {
+		visibility: hidden;
+	}
+}
+
+
+@media only screen 
+    and (min-device-width : 414px) 
+    and (max-device-width : 736px) 
+    and (orientation : landscape) {
+        
+
+        
+        #pgtitle::after {
+    		content: "NCM";
+    		font-size: 12pt;
+    		visibility: visible;
+    		display: block;
+    		position: absolute;
+    		top: 2px;
+    	}
+
+        .weather-place {
+            display: none !important;
+        }
+        .weather-place img {
+            display: none !important;
+        }
+        
+        .theMenu  {
+            display: none !important;
+            visibility: hidden;
+        }
+        .upperRightCorner  {
+            display: none !important;
+            visibility: hidden;
+        }
+
+}
+
+/* This prevents the named div and others from being printed */
+@media print{
+	#rightCorner{display: none !important; }
+	.btn-group{display: none !important;}
+	.nobg2{display: none !important;}
+	#ourFrequencies{display:none !important;}
+	#refbutton{display:none !important;}
+	#primeNav{display:none !important;}
+	.theBox{display:none !important;}
+	.weather-place{display:none !important;}
+	.refbutton{display:none !important;}
+	#forcb1 {display: none !important;}
+	#makeNewNet {display: none !important;}
+	#refrate {display: none !important;}
+/*	.form-group {display: block;} */
+}
+
+

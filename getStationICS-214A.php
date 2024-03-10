@@ -25,7 +25,7 @@ function secondsToDHMS($seconds) {
 $netID = strip_tags($_POST["netid"]); // The one we are copying rows to
 $call = strip_tags($_POST["call"]); // The name of this new event	
 
-//$netID = 4743;
+//$netID = 10684;
 //$call = 'wa0tjt';
 
     // change dttm below to timeout or choose the later timestamp
@@ -73,8 +73,11 @@ $call = strip_tags($_POST["call"]); // The name of this new event
     foreach($db_found->query($sql) as $row) {
 		++$num_rows; // Increment row counter for coloring background of rows
 		
-		$activity .= "<tr><td style='white-space: nowrap; width:25%;'> $row[timestamp] </td>
-		                <td colspan=2> $row[comment] </td></tr>";
+		$activity .= "
+		<tr>
+		    <td class='highlightMe' style='white-space: nowrap; width:25%;'> $row[timestamp] </td>
+            <td colspan=2> $row[comment] </td>
+        </tr>";
 		
 		// ====================================
         // Now get the W3W words from lat/lon
@@ -137,6 +140,25 @@ $call = strip_tags($_POST["call"]); // The name of this new event
         <head>
             <meta charset = "UTF-8" />
             <title>Amateur Radio Net Control Manager Individual Activity Log</title>
+            <script>
+                console.log("in the function");
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get all elements with the class "highlightMe"
+                    var elements = document.getElementsByClassName("highlightMe");
+                        console.log("assign elements:"+elements);
+                    // Loop through each element and check if it contains the specified string
+                    for (var i = 0; i < elements.length; i++) {
+                        var tdContent = elements[i].innerHTML;
+                console.log("tdContent: "+tdContent);
+                        // Check if the content contains the specified string
+                        if (tdContent.includes("LOCΔ:APRS")) {
+                            // Add the "highlight" class to the current element
+                            elements[i].classList.add("highlight");
+                        }
+                    }
+                });
+            </script>
+            
             <style>
                 table {
                     width: 100%;

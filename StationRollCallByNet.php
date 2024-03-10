@@ -233,16 +233,19 @@ $(document).ready(function()
 						break;
 						case "LSN": $nc = "Liaison to ...";
 						break;
-						case "EM": $nc = "Emergency Manager";
+						case "EM":  $nc = "Emergency Manager";
 						break;
 						case "CMD": $nc = "Command";
 						break;
-						case "TL": $nc = "Team Lead";
+						case "TL":  $nc = "Team Lead";
 						break;
 						case "RELAY": $nc = "Relay Station";
 						break;
 						case "   ": $nc = "Operator";
 						break;
+						case "Capt": $nc = "Team Captain";
+						break;
+
 					}
 					
 					// fix creds if they exist by adding a comma after its name.

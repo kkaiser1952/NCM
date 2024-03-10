@@ -1,4 +1,10 @@
  <?php
+    /* 
+     ini_set('display_errors', 1);
+     ini_set('display_startup_errors', 1);
+     error_reporting(E_ALL);
+     */
+
      // Get the IP address of the person making the changes.
     require_once "getRealIpAddr.php";
 	
@@ -8,13 +14,14 @@
 				return substr_replace($subject, $replace, $pos, strlen($search));
 			}
 			return $subject;
-	}
+	} // end of str_replace_irst function
 	
 	// credentials and grid calculator
 	 require_once "dbConnectDtls.php";
 	 require_once "GridSquare.php";
  
 		$rawdata = file_get_contents('php://input');
+		    //error_log("rawdata= $rawdata");
 		    // echo("$rawdata");  
             // Value=Keith&Id=Fname%3A89407Keith
             // Value=Douglas&Id=Lname%3A89407Douglas
@@ -65,27 +72,27 @@
 		// ALLOW UPDATE TO THESE FIELDS BUT TEST tactical for DELETE don't update for that 
 		if ($column == "county"     | $column == "state"     | $column == "grid" | 
 		    $column == "latitude"   | $column == "longitude" | $column == "district" |
-		    $column == "tactical" AND $value <> "DELETE" | $column == "team" | $column == 'aprs_call' |
-		    $column == "cat" | $column == "section" ) {
+		    $column == "tactical" AND $value <> "DELETE" | $column == "team" | $column == 'aprs_call' | $column == "cat" | $column == "section" ) {
     		    
             if ($column == 'tactical' AND $value != '') {
-    		$sql = "SELECT ID, netID, callsign, tactical
-			          FROM NetLog 
-					WHERE recordID = '$recordID'";
-
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$tactical  = $row[tactical];
-			}
-			
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Tactical set to: $value', '$open', '$ipaddress')";
-		
-			$db_found->exec($sql);
+        		$sql = "SELECT ID, netID, callsign, tactical
+    			          FROM NetLog 
+    					WHERE recordID = '$recordID'";
+    
+    			foreach($db_found->query($sql) as $row) {
+    				$netID = $row['netID'];
+    				$ID	   = $row['ID'];
+    				$cs1   = $row['callsign'];
+    				$tactical  = $row['tactical'];
+    			}
+    			
+    			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+    					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'Tactical set to: $value', '$open', '$ipaddress')";
+    		
+    			$db_found->exec($sql);
 
 		    } // end tactical
+		    
     		
     		if ($column == "cat") { 
         		$column = "TRFK-FOR"; 
@@ -96,9 +103,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			$deltaX = "$column Change";
@@ -125,9 +132,9 @@
 					 WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			// Then we insert the new update into the TimeLog table
@@ -186,9 +193,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			}
 			
 			// Then we insert the new update into the TimeLog table
@@ -213,11 +220,11 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$recordID = $row[recordID];
-				$tt		  = $row[tt];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$recordID = $row['recordID'];
+				$tt		  = $row['tt'];
 			} // end elseif column = mode
 			
 			// Then we insert the new update into the TimeLog table
@@ -235,9 +242,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			
 			// Then we insert the new update into the TimeLog table
@@ -252,9 +259,9 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			
 			// Then we insert the new update into the TimeLog table	
@@ -266,25 +273,58 @@
 			$db_found->exec($sql);
 		} // End of Band elseif
 		
+		////////////// Update for aprs_call starts here
 		elseif ($column == 'aprs_call' AND $value != '') {
-    		$sql = "SELECT ID, netID, callsign, aprs_call
+    		$sql = "SELECT ID, netID, callsign, aprs_call, latitude, longitude
 			          FROM NetLog 
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$aprs_call  = $row[aprs_call];
-			//	$value = strtoupper($value);
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$aprs_call  = $row['aprs_call'];
+			    $lat = $row['latitude'];
+			    $lng = $row['longitude'];
 			}
-			
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', '$open', '$ipaddress')";
-		
+				
+		    // Updated 2024-01-31 to stop using column latlng		
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'APRS_CALL set to: $value', 
+        NOW(), '$lat', '$lng', '$ipaddress')";
+	
 			$db_found->exec($sql);
 
-		} // End of aprs_call
+		} ///////////////// End of Update for aprs_call
+		
+		////////////// Update for W3W starts here
+		
+		/* Commented on 2024-03-04, current code is at the bottom of locations_w3w.php
+		elseif ($column == 'W3W' AND $value != '') {
+    		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
+			          FROM NetLog 
+					WHERE recordID = '$recordID'";
+
+			foreach($db_found->query($sql) as $row) {
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$w3w  = $row['W3W'];
+			    $lat = $row['latitude'];
+			    $lng = $row['longitude'];
+			}
+				
+			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
+        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
+        NOW(), 
+        '$lat', '$lng', '$ipaddress')";
+	
+			$db_found->exec($sql);
+
+		} 
+		 ///////////////// End of Update for W3W
+		 */
+		
 		
 		elseif ($column == 'team' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, team
@@ -292,10 +332,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$team  = $row[team];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$team  = $row['team'];
 			}
 			
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
@@ -311,9 +351,9 @@
 					 WHERE recordID = '$recordID'";
 					
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
 			} // end elseif column = traffic
 			 
 			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
@@ -329,7 +369,7 @@
 			
 			// The code here fixes the issue of losing any comment with a tick (') in it, but the display in the
 			// Time Line Comments field still shows the backslash (\) used to escape the tick. YIKES!
-			$value = str_replace("'", "\'", $value);
+			$value = str_replace("'", "''", $value);
 			
 			// First we have to go get some more information about who updated the comment
 			$sql = "SELECT ID, netID, callsign, home
@@ -337,10 +377,10 @@
 					WHERE recordID = '$recordID'";
 
 			foreach($db_found->query($sql) as $row) {
-				$netID = $row[netID];
-				$ID	   = $row[ID];
-				$cs1   = $row[callsign];
-				$home  = $row[home];
+				$netID = $row['netID'];
+				$ID	   = $row['ID'];
+				$cs1   = $row['callsign'];
+				$home  = $row['home'];
 			}
 			
 			// If its to reset the home coordinates then do this
@@ -448,7 +488,7 @@
             	$stmt= $db_found->prepare($sql);
             	$stmt->execute();
             	    $result = $stmt->fetch();
-            	        $callsign = $result[callsign];        
+            	        $callsign = $result['callsign'];        
 
             // Update the stations table for the changed values
     		$sql = "UPDATE stations SET $column = '$value' 

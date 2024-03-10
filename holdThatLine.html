@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Table Cell</title>
+  <style>
+    .editC {
+      border: 1px solid #ccc;
+      padding: 5px;
+      width: 200px; /* Set your desired default width */
+    }
+
+    .editC [contenteditable="true"] {
+      font-size: 16px; /* Set your desired font size */
+    }
+  </style>
+  <script>
+    var initialContent = '';
+
+    function setCaretToEnd(element) {
+      var range = document.createRange();
+      range.selectNodeContents(element);
+      range.collapse(false);
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    function editTableCell(tdId) {
+      var td = document.getElementById(tdId);
+
+      if (td.classList.contains('editC')) {
+        // Preserve the initial content
+        if (!initialContent) {
+          initialContent = td.innerText;
+        }
+
+        // Make the <td> content-editable
+        td.contentEditable = true;
+
+        // Set cursor at the end of the content or a new line
+        setCaretToEnd(td);
+
+        td.focus();
+      }
+    }
+
+    function blurTableCell(tdId) {
+      var td = document.getElementById(tdId);
+      if (td.classList.contains('editC')) {
+        td.contentEditable = false;
+        // If initial content is not set, set it to the current content
+        if (!initialContent) {
+          initialContent = td.innerText;
+        }
+      }
+    }
+
+    function handleKeyPress(event, tdId) {
+      var td = document.getElementById(tdId);
+
+      // Check if Enter key is pressed
+      if (event.key === 'Enter') {
+        event.preventDefault();
+
+        // Append a new line and set cursor at the end
+        td.innerHTML += '<br>';
+        setCaretToEnd(td);
+      }
+
+      // Check if the entered text starts with '~'
+      if (event.key === '~' && td.innerText.trim().length === 1) {
+        event.preventDefault();
+
+        // Save the line (you can adjust this behavior)
+        console.log('Save the line:', td.innerText);
+
+        // Preserve the existing content and reset the current line
+        initialContent = td.innerText;
+        td.innerHTML = '';
+      }
+    }
+  </script>
+</head>
+<body>
+
+<table border="1">
+  <tr>
+    <td class="editable editC c14" id="comments:153085" oncontextmenu="stationTimeLineList('KD0NBH:10684');return false;" onclick="editTableCell('comments:153085'); empty('comments:153085');" onblur="blurTableCell('comments:153085');" onkeypress="handleKeyPress(event, 'comments:153085');" title="Comments, Click to edit...">
+    </td>
+  </tr>
+  <!-- Add more rows as needed -->
+</table>
+
+</body>
+</html>

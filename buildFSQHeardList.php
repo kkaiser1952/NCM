@@ -4,7 +4,7 @@ require_once "dbConnectDtls.php";
 
 //$netID = strip_tags($_POST["q"]);
 $netID = intval($_POST["q"]);
-//$netID = 6532;
+//$netID = 10503;
 // you may have to increase the size of the GROUP_CONCAT if the number of callsigns is above 146
 // this is done with a SET GLOBAL group_concat_max_len=2048 this makes the max about 292 callsigns
 
@@ -60,11 +60,20 @@ $netID = intval($_POST["q"]);
         	$callListwStat       .= "$row[callsign]   $row[netcontrol]   $row[act]<br>";
         	$callListwStatPound  .= "$row[callsign]#<br>";
 
-            $callListwSNR       .= "<tr><td>$relaystation$row[callsign]?</td><td>$relaystation$row[callsign] ack</td></tr>";
-            $callListwACK       .= "<tr><td>allcall $row[callsign]#</td><td>$relaystation$row[callsign] ack</td></tr>";
-            $callListwTFK       .= "<tr><td>$relaystation$row[callsign]&</td><td>$relaystation$row[callsign] ack</td></tr>";
+            $callListwSNR       .= "<tr><td>$relaystation $row[callsign]?
+                                    </td>
+                                    <td>$relaystation allcall $row[callsign] ack</td></tr>";
+            
+            $callListwACK       .= "<tr><td>allcall $row[callsign]#
+                                    </td>
+                                    <td>$relaystation allcall $row[callsign] ack</td></tr>";
+            
+            $callListwTFK       .= "<tr><td>$relaystation $row[callsign]&
+                                    </td>
+                                    <td>$relaystation allcall $row[callsign] ack</td></tr>";
 	    } // end foreach
 	    
+	    //   For ack to all: w0wts;allcall w0nrp/a ack
 	
 	echo("<!DOCTYPE html>
         <html>
@@ -124,10 +133,12 @@ $netID = intval($_POST["q"]);
                 <table>
                     $callListwTFK
                 </table>
+                
+                <p class='p2'>For ack to all:  w0wts;allcall w0nrp/a ack   </p>
             </div>
                
             <div>
-            <div><p>allcall ncs final list of stations for net #$netID <br> $callList</p></div>
+            <div><p>$relaystation allcall ncs final list of stations for net #$netID <br> $callList</p></div>
                 <p class='p2'>===== Finals and closing =====<br>
         	       allcall NCS calling late and missed stations, call NCS now. <br>
         	       $allrelaystation NCS calling late and missed stations, call NCS now. <br><br>
@@ -152,6 +163,7 @@ $netID = intval($_POST["q"]);
                 <br><br><br>
                 
             <div>
+                update: 2023-11-30<br>
                 buildFSQHeardList.php
             </div>
         </body>

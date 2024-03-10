@@ -8,18 +8,21 @@
     require_once "dbConnectDtls.php";
     
     $q = $_GET['q'];  //echo "q is $q";
-    //$q = $_GET["NetID"]; 
+    //$q = 10005; 
 
 	/* Added the class stuff on 2018-1-17 */
-	$sql = $db_found->prepare("
+       $sql = ("
 	    SELECT CONCAT(netcall,' ',activity,' for: ', DATE_FORMAT(logdate,'%Y-%m-%d')) as activity
           FROM NetLog 
-         WHERE netID = $q
+         WHERE netID = :netId
            AND LOGDATE <> 0
          LIMIT 1
         ");
-	       
-	   $sql->execute();
-            $ts = $sql->fetchColumn();  
+        
+        $stmt = $db_found->prepare($sql);
+        $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+        $stmt->execute();
+        
+            $ts = $stmt->fetchColumn();  
                 echo "$ts";        
 ?>

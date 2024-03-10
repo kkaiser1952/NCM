@@ -1,0 +1,157 @@
+		@charset "UTF-8";
+
+*
+{
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+}
+.firstword {
+	color:#4604cb;
+	font-weight: bold;
+}
+body {
+	padding-left: 5px;
+	padding-top: 5px;
+	width: 540pt;
+	color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    margin: 0pt;
+}
+.thead {
+	width: 100%;
+	border: 1px solid black;
+}
+
+.row1 {
+	display: flex;
+}
+.r1box1 {
+	width: 130pt;
+	border: 1px solid black;
+}
+.r1box2 {
+	width: 235pt;
+	border: 1px solid black;
+}
+.r1box3 {
+	width: 235pt;
+	border: 1px solid black;
+}
+.row1 > span {
+	padding: 5px;
+	font-size: 15px;
+}
+
+.row2 {
+	display: flex;
+}
+.row2 > span {
+	padding: 5px;
+	font-size: 15px;
+}
+.r2box1 {
+	 width: 50%;
+	 border: 1px solid black;
+}
+.r2box2 {
+	width: 50%;
+	border: 1px solid black;
+}
+
+.row3 {
+	display: flex;
+}
+.row3 > span {
+	padding: 5px;
+	font-size: 15px;
+}
+.r3box1 {
+	text-align: center;
+	width: 600pt;
+	border: 1px solid black;
+}
+
+.row5 {
+	display: flex;
+	border-top: 2px solid black;
+}
+.row5 > span {
+	padding: 5px;
+	font-size: 15px;
+}
+.r5box1 {
+	width: 40%;
+	border: 1px solid black;
+
+}
+.r5box2 {
+	width: 40%;
+	border: 1px solid black;
+
+}
+.r5box3 {
+	width: 20%;
+	border: 1px solid black;
+
+}
+
+.tr {
+	
+}
+.th1 {
+	padding: 2px;
+	width: 10%;
+	border: 1px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.th2 {
+    padding: 2px;
+	width: 20%;
+	border: 1px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.th3 {
+    padding: 2px;
+	width: 20%;
+	border: 1px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+.th4 {
+	padding: 2px;
+	width: 50%;
+	border: 1px solid black;
+	border-bottom: 2px solid black;
+}
+
+.box4td1, .box4td3, .box4td5 {
+	padding: 2px;
+	width: 10%;
+	border: 1px solid black;
+	border-right: 2px solid black;
+}
+.box4td2, .box4td4 {
+	padding: 2px;
+	width: 10%;
+	border: 1px solid black;
+}
+.box4td6 {
+	padding: 2px;
+	width: 50%;
+	border: 1px solid black;
+}
+
+
+.table1 {
+	width: 100%;
+	border: 1px solid black;
+	border-collapse: collapse;
+    border-spacing: 0;
+}

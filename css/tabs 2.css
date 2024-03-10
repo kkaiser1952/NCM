@@ -1,0 +1,49 @@
+/* Mine: written: ????; updated: 2018-1-17 */
+
+#tabs ul {
+	float:left;
+	width:100%;
+	padding:0;
+	margin:0;
+	list-style-type: none;
+}
+#tabs ul li {
+	display: inline;
+}
+#tabs ul li a {
+	width: 20%;
+    color: white;
+    text-align: center;
+    background-color: #81C6DD;
+    float: left;
+    overflow: hidden;
+    padding: 10px 5px;
+}
+
+#tabs ul li:first-child a {
+    border-right: 1px solid white;
+    background-color: #90CA77;
+}
+
+#tabs ul li:last-child a {
+    border-left: 1px solid white;
+    background-color: #E9B64D;
+}
+
+#tabs {
+    height: 36px;
+    width: 100%;
+}
+
+#tab1{
+    background-color: #90CA77;
+}
+
+#tab2{
+    background-color: #81C6DD;
+}
+
+#content {
+    text-align: justify;
+    overflow: hidden;
+}

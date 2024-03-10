@@ -1,0 +1,28 @@
+{
+    "short_name": "NCM",
+    "name": "Net Control Manager",
+    "description": "Net Control Manager",
+    "icons": [
+                {
+                    "src": "/images/NCM.png",
+                    "type": "image/png",
+                    "size": "55x55"
+                },
+                {
+                    "src": "/images/NCM2.png",
+                    "type": "image/png",
+                    "size": "450X55"
+                },
+                {
+                    "src": "/images/US-NWS-Logo.png",
+                    "type": "image/png",
+                    "size": "50x50"
+                }
+              ],
+    "start_url": "indexSW.php",
+    "background_color": "",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "",
+    "shortcuts": []
+}

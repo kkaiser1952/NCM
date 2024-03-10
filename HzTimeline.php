@@ -24,6 +24,9 @@
     <meta name="Revisit" content="1 month" >
     <meta name="keywords" content="Amateur Radio Net, Ham Net, Net Control, Call Sign, NCM, Emergency Management Net, Net Control Manager" >
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon-32x32.png" >
     
     <!-- =============== All above this should not be editied ====================== -->
@@ -41,11 +44,19 @@
 <style>
     .title {
         position: absolute;
-        top: 25px;
+        top: 35px;
         left: 50px;
         font-size: 20pt;
         color: red;
     }
+
+    .container {
+    /*    width: 100%;
+        overflow-x: auto;
+        white-space: nowrap; 
+        */
+    }
+    
 </style>
 
 <script>
@@ -63,33 +74,36 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     
      $netID = intval( $_GET["NetID"] );   //$q = 2916;
-     //$netID = 1000;
-    
-    //$netID = 3685;
+     //$netID = 10032;
     
 // Get some net info
 $sql = ("
     SELECT activity, frequency, netcall, DATE(logdate)
       FROM NetLog
-     WHERE netID = $netID
+     WHERE netID = :netId
      LIMIT 0,1 
 ");    
 
-//echo "$sql";
-
-$stmt = $db_found->prepare($sql);
-	$stmt->execute();
-        $activity = $stmt->fetchColumn(0);
+    // prepared statments
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':netId', $netID, PDO::PARAM_INT);
     $stmt->execute();
-        $frequency = $stmt->fetchColumn(1);
-    $stmt->execute();
-        $netcall = $stmt->fetchColumn(2);
-    $stmt->execute();
-        $dateofit = $stmt->fetchColumn(3);
-        
-        //echo("<br><br><br>$activity, $frequency, $netcall, $dateofit");
-
     
+    // Fetch the results as an associative array
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+    	$$activity = $row['activity'];
+        $frequency = $row['frequency'];
+        $netcall = $row['netcall'];
+        $dateofit = $row['DATE(logdate)'];
+        
+        //echo 'act: ' . $activity . ' frq: ' . $frequency . ' net: ' . $netcall . ' dat: ' . $dateofit;
+} else {
+    echo "No rows found.";
+}
+
+    //echo "before $netID";
 // Count how many unique minute by grouped minutes
 $sql = (" 
     
@@ -102,10 +116,10 @@ $sql = ("
             CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) AS hrmn,
                     
-           COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
+            COUNT(CONCAT(date_format(timestamp,'%H'),':',LPAD(MINUTE(
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0))) AS hrmncount,
            
-           timestamp
+            timestamp
            
       FROM TimeLog
      WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
@@ -113,6 +127,12 @@ $sql = ("
                 FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/300)*300)),2,0)) 
              
 ");
+    //$stmt = $db_found->prepare($sql);
+    //$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    //$stmt->execute();
+    
+    // Fetch the results as an associative array
+    //$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $db_found->exec($sql);
 
@@ -132,9 +152,9 @@ $sql = $db_found->prepare(" SELECT COUNT(*) as cntr FROM ncm.temp_hrmn ");
                 else if ($rowcount = 9  ) {$mfactor = 20; }
                 else if ($rowcount >9   ) {$mfactor = 10; }
         $callwidth = ($rowcount * $mfactor)."px";
-            echo "::  $rowcount $mfactor  $callwidth";
+            //echo "::  $rowcount $mfactor  $callwidth";
 
-$sql = ("
+$sql = "
     SELECT 
         callsign,
      
@@ -171,16 +191,17 @@ $sql = ("
 
       FROM TimeLog a
           ,temp_hrmn b
-     WHERE netID = $netID AND callsign NOT LIKE '%genc%' AND callsign NOT LIKE '%weather%'
+     WHERE netID = $netID 
+       AND callsign NOT LIKE '%genc%' 
+       AND callsign NOT LIKE '%weather%'
        AND b.hrmn = CONCAT(date_format(a.timestamp,'%H'),':',LPAD(MINUTE(
         FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(a.timestamp)/300)*300)),2,0))
      
      GROUP BY combo
-     ORDER BY a.uniqueID  ");
+     ORDER BY a.uniqueID  ";
      
      $tmpArray = array();
      $rowno = 0;
-
 ?>
 
 </head>
@@ -220,7 +241,6 @@ $sql = ("
   
   <p>HzTimeline.php</p>
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 

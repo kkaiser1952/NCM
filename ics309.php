@@ -8,7 +8,7 @@
     require_once "dbConnectDtls.php";
     
     $q = intval($_GET["NetID"]);  
-   // $q = 3080;
+    //$q = 11148;
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
@@ -28,26 +28,43 @@
 	//	echo "c= $children<br>";
     
     
-    $sql1 = ("SELECT min(a.logdate) AS minlog, 
-    				 DATE(min(a.logdate)) AS indate, 
-    				 TIME(min(a.logdate)) AS intime, 
-    				 DATE(max(a.timeout)) AS outdate, 
-    				 TIME(max(a.timeout)) AS outtime, 
-    				 a.activity, a.fname, a.lname, 
-    				 a.netcontrol, 
-    				 a.callsign, 
-    				 a.netcall,
-    				 b.kindofnet, b.box4, b.box5, a.subNetOfID,
-    				 a.frequency
-    	       FROM NetLog  as a
-    	       	   ,NetKind as b
-    	       WHERE a.netcall = b.call
-			     AND netID = $q 
-			     AND logdate = (SELECT min(logdate) 
-								  FROM NetLog 
-								  WHERE netID = $q )
+    $sql1 = ("SELECT 
+    MIN(a.logdate) AS minlog, 
+    DATE_FORMAT(MIN(a.logdate), '%Y-%m-%d') AS indate, 
+    DATE_FORMAT(MIN(a.logdate), '%H:%i:%s') AS intime, 
+    DATE_FORMAT(MAX(a.timeout), '%Y-%m-%d') AS outdate, 
+    DATE_FORMAT(MAX(a.timeout), '%H:%i:%s') AS outtime, 
+    a.activity, 
+    a.fname, 
+    a.lname, 
+    a.netcontrol, 
+    a.callsign, 
+    a.netcall, 
+    b.kindofnet, 
+    b.box4, 
+    b.box5, 
+    a.subNetOfID, 
+    a.frequency, 
+    a.traffic 
+FROM 
+    NetLog AS a
+    INNER JOIN NetKind AS b ON a.netcall = b.call
+WHERE 
+    a.netID = $q
+    AND a.logdate IS NOT NULL AND a.logdate != '0000-00-00 00:00:00'
+    AND a.timeout IS NOT NULL AND a.timeout != '0000-00-00 00:00:00'
+    AND a.logdate = (
+        SELECT 
+            MIN(logdate) 
+        FROM 
+            NetLog 
+        WHERE 
+            netID = $q
+            AND logdate IS NOT NULL AND logdate != '0000-00-00 00:00:00'
+    );
+
 			");
-    			
+    	//echo $sql1;		
 			
     foreach($db_found->query($sql1) as $row) {
 	    
@@ -110,7 +127,7 @@
 		<table class = "table1">
 			<thead id="thead" style="text-align: center;">			
 				<tr> 
-					<th class="th1" colspan="1">	Time<br>(Local)</th>
+					<th class="th1" colspan="1">	Time<br>(UTC)</th>
 					<th class="th2" colspan="2">FROM:<br>Call Sign/ID | Msg #</th>
 					<th class="th3" colspan="2">TO:<br>Call Sign/ID | Msg #</th>
 					<th class="th4" colspan="1">Message</th>
@@ -119,51 +136,24 @@
 			<tbody>
 				<?php
 	        
-			     /*   $sql = ("SELECT time(TIMESTAMP) as timestamp, 
-			                        ID, callsign, comment
-			        		   FROM TimeLog 
-			        		  WHERE netID = $q 
-			        		    AND comment <> 'Initial Log In'
-			        		    AND comment NOT LIKE 'this id was deleted'
-			        		  ORDER BY timestamp");
-			     */   		  
+			       		  
                     $sql = ("SELECT time(TIMESTAMP) as timestamp, 
 			                        ID, callsign, comment, uniqueID
 			        		   FROM TimeLog 
-			        		  WHERE netID = $q
-			        		    AND comment <> 'Initial  Log In'
-			        		    AND comment NOT LIKE '%this id was deleted%'
-                                AND comment <> 'The log was closed, ICS-214 Created'
+			        		  WHERE netID = $q  
                                 AND callsign NOT IN('GENCOMM', 'weather')
-                                AND comment <> 'The log was re-opened'
-                                AND comment NOT LIKE '%Mode set to:%'
-                                AND comment NOT LIKE '%Opened the  net from%'
+                                AND comment NOT REGEXP 'Role changed|Opened the net from|Mode set to|this id was deleted|The log was closed|The log was re-opened|Initial|Status change|Band set to|Role Removed|ZOOM|unattended|not heard'
 			        		  ORDER BY timestamp");
-			/*
-			  
-    			  SELECT DISTINCT time(timestamp) as timestamp, band, comment,
-	   TimeLog.callsign
-  FROM TimeLog, NetLog
- WHERE TimeLog.netID = 1274 
-   AND NetLog.netID = 1274
-   AND TimeLog.id = NetLog.id
- ORDER BY timestamp
-    			  
-    			  
-    			         $sql = ("SELECT time(t1.timestamp) as timestamp, t1.callsign, t2.band, t1.comment, t1.netID, t1.id
-FROM TimeLog t1 
-JOIN (SELECT band, netID, id FROM NetLog WHERE netID = 1274) t2 
-ON (t1.id = t2.id ) 
-WHERE t1.netID=1274 AND t2.netID = 1274
-GROUP BY band, callsign, timestamp
-ORDER by timestamp"); */
+			        		  
+			     //echo "$sql";
+
 						foreach($db_found->query($sql) as $row) {
 							
 							echo "<tr style=\"height: 17pt\">
 									   <td class=\"box4td1\"  colspan=\"1\">	$row[timestamp]</td>
 									   <td class=\"box4td2\"  colspan=\"1\">	$row[callsign]</td>
 									   <td class=\"box4td3\"  colspan=\"1\">UNK</td>
-									   <td class=\"box4td4\"  colspan=\"1\">	NCO</td>
+									   <td class=\"box4td4\"  colspan=\"1\">	NET</td>
 									   <td class=\"box4td5\"  colspan=\"1\">$row[uniqueID]</td>
 									   <td class=\"box4td6\"  colspan=\"1\">	$row[comment]</td>
 								  </tr>";			

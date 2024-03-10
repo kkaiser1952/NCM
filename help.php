@@ -175,6 +175,7 @@
         <a href="#listNets">List/Find All Nets</a><br>
         <a href="#netbyNumber">Brouse Net By Number</a><br>
         <a href="#listPois">List All POI's</a><br>
+        <a href="#addrfPoi">Add RF Hole POI</a><br>
         
         <a href="#mapNet">Map This Net</a><br>
         <a href="#timeline">Graphic Time Line</a><br>
@@ -315,7 +316,8 @@
 	<b style="color:#aa7941;">FCC</b> - Federal Communications Commission<br>
 	
 	<b style="color:#aa7941;">MARS</b> - Military Auxiliary Radio system<br>
-	<b style="color:#aa7941;">W3W</b> - What3Words
+	<b style="color:#aa7941;">W3W</b> - What3Words<br>
+	<b style="color:#aa7941;">POI</b> - Point of Interest
   </div>
 </div>
 <br>
@@ -346,6 +348,13 @@
 	<h3>Recent Changes:</h3>
 	
 	    <header>
+    	    <h2>2023</h2>
+    	<p>Be sure to look at the new RF Hole Points of interest information in the <a href="#Mapping"> Mapping your Net section</a>.</p>
+    	    <p>2023 is still underway but new things are coming. The new RF Hole points of interest are in place and open for your test.</p>
+    	    <p>GMRS callsign look-up is also in the works and should be available in the near future.</p>
+    	    
+    	    <p> The big news should come later this year and has to do with the MySQL table in use. While this is something you don't see exactly, you will feel its importance once fully implemented. Faster response times especially when dealing with a larger net are going to be impressive.</p>
+    	    
     	    <h2>2022</h2>
     	    <a href="#facility">Check out the new facility type net</a><br>
     	    <p>Be sure to check out <a href="#location">Station Location Considerations</a> for a discussion on the importance and means of knowing the location of each station logging into your nets.
@@ -361,6 +370,7 @@
                 <li><a href="#aprs_call">APRS_CALL</a></li>
                 
             </ul>
+            
                 
     	    <p>2022 has seen an expansion of the optional columns with the additon of 'Team', 'W3W' and 'APRS_CALL'. The functionality of all three is still in development especially the last two. One use for the 'Team' column will be to allow sorting of the table based on a team name. Names like Safety, SAG, Rest Stop, for example during a bike ride can help finding a specific call sign easier. 
     	    </p><p>The new 'W3W' and 'APRS_CALL' columns have at least two uses. The first would be to more easily change a statons location (latitude, longitude, grid). The second is to give NCM the ability to track the movement of a staton over time. Both these scenarios are discussed in the 'Station Location Considerations' discussion a little further below.
@@ -442,7 +452,7 @@
         </p><p>
         The best use of W3W looks like this:
         </p><ol>       
-        <li>The station operator uses the smart phone What 3 Words app to find their location and calls it into the NCS/logger. The W3W app is free for all smart phones, requires no internet or connectivity to work.
+        <li>The station operator uses the smart phone What 3 Words app to find their location and then useing his radio calls it into the NCS/logger. The W3W app is free for all smart phones, requires no internet or connectivity to work.
         </li><li>The NCS/logger checks this location using the w3w web site to be sure the three words were received correctly.
         </li><li>If correct, the three words are entered into the W3W field in NCM.
         </ol><p>        
@@ -451,10 +461,10 @@
         The best use of APRS_CALL looks like this:
         </p>
         <ol>
-        <li>Station WA0TJT manually beacons his location via APRS, and notifies the NCS/logger he/she has done so.
+        <li>Station WA0TJT-8 manually beacons his location via APRS, and notifies the NCS/logger he/she has done so.
         </li><li>The NCS/logger right clicks on the stations call-ssid information in the APRS_CALL field.  Be sure to have the station’s ssid entered into NCM.
         </ol><p>
-        In both circumstance the information is propagated to the other location fields of NCM. They are interchangeable; you can use either method to report location information and it’s not dependent on how it was done the previous time.
+        In both circumstance the information is propagated to the other location fields of NCM. They are interchangeable; you can use either method to report location information and it’s not dependent on how it was done the previous time W3W or APRS.
         </p><p>
         <b>Time Based Tracking</b>
         </p><p>
@@ -596,7 +606,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 			<p> If not already created then...</p>
 			<p>Click the blue <b style="color:red">'Start A New Net'</b> Button at the top of the page.</p>
 			
-			<p style="padding-top: 1px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=500 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+			<p style="padding-top: 1px;"><embed src="https://net-control.us/video/Start%20A%20Te0st%20Net.mov" width=800 height=600 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
     			
 			</p>
 
@@ -703,7 +713,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	<p>The background color of this menu bar will change from <b style="color:#c992d3">purple</b> to <b style="color:red">red</b> over the course of 10 minutes. Use this as a visual reminder to do a station identification.</p>
 	<p>Entering Station call signs (There are a number of possible ways to do this.) All entries can be done with a <b style="color:red">TAB TAB TAB (triple tab)</b> after entering a partial or full call sign only.</p>
 	
-	<p style="padding-top: 1px;"><embed src="video/Add%20A%20Call%20to%20Net.mov" width=400 height=400 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
+	<p style="padding-top: 1px;"><embed src="video/Add%20A%20Call%20to%20Net.mov" width=800 height=600 controller=true autoplay=false PLUGINSPAGE="http://www.apple.com/quicktime/">
     			
 			</p>
 	
@@ -751,7 +761,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 
 	<p>
 		To delete an entry, locate the <b style="color:red">red X</b> at the end of the row. Click on it, or on the words (Click to delete). <br>A dialog box will open asking you to confirm. 
-			Choose your option.<br> Another method if the above doesn't work is to type in the 'Tactical' column the word <b>'DELETE'</b> in all caps. Be sure its the only thing in the cell and not adding to a tactical call. You'll know if this worked because <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> will respond with a "DELETED successfully", the row will be deleted on the next data refresh.<br>A delete is not undoable, if needed just add the call again.
+			Choose your option.</p><p> Another method if the above doesn't work is to type in all caps <b>'DELETE'</b> into the 'Tactical' column. Be sure its the only thing in the cell and not adding to a tactical call. You'll know if this worked because <span class="firstword">N</span><span class="secondword">C</span><span class="thirdword">M</span> will respond with a "DELETED successfully", the row will be deleted on the next data refresh.</p><p style="color: blue;">A delete is not undoable, if needed just add the call again.
 	</p>
 	<p>
 		In both cases this action is recorded in the TimeLine Log to document the deletion.
@@ -777,7 +787,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	   <p>You can always return to the default sort order by clicking the blue 'Refresh' button.</p>
 	   <p>The <b>default sort</b> is a somewhat complex algorithm that took a while to figure out. Basically its sorted first by the control stations, starting with the primary net control station, followed by the logging station. It seemed logical to keep them at the top. At the same time it seemed logical to move the checked-out stations to the bottom. The exception to this is a control station that has checked-out. I left them with the other control stations in case its status was in question. All others are then sorted by the time of check-in. They are recorded to the second but only displayed to the minute.</p>
 	   
-	   <p><b style="color:red">Close Net</b> - Clicking this button should be the last thing the NCO or logger does at the end of a net. After asking who (enter your call sign) is closeing the net it populates the Time Out fields and calculates the Total Volunteer Hours at the bottom of the table. It does not reset any log out times that may already be indicated. Total Volunteer Hours are calculated to the second from log-in to log-out times. You are automatically taken to the ICS-214 report after closing a net.</p>
+	   <p><b style="color:red">Close Net</b> - Clicking this button should be the last thing the NCO or logger does at the end of a net. After asking who (enter your call sign) is closing the net it populates the Time Out fields and calculates the Total Volunteer Hours at the bottom of the table. It does not reset any log out times that may already be indicated. Total Volunteer Hours are calculated to the second from log-in to log-out times. You are automatically taken to the ICS-214 report after closing a net.</p>
 	   <p><b>To re-open a closed log,</b> where the time out is showing, RIGHT click the <b style="color:red">'Net Closed'</b> button and confirm. Be advised however that <u>this resets all entries (except those already checked out) for timeout to NULL</u>. There is no current method to reset the time out by station. I'm working on it. Contact me if you have an issue or need help.</p>
 	   <p>If you are just looking at a past log or the current log, you may just leave the page, or close the page. <b style="color:red;">But please DO NOT use the <b style="color:red">Close Net</b> button again.</b></p>
 	   
@@ -1489,6 +1499,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
     DB Variable: w3w<br>
 </div>
    
+ <a href="https://what3wordsnotion.notion.site/US-Public-Safety-with-what3words-eede3a88cd1e46848d5bfe62ff230b43" target="_blank">US Public Safety with what3words</a>
 <p>what3words is an easy way to talk about any precise location in the world. It gives every 3m x 3m square (10 sq/ft) a unique combination of three words: a what3words address.
 </p><p>A what3words address is more precise than a street address, and many people find three words easier to remember and say than GPS coordinates, grid references or latitude and  longitude.
 
@@ -1781,8 +1792,13 @@ The information is propagated to the other location fields of NCM. They are inte
 <p>In the 'Reports' dropdown in the upper right corner you can select 'Map This Net'. When selected a map will appear with markers for each station logged into the net. In the lower right corner is a list of Points of Interest that will optionally display various public location that may be of interest to your net. The POIs must first be added to the system, to do this requires a CSV file which will be detailed below.
 </p><p>In addition to the POI's it is also possible to use any marker on the map as a center point to a series of expanding circles with bearing markers for distance and direction needs. To activate this right-click on any marker, two dialog boxes will open asking for the distance between circles and then how many. I suggest you accept the defaults, and adjust only if you don't like the results. See below for an example.
 </p>
-     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px;"  src="screenshots/map.png" alt="map" />
-     
+<p>
+     <img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px; width: 75%;" src="screenshots/map.png" alt="map" />
+</p>
+<p>
+    <br><br>
+<img style="float:left; padding-left: 10px; padding-right: 10px; border-radius: 10px; margin-right: 15px; width: 75%;" src="screenshots/map2.png" alt="map" />
+</p>  
      
 <div class="flexcontainer">
 	<div style="">
@@ -1798,6 +1814,8 @@ The information is propagated to the other location fields of NCM. They are inte
             	<li>Points of Interest are available. See below for more details. Click to activate your choices. Detail information about the POI will appear when you click the POI marker.</li>
             	<li>Clicking anywhere within the circles will hide the circles but leave in place the bearing and distance markers.</li>
             	<li>Simplex capabilities example on YouTube: <a href="https://www.youtube.com/watch?v=nsA9Hv6K_00" target="_blank">https://www.youtube.com/watch?v=nsA9Hv6K_00</a></li>
+            	<li>A RF Hole is defined as a place where you can't hear your repeater or the coverage is poor, noisy, or in & out. To accomidate these transient location an entry form has been created <a href="https://net-control.us/AddRF-HolePOI.php" target="_blank">https://net-control.us/AddRF-HolePOI.php</a>. These are displayable from the Point of Interest list on the map. All RF Hole POI's will expire 120 days after there creation date.</li>
+            	<li>The second map illustrates how using APRS Call or What3Words will create a map similar to a bread crumb map. This would be appropriate for use during neighborhood assesments, search & rescue and other situations where one or more hams will be required to show multiple locations.<br>When this is in use each ham will have there own bread crumb map on the primary map.</li>
             </ol>
     	 <!-- End Features Include paragraph -->
 	</div> <!-- End  -->	
@@ -1950,7 +1968,7 @@ Tables in NCM:
 </p>
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
 Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
-Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
+Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, APRS Data comes from <a href="https://aprs.fi" target="_blank">https://aprs.fi</a>, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
     </div>
     

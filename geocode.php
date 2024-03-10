@@ -87,6 +87,8 @@ function geocode($address){
     }
 }
 
+//$address = "16640 Tara Rd. Lincoln Ar";
+
 //$address = "2310 Aldrich Ave S Apt 110 Minneapolis MN 55405";
 //$address = "6024 N Ames Kansas City MO 64151";
 //$address = '333 RASPBERRY LN MONUMENT CO 80132';
@@ -95,8 +97,9 @@ function geocode($address){
 
 //$address = '39.503,-93.602';
 //$address = '64154';  zip code works
-//$koords = geocode("$address");
-//echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
-//              44.9597511, -93.289555, Hennepin , MN
+/*
+$koords = geocode("$address");
+echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
+*/
 
 ?>

@@ -60,11 +60,13 @@
 		    <th>mode</th>
 		    <th>Notes</th>
 		    <th>Country</th>
+		    <th>W3W</th>
+		    <th>Radius</th>
 	    </tr>
 	    <?php
 			$sql1 = ("SELECT id, class, Type, name, county, address, city,
 			                 latitude, longitude, grid, altitude, tactical,
-			                 DGID, mode, Notes, country
+			                 DGID, mode, Notes, country, w3w, radius
                         FROM poi
                        ORDER BY ID
 					;");
@@ -88,6 +90,8 @@
 			        <td>$row[mode]</td>	
                     <td>$row[Notes]</td>
                     <td>$row[country]</td>
+                    <td>$row[w3w]</td>
+                    <td>$row[radius]</td> 
 			   </tr>
 			   ";
 		    }

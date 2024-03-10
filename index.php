@@ -131,12 +131,12 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
+    	<!-- <a href="#cc" rel="modal:open" id="version2">v8.03.11 -->
+    	<a href="https://groups.io/g/NCM" target="_blank">About</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
         -->
-	
     </span> <!-- End of id version -->
 </div> 
 
@@ -220,15 +220,24 @@
 	<!--    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a> -->
 	    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
 	    
+	    <a href="AddRF-HolePOI.php" target="_blank" rel="noopener" id="PoiList" title="Create New RF Hole POI">Add RF Hole POI</a>
+	    
+	    
 	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">GeoDistance</a>
 
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
+	    
+	    <a href="https://vhf.dxview.org" id="mapdxView" target="_blank">DXView Propagation Map</a>
+	    
+	    <a href="https://www.swpc.noaa.gov" id="noaaSWX" target="_blank">NOAA Space Weather</a>
+	    
+	    <a href="https://spaceweather.com" id="SpaceWX" target="_blank">Space Weather</a>
  
 	    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
 		<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
 		<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
-		<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
-		<a rel="noopener" href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
+		<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the
+    		active net">ICS-309</a>
 		<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
         <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
 		<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
@@ -541,7 +550,8 @@
 			
 			<input id="timelinehide" type="submit" value="Hide TimeLine" class="timelinehide" onClick="HideTimeLine();" />
 			
-			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" >
+			<!-- When the time line shows this is a specific search or numbers -->
+			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" />
 			
 			<button class="timelineBut3" type="button" id="runtls" 
 			style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black; "
@@ -681,14 +691,17 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
 <!-- My javascript -->	
-	<script src="js/NetManager.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
-	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+    <script src="js/NetManager-W3W-APRS.js"></script> <!-- Added on 2024-02-21 -->
+	<script src="js/NetManager.js"></script>          <!-- NCM Primary Javascrip 2018-1-18 -->
+	<script src="js/NetManager-p2.js"></script>	      <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+	
 	
 	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
 	
 	<script src="js/grid.js"></script>
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
+	
 	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
@@ -773,6 +786,24 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
+/*
+document.addEventListener('DOMContentLoaded', function() {
+        var tdElement = document.getElementById('c24:<?php echo $row['recordID']; ?>');
+        
+        // Left click event
+        tdElement.addEventListener('click', function(event) {
+            // Display dialog box here
+            // Example: showModalDialogBox();
+        });
+
+        // Right click event
+        tdElement.addEventListener('contextmenu', function(event) {
+            // Run JavaScript function for right click action
+            mapWhat3Words('<?php echo $row['w3w']; ?>');
+            event.preventDefault(); // Prevent default right-click behavior
+        });
+    });
+*/
 
 </script>
 

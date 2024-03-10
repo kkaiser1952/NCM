@@ -1,0 +1,430 @@
+@charset "UTF-8";
+
+*
+{
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+}
+.firstword {
+	color:#4604cb;
+	font-weight: bold;
+}
+.s1
+{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    float: left;
+}
+.s2
+{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+h1
+{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 12pt;
+}
+h2
+{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+.p, p
+{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    margin: 0pt;
+}
+.s4
+{
+    color: #FFF;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l1
+{
+    padding-left: 0pt;
+}
+#l1 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l2
+{
+    padding-left: 0pt;
+}
+#l2 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l3
+{
+    padding-left: 0pt;
+}
+#l3 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l4
+{
+    padding-left: 0pt;
+}
+#l4 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l5
+{
+    padding-left: 0pt;
+}
+#l5 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l6
+{
+    padding-left: 0pt;
+}
+#l6 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l7
+{
+    padding-left: 0pt;
+}
+#l7 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+li
+{
+    display: block;
+}
+#l8
+{
+    padding-left: 0pt;
+}
+#l8 > li:before
+{
+    content: "? ";
+    color: black;
+    font-family: Symbol, serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+}
+table, tbody
+{
+    vertical-align: top;
+    overflow: visible;
+}
+.table1 {
+    border-collapse: collapse; margin-left: 4.99pt; border-spacing: 0;
+}
+.box1 {
+    width: 203pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box1 H3 {
+	padding-left: 93pt;
+	text-decoration: underline;
+}
+.box2 {
+    width: 337pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box2s1p1 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    float: left;
+}
+.box2s2p2 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    float: left;
+}
+.box3 {
+    width: 180pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box4 {
+    width: 180pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box5 {
+    width: 180pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box6 {
+    width: 540pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box6name {
+    width: 180pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 1pt;
+}
+.box6position {
+    width: 180pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 1pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 1pt;
+}
+.box6agency {
+    width: 180pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 1pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box6td {
+    width: 180pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 1pt; padding-left: 3pt;
+}
+
+.creds {
+	padding-left: 35px;
+}
+.box6s2p1 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; text-indent: 0pt; text-align: center;
+}
+.box6s2p2 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+	padding-top: 2pt; text-indent: 0pt; text-align: center;
+}
+.box6s2p3 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; padding-left: 40pt; text-indent: 0pt; text-align: center;
+}
+.box6s2p3a {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; text-indent: 0pt; 
+}
+.box6s2p3b {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; padding-left: 40px; text-indent: 0pt; text-align: center;
+}
+
+.box7 {
+    width: 540pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 2pt; 
+}
+.box7date {
+    width: 95pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 1pt;
+}
+.box7notable {
+    width: 445pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 1pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 2pt; padding-left: 3pt;
+}
+.box7td1 {
+    width: 95pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 1pt; padding-left: 3pt;
+}
+.box7td2 {
+    width: 445pt; border-top-style: solid; border-top-width: 1pt; border-left-style: solid;
+        border-left-width: 1pt; border-bottom-style: solid; border-bottom-width: 1pt;
+        border-right-style: solid; border-right-width: 2pt;padding-left: 3pt;
+}
+.box7s1p0 {
+	font-weight: bold;
+}
+.box7s2p1 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; padding-left: 23pt; text-indent: 0pt; text-align: left;
+}
+.box7s2p2 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; padding-left: 4pt; text-indent: 0pt; text-align: left;
+}
+.box7s2p0 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 2pt; padding-left: 4pt; text-indent: 0pt; text-align: left;
+}
+.box8 {
+    width: 540pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box8page {
+    width: 216pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box8date {
+    width: 324pt; border-top-style: solid; border-top-width: 2pt; border-left-style: solid;
+        border-left-width: 2pt; border-bottom-style: solid; border-bottom-width: 2pt;
+        border-right-style: solid; border-right-width: 2pt;
+}
+.box8s2p1 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 3pt; padding-left: 4pt; text-indent: 0pt; text-align: left;
+}
+.box8s2p3 {
+    color: black;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 9.5pt;
+    padding-top: 1pt; padding-left: 4pt; text-indent: 0pt; text-align: left;
+}

@@ -1,0 +1,137 @@
+
+body, html {
+  padding: 0;
+  margin: 0;
+  font-family: Calibri, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.04em;
+  width: intrinsic;  /* width added by KK it moved the graphic to the left border*/
+}
+
+.container {
+  max-width: 1140px;  /* orig: 1140px */
+  margin: 0 auto;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+ul::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+ul.timeline {
+  display: flex;
+  flex-wrap: wrap;
+/*  padding: 50px 30px;  */
+  padding: 50px 30px 0px 30px;
+  width: 1400px;  /* KK added, expanded the graphic */
+}
+
+/* This CSS definition is replaced in HzTimeline.php, left here for reference */
+/* The only part that is different is the 8, it gets replaced with the number of 5 minute intervals */
+ul.timeline > li {
+  width: calc( 100% / 8 );  /* KK for shorter distance between times, make the denominator smaller 8 default*/
+  /* 9 is about the max unless we can expand the width of the overall display, work on that */
+}
+ul.timeline > li:nth-of-type(odd) > .content {
+  transform: translateY(calc(-100% - 24px));  /* was 24px */
+}
+ul .hrmn {
+  color: #ffd402;
+  background: #3f444c;
+  display: block;
+  position: relative;
+  padding-left: 24px;
+  line-height: 24px;
+  font-weight: bold;
+  font-size: 18px;
+  content: "";
+}
+ul .hrmn::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background: #ffd402;
+  border-radius: 50%;
+  left: -24px;
+  top: calc( (40 - 24) / 2 * -1px );
+}
+ul .hrmn.new {
+  border-radius: 0 24px 24px 0;
+}
+ul .hrmn.new::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  display: block;
+  border: 20px solid #3f444c;
+  box-sizing: border-box;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  right: -30px;
+  top: -9.5px;
+}
+ul .content {
+  border-left: 8px solid #ffd402;
+  margin-left: -8px;
+  padding: 15px 0;   /* KK default was 15px */
+  padding-right: 24px;  /* KK default was 24px */
+}
+ul .content > li {
+  padding-left: 20px;
+  border-bottom: 4px solid #eef4f7;
+  padding-bottom: 2px; /* KK consider removing default was 8px*/
+  
+  position: relative;
+  margin-left: -8px;
+  /* KK Added these lines to allow columns to over flow to next column 3/17/21 */
+  width: 270px;
+  height: 30px;  /* KK modified from 40px */
+  white-space: nowrap; 
+  overflow-x:   auto ;
+  color: #023802;
+  
+}
+ul .content > li:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+ul .content > li::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #eef4f7;
+  left: 2px;
+  top: 8px;
+}
+
+@media screen and (max-width: 1140px) {
+  ul.timeline > li {
+    width: calc( 100% / 4 );
+  }
+}
+@media screen and (max-width: 991px) {
+  ul.timeline > li {
+    width: calc( 100% / 2 );
+  }
+}
+@media screen and (max-width: 767px) {
+  ul.timeline {
+    display: block;
+  }
+  ul.timeline > li {
+    width: 100%;
+  }
+  ul.timeline > li:nth-of-type(odd) .content {
+    transform: none;
+  }
+}

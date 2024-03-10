@@ -1,0 +1,1450 @@
+body {
+	background:#e0e1e3; 
+	width: 100%;
+	counter-reset: sortabletablescope;  /* This is the time log only */
+    counter-reset: netLogCounter;       /* This is the net log only */
+}
+
+/* netLog */
+table#thisNet {
+  counter-reset: netLogCounter 0;
+}
+
+table#thisNet tbody tr {
+  counter-increment: netLogCounter;
+}
+
+table#thisNet tbody tr td:first-child::before {
+  content: counter(netLogCounter); 
+}
+
+
+.c10, .c11  {
+    white-space: nowrap;
+}
+.btn-toolbar {
+	margin: 0;
+}
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: black; /* 2018-03-25 */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn {
+	background-color: #e0eaf2;
+} 
+
+/* The next four css items are used to grow and shrink the size of the X (delete) button at the end of each row */
+/* This is a slightly more complex control of the above */
+a.delete {
+  text-decoration: none;
+  position:relative;
+  display:inline-block;
+  overflow:visible;
+}
+
+a.delete img {
+  height: 20px; 
+  transition: 1s
+}
+
+/* Controls the size of the x used to delete a row */
+.delete img {	
+	min-width: 20px; 
+}
+
+td a.delete {
+	display: block;
+	width:	100%;
+}
+
+a.delete:hover img {
+  height: 30px;
+}
+
+a.delete:hover::after {
+  content:"Click to delete";
+  position:absolute;
+  z-index:999;
+  left:100%;
+  top:40%;
+  font-size:12px;
+  width:100px;
+}
+
+.editComments {
+	border: 1px solid red;
+	display: inline-block;
+	min-height: 20px;
+	min-width: 100px;
+}
+	
+/* NOT @media CSS */
+#urcb {
+	visibility: visible;
+}
+
+ /*
+#ourfreqs {
+	width: 450px; 
+}
+*/
+
+#rightCorner {   /* Enclosing box */
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 450px;
+	padding-right: 10px;
+}
+
+#upperRightCorner {    /* Box to hold frequency chart */
+/*	width: 450px; */
+
+}
+
+#theMenu {   /* Box to hold the menu items */
+	width: 450px;
+	font-size: 12px;
+}
+
+.modal {
+	width: 700px;
+}
+
+#autoref {
+	margin-right: 5px;
+	border-radius: 10px;
+	background-color: white;
+}
+
+.optclass {
+	font-weight: bold;
+	color:white;
+	font-size: larger;
+}
+
+.lightgreen {
+  font-weight: bold !important;
+  color: #0909b7 !important;
+  background: #a6ff00 !important;
+}
+.pbBlue {
+  font-weight: bold !important;
+  color: white !important;
+  background: #1103a6 !important;
+}
+.pbGreen {
+  font-weight: bold !important;
+  color: white !important;
+  background: green !important;
+}
+.pbWhite {
+    font-weight: bold !important;
+    color: black !important;
+}
+
+.green {
+  font-weight: bold !important;
+  color: #fff !important;
+  background: #70ba7b !important;
+}
+
+.yellow {   /* this is for pre-built nets */
+  font-weight: bold !important;
+  color: #f1f90a !important;
+  background: #776fba !important;
+}
+
+.pbcolor2 {
+	font-weight: bold !important;
+	color: black !important;
+	background: white !important;
+}
+
+#openNets {
+	padding-left: 400px;
+	color:#077107;
+}
+#openNets li {
+	font-weight: bold;
+}
+/* The hidden general comments input field */
+#genComments {
+	min-width: 90%;
+	border-style: hidden;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	height: 24pt;
+	max-height: 24pt;
+	margin: 0px 0px 3px 0px;
+	overflow: hidden;
+	white-space: nowrap;
+	color: blue;
+	font-size: 12pt;
+}
+
+/* These two are for the genComments box */
+#forcb1 {
+	left: 20px;
+	position: relative;
+	max-width: 90%; 
+}
+#forcb1:hover {
+	background-color: #f5f5a2;
+/*	color: red; */
+	border: 2px solid #7804fc;
+}
+
+#preambledev, #agendadiv, #closingdev, #reportsdev, #dropbtn{
+	font-size: 11pt;
+	color: blue ;
+    border: none;
+    cursor: pointer;
+}
+#helpdev {
+	font-size: 11pt;
+	color: red ;
+    border: none;
+    cursor: pointer;
+}
+
+
+.digitalKey {
+	background-color: #fbc1ab;
+}
+.trafficKey {
+	background-color: #ff9cc2;
+}
+
+.logoutKey {
+	background-color: #cacaca;
+}
+.brbKey {
+	background-color: #d783ff;
+}
+.ioKey {
+	background-color: #cacaca;
+}
+.noCallKey {
+	background-color: #fa0202;
+}
+.dupeCallKey {
+	background-color: #fa0202;
+}
+.redKey {
+	background-color: pink;
+	color:#fa0404;
+}
+.fliKey {
+	background-color: #ffdb2b;
+}
+
+/* Controls the colors and timer in the 10 minute timer div */
+#resetx {
+	position:  absolute;
+	padding-left: 220px;
+	padding-bottom: 10px;
+	z-index: -5;
+	font-size: smaller;
+	border-radius: 5px;
+	color: red;
+}
+#timex {
+	font-size: 30px;
+	color:  #aff805;
+	align-content: center;
+	line-height: 50px;
+}
+#timerx {
+	border: 2px solid black;
+	border-radius: 15px;
+	color: #aff805;
+	font-size: 20px;
+    width: 230px;
+    height: 50px;
+   /* background-color: red; */
+    -webkit-animation-name: timerColor; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 60s; /* Safari 4.0 - 8.0 */
+    animation-name: timerColor;
+    animation-duration: 60s;
+   /* padding-bottom: 15px; */
+    position: relative;
+	left: 15px;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes timerColor {
+  0%  { background-color: green; }
+  40% { background-color: orange; }
+  60% { background-color: yellow; } 
+  80% { background-color: #e8816e; }
+  90% { background-color: red; }
+}
+
+
+/* Standard syntax */
+@keyframes timerColor {
+  0%  { background-color: green; }
+  40% { background-color: orange; }
+  60% { background-color: yellow; } 
+  80% { background-color: #e8816e; }
+  90% { background-color: red; }
+}
+
+/* End of the timer control section */
+
+.optclass {
+	background-color: pink;
+}
+
+.editFnm {
+	text-transform: capitalize;
+}
+
+.editLnm {
+	text-transform: capitalize;
+}
+
+.editfd {
+	font-family: 'Allerta', sans-serif;
+	text-transform: uppercase;
+}
+
+.editCS1 {
+	font-family: 'Allerta', sans-serif;
+	text-transform: uppercase;
+}
+
+#callsign {
+	font-family: 'Allerta', sans-serif;
+	text-transform:uppercase;
+	background-color: #ddebac;
+}
+
+li.multiCols {
+	width:50%; float:left;
+}
+
+
+
+#cb1span {
+	left: 20px;
+	position: relative;
+	width: 50%;
+}
+
+#updtOpt {
+	
+	float: right;
+}
+
+#toCSV {
+/*	text-shadow: 3px 2px 3px #333333;  */
+	border-radius: 9px;
+}
+
+#primeNav {
+	background-color: #d1cbf4;
+	height: 30px;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 15px;
+	padding: 5px;
+	border: 2px solid #7804fc;
+	min-width: 1000px;
+	width: 98%;
+} 
+
+#makeNewNet input,select{
+	color: red;
+}
+
+#docType {
+	background-color: #caf7e0;
+}
+
+#makeNewNet {
+	color: blue;
+	font-size: 1.5em;
+	position: absolute;
+	padding-left: 20px;
+}
+
+
+
+#mapmembers {
+	background: #8284ef;
+	border-radius: 9px;
+	position: relative;
+	left: 15px;
+}
+
+#aprs {
+	background: #8284ef;
+	border-radius: 9px;
+}
+
+img {
+	max-width: 100%;
+}
+
+input[type="radio"] {
+  	margin: 0 10px 0 10px;
+}
+
+#theUTC {
+  color: red;
+}
+
+#netdata {
+	padding-left: 10px;
+	
+}
+
+#makeNewNet {
+	border: 2px solid black;
+	border-radius: 25px;
+	background: #c3c4f0;
+	padding: 20px;
+}
+
+#netchoice p {
+	font-size: 1em; /*14pt;*/
+	font-weight: bold;
+	color: red;
+}
+
+#showgrid, #showemail, #showLATLON, #showLN, #showTOD {
+	background-color: #e3e858;
+}
+
+.hidden {
+    visibility: hidden;
+ /*   over-flow: hidden; */
+    width: 0px;
+    height: 0px;
+    display:none;
+}
+
+/* Buttons and inputs on the main page */
+/* The button to close the log */
+.closenet {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	position: relative;
+	color:red; 
+	font-weight:900;
+	float: right;
+	background-color: white;
+	border-radius: 8px;
+	border: 2px solid #bf0000; /* Red */
+}
+
+.closenet:hover {
+	background-color: red;
+	color: white;
+}
+
+.colorRed {
+    color: red;
+}
+
+/* Time Line button */
+.timeline {
+	background-color: #cac7c7;
+	border-radius: 8px;
+	border: 2px solid black; 
+}
+
+.timeline:hover {
+/*	background-color: black;
+	color: white; */
+}
+
+#timelinehide {
+	color: green;
+	border-radius: 8px;
+	border: 2px solid black;
+}
+
+#timelinehide:hover {
+	background-color: black;
+	color: white;
+}
+.timelineBut2 {
+    margin-left:20px;
+}
+.timelineBut2:hover {
+    background-color: black;
+	color: white;
+}
+
+.copyPB {
+	background-color: #ccc6f7;
+	border-radius: 8px;
+	margin-left: 25px;
+	float: left;
+	border: 2px solid darkblue;
+}
+
+/* Check In button */
+.ckin1 {
+	background-color:lightgreen;
+	border-radius: 8px;
+	margin-left: 25px;
+	float: left;
+	border: 2px solid darkgreen;
+}
+
+.ckin1:hover {
+	background-color: #2c6304;
+	color: white;
+}
+
+/* Show/Hide button NOT WORKING*/
+.showops {
+	height: 25px;
+	background-color:white;
+	border-radius: 8px;
+	margin-right: 35px;
+	border-color: green;
+}
+.brdrGreen {
+    border-color: green;
+    text-transform: uppercase;
+}
+
+/* The refresh button */
+.refbutton {
+	background-color: #cac7c7;
+	border-radius: 8px;
+	border: 2px solid black;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.refbutton:hover {
+	background-color: #2c6304;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/* The Start a new net button */
+.newbttn {
+	position: relative;
+	border-radius: 8px;
+	background-color: lightblue;
+	border-color: #3403e3;
+	font-weight: bold;
+	left: 10px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.newbttn:hover {
+	background-color: blue;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/* The Reports dropdown list */
+.dropbtn {
+	font-size: 11pt;
+   
+    color: blue ;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+	z-index: 10000;
+	color: black;
+	right: 0;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+/* The show/hide button */
+.dropbtn2 {
+		width: 400px;
+		border-radius: 8px;
+		border: 2px solid black; 
+	    background-color: salmon;
+	    color: black;
+	    cursor: pointer;
+}
+
+
+.dropdown { /* this definition is in several places, shown here for clarity */
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content2 {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content2 a {
+	align-content: center;
+    color: black;
+    padding: 12px 10px 10px 0px;  /* top right bottom left */
+    text-decoration: none;
+    display: block; 
+}
+
+.dropdown-content2 a:hover {
+	background-color: #f3a17e;
+}
+
+.dropdown:hover .dropdown-content2 {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #b27e58;
+}
+/* END of Button styles */
+
+#pretimeline tr:nth-of-type(even) {
+	background-color:yellow; /*#f5acac; */ 
+    width: 100%;
+}
+
+#pretimeline {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#pretimeline td, #pretimeline th {
+    
+    border: 1px solid #98bf21;
+    padding: 3px 7px 2px 7px;
+}
+
+#pretimeline th {
+	font-weight: 900;
+    font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #b00c0c; 
+    color: #ffffff;
+}
+
+.trFREQS {
+    white-space:nowrap; 
+    padding-right: 10px;
+}
+
+#thisNet {
+  /*  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
+    font-family: 'Allerta', sans-serif; 
+    width: 98%; /* This was commented out I think it caused the cell shifting, i uncommented 2019-05-24 */
+    border-collapse: collapse;
+}
+
+#thisNet td, #thisNet th {
+    font-size: 1em;
+    border: 1px solid #98bf21;
+    padding: 3px 7px 2px 7px;
+}
+
+.cent {
+	text-align: center;
+}
+
+/* ROLE is to hilight the row of id="netBody" when a role is shown */
+.role { 
+	background-color: #edafaf;
+}
+
+#thisNet th {
+	font-weight: 900;
+    font-size: 1.1em;
+  /*  text-align: left; */
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #2c742f; 
+    color: #ffffff;
+    text-align: center;
+}
+
+
+
+/* Sortable tables */
+xtable.sortable thead {
+    background-color:#eee; 
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
+}
+
+.cs1 {
+	text-transform:uppercase;
+}
+
+/* Inputs on button bar */
+#cs1 {
+	text-transform:uppercase;
+	font-family: 'Allerta', sans-serif; font-weight: 400; 
+	background: #ede8ad;
+	float: left;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+}
+
+#Fname {
+	text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 5px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+}
+
+/* next to Name on button bar */
+#TrfkSwitch {
+    text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 10px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+	width: 15px;
+}
+
+#custom {
+	text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 5px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+}
+
+#section {
+	text-transform: capitalize;
+	background: #ede8ad;
+	float: left;
+	position: relative;
+	left: 5px;
+	border: 2px solid brown;
+	border-radius: 4px;
+	font-size:13pt;
+}
+/* end of inputs on button bar */
+
+
+input:focus {
+    background-color: yellow;
+}
+
+input:required { 
+    background-color: #f3a2a2;
+}
+
+#admin {
+	position: absolute;
+	left: 15px;
+	font-weight: bold;
+}
+
+#csnm {
+	width: 100%;
+}
+
+/* This CSS controls the spacing between the actlog and timeline div's in index.php */
+/* use of position: relative; is required absolute squishes them togeterh */
+#actLog {
+   
+    width: 100%; 
+    position: relative;
+	left: 15px;
+	padding-right: 10px;
+}
+
+
+#txtHint {
+	position: absolute;
+	z-index: 100;
+	background-color: #cbbaba;
+	color: #030365;
+	left: 75px;
+	top: 35px;
+}
+
+
+#status { 
+	padding:3px; 
+	background:#88C4FF; 
+	color:#000; 
+	font-weight:bold; 
+	font-size:12px; 
+	margin-bottom:5px; 
+	display:none; 
+	width:90%; 
+}
+
+#NCMlogo {  
+    width: 35px;
+    padding-left: 10px;
+    padding-top: 5px;
+    vertical-align:middle;
+}
+
+#pgtitle {
+	font-family: 'Cantora One', sans-serif;
+	font-size: 48px;
+	text-shadow: 4px 4px 4px #aaa;
+	padding-right: 5px;
+	text-shadow: 2px 2px 2px #aaa;
+	position: relative;
+	left: 15px; 
+	top: 10px;
+	font-size: 2.5em; 
+	font-weight:900;
+	color:#2c742f;
+
+}
+
+#dttm2 {
+	width: 100%;
+	font-family: 'Stoke', serif;
+	position: relative;
+	left: 2px;
+	font-size:1.35em;
+	font-weight:900;
+	color:  #05341e; 
+	padding-top: 5px;
+    padding-left:20pt;
+}
+
+.weather-place {
+	position: relative;
+	left: 10px;
+	font-size:1.2em;
+	font-weight:900;
+	color: #181aff ;
+}
+
+
+#version {
+	position: relative;
+	left: 10px;
+	font-size:.75em;
+	font-weight:900;
+	color: #1014f8 ;  /*#2c742f;*/
+}
+
+#sub {
+	position: absolute;
+	z-index: 100;
+	font-size:5em;
+	font-weight: bold;
+}
+
+.input_container {
+	left: 400px;
+	font-size:1.5em;
+	border: #2c742f;
+	color: #2c742f;
+}
+
+#cb0 {
+	left: 400px;
+	font-size:1.5em;
+	border: #2c742f;
+	color: #2c742f;
+}
+
+thead {
+	text-align:center;
+}
+
+#subnethead {
+	font-size: 1.5em;
+	color: #2c742f;
+	float: left;
+}
+
+#subfreq {
+	font-size: 1.5em;
+	color: #2c742f;
+	float: right;
+}
+
+#newNet {
+	position: relative;
+	left: 15px; 
+}
+
+@keyframes flash {
+	0% {
+		/*border: 2px solid #036b38;*/
+		background-color:#c9c1f7;
+	}
+	25% {
+		/*border: 2px solid #036b38;*/
+		background-color:#c9c1f7;
+	}
+	45% {
+		/*border: 2px solid #036b38;*/
+		background-color:#c9c1f7;
+	}
+	65% {
+		/*border: 2px solid #036b38;*/
+		background-color:#c9c1f7;
+	}
+	85% {
+		/*border: 2px solid #036b38;*/
+		background-color:#bd7373;
+	}
+	90% {
+	  /*  border: 5px solid #9e0404; */
+	  	background-color:red;
+    } 
+    100% {
+	  /*  border: 5px solid #9e0404; */
+	  	background-color:red;
+    }     
+}
+         
+.flashit {
+	padding-right: 10px;
+	animation-name: flash;
+	animation-duration: 600s; 
+    animation-timing-function: ease-in-out; 
+    animation-iteration-count: infinite;
+    animation-fill-mode: none;
+    animation-play-state: running; 
+}
+
+#select1 {
+	width: 70%;
+	margin-top: 15px;
+	position: relative;
+	left: 10px;
+	font-family: 'Allerta', sans-serif;
+	font-size: 1.5em;
+	border: 2px solid #036b38;  
+	color: #2c742f;
+	border-radius: 8px;
+} 
+
+.slzero {
+	font-family: 'Allerta', sans-serif;
+	font-size: 1.5em;
+}
+
+#subNets {
+	position: relative;
+}
+
+
+#ourFrequencies{
+	/*width: 550px;  commented out on 2016-10-02 */
+	float: right;
+	right: 3%; /* was 20% until 2016-10-02 */
+	position: absolute; 
+	top: 15px;
+	color: red;
+	border-collapse: collapse;
+}
+
+.nobg {
+	color:White;
+	background-color: #D7131B;
+	text-align: center;
+	padding: 3px;
+}
+
+.nobg1 {
+	color: #D7131B;
+	background-color: #ACDDA4;
+	font-weight: bold;
+	padding: 3px;
+	
+}
+
+.dmr {  /* This is for the 2nd column of ourFrequencies */
+	color: #D7131B;
+	background-color: #ACDDA4;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.nobg2 {
+	column-span:all;
+	color: #D7131B;
+	font-weight: bold;
+	text-align: center;
+	padding: 3px;
+	padding-right: 10px;
+}
+
+.dmr2 { /* This is for changing rows of ourFrequencies */
+	color: #2e13d7;
+	font-weight: bold;
+	text-align: center;
+	padding: 3px;
+}
+
+#ourfreqs {
+	border-spacing: 1px;
+	float: right;
+	padding: 5px;
+	width: 450px;
+}
+
+#sfreq {
+	position: absolute;
+	right: 0;
+	top: auto;
+}
+
+option {
+	font-size:19px;
+}
+
+ul {
+	list-style: none;
+}
+
+.left-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.right-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+#theBox {
+	position: relative;
+	left: 10px;
+    display: table;
+    width: 45%;
+    font-weight: bold;
+}
+
+#freq {
+	font-size:1.5em;
+	border: #2c742f;
+	color: #2c742f; 
+	float: right;	
+}
+
+#myBtn {
+  opacity: 0.7;
+  
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: rgba(129, 118, 118, 0.5);
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #645f5f;
+}
+
+/* Below to bottom copied here from index.php on 2019-01-09 */
+.subnetkey {
+ border: 0;
+ background: #e4f0e9;
+}
+
+/* This is the CSS for the scrollable comments field */
+div.scrollable {
+width: 100%;
+height: 75px; 
+margin: 0;
+overflow: auto;   /* optional scroll to show it all the time */
+}
+
+tbody {
+ padding-right: 10px;
+}
+
+.dropdown-menu {
+/* position: relative; */ /* puts the dropdown off to the side */
+ position: absolute; /* puts the dropdown underneath */
+}
+prompt {
+ font-weight: bold;
+ color: blue;
+ text-transform: capitalize;
+ 
+}
+
+#thisNet tr:nth-child(even) {
+    background-color: #eaf2d3;
+}
+
+#timeline {
+    display: none;
+    width: 98%;
+}
+#timelinehide {
+    display: none;
+}
+
+/* Hamburger Menu on upper right corner */
+.gradient-menu {
+  padding-left: 1.25em;
+  position: relative;
+}
+.gradient-menu:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.21em;
+  bottom: 0.21em;
+  width: .75em;
+  background: linear-gradient(
+    to bottom, 
+    black, black 20%, 
+    white 20%, white 40%, 
+    black 40%, black 60%, 
+    white 60%, white 80%, 
+    black 80%, black 100%
+  );
+}
+
+#bardropdown {
+	float: right;
+}
+
+/* all this came from index.php on 2019-10-12 */
+
+ /* Put test CSS here */	 
+    /* This sets the background colors of alternating rows to white and green */
+    .clearfix {
+      overflow: auto;     
+    }
+    
+    .btn-group2 .timelineBut .dropbtn2 .ckin1 .copyPB .closenet{
+      background-color: #cac7c7;
+      border-radius: 5px;
+      border: 1px solid #cac7c7;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 25px;
+      float: left;
+      vertical-align: middle;
+    }
+    
+    .poiedit {
+        background-color: yellow;
+        border-radius: 8px;
+        border: 1px solid blue;
+        text-align: center;
+        display: inline-block;
+        float: left;
+        color: red;
+        margin-left: 25px;
+    }
+          
+    .btn-group2 .timelineBut:hover {
+      background-color: black;
+      color: white;
+    }
+    
+    .btn-group2 :not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
+    
+    .btn-group2 .dropbtn2 {
+		width: auto; 
+	    background-color: salmon;
+	    color: black;
+	    cursor: pointer;
+	    margin-left: 50px;
+	    float: left;
+    }
+    .btn-group2 .dropbtn2:hover {
+        background-color: red;
+        color: white;
+    }
+    
+    .btn-group2 .ckin1 {
+    	background-color:lightgreen;
+    	margin-left: 25px;
+    	float: left;
+    	border: 2px solid darkgreen;
+    }
+    
+    .btn-group2 .ckin1:hover {
+    	background-color: #2c6304;
+    	color: white;
+    }
+    
+    .editC {
+	    height:100%;
+    }
+    
+    .timelineBut {
+        border-radius: 8px;
+        border: 2px solid gray;
+    }
+    
+    
+    /* =============== new dropdown stuff added 2019-09-22 ============= */
+
+/* The search field */
+#GroupInput, #KindInput, #FreqInput {
+  box-sizing: border-box;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 3px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.GroupDropdown-content, .KindDropdown-content, .FreqDropdown-content {
+  width: 600px;
+  height: 400px;
+  overflow-x: auto;
+  background-color: #bbded6; /* Was f6f6f6 */
+  min-width: 230px;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.GroupDropdown-content a, .KindDropdown-content a, .FreqDropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.GroupDropdown-content a:hover, .KindDropdown-content a:hover, .FreqDropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* The search field when it gets focus/clicked on */
+#GroupInput:focus, #KindInput:focus, #FreqInput:focus {
+    outline: 3px solid #ddd;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .GroupDropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+#smtitle {
+    width: 55px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+#pgtitle2 {
+    width: 450px;
+}
+
+.Qbutton {
+    color: red;
+    background-color: transparent;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16pt;
+    float: right;
+    padding-right: 20px;
+    text-align: center;
+    width: 20px;
+}
+
+
+/* This CSS will display a js free alert of sorts */
+/****************/
+/* Unopened lightbox */
+.NewLightbox {
+  display: none;
+}
+
+/* Opened lightbox */
+.NewLightbox:target {
+ /* position: absolute; */
+  left: 150px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Lightbox content */
+.NewLightbox figcaption {
+  width: 25rem;
+  position: relative;
+  padding: 1.5em;
+  background-color: lightpink;
+}
+
+/* Close button */
+.NewLightbox .Qclose {
+  position: relative;
+  display: block;
+}
+
+.NewLightbox .Qclose::after {
+  right: -1rem;
+  top: -1rem;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  content: "×";
+  cursor: pointer;
+}
+
+/* Lightbox overlay */
+.NewLightbox .Qclose::before {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  content: "";
+  cursor: default;
+}
+
+/* This makes the freeze of the header work. but not too well 	*/
+    .besticky {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 40px;
+    } 
+        
+    /* remarks is only used for a title of old nets being browsed */
+    #remarks {
+        color: red;
+        font-weight: bold;
+        font-size: 18pt;
+        padding-left: 30px;
+        padding-bottom: 10px;
+    }
+    
+    .by_number {
+        padding-left: 10px;
+    }
+    
+    .newstuff {
+        color:red; 
+        font-weight: bold; 
+        padding-bottom: 5px; 
+        width:50%;
+    }
+    
+    
+    #dttm{
+      display: flex;
+    }
+    
+/*    #dttm > div {
+      padding: 35px;
+    } */
+    
+    #dttm1 {
+       padding-top: 5px;
+       padding-left: 35px; 
+       padding-right: 1px;
+    }
+    
+    #dttm2 {
+        padding-left: 1px;
+    }
+    
+    .opcolors {
+        font-weight: bold !important;
+        color: white !important;
+        align-content: center;
+   /*     padding-left:10px;
+        padding-right:10px; */
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1b6013+44,2989d8+47,207cca+49,1c1fcc+52 */
+        background: #1b6013; /* Old browsers */
+        background: -moz-linear-gradient(left,  #1b6013 44%, #2989d8 47%, #207cca 49%, #1c1fcc 52%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(left,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right,  #1b6013 44%,#2989d8 47%,#207cca 49%,#1c1fcc 52%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b6013', endColorstr='#1c1fcc',GradientType=1 ); /* IE6-9 */
+
+    }
+

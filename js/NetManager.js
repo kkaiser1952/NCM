@@ -20,8 +20,6 @@ var $idofnet		= $("#idofnet");
 var $select1		= $("#select1");
 var $isopen			= $("#isopen");
 
-
-
 function mapWhat3Words(w3w) {  
     if (w3w == '') {alert('No entry or click the blue refresh button first to see this location.');}
     else {
@@ -65,7 +63,6 @@ function setDfltMode() {
         var modeOptions = ["Voice", "CW", "Mob", "HT", "Dig", "FSQ", "D*", "Echo", "DMR", "Fusion", "V&D", "Online", "Relay"];
     */
 }
-
 
 // This function is called when the 'Report by Call Sign' is selected from the hamburger menu
 function CallHistoryForWho() {
@@ -409,7 +406,6 @@ $('.editGComms').on("click", function(){
 });
 
 
-
 // This function empties the contents of other fields
 // For some reason it doesn't work properly in jQuery
 function empty(thisID) {
@@ -426,8 +422,6 @@ function TimeLine() {
 	$("#timeline").toggle(500, function() {
         $(".timelinehide").toggle(500);
         $(".timelineBut2").toggle(500); // this is the update button
-        $("#timelinesearch").toggle(500);
-        $(".timelineBut3").toggle(500);
 	});
 	
 		var str = $("#idofnet").html();
@@ -436,36 +430,6 @@ function TimeLine() {
 			$("#timeline").html(data);	// this once said .TimeLine() as if calling itself again
 		}); // end response
 } // End TimeLine()
-
-// The filtering (searching) of the timeline
-function timelinesearch() {
-    var findthis = $("#timelinesearch").val();
-        if (findthis == "") { 
-            alert("No values in search box."); 
-                return false;
-        }else {
-            var netID = $("#idofnet").text().trim();
-            var str = netID+","+findthis;
-                console.log("@447 netID: "+netID+" findthis: "+findthis+" str: "+str+" in timelinesearch function");
-                if (findthis) {
-                    $.get('getTimeLogSearch.php', {q: str}, function(data) {
-                        $("#timeline").html(data);
-                    });
-                    /*
-                    $.ajax({
-                        type:   'POST',
-                        url:    'getTimeLogSearch.php', 
-                        data:   {q: str},
-                        success:function(data) {
-                            
-                        } // End success
-                    }); // End ajax
-                */
-                } // End if findthis exists
-                    // Empty the search field when all else is done
-                    $("#timelinesearch").val(" ");
-        } // End else because findthis does exist
-}
 
 function RefreshTimeLine() {
     var str = $("#idofnet").html();
@@ -480,9 +444,6 @@ function HideTimeLine() {
 		
 	$("#timeline").hide(500);
 	$(".timelinehide").hide(500);
-	
-	$("#timelinesearch").hide(500);
-	$(".timelineBut3").hide(500);
 } // End HideTimeLine()
 // ========================================================================================================
 
@@ -602,7 +563,7 @@ function showActivities(str, str2) {
                          if ( tz_domain == 'Local' ) { goLocal(); } else { goUTC(); }
                },
                error: function() {
-                   alert('Sorry somethings wrong in NetManager.js @566, try again');
+                   alert('Sorry somethings wrong in NetManager.js @468, try again');
                }
             });
                  
@@ -632,7 +593,6 @@ function showActivities(str, str2) {
 
 
 // re-wrote these two function 2018-02-12
-// finds and displays a list of hints for the callsign entry
 function showHint(str) {
     // var nc = $( "#thenetcallsign" ).html(); alert('val= '+nc);
    // alert(str);
@@ -653,7 +613,6 @@ function showHint(str) {
 	  	})
 }} 
 
-// finds and displays a list of hints for the name entry
 function nameHint(str) {
 	if (str.length == 0) {
 
@@ -785,10 +744,6 @@ function refresh() {
 	    // refreshnet is the netID of the open net
 		showActivities(refreshnet); // showActivities function is in this file
 		//RefreshGenComm(refreshnet);
-	/*	
-if ( $("#isopen").html() != "undefined" && $("#select1").find(":selected").attr("data-net-status") == 0 ) 
-        { hideCloseButton(1); }
-	*/	
 }
 
 $('#refbutton').click(function() {
@@ -803,7 +758,7 @@ $('#refbutton').click(function() {
 
 function showColumns() {
 	var netcall   = $("#thenetcallsign").html().replace(/\s+/g, '');
-	var myCookie = (getCookie('columnChoices_'+netcall));  //alert("refresh @761 myCookie = "+myCookie);
+	var myCookie = (getCookie('columnChoices_'+netcall));  //alert("refresh @625 myCookie = "+myCookie);
 	
 	if (myCookie) {
 		var testem = myCookie.split(",");  //alert("testem= "+testem);

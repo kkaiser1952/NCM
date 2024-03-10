@@ -48,7 +48,7 @@
 		 else { $thewhere = "WHERE docType LIKE '%preamble%'
     		    AND domain like '%$domain%'
     		    AND (subdomain like '%$activity%' OR subdomain = '')
-			 	AND NOW() <= end
+			 	
 			 	";
 			  }
 
@@ -58,6 +58,8 @@ $sql = ("SELECT description, contact, callsign, id, dttm, start, end
 	      ORDER BY dttm DESC
 	      LIMIT 1
 		  ");
+		  
+		  //echo $sql;
 		  
     /*
         SELECT description, contact, callsign, id, dttm, start, end 

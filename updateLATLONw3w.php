@@ -1,31 +1,26 @@
 <?php
+    // updateLATLONw3w.php
+    
 	// this program calculates a new lat/lon anytime the what3words (w3w) column is changed. 
 	// It also find the nearest cross roads based on the lat lon using the GeoNames API
 	// It runs from the editLAT and editLON in CallEditFunction.js
 	// Written 2019-03-29
 	// Modified 2019-05-26 --> Added the cross CrossRoads API
 	
-	ini_set('display_errors',1); 
-	error_reporting (E_ALL ^ E_NOTICE);
+	//ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
     
     $recordID   = $_GET['recordID'];  //echo("recordID= $recordID<br><br>");
-   // $recordID = 24064;
+    //$recordID = 152964;
     
 // ==============================================================
 // This part gets the w3w that was entered into the column in NCM
 // ==============================================================
-/*
-    SELECT a.w3w, a.callsign, a.netID, a.ID, a.recordID, a.team,
-	(SELECT b.recordID FROM NetLog b WHERE b.netID = a.netID AND b.team = a.team AND b.recordID <> a.recordID) as rID
-		  FROM NetLog a
-		 WHERE a.recordID =  60749
-    */
 
-
-$sql = "SELECT w3w, callsign, netID, ID, recordID, team
+$sql = "SELECT SUBSTRING_INDEX(w3w, '<br>', 1) AS w3w, callsign, netID, ID, recordID, team
 		  FROM NetLog
 		 WHERE recordID =  $recordID
 	   ";
@@ -53,13 +48,10 @@ $sql = "SELECT w3w, callsign, netID, ID, recordID, team
         $w3w = str_ireplace($splitarray, ".", $w3w);
         $prt = str_ireplace('/','',$w3w);
         
-        
-        
         $pieces = explode(".", $prt);
             $w3w = join(".", array_slice($pieces, 0, 3));
             $obj = join(" ", array_slice($pieces, 3));
-        
-        
+              
         $CrossRoads = 0;
 	
 	//echo("sql=<br>$sql<br><br>w3w= $w3w<br>call= $callsign<br>netID= $netID<br>ID= $ID<br>recordID= $recordID<br><br>");
@@ -68,6 +60,7 @@ $sql = "SELECT w3w, callsign, netID, ID, recordID, team
 // Now get the lat/lon from W3W site
 // ====================================
 $curl = curl_init();
+echo "@71 curl= $curl";
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.what3words.com/v3/convert-to-coordinates?key=5WHIM4GD&words=$w3w",
@@ -107,50 +100,52 @@ if ($err) {
                    $grid   = gridsquare($lat, $lng);	 
                    $CrossRoads = 1;
                    
+        echo("<br><br>@101<br>lat= $lat<br> lng= $lng<br> grid= $grid<br> w3w= $w3w<br>call= $callsign<br>netID= $netID<br>ID= $ID<br>recordID= $recordID<br><br>");
+                   
 // =========================================================================================
 // Now lets get the nearest cross roads, notice that this CURL is inside the else loop above
 // =========================================================================================
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-));
-
-$response = curl_exec($curl);
-    echo "GeoNames CURL Response= $response<br>";
-$err = curl_error($curl);
-    echo "GeoNames CURL Error Response= $err<br><br>";
-
-curl_close($curl);
-
-if ($err) {
-  echo "CURL Error #:" . $err;
-
-} else { // no curl error
-    //echo "<br><br>in readGeoNames(): the Cross Roads CURL response<br> $response";
-  
-    $crc = json_decode($response, true);
-    
-       $street1  = $crc['intersection']['street1']; 
-       $street2  = $crc['intersection']['street2'];     
-       
-       $CrossRoads   = "$street1 &amp; $street2";
-            //echo("<br><br>In readGeoNames(): street1= $street1,<br> street2= $street2,<br> CR= $CrossRoads");
-            
-} // end else
+                $curl = curl_init();
+                
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => "",
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 30,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => "GET",
+                ));
+                
+                $response = curl_exec($curl);
+                    echo "GeoNames CURL Response= $response<br>";
+                $err = curl_error($curl);
+                    echo "GeoNames CURL Error Response= $err<br><br>";
+                
+                curl_close($curl);
+                
+                if ($err) {
+                  echo "CURL Error #:" . $err;
+                
+                } else { // no curl error
+                    //echo "<br><br>in readGeoNames(): the Cross Roads CURL response<br> $response";
+                  
+                    $crc = json_decode($response, true);
+                    
+                       $street1  = $crc['intersection']['street1']; 
+                       $street2  = $crc['intersection']['street2'];     
+                       
+                       $CrossRoads   = "$street1 &amp; $street2";
+                            //echo("<br><br>@147 In readGeoNames():<br> street1= $street1,<br> street2= $street2,<br> CR= $CrossRoads");
+                            
+                } // end else
             } // end else of chkResponse from what3words curl 
 } // end else of what3words curl 
 
-//echo "CrossRoads= $CrossRoads";
+echo "<br>@143 CrossRoads= $CrossRoads";
 
 // ====================================
-// Did we have goo cross roads provided
+// Did we have good cross roads provided
 // ====================================
 if ($CrossRoads) {
 // ====================================
@@ -161,6 +156,7 @@ $sql2 = "UPDATE NetLog
 		       delta = 'Y'
 		 WHERE recordID = $recordID
         ";
+    //echo "@167 sql2<br>$sql2";
 	$stmt2 = $db_found->prepare($sql2);
 	$stmt2 -> execute();
 	
@@ -168,15 +164,22 @@ if ($obj == '' ) {
     $delta = 'LOC&#916:W3W:';
 }else { $delta = 'LOC&#916:W3W:OBJ:'; }
 
+// Not using the geo any longer, so this value is just lat and lng together
 $latlng = "$lat,$lng";
 
+$ipaddress = '';
 
-	
-$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress, latlng) 
-					VALUES ('$recordID', '$ID', '$netID', '$callsign', '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress', GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')')) )";
-        
-       //  echo "<br><br>sql2= $sql3"
-   $db_found->exec($sql3);
+
+
+// removed latlng 2023-12-22
+$sql3 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+            VALUES ('$recordID', '$ID', '$netID', '$callsign', 
+                    '$delta $w3w -> Cross Roads: $CrossRoads ($latlng) $obj', '$open', '$ipaddress') 
+        ";
+                    
+       echo "<br>@177 sql3<br>$sql3"; 
+    $stmt3 = $db_found->prepare($sql3);
+	$stmt3 -> execute();
 
 // ===================================================================================
 // Update the NetLog table to reflect the error, so it will appear in the comments
@@ -188,7 +191,7 @@ $sql4 = "UPDATE NetLog
     $stmt4 = $db_found->prepare($sql4);
 	$stmt4 -> execute();
 
-//echo "sql4=<br> $sql4<br><br>recordID= $recordID<br>CrossRoads= $CrossRoads";
+echo "@191 sql4=<br> $sql4<br><br>recordID= $recordID<br>CrossRoads= $CrossRoads";
    
 }
 	

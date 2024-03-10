@@ -1,40 +1,63 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Column Reference Guied</title>
-   
+  <style>
+    #APRSDialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5in;
+      height: 4in;
+      padding: 10px;
+      background-color: #f2f2f2;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #APRSDialog h3 {
+      margin-top: 0;
+      color: blue;
+    }
+    
+    #APRSDialog h2 {
+      margin-top: 0;
+      color: red;
+      font-size: larger;
+    }
+
+    #APRSDialog .option-group {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    #APRSDialog .option-group input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    #APRSDialog .option-group label {
+      margin-right: 35px;
+    }
+
+    #APRSDialog textarea {
+      width: 100%;
+      resize: vertical;
+    }
+  </style>
 </head>
 <body>
-    <!-- Setup to look best in a split screen -->
-<pre>
-+++++++ Column Assignments +++++++++++++++++ Admin +++++++++++++++
- Class  Web Name        DB Name           Class  DB Name  
-    c1: Role            netcontrol          c25: recordID
-    c2: Mode            Mode                c26: ID
-    c3: Status          active              c27: status
-    c4: Traffic         traffic             c28: home
-    c5: TT              tt                  c29: ipaddress
-    c6: Call Sign       callsign
-    c7: First Name      Fname               
-    c8: Last Name       Lname               ++++ Custom
-    c9: Tactical        tactical            c50: cat
-    c10: Phone          phone               c51: section
-    c11: Email          emial
-    c12: Time IN        logdate             ++++ No Class
-    c13: Time Out       timeout                netID
-    c14: Comments       comments               subNetOfID
-    c15: Credentials    creds                  activity
-    c16: Time On Duty   timeonduty             frequency
-    c17: County         county                 netcall
-    c18: State          state                  logclosedtime
-    c19: District       district               firstLogin
-    c20: Grid           grid                   pb
-    c21: Latitude       latitude               dttm
-    c22: Longitude      longitude           
-    c23: Band           band
-    c24: W3W            w3w
-    c35: City           city
-</pre>
-
+  <div id="APRSDialog">
+    <h2>Choose an option:</h2>
+    <h3>A comment is logged but not mapped.<br>Objects are always logged and mapped.</h3>
+    <div class="option-group">
+      <input type="radio" id="option1" name="option" value="option1">
+      <label for="option1">Comment</label>
+      <input type="radio" id="option2" name="option" value="option2" checked>
+      <label for="option2">Object</label>
+    </div>
+    <h3>Enter a comment:</h3>
+    <textarea id="comment" rows="8" cols="50"></textarea>
+  </div>
 </body>
 </html>

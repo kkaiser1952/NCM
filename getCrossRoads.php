@@ -7,15 +7,21 @@ error_reporting( 0 );
 	
 // =========================================================================================
 // Now lets get the nearest cross roads, 
-// http://img.geonames.org/maps/us-reverse-geocoder.html
+// http://www.geonames.org/maps/osm-reverse-geocoder.html
 // =========================================================================================
 
 function getCrossRoads($lat, $lng) {
    // echo "$lat $lng";
+   
+   // This disables the SSL certificate verification and allows CURL to make the request without checking the certificate validity. So dont use it in production.
+   //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
     $curl = curl_init();
     
+// http://www.geonames.org/maps/osm-reverse-geocoder.html
+
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
+      CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
       CURLOPT_SSL_VERIFYPEER => false,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
@@ -42,9 +48,14 @@ function getCrossRoads($lat, $lng) {
            $street1  = $crc['intersection']['street1']; 
            $street2  = $crc['intersection']['street2'];     
            
-           return "$street1 &amp; $street2";
+           $CrossRoads = "$street1 &amp; $street2";
            
-          // echo "$CrossRoads";
+           //return "$street1 &amp; $street2";
+           
+           //echo "$CrossRoads";
+           return $CrossRoads;
+           
+          // return "$street1 &amp; $street2";
             
     } // end else	
 };  // End function

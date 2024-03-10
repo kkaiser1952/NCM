@@ -212,45 +212,33 @@ echo ("
             
             <div class='$class'> $row[district]	</div>			
         </td>   
-        
-      <!--
-        <td $brbCols class=\"editable editdist  c59 cent\" 
-            style=\"text-transform:uppercase\"
-            id=\"district:$row[recordID]\"  
-            sorttable_customkey=\"$row[district] $row[county] $row[state] \"
-            onClick=\" empty('district:$row[recordID]'); \" > 
-            
-            <div class='$class'> $row[district]	</div>	  					
-        </td>
-       --> 
-    
-        <td $brbCols 
-            class=\"editable W3W  c24 cent\" 
+
+
+
+        <td $brbCols contenteditable=\"false\"
+            class=\" W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
-            onClick=\"empty('w3w:$row[recordID]');\">
-            <div class='$class'> $row[w3w]	</div> 
-        </td>   
-        <!-- onClick=\"empty('w3w:$row[recordID]'); getW3W('$row[recordID]'); event.preventDefault(); 
-            \"> -->
-        <!-- https://www.formget.com/jquery-dialog-form/ -->
-        
-        
-        <td $brbCols 
+            onClick=\"empty('w3w:$row[recordID]'); getAPRSLocations('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
+            style=\"cursor: pointer;\">
+            <div class='$class' readonly> $row[w3w]	</div> 
+        </td> 
+     
+        <td $brbCo
             class=\"editable editteam  c30 cent\" 
             id=\"team:$row[recordID]\" 
             onClick=\"empty('team:$row[recordID]');\">
             <div class='$class'> $row[team]	</div> 
         </td>
+
         
         <td $brbCols 
             class=\"editable editaprs_call  c31 cent\" 
             id=\"aprs_call:$row[recordID]\" 
             style=\"text-transform:uppercase\"
-            oncontextmenu=\"getFindu('$row[aprs_call], $row[recordID]');return false; \"
-            onClick=\"empty('aprs_call:$row[recordID]');
-            \">
-            <div class='$class'> $row[aprs_call]	</div> 
+            oncontextmenu=\"getAPRSLocations('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], APRS');return false; \"
+            onClick=\"empty('aprs_call:$row[recordID]');\">
+            <div class='$class'> $row[aprs_call] </div> 
         </td>
         
         <td $brbCols 

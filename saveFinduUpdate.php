@@ -95,10 +95,11 @@
 				$stmt->execute();
           		
         // The TS is the last update time from Findu it will differ from current timestamp
+        // Removed latlng on 2023-12-22
         $comment = "$delta:APRS:OBJ: @:$ts ($lat,$lon)  ///$w3w   Cross Roads: $crossRoads Object: $objname";
         
-        $sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, latlng, timestamp, ipaddress) 
-					VALUES ('$recID', '$ID', '$nID', '$cs1', '$comment', GeomFromText(CONCAT('POINT (', $lat, ' ', $lon, ')')), '$open', '$ipaddress')";
+        $sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+					VALUES ('$recID', '$ID', '$nID', '$cs1', '$comment', '$open', '$ipaddress')";
 						
 			$db_found->exec($sql);
 	

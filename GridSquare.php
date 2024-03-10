@@ -53,15 +53,27 @@ $ycalc[2] = $lat +  90;
             $yn[$y] = $ylp;
 		}
 	} 
-  		$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+	    
+	    // My attempt
+  		//$yqth = $ychr{$yn[1]} . $ychr{$yn[4]} . $ynum{$yn[2]} . $ynum{$yn[5]} . $ychr{$yn[3]} . $ychr{$yn[6]};
+  		
+  		// chatGPT suggestion of 2023-11-19
+  		$yqth = $ychr[$yn[1]] . $ychr[$yn[4]] . $ynum[$yn[2]] . $ynum[$yn[5]] . $ychr[$yn[3]] . $ychr[$yn[6]];
+  		
+  		//Notice: String offset cast occurred in /var/www/html/GridSquare.php on line 56
   		
     	return $yqth;
 } /* end of the gridsquare function */
 
 //echo "$yqth<br>";
 
-//$gs = gridsquare(39.8520, -94.37400);
+//$gs = gridsquare(39.2028965, -94.602876);
+//echo "$gs<br>";
 //echo "$gs[0], $gs[1]...$gs[5]<br>";
 //print_r("$gs");
-
+/*
+    EM29QE
+E, M...E
+EM29QE
+*/
 ?>

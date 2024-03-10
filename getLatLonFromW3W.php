@@ -7,7 +7,8 @@
   // {"country":"US","square":{"southwest":{"lng":-94.602915,"lat":39.202889},"northeast":{"lng":-94.60288,"lat":39.202916}},"nearestPlace":"Riverside, Missouri","coordinates":{"lng":-94.602897,"lat":39.202903},"words":"easily.hardest.ended","language":"en","map":"https:\/\/w3w.co\/easily.hardest.ended"};
     
     // example address
-   // $w3w = "easily.hardest.ended";
+    //$w3w = "easily.hardest.ended";
+    $w3w = "guiding.confusion.towards";
     	
 	$curl = curl_init();
 
@@ -29,13 +30,34 @@ curl_close($curl);
 if ($err) {
   echo "cURL Error #:" . $err;
 } else {
-  echo $response;
+  //echo $response;
   
     $w3wLL = json_decode($response, true);
+    
+    //echo "<br>Response: <br>"; var_dump($w3wLL);
+    print_r($w3wLL);
+    
+    $nearest = $w3wLL['nearestPlace'];
+    
+    echo '<br><br>nearest: ' . $nearest . '<br>';
+    
+    // Use explode to split the string by comma and get the first part
+    $parts = explode(',', $nearest);
+    
+    // Trim any leading or trailing whitespace from the first part
+    $firstPart = trim($parts[0]);
+    
+    echo $firstPart; // Output: "Riverside"
+    
+   // echo "$wewLL";
         
         $koords = $w3wLL['coordinates']; 
         
-        echo "<PRE>".json_encode($koords, JSON_PRETTY_PRINT)."</PRE><br>";
+        
+        
+       // echo "$koords";
+        
+        //echo "<PRE>".json_encode($koords, JSON_PRETTY_PRINT)."</PRE><br>";
         
 } // end else
 		    

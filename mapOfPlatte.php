@@ -23,7 +23,46 @@
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
     <link rel="stylesheet" type="text/css" href="css/maps.css">  
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.contextmenu.min.css">
-  
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    
+    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
+    <!--<script src="js/L.Control.MousePosition.js"></script>-->
+     
+    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
+    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
+    
+    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
+    
+    <script src="js/hamgridsquare.js"></script>
+    
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
+    <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
+    <!-- Allows for rotating markers when more than one at the same place -->
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    
+    <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
+    
+    
+     
+     <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
+     <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Vector from CDN -->
+  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
+    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
+    crossorigin=""></script>
+    
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
+    crossorigin=""></script>     
+    <!-- ******************************** End ESRI LEAFLET ***************************************** ->
   
   <!-- What 3 Words -->
   <script src="js/control.w3w.js"></script>
@@ -32,6 +71,8 @@
   <script src="js/leaflet_numbered_markers.js"></script>
   <script src="js/L.Grid.js"></script>                    <!-- https://github.com/jieter/Leaflet.Grid -->
   <script src="js/geolet.js"></script>
+  
+
 
   
   <style>
@@ -278,44 +319,6 @@
     }
   </script>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    
-    <!-- https://github.com/ardhi/Leaflet.MousePosition -->
-    <!--<script src="js/L.Control.MousePosition.js"></script>-->
-     
-    <!-- https://github.com/PowerPan/leaflet.mouseCoordinate replaces MousePosition -->
-    <script src="js/leaflet/leaflet.mouseCoordinate-master/dist/leaflet.mousecoordinate.min.js"></script>   
-    
-    <!-- <script src="https://github.com/PowerPan/leaflet.mouseCoordinate.git"></script> -->
-    
-    <script src="js/hamgridsquare.js"></script>
-    
-    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>  
-    <script src="js/leaflet/leaflet.contextmenu.min.js"></script>
-    <!-- Allows for rotating markers when more than one at the same place -->
-    <script src="js/leaflet.rotatedMarker.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.9.1/src/leaflet.geometryutil.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
-    
-    <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=5WHIM4GD"></script>
-    
-    
-     
-     <!-- ******************************** Load ESRI LEAFLET from CDN ******************************* -->
-     <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
-    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
-    crossorigin=""></script>
-
-  <!-- Load Esri Leaflet Vector from CDN -->
-  <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"
-    integrity="sha512-EMt/tpooNkBOxxQy2SOE1HgzWbg9u1gI6mT23Wl0eBWTwN9nuaPtLAaX9irNocMrHf0XhRzT8B0vXQ/bzD0I0w=="
-    crossorigin=""></script>
-    
-    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
-    crossorigin=""></script>     
-    <!-- ******************************** End ESRI LEAFLET ***************************************** -->
+  
 </body>
 </html>

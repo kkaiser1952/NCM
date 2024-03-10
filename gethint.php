@@ -4,6 +4,7 @@ require_once "dbConnectDtls.php";
 
 	
 	$term = $_GET['term'];
+	//$term = 'keit';
 	
 	$term = str_replace(' ','', $term); 
 	 		  	// ,' --> ',state,'--',county,'--',district

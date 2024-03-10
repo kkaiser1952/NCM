@@ -1,0 +1,163 @@
+/* These CSS definitions are for all the bubble boxes in NCM */
+
+.initiallyHidden { display: none; }
+.initiallyHidden2 { display: none; }
+
+/* button definition to show/hide tips */
+.tbb{
+        background-color: #4CAF50;
+        border: none;
+        color: #0b069e;
+        padding: 1px 1px;
+        height: 15px;
+        width:  15px;
+        text-align: center ;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 9px;
+        cursor: pointer;
+        border-radius: 50%;
+}
+	
+
+
+/* The left and right here are the final position of the NCM and Net Control Manager titles */
+/* These future features work with the very last javascript at the bottom of this page. */
+@keyframes pageOpening {
+  /*    from {left:50%; top:50%;  transform:rotate(0deg);}  
+        to {left:10px; top:5px; transform:rotate(360deg);} */
+        from {left:100%; top:5px; }
+        to {left:20px; top:5px;}
+}
+@keyframes moveRightCorner {
+        from {left:20px; top:5px; }
+        to {right:5px; top:5px;}
+}
+.openingImages {
+    /*
+    position: relative;
+    animation: pageOpening 1.0s ;  */
+}
+#ourfreqs {
+  /*  position: relative; 
+    animation: moveRightCorner 1.0s ; */
+}
+
+
+/* check these */
+/* https://auralinna.blog/post/2017/how-to-make-a-css-speech-bubble-with-borders-and-drop-shadow/ */
+/* Speech bubble below */
+/* https://www.sitepoint.com/pure-css3-speech-bubbles/ */
+
+/* ***************** */
+/* for the main page */
+/* ***************** */
+.tipimage{
+    color: red;
+    text-decoration: none;
+}
+.TipBubbles, .TipBubShort {
+      position: relative;
+      color: blue;
+      font-size: larger;
+      left: 20px;
+      width: 300px; 
+      height: 30px;       /* size up and down */
+      text-align: center;
+      line-height: 30px;  /* same as height */
+      background-color: yellow;
+      border: 4px solid #999; */
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-shadow: 2px 2px 4px #888;
+      -moz-box-shadow: 2px 2px 4px #888;
+      box-shadow: 2px 2px 4px #888;
+      z-index: 100;
+}
+
+.TipBubbles:before {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 30px;
+      top: 30px;            
+      border: 25px solid;  
+      border-color: #999 transparent transparent #999;
+}
+.TipBubbles:after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 38px;
+      top: 30px;            
+      border: 15px solid;    
+      border-color: yellow transparent transparent yellow;
+}
+
+
+/* ***************** */
+/* for the help file */
+/* ***************** */
+.HelpBubbles, .HelpBubbles2{
+      position: relative;
+      color: blue;
+      font-size: medium;
+      left: 475px;
+      width: 300px; 
+      
+      height: 50px;       /* size up and down */
+      text-align: center;
+      line-height: 30px;  /* same as height */
+      background-color: yellow;
+      border: 8px solid #999;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-shadow: 2px 2px 4px #888;
+      -moz-box-shadow: 2px 2px 4px #888;
+      box-shadow: 2px 2px 4px #888;
+}
+.HelpBubbles:before {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 30px;
+      top: 30px;            /* Same as height in HelpBubbles */
+      border: 25px solid;
+      border-color: #999 transparent transparent #999;
+}
+.HelpBubbles:after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 38px;
+      top: 30px;            /* Same as height in HelpBubbles */
+      border: 15px solid;
+      border-color: yellow transparent transparent yellow;
+}
+.HelpBubbles2:before {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 30px;
+      top: 30px;            /* Same as height in HelpBubbles */
+      border: 25px solid;
+      border-color: #999 transparent transparent #999;
+}
+.HelpBubbles2:after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 38px;
+      top: 30px;            /* Same as height in HelpBubbles */
+      border: 15px solid;
+      border-color: yellow transparent transparent yellow;
+}
+

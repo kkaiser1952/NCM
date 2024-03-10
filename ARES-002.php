@@ -12,7 +12,7 @@
 require_once "dbConnectDtls.php";
 
 $year = 2023;
-$month = 3;
+$month = 7;
 $netcall = 'w0kcn';
 
 $sql = "SELECT netID,

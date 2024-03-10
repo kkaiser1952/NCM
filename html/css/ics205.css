@@ -1,0 +1,6 @@
+.table1, th, td {
+    border: 1px solid black;
+}
+.table1 {
+    width: 90%;
+}

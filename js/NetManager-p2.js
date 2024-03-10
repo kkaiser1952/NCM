@@ -1,25 +1,11 @@
 /* All of this NetManager-p2 (part 2) file was copied from the top of the index.php and moved here on 2018-1-15 */
 
 // This function is used by the latitude & longitude columns from rowDefinitions.php
-//function getCrossRoads(lat,lng) {
+function getCrossRoads(lat,lng) {
 
     //var in = eval('http://www.findu.com/cgi-bin/posit.cgi?call='+aprscall+'&comma=1&time=1&start=24');
     
-//} // end getCrossRoads()
-
-// this MIGHT be used to more easily enter W3W values correctly
-// currently not being used...
-parms = Array();
-function getW3W(parms) {
-    const objName = prompt('Enter a W3W address & optional object \n ex: clip.apples.leap green car'); 
-    parms = parms.split(',');   
-    const recordID = parms[0];
-    const netID = $("#idofnet").text().trim();
-    
-   $("#w3w:"+recordID).text(objName);
-    
-    console.log('@22 netID '+netID+' recordID= '+recordID+' objName= '+objName);       
-}
+} // end getCrossRoads()
 
 
 
@@ -27,7 +13,7 @@ function getW3W(parms) {
 // It is processed in the saveFinduUpdate.php program
 parms = Array();
 function getFindu(parms) {
-    const objName = prompt('OPTIONAL: Enter an object description'); 
+    const objName = prompt('Enter an object description'); 
     parms = parms.split(',');
     const aprs_call = parms[0];
     const recordID  = parms[1];
@@ -39,10 +25,9 @@ function getFindu(parms) {
     console.log("@26 In getFindu Function netID "+netID+" "+aprs_call+"  recordID= "+recordID);
 
 // Contribution by Louis Gamor programer of extrodinary talents from Ghana, Africa
-// https://www.findu.com/cgi-bin/find.cgi?call=ak0sk-7
-// https://www.findu.com/cgi-bin/posit.cgi?call=ak0sk-7&comma=1&time=1
-// https://www.findu.com/cgi-bin/rawposit.cgi?call=ak0sk-7&start=96&length=12&time1
-// http://www.findu.com/cgi-bin/posit.cgi?call=ak0sk-7&comma=1&time=1&start=96&length=96
+// https://www.findu.com/cgi-bin/find.cgi?call=wa0tjt-13
+// https://www.findu.com/cgi-bin/posit.cgi?call=wa0tjt-13&comma=1&time=1
+// https://www.findu.com/cgi-bin/rawposit.cgi?call=wa0tjt-13&start=12&length=12&time1
 const fetchDataFromURL = async () => {
     await fetch("https://shrouded-depths-69856.herokuapp.com/http://www.findu.com/cgi-bin/posit.cgi?call="+aprs_call+"&comma=1&time=1&start=12")
     .then(async response => {
@@ -70,7 +55,7 @@ const processDataFromURL = urlData => {
                 
                 //const thiscomments = '#comments:'+recordID.replace(/\s/g, "");
             
-        var str = lat+","+lon+","+recordID+","+netID+","+ts+","+objName;
+        var str = lat+','+lon+','+recordID+','+netID+','+ts+','+objName;
             
             console.log('@57 str= '+str);
             
@@ -84,7 +69,9 @@ const processDataFromURL = urlData => {
 
                 }, // end response
                 error: function() {
-                    alert('No update: timestamp is the same as previous, see line 60 in saveFinduUpdate.php ');
+					alert(lastStationLocationUpdate[1]);
+					/*if (lastStationLocationUpdate[0] == 'Sorry') 
+                        {*/ //$("#thiscomments").text(lastStationLocationUpdate[1]); 
                     
                     console.log('@74 0= '+lastStationLocationUpdate[0]+' 1= '+lastStationLocationUpdate[1]);
 				}
@@ -128,39 +115,9 @@ const getMostRecentStationUpdate = coordinatesArray => {
 
 } // end getFindu() function
 
-// ======================================================================================
 // End of Contribution by Louis Gamor programer of extrodinary talents from Ghana, Africa
-// ======================================================================================
+// =============================================
 
-function doubleClickComments(rID, cs1, netID) {
-    console.log("@136 You did it");
-}
-
-// This function will run doubleClickCall.php, it has two jobs, one is to update the stations table
-// with the information about this DX call and two is to update the NetLog table at the appropriate
-// recordID with pretty much the same information. 
-// Two birds with one stone kind of thing.
-function doubleClickCall(rID, cs1, netID) {
-   var rID = rID;
-   var cs1 = cs1;
-   var netID = netID;
-   // var str = rID+','+ cs1;
-   // alert('In the doubleClickCall function \n recordID:'+rID+',  cs1:'+cs1);
-     //var fst = cs1.charAt(0);
-   
-   if ( cs1.charAt(0) == 'A' || cs1.charAt(0) == 'N' || cs1.charAt(0) == 'K' || cs1.charAt(0) == 'W' ) 
-        { alert("DX calls only on double click"); }
-        else {
-            $.ajax({
-        		type: 'GET',
-        		url: 'getDXstationInfo.php',
-        		data: { rID:rID, cs1:cs1, netID:netID},
-        		success: function(response) {
-            		alert('The records have been updated for DX station '+cs1);				
-        		} // end response
-        	}); // end ajax writing of table
-        }
-}
 
 function whoAreYou() {
     var WRU = prompt("Your Call?");
@@ -195,6 +152,7 @@ $(document).ready(function() {
 
 
 function newNet(str) {   
+	  
     // All callsigns require at least one number 
     // The callsign div must have a value
     var firstDigit = $( '#callsign' ).val().match(/\d/); //alert(firstDigit);
@@ -212,12 +170,11 @@ function newNet(str) {
 	$("#form-group-1").show();
 	$("#timer").removeClass("hidden");
 	
+	
+	
 	var newnetnm = $("#GroupInput").val().trim(); //alert('newnetnm= '+newnetnm); // newnetnm= W0KCN
-	    console.log("@216 newnetnm in NetManager-p2.js "+newnetnm);
 	
 	var netcall  = $("#GroupInput").val().trim(); // this should be org
-	//var netview  = $("#GroupInput").val().trim();
-	    console.log("@219 netcall in NetManager-p2.js "+netcall);
 
     var newnetfreq = $("#FreqInput").val();
         if (newnetfreq == '' ) {newnetfreq = '144.520MHz'; }
@@ -231,7 +188,7 @@ function newNet(str) {
         	    if (netcall == '' ) { netcall = callsign; }
     	}
     	if ( newnetkind == '' ) {
-        	var newnetkind = prompt("What should I use as a group name or call? ex: North ARES");
+        	var newnetkind = prompt("What should I use as a group name? ex: North ARES");
         	    if ( newnetkind == '' ) { newnetkind = callsign; }	
     	}
 		
@@ -295,19 +252,10 @@ function newNet(str) {
 			
 		} // end response
 	}); // end ajax writing of table
-/*	
-	$.ajax({
-    	type: 'POST',
-    	url:  'view4hints.php',
-    	data: {q: netcall},
-    	success: function(response) {console.log('view created')}
-	}
-*/
 }}
 
 function hideCloseButton(pb) {
     //alert('pb '+pb);
-    console.log("@298 in hidCloseButton function "+pb);
     if (pb == 1) {$("#closelog").addClass("hidden");}
 }  
 
@@ -359,7 +307,7 @@ function checkIn() {
 //	var cs1 		= cs1.toUpperCase();
 
     // All callsigns require at least one number except these
-    var goodcalls = ["NONHAM","HCALPHA","HCBRAVO","HCCHARLIE","HCDELTA","HCECHO","HCFOXTROT","HCGOLF","HCHOTEL","HCINDIA","HCJULIETT","HCKILO","HCLIMA","HCMIKE","HCNOVEMBER","HCOSCAR","HCPAPA","HCQUEBEC","HCROMEO","HCSIERRA","HCTANGO","HCUNIFORM","HCVICTOR","HCWHISKEY","HCX-RAY","YANKEE","HCZULU","NETCONTROL", "EMCOMM"];	  
+    var goodcalls = ["NONHAM","HCALPHA","HCBRAVO","HCCHARLIE","HCDELTA","HCECHO","HCFOXTROT","HCGOLF","HCHOTEL","HCINDIA","HCJULIETT","HCKILO","HCLIMA","HCMIKE","HCNOVEMBER","HCOSCAR","HCPAPA","HCQUEBEC","HCROMEO","HCSIERRA","HCTANGO","HCUNIFORM","HCVICTOR","HCWHISKEY","HCX-RAY","YANKEE","HCZULU","NETCONTROL"];	  
   	  
   /* The next few lines test the validity of the callsign cs1 and exits if not good */
   	//if (cs1.trim() == "NONHAM") {
@@ -372,13 +320,13 @@ function checkIn() {
 	 // if (firstDigit == null && cs1.trim() != "NONHAM" ) {
       if (firstDigit == null && goodcalls.indexOf(cs1.trim()) < 0 ) {
     	
-		  var cs1 = prompt(cs1+" is an invalid callsign! \n Callsigns worldwide requie at least one number. \n Please enter a correct callsign, or the appropriate word ex. 'NONHAM', 'EMCOMM' for non amateur participants.");
+		  var cs1 = prompt(cs1+" is an invalid callsign! \n Callsigns worldwide requie at least one number. \n Please enter a correct callsign, or the word NONHAM for non amateurs.");
 		  
 			  if (cs1 === "" || (cs1.match(/\d/) == null)) {
 			  	return;
 			  } 
-	  } // End if @355
-  	} // End else @357
+	  } // End if @195
+  	} // End else @191
   	
   //	alert(TSvalue);
 
@@ -478,7 +426,7 @@ $('.remember-selection').each(function(r) {
     });
 }); // end of fillFreqs() function
 
-// This function changes the onscreen button from Close Net to Net Closed as is appropriate based on the net
+// This function changes the onscreen button from Close Net to Net Closed as is appropriate base on the net
 // that was selected from the dropdown of previous nets (id = select1)
 // And it hides the 'Start a new net' button when a net is selected from the dropdown
 // 0 means the net is still open
@@ -487,25 +435,26 @@ function switchClosed() {
 	$(".theBox").addClass("hidden");
 	var status = $("#select1").find(":selected").attr("data-net-status");
 	
-	    console.log("@482 status = "+status);
-	    
 	if ( status == 0 ) { 
 		$("#closelog").html("Close Net"); 
 	} else {
 		$("#closelog").html("Net Closed");
 	} 
 	
-	   var ispb = $("#ispb").html();    // Is this a pre-built? 1=yes, 0=no
-       var pbStat = $("#pbStat").html();    // may not be working correctly
-       var isopen = $("#isopen").html();    // Is this open? 1=yes, 0=no
-       
-	    console.log("@494 status = "+status+" ispb = "+ispb+" pbStat= "+pbStat+" isopen= "+isopen);
-       
-    // Test if its a new PB being built, if so hide the 'close net' button
-   // if ( $("#isopen").html() != "undefined") 
-     //   { hideCloseButton(1); }
+	   var ispb = $("#ispb").html(); 
+       var pbStat = $("#pbStat").html();
+       var isopen = $("#isopen").html();
+      // alert('ispb :'+ispb+' pbStat:'+pbStat+'  statis:'+status+'  isopen:'+isopen);
+      // if (ispb == 1 && pbStat == 0 && status != 0 && isopen == 0) {hideCloseButton(ispb)}
       
-} // End of switchClosed function
+    /*    $(".tb2")removeClass("initiallyHidden");
+        $(".tb1")addClass("initiallyHidden");
+    */   
+  /*    // switch the tips button to 
+        $("#tb").removeClass("tipsbutton");
+        $("#tb").addClass("tipsbutton2");
+        */
+}
 
 // https://stackoverflow.com/questions/7697936/jquery-show-hide-options-from-one-select-drop-down-when-option-on-other-select
 // These two functions control what will be seen in the newnetnm dropdown after the organization is chosen
@@ -572,7 +521,6 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
     // gethint.php here is called gethintSuspects.php    
     
     var nc = $("#thenetcallsign").text();
-        console.log('@575 nc= '+nc);        
     
         $("#cs1").autocomplete({
             autoFocus: true,
@@ -582,7 +530,7 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
               nc: nc
             },
             select: function(event, ui) {
-              // This is under the readonly on the Fname input field below
+              // This if undes the readonly on the Fname input field below
               if (ui.item.label == 'NONHAM') {
                 $('#Fname').prop('readonly', false);
               }
@@ -592,15 +540,14 @@ function filterSelectOptions(selectElement, attributeName, attributeValue) {
               var nc = $("#thenetcallsign").html();
               //return false;
             }
-          }) // end autocomplete
-          
+          })
           .data("ui-autocomplete")._renderItem = function(ul, item) {
             return $("<li>")
               .append("<a>" + item.label + " --->  " + item.desc + "</a>")
               .appendTo(ul);
           };
         
-        
+    
                    
 //});
 
@@ -828,8 +775,6 @@ function openColumnPopup() {
 	var popupWindow = window.open("columnPicker.php?netcall="+netcall, "Columns",  strWindowFeatures);
 }
 
-
-
 function seecopyPB() {
 	$("#copyPB").removeClass("hidden");
 }
@@ -936,25 +881,18 @@ function buildFSQHeardList() {
 function buildCallHistoryByNetCall() {
     //var netcall 	= $("#idofnet").html();
     var netcall = '';
-    var numofmo = 0;
         if ( typeof netcall === 'undefined' || netcall === null || netcall == '' ) {
     	    var netcall = prompt("Enter a Net call sign i.e. MODES, MESN, KCNARES");  //alert(netcall);
-    	    var numofmo = prompt("How many months back? i.e. 3, 5, 12");
 		
             if (netcall =="") {alert("Sorry no net was selected"); return;}
 	    }
 	    
     var popupWindow = window.open("", "_blank",  strWindowFeatures);
     
-    var runurl = 'getCallsHistoryByNetCall.php'; // default
-        if (netcall == 'KCHEART' | netcall == 'kcheart') {runurl = 'getCallsHistoryByNetCall-FACILITY.php';} // KCHEART, etc.
-        
-        //alert(runurl);
-    
     $.ajax({
 		type: 'POST',
-		url: runurl,
-		data: {netcall: netcall.trim(), nomo: numofmo},
+		url: 'getCallsHistoryByNetCall.php',
+		data: {netcall: netcall.trim()},
 		success: function(html) {	
 			popupWindow.document.write(html);		
 		} // end success
@@ -962,29 +900,6 @@ function buildCallHistoryByNetCall() {
     
 }
 
-//const netID = $("#idofnet").text().trim();
-function geoDistance() {
-    if ( $('#idofnet').length ) {
-		var netID	 = $("#idofnet").html().trim();
-	} else {
-		var netID = prompt("Enter a Log number.");
-	}
-        	    
-    //var popupWindow = window.open("", "_blank",  strWindowFeatures);
-    
-    window.open("geoDistance.php?NetID="+netID,"_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
-    //var runurl = 'geoDistance.php'; // default
-    
-/*    $.ajax({
-		type: 'GET',
-		url: 'geoDistance.php',
-		data: {q: netID},
-		success: function(html) {	
-			popupWindow.document.write(html);		
-		} // end success
-	});
-	*/
-}
 
 // ===================================== put here from index.php at the bottom ------------------------------
 
@@ -1021,8 +936,6 @@ function topFunction() {
 
 // Hide the initial 'Hide Timeline' button
 $("#timelinehide").hide();
-$("#timelinesearch").hide();
-$(".timelineBut3").hide();
 
 
 // 2018-08-16 This script is used to show the subnets of any given net. It also shows the parent
@@ -1031,7 +944,6 @@ $(".timelineBut3").hide();
 	$(document).on('click', '.subnetkey', function(event) {
     	
     	$(".timelineBut2").addClass("hidden");
-    	
     	
 		$("#subNets").html("");				  // Clears any previous entries
 		var strr   = $(".subnetkey").val();   // The string of net numbers like 789, 790
@@ -1313,11 +1225,9 @@ function stationTimeLineList(info) {
 	
 	var popupWindow = window.open("", "_blank",  strWindowFeatures);
 		
-		// was using getStationsTimeLine.php, replaced 2021-12-10
-		
 	$.ajax({
 		type: 'POST',
-		url: 'getStationICS-214A.php',
+		url: 'getStationTimeLine.php',
 		data: {netid:netID, call:callsign},
 		success: function(html) {	
 			popupWindow.document.write(html);		
@@ -1325,75 +1235,10 @@ function stationTimeLineList(info) {
 	});
 }
 
-// A right click on this field changes it to 'STANDBY' or 'STANDBY' gets changed to 'Resolved'
-function rightClickTraffic(recordID) {
-    //alert(recordID+" in rightClickACT()");
-		if(recordID) {
-    		//alert(recordID+" in rightClickACT()");
-			$.ajax({
-				type: 'POST',
-				url: 'rightClickTraffic.php',
-				data: {q: recordID},
-				success: function(html) {
-					//refresh();
-				},
-				error: function (data, status, e) {
-    			alert(e);
-			} // end error
-			});
-		}
-		var netID = $("#idofnet").html().trim();
-		showActivities( netID );
-};
-
-// This function changes a blank or no to yes, part of facility handling
-function rightClickOnSite(recordID) {
-    //if(recordID) {
-        //console.log("@1313 recordID= "+recordID+" in rightClickOnSite()");
-        // The "Click to edit" is coming from jquery.jeditable.js but i don't know why
-        $.ajax({
-			type: 'POST',
-			url: 'rightClickOnSite.php',
-			data: {q: recordID},
-			success: function(data, status) {
-    			//console.log(alert(data));
-			},
-			error: function (data, status, e) {
-    			alert(e);
-			} // end error
-        });
-    //}
-    var netID = $("#idofnet").html().trim();
-	showActivities( netID );
-};
-
-// A right click on this field looks up the distrct from the HPD table and updates it in the NetLog
-function rightClickDistrict(str) {
-	if(str) {
-    	var split    = str.split(",");
-        var recordID = split[0];
-        var state    = split[1];
-        var county   = split[2];
-
-		console.log('@1280 str:'+str+'\n recordID:'+recordID+', state:'+state+', county:'+county);
-		
-		$.ajax({
-			type: 'POST',
-			url: 'rightClickDistrict.php',
-			data: {q: recordID, st: state, co: county},
-			success: function(html) {
-			}
-		});
-	}
-	var netID = $("#idofnet").html().trim();
-	showActivities( netID );
-};
-
-// A right click on 'In' changes it to 'Out' and v.v.
 function rightClickACT(recordID) {
     //alert(recordID+" in rightClickACT()");
 		if(recordID) {
-    		//console.log(recordID+" in rightClickACT()");
+    		//alert(recordID+" in rightClickACT()");
 			$.ajax({
 				type: 'POST',
 				url: 'rightClickACT.php',
@@ -1407,30 +1252,6 @@ function rightClickACT(recordID) {
 		showActivities( netID );
 };
 
-// require_once "wxLL2.php";	at line 45 
-// This function uses the clickers callsign to look up their lat/lon from the stations table. 
-function newWX() {
-    var str = prompt('What is your callsign?');
-        if (str =="") { alert("OK no valid call was entered");
-        }else { var thiscall = [str.trim()]; 
-               console.log('@773 in index.php, The requested call is '+thiscall);
-                  $.ajax({
-		                type: "GET",
-		                url:  "getNewWX.php",  
-		                data: {str : str},
-		                success: function(response) {
-                            //console.log(response);
-                            $(".theWX").html(response);
-		                },  // end success
-		                error: function() {
-			                alert('Last Query Failed, try again.');
-		                } // End error
-                  }); // End ajax
-	      } // end of else
-}; // end newWX function
-
-
-
 // This controls the where and when of the tip bubbles at <button class="tbb" in index.php
 $(document).ready(function(){
     $(".tbb").click(function(){
@@ -1441,21 +1262,14 @@ $(document).ready(function(){
             
         }
     });
-}); 
-
-// this function creates a table view of the net call in the NetKind table if it doesn't already exist
-function createNetKindView() { 
-    var viewnm = $("#GroupInput").val().trim();
-    //console.log("@1450 createNetKindView() in NetManager-p2.js viewnm= "+viewnm);
-        if(viewnm) {
-            $.ajax({
-                type: "GET",
-                url: "buildView4netcall.php",
-                data: {viewnm: viewnm},
-                success: function(response) {
-                    console.log("@1457 createNetKindView in NetManager-p2.js viewnm= "+viewnm);
-                }
-            });
+    /*
+    $(".tbb2").click(function(){
+        if ($("#refbutton").hasClass("hidden") ) {
+            $(".tb1").toggle();
+        }else {
+            $(".tb2").toggle();
+            
         }
-
-} // end createNetKindView()
+    });
+    */
+}); 

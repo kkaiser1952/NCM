@@ -1,24 +1,32 @@
 <!doctype html>
 
 <?php
+    // Modified on 11/18/23 to fix the prepared by field in the report. The First name was correct the last name was not. 
 
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
     
-    $q = intval( $_GET["NetID"] );   //$q = 2916;
+    $q = intval( $_GET["NetID"] );  //$q = 10016;
+    //$q = 10418;
+    
+        // Variable initialization
+        $children = '';
+        $activity = '';
+        $indate = '';
     
     // The below SQL is used to report the parent and child nets
     $sql = "SELECT subNetOfID, 
 			       GROUP_CONCAT(DISTINCT netID SEPARATOR ', ')
 			  FROM NetLog
-			 WHERE subNetOfID = $q
+			 WHERE subNetOfID = :netId
 			 ORDER BY netID";
 			 
 	$stmt = $db_found->prepare($sql);
+	$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    $stmt->execute();
 	
-		$stmt -> execute();
 			$children = $stmt->fetchColumn(1); 
 			
     $sql1 = ("SELECT min(logdate) AS minlog, 
@@ -29,47 +37,64 @@
     				 activity, netcall, subNetOfID,
     				 frequency
     	       FROM NetLog 
-    	       WHERE netID = $q
+    	       WHERE netID = :netId;
     	         AND logdate <> 0 
             ");  
 					
-    foreach($db_found->query($sql1) as $row) {
-	    
-	    	$activity = $row[activity];
-	    $indate = $row[indate]; $outdate = $row[outdate];	$callsign = $row[callsign];
-	    $intime = $row[intime]; $outtime = $row[outtime];	$name = $row[activity];
-	    $parent = $row[subNetOfID]; $freq = $row[frequency]; 
-    }
+    $stmt = $db_found->prepare($sql1);
+    $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Fetch the results as an associative array
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Now, you can access the values using the keys in the $row array
+    $activity = $row['activity'];
+    $indate = $row['indate'];
+    $outdate = $row['outdate'];
+    $callsign = $row['callsign'];
+    $intime = $row['intime'];
+    $outtime = $row['outtime'];
+    $name = $row['activity'];
+    $parent = $row['subNetOfID'];
+    $freq = $row['frequency']; 
     
     
-    $sql2 = "SELECT fname, lname
-               FROM NetLog
-              WHERE netID = $q
-                AND netcontrol = 'PRM'
-            ";
-        $stmt = $db_found->prepare($sql2);
+    
+    $sql2 = "SELECT CONCAT(Fname, ' ', Lname) as LogPrep
+         FROM NetLog
+         WHERE netID = :netId
+           AND (netcontrol = 'PRM' OR netcontrol = 'LOG')
+         ORDER BY CASE WHEN netcontrol = 'PRM' THEN 1 ELSE 2 END
+         LIMIT 1";
 
-		$stmt -> execute();
-		//	$children = $stmt->fetchColumn(1); 
-			$fname  = $stmt->fetchColumn(0); 
-        $stmt -> execute();
-			$lname   = $stmt->fetchColumn(1); 
-			//$netcontrol = "Net Control Operator $fname $lname = $callsign";
+$stmt = $db_found->prepare($sql2);
+$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+$stmt->execute();
+
+// Fetch the results as a single column value
+$LogPrep = $stmt->fetchColumn(0);
+
+echo ($LogPrep);
+
 			
     $sql3 = "SELECT box4, box5, kindofnet
                FROM NetKind
               WHERE `call` = '$row[netcall]'
             ";
    // echo "$sql3";
-        $stmt3 = $db_found->prepare($sql3);
-
-		$stmt3 -> execute();
+        $stmt = $db_found->prepare($sql3);
+        $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        // Fetch the results as an associative array
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 		//	$children = $stmt->fetchColumn(1); 
-			$box4  = $stmt3->fetchColumn(0); 
-        $stmt3 -> execute();
-			$box5   = $stmt3->fetchColumn(1); 
-        $stmt3 -> execute();
-			$kindofnet   = $stmt3->fetchColumn(2); 
+			$box4  = $stmt->fetchColumn(0); 
+        //$stmt3 -> execute();
+			$box5   = $stmt->fetchColumn(1); 
+        //$stmt3 -> execute();
+			$kindofnet   = $stmt->fetchColumn(2); 
 			
         if ($box5 == '') {$box5 = 'Volunteer Amateur Radio Operators (Hams)';}
             
@@ -214,97 +239,124 @@ $(document).ready(function()
 
         
         <?php 
-	        $sql = ("SELECT COUNT(*) as recCount
-	        		   FROM NetLog 
-	        		  WHERE netID = $q"); 
-				$stmt = $db_found->prepare($sql);
-				$stmt->execute();
-				
-				$result = $stmt->fetch();
-					$recCount	= $result[0];
-					
-	        $sql = ("SELECT COUNT(*) as actCount
-	        		   FROM TimeLog 
-	        		  WHERE netID = $q"); 
-				$stmt = $db_found->prepare($sql);
-				$stmt->execute();
-				
-				$result = $stmt->fetch();
-					$actCount	= $result[0];
+	        $sql4 = "SELECT COUNT(*) as recCount
+                     FROM NetLog 
+                     WHERE netID = :netId"; 
+            
+            $stmt = $db_found->prepare($sql4);
+            $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            // Fetch the result as an associative array
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $recCount = $row['recCount']; // Access the 'recCount' column from the associative array
+            
+            $sql5 = "SELECT COUNT(*) as actCount
+                     FROM TimeLog 
+                     WHERE netID = :netId"; 
+            
+            $stmt = $db_found->prepare($sql5);
+            $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            // Fetch the result as an associative array
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $actCount = $row['actCount'];
+  
+                /* */
 					
 				$rowCount = $recCount + $actCount + 11 + 2;
 				// break page after rowCount of 36 
 					
 	        $ManHours = 0;
 	        
-	        $sql = ("SELECT  ID, callsign, fname, lname, netcontrol, 
-	                         TRIM(tactical) as tactical, 
-	                         TRIM(email) as email,
-	        				 TRIM(creds) as creds, 
-	        				 TRIM(timeonduty) as tmd, 
-	        			     TRIM(sec_to_time(timeonduty)) as tod,
-	        			     TRIM(CONCAT_WS('  ',city, state, county, ' Co., Dist.', district)) as dist,
-	        			     TRIM(band) as band,
-	        			     TRIM(team) as team
-	        			     
-	        			     
-	        		   FROM NetLog 
-	        		  WHERE netID = $q 
-	        		     
-	        		    AND (timeout <> 0 AND logdate <> 0
-	        		     OR RIGHT(callsign, 2) = '-U')
-	        		  ORDER BY logdate");	
-				foreach($db_found->query($sql) as $row) {
-					$nc = "Operator";
-					switch($row[netcontrol]) {
-						case "PRM": $nc = "Primary Net Control";
-						break;
-						case "2nd": $nc = "Secondary Net Control";
-						break;
-						case "3rd": $nc = "Tertiary Net Control";
-						break;
-						case "RELAY": $nc = "Relay Station";
-						break;
-						case "PIO": $nc = "Public Information Officer";
-						break;
-						case "Log": $nc = "Net Logger";
-						break;
-						case "LSN": $nc = "Liaison to ...";
-						break;
-						case "EM": $nc = "Emergency Manager";
-						break;
-						case "   ": $nc = "Operator";
-						break;
-					}
-					
-					// fix creds if they exist by adding a comma after its name.
-					$creds = "$row[creds]";
-						if ("$row[creds]" <> '') {$creds = "$row[creds],";} // only add the comma for non-blank credentials
-						else {$creds = '';}
-				  
-					$ManHours = $ManHours + $row[tmd];
-					
-					echo "<tr style=\"height: 17pt; page-break-inside: avoid;\">
-							   <td class=\"box6td\">$row[callsign] <span class=\"spread\">$row[fname] $row[lname]</span><span><br>$row[email]</span></td>
-							   <td class=\"box6td\">$row[band] $nc <span class=\"spread\">$row[tactical]</span></td>
-							   <td class=\"box6td\">
-							   		<span class=\"tod\">$row[tod]</span> 
-							   		<span class=\"creds\">$creds $row[dist],</span>
-							   		<span class=\"team\" style=\"float:right; padding-right:3pt;\">$row[team]</span>
-							   </td>
-							   </tr>";			
-			}
-			
-					$hours = floor($ManHours / 3600);
-					$mins = floor($ManHours / 60 % 60);
-					$secs = floor($ManHours % 60);
-					$timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
-					
-					echo "<tr style=\"height: 17pt\">
-						  <td>$recCount Stations</td>
-						  <td><b>Total Volunteer Hours</b></td>
-						  <td>$timeFormat</td>
-						  </tr>";
+	        $sql6 = "SELECT  ID, callsign, fname, lname, netcontrol, 
+                         TRIM(tactical) as tactical, 
+                         TRIM(email) as email,
+                         TRIM(creds) as creds, 
+                         TRIM(timeonduty) as tmd, 
+                         TRIM(sec_to_time(timeonduty)) as tod,
+                         TRIM(CONCAT_WS('  ',city, state, county, ' Co., Dist.', district)) as dist,
+                         TRIM(band) as band,
+                         TRIM(team) as team
+                       
+                   FROM NetLog 
+                  WHERE netID = :netId 
+                     
+                    AND (timeout <> 0 AND logdate <> 0
+                     OR RIGHT(callsign, 2) = '-U')
+                  ORDER BY logdate";	
+
+$stmt = $db_found->prepare($sql6);
+$stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+$stmt->execute();
+
+$ManHours = 0;
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $nc = "Operator";
+    switch ($row['netcontrol']) {
+        case "PRM":
+            $nc = "Primary Net Control";
+            break;
+        case "2nd":
+            $nc = "Secondary Net Control";
+            break;
+        case "3rd":
+            $nc = "Tertiary Net Control";
+            break;
+        case "RELAY":
+            $nc = "Relay Station";
+            break;
+        case "PIO":
+            $nc = "Public Information Officer";
+            break;
+        case "Log":
+            $nc = "Net Logger";
+            break;
+        case "LSN":
+            $nc = "Liaison to ...";
+            break;
+        case "EM":
+            $nc = "Emergency Manager";
+            break;
+        case "   ":
+            $nc = "Operator";
+            break;
+    }
+
+    // Fix creds if they exist by adding a comma after its name.
+    $creds = trim($row['creds']);
+    if (!empty($creds)) {
+        $creds .= ',';
+    }
+
+    $ManHours += $row['tmd'];
+
+    echo "<tr style=\"height: 17pt; page-break-inside: avoid;\">
+               <td class=\"box6td\">{$row['callsign']} <span class=\"spread\">{$row['fname']} {$row['lname']}</span><span><br>{$row['email']}</span></td>
+               <td class=\"box6td\">{$row['band']} $nc <span class=\"spread\">{$row['tactical']}</span></td>
+               <td class=\"box6td\">
+                    <span class=\"tod\">{$row['tod']}</span> 
+                    <span class=\"creds\">$creds {$row['dist']}</span>
+                    <span class=\"team\" style=\"float:right; padding-right:3pt;\">{$row['team']}</span>
+               </td>
+           </tr>";
+}
+
+$hours = floor($ManHours / 3600);
+$mins = floor($ManHours / 60 % 60);
+$secs = floor($ManHours % 60);
+$timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+
+echo "<tr style=\"height: 17pt\">
+      <td>$recCount Stations</td>
+      <td><b>Total Volunteer Hours</b></td>
+      <td>$timeFormat</td>
+      </tr>";
+
         ?>
 
         
@@ -328,25 +380,29 @@ $(document).ready(function()
         
         <?php
 	        
-	        $sql = ("SELECT TIMESTAMP, ID, callsign, comment 
-	        		   FROM TimeLog 
-	        		  WHERE netID = $q 
-	        		  ORDER BY timestamp");
-	
-				foreach($db_found->query($sql) as $row) {
-				  
-					echo "<tr style=\"height: 17pt\">
-							   <td class=\"box7td1\" >$row[TIMESTAMP]</td>
-							   <td class=\"box7td2\"  colspan=\"2\">$row[callsign]: $row[comment]</td>
-							   </tr>";			
-			}
+	        $sql7 = "SELECT TIMESTAMP, ID, callsign, comment 
+                     FROM TimeLog 
+                     WHERE netID = :netId 
+                     ORDER BY timestamp";
+            
+            $stmt = $db_found->prepare($sql7);
+            $stmt->bindParam(':netId', $q, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr style=\"height: 17pt\">
+                          <td class=\"box7td1\">{$row['TIMESTAMP']}</td>
+                          <td class=\"box7td2\" colspan=\"2\">{$row['callsign']}: {$row['comment']}</td>
+                      </tr>";
+            }
+
         ?>
 
         <tr style="height: 20pt">
             <td class="box8" colspan="3">
                 <p class="box8s2p1">
 	                
-                    <b>8. Prepared by: </b><?php echo "$fname $lname" ?> , Net Control Operator <u></u>
+                    <b>8. Prepared by: </b><?php echo "$LogPrep" ?> , Net Control Operator <u></u>
                     
                 </p>
             </td>
