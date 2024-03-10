@@ -26,7 +26,7 @@
     $objName        = $_GET["objName"]; 
     $APRScomment    = $_GET["comment"];
     
-    /*
+    
     echo ("@30 in locations_APRS.php:: <br>
        aprs_call: $aprs_call <br>
        recordID: $recordID <br>
@@ -36,7 +36,7 @@
        nid: $nid <br>
        objName: $objName <br>
        APRScomment: $APRScomment <br>");
-    */
+    
     
     // passcodes
     include('config2.php');
@@ -53,9 +53,9 @@
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
-    //echo "<pre>";
-        //print_r($data);
-    //echo "</pre>";
+    echo "<pre>";
+        print_r($data);
+    echo "</pre>";
     
     // Extract the required data from the aprs.fi api 
     $lat             = $data['entries'][0]['lat'];
