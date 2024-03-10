@@ -114,7 +114,12 @@ ORDER BY callsign, MIN(timestamp);
                 ) AS allKoords
                 FROM TimeLog
                 WHERE netID = $q
-                AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+                AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
                 GROUP BY callsign
                 ORDER BY timestamp ASC;
 
@@ -150,11 +155,17 @@ ORDER BY callsign, MIN(timestamp);
                         @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
                         @prev_c := callsign
                FROM TimeLog, (select @counter := 0, @prev_c := null) init
-              WHERE netID = $q
-                AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+              WHERE netID = $q        
+                AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
               ORDER BY callsign, timestamp ASC) s         
           ");
           
+          // AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
           // above working well
         //echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
           
@@ -323,11 +334,19 @@ foreach($db_found->query($sql3) as $row) {
        
 	                 callsign
 	            FROM TimeLog
-	           WHERE netID = $q 
-                 AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+	           WHERE netID = $q
+                  AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+                 
                GROUP BY callsign
                ORDER BY callsign
            ");
+           
+           //  AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%') 
            
     //echo "<br><br>Fourth sql:<br> $sql4 <br>";
     
