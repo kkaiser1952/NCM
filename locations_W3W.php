@@ -7,6 +7,8 @@
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
+	// aprs_call and aprs_callsign not needed in W3W
+	$aprs_call      = trim($_GET["aprs_call"]);
 	$recordID       = trim($_GET["recordID"]);
     $CurrentLat     = trim($_GET["CurrentLat"]);
     $CurrentLng     = trim($_GET["CurrentLng"]);
@@ -14,23 +16,28 @@
     $nid            = trim($_GET["nid"]);
     $objName        = trim($_GET["objName"]);
     $APRScomment    = trim($_GET["comment"]);
+    $what3words     = trim($_GET["w3wfield"]);
 
     
     echo ("@27 in locations_W3W.php::   <br>
+       aprs_call: $aprs_call            <br>
        recordID: $recordID              <br>
        CurrentLat: $CurrentLat          <br>
        CurrentLng: $CurrentLng          <br>
        cs1: $cs1                        <br>
        nid: $nid                        <br>
        objName: $objName                <br>
-       APRScomment: $APRScomment        <br>");
+       APRScomment: $APRScomment        <br>
+       w3wfield: $what3words            <br>
+    ");
 	
-	// Lets build the two queries we need to get and data and update the tables.
+	// Lets build the two queries we need to get data and update the tables.
 
     // Test recordID = 159815
 // Get values from the NetLog table
+/* this is the stuff from the old way 
 $sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
-          FROM NetLog 
+         FROM NetLog 
 		WHERE recordID = '$recordID'";
 echo "sql1: $sql1";
 			foreach($db_found->query($sql) as $row) {
@@ -41,7 +48,7 @@ echo "sql1: $sql1";
 			    $lat = $row['latitude'];
 			    $lng = $row['longitude'];
 			}
-	
+	*/
 /*
 // Update the TimeLog table			
 $sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 

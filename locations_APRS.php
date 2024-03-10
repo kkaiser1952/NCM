@@ -8,7 +8,7 @@
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
 	$aprs_call      = $_GET["aprs_call"];      
-        $aprs_callsign  = strtoupper($aprs_call);
+    $aprs_callsign  = strtoupper($aprs_call);
     $recordID       = $_GET["recordID"]; 
     $CurrentLat     = $_GET["CurrentLat"];
     $CurrentLng     = $_GET["CurrentLng"];
