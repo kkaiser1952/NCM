@@ -219,7 +219,7 @@ echo ("
             class=\" W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
-            onClick=\"empty('w3w:$row[recordID]'); getAPRSLocations('$row[aprs_call], $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
+            onClick=\"empty('w3w:$row[recordID]'); getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
             style=\"cursor: pointer;\">
             <div class='$class' readonly> $row[w3w]	</div> 
         </td> 
