@@ -11,8 +11,10 @@
         5) Add comment info into 'comments' field 
     */
     
-    //ini_set('display_errors',1); 
-	//error_reporting (E_ALL ^ E_NOTICE);
+    require_once "dbConnectDtls.php";
+    
+    ini_set('display_errors',1); 
+	error_reporting (E_ALL ^ E_NOTICE);
 	
 	// Lets build the two queries we need to get and data and update the tables.
 
@@ -135,14 +137,14 @@ function convertW3WtoCoordinates($what3words) {
     $thislatlng = "$lat,$lng";
     
     // Output the aprs supplied data
-    //echo "<u>From The APRS API part 2</u><br>";
-    //echo "Latitude: {$lat}<br>";
-    //echo "Longitude: {$lng}<br>";
-    //echo "Altitude: {$altitude}<br>";
-    //echo "First Time: {$firsttime} UTC<br>";
-    //echo "This Time: {$thistime} UTC<br>";
-    //echo "aprs comment: {$aprs_comment} <br>";
-    //echo "thislatlng: {$thislatlng} ";
+    echo "<br><u>From The APRS API part 2</u><br>";
+    echo "Latitude: {$lat}              <br>";
+    echo "Longitude: {$lng}             <br>";
+    echo "Altitude: {$altitude}         <br>";
+    echo "First Time: {$firsttime} UTC  <br>";
+    echo "This Time: {$thistime} UTC    <br>";
+    echo "aprs comment: {$aprs_comment} <br>";
+    echo "thislatlng: {$thislatlng}     <br>";
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -161,10 +163,10 @@ function convertW3WtoCoordinates($what3words) {
     // use What3words\Geocoder\Geocoder;
     require_once('Geocoder.php');
     $latx = (float) $data['entries'][0]['lat'];
-        //$lat = number_format($latx, 6);
+        $lat = number_format($latx, 6);
     $lngx = (float) $data['entries'][0]['lng'];
-        //$lng = number_format($lngx, 6);
-    //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
+        $lng = number_format($lngx, 6);
+    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
@@ -214,10 +216,16 @@ function convertW3WtoCoordinates($what3words) {
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
+    
+    $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+       
+       echo "<br>deltax: $deltax<br>";
+
 
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo $json;
-//echo "\n\n";
+echo $json;
+echo "\n\n";
+
 
 // This SQL updates the NetLog with all the information we just created.
     
@@ -233,8 +241,13 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
          WHERE recordID = $recordID;
        ";
        
-       $stmt = $db_found->prepare($sql1);
-       $stmt->execute();
+       
+       try {
+            $stmt = $db_found->prepare($sql1);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
        */
        //echo $sql;   
        //echo "\n\n";
@@ -249,9 +262,7 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
         Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
         Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
        */
-       $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
-       
-       
+
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
@@ -259,15 +270,18 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
        "; 
        
        // The recordID below is from the NetLog
-       
+       /*
        $sql2 = 
        "INSERT INTO TimeLog 
             (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
                 VALUES ('$recordID', '$ID', '$nid', '$cs1', '$deltax', NOW(), '$lat', '$lng', '$ipaddress')";
-       
+       */
        //echo $sql2;
        
-       $stmt = $db_found->prepare($sql2);
-       $stmt->execute();
-        
+       try {
+            $stmt = $db_found->prepare($sql2);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
 ?>

@@ -161,7 +161,6 @@ echo "\n\n";
 */
 
 // This SQL updates the NetLog with all the information we just created.
-    //require_once "dbConnectDtls.php";
     
        $sql = 
        "UPDATE NetLog 
