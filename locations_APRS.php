@@ -2,16 +2,7 @@
     // locations_APRS.php is designed to work much like its counter part locations_W3W.php but with APRS_call from the APRSIS as input. Done via right click on the field.
     // It is called by the ajax() in NetManager-W3W-APRS.js
     
-    /*
-        GOALS:
-        1)
-        2)
-        3)
-        4)
-        5)
-         
-         
-        */
+    require_once "dbConnectDtls.php";
         
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
@@ -26,7 +17,7 @@
     $objName        = $_GET["objName"]; 
     $APRScomment    = $_GET["comment"];
     
-    
+    /*
     echo ("@30 in locations_APRS.php:: <br>
        aprs_call: $aprs_call <br>
        recordID: $recordID <br>
@@ -36,7 +27,7 @@
        nid: $nid <br>
        objName: $objName <br>
        APRScomment: $APRScomment <br>");
-    
+    */
     
     // passcodes
     include('config2.php');
@@ -53,9 +44,11 @@
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
+    /*
     echo "<pre>";
         print_r($data);
     echo "</pre>";
+    */
     
     // Extract the required data from the aprs.fi api 
     $lat             = $data['entries'][0]['lat'];
@@ -64,7 +57,7 @@
     $alt_feet        = $data['entries'][0]['altitude']*3.28084;
     $altitude_feet   = number_format($alt_feet, 1);
     $aprs_comment    = $data['entries'][0]['comment'];
-        //echo "aprs comment: {$aprs_comment};
+        //echo "lat: $lat lng: $lng aprs comment: $aprs_comment";
     
     // $firsttime is the value of time in the returned array. It is the last time heard
     // $thistime is the value of lasttime in the array. It is the most current time heard
@@ -75,14 +68,16 @@
     $thislatlng = "$lat,$lng";
     
     // Output the aprs supplied data
-    //echo "<u>From The APRS API part 2</u><br>";
-    //echo "Latitude: {$lat}<br>";
-    //echo "Longitude: {$lng}<br>";
-    //echo "Altitude: {$altitude}<br>";
-    //echo "First Time: {$firsttime} UTC<br>";
-    //echo "This Time: {$thistime} UTC<br>";
-    //echo "aprs comment: {$aprs_comment};
-    //echo "thislatlng: {$thislatlng}";
+    /*
+    echo "<br><u>From The APRS API part 2</u><br>";
+    echo "Latitude: {$lat}              <br>";
+    echo "Longitude: {$lng}             <br>";
+    echo "Altitude: {$altitude}         <br>";
+    echo "First Time: {$firsttime} UTC  <br>";
+    echo "This Time: {$thistime} UTC    <br>";
+    echo "aprs comment: {$aprs_comment} <br>";
+    echo "thislatlng: {$thislatlng}     <br>";
+    */
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -104,7 +99,7 @@
         $lat = number_format($latx, 6);
     $lngx = (float) $data['entries'][0]['lng'];
         $lng = number_format($lngx, 6);
-    //echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
+    echo ('@107 <br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
@@ -154,10 +149,16 @@
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
+    
+    $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+       
+       echo "<br>deltax: $deltax<br>";
 
+/*
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo $json;
-//echo "\n\n";
+echo "<br><br> $json";
+echo "\n\n";
+*/
 
 // This SQL updates the NetLog with all the information we just created.
     //require_once "dbConnectDtls.php";
@@ -172,35 +173,30 @@ $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
               ,dttm         = NOW()
               ,comments     = '$APRScomment--<br>Via APRS'
          WHERE recordID = $recordID;
-       ";
+       ";     
        
-       $stmt = $db_found->prepare($sql);
-       $stmt->execute();
+       //echo "<br> sql: $sql<br>";
        
-       //echo $sql;   
-       //echo "\n\n";
+       try {
+            $stmt = $db_found->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
        
-       //Interpretation of the deltax variable;
-       /* The field delimiter is the colon, :
-    
-        Identifier: 'LOC&#916:APRS OBJ::8'  This could also be APRS COM::
-        Item name: '8'  This can also be things like 'Red Car', 'Tree on roof', etc.
-        Additional information: past 56th ct & Keith and Deb from KCMO these are APRS comments from the reporting source
-        what3words string: '///summer.topic.yesterday'  The W3W address
-        Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
-        Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
-       */
-       $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-       $sql = 
+       $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       //echo $sql;
+       //echo "sql insert: $sql2<br>";
        
-       $stmt = $db_found->prepare($sql);
-       $stmt->execute();
-        
+       try {
+            $stmt = $db_found->prepare($sql2);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
 ?>
