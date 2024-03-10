@@ -48,13 +48,18 @@ SELECT
     ), ']') AS arrBounds
 
 FROM (
-    SELECT callsign, comment, timestamp
+    SELECT callsign, `comment`, timestamp
     FROM TimeLog
     WHERE netID = $q
-    AND callsign <> 'GENCOMM'
-    AND latlng IS NOT NULL
-    AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
-    AND uniqueID <> 382982
+        AND callsign <> 'GENCOMM'
+        AND latlng IS NOT NULL
+        AND (
+        (`comment` LIKE 'LOC&#916:APRS%') 
+            OR (`comment` LIKE 'LOC&#916:W3W%')
+        )
+        AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+        AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+        AND uniqueID <> 382982
     ORDER BY timestamp
 ) AS filtered_data
 GROUP BY callsign
