@@ -4,7 +4,6 @@
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
-    include "config2.php";
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -12,20 +11,19 @@
 	$aprs_call      = $_GET["aprs_call"];
 	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
-    $CurrentLat     = $_GET["CurrentLat"];
-    $CurrentLng     = $_GET["CurrentLng"];
+    //$CurrentLat     = $_GET["CurrentLat"];
+    //$CurrentLng     = $_GET["CurrentLng"];
     $cs1            = $_GET["cs1"];
     $nid            = $_GET["nid"];
     $objName        = $_GET["objName"];
     $APRScomment    = $_GET["comment"];
     $what3words     = $_GET["w3wfield"];
 
-    
+
     echo ("@22 in locations_W3W.php::   <br>
        aprs_call: $aprs_call            <br>
        recordID: $recordID              <br>
-       CurrentLat: $CurrentLat          <br>
-       CurrentLng: $CurrentLng          <br>
+       
        cs1: $cs1                        <br>
        nid: $nid                        <br>
        objName: $objName                <br>
@@ -36,10 +34,10 @@
 // Get coordinates from What3words
 list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
 
-echo "@123 W3W Latitude: " . $latitude . "<br>";
-echo "@124 W3W Longitude: " . $longitude . "<br>";
+echo "@37 W3W Latitude: " . $latitude . "<br>";
+echo "@38 W3W Longitude: " . $longitude . "<br>";
 
-?>
+
     // Everything below here matches the locations_APRS.php
     // ====================================================
 
@@ -136,8 +134,8 @@ echo "@124 W3W Longitude: " . $longitude . "<br>";
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
-        "CurrentLat"    => htmlspecialchars($CurrentLat),
-        "CurrentLng"    => htmlspecialchars($CurrentLng),
+        //"CurrentLat"    => htmlspecialchars($CurrentLat),
+        //"CurrentLng"    => htmlspecialchars($CurrentLng),
         "lat"           => htmlspecialchars($lat),
         "lng"           => htmlspecialchars($lng),
         "altitude_meters" => htmlspecialchars($altitude_meters),

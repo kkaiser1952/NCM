@@ -1,4 +1,6 @@
 <?php
+    
+include "config2.php";
 
 function getCoordinatesFromW3W($w3w) {
     $w3w_api_key = $config['geocoder']['api_key']; // Make sure $config is available in this file
