@@ -9,7 +9,7 @@
 // Set error handler
 set_error_handler("customError");
         
-  echo "<script>console.log('16) Now In locations_W3W.php: <br>');</script>";      
+  echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";      
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
@@ -19,7 +19,7 @@ set_error_handler("customError");
 	error_reporting (E_ALL ^ E_NOTICE);
 	
 	$aprs_call      = $_GET["aprs_call"];
-	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "<br>');</script>";
+	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "');</script>";
 	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
     $CurrentLat     = $_GET["CurrentLat"];
@@ -27,7 +27,7 @@ set_error_handler("customError");
     $cs1            = $_GET["cs1"];
     $nid            = $_GET["nid"];
     $objName        = $_GET["objName"];
-    $APRScomment    = $_GET["comment"];
+    $W3Wcomment     = $_GET["comment"];
     $what3words     = $_GET["w3wfield"];
 
 /*
@@ -38,7 +38,7 @@ set_error_handler("customError");
        cs1: $cs1                        <br>
        nid: $nid                        <br>
        objName: $objName                <br>
-       APRScomment: $APRScomment        <br>
+       W3Wcomment: $W3Wcomment        <br>
        w3wfield: $what3words            <br>
     ");
 */
@@ -78,6 +78,7 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
     // This stuff is for printing only
     $crossroads = html_entity_decode($crossroads);
 
+/*
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
@@ -95,14 +96,15 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
         "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
-        "aprs_comment"  => htmlspecialchars($aprs_comment),
+        "aprs_comment"  => htmlspecialchars($W3W_comment),
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
+ */
     
-    $deltax = 'LOC&#916:W3W '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
+    $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
        
-       echo "<br>deltax: $deltax<br>";
+       //echo "<br>deltax: $deltax<br>";
 
 
 // This SQL updates the NetLog with all the information we just created.
@@ -113,9 +115,9 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
               ,longitude    = '$longitude'
               
               ,grid         = '$grid'
-              ,w3w          = '$words<br>$crossroads'
+              ,w3w          = '$what3words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$aprs_comment--<br>Via W3W'
+              ,comments     = '$W3Wcomment--<br>Via W3W'
          WHERE recordID = $recordID;
        ";
        
