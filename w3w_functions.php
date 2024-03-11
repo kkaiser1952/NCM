@@ -1,8 +1,13 @@
 <?php
-    
-include "config2.php";
 
 function getCoordinatesFromW3W($w3w) {
+    
+    global $config;
+    
+    include "config2.php";
+    
+    $w3w_api_key = $config['geocoder']['api_key'];
+    
     $w3w_api_key = $config['geocoder']['api_key']; // Make sure $config is available in this file
     $url = "https://api.what3words.com/v3/convert-to-coordinates?words=" . $w3w . "&key=" . $w3w_api_key;
 
@@ -27,8 +32,5 @@ function getCoordinatesFromW3W($w3w) {
         echo "Request failed with status code: " . $httpCode;
     }
 }
-
-$w3w = '///influential.payment.default';
-echo getCoordinatesFromW3W($w3w);
 
 ?>

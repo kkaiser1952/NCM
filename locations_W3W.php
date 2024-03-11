@@ -9,19 +9,17 @@
 // Set error handler
 set_error_handler("customError");
         
-  echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";      
+  echo "<script>console.log('16) Now In locations_W3W.php: <br>');</script>";      
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
+    //include "config2.php";
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-
-
-	
 	$aprs_call      = $_GET["aprs_call"];
-	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "');</script>";
+	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "<br>');</script>";
 	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
     $CurrentLat     = $_GET["CurrentLat"];
@@ -32,7 +30,7 @@ set_error_handler("customError");
     $APRScomment    = $_GET["comment"];
     $what3words     = $_GET["w3wfield"];
 
-
+/*
     echo ("@22 in locations_W3W.php::   <br>
        aprs_call: $aprs_call            <br>
        recordID: $recordID              <br>
@@ -43,89 +41,25 @@ set_error_handler("customError");
        APRScomment: $APRScomment        <br>
        w3wfield: $what3words            <br>
     ");
+*/
     
 // Get coordinates from What3words
 list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
 
-echo "@37 W3W Latitude: " . $latitude . "<br>";
-echo "@38 W3W Longitude: " . $longitude . "<br>";
-
-
-    // Everything below here matches the locations_APRS.php
-    // ====================================================
-
-    $aprs_fi_api_key = $config['aprs_fi']['api_key'];
-
-    $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
-    
-    // Fetch the data from the API
-    $json_data = file_get_contents($api_url);
-    $data = json_decode($json_data, true);
-    
-    // Add debugging statement to check if $data contains the expected values
-    echo "<pre>";
-        print_r($data);
-    echo "</pre>";
-    
-    // Extract the required data from the aprs.fi api 
-    $lat             = $data['entries'][0]['lat'];
-    $lng             = $data['entries'][0]['lng'];
-    $altitude_meters = $data['entries'][0]['altitude'];
-    $alt_feet        = $data['entries'][0]['altitude'];
-    $altitude_feet   = number_format($alt_feet*3.28084, 1);
-    $aprs_comment    = $data['entries'][0]['comment'];
-        //echo "aprs comment: {$aprs_comment};
-        
-    
-    // $firsttime is the value of time in the returned array. It is the last time heard
-    // $thistime is the value of lasttime in the array. It is the most current time heard
-    $firsttime = gmdate('Y-m-d H:i:s', $data['entries'][0]['time']);
-    $thistime = gmdate('Y-m-d H:i:s', $data['entries'][0]['lasttime']);
-    
-    // for including into the Time Line Log at end of the comment or object
-    $thislatlng = "$lat,$lng";
-    
-    // Output the aprs supplied data
-    echo "<br><u>From The APRS API part 2</u><br>";
-    echo "Latitude: {$lat}              <br>";
-    echo "Longitude: {$lng}             <br>";
-    echo "Altitude: {$altitude}         <br>";
-    echo "First Time: {$firsttime} UTC  <br>";
-    echo "This Time: {$thistime} UTC    <br>";
-    echo "aprs comment: {$aprs_comment} <br>";
-    echo "thislatlng: {$thislatlng}     <br>";
-    
+//echo "@49 W3W Latitude: " . $latitude . "<br>";
+//echo "@50 W3W Longitude: " . $longitude . "<br>";
+   
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
     include('getCrossRoads.php');
-    $crossroads = getCrossRoads($lat, $lng);
+    $crossroads = getCrossRoads($latitude, $longitude);
     //echo "{$crossroads}<br>";
     
     // Now get the gridsquare
     include('GetGridSquare.php');
-    $grid = getgridsquare($lat, $lng);
+    $grid = getgridsquare($latitude, $longitude);
     //echo "<br>Grid Square: {$grid}<br>";
-    
-    // Now lets add the what3words words from the W3W geocoder
-    $w3w_api_key = $config['geocoder']['api_key'];
-    
-    // use What3words\Geocoder\Geocoder;
-    require_once('Geocoder.php');
-    $latx = (float) $data['entries'][0]['lat'];
-        $lat = number_format($latx, 6);
-    $lngx = (float) $data['entries'][0]['lng'];
-        $lng = number_format($lngx, 6);
-    echo ('<br><br>lat '.$lat.', lng '.$lng.'<br>');
-    
-    $api = new What3words\Geocoder\Geocoder($w3w_api_key);
-       
-    // Get the what3words using lat lng
-    $result = $api->convertTo3wa($lat, $lng);
-    //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
-        //print_r($result);
-    
-    //echo "<br>"; 
-    
+           
     //$southwest_lat = $result['square']['southwest']['lat'];
     //$southwest_lng = $result['square']['southwest']['lng'];
     //$northeast_lat = $result['square']['northeast']['lat'];
@@ -149,15 +83,15 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
         "recordID"      => htmlspecialchars($recordID),
         "CurrentLat"    => htmlspecialchars($CurrentLat),
         "CurrentLng"    => htmlspecialchars($CurrentLng),
-        "lat"           => htmlspecialchars($lat),
-        "lng"           => htmlspecialchars($lng),
+        "lat"           => htmlspecialchars($latitude),
+        "lng"           => htmlspecialchars($longitude),
         "altitude_meters" => htmlspecialchars($altitude_meters),
         "altitude_feet" => htmlspecialchars($altitude_feet),
         "crossroads"    => htmlspecialchars($crossroads),
         "firsttime"     => htmlspecialchars($firsttime),
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
-        "what3words"    => htmlspecialchars($words),
+        "what3words"    => htmlspecialchars($what3words),
         "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
@@ -166,7 +100,7 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
     
-    $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+    $deltax = 'LOC&#916:W3W '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
        echo "<br>deltax: $deltax<br>";
 
@@ -175,8 +109,8 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
     
        $sql1 = 
        "UPDATE NetLog 
-           SET latitude     = '$lat'
-              ,longitude    = '$lng'
+           SET latitude     = '$latitude'
+              ,longitude    = '$longitude'
               
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
