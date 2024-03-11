@@ -187,7 +187,7 @@ echo "\n\n";
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
+            VALUES ( NOW(), '$cs1', '$deltax');      
        ";
        
        //echo "sql insert: $sql2<br>";

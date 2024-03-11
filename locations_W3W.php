@@ -46,6 +46,10 @@ set_error_handler("customError");
 // Get coordinates from What3words
 list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
 
+$thislatlng = "$latitude,$longitude";
+
+echo "$thislatlng";
+
 //echo "@49 W3W Latitude: " . $latitude . "<br>";
 //echo "@50 W3W Longitude: " . $longitude . "<br>";
    
@@ -74,7 +78,7 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
     // This stuff is for printing only
     $crossroads = html_entity_decode($crossroads);
 
-/*
+
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
@@ -96,11 +100,12 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
- */
+ 
     
-    $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
+   // $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
+    $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : ///'.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-       //echo "<br>deltax: $deltax<br>";
+       echo "<br>deltax: $deltax<br>";
 
 
 // This SQL updates the NetLog with all the information we just created.
@@ -134,8 +139,8 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
 
        $sql2 = 
        "INSERT INTO TimeLog 
-            (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
+            (timestamp, callsign, comment)
+            VALUES ( NOW(), '$cs1', '$deltax');      
        "; 
        
               
