@@ -28,4 +28,7 @@ function getCoordinatesFromW3W($w3w) {
     }
 }
 
+$w3w = '///influential.payment.default';
+echo getCoordinatesFromW3W($w3w);
+
 ?>

@@ -17,20 +17,15 @@ set_error_handler("customError");
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-// Rest of your code...
-try {
-$stmt = $db_found->prepare($sql2);
-$stmt->execute();
-} catch (PDOException $e) {
-echo "<script>console.log('Error: " . $e->getMessage() . "');</script>";
-}
+
+
 	
 	$aprs_call      = $_GET["aprs_call"];
 	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "');</script>";
 	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
-    //$CurrentLat     = $_GET["CurrentLat"];
-    //$CurrentLng     = $_GET["CurrentLng"];
+    $CurrentLat     = $_GET["CurrentLat"];
+    $CurrentLng     = $_GET["CurrentLng"];
     $cs1            = $_GET["cs1"];
     $nid            = $_GET["nid"];
     $objName        = $_GET["objName"];
@@ -68,16 +63,16 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
-    //echo "<pre>";
-        //print_r($data);
-    //echo "</pre>";
+    echo "<pre>";
+        print_r($data);
+    echo "</pre>";
     
     // Extract the required data from the aprs.fi api 
     $lat             = $data['entries'][0]['lat'];
     $lng             = $data['entries'][0]['lng'];
     $altitude_meters = $data['entries'][0]['altitude'];
-    $alt_feet        = $data['entries'][0]['altitude']*3.28084;
-    $altitude_feet   = number_format($alt_feet, 1);
+    $alt_feet        = $data['entries'][0]['altitude'];
+    $altitude_feet   = number_format($alt_feet*3.28084, 1);
     $aprs_comment    = $data['entries'][0]['comment'];
         //echo "aprs comment: {$aprs_comment};
         
@@ -152,8 +147,8 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
     $varsToKeep = array(
         "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
-        //"CurrentLat"    => htmlspecialchars($CurrentLat),
-        //"CurrentLng"    => htmlspecialchars($CurrentLng),
+        "CurrentLat"    => htmlspecialchars($CurrentLat),
+        "CurrentLng"    => htmlspecialchars($CurrentLng),
         "lat"           => htmlspecialchars($lat),
         "lng"           => htmlspecialchars($lng),
         "altitude_meters" => htmlspecialchars($altitude_meters),
@@ -175,11 +170,6 @@ echo "@38 W3W Longitude: " . $longitude . "<br>";
        
        echo "<br>deltax: $deltax<br>";
 
-/*
-$json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-echo $json;
-echo "\n\n";
-*/
 
 // This SQL updates the NetLog with all the information we just created.
     
@@ -187,11 +177,11 @@ echo "\n\n";
        "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'
-              ,ipaddress    = '$ipaddress'
+              
               ,grid         = '$grid'
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$W3Wcomment--<br>Via W3W'
+              ,comments     = '$aprs_comment--<br>Via W3W'
          WHERE recordID = $recordID;
        ";
        
@@ -202,20 +192,7 @@ echo "\n\n";
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-       */
-       //echo $sql;   
-       //echo "\n\n";
        
-       //Interpretation of the deltax variable;
-       /* The field delimiter is the colon, :
-    
-        Identifier: 'LOC&#916:W3W OBJ::8'  This could also be APRS COM::
-        Item name: '8'  This can also be things like 'Red Car', 'Tree on roof', etc.
-        Additional information: past 56th ct & Keith and Deb from KCMO these are APRS comments from the reporting source
-        what3words string: '///summer.topic.yesterday'  The W3W address
-        Nearest crossroads: '60th Court & Ames Ave'   The nearest crossroads
-        Latitude and longitude: '39.20245, -94.60254'  The lat/lng of W3W
-       */
 
        $sql2 = 
        "INSERT INTO TimeLog 
@@ -223,15 +200,7 @@ echo "\n\n";
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        "; 
        
-       // The recordID below is from the NetLog
-       /*
-       $sql2 = 
-       "INSERT INTO TimeLog 
-            (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
-                VALUES ('$recordID', '$ID', '$nid', '$cs1', '$deltax', NOW(), '$lat', '$lng', '$ipaddress')";
-       */
-       //echo $sql2;
-       
+              
        try {
             $stmt = $db_found->prepare($sql2);
             $stmt->execute();
