@@ -1,6 +1,15 @@
 <?php
     // locations_w3w.php is designed to work much like its counter part locations_APRS.php but with W3W as input by the logger.
     // It is called by the ajax() in NetManager-W3W-APRS.js
+    
+// Error handling function
+    function customError($errno, $errstr) {
+        echo "<script>console.log('Error: [$errno] $errstr');</script>";
+}
+// Set error handler
+set_error_handler("customError");
+        
+  echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";      
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
@@ -8,7 +17,16 @@
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
+// Rest of your code...
+try {
+$stmt = $db_found->prepare($sql2);
+$stmt->execute();
+} catch (PDOException $e) {
+echo "<script>console.log('Error: " . $e->getMessage() . "');</script>";
+}
+	
 	$aprs_call      = $_GET["aprs_call"];
+	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "');</script>";
 	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
     //$CurrentLat     = $_GET["CurrentLat"];
