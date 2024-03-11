@@ -3,23 +3,25 @@
     // It is called by the ajax() in NetManager-W3W-APRS.js
         
     require_once "dbConnectDtls.php";
+    require_once "w3w_functions.php";
+    include "config2.php";
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	// aprs_call and aprs_callsign not needed in W3W
-	$aprs_call      = trim($_GET["aprs_call"]);
-	$recordID       = trim($_GET["recordID"]);
-    $CurrentLat     = trim($_GET["CurrentLat"]);
-    $CurrentLng     = trim($_GET["CurrentLng"]);
-    $cs1            = trim($_GET["cs1"]);
-    $nid            = trim($_GET["nid"]);
-    $objName        = trim($_GET["objName"]);
-    $APRScomment    = trim($_GET["comment"]);
-    $what3words     = trim($_GET["w3wfield"]);
+	$aprs_call      = $_GET["aprs_call"];
+	$aprs_callsign  = strtoupper($aprs_call);
+	$recordID       = $_GET["recordID"];
+    $CurrentLat     = $_GET["CurrentLat"];
+    $CurrentLng     = $_GET["CurrentLng"];
+    $cs1            = $_GET["cs1"];
+    $nid            = $_GET["nid"];
+    $objName        = $_GET["objName"];
+    $APRScomment    = $_GET["comment"];
+    $what3words     = $_GET["w3wfield"];
 
     
-    echo ("@27 in locations_W3W.php::   <br>
+    echo ("@22 in locations_W3W.php::   <br>
        aprs_call: $aprs_call            <br>
        recordID: $recordID              <br>
        CurrentLat: $CurrentLat          <br>
@@ -30,94 +32,14 @@
        APRScomment: $APRScomment        <br>
        w3wfield: $what3words            <br>
     ");
-	
-	// Lets build the two queries we need to get data and update the tables.
-
-    // Test recordID = 159815
-// Get values from the NetLog table
-/* this is the stuff from the old way 
-$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
-         FROM NetLog 
-		WHERE recordID = '$recordID'";
-echo "sql1: $sql1";
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row['netID'];
-				$ID	   = $row['ID'];
-				$cs1   = $row['callsign'];
-				$w3w  = $row['W3W'];
-			    $lat = $row['latitude'];
-			    $lng = $row['longitude'];
-			}
-	*/
-/*
-// Update the TimeLog table			
-$sql2 = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
-        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
-        NOW(), '$lat', '$lng', '$ipaddress')";
-	
-	echo "sql2: $sql2";
-    //$db_found->exec($sql);
-*/
-
-// Function to convert W3W into lat/long
-function convertW3WtoCoordinates($what3words) {
-    $w3w_api_key = $config['geocoder']['api_key'];
-    //$apiKey = "YOUR_API_KEY"; // Replace with your actual API key
-    $url = "https://api.what3words.com/v3/convert-to-coordinates?words=" . $what3words . "&key=" . $w3w_api_key;
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+// Get coordinates from What3words
+list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
 
-    if ($httpCode === 200) {
-        $data = json_decode($response, true);
-        if (isset($data['coordinates'])) {
-            $latitude = $data['coordinates']['lat'];
-            $longitude = $data['coordinates']['lng'];
-            return array($latitude, $longitude);
-        } else {
-            echo "Invalid response from API";
-        }
-    } else {
-        echo "Request failed with status code: " . $httpCode;
-    }
-} // End of convertW3WtoCoordinates() function
-	
-	$W3W_entered = $_GET["W3W_entered"];      
-	$recordID    = $_GET["recordID"]; 
-    $CurrentLat  = $_GET["CurrentLat"];       
-    $CurrentLng  = $_GET["CurrentLng"];        
-    $cs1         = $_GET["cs1"];  
-    $nid         = $_GET["nid"];   
-    $objName     = $_GET["objName"];   
-    $W3Wcomment  = $_GET["comment"];   
-    
-    // This variable not needed for W3W, set to stay like locations_APRS.php
-    $aprs_callsign = ""; 
-    
-    echo("@47 in locations_W3W.php::    <br>
-        W3W entered: $W3W_entered       <br>
-        recordID: $recordID             <br>
-        CurrentLat: $CurrentLat         <br>
-        CurrentLng: $CurrentLng         <br>
-        cs1: $cs1                       <br>
-        nid: $nid                       <br>
-        objName: $objName               <br>
-        W3Wcomment: $W3Wcomment         <br>");
-     
-    // passcodes 
-    include('config2.php');
-    
-    //$api = new What3words\Geocoder\Geocoder($w3w_api_key);
-    list($latitude, $longitude) = convertW3WtoCoordinates($W3W_entered);
-    
-    echo "@62 W3W Latitude: " . $latitude . "<br>";
-    echo "@63 W3W Longitude: " . $longitude . "<br>";
+echo "@123 W3W Latitude: " . $latitude . "<br>";
+echo "@124 W3W Longitude: " . $longitude . "<br>";
 
+?>
     // Everything below here matches the locations_APRS.php
     // ====================================================
 
@@ -300,4 +222,5 @@ echo "\n\n";
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
 ?>
