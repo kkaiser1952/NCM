@@ -9,7 +9,7 @@
 // Set error handler
 set_error_handler("customError");
         
-  echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";      
+  //echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";      
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
@@ -60,10 +60,6 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
     $grid = getgridsquare($latitude, $longitude);
     //echo "<br>Grid Square: {$grid}<br>";
            
-    //$southwest_lat = $result['square']['southwest']['lat'];
-    //$southwest_lng = $result['square']['southwest']['lng'];
-    //$northeast_lat = $result['square']['northeast']['lat'];
-    //$northeast_lng = $result['square']['northeast']['lng'];
     $words = $result['words'];
     //$language = $result['language'];
     $map = $result['map'];
@@ -129,11 +125,17 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
             echo "Error: " . $e->getMessage();
         }
        
+       /* Format i need: 
+           LOC&#916:APRS  : Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267
+           
+          Format I have:
+           LOC&#916:W3W COM::1416 NOTUSED : a stop up the street : a stop up the street : ///stars.icicle.amuse :<br> NW 60th Ct & N Ames Ave : () 
+           */
 
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid', '($latitude,$longitude)');      
+            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        "; 
        
               

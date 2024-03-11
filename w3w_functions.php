@@ -6,8 +6,6 @@ function getCoordinatesFromW3W($w3w) {
     
     include "config2.php";
     
-    $w3w_api_key = $config['geocoder']['api_key'];
-    
     $w3w_api_key = $config['geocoder']['api_key']; // Make sure $config is available in this file
     $url = "https://api.what3words.com/v3/convert-to-coordinates?words=" . $w3w . "&key=" . $w3w_api_key;
 
