@@ -18,9 +18,6 @@ set_error_handler("customError");
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call      = $_GET["aprs_call"];
-	    echo "<script>console.log('17) aprs_call: " . $aprs_call . "');</script>";
-	$aprs_callsign  = strtoupper($aprs_call);
 	$recordID       = $_GET["recordID"];
     $CurrentLat     = $_GET["CurrentLat"];
     $CurrentLng     = $_GET["CurrentLng"];
@@ -29,19 +26,6 @@ set_error_handler("customError");
     $objName        = $_GET["objName"];
     $W3Wcomment     = $_GET["comment"];
     $what3words     = $_GET["w3wfield"];
-
-/*
-    echo ("@22 in locations_W3W.php::   <br>
-       aprs_call: $aprs_call            <br>
-       recordID: $recordID              <br>
-       
-       cs1: $cs1                        <br>
-       nid: $nid                        <br>
-       objName: $objName                <br>
-       W3Wcomment: $W3Wcomment        <br>
-       w3wfield: $what3words            <br>
-    ");
-*/
     
 // Get coordinates from What3words
 list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
@@ -64,9 +48,9 @@ echo "$thislatlng";
     $grid = getgridsquare($latitude, $longitude);
     //echo "<br>Grid Square: {$grid}<br>";
            
-    $words = $result['words'];
+    //$words = $result['words'];
     //$language = $result['language'];
-    $map = $result['map'];
+    //$map = $result['map'];
     //$place = $result['nearestPlace'];
     
     //echo "<br><u>From Geocoder by What3Words</u><br>";
@@ -80,30 +64,24 @@ echo "$thislatlng";
 
 
     $varsToKeep = array(
-        "aprs_callsign" => htmlspecialchars($aprs_callsign),
         "recordID"      => htmlspecialchars($recordID),
         "CurrentLat"    => htmlspecialchars($CurrentLat),
         "CurrentLng"    => htmlspecialchars($CurrentLng),
         "lat"           => htmlspecialchars($latitude),
         "lng"           => htmlspecialchars($longitude),
-        "altitude_meters" => htmlspecialchars($altitude_meters),
-        "altitude_feet" => htmlspecialchars($altitude_feet),
         "crossroads"    => htmlspecialchars($crossroads),
-        "firsttime"     => htmlspecialchars($firsttime),
-        "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
         "what3words"    => htmlspecialchars($what3words),
         "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
-        "aprs_comment"  => htmlspecialchars($W3W_comment),
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
  
     
    // $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
-    $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : ///'.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
+    $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
        echo "<br>deltax: $deltax<br>";
 
@@ -135,6 +113,9 @@ echo "$thislatlng";
            
           Format I have:
            LOC&#916:W3W COM::1416 NOTUSED : a stop up the street : a stop up the street : ///stars.icicle.amuse :<br> NW 60th Ct & N Ames Ave : () 
+           
+           This is TimeLog:
+           LOC&#916:W3W COM::1739 NOTUSED : Nice day sorta/kinda : Nice day sorta/kinda : ///verses.initiation.learnt : N Ames Ave & N Bedford Ave : (39.202283,-94.602793)
            */
 
        $sql2 = 
