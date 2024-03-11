@@ -133,7 +133,7 @@ list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
+            VALUES ( NOW(), '$cs1', '$deltax', '$nid', '($latitude,$longitude)');      
        "; 
        
               

@@ -2,8 +2,8 @@
     
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
     
-    //ini_set('display_errors',1); 
-    //error_reporting (E_ALL ^ E_NOTICE);
+    ini_set('display_errors',1); 
+    error_reporting (E_ALL ^ E_NOTICE);
 			
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
