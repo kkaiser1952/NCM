@@ -18,6 +18,7 @@ set_error_handler("customError");
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
+	$aprs_call      = $_GET["aprs_call"];
 	$recordID       = $_GET["recordID"];
     $CurrentLat     = $_GET["CurrentLat"];
     $CurrentLng     = $_GET["CurrentLng"];
@@ -26,6 +27,18 @@ set_error_handler("customError");
     $objName        = $_GET["objName"];
     $W3Wcomment     = $_GET["comment"];
     $what3words     = $_GET["w3wfield"];
+    
+     echo ("in locations_W3W.php:: <br>
+       aprs_call: $aprs_call <br>
+       recordID: $recordID <br>
+       CurrentLat: $CurrentLat <br>
+       CurrentLng: $CurrentLng <br>
+       cs1: $cs1 <br>
+       nid: $nid <br>
+       objName: $objName <br>
+       W3Wcomment: $W3Wcomment <br>
+       what3words: $what3words <br>
+     ");
     
 // Get coordinates from What3words
 list($latitude, $longitude) = getCoordinatesFromW3W($what3words);
@@ -75,12 +88,12 @@ echo "$thislatlng";
         "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
+        "W3Wcomment"    => htmlspecialchars($W3Wcomment),
         "objName"       => htmlspecialchars($objName),
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
  
     
-   // $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
     $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
       // echo "<br>deltax: $deltax<br>";
@@ -112,17 +125,19 @@ echo "$thislatlng";
        $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, netID, comment)
-            VALUES ( NOW(), '$cs1', $nid '$deltax');      
+            VALUES ( NOW(), '$cs1', $nid, '$deltax');      
        "; 
        
-       echo "$sql2";
+       //echo "$sql2";
        
-              
        try {
             $stmt = $db_found->prepare($sql2);
-            $stmt->execute();
+                if ($stmt->execute()) { 
+                    echo "sql2 executed successfully";
+                } else {
+                    echo "sql2 execution failed";
+                }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-
 ?>
