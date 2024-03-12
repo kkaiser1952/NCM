@@ -5,18 +5,17 @@
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
         
-    //ini_set('display_errors',1); 
-	//error_reporting (E_ALL ^ E_NOTICE);
+    ini_set('display_errors',1); 
+	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call      = $_GET["aprs_call"];      
-    $aprs_callsign  = strtoupper($aprs_call);
-    $recordID       = $_GET["recordID"]; 
-    $CurrentLat     = $_GET["CurrentLat"];
-    $CurrentLng     = $_GET["CurrentLng"];
-    $cs1            = $_GET["cs1"]; 
-    $nid            = $_GET["nid"]; 
-    $objName        = $_GET["objName"]; 
-    $APRScomment    = $_GET["comment"];
+	$aprs_call = isset($_GET["aprs_call"]) ? filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING) : '';
+$recordID = isset($_GET["recordID"]) ? filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT) : '';
+$CurrentLat = isset($_GET["CurrentLat"]) ? filter_input(INPUT_GET, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : '';
+$CurrentLng = isset($_GET["CurrentLng"]) ? filter_input(INPUT_GET, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : '';
+$cs1 = isset($_GET["cs1"]) ? filter_input(INPUT_GET, 'cs1', FILTER_SANITIZE_STRING) : '';
+$nid = isset($_GET["nid"]) ? filter_input(INPUT_GET, 'nid', FILTER_SANITIZE_NUMBER_INT) : '';
+$objName = isset($_GET["objName"]) ? filter_input(INPUT_GET, 'objName', FILTER_SANITIZE_STRING) : '';
+$APRScomment = isset($_GET["comment"]) ? filter_input(INPUT_GET, 'comment', FILTER_SANITIZE_STRING) : '';
     
     
     
@@ -156,11 +155,11 @@
        
        echo "<br>deltax: $deltax<br>";
 
-/*
+
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo "<br><br> $json";
 echo "\n\n";
-*/
+
 
 // This SQL updates the NetLog with all the information we just created.
 
@@ -188,29 +187,8 @@ $stmt->execute();
 } catch (PDOException $e) {
 echo "Error: " . $e->getMessage();
 }
-    
-/*       $sql = 
-       "UPDATE NetLog 
-           SET latitude     = '$lat'
-              ,longitude    = '$lng'
-              ,ipaddress    = '$ipaddress'
-              ,grid         = '$grid'
-              ,w3w          = '$words<br>$crossroads'
-              ,dttm         = NOW()
-              ,comments     = '$APRScomment--<br>Via APRS'
-         WHERE recordID = $recordID;
-       ";     
-       
-       //echo "<br> sql: $sql<br>";
-       
-       try {
-            $stmt = $db_found->prepare($sql);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-*/      
-        
+
+            
 $sql2 = "INSERT INTO TimeLog (timestamp, callsign, netID, comment) VALUES (NOW(), :cs1, :nid, :deltax)";
 try {
 $stmt = $db_found->prepare($sql2);
@@ -226,25 +204,4 @@ echo "sql2 execution failed";
 echo "Error: " . $e->getMessage();
 } 
  
-       
-       
-/*       $sql2 = 
-       "INSERT INTO TimeLog 
-            (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
-       ";
-       
-       //echo "sql insert: $sql2<br>";
-       
-       try {
-            $stmt = $db_found->prepare($sql2);
-                if ($stmt->execute()) { 
-                    echo "sql2 executed successfully";
-                } else {
-                    echo "sql2 execution failed";
-                }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-*/
 ?>
