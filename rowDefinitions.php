@@ -213,6 +213,7 @@ echo ("
             <div class='$class'> $row[district]	</div>			
         </td>   
 
+        <!-- Column W3W -->
         <td $brbCols contenteditable=\"false\"
             class=\" W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
@@ -231,6 +232,7 @@ echo ("
         </td>
 
         
+        <!-- Column APRS_CALL -->
         <td $brbCols 
             class=\"editable editaprs_call  c31 cent\" 
             id=\"aprs_call:$row[recordID]\" 
