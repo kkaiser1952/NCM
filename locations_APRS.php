@@ -3,6 +3,7 @@
     // It is called by the ajax() in NetManager-W3W-APRS.js
     
     require_once "dbConnectDtls.php";
+    require_once "w3w_functions.php";
         
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
@@ -17,7 +18,8 @@
     $objName        = $_GET["objName"]; 
     $APRScomment    = $_GET["comment"];
     
-    /*
+    
+    
     echo ("@30 in locations_APRS.php:: <br>
        aprs_call: $aprs_call <br>
        recordID: $recordID <br>
@@ -27,7 +29,7 @@
        nid: $nid <br>
        objName: $objName <br>
        APRScomment: $APRScomment <br>");
-    */
+    
     
     // passcodes
     include('config2.php');
@@ -194,7 +196,11 @@ echo "\n\n";
        
        try {
             $stmt = $db_found->prepare($sql2);
-            $stmt->execute();
+                if ($stmt->execute()) { 
+                    echo "sql2 executed successfully";
+                } else {
+                    echo "sql2 execution failed";
+                }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
