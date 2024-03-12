@@ -83,7 +83,8 @@ echo "$thislatlng";
    // $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' :<br> '.$crossroads.' : ('.$thislatlng.')';
     $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-       echo "<br>deltax: $deltax<br>";
+      // echo "<br>deltax: $deltax<br>";
+      echo "<script>console.log('$deltax');</script>";
 
 
 // This SQL updates the NetLog with all the information we just created.
@@ -108,21 +109,13 @@ echo "$thislatlng";
             echo "Error: " . $e->getMessage();
         }
        
-       /* Format i need: 
-           LOC&#916:APRS  : Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267
-           
-          Format I have:
-           LOC&#916:W3W COM::1416 NOTUSED : a stop up the street : a stop up the street : ///stars.icicle.amuse :<br> NW 60th Ct & N Ames Ave : () 
-           
-           This is TimeLog:
-           LOC&#916:W3W COM::1739 NOTUSED : Nice day sorta/kinda : Nice day sorta/kinda : ///verses.initiation.learnt : N Ames Ave & N Bedford Ave : (39.202283,-94.602793)
-           */
-
        $sql2 = 
        "INSERT INTO TimeLog 
-            (timestamp, callsign, comment)
-            VALUES ( NOW(), '$cs1', '$deltax');      
+            (timestamp, callsign, netID, comment)
+            VALUES ( NOW(), '$cs1', $nid '$deltax');      
        "; 
+       
+       echo "$sql2";
        
               
        try {
