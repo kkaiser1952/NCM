@@ -8,7 +8,7 @@
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call = isset($_GET["aprs_call"]) ? filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING) : '';
+$aprs_call = isset($_GET["aprs_call"]) ? filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING) : '';
 $recordID = isset($_GET["recordID"]) ? filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT) : '';
 $CurrentLat = isset($_GET["CurrentLat"]) ? filter_input(INPUT_GET, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : '';
 $CurrentLng = isset($_GET["CurrentLng"]) ? filter_input(INPUT_GET, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) : '';
@@ -109,12 +109,6 @@ $APRScomment = isset($_GET["comment"]) ? filter_input(INPUT_GET, 'comment', FILT
     //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
         //print_r($result);
     
-    //echo "<br>"; 
-    
-    //$southwest_lat = $result['square']['southwest']['lat'];
-    //$southwest_lng = $result['square']['southwest']['lng'];
-    //$northeast_lat = $result['square']['northeast']['lat'];
-    //$northeast_lng = $result['square']['northeast']['lng'];
     $words = $result['words'];
     //$language = $result['language'];
     $map = $result['map'];
@@ -189,9 +183,8 @@ echo "Error: " . $e->getMessage();
 }
 
             
-$sql2 = "INSERT INTO TimeLog (timestamp, callsign, netID, comment) VALUES (NOW(), :cs1, :nid, :deltax)";
+$stmt = $db_found->prepare("INSERT INTO TimeLog (timestamp, callsign, netID, comment) VALUES (NOW(), :cs1, :nid, :deltax)";
 try {
-$stmt = $db_found->prepare($sql2);
 $stmt->bindParam(':cs1', $cs1);
 $stmt->bindParam(':nid', $nid);
 $stmt->bindParam(':deltax', $deltax);

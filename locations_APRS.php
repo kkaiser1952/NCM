@@ -152,44 +152,18 @@
         "thislatlng"    => htmlspecialchars($thislatlng)
     );
     
-    $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
-       
-       echo "<br>deltax: $deltax<br>";
-
-/*
+    
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
 echo "<br><br> $json";
 echo "\n\n";
-*/
+
+
+$deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+       
 
 // This SQL updates the NetLog with all the information we just created.
-
-$sql =
-"UPDATE NetLog
-    SET latitude = :lat
-        ,longitude = :lng
-        ,ipaddress = :ipaddress
-        ,grid = :grid
-        ,w3w = :words
-        ,dttm = NOW()
-        ,comments = :APRScomment
-  WHERE recordID = :recordID;
-";
-try {
-$stmt = $db_found->prepare($sql);
-$stmt->bindParam(':lat', $lat);
-$stmt->bindParam(':lng', $lng);
-$stmt->bindParam(':ipaddress', $ipaddress);
-$stmt->bindParam(':grid', $grid);
-$stmt->bindParam(':words', $words."<br>".$crossroads);
-$stmt->bindParam(':APRScomment', $APRScomment."--<br>Via APRS");
-$stmt->bindParam(':recordID', $recordID);
-$stmt->execute();
-} catch (PDOException $e) {
-echo "Error: " . $e->getMessage();
-}
     
-/*       $sql = 
+       $sql = 
        "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'
@@ -209,26 +183,9 @@ echo "Error: " . $e->getMessage();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-*/      
         
-$sql2 = "INSERT INTO TimeLog (timestamp, callsign, netID, comment) VALUES (NOW(), :cs1, :nid, :deltax)";
-try {
-$stmt = $db_found->prepare($sql2);
-$stmt->bindParam(':cs1', $cs1);
-$stmt->bindParam(':nid', $nid);
-$stmt->bindParam(':deltax', $deltax);
-if ($stmt->execute()) {
-echo "sql2 executed successfully";
-} else {
-echo "sql2 execution failed";
-}
-} catch (PDOException $e) {
-echo "Error: " . $e->getMessage();
-} 
- 
        
-       
-/*       $sql2 = 
+       $sql2 = 
        "INSERT INTO TimeLog 
             (timestamp, callsign, comment, netID)
             VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
@@ -246,5 +203,5 @@ echo "Error: " . $e->getMessage();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-*/
+
 ?>
