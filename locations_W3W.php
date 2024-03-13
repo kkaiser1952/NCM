@@ -45,6 +45,7 @@ list($lat, $lng) = getCoordinatesFromW3W($what3words);
 $thislatlng = "$lat, $lng";
 
 //echo "$thislatlng";
+echo "<script>console.log('thislatlng: $thislatlng');</script>";
 
    
     // Now get the crossroads data
@@ -61,8 +62,8 @@ $thislatlng = "$lat, $lng";
 
     $varsToKeep = array(
         "recordID"      => htmlspecialchars($recordID),
-        //"CurrentLat"    => htmlspecialchars($CurrentLat), // Not needed
-        //"CurrentLng"    => htmlspecialchars($CurrentLng), // Not needed
+        "CurrentLat"    => htmlspecialchars($CurrentLat), // Not needed
+        "CurrentLng"    => htmlspecialchars($CurrentLng), // Not needed
         "lat"           => htmlspecialchars($lat),
         "lng"           => htmlspecialchars($lng),
         "crossroads"    => htmlspecialchars($crossroads),
@@ -78,7 +79,7 @@ $thislatlng = "$lat, $lng";
     
     $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-      echo "<script>console.log('$deltax');</script>";
+      echo "<script>console.log('deltax:  $deltax');</script>";
 
 
 // This SQL updates the NetLog with all the information we just created.
@@ -97,16 +98,17 @@ $thislatlng = "$lat, $lng";
             $stmt->bindParam(':lng', $lng);
             $stmt->bindParam(':grid', $grid);
             $w3wValue = $what3words . "<br>" . $crossroads;
-            $stmt->bindParam(':w3w', $w3wValue);
-            $stmt->bindParam(':comments', $W3Wcomment."--<br>Via W3W");
+                $stmt->bindParam(':w3w', $w3wValue);
+            $comValue = $W3Wcomment . "--<br>Via W3W";
+                $stmt->bindParam(':comments', $comValue);
             $stmt->bindParam(':recordID', $recordID);
         $stmt->execute();
         } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-    }
+    } 
         
     
- /*      $sql1 = "UPDATE NetLog 
+/*       $sql1 = "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'    
               ,grid         = '$grid'
