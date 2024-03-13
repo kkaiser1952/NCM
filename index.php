@@ -117,9 +117,9 @@
 	 
 <style>
 /* using this to prevent direct editiong to C24 the W3W column */
-    .readonly {
+  /*  .readonly {
         pointer-events: none;
-    }
+    } */
 </style>
 	
 </style>
