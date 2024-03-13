@@ -214,24 +214,27 @@ echo ("
         </td>   
 
         <!-- Column W3W -->
-        <!-- readonly & contenteditable=\"false\", & disabled  all failed -->
-        
-        <td $brbCols class=\" W3W c24 cent \" id=\"w3w:$row[recordID]\" oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" onClick=\"empty('w3w:$row[recordID]');
-            setTimeout(function() {
-            getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');
-            document.getElementById('W3Wfield').value = '$row[w3w]';
-            // Open dialog box here
-            }, 1000);\" style=\"cursor: pointer;\">
-            <div disabled class='$class'> $row[w3w] </div>
-        </td> 
-        
-        <!-- Old, original version, notice the editable in class=
         <td $brbCols 
-            class=\"editable W3W  c24 cent\" 
+            class=\" readonly W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
-            onClick=\"empty('w3w:$row[recordID]'); getAPRSLocations('$row[aprs_call], ,$row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\">
-            <div class='$class'> $row[w3w]	</div> 
+            onClick=\"empty('w3w:$row[recordID]'); 
+            getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
+            style=\"cursor: pointer;\">
+            <div class='$class' readonly> $row[w3w]	</div> 
+        </td> 
+        
+        
+        <!-- Column W3W -->
+        <!-- Save as the original code for c24 
+        <td $brbCols 
+            class=\" readonly W3W  c24 cent\" 
+            id=\"w3w:$row[recordID]\" 
+            oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
+            onClick=\"empty('w3w:$row[recordID]'); 
+            getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
+            style=\"cursor: pointer;\">
+            <div class='$class' readonly> $row[w3w]	</div> 
         </td> 
         -->
      
