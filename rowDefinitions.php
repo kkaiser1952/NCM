@@ -214,7 +214,7 @@ echo ("
         </td>   
 
         <!-- Column W3W -->
-        <td $brbCols contenteditable=\"false\"
+        <td $brbCols readonly contenteditable=\"false\"
             class=\" W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
             oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
