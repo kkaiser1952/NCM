@@ -214,6 +214,7 @@ echo ("
         </td>   
 
         <!-- Column W3W -->
+        <!-- readonly & contenteditable=\"false\" both failed -->
         <td $brbCols 
             class=\"  W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
