@@ -119,7 +119,6 @@
 /* using this to prevent direct editiong to C24 the W3W column */
     .readonly {
         pointer-events: none;
-        /* This CSS rule disables pointer events on the table cell */
     }
 </style>
 	
