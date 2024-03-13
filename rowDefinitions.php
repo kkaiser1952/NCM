@@ -214,15 +214,15 @@ echo ("
         </td>   
 
         <!-- Column W3W -->
-        <!-- readonly & contenteditable=\"false\" both failed -->
-        <td $brbCols 
-            class=\"  W3W  c24 cent \" 
-            id=\"w3w:$row[recordID]\" 
-            oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" 
-            onClick=\"empty('w3w:$row[recordID]'); 
-            getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');\" 
-            style=\"cursor: pointer;\">
-            <div class='$class'  > $row[w3w]	</div> 
+        <!-- readonly & contenteditable=\"false\", & disabled  all failed -->
+        
+        <td $brbCols class=\" W3W c24 cent \" id=\"w3w:$row[recordID]\" oncontextmenu=\"mapWhat3Words('$row[w3w]');return false; \" onClick=\"empty('w3w:$row[recordID]');
+            setTimeout(function() {
+            getAPRSLocations('NOTUSED, $row[recordID], $row[latitude],$row[longitude],$row[callsign],$row[netID], W3W');
+            document.getElementById('W3Wfield').value = '$row[w3w]';
+            // Open dialog box here
+            }, 1000);\" style=\"cursor: pointer;\">
+            <div disabled class='$class'> $row[w3w] </div>
         </td> 
         
         <!-- Old, original version, notice the editable in class=
