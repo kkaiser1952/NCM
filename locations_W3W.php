@@ -35,8 +35,7 @@ list($lat, $lng) = getCoordinatesFromW3W($what3words);
 
 $thislatlng = "$lat, $lng";
 
-//echo "$thislatlng";
-echo "<script>console.log('thislatlng: $thislatlng');</script>";
+//echo "<script>console.log('thislatlng: $thislatlng');</script>";
 
    
     // Now get the crossroads data
@@ -52,9 +51,7 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
     
     // Now get the City, State, and Count
     list($state, $county, $city) = reverseGeocode($lat, $lng, $_GOOGLE_MAPS_API_KEY);
-    //$state = $state;
-    //$city  = $city;
-    //$county= $county;
+
                
     $varsToKeep = array(
         "recordID"      => htmlspecialchars($recordID),
@@ -78,31 +75,41 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
     
     $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
-      echo "<script>console.log('deltax:  $deltax');</script>";
+      //echo "<script>console.log('deltax:  $deltax');</script>";
 
 
     // This SQL updates the NetLog with all the information we just created
+    $sql = "UPDATE NetLog
+               SET latitude     = :lat
+                  ,longitude    = :lng
+                  ,grid         = :grid
+                  ,w3w          = :w3w
+                  ,dttm         = NOW()
+                  ,comments     = :comments
+                  ,city         = :city
+                  ,county       = :county
+                  ,state        = :state
+             WHERE recordID = :recordID     
+    ";
         
-    $sql = "UPDATE NetLog 
-           SET latitude     = '$lat'
-              ,longitude    = '$lng'
-              ,grid         = '$grid'
-              ,w3w          = '$what3words<br>$crossroads'
-              ,dttm         = NOW()
-              ,comments     = '$W3Wcomment--<br>Via W3W'
-              ,city         = '$city'
-              ,county       = '$county'
-              ,state        = '$state'
-         WHERE recordID = $recordID;
-       ";
-        
-     try {
-            $stmt = $db_found->prepare($sql);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-
+    try { 
+        $stmt = $db_found->prepare($sql);
+        $stmt->bindParam(':lat', $lat);
+        $stmt->bindParam(':lng', $lng);
+        $stmt->bindParam(':grid', $grid);
+            $w3wValue = $what3words . "<br>" . $crossroads;
+        $stmt->bindParam(':w3w', $w3wValue);
+            $commentsValue = $W3Wcomment . "--<br>Via W3W";
+        $stmt->bindParam(':comments', $commentsValue);
+        $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':county', $county);
+        $stmt->bindParam(':state', $state);
+        $stmt->bindParam(':recordID', $recordID);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    
                 
     // Update the TimeLog with the new information    
     $sql2 = "INSERT INTO TimeLog 

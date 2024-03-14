@@ -225,8 +225,7 @@ echo ("
         </td> 
         
         
-        <!-- Column W3W -->
-        <!-- Save as the original code for c24 
+        <!-- Saved as the original code for c24 
         <td $brbCols 
             class=\" readonly W3W  c24 cent\" 
             id=\"w3w:$row[recordID]\" 
