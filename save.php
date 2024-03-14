@@ -1,4 +1,7 @@
  <?php
+    /* this program is used anytime a value is entered into any column in NCM */
+    /* sometimes it runs PHP or JS program to save and/or load the data */
+    /* This is one of the first programs written or NCM, and needs some ediing */
     /* 
      ini_set('display_errors', 1);
      ini_set('display_startup_errors', 1);
