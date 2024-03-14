@@ -115,7 +115,7 @@ if (isset($_GET["comment"])) {
     // Get the what3words using lat lng
     $result = $api->convertTo3wa($lat, $lng);
     
-    $words = $result['words'];
+    $what3words = $result['words'];
     //$language = $result['language'];
     //$map = $result['map'];
     //$place = $result['nearestPlace'];
@@ -142,7 +142,7 @@ if (isset($_GET["comment"])) {
         "firsttime"     => htmlspecialchars($firsttime),
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
-        "what3words"    => htmlspecialchars($words),
+        "what3words"    => htmlspecialchars($what3words),
        // "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
@@ -157,7 +157,7 @@ echo "<br><br> $json";
 echo "\n\n";
 
 
-$deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
+$deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
        
 
 // This SQL updates the NetLog with all the information we just created.
@@ -177,9 +177,8 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$cr
     $sql1 = "UPDATE NetLog
         SET latitude        = :lat
             ,longitude      = :lng
-            ,ipaddress      = :ipaddress
             ,grid           = :grid          
-            ,w3w            = :words
+            ,w3w            = :what3words
             ,dttm           = NOW()
             ,comments       = :comments
        WHERE recordID = :recordID;
@@ -188,9 +187,8 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$cr
     try { $stmt = $db_found->prepare($sql1);
             $stmt->bindParam(':lat', $lat);
             $stmt->bindParam(':lng', $lng);
-            $stmt->bindParam(':ipaddress', $ipaddress);
             $stmt->bindParam(':grid', $grid);
-            $w3wValue = $words . "<br>" . $crossroads;
+            $w3wValue = $what3words . "<br>" . $crossroads;
                 $stmt->bindParam(':w3w', $w3wValue);
             $comValue = $W3Wcomment . "--<br>Via APRS";
                 $stmt->bindParam(':comments', $comValue);
