@@ -15,18 +15,8 @@ set_error_handler("customError");
     require_once "w3w_functions.php";
     //include "config2.php";
     
-    ini_set('display_errors',1); 
-	error_reporting (E_ALL ^ E_NOTICE);
-	
-/*	$aprs_call      = $_GET["aprs_call"];
-	$recordID       = $_GET["recordID"];
-    $CurrentLat     = $_GET["CurrentLat"];
-    $CurrentLng     = $_GET["CurrentLng"];
-    $cs1            = $_GET["cs1"];
-    $nid            = $_GET["nid"];
-    $objName        = $_GET["objName"];
-    $W3Wcomment     = $_GET["comment"];
-    $what3words     = $_GET["w3wfield"]; */
+    //ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
     
 $aprs_call = isset($_GET["aprs_call"]) ? filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING) : '';
 $recordID = isset($_GET["recordID"]) ? filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT) : '';
@@ -51,15 +41,14 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
     // Now get the crossroads data
     include('getCrossRoads.php');
     $crossroads = getCrossRoads($lat, $lng);
+        
+    // This stuff is for printing only
+    $crossroads = html_entity_decode($crossroads);
     
     // Now get the gridsquare
     include('GetGridSquare.php');
     $grid = getgridsquare($lat, $lng);
                
-    // This stuff is for printing only
-    $crossroads = html_entity_decode($crossroads);
-
-
     $varsToKeep = array(
         "recordID"      => htmlspecialchars($recordID),
         "CurrentLat"    => htmlspecialchars($CurrentLat), // Not needed
@@ -82,7 +71,7 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
       echo "<script>console.log('deltax:  $deltax');</script>";
 
 
-// This SQL updates the NetLog with all the information we just created.
+    // This SQL updates the NetLog with all the information we just created.
     $sql1 = "UPDATE NetLog
         SET latitude        = :lat
             ,longitude      = :lng
@@ -106,41 +95,25 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
         } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     } 
-        
-    
-/*       $sql1 = "UPDATE NetLog 
-           SET latitude     = '$lat'
-              ,longitude    = '$lng'    
-              ,grid         = '$grid'
-              ,w3w          = '$what3words<br>$crossroads'
-              ,dttm         = NOW()
-              ,comments     = '$W3Wcomment--<br>Via W3W'
-         WHERE recordID = $recordID;
-       ";
-            
-       try {
-            $stmt = $db_found->prepare($sql1);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        } */
-        
-     
-       $sql2 = 
-       "INSERT INTO TimeLog 
+                
+    // Update the TimeLog with the new information    
+    $sql2 = "INSERT INTO TimeLog 
             (timestamp, callsign, netID, comment)
-            VALUES ( NOW(), '$cs1', $nid, '$deltax');      
-       "; 
-       
-       
-       try {
-            $stmt = $db_found->prepare($sql2);
-                if ($stmt->execute()) { 
-                    echo "sql2 executed successfully";
-                } else {
-                    echo "sql2 execution failed";
-                }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+            VALUES (NOW(), :callsign, :netID, :comment)
+    ";
+ 
+    try { $stmt = $db_found->prepare($sql2);
+            // Bind parameters
+            $stmt->bindParam(':callsign', $cs1);
+            $stmt->bindParam(':netID', $nid);
+            $stmt->bindParam(':comment', $deltax);
+    
+    if ($stmt->execute()) { 
+        echo "sql2 executed successfully";
+    } else {
+        echo "sql2 execution failed";
+    }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 ?>

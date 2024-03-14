@@ -8,7 +8,7 @@
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
 	
-	$aprs_call      = $_GET["aprs_call"];      
+/*	$aprs_call      = $_GET["aprs_call"];      
     $aprs_callsign  = strtoupper($aprs_call);
     $recordID       = $_GET["recordID"]; 
     $CurrentLat     = $_GET["CurrentLat"];
@@ -17,40 +17,59 @@
     $nid            = $_GET["nid"]; 
     $objName        = $_GET["objName"]; 
     $APRScomment    = $_GET["comment"];
-    
-    
-    
-    echo ("@30 in locations_APRS.php:: <br>
-       aprs_call: $aprs_call <br>
-       recordID: $recordID <br>
-       CurrentLat: $CurrentLat <br>
-       CurrentLng: $CurrentLng <br>
-       cs1: $cs1 <br>
-       nid: $nid <br>
-       objName: $objName <br>
-       APRScomment: $APRScomment <br>");
+ */
+ 
+// Check if the variables are set before sanitizing
+if (isset($_GET["aprs_call"])) {
+    $aprs_call = filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING);
+    $aprs_callsign = strtoupper($aprs_call);
+}
+
+if (isset($_GET["recordID"])) {
+    $recordID = filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT);
+}
+
+if (isset($_GET["CurrentLat"])) {
+    $CurrentLat = filter_input(INPUT_GET, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+}
+
+if (isset($_GET["CurrentLng"])) {
+    $CurrentLng = filter_input(INPUT_GET, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+}
+
+if (isset($_GET["cs1"])) {
+    $cs1 = filter_input(INPUT_GET, 'cs1', FILTER_SANITIZE_STRING);
+}
+
+if (isset($_GET["nid"])) {
+    $nid = filter_input(INPUT_GET, 'nid', FILTER_SANITIZE_NUMBER_INT);
+}
+
+if (isset($_GET["objName"])) {
+    $objName = filter_input(INPUT_GET, 'objName', FILTER_SANITIZE_STRING);
+}
+
+if (isset($_GET["comment"])) {
+    $APRScomment = filter_input(INPUT_GET, 'comment', FILTER_SANITIZE_STRING);
+}
+
     
     
     // passcodes
     include('config2.php');
-    
-    // Everything below here matches the locations_W3W.php
-    // ===================================================
-    
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
-
-    $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
+        $api_url = "http://api.aprs.fi/api/get?name={$aprs_callsign}&what=loc&apikey={$aprs_fi_api_key}&format=json";
     
     // Fetch the data from the API
     $json_data = file_get_contents($api_url);
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
-    /*
+    
     echo "<pre>";
         print_r($data);
     echo "</pre>";
-    */
+    
     
     // Extract the required data from the aprs.fi api 
     $lat             = $data['entries'][0]['lat'];
@@ -68,18 +87,6 @@
     
     // for including into the Time Line Log at end of the comment or object
     $thislatlng = "$lat,$lng";
-    
-    // Output the aprs supplied data
-    /*
-    echo "<br><u>From The APRS API part 2</u><br>";
-    echo "Latitude: {$lat}              <br>";
-    echo "Longitude: {$lng}             <br>";
-    echo "Altitude: {$altitude}         <br>";
-    echo "First Time: {$firsttime} UTC  <br>";
-    echo "This Time: {$thistime} UTC    <br>";
-    echo "aprs comment: {$aprs_comment} <br>";
-    echo "thislatlng: {$thislatlng}     <br>";
-    */
     
     // Now get the crossroads data
     //echo "<br><u>From The getCrossRoads()</u><br>";
@@ -107,18 +114,10 @@
        
     // Get the what3words using lat lng
     $result = $api->convertTo3wa($lat, $lng);
-    //echo "<br><br><u>The W3W Geocoder Array by What3Words</u><br>";
-        //print_r($result);
     
-    //echo "<br>"; 
-    
-    //$southwest_lat = $result['square']['southwest']['lat'];
-    //$southwest_lng = $result['square']['southwest']['lng'];
-    //$northeast_lat = $result['square']['northeast']['lat'];
-    //$northeast_lng = $result['square']['northeast']['lng'];
     $words = $result['words'];
     //$language = $result['language'];
-    $map = $result['map'];
+    //$map = $result['map'];
     //$place = $result['nearestPlace'];
     
     //echo "<br><u>From Geocoder by What3Words</u><br>";
@@ -144,7 +143,7 @@
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
         "what3words"    => htmlspecialchars($words),
-        "map"           => htmlspecialchars($map),
+       // "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
         "aprs_comment"  => htmlspecialchars($aprs_comment),
@@ -163,7 +162,7 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$cr
 
 // This SQL updates the NetLog with all the information we just created.
     
-       $sql = 
+/*    $sql = 
        "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'
@@ -173,33 +172,51 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$cr
               ,dttm         = NOW()
               ,comments     = '$APRScomment--<br>Via APRS'
          WHERE recordID = $recordID;
-       ";     
+    ";    */ 
        
-       //echo "<br> sql: $sql<br>";
-       
-       try {
-            $stmt = $db_found->prepare($sql);
-            $stmt->execute();
+    $sql1 = "UPDATE NetLog
+        SET latitude        = :lat
+            ,longitude      = :lng
+            ,ipaddress      = :ipaddress
+            ,grid           = :grid          
+            ,w3w            = :words
+            ,dttm           = NOW()
+            ,comments       = :comments
+       WHERE recordID = :recordID;
+    ";
+
+    try { $stmt = $db_found->prepare($sql1);
+            $stmt->bindParam(':lat', $lat);
+            $stmt->bindParam(':lng', $lng);
+            $stmt->bindParam(':ipaddress', $ipaddress);
+            $stmt->bindParam(':grid', $grid);
+            $w3wValue = $words . "<br>" . $crossroads;
+                $stmt->bindParam(':w3w', $w3wValue);
+            $comValue = $W3Wcomment . "--<br>Via APRS";
+                $stmt->bindParam(':comments', $comValue);
+            $stmt->bindParam(':recordID', $recordID);
+        $stmt->execute();
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-        
-       
-       $sql2 = 
-       "INSERT INTO TimeLog 
-            (timestamp, callsign, comment, netID)
-            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
+        echo "Error: " . $e->getMessage();
+    }   
+         
+       // Update the TimeLog with the new information 
+       $sql2 = "INSERT INTO TimeLog 
+            (timestamp, callsign, netID, comment)
+            VALUES (NOW(), :callsign, :netID, :comment)
        ";
        
-       //echo "sql insert: $sql2<br>";
-       
-       try {
-            $stmt = $db_found->prepare($sql2);
-                if ($stmt->execute()) { 
-                    echo "sql2 executed successfully";
-                } else {
-                    echo "sql2 execution failed";
-                }
+       try { $stmt = $db_found->prepare($sql2);
+            // Bind parameters
+            $stmt->bindParam(':callsign', $cs1);
+            $stmt->bindParam(':netID', $nid);
+            $stmt->bindParam(':comment', $deltax);
+    
+        if ($stmt->execute()) { 
+            echo "sql2 executed successfully";
+        } else {
+            echo "sql2 execution failed";
+        }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
