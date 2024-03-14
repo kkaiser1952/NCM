@@ -13,6 +13,7 @@ set_error_handler("customError");
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
+    require_once "getCityStateFromLatLng.php"
     //include "config2.php";
     
     //ini_set('display_errors',1); 
@@ -48,6 +49,12 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
     // Now get the gridsquare
     include('GetGridSquare.php');
     $grid = getgridsquare($lat, $lng);
+    
+    // Now get the City, State, and Count
+    list($state, $county, $city) = reverseGeocode($lat, $lng, $_GOOGLE_MAPS_API_KEY);
+    $state = $state;
+    $city  = $city;
+    $county= $county;
                
     $varsToKeep = array(
         "recordID"      => htmlspecialchars($recordID),
@@ -62,7 +69,10 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
         "nid"           => htmlspecialchars($nid),
         "W3Wcomment"    => htmlspecialchars($W3Wcomment),
         "objName"       => htmlspecialchars($objName),
-        "thislatlng"    => htmlspecialchars($thislatlng)
+        "thislatlng"    => htmlspecialchars($thislatlng),
+        "city"          => htmlspecialchars($city),
+        "county"        => htmlspecialchars($county),
+        "state"         => htmlspecialchars($state),
     );
  
     
@@ -79,6 +89,9 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
             ,w3w            = :w3w
             ,dttm           = NOW()
             ,comments       = :comments
+            ,city           = :city
+            ,county         = :county
+            ,state          = :state
        WHERE recordID = :recordID;
         ";
         
@@ -91,6 +104,9 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
             $comValue = $W3Wcomment . "--<br>Via W3W";
                 $stmt->bindParam(':comments', $comValue);
             $stmt->bindParam(':recordID', $recordID);
+            $stmt->bindParam(':city', $city);
+            $stmt->bindParam(':county', $county);
+            $stmt->bindParam(':city', $state);
         $stmt->execute();
         } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

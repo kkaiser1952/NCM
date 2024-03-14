@@ -114,16 +114,10 @@ if (isset($_GET["comment"])) {
        
     // Get the what3words using lat lng
     $result = $api->convertTo3wa($lat, $lng);
-    
-    $what3words = $result['words'];
+    $words = $result['words'];
     //$language = $result['language'];
-    //$map = $result['map'];
+    $map = $result['map'];
     //$place = $result['nearestPlace'];
-    
-    //echo "<br><u>From Geocoder by What3Words</u><br>";
-    //echo "Words: {$words}<br>";
-    //echo "Map: {$map}<br>";
-    //echo "Nearest Place: {$place}<br>";
     
     
     // This stuff is for printing only
@@ -142,8 +136,8 @@ if (isset($_GET["comment"])) {
         "firsttime"     => htmlspecialchars($firsttime),
         "thistime"      => htmlspecialchars($thistime),
         "grid"          => htmlspecialchars($grid),
-        "what3words"    => htmlspecialchars($what3words),
-       // "map"           => htmlspecialchars($map),
+        "what3words"    => htmlspecialchars($words),
+        "map"           => htmlspecialchars($map),
         "cs1"           => htmlspecialchars($cs1),
         "nid"           => htmlspecialchars($nid),
         "aprs_comment"  => htmlspecialchars($aprs_comment),
@@ -157,12 +151,12 @@ echo "<br><br> $json";
 echo "\n\n";
 
 
-$deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
+$deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$crossroads.' : ('.$thislatlng.')';
        
 
 // This SQL updates the NetLog with all the information we just created.
     
-/*    $sql = 
+       $sql = 
        "UPDATE NetLog 
            SET latitude     = '$lat'
               ,longitude    = '$lng'
@@ -172,49 +166,33 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$what3words.' : 
               ,dttm         = NOW()
               ,comments     = '$APRScomment--<br>Via APRS'
          WHERE recordID = $recordID;
-    ";    */ 
+       ";     
        
-    $sql1 = "UPDATE NetLog
-        SET latitude        = :lat
-            ,longitude      = :lng
-            ,grid           = :grid          
-            ,w3w            = :what3words
-            ,dttm           = NOW()
-            ,comments       = :comments
-       WHERE recordID = :recordID;
-    ";
-
-    try { $stmt = $db_found->prepare($sql1);
-            $stmt->bindParam(':lat', $lat);
-            $stmt->bindParam(':lng', $lng);
-            $stmt->bindParam(':grid', $grid);
-            $w3wValue = $what3words . "<br>" . $crossroads;
-                $stmt->bindParam(':w3w', $w3wValue);
-            $comValue = $W3Wcomment . "--<br>Via APRS";
-                $stmt->bindParam(':comments', $comValue);
-            $stmt->bindParam(':recordID', $recordID);
-        $stmt->execute();
+       //echo "<br> sql: $sql<br>";
+       
+       try {
+            $stmt = $db_found->prepare($sql);
+            $stmt->execute();
         } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }   
-         
-       // Update the TimeLog with the new information 
-       $sql2 = "INSERT INTO TimeLog 
-            (timestamp, callsign, netID, comment)
-            VALUES (NOW(), :callsign, :netID, :comment)
+            echo "Error: " . $e->getMessage();
+        }
+        
+       
+       $sql2 = 
+       "INSERT INTO TimeLog 
+            (timestamp, callsign, comment, netID)
+            VALUES ( NOW(), '$cs1', '$deltax', '$nid');      
        ";
        
-       try { $stmt = $db_found->prepare($sql2);
-            // Bind parameters
-            $stmt->bindParam(':callsign', $cs1);
-            $stmt->bindParam(':netID', $nid);
-            $stmt->bindParam(':comment', $deltax);
-    
-        if ($stmt->execute()) { 
-            echo "sql2 executed successfully";
-        } else {
-            echo "sql2 execution failed";
-        }
+       //echo "sql insert: $sql2<br>";
+       
+       try {
+            $stmt = $db_found->prepare($sql2);
+                if ($stmt->execute()) { 
+                    echo "sql2 executed successfully";
+                } else {
+                    echo "sql2 execution failed";
+                }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
