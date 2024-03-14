@@ -89,7 +89,7 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
               ,grid         = '$grid'
               ,w3w          = '$what3words<br>$crossroads'
               ,dttm         = NOW()
-              ,comments     = '$W3Wcomment--<br>Via APRS'
+              ,comments     = '$W3Wcomment--<br>Via W3W'
               ,city         = '$city'
               ,county       = '$county'
               ,state        = '$state'
