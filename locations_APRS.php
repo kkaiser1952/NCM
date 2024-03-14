@@ -4,6 +4,8 @@
     
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
+    require_once "getCityStateFromLatLng.php";
+    require_once "config.php";
         
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
@@ -54,7 +56,6 @@ if (isset($_GET["comment"])) {
 }
 
     
-    
     // passcodes
     include('config2.php');
     $aprs_fi_api_key = $config['aprs_fi']['api_key'];
@@ -65,11 +66,11 @@ if (isset($_GET["comment"])) {
     $data = json_decode($json_data, true);
     
     // Add debugging statement to check if $data contains the expected values
-    
+    /*
     echo "<pre>";
         print_r($data);
     echo "</pre>";
-    
+    */
     
     // Extract the required data from the aprs.fi api 
     $lat             = $data['entries'][0]['lat'];
@@ -98,6 +99,10 @@ if (isset($_GET["comment"])) {
     include('GetGridSquare.php');
     $grid = getgridsquare($lat, $lng);
     //echo "<br>Grid Square: {$grid}<br>";
+    
+    // Now get the City, State, and Count
+    include('getCityStateromLatLng.php');
+    list($state, $county, $city) = reverseGeocode($lat, $lng, $_GOOGLE_MAPS_API_KEY);
     
     // Now lets add the what3words words from the W3W geocoder
     $w3w_api_key = $config['geocoder']['api_key'];
@@ -142,7 +147,10 @@ if (isset($_GET["comment"])) {
         "nid"           => htmlspecialchars($nid),
         "aprs_comment"  => htmlspecialchars($aprs_comment),
         "objName"       => htmlspecialchars($objName),
-        "thislatlng"    => htmlspecialchars($thislatlng)
+        "thislatlng"    => htmlspecialchars($thislatlng),
+        "city"          => htmlspecialchars($city),
+        "county"        => htmlspecialchars($county),
+        "state"         => htmlspecialchars($state)
     );
     
     
@@ -165,6 +173,9 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : ///'.$words.' : '.$cr
               ,w3w          = '$words<br>$crossroads'
               ,dttm         = NOW()
               ,comments     = '$APRScomment--<br>Via APRS'
+              ,city         = '$city'
+              ,county       = '$county'
+              ,state        = '$state'
          WHERE recordID = $recordID;
        ";     
        

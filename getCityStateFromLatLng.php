@@ -15,10 +15,10 @@ function reverseGeocode($lat, $lng, $apiKey) {
 
         foreach ($addressComponents as $component) {
             if (in_array('administrative_area_level_1', $component['types'])) {
-                $state = $component['long_name'];
+                $state = $component['short_name'];
             }
             if (in_array('administrative_area_level_2', $component['types'])) {
-                $county = $component['long_name'];
+                $county = str_replace(' County', '', $component['long_name']);
             }
             if (in_array('locality', $component['types'])) {
                 $city = $component['long_name'];

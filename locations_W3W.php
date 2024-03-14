@@ -13,8 +13,8 @@ set_error_handler("customError");
         
     require_once "dbConnectDtls.php";
     require_once "w3w_functions.php";
-    require_once "getCityStateFromLatLng.php"
-    //include "config2.php";
+    require_once "getCityStateFromLatLng.php";
+    require_once "config.php";
     
     //ini_set('display_errors',1); 
 	//error_reporting (E_ALL ^ E_NOTICE);
@@ -52,9 +52,9 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
     
     // Now get the City, State, and Count
     list($state, $county, $city) = reverseGeocode($lat, $lng, $_GOOGLE_MAPS_API_KEY);
-    $state = $state;
-    $city  = $city;
-    $county= $county;
+    //$state = $state;
+    //$city  = $city;
+    //$county= $county;
                
     $varsToKeep = array(
         "recordID"      => htmlspecialchars($recordID),
@@ -72,7 +72,7 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
         "thislatlng"    => htmlspecialchars($thislatlng),
         "city"          => htmlspecialchars($city),
         "county"        => htmlspecialchars($county),
-        "state"         => htmlspecialchars($state),
+        "state"         => htmlspecialchars($state)
     );
  
     
@@ -81,36 +81,28 @@ echo "<script>console.log('thislatlng: $thislatlng');</script>";
       echo "<script>console.log('deltax:  $deltax');</script>";
 
 
-    // This SQL updates the NetLog with all the information we just created.
-    $sql1 = "UPDATE NetLog
-        SET latitude        = :lat
-            ,longitude      = :lng
-            ,grid           = :grid
-            ,w3w            = :w3w
-            ,dttm           = NOW()
-            ,comments       = :comments
-            ,city           = :city
-            ,county         = :county
-            ,state          = :state
-       WHERE recordID = :recordID;
-        ";
+    // This SQL updates the NetLog with all the information we just created
         
-    try { $stmt = $db_found->prepare($sql1);
-            $stmt->bindParam(':lat', $lat);
-            $stmt->bindParam(':lng', $lng);
-            $stmt->bindParam(':grid', $grid);
-            $w3wValue = $what3words . "<br>" . $crossroads;
-                $stmt->bindParam(':w3w', $w3wValue);
-            $comValue = $W3Wcomment . "--<br>Via W3W";
-                $stmt->bindParam(':comments', $comValue);
-            $stmt->bindParam(':recordID', $recordID);
-            $stmt->bindParam(':city', $city);
-            $stmt->bindParam(':county', $county);
-            $stmt->bindParam(':city', $state);
-        $stmt->execute();
+    $sql = "UPDATE NetLog 
+           SET latitude     = '$lat'
+              ,longitude    = '$lng'
+              ,grid         = '$grid'
+              ,w3w          = '$what3words<br>$crossroads'
+              ,dttm         = NOW()
+              ,comments     = '$W3Wcomment--<br>Via APRS'
+              ,city         = '$city'
+              ,county       = '$county'
+              ,state        = '$state'
+         WHERE recordID = $recordID;
+       ";
+        
+     try {
+            $stmt = $db_found->prepare($sql);
+            $stmt->execute();
         } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    } 
+            echo "Error: " . $e->getMessage();
+        }
+
                 
     // Update the TimeLog with the new information    
     $sql2 = "INSERT INTO TimeLog 
