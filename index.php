@@ -791,6 +791,17 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
+function openDialogAndMoveCursor(recordID, w3w, latitude, longitude, callsign, netID) {
+    // Open the dialog box
+    document.getElementById('dialogBox').showModal();
+    
+    // Move the cursor to the textbox in the dialog box
+    document.getElementById('w3wfield').focus();
+    
+    // Optionally, you can perform any additional actions based on the provided data (recordID, w3w, latitude, longitude, callsign, netID)
+    // Example: console.log(recordID, w3w, latitude, longitude, callsign, netID);
+}
+
 /*
 document.addEventListener('DOMContentLoaded', function() {
         var tdElement = document.getElementById('c24:<?php echo $row['recordID']; ?>');
