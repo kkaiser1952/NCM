@@ -1566,7 +1566,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 The best use of APRS_CALL looks like this:
 </p><p>
 1. Station WA0TJT manually beacons his location via APRS, and notifies the NCS/logger he/she has done so.
-2. The NCS/logger right clicks on the stations call-ssid information in the APRS_CALL field.  Be sure to have the station’s ssid entered into NCM.
+2. The NCS/logger right clicks on the stations call-ssid information in the APRS_CALL field.  Be sure to have the station’s ssid WA0TJT-1 entered into NCM.
 </p><p>
 The information is propagated to the other location fields of NCM. They are interchangeable; you can use this method to report location information and it’s not dependent on how it was done the previous time using W3W.
 </p>
@@ -1967,7 +1967,7 @@ Tables in NCM:
 <p>Dedicated to my mom and dad, Joyce & Marvin Kaiser who knew I wanted to be an Amateur Radio operator before I did.
 </p>
 <p>&copy; Copyright 2015-<?php echo date("Y");?>, by Keith D. Kaiser, WA0TJT <br>
-Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of Deb Kaiser, W0DLK. <br>
+Written by: Keith D. Kaiser, WA0TJT with the invaluable assistance, understanding and love of my wonderful wife/best friend/advisor Deb Kaiser, W0DLK. <br>
 Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV) who is also our server host, Sila Kissuu (AK0SK), Nicolas Carpi for his jeditable, Mathew Bishop (KF0CJM), Louis Gamor, APRS Data comes from <a href="https://aprs.fi" target="_blank">https://aprs.fi</a>, Members of Kansas City Northland ARES, The Platte County Amateur Radio Group, and the many members of <a href="https://stackoverflow.com" target="_blank"> Stack Overflow.</a>
 </p>
     </div>
