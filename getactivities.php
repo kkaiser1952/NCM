@@ -156,7 +156,7 @@ if ( $q <> 0 ){
 					FROM  NetLog 
 					WHERE netID = $q
 		  			ORDER BY
-		  			  band,  /* Added 2024-03-21 */
+		  			  band, team,  /* Added 2024-03-21 */
                       CASE
                         WHEN netcall IN ('KCHEART', 'ARHAB') THEN 0
                         WHEN netcontrol IN ('PRM','CMD','TL','EM') THEN 1
