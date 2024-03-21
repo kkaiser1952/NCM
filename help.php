@@ -348,39 +348,24 @@
 	<h3>Recent Changes:</h3>
 	
 	    <header>
-    	    <h2>2023</h2>
+    	    <h2>2023 -- 2024</h2>
+    	    
+    <P>The most significant change (my opionion) is in the use of the APRS_CALL and W3W columns. Clicking in the APRS_CALL allows you to enter the callsign this users is beaconing his radio on. For example my truck beacons APRS as WA0TJT-1, a right click here opens a dialogbox with three options; a simple move station request, a comment on an object, or an actual object such as 'tree on house'. <br>
+        The W3W field when (left) clicked brings up a similar dialogbox with the same options, for the What3Words you enter in the appropriate field.<br>
+        Check out the full usage instructions <b style="color:#aa7941;">W3W - What3Words</b>
+    	    
     	<p>Be sure to look at the new RF Hole Points of interest information in the <a href="#Mapping"> Mapping your Net section</a>.</p>
-    	    <p>2023 is still underway but new things are coming. The new RF Hole points of interest are in place and open for your test.</p>
+    	    
+    	    <h2>GMRS Callsigns</h2>
     	    <p>GMRS callsign look-up is also in the works and should be available in the near future.</p>
-    	    
-    	    <p> The big news should come later this year and has to do with the MySQL table in use. While this is something you don't see exactly, you will feel its importance once fully implemented. Faster response times especially when dealing with a larger net are going to be impressive.</p>
-    	    
-    	    <h2>2022</h2>
-    	    <a href="#facility">Check out the new facility type net</a><br>
-    	    <p>Be sure to check out <a href="#location">Station Location Considerations</a> for a discussion on the importance and means of knowing the location of each station logging into your nets.
-                </p>
-            <p>New Columns in 2022</p>    
-            <ul class="topics"> <!-- three columns -->
-                <li><a href="#country">Country</li>
-                <li><a href="#facilitycol">Facility</a></li>
-                <li><a href="#onsitecol">On Site</a></li>
-                
-                <li><a href="#team">Team</a></li>
-                <li><a href="#what3words">W3W</a></li>
-                <li><a href="#aprs_call">APRS_CALL</a></li>
-                
-            </ul>
-            
-                
-    	    <p>2022 has seen an expansion of the optional columns with the additon of 'Team', 'W3W' and 'APRS_CALL'. The functionality of all three is still in development especially the last two. One use for the 'Team' column will be to allow sorting of the table based on a team name. Names like Safety, SAG, Rest Stop, for example during a bike ride can help finding a specific call sign easier. 
-    	    </p><p>The new 'W3W' and 'APRS_CALL' columns have at least two uses. The first would be to more easily change a statons location (latitude, longitude, grid). The second is to give NCM the ability to track the movement of a staton over time. Both these scenarios are discussed in the 'Station Location Considerations' discussion a little further below.
-               
                 
     	    <h2>Individual Activity Log (ICS-214A)</h2>
     	    <p>This report is displayed as a pop-up modal when you right click in the 'Time Line Comments' column of any row. It is a personal ICS-214 just for that callsign, easily printable or it can be saved as a PDF by your browser. 
-    	    </p><h2>Double (left) Click a callsign</h2>
+    	    </p>
+    	<!--    <h2>Double (left) Click a callsign</h2>
     	    <p>Thanks to the people at Buckmaster (HamCall.net) double clicking a DX (international) callsign now updates the stored information about that call in the stations table. At the same time it adds latitude, longitude, first & last name, and other key information to the open log you are on. This is still not 100% because many countries do not publish their current amateur callsign information.
 	    </header>
+	    -->
 	    <p>
 	    </p>
 <br>
