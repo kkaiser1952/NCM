@@ -364,9 +364,9 @@ $sql = $db_found->prepare("
 SELECT  count(callsign) as all_callsigns,
         sum(firstLogIn) as ttl_1st_logins,
         CONCAT(FLOOR(SUM(`timeonduty`) / 86400), ' days ',
-        LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
-        LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
-        LPAD(SUM(`timeonduty`) % 60, 2, '0')
+            LPAD(FLOOR((SUM(`timeonduty`) % 86400) / 3600), 2, '0'), ':',
+            LPAD(FLOOR((SUM(`timeonduty`) % 3600) / 60), 2, '0'), ':',
+            LPAD(SUM(`timeonduty`) % 60, 2, '0')
         ) AS time_on_duty
   FROM NetLog
  WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
@@ -566,6 +566,8 @@ if (!empty($result)) {
 
     // Table rows
     $currentDate = null;
+    $dailyTotals = [];
+    
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
         $PBcss  = $row['PBcss'];     // Blue:    Prebuilt
@@ -627,16 +629,32 @@ if (!empty($result)) {
       //  if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
     
         // Output the date and day of the week in a separate row for the start of a new day
-        $date = substr($row['logdate'], 0, 10);
-        $dayOfWeek = date('l', strtotime($date));        
+        $localLogDate = date('Y-m-d', strtotime($row['logdate']));
+        $dayOfWeek = date('l', strtotime($localLogDate));
+        
+        if (!isset($dailyTotals[$localLogDate])) {
+            $dailyTotals[$localLogDate] = [
+                'firstLogins' => 0,
+                'stations' => 0
+            ];
+        }
+        
+        $dailyTotals[$localLogDate]['firstLogins'] += $row['First_Login'];
+        $dailyTotals[$localLogDate]['stations'] += $row['stations'];        
              
-            if ($currentDate !== $date) {
-                echo '<tr class="date-row ">';
-                echo '<td colspan="' . (count($row) + 1) . '">' . $date . ' (' . $dayOfWeek . ') </td>';
-                //echo '<td colspan="' . (count($row) + 1) . '"> cnt here </td>'; 
-            
+            if ($currentDate !== $localLogDate) {
+                echo '<tr class="date-row">';
+                echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
+                echo '<td></td>'; // Empty cell for netcall_activity
+                echo '<td>' . $dailyTotals[$localLogDate]['stations'] . '</td>'; // Total stations
+                echo '<td></td>'; // Empty cell for frequency
+                echo '<td></td>'; // Empty cell for logclosedtime
+                echo '<td>' . $dailyTotals[$localLogDate]['firstLogins'] . '</td>'; // Total first logins
+                echo '<td></td>'; // Empty cell for Volunteer_Time
+                echo '<td></td>'; // Empty cell for Open
+                echo '<td></td>'; // Empty cell for Close
                 echo '</tr>';
-                $currentDate = $date;
+                $currentDate = $localLogDate;
             }
             
             // The row color if there is one
