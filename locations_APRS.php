@@ -11,36 +11,36 @@
 	error_reporting (E_ALL ^ E_NOTICE);
 	 
 // Check if the variables are set before sanitizing
-if (isset($_POST["aprs_call"])) {
+if (isset($_GET["aprs_call"])) {
     $aprs_call = filter_input(INPUT_POST, 'aprs_call', FILTER_SANITIZE_STRING);
     $aprs_callsign = strtoupper($aprs_call);
 }
 
-if (isset($_POST["recordID"])) {
+if (isset($_GET["recordID"])) {
     $recordID = filter_input(INPUT_POST, 'recordID', FILTER_SANITIZE_NUMBER_INT);
 }
 
-if (isset($_POST["CurrentLat"])) {
+if (isset($_GET["CurrentLat"])) {
     $CurrentLat = filter_input(INPUT_POST, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 }
 
-if (isset($_POST["CurrentLng"])) {
+if (isset($_GET["CurrentLng"])) {
     $CurrentLng = filter_input(INPUT_POST, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 }
 
-if (isset($_POST["cs1"])) {
+if (isset($_GET["cs1"])) {
     $cs1 = filter_input(INPUT_POST, 'cs1', FILTER_SANITIZE_STRING);
 }
 
-if (isset($_POST["nid"])) {
+if (isset($_GET["nid"])) {
     $nid = filter_input(INPUT_POST, 'nid', FILTER_SANITIZE_NUMBER_INT);
 }
 
-if (isset($_POST["objName"])) {
+if (isset($_GET["objName"])) {
     $objName = filter_input(INPUT_POST, 'objName', FILTER_SANITIZE_STRING);
 }
 
-if (isset($_POST["comment"])) {
+if (isset($_GET["comment"])) {
     $APRScomment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
 }
 
@@ -217,6 +217,7 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$
         'message' => 'Data updated successfully'
     );
     header('Content-Type: application/json');
+    error_log(json_encode($response)); // Log the JSON response
     echo json_encode($response);
     exit;
 ?>
