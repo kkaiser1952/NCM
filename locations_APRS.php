@@ -80,7 +80,7 @@ $distance = calculateDistance($currentLat, $currentLng, $newLat, $newLng);
 // Compare the distance with the tolerance
 if ($distance < $toleranceMeters) {
     // Coordinates are within the tolerance
-    $warningMessage = "<b style='color:red;'>Warning:</b> Coordinates have not significantly changed since the last update.";
+    $warningMessage = "<b style='color:red;'>Warning:</b> Coordinates have not significantly changed since the last update.<br>";
     
     // Update the NetLog table with the warning message
     $sql = "UPDATE NetLog
