@@ -7,41 +7,41 @@
     require_once "getCityStateFromLatLng.php";
     require_once "config.php";
         
-    ini_set('display_errors',1); 
-	error_reporting (E_ALL ^ E_NOTICE);
+    //ini_set('display_errors',1); 
+	//error_reporting (E_ALL ^ E_NOTICE);
 	 
 // Check if the variables are set before sanitizing
 if (isset($_GET["aprs_call"])) {
-    $aprs_call = filter_input(INPUT_POST, 'aprs_call', FILTER_SANITIZE_STRING);
+    $aprs_call = filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING);
     $aprs_callsign = strtoupper($aprs_call);
 }
 
 if (isset($_GET["recordID"])) {
-    $recordID = filter_input(INPUT_POST, 'recordID', FILTER_SANITIZE_NUMBER_INT);
+    $recordID = filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT);
 }
 
 if (isset($_GET["CurrentLat"])) {
-    $CurrentLat = filter_input(INPUT_POST, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $CurrentLat = filter_input(INPUT_GET, 'CurrentLat', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 }
 
 if (isset($_GET["CurrentLng"])) {
-    $CurrentLng = filter_input(INPUT_POST, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $CurrentLng = filter_input(INPUT_GET, 'CurrentLng', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 }
 
 if (isset($_GET["cs1"])) {
-    $cs1 = filter_input(INPUT_POST, 'cs1', FILTER_SANITIZE_STRING);
+    $cs1 = filter_input(INPUT_GET, 'cs1', FILTER_SANITIZE_STRING);
 }
 
 if (isset($_GET["nid"])) {
-    $nid = filter_input(INPUT_POST, 'nid', FILTER_SANITIZE_NUMBER_INT);
+    $nid = filter_input(INPUT_GET, 'nid', FILTER_SANITIZE_NUMBER_INT);
 }
 
 if (isset($_GET["objName"])) {
-    $objName = filter_input(INPUT_POST, 'objName', FILTER_SANITIZE_STRING);
+    $objName = filter_input(INPUT_GET, 'objName', FILTER_SANITIZE_STRING);
 }
 
 if (isset($_GET["comment"])) {
-    $APRScomment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+    $APRScomment = filter_input(INPUT_GET, 'comment', FILTER_SANITIZE_STRING);
 }
 
     
@@ -102,7 +102,7 @@ if (isset($_GET["comment"])) {
         $lat = number_format($latx, 6);
     $lngx = (float) $data['entries'][0]['lng'];
         $lng = number_format($lngx, 6);
-    //echo ('@107 <br><br>lat '.$lat.', lng '.$lng.'<br>');
+    echo ('@107 <br><br>lat '.$lat.', lng '.$lng.'<br>');
     
     $api = new What3words\Geocoder\Geocoder($w3w_api_key);
        
@@ -144,8 +144,8 @@ if (isset($_GET["comment"])) {
     
     
 $json = json_encode($varsToKeep, JSON_PRETTY_PRINT);
-//echo "<br><br> $json";
-//echo "\n\n";
+echo "<br><br> $json";
+echo "\n\n";
 
 
 $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
@@ -180,14 +180,8 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$
         $stmt->bindParam(':recordID', $recordID);
         $stmt->execute();
     } catch (PDOException $e) {
-    $response = array(
-        'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
-    );
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit;
-}
+        echo "Error: " . $e->getMessage();
+    }
        
                
     // Update the TimeLog with the new information    
@@ -211,13 +205,4 @@ $deltax = 'LOC&#916:APRS '.$objName.' : '.$APRScomment.' : '.$what3words.' : '.$
         echo "Error: " . $e->getMessage();
     }
 
-    // Send a JSON response back to the client
-    $response = array(
-        'success' => true,
-        'message' => 'Data updated successfully'
-    );
-    header('Content-Type: application/json');
-    error_log(json_encode($response)); // Log the JSON response
-    echo json_encode($response);
-    exit;
 ?>
