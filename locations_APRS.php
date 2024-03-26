@@ -140,6 +140,73 @@ $thislatlng = "$newLat,$newLng";
 include('getCrossRoads.php');
 $crossroads = getCrossRoads($newLat, $newLng);
 
+/*
+    error_reporting(0);
+function getCrossRoads($lat, $lng, $maxRetries = 2, $retryDelay = 1) {
+    $retryCount = 0;
+    $crossroads = '';
+
+    while ($retryCount < $maxRetries) {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://api.geonames.org/findNearestIntersectionJSON?lat=$lat&lng=$lng&radius=1&username=ncm_wa0tjt",
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 5, // Set a timeout of 5 seconds
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        curl_close($curl);
+
+        if ($err) {
+            // If there's an error, increment the retry count and wait before retrying
+            $retryCount++;
+            if ($retryCount < $maxRetries) {
+                sleep($retryDelay);
+                continue;
+            } else {
+                // If the maximum number of retries is reached, return an error message
+                return "Error retrieving crossroads: " . $err;
+            }
+        } elseif ($httpCode === 200) {
+            // If the API call is successful (HTTP code 200), process the response
+            $crc = json_decode($response, true);
+            if (isset($crc['intersection']['street1']) && isset($crc['intersection']['street2'])) {
+                $street1 = $crc['intersection']['street1'];
+                $street2 = $crc['intersection']['street2'];
+                $crossroads = "$street1 &amp; $street2";
+                return $crossroads;
+            } else {
+                // If the response doesn't contain the expected data, return a default message
+                return "Crossroads not found";
+            }
+        } else {
+            // If the API call returns a non-200 status code, increment the retry count and wait before retrying
+            $retryCount++;
+            if ($retryCount < $maxRetries) {
+                sleep($retryDelay);
+                continue;
+            } else {
+                // If the maximum number of retries is reached, return an error message
+                return "Error retrieving crossroads. HTTP status code: " . $httpCode;
+            }
+        }
+    }
+
+    // If no crossroads are found after all retries, return a default message
+    return "Crossroads not found";
+}
+  */
+
+
 // Now get the gridsquare
 include('GetGridSquare.php');
 $grid = getgridsquare($newLat, $newLng);
