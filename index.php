@@ -791,36 +791,32 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
-/*
-function openDialogAndMoveCursor(recordID, w3w, latitude, longitude, callsign, netID) {
-    // Open the dialog box
-    document.getElementById('dialogBox').showModal();
+document.addEventListener('keydown', function(event) {
+  if (isTabletDevice() && event.shiftKey && event.key === 'Shift') {
+    // Right shift key is being held down on a tablet device
+    // Perform the desired action or trigger the right-click event
+    event.preventDefault(); // Prevent the default shift key behavior if needed
     
-    // Move the cursor to the textbox in the dialog box
-    document.getElementById('w3wfield').focus();
-    
-    // Optionally, you can perform any additional actions based on the provided data (recordID, w3w, latitude, longitude, callsign, netID)
-    // Example: console.log(recordID, w3w, latitude, longitude, callsign, netID);
-} */
-
-/*
-document.addEventListener('DOMContentLoaded', function() {
-        var tdElement = document.getElementById('c24:<?php echo $row['recordID']; ?>');
-        
-        // Left click event
-        tdElement.addEventListener('click', function(event) {
-            // Display dialog box here
-            // Example: showModalDialogBox();
-        });
-
-        // Right click event
-        tdElement.addEventListener('contextmenu', function(event) {
-            // Run JavaScript function for right click action
-            mapWhat3Words('<?php echo $row['w3w']; ?>');
-            event.preventDefault(); // Prevent default right-click behavior
-        });
+    // Example: Trigger a custom right-click event on the target element
+    var targetElement = event.target;
+    var customRightClickEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      button: 2,
+      buttons: 2,
+      clientX: targetElement.getBoundingClientRect().left,
+      clientY: targetElement.getBoundingClientRect().top
     });
-*/
+    targetElement.dispatchEvent(customRightClickEvent);
+  }
+});
+
+function isTabletDevice() {
+  var userAgent = navigator.userAgent.toLowerCase();
+  console.log('User Agent:', userAgent); // Log the user agent string
+  return /ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(userAgent);
+}
 
 </script>
 
