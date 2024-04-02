@@ -306,21 +306,21 @@ foreach($db_found->query($sql3) as $row) {
     //echo "<br>div1:<br> $div1 <br><br>";   
     //echo "<br>div2: $div1 <br><br>";
    
-        $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
-                            rotationAngle: $dup, 
-                            rotationOrigin: 'bottom', 
-                            opacity: 0.75,
-                            contextmenu: true, 
-                            contextmenuWidth: 140,
-                            contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
-                            
-                            icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                            title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();                    
-                            
-                            $('Objects'._icon).addClass('objmrkr');    
-                            $('Objects'._icon).addClass('huechange');                                          
-                       "; // End of objMarkers
-    //echo "objMarkers:<br> $objMarkers <br>";
+    if (isset($row['lat']) && !empty($row['lat']) && isset($row['lng']) && !empty($row['lng'])) {
+    $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
+        rotationAngle: $dup,
+        rotationOrigin: 'bottom',
+        opacity: 0.75,
+        contextmenu: true,
+        contextmenuWidth: 140,
+        contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
+        icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+        title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();
+
+    $('Objects'._icon).addClass('objmrkr');
+    $('Objects'._icon).addClass('huechange');
+    ";
+    }
 } // end foreach
 
 
