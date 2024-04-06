@@ -262,7 +262,7 @@ var lng = -94.601830;
 var OBJMarkerList = L.layerGroup();
 
 console.log(OBJMarkerList.getLayers());
-console.log('@260');
+console.log('@265');
 //console.log('@262 OBJMarkerList '+JSON.stringify(OBJMarkerList));
 
 // Add layers to OBJMarkerList (example)
@@ -301,7 +301,9 @@ function removeMarker() {
 // Define the beginning map
 var map = L.map('map', {
 	drawControl: true,
-	zoom: 12
+	zoom: 13,
+	zoomAnimation: false,
+	zoomOptions: { animate: false }
 }); 
 
 
