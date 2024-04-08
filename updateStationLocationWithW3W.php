@@ -20,9 +20,9 @@
             
   
     
- $callsign = 'kb0txd';
+ $callsign = 'kf0jqh';
  //$w3w     = 'pylon.slamming.grit';        // Brazil
- $w3w     = '///retrospect.buying.duty';    // k0rgb
+ $w3w     = '///tanks.green.shaky';    // k0rgb
  
  
  

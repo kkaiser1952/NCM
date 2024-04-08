@@ -1,4 +1,7 @@
  <?php
+    /* this program is used anytime a value is entered into any column in NCM */
+    /* sometimes it runs PHP or JS program to save and/or load the data */
+    /* This is one of the first programs written or NCM, and needs some ediing */
     /* 
      ini_set('display_errors', 1);
      ini_set('display_startup_errors', 1);
@@ -296,35 +299,7 @@
 			$db_found->exec($sql);
 
 		} ///////////////// End of Update for aprs_call
-		
-		////////////// Update for W3W starts here
-		
-		/* Commented on 2024-03-04, current code is at the bottom of locations_w3w.php
-		elseif ($column == 'W3W' AND $value != '') {
-    		$sql = "SELECT ID, netID, callsign, w3w, latitude, longitude
-			          FROM NetLog 
-					WHERE recordID = '$recordID'";
-
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row['netID'];
-				$ID	   = $row['ID'];
-				$cs1   = $row['callsign'];
-				$w3w  = $row['W3W'];
-			    $lat = $row['latitude'];
-			    $lng = $row['longitude'];
-			}
-				
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, latitude, longitude, ipaddress) 
-        VALUES ('$recordID', '$ID', '$netID', '$cs1', 'W3W set to: $value', 
-        NOW(), 
-        '$lat', '$lng', '$ipaddress')";
-	
-			$db_found->exec($sql);
-
-		} 
-		 ///////////////// End of Update for W3W
-		 */
-		
+			
 		
 		elseif ($column == 'team' AND $value != '') {
     		$sql = "SELECT ID, netID, callsign, team

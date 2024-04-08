@@ -1,5 +1,6 @@
 <?php
     
+     include('config2.php');
     // Get the lat/lon from a what3words address
     
   //  https://api.what3words.com/v3/convert-to-coordinates?words=filled.count.soap&key=[API-KEY]
@@ -8,7 +9,7 @@
     
     // example address
     //$w3w = "easily.hardest.ended";
-    $w3w = "guiding.confusion.towards";
+    $w3w = "///custodian.back.glittering";
     	
 	$curl = curl_init();
 
@@ -55,9 +56,9 @@ if ($err) {
         
         
         
-       // echo "$koords";
+        echo "$koords";
         
-        //echo "<PRE>".json_encode($koords, JSON_PRETTY_PRINT)."</PRE><br>";
+        echo "<PRE>".json_encode($koords, JSON_PRETTY_PRINT)."</PRE><br>";
         
 } // end else
 		    

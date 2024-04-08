@@ -136,13 +136,19 @@
 /* Kansas City International Airport 1 International Square, Kansas City, MO 64153 North Kansas City  39.3003, -94.72721 0 Ft. */
         
         // Pull detail data FROM  poi table
-        $sql = "SELECT id,  name,  Notes, 
+        $sql = "SELECT id,  name,  Notes, w3w,
                         LOWER(class) as class, 
                         address, latitude, longitude, grid,
                         CONCAT(latitude,',',longitude) as koords,
                         
-                        CONCAT(name, ' ', address, ' ', Notes, ' ',
-                        latitude, ', ', longitude, ' ', altitude, ' Ft.' ) as addr,
+                        CONCAT(name, ' ', 
+                                address, ' ', 
+                                Notes, ' ',
+                                latitude, ', ', 
+                                longitude, ' ', 
+                                altitude, ' Ft.'
+                                 
+                                ) as addr,
                         
                         REPLACE(REPLACE(REPLACE(tactical,'-',''), '#', ''), '!', '') AS tactical,
 
@@ -259,7 +265,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // ... other properties
         icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
         title: " . json_encode("{$row['tactical']} {$row['name']}  {$row['Notes']} {$row['koords']}") . ",
-    }).addTo(fg).bindPopup(" . json_encode("{$row['tactical']}<br><br>Name: {$row['name']}<br><br>Crossroads: <b style='color:red'>{$row['address']}</b> <br><br> Grid: {$row[grid]}<br>{$row['Notes']}<br> {$row['koords']}<br><br>Created: {$row['dttm']}<br><br>poiMarkers.php
+    }).addTo(fg).bindPopup(" . json_encode("{$row['tactical']}<br><br>Name: {$row['name']}<br><br>W3W:<br><b style='color:red'> {$row['w3w']}</b><br>
+        <br>Crossroads:<br> <b style='color:red'>{$row['address']}</b> <br><br> Grid: {$row[grid]}<br>{$row['Notes']}<br> {$row['koords']}<br><br>Created: {$row['dttm']}<br><br>poiMarkers.php
     ") . ");
     
     $('{$row['class_lower']}'._icon).addClass('$poimrkr');
