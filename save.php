@@ -360,7 +360,7 @@
 			
 			// If its to reset the home coordinates then do this
 			    $deltaX = 'LOC&#916;';
-			    $Varray = array("@home", "@ home", "@  home", "at home", "gone home,", "headed home", "going home", "home");
+			    $Varray = array("@home", "@ home", "@  home", "at home", "gone home", "headed home", "going home", "home");
             if (in_array(strtolower("$value"), $Varray)) {
     			$latitude = explode(',', $home)[0]; 
     			$longitude = explode(',', $home)[1];

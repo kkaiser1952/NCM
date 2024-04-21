@@ -1,4 +1,6 @@
 <?php
+    // UpdateStationsWithFCCdata.php
+    // UpdateStationsWithFCCdata.php to remove latlng
     // UpdateStationsWithFCCdata.php  Written 2023-09-16, also look at updateStationsinfo.php but this one should do it all
     
     //error_reporting(E_ALL);
@@ -111,7 +113,7 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
              dttm = :dttm,
              latitude = :latitude,
              longitude = :longitude,
-             latlng = POINT(:latitude, :longitude),
+             
              `comment` = 'Updated via fixStationsWithFCCdata.php'
           WHERE id = :callsign";    
 
@@ -128,7 +130,6 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
         $stmt2->bindValue(':dttm', date('Y-m-d H:i:s'));
         $stmt2->bindValue(':latitude', $latitude);
         $stmt2->bindValue(':longitude', $longitude);
-        $stmt2->bindValue(':latlng', "POINT($latitude $longitude)");
         $stmt2->bindValue(':callsign', $row['callsign']);
 
         // Add debugging output for SQL query and bound values
@@ -146,7 +147,6 @@ for ($i = 0; $i < count($rows); $i += $batchSize) {
             ':dttm' => date('Y-m-d H:i:s'),
             ':latitude' => $latitude,
             ':longitude' => $longitude,
-            ':latlng' => "POINT($latitude $longitude)",
             ':callsign' => $row['callsign']
         ]) . "<br>=========================";
 

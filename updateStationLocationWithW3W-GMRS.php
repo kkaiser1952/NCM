@@ -1,5 +1,7 @@
 <!doctype html>
 <?php
+    // updateStationLocationWithW3W-GMRS.php
+    // udated to remove latlng
 	/*
 		https://net-control.us/updateStationLocationWithW3W-GMRS.php
 	*/
@@ -63,7 +65,6 @@ $sql = ("
            ,state       = '$state'
            ,home        = '$lat,$lng,$grid,$county,$state'
            ,fccid       = $fccid
-           ,latlng      = GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')'))
            ,active_call = 'y'
            ,country     = '$country'
            ,dttm        = NOW()

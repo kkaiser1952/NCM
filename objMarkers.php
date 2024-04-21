@@ -1,5 +1,6 @@
 <?php
-    
+    // objMarkers.php
+    // Updated: to remove latlng in SQL
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
     
     ini_set('display_errors',1); 
@@ -52,7 +53,6 @@ FROM (
     FROM TimeLog
     WHERE netID = $q
         AND callsign <> 'GENCOMM'
-        AND latlng IS NOT NULL
         AND (
         (`comment` LIKE 'LOC&#916:APRS%') 
             OR (`comment` LIKE 'LOC&#916:W3W%')
