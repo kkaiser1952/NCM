@@ -373,7 +373,7 @@
     			
     		$sql = "UPDATE NetLog 
                        SET latitude = $latitude, longitude = $longitude, 
-                           grid ='$grid', county = '$county', state = '$state', w3w = '',
+                           gri ='$grid', county = '$county', state = '$state', w3w = '',
                            delta = 'Y' /* indication in table that location has changed */
     			         WHERE recordID = $recordID";
 		
