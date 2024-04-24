@@ -73,7 +73,7 @@ $orgCnt = $stmt->fetchColumn(0);
 
 // Generate the HTML output
 echo '<div style="font-family: Arial, sans-serif; padding: 20px;">';
-echo '<h2>NCM Statistics</h2>';
+echo '<h2>V1 NCM Statistics</h2>';
 echo '<table style="border-collapse: collapse; width: 100%;">';
 echo '<tr><td style="padding: 10px; border: 1px solid #ccc;"><strong>Total Logins:</strong></td><td style="padding: 10px; border: 1px solid #ccc;">' . $logins . '</td></tr>';
 echo '<tr><td style="padding: 10px; border: 1px solid #ccc;"><strong>New Logins:</strong></td><td style="padding: 10px; border: 1px solid #ccc;">' . $newb . '</td></tr>';
