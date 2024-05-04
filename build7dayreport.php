@@ -369,7 +369,7 @@ SELECT  count(callsign) as all_callsigns,
             LPAD(SUM(`timeonduty`) % 60, 2, '0')
         ) AS time_on_duty
   FROM NetLog
- WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
+ WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -383,7 +383,7 @@ $sql = $db_found->prepare("
     SELECT
         CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID)
             ELSE nl.netID END AS netID,
-        CASE WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(nl.logdate,'+00:00','-06:00')
+        CASE WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(nl.logdate,'+00:00','-05:00')
             ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
         CONCAT(nl.netcall, '<br>', nl.activity) AS netcall_activity,
         nl.stations,
@@ -409,19 +409,19 @@ $sql = $db_found->prepare("
         subquery.First_Login,
     (SELECT COUNT(DISTINCT netID)
        FROM NetLog
-      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
       ) AS netID_count,
            SEC_TO_TIME(SUM(
         CASE
             WHEN nl.timeonduty IS NULL THEN 0
-            WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+            WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
                 ELSE TIME_TO_SEC(nl.timeonduty)
         END
     )) AS Volunteer_Time,
     SEC_TO_TIME(
         CASE
             WHEN subquery.total_timeonduty_sum IS NULL THEN 0
-            WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+            WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
                 ELSE subquery.total_timeonduty_sum
     END
     ) AS Total_Time,
@@ -448,14 +448,14 @@ $sql = $db_found->prepare("
             CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
                 ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
      FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS nl
     LEFT JOIN (
         SELECT netID,
     SUM(firstLogin) AS First_Login, IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS subquery ON nl.netID = subquery.netID
     LEFT JOIN TimeLog tl ON nl.netID = tl.netID
