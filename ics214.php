@@ -75,7 +75,7 @@ $stmt->execute();
 // Fetch the results as a single column value
 $LogPrep = $stmt->fetchColumn(0);
 
-echo ($LogPrep);
+//echo ($LogPrep);
 
 			
     $sql3 = "SELECT box4, box5, kindofnet
