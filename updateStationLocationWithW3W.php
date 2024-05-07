@@ -20,9 +20,9 @@
             
   
     
- $callsign = 'kf0jqh';
+ $callsign = 'ky4wl';
  //$w3w     = 'pylon.slamming.grit';        // Brazil
- $w3w     = '///tanks.green.shaky';    // k0rgb
+ $w3w     = '///suggestive.staging.peanut';    // k0rgb
  
  
  
@@ -73,7 +73,6 @@ $sql = ("
            ,state       = '$state'
            ,home        = '$lat,$lng,$grid,$county,$state'
            ,fccid       = $fccid
-           ,latlng      = GeomFromText(CONCAT('POINT (', $lat, ' ', $lng, ')'))
            ,active_call = 'y'
            ,country     = '$country'
            ,dttm        = NOW()
