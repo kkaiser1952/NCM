@@ -357,7 +357,38 @@ require_once "NCMStats.php";
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
-//require_once "dbConnectDtls.php";  // Access to MySQL is in the NCMStats.php 
+require_once "dbConnectDtls.php";  
+ 
+$sql = $db_found->prepare("
+SELECT
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) AS log_date,
+    COUNT( callsign) AS total_stations,
+    SUM(firstLogin) AS total_first_logins
+FROM
+    NetLog
+WHERE
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+GROUP BY
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR))
+ORDER BY
+    log_date DESC;
+");
+$sql->execute();
+$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+// Display the column headers
+echo "Log Date, Total Stations, Total First Logins<br>";
+
+// Loop through each row in the result set
+foreach ($result as $row) {
+    $logDate = $row['log_date'];
+    $totalStations = $row['total_stations'];
+    $totalFirstLogins = $row['total_first_logins'];
+
+    // Display the row data
+    echo "$logDate, $totalStations, $totalFirstLogins<br>";
+}
+
+
 
 // Grand totals SQL
 $sql = $db_found->prepare("
