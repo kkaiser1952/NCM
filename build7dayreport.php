@@ -4,26 +4,26 @@
 ?>		
 </DOCTYPE html>
 <html>
-    <head>
+<head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>7 Day NCM Activity Report</title>
         
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-          $(document).ready(function() {
-              $('tr td:first-child').click(function() {
-                var value = $(this).text(); // Get the text value of the clicked <td>
-                net_by_number(value); // Call your function with the retrieved value
-              });
-          });
-          
-          function net_by_number(value) {
-            //alert("You clicked the first table cell with value: " + value);
-            // Perform any other desired actions using the value
-          }
-        </script>
-        <script src="js/NetManager.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('tr td:first-child').click(function() {
+        var value = $(this).text(); // Get the text value of the clicked <td>
+        net_by_number(value); // Call your function with the retrieved value
+      });
+  });
+  
+  function net_by_number(value) {
+    //alert("You clicked the first table cell with value: " + value);
+    // Perform any other desired actions using the value
+  }
+</script>
+<script src="js/NetManager.js"></script>
 
 <script>
     /*
@@ -77,276 +77,9 @@
     });
 </script>
 
-
-        
-        <style>
-            table {
-                border-collapse: collapse;
-            }
-            
-            th, td {
-                padding: 8px;
-                border: 1px solid #000000;
-            }
-            
-            .odd-row {
-                background-color: #FFFFFF;
-                color: black;
-            }
-            
-            .even-row {
-                background-color: #F0F0F0;
-                color: black;
-            }
-                        
-            /* Style for nets with 1 entry */
-            .red-bg {
-                background-color: red;
-                color: white;
-            }
-            
-            /* Style for Open nets */
-            .green-bg {
-                background-color: green;
-                color: white;
-            }
-            
-            /* Style for Pre-Built nets */
-            .blue-bg {
-                background-color: blue;
-                color: white;
-                font-weight: bold;
-            }
-                        
-            /* Style for Test nets */
-            .purple-bg {
-                background-color: purple;
-                color: white;
-                font-weight: bold;
-            }
-            
-            /* Style for Facility Nets */
-            .yellow-bg {
-              background-color: yellow;
-              color: blue;
-            }
-            
-            .cayenne-bg {
-                background-color: #941100;
-                color: white;
-                font-weight: bold;
-            }
-            
-            label {
-              font-weight: bold;
-            }
-            
-            .date-row {
-              font-weight: bold;
-              font-size: 18pt;
-              color: darkgreen;
-            }
-                  
-            /* Style for 1 record and pre-built net */
-            /* Style for the first two columns (red) */
-            .redblue-bg {
-              background-color: red;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .redblue-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, blue);
-              color: white;
-            }
-            
-            /* Style for the last three columns (blue) */
-            .redblue-bg td:nth-last-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            .bluegreen-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, green);
-              color: white;
-            }
-            
-            .bluegreen-bg td:nth-last-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            /* Style for 1 record and pre-built net */
-            /* Style for the first column (blue) */
-            .blueyellow-bg td:nth-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .blueyellow-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, yellow);
-              color: white;
-            }
-            
-            /* Style for the last three columns (green) */
-            .blueyellow-bg td:nth-last-child(-n + 5) {
-              background-color: yellow;
-              color: white;
-            }
-
-          
-             /* ---- */
-            
-           
-            /* Style for the first two columns (red) */
-            .redpurple-bg {
-              background-color: red;
-              color: white;
-            }
-            
-            /* If you add a new column to the report change all the 5's to 6 to extend the gradient */
-            
-            /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, purple);
-              color: white;
-            }
-            
-            /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            /* END: Style for 1 record and test net */
-            
-            /* Style for an open test net */
-            .greenpurple-bg td:nth-child(-n + 5) {
-              background-color: green;
-              color: white;
-            }
-            
-            .greenpurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, green, purple);
-              color: white;
-            }
-            
-            .greenpurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            
-            /* Style for an pre-built test net */
-            .bluepurple-bg td:nth-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            .bluepurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, purple);
-              color: white;
-            }
-            
-            .bluepurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            
-            /* ---- */
-           
-            /* Style for the first two columns (red) */
-            .redgreen-bg td:nth-child(-n + 5) {
-              background-color: red;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .redgreen-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, green);
-              color: white;
-            }
-            
-            /* Style for the last three columns (green) */
-            .redgreen-bg td:nth-last-child(-n + 5) {
-              background-color: green;
-              color: white;
-            }
-            
-            .reportTitle {
-                font-size: 18pt;
-                margin-left: 300px;
-            }
-            
-            /* ---- */
-            
-            /* Style for combination label */
-            .combo-bg {
-              background-image: linear-gradient(to right, red, yellow, green, purple, blue, #941100 );
-              width: 300px;
-              color: white;
-            }
-            
-            /* Apply some general styling to the form rows and columns */
-            .report-container {
-              max-width: 600px; /* Adjust the width as needed */
-              margin-left: 300px;
-            }
-            
-            /* Apply some general styling to the form rows and columns */
-            .form-row {
-              display: flex;
-              align-items: baseline; /* Vertically align based on the baseline */
-              justify-content: flex-start; /* Align form rows to the left */
-              margin-bottom: 10px;
-            }
-            
-            .form-column {
-              flex: 1;
-              margin-right: 20px;
-            }
-            
-            /* Set a fixed width for labels to make them the same length */
-            .form-row label {
-              flex-basis: 120px; /* Adjust the width as needed */
-            }
-            
-            /* Set a fixed width for the last input (field5) to make it the same length */
-            .form-row:last-child input {
-              max-width: calc(100% - 120px); /* 100% minus the label width */
-            }
-            
-            /* Define the CSS rules for centering the content */
-            .centered {
-                text-align: center;
-            }
-            
-            /* Style for the new sum row */
-            .sum-row {
-                background-color: lightgray;
-                color:blue;
-                font-weight: bold;
-                font-size: 16pt;
-                text-align: center;
-            }
-            
-            tr:first-child {
-              border-bottom: 2px solid red;
-            }
-            
-            /* Style the dropdown list for NetID */
-            /* CSS for the dropdown-trigger class */
-            .dropdown-list {
-                position: absolute;
-                background-color: white;
-                border: 1px solid #ccc;
-                padding: 5px;
-                font-size: 16pt;
-            }
-
-            
-
-        </style>
-    </head>
+<link rel="stylesheet" type="text/css" href="css/build7dayreport.css">
+  
+</head>
 <body>
 
 <?php
