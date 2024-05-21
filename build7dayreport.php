@@ -87,11 +87,15 @@ require_once "NCMStats.php";
 	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
 // The purpose of this page/program is to send a daily report of NCM to my messages
 // Written: 2023-06-21, first day of summer	
+// Updated: 2024-05-20
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";  
  
+ 
+// Collect the daily totls of stations and first logins 
 $sql = $db_found->prepare("
 SELECT
     DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) AS log_date,
@@ -406,14 +410,17 @@ if (!empty($result)) {
         $dailyTotals[$localLogDate]['firstLogins'] += $row['First_Login'];
         $dailyTotals[$localLogDate]['stations'] += $row['stations'];        
              
+             // the station count and first logins go here in colmns 
             if ($currentDate !== $localLogDate) {
                 echo '<tr class="date-row">';
                 echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
                 echo '<td></td>'; // Empty cell for netcall_activity
-                echo '<td>' . $dailyTotals[$localLogDate]['stations'] . '</td>'; // Total stations
+                echo '<td>' . $totalStations . '</td>'; // Total stations
+                //echo '<td>' . $dailyTotals[$localLogDate]['stations'] . '</td>'; // Total stations
                 echo '<td></td>'; // Empty cell for frequency
                 echo '<td></td>'; // Empty cell for logclosedtime
-                echo '<td>' . $dailyTotals[$localLogDate]['firstLogins'] . '</td>'; // Total first logins
+                echo '<td>' . $totalFirstLogins . '</td>'; // Total stations
+                //echo '<td>' . $dailyTotals[$localLogDate]['firstLogins'] . '</td>'; // Total first logins
                 echo '<td></td>'; // Empty cell for Volunteer_Time
                 echo '<td></td>'; // Empty cell for Open
                 echo '<td></td>'; // Empty cell for Close
