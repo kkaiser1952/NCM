@@ -1967,8 +1967,12 @@ Additonal Authors, advisers, resources and mentors include: Jeremy Geeo (KD0EAV)
 
     </span>
    
-<p>
+<br>
 <div>
+    <p>Proud recipient of the Mo-Kan Regional Council of Amateur Radio Organizations, Eagle Award 
+    </p>
+<img src="images/image002.png" alt="image002" width="" height="" >
+ <br><br><br>
  <img src="images/backgroundantenna328x72.png"  alt="backgroundantenna328x72" width="250" >
     International (DX) station information compliments of Daniel Bateman, KK4FOS with Buckmaster International, LLC
 </div>
