@@ -85,7 +85,7 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 		$from = '';
 		//if (empty($maxID)) {
         if (is_null($maxID)) {
-    		include "getFCCrecord.php";
+    		//include "getFCCrecord.php";
     		
     		$stmt = $db_found->prepare("SELECT MAX(ID)+1 AS newid 
                                   FROM stations 
