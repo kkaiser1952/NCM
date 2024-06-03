@@ -143,19 +143,6 @@ $ipaddress = getRealIpAddr();
          LIMIT 0,1
     ");  
 
-/* This query pulls the last time this callsign logged on */
-/*
-$stmt2 = $db_found->prepare("
-	SELECT recordID, id, Fname, Lname,  grid, creds, email, latitude, longitude, tactical,
-	       SUBSTRING_INDEX(home, ',', -1) as state,
-           SUBSTRING_INDEX(SUBSTRING_INDEX(home, ',', -2),',',1) as county,
-           district, tt, home, phone
-	  FROM NetLog 
-	 WHERE callsign = '$cs1' 
-	 ORDER BY netID DESC 
-	 LIMIT 0,1
-    "); 
-*/
 	$stmt2->execute();
 	$result = $stmt2->fetch();
 	
