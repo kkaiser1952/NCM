@@ -1,6 +1,8 @@
 <?php 
-	//require_once "NCMStats.php";		
-	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";	
+	// The purpose of this page/program is to create a 7 day report of NCM activites.
+	
+    // Written: 2023-06-21, first day of summer	
+    // Updated: 2024-06-15	
 ?>		
 </DOCTYPE html>
 <html>
@@ -26,11 +28,6 @@
 <script src="js/NetManager.js"></script>
 
 <script>
-    /*
-        It targets elements with the class dropdown-on-NetID and adds event handlers for the link with class dropdown-trigger and the dropdown select with class dropdown-list.
-        When the link is clicked, it prevents the default link behavior, displays the dropdown below the link, and calculates its position relative to the link.
-        When an option is selected from the dropdown, it opens the URL associated with the selected option in a new window/tab.
-    */
 
     $(document).ready(function() {
         $('.dropdown-on-NetID').each(function() {
@@ -85,9 +82,7 @@
 <?php
 require_once "NCMStats.php";		
 	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
-// The purpose of this page/program is to send a daily report of NCM to my messages
-// Written: 2023-06-21, first day of summer	
-// Updated: 2024-05-20
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
@@ -111,18 +106,24 @@ ORDER BY
     log_date DESC;
 ");
 $sql->execute();
-$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+$dailyTotals = $sql->fetchAll(PDO::FETCH_ASSOC);
+//$result = $sql->fetchAll(PDO::FETCH_ASSOC);
 // Display the column headers
-echo "Log Date, Total Stations, Total First Logins<br>";
+//echo "Log Date, Total Stations, Total First Logins<br>";
 
-// Loop through each row in the result set
-foreach ($result as $row) {
-    $logDate = $row['log_date'];
-    $totalStations = $row['total_stations'];
-    $totalFirstLogins = $row['total_first_logins'];
 
-    // Display the row data
-    echo "$logDate, $totalStations, $totalFirstLogins<br>";
+// Check if $result is an array and has elements
+if (is_array($result) && !empty($result)) {
+    // Loop through each row in the result set
+    foreach ($result as $row) {
+        $logDate = $row['log_date'];
+        $totalStations = $row['total_stations'];
+        $totalFirstLogins = $row['total_first_logins'];
+        // Display the row data
+        //echo "$logDate, $totalStations, $totalFirstLogins<br>";
+    }
+} else {
+    //echo "No results found.";
 }
 
 
@@ -334,7 +335,7 @@ if (!empty($result)) {
 
     // Table rows
     $currentDate = null;
-    $dailyTotals = [];
+    //$dailyTotals = [];
     
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
@@ -392,41 +393,36 @@ if (!empty($result)) {
             $THEcss = $SNcss;
         }
         
-        
-        // The Test for a netID and its CSS settings
-      //  if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
-    
-        // Output the date and day of the week in a separate row for the start of a new day
-        $localLogDate = date('Y-m-d', strtotime($row['logdate']));
-        $dayOfWeek = date('l', strtotime($localLogDate));
-        
-        if (!isset($dailyTotals[$localLogDate])) {
-            $dailyTotals[$localLogDate] = [
-                'firstLogins' => 0,
-                'stations' => 0
-            ];
-        }
-        
-        $dailyTotals[$localLogDate]['firstLogins'] += $row['First_Login'];
-        $dailyTotals[$localLogDate]['stations'] += $row['stations'];        
-             
-             // the station count and first logins go here in colmns 
-            if ($currentDate !== $localLogDate) {
-                echo '<tr class="date-row">';
-                echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
-                echo '<td></td>'; // Empty cell for netcall_activity
-                echo '<td>' . $totalStations . '</td>'; // Total stations
-                //echo '<td>' . $dailyTotals[$localLogDate]['stations'] . '</td>'; // Total stations
-                echo '<td></td>'; // Empty cell for frequency
-                echo '<td></td>'; // Empty cell for logclosedtime
-                echo '<td>' . $totalFirstLogins . '</td>'; // Total stations
-                //echo '<td>' . $dailyTotals[$localLogDate]['firstLogins'] . '</td>'; // Total first logins
-                echo '<td></td>'; // Empty cell for Volunteer_Time
-                echo '<td></td>'; // Empty cell for Open
-                echo '<td></td>'; // Empty cell for Close
-                echo '</tr>';
-                $currentDate = $localLogDate;
+    // Output the date and day of the week in a separate row for the start of a new day
+    $localLogDate = date('Y-m-d', strtotime($row['logdate']));
+    $dayOfWeek = date('l', strtotime($localLogDate));
+
+    if ($currentDate !== $localLogDate) {
+        // Find the corresponding daily totals for the current date
+        $totalStations = 0;
+        $totalFirstLogins = 0;
+
+        foreach ($dailyTotals as $dailyTotal) {
+            if ($dailyTotal['log_date'] === $localLogDate) {
+                $totalStations = $dailyTotal['total_stations'];
+                $totalFirstLogins = $dailyTotal['total_first_logins'];
+                break;
             }
+        }
+
+        echo '<tr class="date-row">';
+        echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
+        echo '<td></td>'; // Empty cell for netcall_activity
+        echo '<td style="text-align: center;">' . $totalStations . '</td>'; // Total stations
+        echo '<td></td>'; // Empty cell for frequency
+        echo '<td></td>'; // Empty cell for logclosedtime
+        echo '<td style="text-align: center;">' . $totalFirstLogins . '</td>'; // Total first logins
+        echo '<td></td>'; // Empty cell for Volunteer_Time
+        echo '<td></td>'; // Empty cell for Open
+        echo '<td></td>'; // Empty cell for Close
+        echo '</tr>';
+        $currentDate = $localLogDate;
+    }
             
             // The row color if there is one
             echo '<tr class="' . $THEcss . '">'; 
