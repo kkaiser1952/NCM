@@ -95,7 +95,8 @@ $sql = $db_found->prepare("
 SELECT
     DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) AS log_date,
     COUNT( callsign) AS total_stations,
-    SUM(firstLogin) AS total_first_logins
+    SUM(firstLogin) AS total_first_logins,
+    sum(timeonduty) AS v_time
 FROM
     NetLog
 WHERE
@@ -119,14 +120,13 @@ if (is_array($result) && !empty($result)) {
         $logDate = $row['log_date'];
         $totalStations = $row['total_stations'];
         $totalFirstLogins = $row['total_first_logins'];
+        $v_time = $row['v_time'];
         // Display the row data
-        //echo "$logDate, $totalStations, $totalFirstLogins<br>";
+        //echo "$logDate, $totalStations, $totalFirstLogins, $v_time<br>";
     }
 } else {
     //echo "No results found.";
 }
-
-
 
 // Grand totals SQL
 $sql = $db_found->prepare("
@@ -401,11 +401,13 @@ if (!empty($result)) {
         // Find the corresponding daily totals for the current date
         $totalStations = 0;
         $totalFirstLogins = 0;
+        $v_time = 0;
 
         foreach ($dailyTotals as $dailyTotal) {
             if ($dailyTotal['log_date'] === $localLogDate) {
                 $totalStations = $dailyTotal['total_stations'];
                 $totalFirstLogins = $dailyTotal['total_first_logins'];
+                $v_time = $dailyTotal['v_time'];
                 break;
             }
         }
@@ -417,6 +419,8 @@ if (!empty($result)) {
         echo '<td></td>'; // Empty cell for frequency
         echo '<td></td>'; // Empty cell for logclosedtime
         echo '<td style="text-align: center;">' . $totalFirstLogins . '</td>'; // Total first logins
+        
+        echo '<td style="text-align: center;">' . gmdate("H:i:s", $v_time) . '</td>'; // Total volunteer hours
         echo '<td></td>'; // Empty cell for Volunteer_Time
         echo '<td></td>'; // Empty cell for Open
         echo '<td></td>'; // Empty cell for Close
