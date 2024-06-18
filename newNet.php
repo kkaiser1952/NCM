@@ -10,19 +10,7 @@ require_once "WXdisplay.php";
 require_once "wx.php";
 //require_once "getFCCrecord.php";/* added 2019-11-24 */
 
-$q = strip_tags(substr($_POST["q"],0, 100)); 
-
-//echo ("$q");
-
-// // WA0TJT;MODES;Missouri Digital Emergency Service;80/40 Meters;0;Weekly Net;0
-// // W0GPS;W0KCN;KCNARES;146.790MHz, PL107.2Hz;0;Weekly 2 Meter Voice;0;;y
-
-//$q = strip_tags(substr("WA0TJT:W0KCN: KCNARES :146.790MHz, T 107.2Hz:0:Weekly 2 Meter Voice Net:0",0,100));
-//$q = strip_tags(substr("WA0BC;TE0ST;TE0ST For Testing Only;444.550Mhz(+) PL100.0Hz;0;Test;0"));
-
-//echo("$q");    //   0        1.      2.           3.            4.          5             6 7  8
-                // W0GPS  ;W0KCN. ;KCNARES ;146.790MHz, PL107.2Hz ;0 ; Weekly 2 Meter Voice; 0; ; y
-  // echo("$q");            
+$q = strip_tags(substr($_POST["q"],0, 100));             
 			    
 $parts		= explode(":",$q);
 $cs1 		= strtoupper($parts[0]);  // The NCS call sign
@@ -96,8 +84,6 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
                     $from = 'FCC';
 		}
 		
-		//include "insertToStations.php";  // added 2020-12-12 to update the stations table
-		
 	// 0 means it is NoT a pre-build, 1 means it is a pre-built
 	switch ($pb) {
       case 0;   // NOT a pre-built
@@ -157,12 +143,6 @@ $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 		$newList = $curr_sub_nets ."+". $newNetID;
 	}
 	
-	/* Removed 2021-08-21 no longer needed
-	if ("$from" == "FCC"){
-	    include "insertToStations.php";  // added 2020-12-12 to update the stations table
-	}*/
-	
 	/* push this back to the page */
 	echo $newNetID;
-	
 ?>
