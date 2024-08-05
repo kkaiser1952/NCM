@@ -5,7 +5,7 @@ require_once "dbConnectDtls.php";
 //$netID = strip_tags($_POST["q"]);
 
 $netID = intval($_POST["q"]);
-//$netID = 1658;
+//$netID = 12369;
 // you may have to increase the size of the GROUP_CONCAT if the number of callsigns is above 146
 // this is done with a SET GLOBAL group_concat_max_len=2048 this makes the max about 292 callsigns
 
@@ -25,10 +25,6 @@ $netID = intval($_POST["q"]);
 			  
 		  FROM NetLog
 		 WHERE netID = $netID
-	/*	   AND active NOT LIKE '%Out%' */
-	/*	 ORDER BY row_number  */
-	/*	 ORDER BY netcontrol DESC, dttm  */
-	/*	 ORDER BY FIELD(netcontrol, 'RELAY','PRM','2ND',Log','LSN','EM','PIO','SEC'), dttm */
 	
 		 ORDER BY CASE netcontrol
 		    WHEN 'PRM'   THEN 0
@@ -41,11 +37,9 @@ $netID = intval($_POST["q"]);
 		    WHEN 'PIO'   THEN 5
 		    WHEN 'SEC'   THEN 6
 		    WHEN 'RELAY' THEN 7
-
-		    else 99
-		    END,
-		     
-		    dttm		  
+		    else dttm
+		    END,    
+		    logdate	  
 	");
 	
 	$sql->execute();

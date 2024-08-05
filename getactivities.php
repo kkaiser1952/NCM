@@ -119,109 +119,94 @@ if ( $q <> 0 ){
     // This SQL pulls the appropriate records for the net requested
     // This also determines the sort order the rows appear in.
     if ($q <> 0) {   	  	 	  				  
-	        $g_query = "SELECT  recordID, netID, subNetOfID, id, ID, 
-	                            TRIM(callsign) AS callsign, tactical,  
-	        					TRIM(BOTH ' ' FROM Fname) as Fname, 
-	        					grid, traffic, latitude, longitude, netcontrol, 
-	        					activity, 
-	        					TRIM(BOTH ' ' FROM Lname) as Lname, 
-	        					email, active, comments, logdate as startdate,
-	        					TRIM(BOTH ' ' FROM creds) as creds, 
-	        					DATE_FORMAT(logdate, '%H:%i') as logdate, 
-	        					DATE_FORMAT(timeout, '%H:%i') as timeout, 
-	        					sec_to_time(timeonduty) as time, netcall, status, Mode, 
-	        					TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
-	        					TRIM(BOTH ' ' FROM county) as county, 
-	        					TRIM(BOTH ' ' FROM country) as country, 
-	        					TRIM(BOTH ' ' FROM city) as city,
-	        					TRIM(BOTH ' ' FROM state) as state,
-	        					TRIM(BOTH ' ' FROM district) as district, 
-	        					firstLogIn, phone, pb, tt, 
-	        					logdate =
-                                	CASE
-                                    	WHEN pb = 1 AND logdate = 0 THEN 1
-                                        ELSE 0
-                                    end as pbStat,
-	        				/*	logdate as pbStat, */
-	        					band, w3w,
-	        					TRIM(team) AS team, 
-	        					aprs_call,
-	        					home, ipaddress, cat, section,
-	        					DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
-	        					DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
-	        					row_number, aprs_call,
-	        					TRIM(facility) AS facility,
-                                onSite, delta
-	        				   
-					FROM  NetLog 
-					WHERE netID = $q
-		  			ORDER BY
-		  			  band, team,  /* Added 2024-03-21 */
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN 0
-                        WHEN netcontrol IN ('PRM','CMD','TL','EM') THEN 1
-                        ELSE 2
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
-                        WHEN netcontrol IN ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') THEN 1
-                        ELSE 4
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
-                        WHEN active = 'MISSING' THEN 3
-                        ELSE 80
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
-                        WHEN active = 'BRB' THEN 5
-                        ELSE 80
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
-                        WHEN active IN ('In-Out', 'Out', 'OUT') THEN 80
-                        ELSE NULL
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
-                        WHEN facility = 'Checkins with no assignment' THEN 95
-                        ELSE 6
-                      END,
-                      CASE
-                        WHEN netcall = 'MESN' THEN district
-                        ELSE NULL
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') THEN facility
-                        ELSE NULL
-                      END,
-                      CASE
-                        WHEN netcall LIKE '%sbbt202%' THEN team
-                        ELSE NULL
-                      END,
-                      CASE
-                        WHEN netcall IN ('KCHEART', 'ARHAB') AND (facility IN ('', 'Checkins with no assignment') AND active IN ('In-Out', 'Out', 'OUT', 'In', 'IN')) THEN 95
-                        ELSE NULL
-                      END,
-                      facility,
-                      logdate
+	        $g_query = 
+"SELECT  recordID, netID, subNetOfID, id, ID, 
+    TRIM(callsign) AS callsign, tactical,  
+	TRIM(BOTH ' ' FROM Fname) as Fname, 
+	grid, traffic, latitude, longitude, netcontrol, 
+	activity, 
+	TRIM(BOTH ' ' FROM Lname) as Lname, 
+	email, active, comments, logdate as startdate,
+	TRIM(BOTH ' ' FROM creds) as creds, 
+	DATE_FORMAT(logdate, '%H:%i') as logdate, 
+	DATE_FORMAT(timeout, '%H:%i') as timeout, 
+	sec_to_time(timeonduty) as time, netcall, status, Mode, 
+	TIMESTAMPDIFF(DAY, logdate , NOW()) as daydiff, 
+	TRIM(BOTH ' ' FROM county) as county, 
+	TRIM(BOTH ' ' FROM country) as country, 
+	TRIM(BOTH ' ' FROM city) as city,
+	TRIM(BOTH ' ' FROM state) as state,
+	TRIM(BOTH ' ' FROM district) as district, 
+	firstLogIn, phone, pb, tt, 
+	logdate =
+    	CASE
+        	WHEN pb = 1 AND logdate = 0 THEN 1
+            ELSE 0
+        end as pbStat,
 
-		  			     
-                /*         CASE when netcontrol in ('PRM','CMD','TL','EM') then 0 ELSE 1 END
-                        ,CASE when netcontrol in ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') then 1 ELSE 4 END
-                                           
-                        ,CASE when active = 'MISSING' then 3 ELSE 80 END
-                        ,CASE when active = 'BRB' then 5 ELSE 80 END
-                        ,CASE when active in('In-Out', 'Out', 'OUT') AND netcall <> 'KCHEART' then 80 END
-                                           
-                        ,CASE when facility in('Checkins with no assignment') then 95 else 6 END
-                        ,CASE when netcall in ('MESN') then district END 
-                        ,CASE when netcall in ('KCHEART') then facility END 
-                        ,CASE when netcall like '%sbbt202%' then team END
-                        ,CASE when netcall in ('KCHEART') AND (facility in('', 'Checkins with no assignment') AND active in('In-Out', 'Out', 'OUT', 'In', 'IN')) then 95 END
-                        ,facility,logdate
-                */
-                    ";  
+	band, w3w,
+	TRIM(team) AS team, 
+	aprs_call,
+	home, ipaddress, cat, section,
+	DATE_FORMAT(CONVERT_TZ(logdate,'+00:00','$tzdiff'), '%H:%i') as locallogdate,
+	DATE_FORMAT(CONVERT_TZ(timeout,'+00:00','$tzdiff'), '%H:%i') as localtimeout,
+	row_number, aprs_call,
+	TRIM(facility) AS facility,
+    onSite, delta
+			   
+	FROM  NetLog 
+	WHERE netID = $q
+		ORDER BY
+		  band, team,  /* Added 2024-03-21 */
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN 0
+        WHEN netcontrol IN ('PRM','CMD','TL','EM') THEN 1
+        ELSE 2
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+        WHEN netcontrol IN ('Log','2nd','LSN','PIO','SEC','RELAY','CMD') THEN 1
+        ELSE 4
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+        WHEN active = 'MISSING' THEN 3
+        ELSE 80
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+        WHEN active = 'BRB' THEN 5
+        ELSE 80
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+        WHEN active IN ('In-Out', 'Out', 'OUT') THEN 80
+        ELSE NULL
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN NULL
+        WHEN facility = 'Checkins with no assignment' THEN 95
+        ELSE 6
+      END,
+      CASE
+        WHEN netcall = 'MESN' THEN district
+        ELSE NULL
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') THEN facility
+        ELSE NULL
+      END,
+      CASE
+        WHEN netcall LIKE '%sbbt202%' THEN team
+        ELSE NULL
+      END,
+      CASE
+        WHEN netcall IN ('KCHEART', 'ARHAB') AND (facility IN ('', 'Checkins with no assignment') AND active IN ('In-Out', 'Out', 'OUT', 'In', 'IN')) THEN 95
+        ELSE NULL
+      END,
+      facility,
+      logdate
+";  
 		  			
     }else if ($q == 0) {
         
