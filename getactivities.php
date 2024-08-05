@@ -205,7 +205,7 @@ if ( $q <> 0 ){
         ELSE NULL
       END,
       facility,
-      logdate
+      logdate ASC
 ";  
 		  			
     }else if ($q == 0) {
