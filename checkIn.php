@@ -347,25 +347,26 @@ if ($Lname == "") {$Lname = "$Lname2";}
 			  	                             	
 		$num_rows = 0;   // Counter to color row backgrounds in loop below
 		
-		$g_query = "SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
-							latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
-							creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
-							sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta, city
-					  FROM  NetLog
-                     WHERE netID = $netID
-                     ORDER BY case 
-		  				when netcontrol in ('PRM','CMD','TL') then 0 
-		  				when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','RELAY') then 1
-		  				when active		= 'MISSING' then 2
-		  				when active		= 'BRB' then 2
-		  				when active 	in('In-Out', 'Out', 'OUT') then 3999
-		  				when netcall in ('MESN') then district 
-		  				when netcall in ('KCHEART') then facility
-		  				when netcall like '%SBBT%' then team
-		  				else logdate  
-		  				end,
-		  				logdate DESC
-                    ";
+		$g_query = "
+    SELECT  recordID, netID, Mode, subNetOfID, id, callsign, tactical, Fname, grid, traffic, 
+			latitude, longitude, netcontrol, activity, Lname, email, active, comments, frequency, 
+			creds, DATE_FORMAT(logdate, '%H:%i') as logdate, DATE_FORMAT(timeout, '%H:%i') as timeout,
+			sec_to_time(timeonduty) as time, county, state, district, netcall, firstLogIn, tt, w3w, home,phone, band, cat, section, row_number, team, aprs_call, country, facility, onSite, delta, city
+	  FROM  NetLog
+     WHERE netID = $netID
+     ORDER BY case 
+			when netcontrol in ('PRM','CMD','TL') then 0 
+			when netcontrol in('2nd','3rd','Log','LSN','PIO','EM','RELAY') then 1
+			when active		= 'MISSING' then 2
+			when active		= 'BRB' then 2
+			when active 	in('In-Out', 'Out', 'OUT') then 3999
+			when netcall in ('MESN') then district 
+			when netcall in ('KCHEART') then facility
+			when netcall like '%SBBT%' then team
+			else logdate  
+			end,
+			logdate DESC
+    ";
 				       
        include "dropdowns.php";
               
