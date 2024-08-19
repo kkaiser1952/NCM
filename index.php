@@ -121,8 +121,6 @@
         pointer-events: none;
     } */
 </style>
-	
-</style>
 
 </head>
 
