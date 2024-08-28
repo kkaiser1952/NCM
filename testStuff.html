@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- From: https://dev.to/safdarali/top-5-html-features-youre-not-using-but-should-be-2i0e?context=digest -->
+
+<html lang="en">
+<head>
+    <title>reference to the help file.</title>
+   
+</head>
+<body>
+    
+    <p>Price: <data value="49.99">$49.99</data></p>
+    
+    <br><br>
+    
+    <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+    <input type="number" id="a" value="0"> +
+    <input type="number" id="b" value="0">
+    = <output name="result" for="a b">0</output>
+</form>
+
+<br><br>
+      
+	<dialog id="myDialog">
+    <p>This is a modal dialog</p>
+    <button onclick="document.getElementById('myDialog').close()">Close</button>
+</dialog>
+
+<button onclick="document.getElementById('myDialog').showModal()">Open Dialog</button>
+
+<br><br>
+
+<details>
+    <summary>More Information</summary>
+    <p>This is the hidden content that will be revealed when you click on "More Information".</p>
+</details>
+
+</body>
+</html>
