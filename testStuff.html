@@ -12,8 +12,9 @@
     
     <br><br>
     
-    <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
-    <input type="number" id="a" value="0"> +
+    <!-- the * is for multiply, + for add, etc. -->
+    <form oninput="result.value=parseInt(a.value)*parseInt(b.value)">
+    <input type="number" id="a" value="0"> *
     <input type="number" id="b" value="0">
     = <output name="result" for="a b">0</output>
 </form>
