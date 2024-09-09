@@ -52,6 +52,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
     require_once "NCMStats.php";       // Get some stats
+    require_once "sidebar.php";
 ?>
 
 <html lang="en" >
@@ -521,7 +522,8 @@
 <!-- The job of showing and hiding the time line is done in the TimeLine() in NetManager.js -->
 		    <div class = "btn-group2">
     		    <button class="ckin1" onclick="checkIn()">Check In</button>
-    		    <button class="dropbtn2n" id="columnPickern">Show/Hide Columns</button>
+    		    <button class="dropbtn2n" id="columnPickern" onclick="openSidebar()">Show/Hide Columns</button>
+
     		 
     		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line</button>
     		    
@@ -706,6 +708,7 @@
 	<script src="js/cookieManagement.js"></script>
 	
 	
+	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
@@ -817,6 +820,8 @@ function isTabletDevice() {
 }
 
 </script>
+
+<script src="js/sidebar.js"></script>
 
 </body>
 </html>
