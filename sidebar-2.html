@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Column Display with Apply, Reset, and Close</title>
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: lightgrey; /* Light grey background */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #111;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #000;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .apply-btn, .sidebar .reset-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 25px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .sidebar .reset-btn {
+            background-color: #FF6347;
+            bottom: 10px;
+        }
+        /* Main content */
+        .main-content {
+            transition: margin-right 0.5s;
+            padding: 16px;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="columnSidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+    <h3>Select Columns</h3>
+    <label><input type="checkbox" value="col1" checked onchange="previewColumn('col1')"> Column 1</label><br>
+    <label><input type="checkbox" value="col2" checked onchange="previewColumn('col2')"> Column 2</label><br>
+    <label><input type="checkbox" value="col3" checked onchange="previewColumn('col3')"> Column 3</label><br>
+    <label><input type="checkbox" value="col4" checked onchange="previewColumn('col4')"> Column 4</label><br>
+
+    <button class="apply-btn" onclick="applyChanges()">Apply</button>
+    <button class="reset-btn" onclick="resetToDefault()">Reset to Default</button>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+    <button onclick="openSidebar()">Select Columns</button>
+    <table>
+        <thead>
+            <tr>
+                <th class="col1">Column 1</th>
+                <th class="col2">Column 2</th>
+                <th class="col3">Column 3</th>
+                <th class="col4">Column 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col1">Row 1, Col 1</td>
+                <td class="col2">Row 1, Col 2</td>
+                <td class="col3">Row 1, Col 3</td>
+                <td class="col4">Row 1, Col 4</td>
+            </tr>
+            <tr>
+                <td class="col1">Row 2, Col 1</td>
+                <td class="col2">Row 2, Col 2</td>
+                <td class="col3">Row 2, Col 3</td>
+                <td class="col4">Row 2, Col 4</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Function to open the sidebar
+function openSidebar() {
+    document.getElementById("columnSidebar").style.width = "250px";
+    document.querySelector(".main-content").style.marginRight = "250px";
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    document.getElementById("columnSidebar").style.width = "0";
+    document.querySelector(".main-content").style.marginRight = "0";
+}
+
+// Preview column changes before applying them
+function previewColumn(columnClass) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = elements[i].style.display === "none" ? "" : "none";
+    }
+}
+
+// Apply changes and store preferences in localStorage
+function applyChanges() {
+    let checkboxes = document.querySelectorAll('#columnSidebar input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        let columnClass = checkbox.value;
+        let isChecked = checkbox.checked;
+        saveUserPreference(columnClass, isChecked);
+    });
+    closeSidebar();
+}
+
+// Save the user's column visibility preferences in localStorage
+function saveUserPreference(columnClass, isVisible) {
+    let userGroup = getUserGroup(); // Function to get the current group from a cookie
+    localStorage.setItem(`${userGroup}_${columnClass}`, isVisible);
+    toggleColumnVisibility(columnClass, isVisible);
+}
+
+// Toggle column visibility based on user preference
+function toggleColumnVisibility(columnClass, isVisible) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = isVisible === "true" ? "" : "none";
+    }
+}
+
+// Reset to default columns (show all)
+function resetToDefault() {
+    let checkboxes = document.querySelectorAll('#columnSidebar input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.checked = true;
+        toggleColumnVisibility(checkbox.value, "true");
+        saveUserPreference(checkbox.value, "true"); // Save default state
+    });
+}
+
+// Load stored column preferences when the page loads
+window.onload = function() {
+    let userGroup = getUserGroup(); // Get the current group from cookie
+    let columns = ['col1', 'col2', 'col3', 'col4']; // Modify for more columns
+    columns.forEach(function(columnClass) {
+        let preference = localStorage.getItem(`${userGroup}_${columnClass}`);
+        if (preference !== null) {
+            toggleColumnVisibility(columnClass, preference);
+            document.querySelector('input[value="'+columnClass+'"]').checked = preference === "true";
+        }
+    });
+}
+
+// Get the user's current group (stored in a cookie)
+function getUserGroup() {
+    // Assuming the group is stored in a cookie called 'userGroup'
+    let groupCookie = document.cookie.split('; ').find(row => row.startsWith('userGroup='));
+    return groupCookie ? groupCookie.split('=')[1] : 'defaultGroup';
+}
+
+</script>
+
+</body>
+</html>

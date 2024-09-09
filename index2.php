@@ -116,16 +116,11 @@
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
 	 
 <style>
-	
+/* using this to prevent direct editiong to C24 the W3W column */
+  /*  .readonly {
+        pointer-events: none;
+    } */
 </style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
- 
-	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
-	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
-
 
 </head>
 
@@ -139,12 +134,12 @@
     
     <span id="version">
         <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<a href="#cc" rel="modal:open" id="version2">v8.03.11</a> 
+    	<!-- <a href="#cc" rel="modal:open" id="version2">v8.03.11 -->
+    	<a href="https://groups.io/g/NCM" target="_blank">About</a> 
     	<!--
     	window.open("", "version2",  strWindowFeatures);
     	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
         -->
-	
     </span> <!-- End of id version -->
 </div> 
 
@@ -228,15 +223,24 @@
 	<!--    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a> -->
 	    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
 	    
+	    <a href="AddRF-HolePOI.php" target="_blank" rel="noopener" id="PoiList" title="Create New RF Hole POI">Add RF Hole POI</a>
+	    
+	    
 	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">GeoDistance</a>
 
 	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
+	    
+	    <a href="https://vhf.dxview.org" id="mapdxView" target="_blank">DXView Propagation Map</a>
+	    
+	    <a href="https://www.swpc.noaa.gov" id="noaaSWX" target="_blank">NOAA Space Weather</a>
+	    
+	    <a href="https://spaceweather.com" id="SpaceWX" target="_blank">Space Weather</a>
  
 	    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
 		<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
 		<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
-		<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the active net">ICS-309</a>
-		<a rel="noopener" href="http://www.stlares.org/Forms/STL-ARES-radiogram.pdf" id="radiogram" target="_blank"> ARRL Fill &amp; Sign RadioGram </a>
+		<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the
+    		active net">ICS-309</a>
 		<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
         <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
 		<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
@@ -290,7 +294,6 @@
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	
 		<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p>
-		<p style="margin-bottom:14px; font-weight: bold;">This version calls netManager2.js for testing</p>
 	
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
             <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
@@ -518,7 +521,7 @@
 <!-- The job of showing and hiding the time line is done in the TimeLine() in NetManager.js -->
 		    <div class = "btn-group2">
     		    <button class="ckin1" onclick="checkIn()">Check In</button>
-    		    <button class="dropbtn2" id="columnPicker">Show/Hide Columns</button>
+    		    <button class="dropbtn2n" id="columnPickern">Show/Hide Columns</button>
     		 
     		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line</button>
     		    
@@ -550,7 +553,8 @@
 			
 			<input id="timelinehide" type="submit" value="Hide TimeLine" class="timelinehide" onClick="HideTimeLine();" />
 			
-			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" >
+			<!-- When the time line shows this is a specific search or numbers -->
+			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" />
 			
 			<button class="timelineBut3" type="button" id="runtls" 
 			style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black; "
@@ -660,13 +664,11 @@
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
 	
-   <script   src="https://code.jquery.com/jquery-3.6.4.min.js"   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="   crossorigin="anonymous"></script>
-   
-  	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
- 
-	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
-	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
-  <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
  
@@ -692,14 +694,17 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
 <!-- My javascript -->	
-	<script src="js/NetManager2.js"></script>         <!-- NCM Primary Javascrip 2018-1-18 -->
-	<script src="js/NetManager-p2.js"></script>	     <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+    <script src="js/NetManager-W3W-APRS.js"></script> <!-- Added on 2024-02-21 -->
+	<script src="js/NetManager.js"></script>          <!-- NCM Primary Javascrip 2018-1-18 -->
+	<script src="js/NetManager-p2.js"></script>	      <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
+	
 	
 	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
 	
 	<script src="js/grid.js"></script>
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
+	
 	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
@@ -721,6 +726,7 @@ $ ( function() {
         $( "#q-mark-in-circle" ).dialog( "open" );
     });
 }); // end click @ #q-mark-in-circle()
+
 
 
 (function() {
@@ -750,7 +756,7 @@ function checkCall() {
     const listOfCalls = new Set( ['ah6ez' ]);
     const isCallInSet = listOfCalls.has($("#callsign").val());
     
-    console.log('@753 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
     
     // If the callsign starting this net is in the above list then ask for his email to send him a message
     if (!isCallInSet == '') {
@@ -783,92 +789,32 @@ function removeSpaces(str) {
   return str.replace(/\s+/g, '');
 }
 
-
-</script>
-
-<script>
-    $(document).ready(function() {
-        
-    console.log('@792 now in ready');
-  // add event listener for net selection dropdown
-  $(document).on('change', '#actLog', function() {
-  var sortOrder = localStorage.getItem('my-sort-order');
-  console.log('@796 sortOrder:', sortOrder);
-
-  if (sortOrder !== null) {
-    console.log('@799 sortOrder is not null');
-    var rows = $('#actLog tbody > tr').get();
-    console.log('@801 rows:', rows);
-
-    rows.sort(function(a, b) {
-      var keyA = $(a).children('td').eq(sortOrder).text().toUpperCase();
-      var keyB = $(b).children('td').eq(sortOrder).text().toUpperCase();
-      if (keyA < keyB) return -1;
-      if (keyA > keyB) return 1;
-      return 0;
+document.addEventListener('keydown', function(event) {
+  if (isTabletDevice() && event.shiftKey && event.key === 'Shift') {
+    // Right shift key is being held down on a tablet device
+    // Perform the desired action or trigger the right-click event
+    event.preventDefault(); // Prevent the default shift key behavior if needed
+    
+    // Example: Trigger a custom right-click event on the target element
+    var targetElement = event.target;
+    var customRightClickEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      button: 2,
+      buttons: 2,
+      clientX: targetElement.getBoundingClientRect().left,
+      clientY: targetElement.getBoundingClientRect().top
     });
-
-    $.each(rows, function(index, row) {
-      $('#actLog').children('tbody').append(row);
-    });
-  } 
-});
-
-    // apply the stored sort order to the table if present
-    if (sortOrder) {
-      applySortOrder(sortOrder);
-    } else {
-      // apply default sort order to "Call Sign" column
-      applySortOrder('callsign asc');
-    }
-
-    // add event listener for right-click on table headers
-    $('th').contextmenu(function() {
-      // get the column name and sort direction
-      var columnName = $(this).attr('data-column-name');
-      var sortDirection = $(this).attr('data-sort-direction');
-
-      // toggle the sort direction
-      if (sortDirection === 'asc') {
-        sortDirection = 'desc';
-      } else {
-        sortDirection = 'asc';
-      }
-
-      // build the sort order string and apply it to the table
-      var sortOrder = columnName + ' ' + sortDirection;
-      applySortOrder(sortOrder);
-
-      // store the sort order in local storage
-      localStorage.setItem('my-sort-order', sortOrder);
-
-      // prevent default right-click behavior
-      return false;
-    });
-  
-
-  // function to apply the given sort order to the table
-  function applySortOrder(sortOrder) {
-    // add 'sorttable_sorted' class to the appropriate table header
-    $('th[data-column-name="' + sortOrder.split(' ')[0] + '"]')
-      .addClass('sorttable_sorted')
-      .siblings()
-      .removeClass('sorttable_sorted');
-
-    // remove the sort indicators from other table headers
-    $('th span').html('');
-
-    // add the sort indicator to the appropriate table header
-    var sortIndicator = sortOrder.split(' ')[1] === 'asc' ? '▴' : '▾';
-    $('th[data-column-name="' + sortOrder.split(' ')[0] + '"] span')
-      .html('&nbsp;' + sortIndicator);
-
-    // do the sorting here using the sortOrder string
-    // ...
+    targetElement.dispatchEvent(customRightClickEvent);
   }
 });
 
-
+function isTabletDevice() {
+  var userAgent = navigator.userAgent.toLowerCase();
+  console.log('User Agent:', userAgent); // Log the user agent string
+  return /ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(userAgent);
+}
 
 </script>
 

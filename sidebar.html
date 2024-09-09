@@ -3,121 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sliding Sidebar with Apply Button</title>
+    <title>Dynamic Column Display with Apply Button</title>
     <style>
-        /* Sidebar styling */
+        /* Sidebar styles */
         .sidebar {
             height: 100%;
             width: 0;
             position: fixed;
+            z-index: 1;
             top: 0;
             right: 0;
-            background-color: #333;
+            background-color: grey;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
         }
-
-        /* Sidebar content */
         .sidebar a {
             padding: 10px 15px;
             text-decoration: none;
-            font-size: 25px;
-            color: #f1f1f1;
+            font-size: 18px;
+            color: #818181;
             display: block;
             transition: 0.3s;
         }
-
         .sidebar a:hover {
             color: #f1f1f1;
-            background-color: #575757;
         }
-
-        /* Close button */
-        .close-btn {
+        .sidebar .close-btn {
             position: absolute;
             top: 0;
             right: 25px;
             font-size: 36px;
-            color: white;
+            margin-left: 50px;
         }
-
-        /* Main content */
-        #main-content {
-            transition: margin-right 0.5s;
-        }
-
-        /* Apply button styling */
-        .apply-btn {
+        .sidebar .apply-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 25px;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
             border: none;
             cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
         }
-
-        .apply-btn:hover {
-            background-color: #45a049;
+        /* Main content */
+        .main-content {
+            transition: margin-right 0.5s;
+            padding: 16px;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
 
-<!-- Main content area -->
-<div id="main-content">
-    <h2>Sliding Sidebar Demo</h2>
-    <button onclick="openSidebar()">Open Sidebar</button>
+<!-- Sidebar -->
+<div id="columnSidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+    <h3>Select Columns</h3>
+    <label><input type="checkbox" value="col1" checked onchange="previewColumn('col1')"> Column 1</label><br>
+    <label><input type="checkbox" value="col2" checked onchange="previewColumn('col2')"> Column 2</label><br>
+    <label><input type="checkbox" value="col3" checked onchange="previewColumn('col3')"> Column 3</label><br>
+    <label><input type="checkbox" value="col4" checked onchange="previewColumn('col4')"> Column 4</label><br>
+    <button class="apply-btn" onclick="applyChanges()">Apply</button>
 </div>
 
-<!-- Sidebar (initially hidden) -->
-<div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
-
-    <!-- Options using radio buttons -->
-    <div>
-        <label><input type="radio" name="option" value="Option 1"> Option 1</label><br>
-        <label><input type="radio" name="option" value="Option 2"> Option 2</label><br>
-        <label><input type="radio" name="option" value="Option 3"> Option 3</label><br>
-        <label><input type="radio" name="option" value="Option 4"> Option 4</label><br>
-    </div>
-
-    <!-- Apply/Finished button -->
-    <button class="apply-btn" onclick="applySelection()">Apply</button>
+<!-- Main content -->
+<div class="main-content">
+    <button onclick="openSidebar()">Select Columns</button>
+    <table>
+        <thead>
+            <tr>
+                <th class="col1">Column 1</th>
+                <th class="col2">Column 2</th>
+                <th class="col3">Column 3</th>
+                <th class="col4">Column 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col1">Row 1, Col 1</td>
+                <td class="col2">Row 1, Col 2</td>
+                <td class="col3">Row 1, Col 3</td>
+                <td class="col4">Row 1, Col 4</td>
+            </tr>
+            <tr>
+                <td class="col1">Row 2, Col 1</td>
+                <td class="col2">Row 2, Col 2</td>
+                <td class="col3">Row 2, Col 3</td>
+                <td class="col4">Row 2, Col 4</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <script>
-    /* Open the sidebar */
-    function openSidebar() {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main-content").style.marginRight = "250px"; /* Optional, pushes main content */
-    }
+// Function to open the sidebar
+function openSidebar() {
+    document.getElementById("columnSidebar").style.width = "250px";
+    document.querySelector(".main-content").style.marginRight = "250px";
+}
 
-    /* Close the sidebar */
-    function closeSidebar() {
-        document.getElementById("mySidebar").style.width = "0";
-        document.getElementById("main-content").style.marginRight = "0";
-    }
+// Function to close the sidebar
+function closeSidebar() {
+    document.getElementById("columnSidebar").style.width = "0";
+    document.querySelector(".main-content").style.marginRight = "0";
+}
 
-    /* Function to capture selected option and close sidebar */
-    function applySelection() {
-        // Find the selected radio button
-        let selectedOption = document.querySelector('input[name="option"]:checked');
-        
-        if (selectedOption) {
-            // Do something with the selected value (for now, log it to console)
-            console.log("Selected option: " + selectedOption.value);
-            
-            // Trigger any further action, like sending data to the server (example)
-            // performAjaxRequest(selectedOption.value); // Placeholder for your server-side logic
-            
-            // Close the sidebar
-            closeSidebar();
-        } else {
-            alert("Please select an option before applying.");
+// Preview column changes before applying them
+function previewColumn(columnClass) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = elements[i].style.display === "none" ? "" : "none";
+    }
+}
+
+// Apply changes and store preferences in localStorage
+function applyChanges() {
+    let checkboxes = document.querySelectorAll('#columnSidebar input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        let columnClass = checkbox.value;
+        let isChecked = checkbox.checked;
+        saveUserPreference(columnClass, isChecked);
+    });
+    closeSidebar();
+}
+
+// Save the user's column visibility preferences in localStorage
+function saveUserPreference(columnClass, isVisible) {
+    localStorage.setItem(columnClass, isVisible);
+    toggleColumnVisibility(columnClass, isVisible);
+}
+
+// Toggle column visibility based on user preference
+function toggleColumnVisibility(columnClass, isVisible) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = isVisible === "true" ? "" : "none";
+    }
+}
+
+// Load stored column preferences when the page loads
+window.onload = function() {
+    let columns = ['col1', 'col2', 'col3', 'col4'];
+    columns.forEach(function(columnClass) {
+        let preference = localStorage.getItem(columnClass);
+        if (preference !== null) {
+            toggleColumnVisibility(columnClass, preference);
+            document.querySelector('input[value="'+columnClass+'"]').checked = preference === "true";
         }
-    }
+    });
+}
+
 </script>
 
 </body>

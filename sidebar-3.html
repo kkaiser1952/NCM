@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Column Display with Reset, Apply, and Close</title>
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #f0f0f0; /* Changed to light grey */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+        .sidebar .close-btn, .sidebar .apply-btn, .sidebar .reset-btn {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: 10px 0;
+        }
+        /* Close button */
+        .sidebar .close-btn {
+            background-color: #d9534f; /* Red */
+        }
+        /* Main content */
+        .main-content {
+            transition: margin-right 0.5s;
+            padding: 16px;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="columnSidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+    <h3>Select Columns</h3>
+    <label><input type="checkbox" value="col1" checked onchange="previewColumn('col1')"> Column 1</label><br>
+    <label><input type="checkbox" value="col2" checked onchange="previewColumn('col2')"> Column 2</label><br>
+    <label><input type="checkbox" value="col3" checked onchange="previewColumn('col3')"> Column 3</label><br>
+    <label><input type="checkbox" value="col4" checked onchange="previewColumn('col4')"> Column 4</label><br>
+    <button class="apply-btn" onclick="applyChanges()">Apply</button>
+    <button class="reset-btn" onclick="resetToDefault()">Reset to Default</button>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+    <button onclick="openSidebar()">Select Columns</button>
+    <table>
+        <thead>
+            <tr>
+                <th class="col1">Column 1</th>
+                <th class="col2">Column 2</th>
+                <th class="col3">Column 3</th>
+                <th class="col4">Column 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col1">Row 1, Col 1</td>
+                <td class="col2">Row 1, Col 2</td>
+                <td class="col3">Row 1, Col 3</td>
+                <td class="col4">Row 1, Col 4</td>
+            </tr>
+            <tr>
+                <td class="col1">Row 2, Col 1</td>
+                <td class="col2">Row 2, Col 2</td>
+                <td class="col3">Row 2, Col 3</td>
+                <td class="col4">Row 2, Col 4</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Function to open the sidebar
+function openSidebar() {
+    document.getElementById("columnSidebar").style.width = "250px";
+    document.querySelector(".main-content").style.marginRight = "250px";
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    document.getElementById("columnSidebar").style.width = "0";
+    document.querySelector(".main-content").style.marginRight = "0";
+}
+
+// Preview column changes before applying them
+function previewColumn(columnClass) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = elements[i].style.display === "none" ? "" : "none";
+    }
+}
+
+// Apply changes and store preferences in localStorage (or cookies if needed)
+function applyChanges() {
+    let checkboxes = document.querySelectorAll('#columnSidebar input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        let columnClass = checkbox.value;
+        let isChecked = checkbox.checked;
+        saveUserPreference(columnClass, isChecked);
+    });
+    closeSidebar();
+}
+
+// Save the user's column visibility preferences in localStorage
+function saveUserPreference(columnClass, isVisible) {
+    localStorage.setItem(columnClass, isVisible);
+    toggleColumnVisibility(columnClass, isVisible);
+}
+
+// Toggle column visibility based on user preference
+function toggleColumnVisibility(columnClass, isVisible) {
+    let elements = document.getElementsByClassName(columnClass);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = isVisible === "true" ? "" : "none";
+    }
+}
+
+// Load stored column preferences when the page loads
+window.onload = function() {
+    let columns = ['col1', 'col2', 'col3', 'col4'];
+    columns.forEach(function(columnClass) {
+        let preference = localStorage.getItem(columnClass);
+        if (preference !== null) {
+            toggleColumnVisibility(columnClass, preference);
+            document.querySelector('input[value="'+columnClass+'"]').checked = preference === "true";
+        }
+    });
+}
+
+// Reset to default columns (you can change default visibility here)
+function resetToDefault() {
+    let columns = {
+        col1: true,
+        col2: true,
+        col3: true,
+        col4: true
+    };
+    Object.keys(columns).forEach(function(columnClass) {
+        localStorage.setItem(columnClass, columns[columnClass]);
+        toggleColumnVisibility(columnClass, columns[columnClass]);
+        document.querySelector('input[value="'+columnClass+'"]').checked = columns[columnClass];
+    });
+}
+
+</script>
+
+</body>
+</html>
