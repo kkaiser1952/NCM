@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Sidebar with Apply Button</title>
+    <style>
+        /* Sidebar styling */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        /* Sidebar content */
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+            background-color: #575757;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            color: white;
+        }
+
+        /* Main content */
+        #main-content {
+            transition: margin-right 0.5s;
+        }
+
+        /* Apply button styling */
+        .apply-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .apply-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main content area -->
+<div id="main-content">
+    <h2>Sliding Sidebar Demo</h2>
+    <button onclick="openSidebar()">Open Sidebar</button>
+</div>
+
+<!-- Sidebar (initially hidden) -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+
+    <!-- Options using radio buttons -->
+    <div>
+        <label><input type="radio" name="option" value="Option 1"> Option 1</label><br>
+        <label><input type="radio" name="option" value="Option 2"> Option 2</label><br>
+        <label><input type="radio" name="option" value="Option 3"> Option 3</label><br>
+        <label><input type="radio" name="option" value="Option 4"> Option 4</label><br>
+    </div>
+
+    <!-- Apply/Finished button -->
+    <button class="apply-btn" onclick="applySelection()">Apply</button>
+</div>
+
+<script>
+    /* Open the sidebar */
+    function openSidebar() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main-content").style.marginRight = "250px"; /* Optional, pushes main content */
+    }
+
+    /* Close the sidebar */
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main-content").style.marginRight = "0";
+    }
+
+    /* Function to capture selected option and close sidebar */
+    function applySelection() {
+        // Find the selected radio button
+        let selectedOption = document.querySelector('input[name="option"]:checked');
+        
+        if (selectedOption) {
+            // Do something with the selected value (for now, log it to console)
+            console.log("Selected option: " + selectedOption.value);
+            
+            // Trigger any further action, like sending data to the server (example)
+            // performAjaxRequest(selectedOption.value); // Placeholder for your server-side logic
+            
+            // Close the sidebar
+            closeSidebar();
+        } else {
+            alert("Please select an option before applying.");
+        }
+    }
+</script>
+
+</body>
+</html>
