@@ -115,6 +115,7 @@
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
     <link rel="stylesheet" type="text/css" href="css/bubbles.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
 	 
 <style>
 /* using this to prevent direct editiong to C24 the W3W column */
