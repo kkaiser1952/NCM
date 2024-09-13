@@ -1,26 +1,21 @@
 <?php
-    // locations_w3w.php is designed to work much like its counter part locations_APRS.php but with W3W as input by the logger.
-    // It is called by the ajax() in NetManager-W3W-APRS.js
+// locations_W3W.php
+// locations_w3w.php is designed to work much like its counter part locations_APRS.php but with W3W as input by the logger.
+// It is called by the ajax() in NetManager-W3W-APRS.js
+// UPDATED: 2024-09-13
     
-header('Content-Type: application/json'); 
-    
-echo "<script>console.log('16) Now In locations_W3W.php: ');</script>";
-    
-// Error handling function
-function customError($errno, $errstr) {
-    echo "<script>console.log('18) Error: [$errno] $errstr');</script>";
-}
-// Set error handler
-set_error_handler("customError");  
-        
-    require_once "dbConnectDtls.php";
-    require_once "w3w_functions.php";
-    require_once "getCityStateFromLatLng.php";
-    require_once "config.php";
-    
+header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
+require_once "dbConnectDtls.php";
+require_once "w3w_functions.php";
+require_once "getCityStateFromLatLng.php";
+require_once "config.php";
+require_once "config2.php";
+
 $response = ['success' => false, 'message' => '', 'error' => ''];
 
-    
 try {
     $aprs_call = isset($_GET["aprs_call"]) ? filter_input(INPUT_GET, 'aprs_call', FILTER_SANITIZE_STRING) : '';
     $recordID = isset($_GET["recordID"]) ? filter_input(INPUT_GET, 'recordID', FILTER_SANITIZE_NUMBER_INT) : '';
@@ -35,15 +30,10 @@ try {
     // Get coordinates from What3words
     list($lat, $lng) = getCoordinatesFromW3W($what3words);
 
-    // Check if coordinates are valid
-    if (empty($lat) || empty($lng)) {
-        throw new Exception('Invalid What3Words input');
-    }
-
     $thislatlng = "$lat, $lng";
 
     // Now get the crossroads data
-    include('getCrossRoads.php');
+    require_once 'getCrossRoads.php';
     $crossroads = getCrossRoads($lat, $lng);
 
     if ($crossroads === false) {
@@ -51,11 +41,11 @@ try {
     }
 
     // Now get the gridsquare
-    include('GetGridSquare.php');
+    require_once 'GetGridSquare.php';
     $grid = getgridsquare($lat, $lng);
 
     // Now get the City, State, and County
-    list($state, $county, $city) = reverseGeocode($lat, $lng, $_GOOGLE_MAPS_API_KEY);
+    list($state, $county, $city) = reverseGeocode($lat, $lng, $config['google_maps_api_key']);
 
     $deltax = 'LOC&#916:W3W '.$objName.' : '.$W3Wcomment.' : '.$what3words.' : '.$crossroads.' : ('.$thislatlng.')';
 
@@ -93,6 +83,7 @@ try {
         $db_found->rollBack();
     }
     $response['error'] = $e->getMessage();
+    error_log('Error in locations_W3W.php: ' . $e->getMessage());
 }
 
 echo json_encode($response);
