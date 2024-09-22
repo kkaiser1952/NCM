@@ -2,6 +2,7 @@
     // objMarkers.php
     // Updated: to remove latlng in SQL
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
+    // Updated: 2024-09-22
     
     ini_set('display_errors',1); 
     error_reporting (E_ALL ^ E_NOTICE);
@@ -29,41 +30,44 @@ SELECT
     CONCAT(callsign, 'OBJ') AS callOBJ,
     COUNT(callsign) AS numofcs,
     CONCAT(callsign, 'arr') AS allnameBounds,
-
     CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', 
-    GROUP_CONCAT(
-        '[', 
-        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', 1), 
-        ',', 
-        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', -1), 
-        ']'
-    ), ']);') AS objBounds,
-
+        CONCAT(
+            '[', 
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', 1),
+            ',',
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', -1),
+            '], [',
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', 1),
+            ',',
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', -1),
+            ']'
+        ),
+    ']);') AS objBounds,
     CONCAT('[', 
     GROUP_CONCAT(
-        '[', 
-        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', 1), 
-        ',', 
-        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(comment, '(', -1), ')', ''), ',', -1), 
-        ']'
-    ), ']') AS arrBounds
-
-FROM (
-    SELECT callsign, `comment`, timestamp
-    FROM TimeLog
-    WHERE netID = $q
-        AND callsign <> 'GENCOMM'
-        AND (
-        (`comment` LIKE 'LOC&#916:APRS%') 
-            OR (`comment` LIKE 'LOC&#916:W3W%')
+        CONCAT(
+            '[', 
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(`comment`, '(', -1), ')', ''), ',', 1),
+            ',',
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(`comment`, '(', -1), ')', ''), ',', -1),
+            ']'
         )
-        AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
-        AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
-        AND uniqueID <> 382982
-    ORDER BY timestamp
-) AS filtered_data
+        ORDER BY timestamp
+        SEPARATOR ','
+    ),
+    ']') AS arrBounds
+FROM TimeLog
+WHERE netID = $q -- Placeholder for netID
+    AND callsign <> 'GENCOMM'
+    AND (
+    (`comment` LIKE 'LOC&#916:APRS%') 
+        OR (`comment` LIKE 'LOC&#916:W3W%')
+    )
+    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+    AND uniqueID <> 382982
 GROUP BY callsign
-ORDER BY callsign, MIN(timestamp);
+ORDER BY callsign;
 
 ");
         
