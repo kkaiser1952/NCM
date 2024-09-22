@@ -28,21 +28,18 @@
 SELECT
     callsign,
     CONCAT(callsign, 'OBJ') AS callOBJ,
-    COUNT(callsign) AS numofcs,
+    COUNT(*) AS numofcs,
     CONCAT(callsign, 'arr') AS allnameBounds,
-    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([', 
-        CONCAT(
-            '[', 
-            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', 1),
-            ',',
-            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', -1),
-            '], [',
-            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', 1),
-            ',',
-            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', -1),
-            ']'
-        ),
-    ']);') AS objBounds,
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([',
+        '[',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', 1),
+        ',',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', -1),
+        '],[',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', 1),
+        ',',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', -1),
+        ']]);') AS objBounds,
     CONCAT('[', 
     GROUP_CONCAT(
         CONCAT(
@@ -223,25 +220,7 @@ foreach($db_found->query($sql3) as $row) {
         ${'comm' . ($i + 1)} = $variableArray[$i];
     }
     
-    // Output the variables
-    
- /*   echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
-    echo "comm1: $comm1 <br>";          // Entered comment
-    echo "comm2: $comm2 <br>";          // From APRS comment 
-    echo "comm3: $comm3 <br>";          // What3Words
-    echo "comm4: $comm4 <br>";          // Crossroad
-    echo "comm5: $comm5 <br>";          // koords
-    echo "<br>";
- */   
- /* Smple output of above echo
-    aprs_call: 1134 WA0TJT-1 
-    comm1: harden                       // location give by station
-    comm2: Keith and Deb from KCMO      // output by D700 radio
-    comm3: ///chum.hamstrings.conspire  // API output of W3W from lat/lng
-    comm4: N Harden St & NW 58th St     // Cross streets from API
-    comm5: 39.19900,-94.60667;          // Latitude by APRS from beacon
- */
-    // this will be the count of markers at the same lat/lng for tilting
+     // this will be the count of markers at the same lat/lng for tilting
     // the marker on the map for duplicates   the rotational angle 
     $dup = 0;
         //if(id==144) {$dup =50;} // what is this?
@@ -450,10 +429,6 @@ minLat      maxLat      minLng      maxLng      callsign
         } // end of if loop
     $cmn++;
     }; // end foreach loop
-    
-    //echo "KornerList: $KornerList";
-    
-       //echo "objMarkers: "$objMarkers";
       
     $allPoints = rtrim($allPoints,",");
        //echo "allPoints:<br> $allPoints";
@@ -474,7 +449,7 @@ minLat      maxLat      minLng      maxLng      callsign
       //echo "$OBJCornerList";
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     //echo "$OBJMarkerList";
+     echo "$OBJMarkerList";
      //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>

@@ -1,9 +1,11 @@
 <?php
-    
+    // objMarkers.php
+    // Updated: to remove latlng in SQL
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
+    // Updated: 2024-09-22
     
-    //ini_set('display_errors',1); 
-    //error_reporting (E_ALL ^ E_NOTICE);
+    ini_set('display_errors',1); 
+    error_reporting (E_ALL ^ E_NOTICE);
 			
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -19,35 +21,54 @@
     require_once "GridSquare.php";
 
    //$q = 10684;
-      // this code seems to work for the arrBounds but not for the objBounds 
-   $sql1 = ("SELECT callsign,
+   
+   //REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
+   
+   $sql1 = ("
+SELECT
+    callsign,
+    CONCAT(callsign, 'OBJ') AS callOBJ,
+    COUNT(*) AS numofcs,
     CONCAT(callsign, 'arr') AS allnameBounds,
-    
-    CONCAT('var ', callsign,
-        'OBJ = L.latLngBounds([',GROUP_CONCAT('[',
-            SUBSTRING_INDEX(SUBSTRING_INDEX(COMMENT, '(', -1),
-                ')',1),']'),']);') AS objBounds,
-    CONCAT('[',GROUP_CONCAT('[',
-            SUBSTRING_INDEX(
-                SUBSTRING_INDEX(COMMENT, '(', -1),
-                ')',1),']'),'],') AS arrBounds
-    FROM
-        (SELECT callsign, comment, timestamp
-           FROM TimeLog
-          WHERE netID = $q
-            AND RIGHT(COMMENT, 1) = ')'
-    	    AND callsign <> 'GENCOMM'
-            
-            AND (comment LIKE 'LOC&#916:W3W%' OR comment LIKE 'LOC&#916:APRS%')
-    	
-          ORDER BY
-            TIMESTAMP) AS filtered_data
-          GROUP BY callsign
-          ORDER BY callsign, MIN(TIMESTAMP)
-   "); // END sql1
+    CONCAT('var ', callsign, 'OBJ = L.latLngBounds([',
+        '[',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', 1),
+        ',',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MIN(`comment`), '(', -1), ')', ''), ',', -1),
+        '],[',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', 1),
+        ',',
+        SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(MAX(`comment`), '(', -1), ')', ''), ',', -1),
+        ']]);') AS objBounds,
+    CONCAT('[', 
+    GROUP_CONCAT(
+        CONCAT(
+            '[', 
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(`comment`, '(', -1), ')', ''), ',', 1),
+            ',',
+            SUBSTRING_INDEX(REPLACE(SUBSTRING_INDEX(`comment`, '(', -1), ')', ''), ',', -1),
+            ']'
+        )
+        ORDER BY timestamp
+        SEPARATOR ','
+    ),
+    ']') AS arrBounds
+FROM TimeLog
+WHERE netID = $q -- Placeholder for netID
+    AND callsign <> 'GENCOMM'
+    AND (
+    (`comment` LIKE 'LOC&#916:APRS%') 
+        OR (`comment` LIKE 'LOC&#916:W3W%')
+    )
+    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+    AND uniqueID <> 382982
+GROUP BY callsign
+ORDER BY callsign;
+
+");
         
-        // The output of this echo has LOCΔ instead of LOC&#916 but it works
-         echo "First sql:<br> $sql1 <br><br>";
+        //echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -69,7 +90,7 @@
          
      } // end of foreach loop 
      
-     //echo "@72 objMiddle: $objMiddle <br> allPoints: $allPoints <br>objSE: $objSE";
+     //echo $objMiddle;
      
      // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
@@ -77,30 +98,35 @@
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
-        $sql2 = ("SELECT 
-                    CONCAT(
+        $sql2 = ("SELECT CONCAT(
                     'var ',
                     callsign,
                     'latlngs = [',
                     GROUP_CONCAT(
-                    CONCAT('[', SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1),
-                    ',',
-                    SUBSTRING_INDEX(SUBSTRING_INDEX(comment, ',', -1), ')', 1),
-                    ']')
+                        CONCAT(
+                            '[',
+                            SUBSTRING(REPLACE(SUBSTRING(comment, -18, 17), ')', ''), 2),
+                            ',',
+                            SUBSTRING(REPLACE(SUBSTRING(comment, -9, 8), ')', ''), 2),
+                            ']'
+                        )
                     ),
                     ']'
-                    ) AS allKoords
-                    FROM TimeLog
-                    WHERE netID = $q
-                    AND callsign <> 'GENCOMM'
-                    AND RIGHT(comment, 1) = ')'
-                    AND (comment LIKE 'LOC&#916:W3W%' OR comment LIKE 'LOC&#916:APRS%')
-                    GROUP BY callsign
-                    ORDER BY timestamp ASC
-        ");
+                ) AS allKoords
+                FROM TimeLog
+                WHERE netID = $q
+                AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+                GROUP BY callsign
+                ORDER BY timestamp ASC;
+
+                ");
                 
-            // The output of this echo has LOCΔ instead of LOC&#916 but it works
-            //echo "<br><br>sql2:<br> $sql2 <br><br>";
+            //echo "<br><br>Second sql2:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
@@ -108,48 +134,41 @@
              
              // all the cords for each callsign
         //echo "alltheKoords:<br>$alltheKoords<br><br>";
-        
-        /* Examples of comments being read
-            LOC&#916:W3W: mice.beak.glimmer -> Cross Roads: N Ames Ave &amp; NW 60th Ct (39.202822,-94.602654)
-            
-            LOC&#916:W3W: easily.hardest.ended -> Cross Roads: N Ames Ave &amp; NW 60th Ct (39.202903,-94.602897)
-            
-            LOC&#916:APRS OBJ:: Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267)
-            
-            LOC&#916:APRS COM:: Keith and Deb from KCMO : ///mice.beak.glimmer : N Ames Ave & NW 60th Ct : (39.20283,-94.60267)
-        */
       
         $sql3 = ("SELECT callsign, timestamp, comment, counter,
-            CASE
-                WHEN  (comment LIKE 'LOC&#916:W3W:%') THEN 'W3W'
-                WHEN  (comment LIKE 'LOC&#916:APRS%') THEN 'APRS'
-                ELSE null
-            END AS 'objType',
-            
-                SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ',', 1) AS lat,
-                SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1), ',', -1)  AS lng,
-            
-                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) 
-                    AS koords
-            
-            FROM (SELECT callsign, timestamp, comment,
-                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lat_sub,
-                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ')', 1) as lng_sub,
-                
-                @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
-                @prev_c := callsign
-                
-             FROM TimeLog, (select @counter := 0, @prev_c := null) init
-            WHERE netID = $q 
-              AND callsign <> 'GENCOMM'
-              AND comment LIKE '%)'
-              AND (comment LIKE 'LOC&#916:W3W:%' OR comment LIKE 'LOC&#916:APRS%')
-            ORDER BY callsign, timestamp ASC
-            ) s         
+                	CASE 
+                    	WHEN comment LIKE '%W3W OBJ::%'  THEN  'W3W'
+                    	WHEN comment LIKE '%W3W COM::%'  THEN  'W3W'
+                        WHEN comment LIKE '%APRS OBJ::%' THEN 'APRS' 
+                        WHEN comment LIKE '%APRS COM::%' THEN 'APRS' 
+                    END AS 'objType',           
+	              
+	                SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1) AS lat,
+	                
+                    REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
+                    
+                    CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1), ',', 
+                    REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS koords
+
+               FROM (
+             SELECT callsign, timestamp, comment,  
+              	    SUBSTRING(comment, -18, 8), SUBSTRING(comment, -9, 8),
+                        @counter := if (callsign = @prev_c, @counter + 1, 1) counter,
+                        @prev_c := callsign
+               FROM TimeLog, (select @counter := 0, @prev_c := null) init
+              WHERE netID = $q        
+                AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+              ORDER BY callsign, timestamp ASC) s         
           ");
           
-          // when seen in echo it comes out as LOCΔ:W3W instead of LOC&#916:W3W%
-        //echo "<br><br>3rd sql:<br> $sql3 <br><br>";
+          // AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
+          // above working well
+        //echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -161,8 +180,11 @@ foreach($db_found->query($sql3) as $row) {
     $callsign = "$row[callsign]";  
     $objType  = "$row[objType]";
     $comment  = "$row[comment];"; 
+    $lat      = "$row[lat];";
+    $lng      = "$row[lng];";
     
-    //$comment = "LOCΔ:APRS OBJ::wa0tjt-1 : 1 Driveway : Keith and Deb from KCMO : ///mice.beak.glimmer & N Ames Ave & NW 60th Ct : 39.20283,-94.60267";
+    //echo "lat: $lat  lng: $lng<br>";
+    //echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>/////////<br>";
     
     switch ($objType) {
     case "W3W":
@@ -198,25 +220,7 @@ foreach($db_found->query($sql3) as $row) {
         ${'comm' . ($i + 1)} = $variableArray[$i];
     }
     
-    // Output the variables
-    
- /*   echo "<br>aprs_call:  $aprs_call <br>";  // Aprs_call
-    echo "comm1: $comm1 <br>";          // Entered comment
-    echo "comm2: $comm2 <br>";          // From APRS comment 
-    echo "comm3: $comm3 <br>";          // What3Words
-    echo "comm4: $comm4 <br>";          // Crossroad
-    echo "comm5: $comm5 <br>";          // koords
-    echo "<br>";
- */   
- /* Smple output of above echo
-    aprs_call: 1134 WA0TJT-1 
-    comm1: harden                       // location give by station
-    comm2: Keith and Deb from KCMO      // output by D700 radio
-    comm3: ///chum.hamstrings.conspire  // API output of W3W from lat/lng
-    comm4: N Harden St & NW 58th St     // Cross streets from API
-    comm5: 39.19900,-94.60667;          // Latitude by APRS from beacon
- */
-    // this will be the count of markers at the same lat/lng for tilting
+     // this will be the count of markers at the same lat/lng for tilting
     // the marker on the map for duplicates   the rotational angle 
     $dup = 0;
         //if(id==144) {$dup =50;} // what is this?
@@ -232,6 +236,9 @@ foreach($db_found->query($sql3) as $row) {
         $allcallList .= "'$row[callsign]',";
                
         $gs = gridsquare($row[lat], $row[lng]); 
+        //$gs = gridsquare($row[koords]);
+        
+        //echo "<br>gs: $gs<br>";
                 
         $icon = "";
         
@@ -264,6 +271,7 @@ foreach($db_found->query($sql3) as $row) {
                  <br>
                     Station Comment:<br>$comm1
                  <br>
+               
                  </div>
                 ";          
                 
@@ -273,42 +281,55 @@ foreach($db_found->query($sql3) as $row) {
                  </div>
                  <div class='xx'>
                     Captured:<br>$row[timestamp]
+                <br><br>
+                    objMarkers.php
                  </div>
                 ";       
                      
     //echo "<br>div1:<br> $div1 <br><br>";   
     //echo "<br>div2: $div1 <br><br>";
    
-        $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
-                            rotationAngle: $dup, 
-                            rotationOrigin: 'bottom', 
-                            opacity: 0.75,
-                            contextmenu: true, 
-                            contextmenuWidth: 140,
-                            contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
-                            
-                            icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
-                            title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();                    
-                            
-                            $('Objects'._icon).addClass('objmrkr');    
-                            $('Objects'._icon).addClass('huechange');                                          
-                       "; // End of objMarkers
-    //echo "objMarkers:<br> $objMarkers <br>";
+    if (isset($row['lat']) && !empty($row['lat']) && isset($row['lng']) && !empty($row['lng'])) {
+    $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
+        rotationAngle: $dup,
+        rotationOrigin: 'bottom',
+        opacity: 0.75,
+        contextmenu: true,
+        contextmenuWidth: 140,
+        contextmenuItems: [{ text: 'Click here to add mileage circles',callback: circleKoords}],
+        icon: L.icon({iconUrl: '$markername', iconSize: [32, 34]}),
+        title:`marker_$markNO`}).addTo(fg).bindPopup(`$div1<br><br>$div2`).openPopup();
+
+    $('Objects'._icon).addClass('objmrkr');
+    $('Objects'._icon).addClass('huechange');
+    ";
+    }
 } // end foreach
 
 
  // Create corner markers for each callsign that has objects.
-    $sql4 = ("SELECT  MIN(SUBSTRING(comment, -18, 8)) as minLat,
-	                 MAX(SUBSTRING(comment, -18, 8)) as maxLat,
-	                 MIN(SUBSTRING(comment, -9, 8))  as minLng,
-	                 MAX(SUBSTRING(comment, -9, 8))  as maxLng,                 
+    $sql4 = ("SELECT  
+                    MIN(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1)) AS minLat,
+                    MAX(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', 1)) AS maxLat,
+	                
+                    MIN(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS minLat,
+                    MAX(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '')) AS maxLat,
+       
 	                 callsign
 	            FROM TimeLog
 	           WHERE netID = $q
-                 AND comment LIKE '%OBJ::%' 
+                  AND (
+                    (`comment` LIKE 'LOC&#916:APRS%') 
+                        OR (`comment` LIKE 'LOC&#916:W3W%')
+                    )
+                    AND `comment` NOT LIKE 'LOC&#916:APRS MOV::%'
+                    AND `comment` NOT LIKE 'LOC&#916:W3W MOV::%'
+                 
                GROUP BY callsign
                ORDER BY callsign
            ");
+           
+           //  AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%') 
            
     //echo "<br><br>Fourth sql:<br> $sql4 <br>";
     
