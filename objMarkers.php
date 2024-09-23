@@ -1,6 +1,5 @@
 <?php
-// objMarkers.php
-// Written: 2017
+    // objMarkers.php
     // Updated: to remove latlng in SQL
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
     // Updated: 2024-09-22
@@ -450,7 +449,7 @@ minLat      maxLat      minLng      maxLng      callsign
       //echo "$OBJCornerList";
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     echo "$OBJMarkerList";
+     //echo "$OBJMarkerList";
      //var OBJMarkerList = var OBJMarkerList = L.layerGroup([W0DLK01,W0DLK02,W0DLK03,W0DLK04,WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,]);
         
 ?>

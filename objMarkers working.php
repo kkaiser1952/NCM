@@ -20,7 +20,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   //$q = 10684;
+   $q = 12699;
    
    //REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
    
@@ -94,7 +94,7 @@ ORDER BY callsign;
      
      // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
-     //echo "oByers: $oByers";
+     echo "oByers: $oByers<br><br>";
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
@@ -133,7 +133,7 @@ ORDER BY callsign;
             }
              
              // all the cords for each callsign
-        //echo "alltheKoords:<br>$alltheKoords<br><br>";
+        echo "alltheKoords:<br>$alltheKoords<br><br>";
       
         $sql3 = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
@@ -183,8 +183,8 @@ foreach($db_found->query($sql3) as $row) {
     $lat      = "$row[lat];";
     $lng      = "$row[lng];";
     
-    //echo "lat: $lat  lng: $lng<br>";
-    //echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>/////////<br>";
+    echo "lat: $lat  lng: $lng<br><br>";
+    echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>";
     
     switch ($objType) {
     case "W3W":
@@ -192,14 +192,14 @@ foreach($db_found->query($sql3) as $row) {
         $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
-        //echo "aprs_call: $aprs_call <br><br>";   
+        echo "aprs_call: $aprs_call <br><br>";   
         break;
     case "APRS":
         $pos1 = strpos($comment, 'OBJ::') + 5;
         $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
-        //echo "aprs_call: $aprs_call <br><br>";
+        echo "aprs_call: $aprs_call <br><br>";
         break;
     } // end switch
     
@@ -243,7 +243,7 @@ foreach($db_found->query($sql3) as $row) {
         $icon = "";
         
         $OBJMarkerList .= "$objmrkr,";  
-        //echo "objmarkerlist: $OBJMarkerList";
+        echo "objmarkerlist: $OBJMarkerList<br><br>";
        
         $comment = "$row[comment]";
  
@@ -430,30 +430,30 @@ minLat      maxLat      minLng      maxLng      callsign
     $cmn++;
     }; // end foreach loop
     
-    //echo "KornerList: $KornerList";
+    echo "KornerList: $KornerList<br><br>";
     
-       //echo "objMarkers: "$objMarkers";
+       echo "objMarkers: $objMarkers<br><br>";
       
     $allPoints = rtrim($allPoints,",");
-       //echo "allPoints:<br> $allPoints";
+       echo "allPoints:<br> $allPoints<br><br>";
        
     $allnameBounds = "let allnameBounds = [$allnameBounds];";
-       //echo "$allnameBounds"; // 
+       echo "$allnameBounds<br><br>"; // 
       
     $allcallList = "var allcallList =[$allcallList];";
-       //echo "$allcallList";
+       echo "$allcallList<br><br>";
       
     $uniqueCallList = "var uniqueCallList = [$uniqueCallList];";
-       //echo "$uniqueCallList"; 
+       echo "$uniqueCallList<br><br>"; 
 
     $KornerList = "var KornerList = L.layerGroup([$KornerList]);";
-      //echo "$KornerList";
+      echo "$KornerList<br><br>";
     
     $OBJCornerList = "var OBJCornerList = L.layerGroup([$OBJCornerList]);";
-      //echo "$OBJCornerList";
+      echo "$OBJCornerList<br><br>";
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     //echo "$OBJMarkerList";
+     echo "$OBJMarkerList<br><br>";
      //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>
