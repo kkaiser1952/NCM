@@ -1,5 +1,6 @@
 <?php
-    // objMarkers.php
+// objMarkers.php
+// Written: 2017
     // Updated: to remove latlng in SQL
     // This program reads the TimeLog table checking for input from W3W and/or APRS_CALL
     // Updated: 2024-09-22

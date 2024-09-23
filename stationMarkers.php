@@ -1,4 +1,7 @@
 <?php
+// stationMarkers.php
+// Written: 2017
+// Updated: 2024-09-??
     // When callsign is selected from a table an underscore (_) is concatenated to the front. This is because 
     // we are getting check-ins from countries like Kenya whose callsigns start 5Z, Javascript does not 
     // allow variables with a number as the first character.

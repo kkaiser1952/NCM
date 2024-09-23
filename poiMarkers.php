@@ -1,6 +1,7 @@
 <?php
-    
-    // poiMarkers.php
+// poiMarkers.php
+// Wirtten 2017
+// Updated 2024-09-??
     
     // This program selects from the DB/NetLog table all the data needed to create the marker points on a map ;
 			ini_set('display_errors',1); 
