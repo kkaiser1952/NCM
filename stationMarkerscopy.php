@@ -30,7 +30,7 @@
                FROM NetLog
               WHERE netID = $q  
                 AND latitude <> ''
-                AND callsign <> 'NONHAM'
+                AND callsign NOT IN('NONHAM','EMCOMM')
               GROUP BY latitude
               HAVING COUNT(latitude) > 1
             ");
@@ -49,7 +49,7 @@
                FROM NetLog
               WHERE netID = $q  
                 AND latitude <> ''
-                AND callsign <> 'NONHAM'
+                AND callsign NOT IN('NONHAM','EMCOMM')
            ");
         foreach($db_found->query($sql) as $callrow) {
             $callsList = $callrow[callsList];
@@ -91,7 +91,7 @@
     			   		END as classColor
     			    ,CONCAT(latitude, ',', longitude) as koords 
     			    ,CONCAT(Fname, ' ', Lname) AS name 
-    			    ,CONCAT('<b>',UPPER(callsign),'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
+    			    ,CONCAT('<b>Tactical: ',tactical,'<br>',UPPER(callsign),'</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,'<br>',county,' Co., ',state,' Dist: ',district,'<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
     			    latitude, longitude
     		   FROM NetLog  		   			   
     		  WHERE netID = $q
@@ -99,12 +99,13 @@
     		    AND longitude IS NOT NULL
     		    AND latitude <> ''
     		    AND longitude <> ''
-    		    AND callsign <> 'NONHAM'
+    		    AND callsign NOT IN('NONHAM','EMCOMM')
     		    AND callsign NOT LIKE '%CAMP%'
     		    AND callsign NOT LIKE '%CREW%'
     		    AND callsign <> ' '
     		   
     		  ORDER BY logdate 
+    		  
     		 ");
     		  
 		$rowno              = 0;
@@ -146,11 +147,9 @@
     		  
     		//  $div4 = "<div class='cc' >$cr</div>";
     		  
-    		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a></div>";
+    		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a><br><br>stationMarkers.php</div>";
     		  
     		  //echo ("$dup --> $callsign ");
-    		  
-          //require "beautifyMarkers.php";
     		  
 		  $stationMarkers .= "
 			var $callsign = new L.marker(new L.latLng($logrow[koords]),{ 
@@ -169,8 +168,7 @@
 				$(`$callsign`._icon).addClass(`$logrow[classColor]`);
                 stationMarkers.push($callsign);
 				";
-				
-			
+						
         } // End $row[koords] test... is there a value     
         
         //$dup = $dup + 45;  //this is the rotation angle	   
