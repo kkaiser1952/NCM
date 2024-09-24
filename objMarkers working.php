@@ -20,7 +20,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "GridSquare.php";
 
-   $q = 12699;
+   //$q = 12699;
    
    //REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(comment, '(', -1), ',', -1), ')', '') AS lng,
    
@@ -68,7 +68,7 @@ ORDER BY callsign;
 
 ");
         
-        //echo "First sql:<br> $sql1 <br><br>";
+        ////echo "First sql:<br> $sql1 <br><br>";
           
         $allnameBounds = "";
         $allPoints = "";
@@ -90,11 +90,11 @@ ORDER BY callsign;
          
      } // end of foreach loop 
      
-     //echo $objMiddle;
+     ////echo $objMiddle;
      
      // Count of number of callsigns, will only be 1 if only 1 person being entered
      $oByers = "var oByers = $oByersCnt";
-     echo "oByers: $oByers<br><br>";
+     //echo "oByers: $oByers<br><br>";
      
         // This creates a lat/lon list for each callsign with objects. This is used in
         // the map.php program in the polyline function
@@ -126,14 +126,14 @@ ORDER BY callsign;
 
                 ");
                 
-            //echo "<br><br>Second sql2:<br> $sql2 <br><br>";
+            ////echo "<br><br>Second sql2:<br> $sql2 <br><br>";
                 
             foreach($db_found->query($sql2) as $row) {
                 $alltheKoords .= $row[allKoords].';';
             }
              
              // all the cords for each callsign
-        echo "alltheKoords:<br>$alltheKoords<br><br>";
+        //echo "alltheKoords:<br>$alltheKoords<br><br>";
       
         $sql3 = ("SELECT callsign, timestamp, comment, counter,
                 	CASE 
@@ -168,7 +168,7 @@ ORDER BY callsign;
           
           // AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%')
           // above working well
-        //echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
+        ////echo "<br><br>3rd sql3:<br> $sql3 <br><br>";
           
           $objMarkers       = "";
           $OBJMarkerList    = "";
@@ -183,8 +183,8 @@ foreach($db_found->query($sql3) as $row) {
     $lat      = "$row[lat];";
     $lng      = "$row[lng];";
     
-    echo "lat: $lat  lng: $lng<br><br>";
-    echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>";
+    //echo "lat: $lat  lng: $lng<br><br>";
+    //echo "comment: $comment<br>koords: $koords<br>callsign: $callsign<br>objType: $objType<br><br>";
     
     switch ($objType) {
     case "W3W":
@@ -192,14 +192,14 @@ foreach($db_found->query($sql3) as $row) {
         $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
-        echo "aprs_call: $aprs_call <br><br>";   
+        //echo "aprs_call: $aprs_call <br><br>";   
         break;
     case "APRS":
         $pos1 = strpos($comment, 'OBJ::') + 5;
         $pos2 = strpos($comment, ' : ');
         
         $aprs_call = substr($comment, $pos1, $pos2 - $pos1);
-        echo "aprs_call: $aprs_call <br><br>";
+        //echo "aprs_call: $aprs_call <br><br>";
         break;
     } // end switch
     
@@ -238,12 +238,12 @@ foreach($db_found->query($sql3) as $row) {
         $gs = gridsquare($row[lat], $row[lng]); 
         //$gs = gridsquare($row[koords]);
         
-        //echo "<br>gs: $gs<br>";
+        ////echo "<br>gs: $gs<br>";
                 
         $icon = "";
         
         $OBJMarkerList .= "$objmrkr,";  
-        echo "objmarkerlist 1: $OBJMarkerList<br><br>";
+        //echo "objmarkerlist 1: $OBJMarkerList<br><br>";
        
         $comment = "$row[comment]";
  
@@ -286,8 +286,8 @@ foreach($db_found->query($sql3) as $row) {
                  </div>
                 ";       
                      
-    //echo "<br>div1:<br> $div1 <br><br>";   
-    //echo "<br>div2: $div1 <br><br>";
+    ////echo "<br>div1:<br> $div1 <br><br>";   
+    ////echo "<br>div2: $div1 <br><br>";
    
     if (isset($row['lat']) && !empty($row['lat']) && isset($row['lng']) && !empty($row['lng'])) {
     $objMarkers .= " var $objmrkr = new L.marker(new L.LatLng($row[lat],$row[lng]),{
@@ -331,7 +331,7 @@ foreach($db_found->query($sql3) as $row) {
            
            //  AND (comment LIKE 'LOC&#916:APRS%' OR comment LIKE 'LOC&#916:W3W%') 
            
-    //echo "<br><br>Fourth sql:<br> $sql4 <br>";
+    ////echo "<br><br>Fourth sql:<br> $sql4 <br>";
     
 /*
 minLat      maxLat      minLng      maxLng      callsign
@@ -361,10 +361,10 @@ minLat      maxLat      minLng      maxLng      callsign
            $callsign = $row[callsign];      
                                 
            // The 0.25 is to make the square every so little bigger.
-    	   $minLat = $row[minLat]-0.25;     ////echo "minLat= $minLat";
-    	   $maxLat = $row[maxLat]+0.25;     ////echo "maxLat= $maxLat";
-    	   $minLng = $row[minLng]+0.25;     ////echo "minLng= $minLng";
-    	   $maxLng = $row[maxLng]-0.25;     ////echo "maxLng= $maxLng";
+    	   $minLat = $row[minLat]-0.25;     //////echo "minLat= $minLat";
+    	   $maxLat = $row[maxLat]+0.25;     //////echo "maxLat= $maxLat";
+    	   $minLng = $row[minLng]+0.25;     //////echo "minLng= $minLng";
+    	   $maxLng = $row[maxLng]-0.25;     //////echo "maxLng= $maxLng";
 
 
           // It takes 5 sets to complete the square 
@@ -430,31 +430,31 @@ minLat      maxLat      minLng      maxLng      callsign
     $cmn++;
     }; // end foreach loop
     
-    echo "KornerList: $KornerList<br><br>";
+    //echo "KornerList: $KornerList<br><br>";
     
-       echo "objMarkers: $objMarkers<br><br>";
+       //echo "objMarkers: $objMarkers<br><br>";
       
     $allPoints = rtrim($allPoints,",");
-       echo "allPoints:<br> $allPoints<br><br>";
+       //echo "allPoints:<br> $allPoints<br><br>";
        
     $allnameBounds = "let allnameBounds = [$allnameBounds];";
-       echo "$allnameBounds<br><br>"; // 
+       //echo "$allnameBounds<br><br>"; // 
       
     $allcallList = "var allcallList =[$allcallList];";
-       echo "$allcallList<br><br>";
+       //echo "$allcallList<br><br>";
       
     $uniqueCallList = "var uniqueCallList = [$uniqueCallList];";
-       echo "$uniqueCallList<br><br>"; 
+       //echo "$uniqueCallList<br><br>"; 
 
     $KornerList = "var KornerList = L.layerGroup([$KornerList]);";
-      echo "$KornerList<br><br>";
+      //echo "$KornerList<br><br>";
     
     $OBJCornerList = "var OBJCornerList = L.layerGroup([$OBJCornerList]);";
-      echo "$OBJCornerList<br><br>";
+      //echo "$OBJCornerList<br><br>";
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
     
-     echo "objmarkerlist 2: $OBJMarkerList<br><br>";
+     //echo "objmarkerlist 2: $OBJMarkerList<br><br>";
      //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>

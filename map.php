@@ -6,7 +6,7 @@
 <!-- This version 2021-10-16 -->
 <!-- This version 2023-08-03 -->
 <!-- This version 2023-12-27 -->
-
+ 
 <?php
 	
 	ini_set('display_errors',1); 
@@ -21,7 +21,8 @@
     // Value comes from an open net or prompt 
     $q = intval($_GET["NetID"]); 
     
-    //$q = 11001; 
+    // Good net to test with for objects
+    $q = 12699; 
 
     
     // We need the min & max latitude to determin if we want to pull data from poiMarkers.php
@@ -46,7 +47,7 @@
     // Loads the programs that create the station, poi,d object markers
 	include "stationMarkers.php";
     include "poiMarkers.php";    
-    include "objMarkers.php";
+    include "objMarkers working.php";
 
 ?>
 
