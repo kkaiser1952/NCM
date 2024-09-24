@@ -457,4 +457,20 @@ minLat      maxLat      minLng      maxLng      callsign
      //echo "objmarkerlist 2: $OBJMarkerList<br><br>";
      //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
+echo "
+<script>
+function createPolylines(map) {
+    var colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow', 'pink', 'brown', 'gray', 'black'];
+    
+    uniqueCallList.forEach(function(callsign, index) {
+        var latlngs = window[callsign + 'latlngs'];
+        if (latlngs && latlngs.length >= 2) {
+            var color = colors[index % colors.length];
+            var polyline = L.polyline(latlngs, {color: color, weight: 3}).addTo(map);
+            console.log('Created polyline for ' + callsign, polyline);
+        }
+    });
+}
+</script>
+";
 ?>

@@ -720,23 +720,10 @@ function connectTheDots(data) {
     return coordsByCallsign;
 }
 
-// Then, wherever you're currently using connectTheDots, replace that code with this:
-function createPolylines(data) {
-    var coordinatesByCallsign = connectTheDots(data);
+// This function is created at the bottom of objMarkers.php
+createPolylines(map);
 
-    for (var callsign in coordinatesByCallsign) {
-        var coordinates = coordinatesByCallsign[callsign];
-        if (coordinates.length >= 2) {
-            var color = callsign === 'WA0TJT' ? 'red' : 'blue'; // Choose colors as needed
-            var polyline = L.polyline(coordinates, {color: color, weight: 3}).addTo(map);
-            console.log("Created polyline for " + callsign, polyline);
-        }
-    }
-}
-
-// Finally, call createPolylines where you want to draw the lines
-createPolylines(yourDataObject);
-/*
+/* This function works and draws lines but connects callsigns
 function connectTheDots(data){
     var c = [];
     for(i in data._layers) {
