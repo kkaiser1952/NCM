@@ -243,7 +243,7 @@ foreach($db_found->query($sql3) as $row) {
         $icon = "";
         
         $OBJMarkerList .= "$objmrkr,";  
-        echo "objmarkerlist: $OBJMarkerList<br><br>";
+        echo "objmarkerlist 1: $OBJMarkerList<br><br>";
        
         $comment = "$row[comment]";
  
@@ -453,7 +453,8 @@ minLat      maxLat      minLng      maxLng      callsign
       echo "$OBJCornerList<br><br>";
 
     $OBJMarkerList = "var OBJMarkerList = L.layerGroup([$OBJMarkerList]);"; 
-     echo "$OBJMarkerList<br><br>";
+    
+     echo "objmarkerlist 2: $OBJMarkerList<br><br>";
      //var OBJMarkerList = L.layerGroup([WA0TJT01,WA0TJT02,WA0TJT03,WA0TJT04,WA0TJT05,WA0TJT06,WA0TJT07,]);
         
 ?>
