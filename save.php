@@ -2,11 +2,6 @@
     /* this program is used anytime a value is entered into any column in NCM */
     /* sometimes it runs PHP or JS program to save and/or load the data */
     /* This is one of the first programs written or NCM, and needs some ediing */
-    /* 
-     ini_set('display_errors', 1);
-     ini_set('display_startup_errors', 1);
-     error_reporting(E_ALL);
-     */
 
      // Get the IP address of the person making the changes.
     require_once "getRealIpAddr.php";
@@ -341,54 +336,87 @@
 					
 		// Update the TimeLog if comments were added
 		elseif ($column == 'comments' AND $value != '') {
-			
-			// The code here fixes the issue of losing any comment with a tick (') in it, but the display in the
-			// Time Line Comments field still shows the backslash (\) used to escape the tick. YIKES!
-			$value = str_replace("'", "''", $value);
-			
-			// First we have to go get some more information about who updated the comment
-			$sql = "SELECT ID, netID, callsign, home
-			          FROM NetLog 
-					WHERE recordID = '$recordID'";
-
-			foreach($db_found->query($sql) as $row) {
-				$netID = $row['netID'];
-				$ID	   = $row['ID'];
-				$cs1   = $row['callsign'];
-				$home  = $row['home'];
-			}
-			
-			// If its to reset the home coordinates then do this
-			    $deltaX = 'LOC&#916;';
-			    $Varray = array("@home", "@ home", "@  home", "at home", "gone home", "headed home", "going home", "home");
-			    echo "364 ".$deltaX;
-            if (in_array(strtolower("$value"), $Varray)) {
-    			$latitude = explode(',', $home)[0]; 
-    			$longitude = explode(',', $home)[1];
-    			$grid = explode(',', $home)[2];
-    			$county = explode(',', $home)[3];
-    			$state = explode(',', $home)[4];
-    			$value2 = "$deltaX:COM:@home, reset to home coordinates ($home)";
-				
-				//echo ("in Varray");
-    			
-    		$sql = "UPDATE NetLog 
-                       SET latitude = $latitude, longitude = $longitude, 
-                           gri ='$grid', county = '$county', state = '$state', w3w = '',
-                           delta = 'Y' /* indication in table that location has changed */
-    			         WHERE recordID = $recordID";
-		
-        		$stmt = $db_found->prepare($sql);
-				$stmt->execute(); 
-        		
-			} else { $value2 = $value; }  // End of in_array 
-			
-			// Then we insert the new update into the TimeLog table 
-			$sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
-					VALUES ('$recordID', '$ID', '$netID', '$cs1', '$value2', '$open', '$ipaddress')";
-		
-			$db_found->exec($sql);
-		} // End comments elseif
+       //error_log("Entering comments section. Value: $value");
+       try {
+           $value = str_replace("'", "''", $value);
+           
+           $sql = "SELECT ID, netID, callsign, home
+                     FROM NetLog 
+                   WHERE recordID = :recordID";
+           
+           error_log("SQL query: $sql");
+           $stmt = $db_found->prepare($sql);
+           $stmt->bindParam(':recordID', $recordID, PDO::PARAM_INT);
+           $stmt->execute();
+           $row = $stmt->fetch(PDO::FETCH_ASSOC);
+           
+           if (!$row) {
+               throw new Exception("No record found for recordID: $recordID");
+           }
+           
+           //error_log("Retrieved data: " . print_r($row, true));
+           
+           $netID = $row['netID'];
+           $ID    = $row['ID'];
+           $cs1   = $row['callsign'];
+           $home  = $row['home'];
+           
+           $deltaX = 'LOC&#916;';
+           $Varray = array("@home", "@ home", "@  home", "at home", "gone home", "headed home", "going home", "home");
+          
+           if (in_array(strtolower($value), $Varray)) {
+               error_log("Home-related comment detected");
+               $homeArray = explode(',', $home);
+               if (count($homeArray) < 5) {
+                   throw new Exception("Invalid home data format");
+               }
+               
+               list($latitude, $longitude, $grid, $county, $state) = $homeArray;
+               $value2 = "$deltaX:COM:@home, reset to home coordinates ($home)";
+               
+               $sql = "UPDATE NetLog 
+                          SET latitude = :latitude, longitude = :longitude, 
+                              grid = :grid, county = :county, state = :state, w3w = '',
+                              delta = 'Y'
+                        WHERE recordID = :recordID";
+           
+               error_log("Update SQL: $sql");
+               $stmt = $db_found->prepare($sql);
+               $stmt->bindParam(':latitude', $latitude, PDO::PARAM_STR);
+               $stmt->bindParam(':longitude', $longitude, PDO::PARAM_STR);
+               $stmt->bindParam(':grid', $grid, PDO::PARAM_STR);
+               $stmt->bindParam(':county', $county, PDO::PARAM_STR);
+               $stmt->bindParam(':state', $state, PDO::PARAM_STR);
+               $stmt->bindParam(':recordID', $recordID, PDO::PARAM_INT);
+               $stmt->execute(); 
+           } else { 
+               $value2 = $value; 
+           }
+           
+           $timestamp = date('Y-m-d H:i:s');
+           
+           $sql = "INSERT INTO TimeLog (recordID, ID, netID, callsign, comment, timestamp, ipaddress) 
+                   VALUES (:recordID, :ID, :netID, :callsign, :comment, :timestamp, :ipaddress)";
+           
+           error_log("Insert SQL: $sql");
+           $stmt = $db_found->prepare($sql);
+           $stmt->bindParam(':recordID', $recordID, PDO::PARAM_INT);
+           $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+           $stmt->bindParam(':netID', $netID, PDO::PARAM_INT);
+           $stmt->bindParam(':callsign', $cs1, PDO::PARAM_STR);
+           $stmt->bindParam(':comment', $value2, PDO::PARAM_STR);
+           $stmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
+           $stmt->bindParam(':ipaddress', $ipaddress, PDO::PARAM_STR);
+           $stmt->execute();
+           
+           //error_log("Comments section completed successfully");
+       } catch (Exception $e) {
+           error_log("Error in save.php comments section: " . $e->getMessage());
+           http_response_code(500);
+           echo "An error occurred while processing your request: " . $e->getMessage();
+           exit;
+       }
+   } // End comments elseif
 		
 		
 		// This routine is to delete the row if the tactical was changed to DELETE we do this because
