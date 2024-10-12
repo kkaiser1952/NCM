@@ -21,15 +21,13 @@ $w3w_api_key = $config['geocoder']['api_key'];
 function getW3WAddress($latitude, $longitude) {
     global $w3w_api_key;
     $url = "https://api.what3words.com/v3/convert-to-3wa?coordinates=$latitude,$longitude&key=$w3w_api_key";
-
     $response = file_get_contents($url);
     $data = json_decode($response, true);
-    
     return $data['words'];  // This will give you the 3-word address
 }
 
 // Batch processing settings
-$batchSize = 10; // Process 100 records at a time
+$batchSize = 100; // Process 100 records at a time
 $offset = 0;      // Starting point for each batch
 $continueProcessing = true;
 
@@ -43,13 +41,12 @@ while ($continueProcessing) {
     // Query for the current batch
     $sql = "
         SELECT st.callsign  as st_callsign,
-               st.Lname     as st_lname,  
-               fcc.last     as fcc_last,   
                st.latitude  as st_latitude, 
                st.longitude as st_longitude,
                st.grid      as st_grid,
                st.county    as st_county,
                st.state     as st_state,
+               st.Lname     as st_lname,
                st.Home      as st_home,
                st.fccid     as st_fccid,
                st.comment   as st_comment,
@@ -58,11 +55,12 @@ while ($continueProcessing) {
                fcc.city, 
                fcc.state, 
                fcc.zip,
+               fcc.last     as fcc_lastname,
                fcc.fccid,
                CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) AS address
           FROM ncm.stations st
           JOIN fcc_amateur.en fcc ON st.callsign = fcc.callsign
-         WHERE LEFT(st.callsign, 1) IN ('a', 'k', 'n', 'w')
+         WHERE LEFT(st.callsign, 1) IN('a','k','n','w')
          LIMIT $batchSize OFFSET $offset;
     ";
 
@@ -75,7 +73,7 @@ while ($continueProcessing) {
     }
 
     // Process each row in the current batch
-    foreach ($results as $row) {      
+    foreach($results as $row) {      
         $totalChecks++;  // Increment the check counter
         
         $fcc_callsign   = $row['fcc_callsign'];
@@ -84,14 +82,14 @@ while ($continueProcessing) {
         $address        = $row['address'];
         $fccid          = $row['fccid'];
         $zip            = $row['zip'];
-        $fcc_last      = $row['fcc_last'];
+        $fcc_lastname   = $row['fcc_lastname'];
 
         $koords = geocode("$address");
-        $latitude = $koords[0];
+        $latitude  = $koords[0];
         $longitude = $koords[1];
-        $county   = $koords[2];
+        $county    = $koords[2];
         $new_state = $koords[3];
-        
+
         // Check if geocode succeeded
         if (empty($latitude) || empty($longitude)) {
             echo "Geocoding failed for $st_callsign. Skipping.<br>";
@@ -100,39 +98,52 @@ while ($continueProcessing) {
         }
 
         $w3w = getW3WAddress($latitude, $longitude);
-
-        // Check for last name changes
-        $lnameChanged = $row['st_lname'] != $fcc_last;
-
+        
         // Compare old vs new values
         if ($row['st_latitude'] != $latitude || $row['st_longitude'] != $longitude || 
             $row['st_county'] != $county || $row['st_state'] != $state || 
-            $lnameChanged) {
+            $row['st_lname'] != $fcc_lastname) {
             
             $gridd = gridsquare($latitude, $longitude);
             $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";    
-            $home = "$latitude,$longitude,$grid,$county,$state,$w3w";
+            $home = "$latitude,$longitude,$grid,$county,$state,$row[city],$w3w";
             $updated = 'Updated by updateStationLocation.php on ' . date('Y-m-d H:i:s');
-
-            // Perform the update
+            
+            // Perform the update using prepared statement
             $sqlUpdate = "UPDATE stations SET
-                latitude  = '$latitude',
-                longitude = '$longitude',
-                grid      = '$grid',
-                county    = '$county',
-                state     = '$state',
-                city      = '{$row['city']}',  
-                home      = '$home',
-                fccid     = '$fccid',
-                zip       = '$zip',
-                Lname     = '$fcc_last',   
-                w3w       = '$w3w',             
+                latitude  = :latitude,
+                longitude = :longitude,
+                grid      = :grid,
+                county    = :county,
+                state     = :state,
+                city      = :city,           
+                home      = :home,
+                fccid     = :fccid,
+                zip       = :zip,
+                Lname     = :lname,    
+                w3w       = :w3w,            
                 dttm      = CURRENT_TIMESTAMP,
-                comment   = '$updated'
-              WHERE callsign = '$st_callsign';
+                comment   = :comment
+              WHERE callsign = :callsign;
             ";              
-              
+
             $stmt2 = $db_found->prepare($sqlUpdate);
+            
+            // Bind parameters
+            $stmt2->bindParam(':latitude', $latitude);
+            $stmt2->bindParam(':longitude', $longitude);
+            $stmt2->bindParam(':grid', $grid);
+            $stmt2->bindParam(':county', $county);
+            $stmt2->bindParam(':state', $state);
+            $stmt2->bindParam(':city', $row['city']);
+            $stmt2->bindParam(':home', $home);
+            $stmt2->bindParam(':fccid', $fccid);
+            $stmt2->bindParam(':zip', $zip);
+            $stmt2->bindParam(':lname', $fcc_lastname);
+            $stmt2->bindParam(':w3w', $w3w);
+            $stmt2->bindParam(':comment', $updated);
+            $stmt2->bindParam(':callsign', $st_callsign);
+
             if ($stmt2->execute()) {
                 $totalChanges++;  // Increment the changes counter if update is successful
             } else {
@@ -151,7 +162,7 @@ while ($continueProcessing) {
     // Increase the offset for the next batch
     $offset += $batchSize;
 
-    // Optional: Pause between batches to avoid server overload
-    sleep(2);  
+    // Add a delay if needed to prevent server overload
+    sleep(2);  // Optional: Pause between batches to avoid server overload
 }
 ?>
