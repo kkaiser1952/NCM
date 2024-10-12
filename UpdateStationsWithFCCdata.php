@@ -28,6 +28,7 @@
         return $data['words'];
     }
     
+    // Loop through all stations that require location update
     $sql = "
         SELECT st.callsign  as st_callsign,
                st.latitude  as st_latitude, 
@@ -76,6 +77,7 @@
             $home = "$latitude,$longitude,$grid,$county,$state,$city,$w3w";
             $updated = 'Updated by updateStationLocation.php on ' . date('Y-m-d H:i:s');
             
+            // Construct the SQL UPDATE statement, but don't execute it yet
             $sqlUpdate = "UPDATE stations SET
                 latitude  = '$latitude',
                 longitude = '$longitude',
@@ -92,11 +94,8 @@
               WHERE callsign = '$st_callsign';
             ";              
               
-            //$stmt2 = $db_found->prepare($sqlUpdate);
-            //$stmt2->execute();
-            
-            echo "$sqlUpdate";
+            // Instead of executing, just echo the SQL update statement
+            echo "$sqlUpdate\n";  // Add a newline for clarity between queries
         }
-    } 
+    }
 ?>
-
