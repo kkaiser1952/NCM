@@ -27,8 +27,8 @@ function getW3WAddress($latitude, $longitude) {
 }
 
 // Batch processing settings
-$batchSize = 100; // Process 100 records at a time
-$offset = 0;      // Starting point for each batch
+$batchSize = 10; // Process 100 records at a time
+$offset = 10;      // Starting point for each batch
 $continueProcessing = true;
 
 // Loop through batches
