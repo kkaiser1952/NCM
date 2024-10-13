@@ -8,161 +8,175 @@
 // Written primarily by ChatGPT on 2024-10-12
 // Written: 2024-10-12
 
-ini_set('display_errors', 1); 
-error_reporting(E_ALL ^ E_NOTICE);
+
+// UpdateStationsWithFCCdata.php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+echo "Script started.<br>";
+error_log("Script started.<br>");
+
+// Check if required files exist
+$requiredFiles = ["dbConnectDtls.php", "geocode.php", "GridSquare.php", "config2.php"];
+foreach ($requiredFiles as $file) {
+    if (!file_exists($file)) {
+        die("Error: Required file $file not found.<br>");
+    }
+}
 
 require_once "dbConnectDtls.php";
-require_once "geocode.php";     
-require_once "GridSquare.php";  
+require_once "geocode.php";
+require_once "GridSquare.php";
 require_once "config2.php";
 
-$w3w_api_key = $config['geocoder']['api_key'];
+echo "All required files loaded successfully.<br>";
+
+$w3w_api_key = $config['geocoder']['api_key'] ?? null;
+if (!$w3w_api_key) {
+    die("Error: What3Words API key not found in config.<br>");
+}
+
+echo "What3Words API key loaded.<br>";
 
 function getW3WAddress($latitude, $longitude) {
     global $w3w_api_key;
     $url = "https://api.what3words.com/v3/convert-to-3wa?coordinates=$latitude,$longitude&key=$w3w_api_key";
     $response = file_get_contents($url);
+    if ($response === false) {
+        echo "Error: Unable to connect to What3Words API.<br>";
+        return null;
+    }
     $data = json_decode($response, true);
-    return $data['words'];  // This will give you the 3-word address
+    return $data['words'] ?? null;
 }
 
 // Batch processing settings
-$batchSize = 10; // Process 100 records at a time
-$offset = 10;      // Starting point for each batch
+$batchSize = 100;
+$offset = 0;
 $continueProcessing = true;
 
-// Loop through batches
+echo "Preparing database statements...<br>";
+
+// Prepare statements outside the loop
+try {
+    $stmt = $db_found->prepare("
+        SELECT st.callsign as st_callsign, st.latitude as st_latitude, 
+               st.longitude as st_longitude, st.grid as st_grid,
+               st.county as st_county, st.state as st_state,
+               st.Lname as st_lname, st.Home as st_home,
+               st.fccid as st_fccid, st.comment as st_comment,
+               fcc.callsign as fcc_callsign, fcc.address1, 
+               fcc.city, fcc.state, fcc.zip,
+               fcc.last as fcc_lastname, fcc.fccid,
+               CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) AS address
+        FROM ncm.stations st
+        JOIN fcc_amateur.en fcc ON st.callsign = fcc.callsign
+        WHERE LEFT(st.callsign, 1) IN ('a','k','n','w')
+        LIMIT :limit OFFSET :offset
+    ");
+
+    $updateStmt = $db_found->prepare("
+        UPDATE stations SET
+        latitude = :latitude, longitude = :longitude,
+        grid = :grid, county = :county, state = :state,
+        city = :city, home = :home, fccid = :fccid,
+        zip = :zip, Lname = :lname, w3w = :w3w,
+        dttm = CURRENT_TIMESTAMP, comment = :comment
+        WHERE callsign = :callsign
+    ");
+
+    echo "Database statements prepared successfully.<br>";
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage() . "<br>");
+}
+
+echo "Starting main processing loop...<br>";
+
 while ($continueProcessing) {
-    // Initialize counters for the report
     $totalChecks = 0;
     $totalChanges = 0;
     $failedUpdates = 0;
 
-    // Query for the current batch
-    $sql = "
-        SELECT st.callsign  as st_callsign,
-               st.latitude  as st_latitude, 
-               st.longitude as st_longitude,
-               st.grid      as st_grid,
-               st.county    as st_county,
-               st.state     as st_state,
-               st.Lname     as st_lname,
-               st.Home      as st_home,
-               st.fccid     as st_fccid,
-               st.comment   as st_comment,
-               fcc.callsign as fcc_callsign,
-               fcc.address1, 
-               fcc.city, 
-               fcc.state, 
-               fcc.zip,
-               fcc.last     as fcc_lastname,
-               fcc.fccid,
-               CONCAT_WS(' ', fcc.address1, fcc.city, fcc.state, fcc.zip) AS address
-          FROM ncm.stations st
-          JOIN fcc_amateur.en fcc ON st.callsign = fcc.callsign
-         WHERE LEFT(st.callsign, 1) IN('a','k','n','w')
-         LIMIT $batchSize OFFSET $offset;
-    ";
+    $stmt->bindParam(':limit', $batchSize, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Database query error: " . $e->getMessage() . "<br>";
+        break;
+    }
 
-    // Execute the query for the current batch
-    $results = $db_found->query($sql);
-    if ($results->rowCount() == 0) {
-        // If no more results, stop processing
+    if (empty($results)) {
+        echo "No more results to process.<br>";
         $continueProcessing = false;
         break;
     }
 
-    // Process each row in the current batch
-    foreach($results as $row) {      
-        $totalChecks++;  // Increment the check counter
-        
-        $fcc_callsign   = $row['fcc_callsign'];
-        $st_callsign    = $row['st_callsign'];
-        $state          = $row['state'];
-        $address        = $row['address'];
-        $fccid          = $row['fccid'];
-        $zip            = $row['zip'];
-        $fcc_lastname   = $row['fcc_lastname'];
+    echo "Processing batch of " . count($results) . " records...<br>";
 
-        $koords = geocode("$address");
-        $latitude  = $koords[0];
-        $longitude = $koords[1];
-        $county    = $koords[2];
-        $new_state = $koords[3];
+    foreach ($results as $row) {
+        $totalChecks++;
 
-        // Check if geocode succeeded
-        if (empty($latitude) || empty($longitude)) {
-            echo "Geocoding failed for $st_callsign. Skipping.<br>";
-            $failedUpdates++;  // Increment failure counter
+        $koords = geocode($row['address']);
+        if (empty($koords[0]) || empty($koords[1])) {
+            echo "Geocoding failed for {$row['st_callsign']}.<br>";
+            $failedUpdates++;
             continue;
         }
 
-        $w3w = getW3WAddress($latitude, $longitude);
-        
-        // Compare old vs new values
+        $latitude = $koords[0];
+        $longitude = $koords[1];
+        $county = $koords[2];
+        $new_state = $koords[3];
+
         if ($row['st_latitude'] != $latitude || $row['st_longitude'] != $longitude || 
-            $row['st_county'] != $county || $row['st_state'] != $state || 
-            $row['st_lname'] != $fcc_lastname) {
-            
+            $row['st_county'] != $county || $row['st_state'] != $new_state || 
+            $row['st_lname'] != $row['fcc_lastname']) {
+
+            $w3w = getW3WAddress($latitude, $longitude);
             $gridd = gridsquare($latitude, $longitude);
-            $grid = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";    
-            $home = "$latitude,$longitude,$grid,$county,$state,$row[city],$w3w";
+            $grid = implode('', array_slice($gridd, 0, 6));
+            $home = "$latitude,$longitude,$grid,$county,{$row['state']},{$row['city']},$w3w";
             $updated = 'Updated by updateStationLocation.php on ' . date('Y-m-d H:i:s');
-            
-            // Perform the update using prepared statement
-            $sqlUpdate = "UPDATE stations SET
-                latitude  = :latitude,
-                longitude = :longitude,
-                grid      = :grid,
-                county    = :county,
-                state     = :state,
-                city      = :city,           
-                home      = :home,
-                fccid     = :fccid,
-                zip       = :zip,
-                Lname     = :lname,    
-                w3w       = :w3w,            
-                dttm      = CURRENT_TIMESTAMP,
-                comment   = :comment
-              WHERE callsign = :callsign;
-            ";              
 
-            $stmt2 = $db_found->prepare($sqlUpdate);
-            
-            // Bind parameters
-            $stmt2->bindParam(':latitude', $latitude);
-            $stmt2->bindParam(':longitude', $longitude);
-            $stmt2->bindParam(':grid', $grid);
-            $stmt2->bindParam(':county', $county);
-            $stmt2->bindParam(':state', $state);
-            $stmt2->bindParam(':city', $row['city']);
-            $stmt2->bindParam(':home', $home);
-            $stmt2->bindParam(':fccid', $fccid);
-            $stmt2->bindParam(':zip', $zip);
-            $stmt2->bindParam(':lname', $fcc_lastname);
-            $stmt2->bindParam(':w3w', $w3w);
-            $stmt2->bindParam(':comment', $updated);
-            $stmt2->bindParam(':callsign', $st_callsign);
+            try {
+                $updateStmt->execute([
+                    ':latitude' => $latitude,
+                    ':longitude' => $longitude,
+                    ':grid' => $grid,
+                    ':county' => $county,
+                    ':state' => $row['state'],
+                    ':city' => $row['city'],
+                    ':home' => $home,
+                    ':fccid' => $row['fccid'],
+                    ':zip' => $row['zip'],
+                    ':lname' => $row['fcc_lastname'],
+                    ':w3w' => $w3w,
+                    ':comment' => $updated,
+                    ':callsign' => $row['st_callsign']
+                ]);
 
-            if ($stmt2->execute()) {
-                $totalChanges++;  // Increment the changes counter if update is successful
-            } else {
-                $failedUpdates++;  // Increment the failed updates counter if something goes wrong
-                echo "Update failed for $st_callsign.<br>";
+                $totalChanges++;
+            } catch (PDOException $e) {
+                echo "Update failed for {$row['st_callsign']}: " . $e->getMessage() . "<br>";
+                $failedUpdates++;
             }
         }
     }
 
-    // Output the report for the current batch
     echo "<h3>Batch Report (Offset: $offset)</h3>";
     echo "<p>Total checks: $totalChecks</p>";
     echo "<p>Total successful changes: $totalChanges</p>";
     echo "<p>Total failed updates: $failedUpdates</p>";
 
-    // Increase the offset for the next batch
     $offset += $batchSize;
-
-    // Add a delay if needed to prevent server overload
-    sleep(2);  // Optional: Pause between batches to avoid server overload
+    
+    // Flush output buffer to show progress
+    ob_flush();
+    flush();
 }
+
+echo "Script completed.<br>";
 ?>
