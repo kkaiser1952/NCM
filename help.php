@@ -531,7 +531,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 	<div style="padding-left: 20px;">
 	    <p>
 		A closed net open for viewing. Notice the extra columns like; tactical, credentials and tt#. Several more are available as well, by using the orange 'Show/Hide Columns' button.
-	    </p><p>Notice the "Refresh", "Timed" and "'NetClosed" buttons, the MODES ==> ... Closed under the button bar and that all Time Out values are present.
+	    </p><p>Notice the "Refresh", "Timed" and "'NetClosed" buttons, the MODES ==> ... Closed under the command bar and that all Time Out values are present.
 		</p><p>The Local timezone is selected and the upper right corner is populated with net information. 
 		</p><p>All groups are encouraged to create a group profile to help with setup for new nets and to populate the upper right corner. Select hamburger menu ==> Select One ==> Create a Group Profile.
 	    </p>
@@ -683,7 +683,7 @@ To accomplish all this two columns have been added to the net display. The 'Faci
 <div class="checkins">
 <a id="checkins"></a>
 <h3 style='margin-bottom: 0;'>ENTERING CHECK-INs  <button style="left:50px;" class="tipsbutton" title="Tips Button"> Tips!</button><br>
-    (Button Bar) </h3>
+    (Command Bar) </h3>
 
 <h4 style='font-size:10pt; margin-top: 0;'>index.php</h4>
 

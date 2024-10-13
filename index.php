@@ -489,7 +489,7 @@
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:250px; left: 655px; margin-bottom: -40px;">
     	 <a class="tipimage" href="https://net-control.us/help.php#additionalColumns" target="_blank"> Select Columns for display</a></p>
 	 <p class="tb2 TipBubbles initiallyHidden" style="width:350px; left: 950px; margin-bottom: 40px;">
-    	 <a class="tipimage" href="https://net-control.us/help.php#timeline" target="_blank">Button Bar with Time Line and Net Status buttons</a></p>
+    	 <a class="tipimage" href="https://net-control.us/help.php#timeline" target="_blank">Command Bar with Time Line and Net Status buttons</a></p>
 	<div id="admin" class=" admin ">   <!-- End is @645 -->
 		<div id="csnm" class="hidden">
 
