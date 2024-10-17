@@ -14,29 +14,24 @@ $netID = intval($_POST["q"]);
 	// Build the simple list of calls for use as the initial here list to tell the net
 	
 	$sql = "SELECT LOWER(callsign) AS callsign,
-	               CASE 
-	                     WHEN active IN('Out','OUT','In-Out','BRB','MISSING','Moved') THEN active
-	                     ELSE ''
-	                     END as act,
-	               netcontrol	               
-	          FROM NetLog
-	          WHERE netID = $netID   
-	          
-              ORDER BY (CASE 
-                            WHEN netcontrol = 'RELAY' THEN 0
-                		    WHEN netcontrol = 'PRM'   THEN 1
-                		    WHEN netcontrol = '2ND'   THEN 2
-                		    WHEN netcontrol = 'Log'   THEN 3
-                		    WHEN netcontrol = 'LSN'   THEN 4
-                		    WHEN netcontrol = 'EM'    THEN 5
-                		    WHEN netcontrol = 'PIO'   THEN 6
-                		    WHEN netcontrol = 'SEC'   THEN 7 
-                		    ELSE logdate
-                        END)
-                       
-                /*       (CASE 
-                            WHEN active IN('Out','OUT','In-Out','BRB','MISSING','Moved') THEN logdate 
-                        END) */
+               CASE 
+                   WHEN active IN('Out','OUT','In-Out','BRB','MISSING','Moved') THEN active
+                   ELSE ''
+               END as act,
+               netcontrol
+        FROM NetLog
+        WHERE netID = $netID   
+        ORDER BY (CASE 
+                      WHEN netcontrol = 'PRM'   THEN 1
+                      WHEN netcontrol = '2ND'   THEN 2
+                      WHEN netcontrol = 'Log'   THEN 3
+                      WHEN netcontrol = 'RELAY' THEN 4
+                      WHEN netcontrol = 'LSN'   THEN 5
+                      WHEN netcontrol IN ('EM', 'PIO') THEN 6
+                      WHEN netcontrol = 'SEC'   THEN 7
+                      ELSE 8 -- assign a value that places the unmatched rows last
+                  END),
+                 dttm ASC;
 		   ";
 		   
         $callList = '';

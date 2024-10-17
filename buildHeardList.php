@@ -25,21 +25,18 @@ $netID = intval($_POST["q"]);
 			  
 		  FROM NetLog
 		 WHERE netID = $netID
-	
-		 ORDER BY CASE netcontrol
-		    WHEN 'PRM'   THEN 0
-		    WHEN 'CMD'   THEN 0
-		    WHEN 'TL'    THEN 0
-		    WHEN '2nd'   THEN 1
-		    WHEN 'Log'   THEN 2
-		    WHEN 'LSN'   THEN 3
-		    WHEN 'EM'    THEN 4
-		    WHEN 'PIO'   THEN 5
-		    WHEN 'SEC'   THEN 6
-		    WHEN 'RELAY' THEN 7
-		    else dttm
-		    END,    
-		    logdate	  
+		 
+		 ORDER BY (CASE
+		 WHEN netcontrol = 'PRM'   THEN 1
+                      WHEN netcontrol = '2ND'   THEN 2
+                      WHEN netcontrol = 'Log'   THEN 3
+                      WHEN netcontrol = 'RELAY' THEN 4
+                      WHEN netcontrol = 'LSN'   THEN 5
+                      WHEN netcontrol IN ('EM', 'PIO') THEN 6
+                      WHEN netcontrol = 'SEC'   THEN 7
+                      ELSE 8 -- assign a value that places the unmatched rows last
+            END),
+                 dttm ASC;	  
 	");
 	
 	$sql->execute();
