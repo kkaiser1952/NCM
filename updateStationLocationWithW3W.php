@@ -20,17 +20,18 @@
             
   
     
- $callsign = 'kq4eoq';
+ $callsign = 'KE6KEN';
  //$w3w     = 'pylon.slamming.grit';        // Brazil
- $w3w     = '///hurricane.burns.commissions';    // k0rgb
+ $w3w     = '///organ.pioneered.instances';    // k0rgb
  
  
  
  // lifted from getFCCrecord.php just to get the fccid
  $fccsql = $db_found->prepare("
-	       SELECT replace(last,\"'\",\"''\") as last 
+	       SELECT  last 
 				 ,first
 				 ,state
+				 ,city
 				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
 				 ,fccid
 			 FROM fcc_amateur.en
@@ -42,6 +43,9 @@
     $fccsql->execute();
 	  	$result     = $fccsql->fetch();
 	 	$fccid 	    = $result[fccid];
+	 	$state      = $result[state];
+	 	$city       = $result[city];
+	 	$zip        = $result[zip];
 
  
 // ====================================
@@ -61,7 +65,7 @@ $w3wLL = $api->convertToCoordinates("$w3w");
 $address = geocode("$lat,$lng");
 //echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
 $county = $address[2];
-$state  = $address[3];
+//$state  = $address[3];
 
 
 $sql = ("
@@ -70,6 +74,7 @@ $sql = ("
            ,longitude   = $lng
            ,grid        = '$grid'
            ,county      = '$county'
+           ,city        = '$city'
            ,state       = '$state'
            ,home        = '$lat,$lng,$grid,$county,$state'
            ,fccid       = $fccid
@@ -77,12 +82,12 @@ $sql = ("
            ,country     = '$country'
            ,dttm        = NOW()
            ,comment     = 'via: updateStationLocationWithW3W'
-           ,zip         = '64089'
+           ,zip         = '$zip'
      WHERE callsign = '$callsign'
 ");         
 
 echo "<br><br>sql= <br>$sql";  
 
-$db_found->exec($sql);
+//$db_found->exec($sql);
 
 ?>
