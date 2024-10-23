@@ -11,7 +11,7 @@
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
     require_once "geocode.php";
-    //require_once "config.php";
+    require_once "config.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */

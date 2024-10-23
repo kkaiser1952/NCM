@@ -1,53 +1,148 @@
 <?php
-// First line output test
-echo "Line 1: Script started\n"; flush();
+echo "1. Script started\n";
 
-// Turn on all error reporting
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-echo "Line 2: Error reporting enabled\n"; flush();
+require_once "dbConnectDtls.php";
+require_once "GridSquare.php";
+require_once "geocode.php";
+require_once "config.php";
+require_once "Geocoder.php";
 
-// Test if the file exists
-echo "Line 3: Checking for Geocoder.php\n"; flush();
-if (file_exists('Geocoder.php')) {
-    echo "Line 4: Geocoder.php found\n"; flush();
-} else {
-    echo "Line 4: Geocoder.php NOT found\n"; flush();
-    die();
-}
+echo "2. Required files loaded\n";
 
-// Look at the file content
-echo "Line 5: Reading Geocoder.php content:\n"; flush();
-echo htmlspecialchars(file_get_contents('Geocoder.php')) . "\n"; flush();
+// Fill the callsign and w3w based on address from FCC 
+$callsign = 'KE6KEN';
+$w3w = 'organ.pioneered.instances'; 
 
-// Try including without namespace
-echo "Line 6: Including Geocoder.php\n"; flush();
-include_once 'Geocoder.php';
-echo "Line 7: Include successful\n"; flush();
-
-// Try class_exists check
-echo "Line 8: Checking if Geocoder class exists\n"; flush();
-if (class_exists('What3words\Geocoder\Geocoder', false)) {
-    echo "Line 9: Class exists without autoload\n"; flush();
-} else {
-    echo "Line 9: Class does not exist without autoload\n"; flush();
-}
-
-if (class_exists('What3words\Geocoder\Geocoder', true)) {
-    echo "Line 10: Class exists with autoload\n"; flush();
-} else {
-    echo "Line 10: Class does not exist with autoload\n"; flush();
-}
-
-// Try explicit declaration
-echo "Line 11: Attempting explicit namespace declaration\n"; flush();
 try {
-    echo "Line 12: Before use statement\n"; flush();
-    use What3words\Geocoder\Geocoder;
-    echo "Line 13: After use statement\n"; flush();
+    // Initialize W3W API using fully qualified name
+    echo "3. Initializing W3W API\n";
+    $api = new \What3words\Geocoder\Geocoder("5WHIM4GD");
+    
+    echo "4. Getting FCC database information\n";
+    $fccsql = $db_found->prepare("
+           SELECT  last 
+                 ,first
+                 ,state
+                 ,city
+                 ,zip
+                 ,CONCAT_WS(' ', address1, city, state, zip) AS address
+                 ,fccid
+             FROM fcc_amateur.en
+            WHERE callsign = :callsign 
+              AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = :callsign)
+            ORDER BY fccid DESC 
+            LIMIT 0,1");        
+                    
+    $fccsql->bindValue(':callsign', $callsign);
+    $fccsql->execute();
+    $result = $fccsql->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$result) {
+        throw new Exception("No FCC record found for $callsign");
+    }
+    
+    $fccid = $result['fccid'];
+    $state = $result['state'];
+    $city = $result['city'];
+    $zip = $result['zip'];
+    echo "5. FCC data retrieved\n";
+
+    // Get coordinates from W3W
+    echo "6. Getting W3W coordinates\n";
+    $w3wLL = $api->convertToCoordinates($w3w);
+    
+    $lat = $w3wLL['coordinates']['lat']; 
+    $lng = $w3wLL['coordinates']['lng'];   
+    $country = $w3wLL['country'];
+    echo "7. Coordinates obtained: $lat, $lng\n";
+   
+    // Get the gridsquare
+    echo "8. Calculating grid square\n";
+    $grid = gridsquare($lat, $lng);     
+    echo "9. Grid square: $grid\n";
+
+    // Get county using our working CURL method
+    echo "10. Starting county lookup\n";
+    if (function_exists('curl_init')) {
+        $ch = curl_init();
+        $url = "https://nominatim.openstreetmap.org/reverse?lat=$lat&lon=$lng&format=json&addressdetails=1";
+        
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'HAM_Radio_Station_Locator/1.0');
+        
+        $response = curl_exec($ch);
+        
+        if ($response === false) {
+            echo "11. CURL Error: " . curl_error($ch) . "\n";
+            $county = null;
+        } else {
+            $data = json_decode($response, true);
+            if ($data && isset($data['address']['county'])) {
+                $county = str_replace(' County', '', $data['address']['county']);
+                echo "11. County found: $county\n";
+            } else {
+                $county = null;
+                echo "11. No county found in response\n";
+            }
+        }
+        
+        curl_close($ch);
+    }
+
+    echo "12. Preparing database update\n";
+    $sql = "UPDATE stations 
+            SET latitude = :lat,
+                longitude = :lng,
+                grid = :grid,
+                county = :county,
+                city = :city,
+                state = :state,
+                home = :home,
+                fccid = :fccid,
+                active_call = 'y',
+                country = :country,
+                dttm = NOW(),
+                comment = 'via: updateStationLocationWithW3W',
+                zip = :zip
+            WHERE callsign = :callsign";
+
+    $stmt = $db_found->prepare($sql);
+    
+    $home = "$lat,$lng,$grid,$county,$state,$city,$w3w";
+    
+    $stmt->bindValue(':lat', $lat);
+    $stmt->bindValue(':lng', $lng);
+    $stmt->bindValue(':grid', $grid);
+    $stmt->bindValue(':county', $county);
+    $stmt->bindValue(':city', $city);
+    $stmt->bindValue(':state', $state);
+    $stmt->bindValue(':home', $home);
+    $stmt->bindValue(':fccid', $fccid);
+    $stmt->bindValue(':country', $country);
+    $stmt->bindValue(':zip', $zip);
+    $stmt->bindValue(':callsign', $callsign);
+    
+    echo "13. Database statement prepared\n";
+    
+    // Uncomment the next line when ready to update the database
+    //$stmt->execute();
+    //echo "14. Database updated\n";
+    
+    echo "\nFinal values:\n";
+    echo "Latitude: $lat\n";
+    echo "Longitude: $lng\n";
+    echo "Grid: $grid\n";
+    echo "County: " . ($county ?? 'Not found') . "\n";
+    echo "State: $state\n";
+    echo "City: $city\n";
+    echo "Country: $country\n";
+    
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
 } catch (Error $e) {
-    echo "Line 13 Error: " . $e->getMessage() . "\n"; flush();
+    echo "Fatal Error: " . $e->getMessage() . "\n";
 }
 
-echo "Line 14: Script reached the end\n"; flush();
+echo "15. Script completed\n";
 ?>
