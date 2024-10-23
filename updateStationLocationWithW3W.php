@@ -1,8 +1,9 @@
 <!doctype html>
-<?php
+<?php 
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table */
     /* REQUIRED: a callsign and the What3Words address
     /* Writte: 2021-10-15 */
+    /* Updated: 2024-10-23 */
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -10,6 +11,7 @@
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
     require_once "geocode.php";
+    require_once "config.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -59,16 +61,45 @@ $w3wLL = $api->convertToCoordinates("$w3w");
    
    // Get the gridsquare from lat lng  
 $grid   = gridsquare($lat, $lng);	 
+
+function reverseGeocode($lat, $lng, $apiKey) {
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$apiKey}";
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+
+    if(isset($data['results']) && !empty($data['results'])) {
+        $addressComponents = $data['results'][0]['address_components'];
+        $state = $county = $city = null;
+
+        foreach ($addressComponents as $component) {
+            if (in_array('administrative_area_level_1', $component['types'])) {
+                $state = $component['short_name'];
+            }
+            if (in_array('administrative_area_level_2', $component['types'])) {
+                $county = str_replace(' County', '', $component['long_name']);
+            }
+            if (in_array('locality', $component['types'])) {
+                $city = $component['long_name'];
+            }
+        }
+        
+        return [$state, $county, $city];
+    }
+
+    return [null, null, null];
+}
+
+
     
 
 // =======================================================
 // Use the goecode.php function to find county and state
 // =======================================================
-$address = geocode("$lat,$lng");
-echo("$address");
+//$address = geocode("$lat,$lng");
+//echo("$address");
 //echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
-$county = $address[2];
-echo ("$county");
+//$county = $address[2];
+//echo ("$county");
 //$state  = $address[3];
 
 
