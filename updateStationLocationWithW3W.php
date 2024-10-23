@@ -17,21 +17,19 @@
         use What3words\Geocoder\Geocoder;
         use What3words\Geocoder\AutoSuggestOption;
             $api = new Geocoder("5WHIM4GD");
-            
-  
-    
+   
+// Fill the callsign and w3w based on address from FCC 
  $callsign = 'KE6KEN';
- //$w3w     = 'pylon.slamming.grit';        // Brazil
- $w3w     = '///organ.pioneered.instances';    // k0rgb
+ $w3w     = 'organ.pioneered.instances'; 
  
- 
- 
- // lifted from getFCCrecord.php just to get the fccid
+
+ // from the fcc DB and en table
  $fccsql = $db_found->prepare("
 	       SELECT  last 
 				 ,first
 				 ,state
 				 ,city
+				 ,zip
 				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
 				 ,fccid
 			 FROM fcc_amateur.en
@@ -47,24 +45,30 @@
 	 	$city       = $result[city];
 	 	$zip        = $result[zip];
 
- 
 // ====================================
 // Now get the lat/lon from W3W site
+
+/* Array ( [country] => US [square] => Array ( [southwest] => Array ( [lng] => -82.457281 [lat] => 34.9413 ) [northeast] => Array ( [lng] => -82.457248 [lat] => 34.941327 ) ) [nearestPlace] => Travelers Rest, South Carolina [coordinates] => Array ( [lng] => -82.457265 [lat] => 34.941314 ) [words] => organ.pioneered.instances [language] => en [map] => https://w3w.co/organ.pioneered.instances )
+*/
 // ====================================
 $w3wLL = $api->convertToCoordinates("$w3w");
 //print_r($w3wLL);
    $lat    = $w3wLL['coordinates']['lat']; 
-   $lng    = $w3wLL['coordinates']['lng'];     
-   $grid   = gridsquare($lat, $lng);	 
-   $country= $w3wLL['country']; 
+   $lng    = $w3wLL['coordinates']['lng'];   
+   $country= $w3wLL['country'];
    
-   
+   // Get the gridsquare from lat lng  
+$grid   = gridsquare($lat, $lng);	 
+    
+
 // =======================================================
 // Use the goecode.php function to find county and state
 // =======================================================
 $address = geocode("$lat,$lng");
+echo("$address");
 //echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
 $county = $address[2];
+echo ("$county");
 //$state  = $address[3];
 
 
@@ -76,7 +80,7 @@ $sql = ("
            ,county      = '$county'
            ,city        = '$city'
            ,state       = '$state'
-           ,home        = '$lat,$lng,$grid,$county,$state'
+           ,home        = '$lat,$lng,$grid,$county,$state,$city,$w3w'
            ,fccid       = $fccid
            ,active_call = 'y'
            ,country     = '$country'
