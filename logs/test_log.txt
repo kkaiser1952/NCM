@@ -1,5 +1,0 @@
-Test script started.
-Test script started.
-Test script started.
-Test log entry at 2024-10-24 18:40:14
-Test script started at 2024-10-24 18:40:14

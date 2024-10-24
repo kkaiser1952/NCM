@@ -1,9 +1,13 @@
 <?php
-
 function getCountyAndStateFromFCC($latitude, $longitude) {
+    // Set up logging
+    $logFile = '/var/www/NCM/logs/test_log.txt';
+    
+    // Log function start with parameters
+    error_log(date('Y-m-d H:i:s') . " - Starting getCountyAndStateFromFCC with lat: $latitude, lon: $longitude\n", 3, $logFile);
+    
     // FCC Block API URL
     $fccApiUrl = "https://geo.fcc.gov/api/census/block/find";
-
     // Parameters for the API call
     $params = [
         'format' => 'json',
@@ -11,70 +15,82 @@ function getCountyAndStateFromFCC($latitude, $longitude) {
         'longitude' => $longitude,
         'showall' => 'true'
     ];
-
+    
     // Build the query string
     $queryString = http_build_query($params);
-
     // Full API URL with query string
     $apiUrlWithParams = $fccApiUrl . '?' . $queryString;
-
-    // Output the full URL for debugging
-    echo "Generated URL: " . $apiUrlWithParams . "<br>";
-
+    
+    // Log the generated URL
+    error_log(date('Y-m-d H:i:s') . " - API URL: $apiUrlWithParams\n", 3, $logFile);
+    
     // Initialize cURL
     $ch = curl_init();
-
+    
     // Set cURL options
     curl_setopt($ch, CURLOPT_URL, $apiUrlWithParams);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-    // Set the User-Agent to mimic a browser request
+    
+    // Set the User-Agent
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-        'Accept-Encoding: gzip' // Ensure gzip is supported
+        'Accept-Encoding: gzip'
     ]);
-
+    
     // Execute the request
     $response = curl_exec($ch);
-
+    
     // Check for cURL errors
     if ($response === false) {
-        return "Error: " . curl_error($ch);
+        $error = curl_error($ch);
+        error_log(date('Y-m-d H:i:s') . " - cURL Error: $error\n", 3, $logFile);
+        curl_close($ch);
+        return "Error: " . $error;
     }
-
+    
+    // Get HTTP status code
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    error_log(date('Y-m-d H:i:s') . " - HTTP Status Code: $httpCode\n", 3, $logFile);
+    
     // Close cURL resource
     curl_close($ch);
-
+    
     // Handle gzip encoded responses
     if (isset($response[0]) && ord($response[0]) == 0x1f && ord($response[1]) == 0x8b) {
-        // Decompress the gzip response
+        error_log(date('Y-m-d H:i:s') . " - Decompressing gzip response\n", 3, $logFile);
         $response = gzdecode($response);
     }
-
-    // Output the raw response for debugging
-    echo "Raw API Response: " . $response . "<br>";
-
+    
+    // Log raw response length
+    error_log(date('Y-m-d H:i:s') . " - Response length: " . strlen($response) . " bytes\n", 3, $logFile);
+    
     // Decode the JSON response
     $data = json_decode($response, true);
-
-    // Output the decoded response for debugging
-    echo "Decoded Response: <pre>" . print_r($data, true) . "</pre><br>";
-
+    
+    // Check for JSON decode errors
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $jsonError = json_last_error_msg();
+        error_log(date('Y-m-d H:i:s') . " - JSON Decode Error: $jsonError\n", 3, $logFile);
+        return "Error: Invalid JSON response - $jsonError";
+    }
+    
     // Check if the response contains valid county and state data
     if (isset($data['County']['name']) && isset($data['State']['code'])) {
-        // Extract county and state
         $county = $data['County']['name'];
         $state = $data['State']['code'];
-
-        // Return an associative array with county and state
+        
+        // Log successful retrieval
+        error_log(date('Y-m-d H:i:s') . " - Successfully retrieved County: $county, State: $state\n", 3, $logFile);
+        
         return [
             'county' => $county,
             'state' => $state
         ];
     } else {
+        error_log(date('Y-m-d H:i:s') . " - Error: Could not retrieve county or state from response\n", 3, $logFile);
         return "Error: Could not retrieve county or state.";
     }
 }
@@ -83,12 +99,20 @@ function getCountyAndStateFromFCC($latitude, $longitude) {
 $latitude = 39.202;
 $longitude = -94.602;
 
+// Log the start of the script
+error_log(date('Y-m-d H:i:s') . " - Starting FCC location lookup script\n", 3, '/var/www/NCM/logs/test_log.txt');
+
 $result = getCountyAndStateFromFCC($latitude, $longitude);
 
 if (is_array($result)) {
-    echo "County: " . $result['county'] . ", State: " . $result['state'];
+    $message = "County: " . $result['county'] . ", State: " . $result['state'];
+    echo $message;
+    error_log(date('Y-m-d H:i:s') . " - Success: $message\n", 3, '/var/www/NCM/logs/test_log.txt');
 } else {
     echo $result;
+    error_log(date('Y-m-d H:i:s') . " - Error in main script: $result\n", 3, '/var/www/NCM/logs/test_log.txt');
 }
 
+// Log the end of the script
+error_log(date('Y-m-d H:i:s') . " - FCC location lookup script completed\n", 3, '/var/www/NCM/logs/test_log.txt');
 ?>
