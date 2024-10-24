@@ -62,45 +62,43 @@ $w3wLL = $api->convertToCoordinates("$w3w");
    // Get the gridsquare from lat lng  
 $grid   = gridsquare($lat, $lng);	 
 
-function reverseGeocode($lat, $lng, $apiKey) {
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$apiKey}";
-    $response = file_get_contents($url);
-    $data = json_decode($response, true);
-
-    if(isset($data['results']) && !empty($data['results'])) {
-        $addressComponents = $data['results'][0]['address_components'];
-        $state = $county = $city = null;
-
-        foreach ($addressComponents as $component) {
-            if (in_array('administrative_area_level_1', $component['types'])) {
-                $state = $component['short_name'];
-            }
-            if (in_array('administrative_area_level_2', $component['types'])) {
-                $county = str_replace(' County', '', $component['long_name']);
-            }
-            if (in_array('locality', $component['types'])) {
-                $city = $component['long_name'];
-            }
+function getCountyFromCoordinates($lat, $lng) {
+    try {
+        $url = "https://geo.fcc.gov/api/census/block/find?lat={$lat}&lon={$lng}&format=json";
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        
+        $response = curl_exec($ch);
+        
+        if ($response === false) {
+            throw new Exception("CURL Error: " . curl_error($ch));
         }
         
-        return [$state, $county, $city];
+        curl_close($ch);
+        
+        $data = json_decode($response, true);
+        
+        if (isset($data['County']['name'])) {
+            // Remove the word "County" from the response
+            return str_replace(' County', '', $data['County']['name']);
+        }
+        
+        return null;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return null;
     }
-
-    return [null, null, null];
 }
 
-echo ("$county");
-    
+// Example usage with your coordinates
+$lat = 34.941314;
+$lng = -82.457265;
 
-// =======================================================
-// Use the goecode.php function to find county and state
-// =======================================================
-//$address = geocode("$lat,$lng");
-//echo("$address");
-//echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
-//$county = $address[2];
-//echo ("$county");
-//$state  = $address[3];
+$county = getCountyFromCoordinates($lat, $lng);
+echo "County: " . ($county ?? 'Not found');
 
 
 $sql = ("
