@@ -12,7 +12,8 @@
     error_reporting(E_ALL);
     
     // Set up logging
-    $logFile = __DIR__ . '/logs/error_log.txt'; // Adjust the path if necessary
+    $logFile = __DIR__ . '/logs/update_log.txt';
+    
     ini_set('log_errors', 'On');
     ini_set('error_log', $logFile);
     
