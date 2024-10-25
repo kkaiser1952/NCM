@@ -14,6 +14,7 @@
     require_once "GridSquare.php";
     require_once "geocode.php";
     require_once "config.php";
+    require_once "getCountyFromCoords.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -38,6 +39,16 @@ $w3wLL = $api->convertToCoordinates("$w3w");
 $grid   = gridsquare($lat, $lng);	 
    //echo "<br>grid: $grid, $country<br><br>";
 // End W3W work
+
+// Get county from getCountyFromCoords.php
+//$county = getCountyFromCoords($lat, $lng);
+
+// Since the function returns either an array or error string, you should check:
+$result = getCountyAndStateFromFCC($lat, $lng);
+//$result = getCountyFromCoords($lat, $lng);
+$countyName = is_array($result) ? $result['county'] : "Error: " . $result;  
+
+    echo "$counyName";
 
  // from the fcc DB and en table
 try {
@@ -94,20 +105,6 @@ try {
     echo "Error: " . $e->getMessage();
 } // End try/catch
 
-// Get county and state from FCC API
 
-$locationInfo = getFCCLocationData($lat, $lng);
-    if ($locationInfo) {
-        $county = $locationInfo['county'];
-        $fccState = $locationInfo['state'];
-        echo "<br>";
-        echo "FCC API Results:<br>";
-        echo "County: $county<br>";
-        echo "State: $fccState<br><br>";
-    } else {
-        echo "Failed to get location data from FCC API<br><br>";
-    }  
-
-    
 /* .us Version */
 ?>

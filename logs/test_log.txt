@@ -1,14 +1,60 @@
-2024-10-25 16:58:12 - Starting FCC location lookup script
-2024-10-25 16:58:12 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
-2024-10-25 16:58:12 - API URL: http://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
-2024-10-25 16:58:20 - cURL Error: Failed to connect to geo.fcc.gov port 80: Connection timed out
-2024-10-25 16:58:20 - Error in main script: Error: Failed to connect to geo.fcc.gov port 80: Connection timed out
-2024-10-25 16:58:20 - FCC location lookup script completed
-2024-10-25 16:59:04 - Starting FCC location lookup script
-2024-10-25 16:59:04 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
-2024-10-25 16:59:04 - API URL: https://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
-2024-10-25 16:59:04 - HTTP Status Code: 403
-2024-10-25 16:59:04 - Response length: 520 bytes
-2024-10-25 16:59:04 - JSON Decode Error: unexpected character
-2024-10-25 16:59:04 - Error in main script: Error: Invalid JSON response - unexpected character
-2024-10-25 16:59:04 - FCC location lookup script completed
+2024-10-25 17:24:52 - Starting FCC location lookup script
+2024-10-25 17:24:52 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
+2024-10-25 17:24:52 - API URL: https://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
+2024-10-25 17:24:52 - Attempting connection with full browser headers
+2024-10-25 17:24:52 - HTTP Status Code: 403
+2024-10-25 17:24:52 - Raw Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+
+2024-10-25 17:24:52 - FCC API is blocking server-side requests. Consider using their API key service or contacting their support.
+2024-10-25 17:24:52 - Error in main script: Error: FCC API access denied. Please check documentation for API key requirements.
+2024-10-25 17:24:52 - FCC location lookup script completed
+Test log entry at 2024-10-25 17:25:06
+Test script started at 2024-10-25 17:25:06
+2024-10-25 17:25:10 - Starting FCC location lookup script
+2024-10-25 17:25:10 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
+2024-10-25 17:25:10 - API URL: https://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
+2024-10-25 17:25:10 - Attempting connection with full browser headers
+2024-10-25 17:25:10 - HTTP Status Code: 403
+2024-10-25 17:25:10 - Raw Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+
+2024-10-25 17:25:10 - FCC API is blocking server-side requests. Consider using their API key service or contacting their support.
+2024-10-25 17:25:10 - Error in main script: Error: FCC API access denied. Please check documentation for API key requirements.
+2024-10-25 17:25:10 - FCC location lookup script completed
+2024-10-25 17:31:21 - Starting county lookup script
+2024-10-25 17:31:21 - Starting getCountyFromCoords with lat: 39.202, lon: -94.602
+2024-10-25 17:31:21 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602&y=39.202&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 17:31:21 - HTTP Status Code: 200
+2024-10-25 17:31:21 - Successfully retrieved County: Platte County, State: Missouri
+2024-10-25 17:31:21 - Success: County: Platte County, State: Missouri
+2024-10-25 17:31:21 - County lookup script completed
+2024-10-25 17:51:51 - Starting county lookup script
+2024-10-25 17:51:51 - Starting getCountyFromCoords with lat: 39.202, lon: -94.602
+2024-10-25 17:51:51 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602&y=39.202&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 17:51:52 - HTTP Status Code: 200
+2024-10-25 17:51:52 - Successfully retrieved County: Platte County, State: Missouri
+2024-10-25 17:51:52 - Success: County: Platte County, State: Missouri
+2024-10-25 17:51:52 - County lookup script completed
+Test log entry at 2024-10-25 17:52:01
+Test script started at 2024-10-25 17:52:01
