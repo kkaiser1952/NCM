@@ -74,17 +74,28 @@ try {
     // Fetch the result
     $result = $fccsql->fetch(PDO::FETCH_ASSOC);
     
-    if ($result) {
-        print_r($result); // Process the data as needed
-    } else {
-        echo "No record found for callsign: " . $callsign;
-    }
+    //print_r($result);
+
+        $fccid      = $result[fccid];
+		$Lname 		= ucfirst(strtolower($result[last])); 
+		$Fname 		= ucfirst(strtolower($result[first]));
+		$state	 	= $result[state];
+		$city       = $result[city];
+		$zip        = $result[zip];
+		$address 	= $result[address];
+		
+		//echo "<br><br> $Fname $Lname<br>$address<br>$city $state $zip";
+        
+        print_r($result);
+        
+        echo "<br><br>";
+
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 } // End try/catch
 
 // Get county and state from FCC API
-/*
+
 $locationInfo = getFCCLocationData($lat, $lng);
     if ($locationInfo) {
         $county = $locationInfo['county'];
@@ -95,90 +106,8 @@ $locationInfo = getFCCLocationData($lat, $lng);
         echo "State: $fccState<br><br>";
     } else {
         echo "Failed to get location data from FCC API<br><br>";
-    }
-*/    
-echo ("<br><br> into koords<br><br>");
-    $koords = geocode("$address"); 
-        print_r($koords);  
-			    // Array ( [0] => 46.906975 [1] => -92.489501 [2] => St. Louis [3] => MN ) 
-			$latitude  = $koords[0];  //echo "<br>lat= $latitude";
-			$longitude = $koords[1];  //echo " lon= $longitude";
-			$county	   = $koords[2];
-			$state	   = $koords[3];
-				if ($state == '') {
-					$state = $state2;
-				}
-/*
-			$gridd 	   = gridsquare($latitude, $longitude);
-			$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";  			
-			$home      = "$latitude,$longitude,$grid,$county,$state";
-*/
+    }  
+
     
 /* .us Version */
-/*
-function reverseGeocode($lat, $lng, $apiKey) {
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$apiKey}";
-    $response = file_get_contents($url);
-    $data = json_decode($response, true);
-
-    if(isset($data['results']) && !empty($data['results'])) {
-        $addressComponents = $data['results'][0]['address_components'];
-        $state = $county = $city = null;
-
-        foreach ($addressComponents as $component) {
-            if (in_array('administrative_area_level_1', $component['types'])) {
-                $state = $component['short_name'];
-            }
-            if (in_array('administrative_area_level_2', $component['types'])) {
-                $county = str_replace(' County', '', $component['long_name']);
-            }
-            if (in_array('locality', $component['types'])) {
-                $city = $component['long_name'];
-            }
-        }
-        
-        return [$state, $county, $city];
-    }
-
-    return [null, null, null];
-}
-
-echo ("<br>county: $county");
-    
-*/
-// =======================================================
-// Use the goecode.php function to find county and state
-// =======================================================
-/*
-$address = geocode("$lat,$lng");
-echo("$address");
-echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
-$county = $address[2];
-echo ("$county");
-$state  = $address[3];
-
-/*
-$sql = ("
-    UPDATE stations 
-        SET latitude    = $lat
-           ,longitude   = $lng
-           ,grid        = '$grid'
-           ,county      = '$county'
-           ,city        = '$city'
-           ,state       = '$state'
-           ,home        = '$lat,$lng,$grid,$county,$state,$city,$w3w'
-           ,fccid       = $fccid
-           ,active_call = 'y'
-           ,country     = '$country'
-           ,dttm        = NOW()
-           ,comment     = 'via: updateStationLocationWithW3W'
-           ,zip         = '$zip'
-     WHERE callsign = '$callsign'
-");         
-
-echo "<br><br>sql= <br>$sql";  
-*/
-
-//$db_found->exec($sql);
-
 ?>

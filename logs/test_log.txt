@@ -1,2 +1,14 @@
-Test log entry at 2024-10-24 23:13:43
-Test script started at 2024-10-24 23:13:43
+2024-10-25 16:58:12 - Starting FCC location lookup script
+2024-10-25 16:58:12 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
+2024-10-25 16:58:12 - API URL: http://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
+2024-10-25 16:58:20 - cURL Error: Failed to connect to geo.fcc.gov port 80: Connection timed out
+2024-10-25 16:58:20 - Error in main script: Error: Failed to connect to geo.fcc.gov port 80: Connection timed out
+2024-10-25 16:58:20 - FCC location lookup script completed
+2024-10-25 16:59:04 - Starting FCC location lookup script
+2024-10-25 16:59:04 - Starting getCountyAndStateFromFCC with lat: 39.202, lon: -94.602
+2024-10-25 16:59:04 - API URL: https://geo.fcc.gov/api/census/block/find?format=json&latitude=39.202&longitude=-94.602&showall=true
+2024-10-25 16:59:04 - HTTP Status Code: 403
+2024-10-25 16:59:04 - Response length: 520 bytes
+2024-10-25 16:59:04 - JSON Decode Error: unexpected character
+2024-10-25 16:59:04 - Error in main script: Error: Invalid JSON response - unexpected character
+2024-10-25 16:59:04 - FCC location lookup script completed

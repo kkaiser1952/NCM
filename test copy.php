@@ -1,7 +1,16 @@
 <?php
+/* getCountyAndStateFromFCC.php */
+/* Written: 2024-10-24
+   Updated: 2024-10-25
+*/
+
+// Define log file path globally
+$logFile = '/var/www/NCM/logs/test_log.txt';
+
+echo "In getCountyAndStateFromFCC <br><br>";
+
 function getCountyAndStateFromFCC($latitude, $longitude) {
-    // Set up logging
-    $logFile = '/var/www/NCM/logs/test_log.txt';
+    global $logFile;
     
     // Log function start with parameters
     error_log(date('Y-m-d H:i:s') . " - Starting getCountyAndStateFromFCC with lat: $latitude, lon: $longitude\n", 3, $logFile);
@@ -93,26 +102,26 @@ function getCountyAndStateFromFCC($latitude, $longitude) {
         error_log(date('Y-m-d H:i:s') . " - Error: Could not retrieve county or state from response\n", 3, $logFile);
         return "Error: Could not retrieve county or state.";
     }
-}
+} // End getCountyAndStateFromFCC()
 
 // Example usage:
 $latitude = 39.202;
 $longitude = -94.602;
 
 // Log the start of the script
-error_log(date('Y-m-d H:i:s') . " - Starting FCC location lookup script\n", 3, '/var/www/NCM/logs/test_log.txt');
+error_log(date('Y-m-d H:i:s') . " - Starting FCC location lookup script\n", 3, $logFile);
 
 $result = getCountyAndStateFromFCC($latitude, $longitude);
 
 if (is_array($result)) {
     $message = "County: " . $result['county'] . ", State: " . $result['state'];
     echo $message;
-    error_log(date('Y-m-d H:i:s') . " - Success: $message\n", 3, '/var/www/NCM/logs/test_log.txt');
+    error_log(date('Y-m-d H:i:s') . " - Success: $message\n", 3, $logFile);
 } else {
     echo $result;
-    error_log(date('Y-m-d H:i:s') . " - Error in main script: $result\n", 3, '/var/www/NCM/logs/test_log.txt');
+    error_log(date('Y-m-d H:i:s') . " - Error in main script: $result\n", 3, $logFile);
 }
 
 // Log the end of the script
-error_log(date('Y-m-d H:i:s') . " - FCC location lookup script completed\n", 3, '/var/www/NCM/logs/test_log.txt');
+error_log(date('Y-m-d H:i:s') . " - FCC location lookup script completed\n", 3, $logFile);
 ?>
