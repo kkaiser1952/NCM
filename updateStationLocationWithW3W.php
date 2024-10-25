@@ -1,6 +1,10 @@
 <!doctype html>
 <?php 
     /* updateStationLocationWithW3W.php */
+    /* Use this program to update the stations table */
+    /* Use the callsign to look up the street address from the */
+    /* en table in the FCC database. Then add the callsign and */
+    /* that address in the fields below.     */
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table */
     /* The value for county is from getCountyFromCoords.php using the census API */
     /* REQUIRED: a callsign and the What3Words address
@@ -144,7 +148,7 @@ $sql = "
 ";
 
 echo "SQL that would be executed:<br><pre>$sql</pre>";
-$db_found->exec($sql);
+//$db_found->exec($sql);
 
 /* .us Version */
 ?>
