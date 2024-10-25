@@ -1,9 +1,11 @@
 <!doctype html>
 <?php 
+    /* updateStationLocationWithW3W.php */
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table */
     /* REQUIRED: a callsign and the What3Words address
     /* Writte: 2021-10-15 */
     /* Updated: 2024-10-23 */
+    /* .us Version */
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
@@ -21,47 +23,99 @@
             $api = new Geocoder("5WHIM4GD");
    
 // Fill the callsign and w3w based on address from FCC 
- $callsign = 'KE6KEN';
- $w3w     = 'organ.pioneered.instances'; 
+ $callsign = 'WA0TJT';
+ $w3w = '///guiding.confusion.towards'; 
  
-
- // from the fcc DB and en table
- $fccsql = $db_found->prepare("
-	       SELECT  last 
-				 ,first
-				 ,state
-				 ,city
-				 ,zip
-				 ,CONCAT_WS(' ', address1, city, state, zip) AS address
-				 ,fccid
-			 FROM fcc_amateur.en
-			WHERE callsign = '$callsign' 
-			  AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$callsign')
-			ORDER BY fccid DESC 
-			LIMIT 0,1 ";		
-					
-    $fccsql->execute();
-	  	$result     = $fccsql->fetch();
-	 	$fccid 	    = $result[fccid];
-	 	$state      = $result[state];
-	 	$city       = $result[city];
-	 	$zip        = $result[zip];
-
-// ====================================
-// Now get the lat/lon from W3W site
-
-/* Array ( [country] => US [square] => Array ( [southwest] => Array ( [lng] => -82.457281 [lat] => 34.9413 ) [northeast] => Array ( [lng] => -82.457248 [lat] => 34.941327 ) ) [nearestPlace] => Travelers Rest, South Carolina [coordinates] => Array ( [lng] => -82.457265 [lat] => 34.941314 ) [words] => organ.pioneered.instances [language] => en [map] => https://w3w.co/organ.pioneered.instances )
-*/
-// ====================================
+// Get the grid and country from W3W
 $w3wLL = $api->convertToCoordinates("$w3w");
-//print_r($w3wLL);
    $lat    = $w3wLL['coordinates']['lat']; 
    $lng    = $w3wLL['coordinates']['lng'];   
    $country= $w3wLL['country'];
    
+   //print_r($w3wLL);
+   
    // Get the gridsquare from lat lng  
 $grid   = gridsquare($lat, $lng);	 
+   //echo "<br>grid: $grid, $country<br><br>";
+// End W3W work
 
+ // from the fcc DB and en table
+try {
+    $sql = "
+        SELECT last,
+               first,
+               state,
+               city,
+               zip,
+               CONCAT_WS(' ', address1, city, state, zip) AS address,
+               fccid
+        FROM fcc_amateur.en e1
+        WHERE callsign = :callsign 
+        AND e1.fccid = (
+            SELECT MAX(e2.fccid) 
+            FROM fcc_amateur.en e2 
+            WHERE e2.callsign = :callsign
+        )
+        ORDER BY e1.fccid DESC 
+        LIMIT 0,1";
+
+    $fccsql = $db_found->prepare($sql);
+
+    // Bind the parameter
+    $fccsql->bindParam(':callsign', $callsign, PDO::PARAM_STR);
+
+    // Manually substitute for debugging
+    $debugQuery = str_replace(':callsign', $db_found->quote($callsign), $sql);
+    //echo "<br>Debug Query:<br> " . $debugQuery . "<br><br>"; // Print the debug query
+
+    // Execute the statement
+    $fccsql->execute();
+
+    // Fetch the result
+    $result = $fccsql->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result) {
+        print_r($result); // Process the data as needed
+    } else {
+        echo "No record found for callsign: " . $callsign;
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+} // End try/catch
+
+// Get county and state from FCC API
+/*
+$locationInfo = getFCCLocationData($lat, $lng);
+    if ($locationInfo) {
+        $county = $locationInfo['county'];
+        $fccState = $locationInfo['state'];
+        echo "<br>";
+        echo "FCC API Results:<br>";
+        echo "County: $county<br>";
+        echo "State: $fccState<br><br>";
+    } else {
+        echo "Failed to get location data from FCC API<br><br>";
+    }
+*/    
+echo ("<br><br> into koords<br><br>");
+    $koords = geocode("$address"); 
+        print_r($koords);  
+			    // Array ( [0] => 46.906975 [1] => -92.489501 [2] => St. Louis [3] => MN ) 
+			$latitude  = $koords[0];  //echo "<br>lat= $latitude";
+			$longitude = $koords[1];  //echo " lon= $longitude";
+			$county	   = $koords[2];
+			$state	   = $koords[3];
+				if ($state == '') {
+					$state = $state2;
+				}
+/*
+			$gridd 	   = gridsquare($latitude, $longitude);
+			$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]";  			
+			$home      = "$latitude,$longitude,$grid,$county,$state";
+*/
+    
+/* .us Version */
+/*
 function reverseGeocode($lat, $lng, $apiKey) {
     $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$apiKey}";
     $response = file_get_contents($url);
@@ -89,20 +143,21 @@ function reverseGeocode($lat, $lng, $apiKey) {
     return [null, null, null];
 }
 
-echo ("$county");
+echo ("<br>county: $county");
     
-
+*/
 // =======================================================
 // Use the goecode.php function to find county and state
 // =======================================================
-//$address = geocode("$lat,$lng");
-//echo("$address");
-//echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
-//$county = $address[2];
-//echo ("$county");
-//$state  = $address[3];
+/*
+$address = geocode("$lat,$lng");
+echo("$address");
+echo("<br><br>$address[0], $address[1], $address[2], $address[3]");
+$county = $address[2];
+echo ("$county");
+$state  = $address[3];
 
-
+/*
 $sql = ("
     UPDATE stations 
         SET latitude    = $lat
@@ -122,6 +177,7 @@ $sql = ("
 ");         
 
 echo "<br><br>sql= <br>$sql";  
+*/
 
 //$db_found->exec($sql);
 
