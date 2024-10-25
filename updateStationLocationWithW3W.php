@@ -9,12 +9,27 @@
     
     ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
+	
+	// Add this debugging at the top of your updateStationLocationWithW3W.php file
+$currentDir = __DIR__;
+$filePath = $currentDir . '/getCountyFromCoords.php';
+echo "Current directory: $currentDir<br>";
+echo "Looking for file: $filePath<br>";
+echo "File exists: " . (file_exists($filePath) ? 'Yes' : 'No') . "<br>";
+echo "File readable: " . (is_readable($filePath) ? 'Yes' : 'No') . "<br>";
+echo "Script location: " . __FILE__ . "<br>";
+echo "Include path: " . get_include_path() . "<br>";
+echo "Document root: " . $_SERVER['DOCUMENT_ROOT'] . "<br>";
+echo "Current working directory: " . getcwd() . "<br>";
+
+// define('BASE_PATH', '/var/www/NCM/');
+// require_once BASE_PATH . "GridSquare.php";
 
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
     require_once "geocode.php";
     require_once "config.php";
-    require_once "getCountyFromCoords.php";
+    require_once "/var/www/NCM/getCountyFromCoords.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -41,14 +56,16 @@ $grid   = gridsquare($lat, $lng);
 // End W3W work
 
 // Get county from getCountyFromCoords.php
-//$county = getCountyFromCoords($lat, $lng);
+$countyResult = getCountyFromCoords($lat, $lng);
+if (is_array($countyResult)) {
+    $county = $countyResult['county'];
+    $state = $countyResult['state'];
+    echo "County: $county, State: $state";
+} else {
+    echo "Error getting county: " . $countyResult;
+}  
 
-// Since the function returns either an array or error string, you should check:
-$result = getCountyAndStateFromFCC($lat, $lng);
-//$result = getCountyFromCoords($lat, $lng);
-$countyName = is_array($result) ? $result['county'] : "Error: " . $result;  
-
-    echo "$counyName";
+    //echo "$county";
 
  // from the fcc DB and en table
 try {
@@ -105,6 +122,26 @@ try {
     echo "Error: " . $e->getMessage();
 } // End try/catch
 
+$sql = "
+    UPDATE stations 
+    SET latitude = $lat,
+        longitude = $lng,
+        grid = '$grid',
+        county = '$county',
+        city = '$city',
+        state = '$state',
+        home = '$lat,$lng,$grid,$county,$state,$city,$w3w',
+        fccid = $fccid,
+        active_call = 'y',
+        country = '$country',
+        dttm = NOW(),
+        comment = 'via: updateStationLocationWithW3W',
+        zip = '$zip'
+    WHERE callsign = '$callsign'
+";
+
+echo "SQL that would be executed:<br><pre>$sql</pre>";
+//$db_found->exec($sql);
 
 /* .us Version */
 ?>
