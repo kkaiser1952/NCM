@@ -38,7 +38,7 @@
 			WHERE callsign = '$callsign' 
 			  AND fccid = (SELECT MAX(fccid) FROM fcc_amateur.en WHERE callsign = '$callsign')
 			ORDER BY fccid DESC 
-			LIMIT 0,1 ");		
+			LIMIT 0,1 ";		
 					
     $fccsql->execute();
 	  	$result     = $fccsql->fetch();
