@@ -2,6 +2,7 @@
 <?php 
     /* updateStationLocationWithW3W.php */
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table */
+    /* The value for county is from getCountyFromCoords.php using the census API */
     /* REQUIRED: a callsign and the What3Words address
     /* Writte: 2021-10-15 */
     /* Updated: 2024-10-23 */
@@ -30,6 +31,7 @@ echo "Current working directory: " . getcwd() . "<br>";
     require_once "geocode.php";
     require_once "config.php";
     require_once "/var/www/NCM/getCountyFromCoords.php";
+    //require_once "getCountyFromCoords.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -136,12 +138,13 @@ $sql = "
         country = '$country',
         dttm = NOW(),
         comment = 'via: updateStationLocationWithW3W',
-        zip = '$zip'
+        zip = '$zip',
+        w3w = '$w3w'
     WHERE callsign = '$callsign'
 ";
 
 echo "SQL that would be executed:<br><pre>$sql</pre>";
-//$db_found->exec($sql);
+$db_found->exec($sql);
 
 /* .us Version */
 ?>

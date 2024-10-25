@@ -82,3 +82,23 @@ Test script started at 2024-10-25 17:52:01
 2024-10-25 18:57:07 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602862&y=39.202903&benchmark=Public_AR_Current&vintage=Current_Current&format=json
 2024-10-25 18:57:07 - HTTP Status Code: 200
 2024-10-25 18:57:07 - Successfully retrieved County: Platte County, State: Missouri
+2024-10-25 19:00:07 - Starting getCountyFromCoords with lat: 39.202903, lon: -94.602862
+2024-10-25 19:00:07 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602862&y=39.202903&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 19:00:07 - HTTP Status Code: 200
+2024-10-25 19:00:07 - Successfully retrieved County: Platte, State: Missouri
+2024-10-25 19:01:57 - Starting getCountyFromCoords with lat: 39.419806, lon: -94.658065
+2024-10-25 19:01:57 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.658065&y=39.419806&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 19:01:57 - HTTP Status Code: 200
+2024-10-25 19:01:57 - Successfully retrieved County: Platte, State: Missouri
+2024-10-25 19:03:05 - Starting getCountyFromCoords with lat: 39.202903, lon: -94.602862
+2024-10-25 19:03:05 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602862&y=39.202903&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 19:03:05 - HTTP Status Code: 200
+2024-10-25 19:03:05 - Successfully retrieved County: Platte, State: Missouri
+2024-10-25 19:05:10 - Starting getCountyFromCoords with lat: 39.202903, lon: -94.602862
+2024-10-25 19:05:10 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602862&y=39.202903&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 19:05:10 - HTTP Status Code: 200
+2024-10-25 19:05:10 - Successfully retrieved County: Platte, State: Missouri
+2024-10-25 19:15:45 - Starting getCountyFromCoords with lat: 39.202903, lon: -94.602862
+2024-10-25 19:15:45 - API URL: https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=-94.602862&y=39.202903&benchmark=Public_AR_Current&vintage=Current_Current&format=json
+2024-10-25 19:15:45 - HTTP Status Code: 200
+2024-10-25 19:15:45 - Successfully retrieved County: Platte, State: Missouri
