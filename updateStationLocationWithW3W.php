@@ -6,7 +6,7 @@
     /* en table in the FCC database. Then add the callsign and */
     /* that address in the fields below.     */
     /* This program uses the W3W address to calculate lat/lon, grid, county, state etc. and update the stations table */
-    /* The value for county is from getCountyFromCoords.php using the census API */
+    /* The value for county is from getCountyFromCensus.php using the census API */
     /* REQUIRED: a callsign and the What3Words address
     /* Writte: 2021-10-15 */
     /* Updated: 2024-10-23 */
@@ -17,7 +17,7 @@
 	
 	// Add this debugging at the top of your updateStationLocationWithW3W.php file
 $currentDir = __DIR__;
-$filePath = $currentDir . '/getCountyFromCoords.php';
+//$filePath = $currentDir . '/getCountyFromCensus.php';
 echo "Current directory: $currentDir<br>";
 echo "Looking for file: $filePath<br>";
 echo "File exists: " . (file_exists($filePath) ? 'Yes' : 'No') . "<br>";
@@ -34,8 +34,8 @@ echo "Current working directory: " . getcwd() . "<br>";
     require_once "GridSquare.php";
     require_once "geocode.php";
     require_once "config.php";
-    require_once "/var/www/NCM/getCountyFromCoords.php";
-    //require_once "getCountyFromCoords.php";
+    //require_once "/var/www/NCM/getCountyFromCensus.php";
+    require_once "getCountyFromCensus.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -61,8 +61,8 @@ $grid   = gridsquare($lat, $lng);
    //echo "<br>grid: $grid, $country<br><br>";
 // End W3W work
 
-// Get county from getCountyFromCoords.php
-$countyResult = getCountyFromCoords($lat, $lng);
+// Get county from getCountyFromCensus.php
+$countyResult = getCountyFromCensus($lat, $lng);
 if (is_array($countyResult)) {
     $county = $countyResult['county'];
     $state = $countyResult['state'];
