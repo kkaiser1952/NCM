@@ -45,8 +45,8 @@ echo "Current working directory: " . getcwd() . "<br>";
             $api = new Geocoder("5WHIM4GD");
    
 // Fill the callsign and w3w based on address from FCC 
- $callsign = 'AD0YN';
- $w3w = '///guiding.confusion.towards'; 
+ $callsign = 'K4STO';
+ $w3w = '///fizzes.exit.blubber'; 
  
 // Get the grid and country from W3W
 $w3wLL = $api->convertToCoordinates("$w3w");
