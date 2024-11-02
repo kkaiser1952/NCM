@@ -29,13 +29,16 @@ echo "Current working directory: " . getcwd() . "<br>";
 
 // define('BASE_PATH', '/var/www/NCM/');
 // require_once BASE_PATH . "GridSquare.php";
+//var/www/html
 
     require_once "dbConnectDtls.php";
     require_once "GridSquare.php";
     require_once "geocode.php";
     require_once "config.php";
     //require_once "/var/www/NCM/getCountyFromCensus.php";
-    require_once "getCountyFromCensus.php";
+    //require_once "getCounty_by_Census.php"
+    // require_once "getCountyFromCensus.php";
+    require_once "/var/www/NCM/getCounty_by_Census.php";
     
     // This is for what3words usage
     /* https://developer.what3words.com/public-api/docs#convert-to-3wa */
@@ -45,8 +48,8 @@ echo "Current working directory: " . getcwd() . "<br>";
             $api = new Geocoder("5WHIM4GD");
    
 // Fill the callsign and w3w based on address from FCC 
- $callsign = 'K4STO';
- $w3w = '///fizzes.exit.blubber'; 
+ $callsign = 'W0DLK';
+ $w3w = '///guiding.confusion.towards'; 
  
 // Get the grid and country from W3W
 $w3wLL = $api->convertToCoordinates("$w3w");
@@ -62,7 +65,7 @@ $grid   = gridsquare($lat, $lng);
 // End W3W work
 
 // Get county from getCountyFromCensus.php
-$countyResult = getCountyFromCensus($lat, $lng);
+$countyResult = getCounty_by_Census($lat, $lng);
 if (is_array($countyResult)) {
     $county = $countyResult['county'];
     $state = $countyResult['state'];
