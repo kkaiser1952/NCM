@@ -11,6 +11,8 @@
     /* Writte: 2021-10-15 */
     /* Updated: 2024-10-23 */
     /* .us Version */
+    
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -19,12 +21,11 @@ error_reporting(E_ALL);
 require_once "dbConnectDtls.php";
 require_once "GridSquare.php";
 require_once "geocode.php";
-require_once "geocoder.php";
 require_once "config.php";
 require_once "/var/www/NCM/getCounty_by_Census.php"; // Ensure this path is correct
 
 // Instantiate W3W API and set callsign
-$api = new Geocoder("5WHIM4GD");
+//$api = new Geocode("5WHIM4GD");
 $callsign = 'W0DLK';
 $w3w = '///guiding.confusion.towards';
 
