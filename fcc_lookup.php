@@ -7,7 +7,7 @@
 	require_once "GridSquare.php";
 	
 function fcc_lookup($cs1) {
-	echo "cs1 at top= $cs1";
+	//echo "cs1 at top= $cs1";
 
 	// This SQL gets the information from the FCC database
 $sql = ("SELECT * from fcc_amateur.en where callsign = 'WA0TJT'");
