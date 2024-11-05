@@ -5,8 +5,8 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 
 $csbase = $cs1;
 // testing
-$csbase = 'wz9v';
-echo "$csbase<br>";
+//$csbase = 'wz9v';
+//echo "$csbase<br>";
 
 	$fccsql = $db_found->prepare("
 	       SELECT  replace(last,\"'\",\"''\") as last 
@@ -40,7 +40,7 @@ echo "$csbase<br>";
 		
 				// This happens either way but really don't matter
 				$koords    = geocode("$address"); 
-				print_r($koords);  
+				//print_r($koords);  
 				    // Array ( [0] => 46.906975 [1] => -92.489501 [2] => St. Louis [3] => MN ) 
 				$latitude  = $koords[0];  //echo "<br>lat= $latitude";
 				$longitude = $koords[1];  //echo " lon= $longitude";
