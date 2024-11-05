@@ -4,6 +4,20 @@ require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
 
 function geocode($address){
+    
+    // Specify the exact path for the log file
+    $log_path = '/var/www/html/geocode_debug.log';
+    
+    // Test if we can write to the directory
+    if (!is_writable('/var/www/html/')) {
+        error_log("Directory not writable: /var/www/html/");
+        // Continue with function but log to system error log
+    }
+    
+    // Add timestamp and start logging
+    $timestamp = date('[Y-m-d H:i:s] ');
+    error_log($timestamp . "Starting geocode for address: $address\n", 3, $log_path);
+    
  
     // url encode the address
     $address = urlencode($address); //echo "$address";
@@ -12,11 +26,18 @@ function geocode($address){
      
     // google map geocode api url
     $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$google_api_key}";
+    
+    // Log the constructed URL (maybe remove in production for security)
+    error_log(date('[Y-m-d H:i:s] ') . "API URL: $url\n", 3, $log_file);
+    
      
     // get the json response
     $resp_json = file_get_contents($url);
     
-    //echo "$resp_json<br><br>";
+    error_log($timestamp . "Response received\n", 3, $log_path);
+    
+    $resp = json_decode($resp_json, true);
+    
      
     // decode the json
     $resp = json_decode($resp_json, true);
@@ -90,16 +111,15 @@ function geocode($address){
 //$address = "16640 Tara Rd. Lincoln Ar";
 
 //$address = "2310 Aldrich Ave S Apt 110 Minneapolis MN 55405";
-//$address = "6024 N Ames Kansas City MO 64151";
+$address = "6024 N Ames Kansas City MO 64151";
 //$address = '333 RASPBERRY LN MONUMENT CO 80132';
 //$address = '73 Summit Avenue NE Swisher IA 52338';
 
 
 //$address = '39.503,-93.602';
 //$address = '64154';  zip code works
-/*
+
 $koords = geocode("$address");
 echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
-*/
 
 ?>

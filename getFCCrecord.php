@@ -5,8 +5,8 @@ require_once "GridSquare.php";  /* added 2017-09-03 */
 
 $csbase = $cs1;
 // testing
-//$csbase = 'wz9v';
-//echo $csbase;
+$csbase = 'wz9v';
+echo "$csbase<br>";
 
 	$fccsql = $db_found->prepare("
 	       SELECT  replace(last,\"'\",\"''\") as last 
@@ -39,7 +39,8 @@ $csbase = $cs1;
 				$firstLogIn = 1;
 		
 				// This happens either way but really don't matter
-				$koords    = geocode("$address"); //print_r($koords);  
+				$koords    = geocode("$address"); 
+				print_r($koords);  
 				    // Array ( [0] => 46.906975 [1] => -92.489501 [2] => St. Louis [3] => MN ) 
 				$latitude  = $koords[0];  //echo "<br>lat= $latitude";
 				$longitude = $koords[1];  //echo " lon= $longitude";
@@ -54,7 +55,7 @@ $csbase = $cs1;
 				$comments 	= "First Log In";  // adding state to this works
 				
 				
-echo ("<br>Lname: $Lname state2: $state2, city: $city, address: $address zip: $zip");
+//echo ("<br>Lname: $Lname state2: $state2, city: $city, address: $address zip: $zip");
 				
                     include "insertToStations.php";  // added 2020-12-12 to update the stations table
            
