@@ -2,6 +2,7 @@
 // geocode.php
 // function to geocode address using OpenStreetMap's Nominatim service
 // function to geocode address, it will return false if unable to geocode address
+// Re-Written: 2024-11-05 help from Claude AI
 
 require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
