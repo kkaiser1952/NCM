@@ -1,125 +1,104 @@
 <?php
+// geocode.php
+// function to geocode address using OpenStreetMap's Nominatim service
 // function to geocode address, it will return false if unable to geocode address
+
 require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
 
 function geocode($address){
-    
-    // Specify the exact path for the log file
-    $log_path = '/var/www/html/geocode_debug.log';
-    
-    // Test if we can write to the directory
-    if (!is_writable('/var/www/html/')) {
-        error_log("Directory not writable: /var/www/html/");
-        // Continue with function but log to system error log
-    }
-    
-    // Add timestamp and start logging
-    $timestamp = date('[Y-m-d H:i:s] ');
-    error_log($timestamp . "Starting geocode for address: $address\n", 3, $log_path);
-    
- 
-    // url encode the address
-    $address = urlencode($address); //echo "$address";
-    
-    $google_api_key = getenv('GOOGLE_MAPS_API_KEY'); 
-     
-    // google map geocode api url
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$google_api_key}";
-    
-    // Log the constructed URL (maybe remove in production for security)
-    error_log(date('[Y-m-d H:i:s] ') . "API URL: $url\n", 3, $log_file);
-    
-     
-    // get the json response
-    $resp_json = file_get_contents($url);
-    
-    error_log($timestamp . "Response received\n", 3, $log_path);
-    
-    $resp = json_decode($resp_json, true);
-    
-     
-    // decode the json
-    $resp = json_decode($resp_json, true);
-    
-    //var_dump($resp);
+   // Clean the address first
+   $address = cleanAddress($address);
    
- 
-    // response status will be 'OK', if able to geocode given address 
-    if($resp['status']=='OK'){
- 
-        // get the important data
-        $lati = $resp['results'][0]['geometry']['location']['lat'];
-        $longi = $resp['results'][0]['geometry']['location']['lng'];
-        
-		// Routine to find the County name
-        foreach ($resp['results'][0]['address_components'] as $comp) {
-		//loop through each component in ['address_components']
-			foreach ($comp['types'] as $currType){
-			//for every type in the current component, check if it = the check
-				if($currType == 'administrative_area_level_2'){
-					//echo $comp['long_name'];
-					$county = $comp['long_name'];
-					$county = str_replace('County','',$county);
-        		}
-			}
-        }        
-        
-        // Routine to find the State code
-        foreach ($resp['results'][0]['address_components'] as $comp) {
-		//loop through each component in ['address_components']
-			foreach ($comp['types'] as $currType){
-			//for every type in the current component, check if it = the check
-				if($currType == 'administrative_area_level_1'){
-					//echo $comp['long_name'];
-					$state = $comp['short_name'];
-        		}
-			}
-        }
-        
-        $formatted_address = $resp['results'][0]['formatted_address'];
-         
-        // verify if data is complete
-        if($lati && $longi && $formatted_address){
-         
-            // put the data in the array
-            
-            $koords = array();            
-             
-            array_push(
-                $koords, 
-                $lati, 
-                $longi,
-                $county,
-                $state
-                    /*
-                    , 
-                    $formatted_address */
-                );
-            // print_r($koords); // Array ( [0] => 39.2029101 [1] => -94.6028748 [2] => Platte [3] => MO )
-             				   // Array ( [0] => 44.9596871 [1] => -93.2895616 [2] => Hennepin [3] => MN ) 
-            return $koords;             
-        }else{
-            return false;
-        }
-         
-    }else{
-        return false;
-    }
+   // Add delay to prevent rate limiting (1 second)
+   sleep(1);
+   
+   // url encode the cleaned address
+   $address = urlencode($address);
+   
+   $url = "https://nominatim.openstreetmap.org/search?format=json&q={$address}&addressdetails=1";
+   
+   $opts = array(
+       'http' => array(
+           'header' => array("User-Agent: MyPHPApp/1.0")
+       )
+   );
+   $context = stream_context_create($opts);
+   
+   $resp_json = file_get_contents($url, false, $context);
+   $resp = json_decode($resp_json, true);
+   
+   if(!empty($resp) && isset($resp[0])) {
+       // Format coordinates to 6 decimal places
+       $lati = number_format((float)$resp[0]['lat'], 6);
+       $longi = number_format((float)$resp[0]['lon'], 6);
+       
+       $state = '';
+       $county = '';
+       
+       if(isset($resp[0]['address'])) {
+           if(isset($resp[0]['address']['state'])) {
+               $state = getStateAbbreviation($resp[0]['address']['state']);
+           }
+           
+           if(isset($resp[0]['address']['county'])) {
+               $county = $resp[0]['address']['county'];
+               $county = str_replace(' County', '', $county);
+           }
+       }
+       
+       if($lati && $longi && $county && $state){
+           $koords = array();            
+           array_push($koords, $lati, $longi, $county, $state);
+           return $koords;             
+       }
+   }
+   return false;
 }
 
-//$address = "16640 Tara Rd. Lincoln Ar";
+function cleanAddress($address) {
+   // Remove apartment numbers, unit numbers, etc.
+   $patterns = array(
+       '/\bAPT\b.*?\b/i',      // Matches "APT" and following text
+       '/\bUNIT\b.*?\b/i',     // Matches "UNIT" and following text
+       '/\b#\d+\b/',           // Matches "#" followed by numbers
+       '/\bSTE\b.*?\b/i',      // Matches "STE" (Suite) and following text
+       '/,.*?(?=\b[A-Z]{2}\b)/'// Removes everything between comma and state code
+   );
+   
+   $address = preg_replace($patterns, '', $address);
+   
+   // Remove extra spaces and trim
+   $address = preg_replace('/\s+/', ' ', $address);
+   return trim($address);
+}
 
-//$address = "2310 Aldrich Ave S Apt 110 Minneapolis MN 55405";
-$address = "6024 N Ames Kansas City MO 64151";
-//$address = '333 RASPBERRY LN MONUMENT CO 80132';
-//$address = '73 Summit Avenue NE Swisher IA 52338';
+function getStateAbbreviation($state_name) {
+   $states = array(
+       'Alabama' => 'AL', 'Alaska' => 'AK', 'Arizona' => 'AZ', 'Arkansas' => 'AR',
+       'California' => 'CA', 'Colorado' => 'CO', 'Connecticut' => 'CT', 'Delaware' => 'DE',
+       'Florida' => 'FL', 'Georgia' => 'GA', 'Hawaii' => 'HI', 'Idaho' => 'ID',
+       'Illinois' => 'IL', 'Indiana' => 'IN', 'Iowa' => 'IA', 'Kansas' => 'KS',
+       'Kentucky' => 'KY', 'Louisiana' => 'LA', 'Maine' => 'ME', 'Maryland' => 'MD',
+       'Massachusetts' => 'MA', 'Michigan' => 'MI', 'Minnesota' => 'MN', 'Mississippi' => 'MS',
+       'Missouri' => 'MO', 'Montana' => 'MT', 'Nebraska' => 'NE', 'Nevada' => 'NV',
+       'New Hampshire' => 'NH', 'New Jersey' => 'NJ', 'New Mexico' => 'NM', 'New York' => 'NY',
+       'North Carolina' => 'NC', 'North Dakota' => 'ND', 'Ohio' => 'OH', 'Oklahoma' => 'OK',
+       'Oregon' => 'OR', 'Pennsylvania' => 'PA', 'Rhode Island' => 'RI', 'South Carolina' => 'SC',
+       'South Dakota' => 'SD', 'Tennessee' => 'TN', 'Texas' => 'TX', 'Utah' => 'UT',
+       'Vermont' => 'VT', 'Virginia' => 'VA', 'Washington' => 'WA', 'West Virginia' => 'WV',
+       'Wisconsin' => 'WI', 'Wyoming' => 'WY'
+   );
+   
+   return isset($states[$state_name]) ? $states[$state_name] : $state_name;
+}
 
-
-//$address = '39.503,-93.602';
-//$address = '64154';  zip code works
-
-$koords = geocode("$address");
-echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
-
+// Test with single address
+$address = "1700 Lindberg Rd, Apt 126 West Lafayette IN 47906 7318";
+$koords = geocode($address);
+if($koords) {
+   echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
+} else {
+   echo "Could not geocode address";
+}
 ?>
