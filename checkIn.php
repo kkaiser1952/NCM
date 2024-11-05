@@ -21,9 +21,9 @@ require_once "getRealIpAddr.php";
 // Clean up the incoming data which should look like this  :439:aa0ax:::0:TE0ST
 if(isset($_POST['q'])){
     $q = strip_tags(substr($_POST["q"],0, 100));
-   // echo ("$q"); 
-      //  undefined:3551:W0DLK:DEBORAH KAISER:undefined:0:TE0ST:0:::A
-      
+    // echo ("$q"); 
+    //  undefined:3551:W0DLK:DEBORAH KAISER:undefined:0:TE0ST:0:::A
+    // If NEW: undefined:13022:WZ9T:: 0 :0:TE0ST:0:::  
 }
 if(isset($q)){ 
 } 
@@ -79,7 +79,7 @@ $ispb   = $parts[4];                //echo "ispb = $ispb";
 //$cspart = preg_split('/ (/|-) /', $cs1);  // same as explode but for / or - to split. the \ is an escapt mark.
 $cspart = preg_split("/[\/|\-]+/", $cs0); // I THINK THIS WORKS!
 
-$csbase = $cspart[0];
+$csbase = $cspart[0];  // callsign base 
 
 $Tname 	= ucfirst($parts[3]);       // The first or both names of this person depending how it was entered
 $fdcat  = $parts[8];                //echo "fdcat: $fdcat";
@@ -160,6 +160,8 @@ $ipaddress = getRealIpAddr();
 	$home       = $result['home'];       $phone    = $result['phone'];
 	$comments  	= "";	  
 	$city       = $result['city'];      
+	
+	//echo "@163 lat= $latitude "; // empty, why?
 	
 	//echo "stmt2: $cs1, $county, $state, $grid, $phone <br>";
 	
@@ -328,6 +330,7 @@ if ($Lname == "") {$Lname = "$Lname2";}
 				        \"$tactical\", \"$email\", \"$latitude\", \"$longitude\", \"$creds\", \"$activity2\", \"$comments\",
 				        \"$timeLogIn\", \"$netcall\", \"$subNetOfID\", \"$frequency\", \"$county\", \"$state\", \"$country\", \"$district\",
 				        \"$firstLogIn\", \"$pb\", \"$tt\", \"$home\", \" \", \"$fdcat\", \"$fdsec\", \"$traffic\", \"$max_row_num  \", \"$city\" )"; 
+//echo $sql;
 	
 	$db_found->exec($sql);
 	

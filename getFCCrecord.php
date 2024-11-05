@@ -4,7 +4,9 @@ require_once "geocode.php";     /* added 2017-09-03 */
 require_once "GridSquare.php";  /* added 2017-09-03 */
 
 $csbase = $cs1;
-//$csbase = 'wa0tjt';
+// testing
+//$csbase = 'wz9v';
+//echo $csbase;
 
 	$fccsql = $db_found->prepare("
 	       SELECT  replace(last,\"'\",\"''\") as last 
@@ -52,7 +54,7 @@ $csbase = $cs1;
 				$comments 	= "First Log In";  // adding state to this works
 				
 				
-//echo ("Lname: $Lname state2: $state2, city: $city, address: $address zip: $zip");
+echo ("<br>Lname: $Lname state2: $state2, city: $city, address: $address zip: $zip");
 				
                     include "insertToStations.php";  // added 2020-12-12 to update the stations table
            
