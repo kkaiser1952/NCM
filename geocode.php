@@ -67,12 +67,16 @@ function cleanAddress($address) {
    return trim($address);
 }
 
+////////// ***** DON'T LEAVE THIS STUFF UNCOMMENTED *******//////
+// Only test locally if no net is in operation //
+/////////////////////////////////////////////////////////////////
+
 // Test with single address
-$address = "1700 Lindberg Rd, Apt 126 West Lafayette IN 47906 7318";
-$koords = geocode($address);
-if($koords) {
-   echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
-} else {
-   echo "Could not geocode address";
-}
+//$address = "1700 Lindberg Rd, Apt 126 West Lafayette IN 47906 7318";
+//$koords = geocode($address);
+//if($koords) {
+//   echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
+//} else {
+//   echo "Could not geocode address";
+//}
 ?>
