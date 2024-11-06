@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////
     
     // Step 1: Enter the callsign
-$callsign = "w0dlk";
+$callsign = "kc0yso";
     
 // Error checking/reporting    
 ini_set('display_errors', 1);
@@ -158,7 +158,50 @@ if (isset($latitude) && isset($longitude)) {
 $home = "$latitude,$longitude,$grid,$county,$state,$city,$neww3w";  // Use double quotes, not single quotes
 echo "<br>home: $home<br>";  // Use double quotes to show the actual values
 
-    // Step 7: Create SQL to update stations
+// Function for proper case that handles apostrophes
+function properCase($string) {
+    // Split on apostrophes to handle names like O'Neil
+    $parts = explode("'", $string);
+    // Proper case each part
+    $parts = array_map(function($part) {
+        return ucwords(strtolower(trim($part)));
+    }, $parts);
+    // Rejoin with apostrophes
+    return implode("'", $parts);
+} // End properCase()
+
+    // Step 7: Get district values
+$district = null;  // Default to null
+$district_sql = "SELECT `District` 
+                   FROM HPD 
+                  WHERE county = :county 
+                    AND state = :state 
+                  LIMIT 1";
+
+try {
+    $stmt_district = $db_found->prepare($district_sql);
+    $stmt_district->bindParam(':county', $county);
+    $stmt_district->bindParam(':state', $state);
+    $stmt_district->execute();
+    
+    if ($row = $stmt_district->fetch(PDO::FETCH_ASSOC)) {
+        $district = $row['District'];
+        $district = strtoupper($district);
+    }
+} catch(PDOException $e) {
+    echo "<br>Error looking up district: " . $e->getMessage();
+} // End try or district look-up
+
+
+    // Step 8: Create SQL to update stations
+// Format variables before binding
+$last = properCase($last);          // Handles O'Neil correctly
+$city = properCase($city);          // Makes "new york" into "New York"
+$county = properCase($county);      // Makes "san diego" into "San Diego"
+$state = strtoupper($state);        // Makes "new york" into "New York"
+$callsign = strtoupper($callsign);  // Ensures callsign is uppercase
+
+
 $sql = "UPDATE stations SET
             `latitude` = :latitude,
             `longitude` = :longitude,
@@ -166,6 +209,7 @@ $sql = "UPDATE stations SET
             `city` = :city,
             `county` = :county,
             `state` = :state,
+            `District` = :district,
             `grid` = :grid,
             `home` = :home,
             `zip` = :zip,
@@ -185,6 +229,7 @@ try {
     $stmt->bindParam(':city', $city);
     $stmt->bindParam(':county', $county);
     $stmt->bindParam(':state', $state);
+    $stmt->bindParam(':district', $district);
     $stmt->bindParam(':grid', $grid);
     $stmt->bindParam(':home', $home);
     $stmt->bindParam(':zip', $zip);
