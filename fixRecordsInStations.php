@@ -20,29 +20,56 @@ require_once "config.php";
 $callsign = "wa0tjt";  //then: wd4nit, wd5gmx
     
     // Step 2-3: Get address, first, last from the FCC en
+// Prepare the SQL query with parameters
 $sql = "
-SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.address1, e1.city, e1.state, e1.zip
+SELECT e1.fccid, e1.callsign, e1.first, e1.last, CONCAT(e1.address1, '  ', e1.city, '  ', e1.state, '  ', e1.zip) as address
   FROM fcc_amateur.en e1
   JOIN (
     SELECT MAX(fccid) as max_fccid 
     FROM fcc_amateur.en 
-    WHERE callsign = '$callsign'
+    WHERE callsign = :callsign
   ) e2 ON e1.fccid = e2.max_fccid
-  WHERE e1.callsign = '$callsign'
-  LIMIT 1"; 
+  WHERE e1.callsign = :callsign
+  LIMIT 1";
 
 // Debug output
-echo "<br>$sql<br>";
+echo "<br>" . htmlspecialchars($sql) . "<br>";
 
-$stmt = $db_found->prepare($sql);
-$stmt->execute();
-
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+try {
+    // Prepare and execute the statement
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':callsign', $callsign);
+    $stmt->execute();
+    
+    // Fetch the results
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result) {
+        // Store each column in a variable
+        $fccid = $result['fccid'];
+        $callsign = $result['callsign'];
+        $first = $result['first'];
+        $last = $result['last'];
+        $address = $result['address'];
+        
+        // Now you can use these variables in your code
+        // For example, you could output them:
+        echo "FCCID: " . htmlspecialchars($fccid) . "<br>";
+        echo "Callsign: " . htmlspecialchars($callsign) . "<br>";
+        echo "Name: " . htmlspecialchars($first) . " " . htmlspecialchars($last) . "<br>";
+        echo "Address: " . htmlspecialchars($address) . "<br>";
+    } else {
+        echo "No results found for callsign: " . htmlspecialchars($callsign);
+    }
+} catch (PDOException $e) {
+    // Handle any database errors
+    echo "Database error: " . htmlspecialchars($e->getMessage());
+}
 
     // Step 4: Use geocode.php to get all the detail location information
 $koords = geocode($address);
 if($koords) {
-    //echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]");
+    echo("<br><br>$koords[0], $koords[1], $koords[2], $koords[3]<br>");
     $latitude = $koords[0];
     $longitude = $koords[1];
     $county = $koords[2];
