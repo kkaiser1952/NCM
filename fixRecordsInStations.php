@@ -24,7 +24,8 @@ $callsign = "w0dlk";  //then: wd4nit, wd5gmx
     // Step 2-3: Get address, first, last from the FCC en
 // Prepare the SQL query with parameters
 $sql = "
-SELECT e1.fccid, e1.callsign, e1.first, e1.last, CONCAT(e1.address1, '  ', e1.city, '  ', e1.state, '  ', e1.zip) as address
+SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.city, e1.zip,
+    CONCAT(e1.address1, '  ', e1.city, '  ', e1.state, '  ', e1.zip) as address
   FROM fcc_amateur.en e1
   JOIN (
     SELECT MAX(fccid) as max_fccid 
@@ -35,7 +36,7 @@ SELECT e1.fccid, e1.callsign, e1.first, e1.last, CONCAT(e1.address1, '  ', e1.ci
   LIMIT 1";
 
 // Debug output
-// echo "<br>" . htmlspecialchars($sql) . "<br>";
+ //echo "<br>" . htmlspecialchars($sql) . "<br>";
 
 try {
     // Prepare and execute the statement
@@ -53,6 +54,8 @@ try {
         $first = $result['first'];
         $last = $result['last'];
         $address = $result['address'];
+        $city = $result['city'];
+        
         
         // Now you can use these variables in your code
         // For example, you could output them:
@@ -60,6 +63,7 @@ try {
         echo "Callsign: " . htmlspecialchars($callsign) . "<br>";
         echo "Name: " . htmlspecialchars($first) . " " . htmlspecialchars($last) . "<br>";
         echo "Address: " . htmlspecialchars($address) . "<br>";
+        echo "City: " . htmlspecialchars($city) . "<br>";
     } else {
         echo "No results found for callsign: " . htmlspecialchars($callsign);
     }
@@ -146,7 +150,8 @@ if (isset($latitude) && isset($longitude)) {
 }
 
 // Step 6: Create Home
-$home = "$latitude,$longitude,$grid,$county,$state,$city,///$neww3w";  // Use double quotes, not single quotes
-echo "<br>$home<br>";  // Use double quotes to show the actual values
+// Example: 39.202903,-94.602862,EM29QE,Platte,MO,KANSAS CITY,///guiding.confusion.towards
+$home = "$latitude,$longitude,$grid,$county,$state,$city,$neww3w";  // Use double quotes, not single quotes
+echo "<br>home: $home<br>";  // Use double quotes to show the actual values
     
 ?>
