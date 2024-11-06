@@ -13,7 +13,7 @@
 /////////////////////////////////////////////////////
     
     // Step 1: Enter the base callsign only
-$callsign = "wa0tjt";
+$callsign = "WR4XM";
 
 // First, create a function to get the base callsign
 // Used when updateing NetLog and/or stations
