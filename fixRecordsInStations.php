@@ -17,7 +17,7 @@ require_once "geocode.php";
 require_once "config.php";
     
     // Step 1: Enter the callsign
-$callsign = "wz9r";
+$callsign = "kq4szi";  //then: wd4nit, wd5gmx
     
     // Step 2-3: Get address, first, last from the FCC en
 $sql = "
@@ -31,7 +31,7 @@ SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.address1, e1.city, e1.state,
   WHERE e1.callsign = '$callsign'
   LIMIT 1"; 
 
-//echo "$sql"; 
+echo "$sql"; 
 
     // Step 4: Use geocode.php to get all the detail location information
 $koords = geocode($address);
