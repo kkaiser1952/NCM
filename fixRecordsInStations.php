@@ -13,11 +13,12 @@ error_reporting(E_ALL);
 // Path settings and imports
 require_once "dbConnectDtls.php";
 require_once "GridSquare.php";
+require_once "getCrossRoads.php";
 require_once "geocode.php";
 require_once "config.php";
     
     // Step 1: Enter the callsign
-$callsign = "wa0tjt";  //then: wd4nit, wd5gmx
+$callsign = "wz9x";  //then: wd4nit, wd5gmx
     
     // Step 2-3: Get address, first, last from the FCC en
 // Prepare the SQL query with parameters
@@ -80,12 +81,48 @@ if($koords) {
 
 echo "<br>$county";
 
-    // Step 4a: Get grid square
+    // Step 5: Get grid square
 $grid = gridsquare($latitude, $longitude);
-
 
 echo "<br>$grid";
 
+    // Step 5: Get Crossroads
+$crossroads = getCrossRoads($latitude, $longitude);
+echo "<br>crossroads: $crossroads";
 
+    // Step 5: Convert lat/lng to W3W   key; 5WHIM4GD
+    /*
+$api_key = '5WHIM4GD';
+    
+$result = getWhat3Words($latitude, $longitude, $api_key);
+
+if (isset($result['words'])) {
+    echo "What3Words address: " . $result['words'];  // e.g., "filled.count.soap"
+} else {
+    echo "Error: " . ($result['error']['message'] ?? 'Unknown error');
+}
+*/
+    
+
+
+
+//////// W3W function /////////
+
+function getWhat3Words($lat, $lng, $api_key) {
+    $url = "https://api.what3words.com/v3/convert-to-3wa";
+    $params = http_build_query([
+        'coordinates' => "$lat,$lng",
+        'language' => 'en',
+        'key' => $api_key
+    ]);
+
+    $ch = curl_init($url . '?' . $params);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    curl_close($ch);
+    
+    return json_decode($response, true);
+}
     
 ?>
