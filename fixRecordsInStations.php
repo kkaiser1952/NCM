@@ -1,17 +1,26 @@
 <?php
     // fixRecordsInStations.php
     // Written: 2024-11-05
+    // There is an extensive writeup at the bottom of the code
+    
     // This program updates a record based only on its callsign
     // Updates stations: lat/lng, Lname, latituded, longituded, grid, county
     // state, city, district, Home, dttm, comment, country, fccid
     // Updates netLog: lat/lng, grid, county, state, city, district, comment
     
-///////////////////////////////////////////////////
-//////////////* CAREFUL THIS IS WORKS *////////////
-///////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+//////////////* CAREFUL THIS IS WORKING *////////////
+/////////////////////////////////////////////////////
     
-    // Step 1: Enter the callsign
-$callsign = "kc0yso";
+    // Step 1: Enter the base callsign only
+$callsign = "wa0tjt";
+
+// First, create a function to get the base callsign
+// Used when updateing NetLog and/or stations
+function getBaseCallsign($callsign) {
+    // Remove everything after hyphen or slash
+    return preg_replace('/([-\/]).*$/', '', $callsign);
+}
     
 // Error checking/reporting    
 ini_set('display_errors', 1);
@@ -247,8 +256,121 @@ try {
        
     // test
         echo "<br>$sql<br>";     
+        
+// ==================================================================== //        
        
-    // Step 8: Create SQL to update netLog
+/// Step 8: Create SQL to read & then update NetLog
+$netlog_query = "SELECT n1.recordID, n1.callsign, n1.latitude, n1.longitude, 
+                        n1.city, n1.county, n1.state, n1.district, n1.grid, n1.netID
+                 FROM NetLog n1
+                 INNER JOIN (
+                     SELECT callsign, MAX(recordID) as max_recordID
+                     FROM NetLog
+                     WHERE callsign LIKE :basecall_pattern
+                     GROUP BY callsign
+                 ) n2 ON n1.recordID = n2.max_recordID
+                 ORDER BY n1.recordID DESC";
+
+try {
+    $stmt_netlog = $db_found->prepare($netlog_query);
+    $stmt_netlog->bindValue(':basecall_pattern', $callsign . '%');  // $callsign is already the base
+    $stmt_netlog->execute();
     
-    
+    $update_count = 0;
+    while ($netlog_row = $stmt_netlog->fetch(PDO::FETCH_ASSOC)) {
+        // Process each matching record
+        $recordID = $netlog_row['recordID'];
+        $full_callsign = $netlog_row['callsign'];
+        $netID = $netlog_row['netID'];
+        
+        $netlog_update = "UPDATE NetLog SET
+                            `latitude` = :latitude,
+                            `longitude` = :longitude,
+                            `city` = :city,
+                            `county` = :county,
+                            `state` = :state,
+                            `District` = :district,
+                            `grid` = :grid,
+                            `dttm` = CURRENT_TIMESTAMP,
+                            `comment` = 'updated by fixRecordsInStations.php'
+                         WHERE `recordID` = :recordID 
+                         AND `callsign` = :full_callsign
+                         AND `netID` = :netID";
+        
+        $stmt_update = $db_found->prepare($netlog_update);
+        $stmt_update->bindParam(':latitude', $latitude);
+        $stmt_update->bindParam(':longitude', $longitude);
+        $stmt_update->bindParam(':city', $city);
+        $stmt_update->bindParam(':county', $county);
+        $stmt_update->bindParam(':state', $state);
+        $stmt_update->bindParam(':district', $district);
+        $stmt_update->bindParam(':grid', $grid);
+        $stmt_update->bindParam(':recordID', $recordID);
+        $stmt_update->bindParam(':full_callsign', $full_callsign);
+        $stmt_update->bindParam(':netID', $netID);
+        
+        // Commented execute as requested
+        // $stmt_update->execute();
+        
+        $update_count++;
+        
+        echo "<br>Ready to update NetLog record for callsign: " . htmlspecialchars($full_callsign) . 
+             " (Record ID: " . htmlspecialchars($recordID) . 
+             ", Net ID: " . htmlspecialchars($netID) . ")";
+    }
+    echo "<br>Total NetLog records found for update: $update_count";
+} catch(PDOException $e) {
+    echo "<br>Error with NetLog operations: " . $e->getMessage();
+}
+?>
+
+<?php
+/*
+========================================================================
+PROGRAM SUMMARY: fixRecordsInStations.php
+========================================================================
+PURPOSE:
+This program updates location and personal information for amateur radio operators
+in both the stations and NetLog tables based on FCC database information.
+
+PROCESS:
+1. Accepts a base callsign input (without suffixes like -1 or /P)
+2. Retrieves current FCC information
+3. Geocodes the address to get precise location data
+4. Calculates grid square from coordinates
+5. Converts coordinates to What3Words address
+6. Looks up district information from HPD table
+7. Updates stations table with all new information
+8. Updates all matching records in NetLog (including callsign variations)
+
+KEY FEATURES:
+- Proper case handling for names (including O'Neil format)
+- State codes forced to uppercase
+- Handles callsign variations in NetLog (WA0TJT, WA0TJT-1, etc.)
+- District lookup based on county/state
+- Secure SQL using prepared statements
+- Full error handling and logging
+
+TABLES AFFECTED:
+1. stations: Complete update of location and personal info
+2. NetLog: Location information update for all matching callsigns
+
+DEPENDENCIES:
+- dbConnectDtls.php: Database connection
+- config2.php: Configuration settings
+- GridSquare.php: Grid calculator
+- getCrossRoads.php: Street intersection lookup
+- geocode.php: Address geocoding
+- What3Words API key (in config)
+- HPD table for district lookups
+
+USAGE:
+1. Modify $callsign variable at top of file
+2. Review results before uncommenting NetLog execute statement
+3. Run manually - admin use only
+
+AUTHOR: Keith Kaiser, WA0TJT & Claude 3.5
+CREATED: 2024-11-05
+========================================================================
+*/
 ?>
