@@ -2,9 +2,15 @@
     // fixRecordsInStations.php
     // Written: 2024-11-05
     // This program updates a record based only on its callsign
-    // Updates: lat/lng, Lname, latituded, longituded, grid, county
+    // Updates stations: lat/lng, Lname, latituded, longituded, grid, county
     // state, city, district, Home, dttm, comment, country, fccid
-    // Think about active_call
+    // Updates netLog: lat/lng, grid, county, state, city, district, comment
+    
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+    
+    // Step 1: Enter the callsign
+$callsign = "wz9x";
     
 // Error checking/reporting    
 ini_set('display_errors', 1);
@@ -17,9 +23,6 @@ require_once "GridSquare.php";
 require_once "getCrossRoads.php";
 require_once "geocode.php";
 //require_once "config.php";
-    
-    // Step 1: Enter the callsign
-$callsign = "w0dlk";  //then: wd4nit, wd5gmx
     
     // Step 2-3: Get address, first, last from the FCC en
 // Prepare the SQL query with parameters
@@ -91,7 +94,7 @@ $grid = gridsquare($latitude, $longitude);
 
 echo "<br>$grid<br>";
 
-// Step 5: Convert lat/lng to W3W
+    // Step 5: Convert lat/lng to W3W
 $api_key = $config['geocoder']['api_key'];
 
 // Debug output to verify coordinates
@@ -149,9 +152,33 @@ if (isset($latitude) && isset($longitude)) {
     echo "Error: Latitude or longitude not set<br>";
 }
 
-// Step 6: Create Home
-// Example: 39.202903,-94.602862,EM29QE,Platte,MO,KANSAS CITY,///guiding.confusion.towards
+    // Step 6: Create Home
+    // Example: 39.202903,-94.602862,EM29QE,Platte,MO,KANSAS CITY,///guiding.confusion.towards
 $home = "$latitude,$longitude,$grid,$county,$state,$city,$neww3w";  // Use double quotes, not single quotes
 echo "<br>home: $home<br>";  // Use double quotes to show the actual values
+
+    // Step 7: Create SQL to update stations
+$sql = "UPDATE stations SET
+                latitude  = '$latitude',
+                longitude = '$longitude',
+                Lname     = '$last',
+                city      = '$city',
+                county    = '$county',
+                state     = '$state',
+                grid      = '$grid',
+                home      = '$home',
+                zip       = '$zip',
+                fccid     = '$fccid',
+                country   = '$country',
+                dttm      = CURRENT_TIMESTAMP,
+                comment   = 'updated by fixRecordsInStations.php'
+         WHERE callsign = '$callsign'
+       ;";
+       
+    // test
+        echo "<br>$sql<br>";     
+       
+    // Step 8: Create SQL to update netLog
+    
     
 ?>
