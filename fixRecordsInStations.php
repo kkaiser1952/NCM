@@ -7,10 +7,11 @@
     // Updates netLog: lat/lng, grid, county, state, city, district, comment
     
 ///////////////////////////////////////////////////
+//////////////* CAREFUL THIS IS WORKS *////////////
 ///////////////////////////////////////////////////
     
     // Step 1: Enter the callsign
-$callsign = "wz9x";
+$callsign = "w0dlk";
     
 // Error checking/reporting    
 ini_set('display_errors', 1);
@@ -159,21 +160,45 @@ echo "<br>home: $home<br>";  // Use double quotes to show the actual values
 
     // Step 7: Create SQL to update stations
 $sql = "UPDATE stations SET
-                latitude  = '$latitude',
-                longitude = '$longitude',
-                Lname     = '$last',
-                city      = '$city',
-                county    = '$county',
-                state     = '$state',
-                grid      = '$grid',
-                home      = '$home',
-                zip       = '$zip',
-                fccid     = '$fccid',
-                country   = '$country',
-                dttm      = CURRENT_TIMESTAMP,
-                comment   = 'updated by fixRecordsInStations.php'
-         WHERE callsign = '$callsign'
-       ;";
+            `latitude` = :latitude,
+            `longitude` = :longitude,
+            `Lname` = :last,
+            `city` = :city,
+            `county` = :county,
+            `state` = :state,
+            `grid` = :grid,
+            `home` = :home,
+            `zip` = :zip,
+            `fccid` = :fccid,
+            `country` = :country,
+            `w3w` = :w3w,
+            `dttm` = CURRENT_TIMESTAMP,
+            `comment` = 'updated by fixRecordsInStations.php',
+            `active_call` = 'y'
+        WHERE `callsign` = :callsign";
+
+try {
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':latitude', $latitude);
+    $stmt->bindParam(':longitude', $longitude);
+    $stmt->bindParam(':last', $last);
+    $stmt->bindParam(':city', $city);
+    $stmt->bindParam(':county', $county);
+    $stmt->bindParam(':state', $state);
+    $stmt->bindParam(':grid', $grid);
+    $stmt->bindParam(':home', $home);
+    $stmt->bindParam(':zip', $zip);
+    $stmt->bindParam(':fccid', $fccid);
+    $stmt->bindParam(':country', $country);
+    $stmt->bindParam(':w3w', $neww3w);  
+    $stmt->bindParam(':callsign', $callsign);
+    
+    $stmt->execute();
+    
+    echo "<br>Record updated successfully for callsign: " . htmlspecialchars($callsign);
+} catch(PDOException $e) {
+    echo "<br>Error updating record: " . $e->getMessage();
+}
        
     // test
         echo "<br>$sql<br>";     
