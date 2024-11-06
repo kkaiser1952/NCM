@@ -33,7 +33,6 @@ SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.address1, e1.city, e1.state,
 
 //echo "$sql"; 
 
-
     // Step 4: Use geocode.php to get all the detail location information
 $koords = geocode($address);
 if($koords) {
@@ -46,30 +45,14 @@ if($koords) {
    echo "Could not geocode address";
 }
 
+echo "<br>$county";
+
     // Step 4a: Get grid square
-$gridd 	   = gridsquare($latitude, $longitude);
-$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
+$grid = gridsquare($latitude, $longitude);
 
-echo "$county, $grid";
 
-/*
-$count = 0;		
-foreach($db_found->query($sql) as $row) {
-$count++;
+echo "<br>$grid";
 
-	$address = $row[address];
-	 
-	$koords  = geocode("$address");
-		$latitude  = $koords[0];
-		$longitude = $koords[1];
-	
-		$county	   = $koords[2];
-		$state	   = $koords[3];
-			if ($state == '') {
-				$state = $row[state];
-			}
-		$gridd 	   = gridsquare($latitude, $longitude);
-		$grid      = "$gridd[0]$gridd[1]$gridd[2]$gridd[3]$gridd[4]$gridd[5]"; 
-*/
+
     
 ?>
