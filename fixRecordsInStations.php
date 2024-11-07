@@ -4,16 +4,26 @@
     // There is an extensive writeup at the bottom of the code
     
     // This program updates a record based only on its callsign
-    // Updates stations: lat/lng, Lname, latituded, longituded, grid, county
-    // state, city, district, Home, dttm, comment, country, fccid
-    // Updates netLog: lat/lng, grid, county, state, city, district, comment
+    // 
+    // Be sure to comment out or uncomment  $stmt_update->execute();
+    // at about line 322 way below. This controls the update of NetLog
     
-/////////////////////////////////////////////////////
-//////////////* CAREFUL THIS IS WORKING *////////////
-/////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
+    //////////////* CAREFUL THIS IS WORKING *////////////
+    /////////////////////////////////////////////////////
+
+/*           KQ4FCR  KN4FIQ  WL7BDH  WW7E  KJ7NUA  KG7WMG  KQ4DNB  N6RC  N5ROC  KJ5BJR  KK4WPE  KZ4LN  K4JOE  KC2UDH  N2UDH  KQ4RGL  WA6ATI  K2RP  KA4A  W5BXD  KE0OHF  KE0AJZ  KC0AJZ  KB0AJZ  KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
+*/
     
     // Step 1: Enter the base callsign only
-$callsign = "n6nww";
+$callsign = "KD2WXB";
+
+/*   
+    Try this search to find empty data;  
+    SELECT GROUP_CONCAT(callsign ORDER BY ID DESC SEPARATOR '  ') AS callsigns
+FROM `stations`
+WHERE id < 12622 AND grid = 'JJ00AA'
+*/
 
 // First, create a function to get the base callsign
 // Used when updateing NetLog and/or stations
