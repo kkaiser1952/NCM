@@ -292,7 +292,7 @@ try {
                             `District` = :district,
                             `grid` = :grid,
                             `dttm` = CURRENT_TIMESTAMP,
-                            `comment` = 'updated by fixRecordsInStations.php'
+                            `comments` = 'updated by fixRecordsInStations.php'
                          WHERE `recordID` = :recordID 
                          AND `callsign` = :full_callsign
                          AND `netID` = :netID";
@@ -310,7 +310,7 @@ try {
         $stmt_update->bindParam(':netID', $netID);
         
         // Commented execute as requested
-        // $stmt_update->execute();
+         $stmt_update->execute();
         
         $update_count++;
         
