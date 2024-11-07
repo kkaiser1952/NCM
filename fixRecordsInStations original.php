@@ -12,11 +12,11 @@
     //////////////* CAREFUL THIS IS WORKING *////////////
     /////////////////////////////////////////////////////
 
-/*           KQ4FCR  KN4FIQ  WL7BDH  WW7E  KJ7NUA  KG7WMG  KQ4DNB  N6RC  N5ROC  KJ5BJR  KK4WPE  KZ4LN  K4JOE  KC2UDH  N2UDH  KQ4RGL  WA6ATI  K2RP  KA4A  W5BXD  KE0OHF  KE0AJZ  KC0AJZ  KB0AJZ  KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
+/*  KN4FIQ  WL7BDH  WW7E  KJ7NUA  KG7WMG  KQ4DNB  N6RC  N5ROC  KJ5BJR  KK4WPE  KZ4LN  K4JOE  KC2UDH  N2UDH  KQ4RGL  WA6ATI  K2RP  KA4A  W5BXD  KE0OHF  KE0AJZ         KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 */
     
     // Step 1: Enter the base callsign only
-$callsign = "KD2WXB";
+$callsign = "KQ4FCR";
 
 /*   
     Try this search to find empty data;  

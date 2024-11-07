@@ -3,69 +3,35 @@
     // Written: 2024-11-05
     // There is an extensive writeup at the bottom of the code
     
-    // This program updates records based on callsigns
-    // Be sure to comment out or uncomment $stmt_update->execute();
-    // for NetLog updates
+    // This program updates a record based only on its callsign
+    // 
+    // Be sure to comment out or uncomment  $stmt_update->execute();
+    // at about line 322 way below
     
 /////////////////////////////////////////////////////
 //////////////* CAREFUL THIS IS WORKING *////////////
 /////////////////////////////////////////////////////
+
+/*         KD2WXB  KQ4FCR  KN4FIQ  WL7BDH  WW7E  KJ7NUA  KG7WMG  KQ4DNB  N6RC  N5ROC  KJ5BJR  KK4WPE  KZ4LN  K4JOE  KC2UDH  N2UDH  KQ4RGL  WA6ATI  K2RP  KA4A  W5BXD  KE0OHF  KE0AJZ  KC0AJZ  KB0AJZ  KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
+*/
     
-// Step 1: Define list of callsigns to process
-$callsign_list = "KQ4FCR  KN4FIQ  WL7BDH W0za w0zb";
-$callsigns = preg_split('/\s+/', trim($callsign_list));
+    // Step 1: Enter the base callsign only
+$callsign = "KN4FIQ";
 
-$total = count($callsigns);
-$current = 0;
-$successful = 0;
-$failed = 0;
+/*   
+    Try this search to find empty data;  
+    SELECT GROUP_CONCAT(callsign ORDER BY ID DESC SEPARATOR '  ') AS callsigns
+FROM `stations`
+WHERE id < 12622 AND grid = 'JJ00AA'
+*/
 
-echo "<h3>Processing $total callsign(s)</h3>";
-
-// Function definitions
+// First, create a function to get the base callsign
+// Used when updateing NetLog and/or stations
 function getBaseCallsign($callsign) {
+    // Remove everything after hyphen or slash
     return preg_replace('/([-\/]).*$/', '', $callsign);
 }
-
-function properCase($string) {
-    $parts = explode("'", $string);
-    $parts = array_map(function($part) {
-        return ucwords(strtolower(trim($part)));
-    }, $parts);
-    return implode("'", $parts);
-}
-
-function getWhat3Words($lat, $lng, $api_key) {
-    $url = "https://api.what3words.com/v3/convert-to-3wa";
-    $params = http_build_query([
-        'coordinates' => "$lat,$lng",
-        'language' => 'en',
-        'key' => $api_key
-    ]);
     
-    $full_url = $url . '?' . $params;
-    
-    $ch = curl_init($full_url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    
-    $response = curl_exec($ch);
-    if(curl_errno($ch)) {
-        echo 'Curl error: ' . curl_error($ch) . "<br>";
-    }
-    
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    
-    $decoded = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        echo "JSON decode error: " . json_last_error_msg() . "<br>";
-    }
-    
-    return $decoded;
-}
-
 // Error checking/reporting    
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -76,98 +42,186 @@ require_once "config2.php";
 require_once "GridSquare.php";
 require_once "getCrossRoads.php";
 require_once "geocode.php";
-
-///// Part 2 ////
-
-// Main processing function
-function processCallsign($callsign) {
-    global $db_found, $config;  // Access to database and config
+//require_once "config.php";
     
-    try {
-        echo "<br><hr><br>Processing callsign: " . htmlspecialchars($callsign);
-        
-        // Step 2-3: Get address, first, last from the FCC en
-        $sql = "SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.city, e1.zip,
-            CONCAT(e1.address1, '  ', e1.city, '  ', e1.state, '  ', e1.zip) as address
-            FROM fcc_amateur.en e1
-            JOIN (
-                SELECT MAX(fccid) as max_fccid 
-                FROM fcc_amateur.en 
-                WHERE callsign = :callsign
-            ) e2 ON e1.fccid = e2.max_fccid
-            WHERE e1.callsign = :callsign
-            LIMIT 1";
+    // Step 2-3: Get address, first, last from the FCC en
+// Prepare the SQL query with parameters
+$sql = "
+SELECT e1.fccid, e1.callsign, e1.first, e1.last, e1.city, e1.zip,
+    CONCAT(e1.address1, '  ', e1.city, '  ', e1.state, '  ', e1.zip) as address
+  FROM fcc_amateur.en e1
+  JOIN (
+    SELECT MAX(fccid) as max_fccid 
+    FROM fcc_amateur.en 
+    WHERE callsign = :callsign
+  ) e2 ON e1.fccid = e2.max_fccid
+  WHERE e1.callsign = :callsign
+  LIMIT 1";
 
-        $stmt = $db_found->prepare($sql);
-        $stmt->bindParam(':callsign', $callsign);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if (!$result) {
-            throw new Exception("No FCC record found");
-        }
+// Debug output
+ //echo "<br>" . htmlspecialchars($sql) . "<br>";
 
-        // Store results
+try {
+    // Prepare and execute the statement
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':callsign', $callsign);
+    $stmt->execute();
+    
+    // Fetch the results
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result) {
+        // Store each column in a variable
         $fccid = $result['fccid'];
+        $callsign = $result['callsign'];
         $first = $result['first'];
         $last = $result['last'];
         $address = $result['address'];
         $city = $result['city'];
         
-        echo "<br>FCCID: " . htmlspecialchars($fccid);
-        echo "<br>Name: " . htmlspecialchars($first) . " " . htmlspecialchars($last);
-        echo "<br>Address: " . htmlspecialchars($address);
-
-        // Step 4: Geocode address
-        $koords = geocode($address);
-        if(!$koords) {
-            throw new Exception("Could not geocode address");
-        }
-
-        $latitude = $koords[0];
-        $longitude = $koords[1];
-        $county = $koords[2];
-        $state = $koords[3];
-
-        echo "<br>Coordinates: $latitude, $longitude";
-        echo "<br>County: $county, State: $state";
-
-        // Step 5: Get grid square
-        $grid = gridsquare($latitude, $longitude);
-        echo "<br>Grid square: $grid";
-
-        // Get W3W
-        $w3w_result = getWhat3Words($latitude, $longitude, $config['geocoder']['api_key']);
-        if (!isset($w3w_result['words'])) {
-            throw new Exception("Could not get W3W");
-        }
-        $neww3w = $w3w_result['words'];
-        echo "<br>What3Words: $neww3w";
-
-        // Create Home string
-        $home = "$latitude,$longitude,$grid,$county,$state,$city,$neww3w";
-
-        // Get district
-        $district = null;
-        $district_sql = "SELECT `District` FROM HPD WHERE county = :county AND state = :state LIMIT 1";
-        $stmt_district = $db_found->prepare($district_sql);
-        $stmt_district->bindParam(':county', $county);
-        $stmt_district->bindParam(':state', $state);
-        $stmt_district->execute();
         
-        if ($row = $stmt_district->fetch(PDO::FETCH_ASSOC)) {
-            $district = strtoupper($row['District']);
-        }
+        // Now you can use these variables in your code
+        // For example, you could output them:
+        echo "<br>FCCID: " . htmlspecialchars($fccid) . "<br>";
+        echo "Callsign: " . htmlspecialchars($callsign) . "<br>";
+        echo "Name: " . htmlspecialchars($first) . " " . htmlspecialchars($last) . "<br>";
+        echo "Address: " . htmlspecialchars($address) . "<br>";
+        echo "City: " . htmlspecialchars($city) . "<br>";
+    } else {
+        echo "No results found for callsign: " . htmlspecialchars($callsign);
+    }
+} catch (PDOException $e) {
+    // Handle any database errors
+    echo "Database error: " . htmlspecialchars($e->getMessage());
+}
 
-        // Format variables
-        $last = properCase($last);
-        $city = properCase($city);
-        $county = properCase($county);
-        $state = strtoupper($state);
-        $callsign = strtoupper($callsign);
+    // Step 4: Use geocode.php to get all the detail location information
+$koords = geocode($address);
+if($koords) {
+    echo("<br>$koords[0], $koords[1], $koords[2], $koords[3]<br>");
+    $latitude = $koords[0];
+    $longitude = $koords[1];
+    $county = $koords[2];
+    $state = $koords[3];
+} else {
+   echo "Could not geocode address";
+}
 
-        // Update stations table
-        $update_sql = "UPDATE stations SET
+echo "<br>$county";
+
+    // Step 5: Get grid square
+$grid = gridsquare($latitude, $longitude);
+
+echo "<br>$grid<br>";
+
+    // Step 5: Convert lat/lng to W3W
+$api_key = $config['geocoder']['api_key'];
+
+// Debug output to verify coordinates
+// echo "<br>Attempting W3W conversion with coordinates: $latitude, $longitude<br>";
+
+function getWhat3Words($lat, $lng, $api_key) {
+    $url = "https://api.what3words.com/v3/convert-to-3wa";
+    $params = http_build_query([
+        'coordinates' => "$lat,$lng",
+        'language' => 'en',
+        'key' => $api_key
+    ]);
+    
+    $full_url = $url . '?' . $params;
+    // Debug output
+    //echo "API URL: " . htmlspecialchars($full_url) . "<br>";
+    
+    $ch = curl_init($full_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    
+    // Add error handling for CURL
+    $response = curl_exec($ch);
+    if(curl_errno($ch)) {
+        echo 'Curl error: ' . curl_error($ch) . "<br>";
+    }
+    
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    // Debug output
+    //echo "HTTP Response Code: " . $http_code . "<br>";
+    //echo "Raw Response: " . htmlspecialchars($response) . "<br>";
+    
+    $decoded = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo "JSON decode error: " . json_last_error_msg() . "<br>";
+    }
+    
+    return $decoded;
+} // End getWhat3Words()
+
+// Call the function with error checking
+if (isset($latitude) && isset($longitude)) {
+    $result = getWhat3Words($latitude, $longitude, $api_key);
+    if (isset($result['words'])) {
+        $neww3w = $result['words'];  // Remove htmlspecialchars here - store raw data
+        echo "What3Words address: " . htmlspecialchars($result['words']) . "<br>";
+    } else {
+        echo "Error in W3W response: " . "<br>";
+        print_r($result); // This will show the full error response
+    }
+} else {
+    echo "Error: Latitude or longitude not set<br>";
+}
+
+    // Step 6: Create Home
+    // Example: 39.202903,-94.602862,EM29QE,Platte,MO,KANSAS CITY,///guiding.confusion.towards
+$home = "$latitude,$longitude,$grid,$county,$state,$city,$neww3w";  // Use double quotes, not single quotes
+echo "<br>home: $home<br>";  // Use double quotes to show the actual values
+
+// Function for proper case that handles apostrophes
+function properCase($string) {
+    // Split on apostrophes to handle names like O'Neil
+    $parts = explode("'", $string);
+    // Proper case each part
+    $parts = array_map(function($part) {
+        return ucwords(strtolower(trim($part)));
+    }, $parts);
+    // Rejoin with apostrophes
+    return implode("'", $parts);
+} // End properCase()
+
+    // Step 7: Get district values
+$district = null;  // Default to null
+$district_sql = "SELECT `District` 
+                   FROM HPD 
+                  WHERE county = :county 
+                    AND state = :state 
+                  LIMIT 1";
+
+try {
+    $stmt_district = $db_found->prepare($district_sql);
+    $stmt_district->bindParam(':county', $county);
+    $stmt_district->bindParam(':state', $state);
+    $stmt_district->execute();
+    
+    if ($row = $stmt_district->fetch(PDO::FETCH_ASSOC)) {
+        $district = $row['District'];
+        $district = strtoupper($district);
+    }
+} catch(PDOException $e) {
+    echo "<br>Error looking up district: " . $e->getMessage();
+} // End try or district look-up
+
+
+    // Step 8: Create SQL to update stations
+// Format variables before binding
+$last = properCase($last);          // Handles O'Neil correctly
+$city = properCase($city);          // Makes "new york" into "New York"
+$county = properCase($county);      // Makes "san diego" into "San Diego"
+$state = strtoupper($state);        // Makes "new york" into "New York"
+$callsign = strtoupper($callsign);  // Ensures callsign is uppercase
+
+
+$sql = "UPDATE stations SET
             `latitude` = :latitude,
             `longitude` = :longitude,
             `Lname` = :last,
@@ -179,33 +233,44 @@ function processCallsign($callsign) {
             `home` = :home,
             `zip` = :zip,
             `fccid` = :fccid,
-            `country` = 'USA',
+            `country` = :country,
             `w3w` = :w3w,
             `dttm` = CURRENT_TIMESTAMP,
             `comment` = 'updated by fixRecordsInStations.php',
             `active_call` = 'y'
-            WHERE `callsign` = :callsign";
+        WHERE `callsign` = :callsign";
 
-        $stmt = $db_found->prepare($update_sql);
-        $stmt->bindParam(':latitude', $latitude);
-        $stmt->bindParam(':longitude', $longitude);
-        $stmt->bindParam(':last', $last);
-        $stmt->bindParam(':city', $city);
-        $stmt->bindParam(':county', $county);
-        $stmt->bindParam(':state', $state);
-        $stmt->bindParam(':district', $district);
-        $stmt->bindParam(':grid', $grid);
-        $stmt->bindParam(':home', $home);
-        $stmt->bindParam(':zip', $result['zip']);
-        $stmt->bindParam(':fccid', $fccid);
-        $stmt->bindParam(':w3w', $neww3w);
-        $stmt->bindParam(':callsign', $callsign);
+try {
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':latitude', $latitude);
+    $stmt->bindParam(':longitude', $longitude);
+    $stmt->bindParam(':last', $last);
+    $stmt->bindParam(':city', $city);
+    $stmt->bindParam(':county', $county);
+    $stmt->bindParam(':state', $state);
+    $stmt->bindParam(':district', $district);
+    $stmt->bindParam(':grid', $grid);
+    $stmt->bindParam(':home', $home);
+    $stmt->bindParam(':zip', $zip);
+    $stmt->bindParam(':fccid', $fccid);
+    $stmt->bindParam(':country', $country);
+    $stmt->bindParam(':w3w', $neww3w);  
+    $stmt->bindParam(':callsign', $callsign);
+    
+    $stmt->execute();
+    
+    echo "<br>Record updated successfully for callsign: " . htmlspecialchars($callsign);
+} catch(PDOException $e) {
+    echo "<br>Error updating record: " . $e->getMessage();
+}
+       
+    // test
+        //echo "<br>$sql<br>";     
         
-        $stmt->execute();
-        echo "<br>Successfully updated stations table";
-
-        // NetLog Updates
-        $netlog_query = "SELECT n1.recordID, n1.callsign, n1.latitude, n1.longitude, 
+// ==================================================================== //        
+       
+/// Step 8: Create SQL to read & then update NetLog
+$netlog_query = "SELECT n1.recordID, n1.callsign, n1.latitude, n1.longitude, 
                         n1.city, n1.county, n1.state, n1.district, n1.grid, n1.netID
                  FROM NetLog n1
                  INNER JOIN (
@@ -216,17 +281,19 @@ function processCallsign($callsign) {
                  ) n2 ON n1.recordID = n2.max_recordID
                  ORDER BY n1.recordID DESC";
 
-        $stmt_netlog = $db_found->prepare($netlog_query);
-        $stmt_netlog->bindValue(':basecall_pattern', $callsign . '%');
-        $stmt_netlog->execute();
+try {
+    $stmt_netlog = $db_found->prepare($netlog_query);
+    $stmt_netlog->bindValue(':basecall_pattern', $callsign . '%');  // $callsign is already the base
+    $stmt_netlog->execute();
+    
+    $update_count = 0;
+    while ($netlog_row = $stmt_netlog->fetch(PDO::FETCH_ASSOC)) {
+        // Process each matching record
+        $recordID = $netlog_row['recordID'];
+        $full_callsign = $netlog_row['callsign'];
+        $netID = $netlog_row['netID'];
         
-        $update_count = 0;
-        while ($netlog_row = $stmt_netlog->fetch(PDO::FETCH_ASSOC)) {
-            $recordID = $netlog_row['recordID'];
-            $full_callsign = $netlog_row['callsign'];
-            $netID = $netlog_row['netID'];
-            
-            $netlog_update = "UPDATE NetLog SET
+        $netlog_update = "UPDATE NetLog SET
                             `latitude` = :latitude,
                             `longitude` = :longitude,
                             `city` = :city,
@@ -239,65 +306,32 @@ function processCallsign($callsign) {
                          WHERE `recordID` = :recordID 
                          AND `callsign` = :full_callsign
                          AND `netID` = :netID";
-            
-            $stmt_update = $db_found->prepare($netlog_update);
-            $stmt_update->bindParam(':latitude', $latitude);
-            $stmt_update->bindParam(':longitude', $longitude);
-            $stmt_update->bindParam(':city', $city);
-            $stmt_update->bindParam(':county', $county);
-            $stmt_update->bindParam(':state', $state);
-            $stmt_update->bindParam(':district', $district);
-            $stmt_update->bindParam(':grid', $grid);
-            $stmt_update->bindParam(':recordID', $recordID);
-            $stmt_update->bindParam(':full_callsign', $full_callsign);
-            $stmt_update->bindParam(':netID', $netID);
-            
-            echo "<br>Ready to update NetLog record:" .
-                 "<br>Callsign: " . htmlspecialchars($full_callsign) .
-                 "<br>Record ID: " . htmlspecialchars($recordID) .
-                 "<br>Net ID: " . htmlspecialchars($netID) .
-                 "<br>New Values:" .
-                 "<br>- Location: $latitude, $longitude" .
-                 "<br>- Grid: $grid" .
-                 "<br>- Address: $city, $county, $state" .
-                 "<br>- District: " . ($district ?? 'none') . 
-                 "<br>------------------------";
-
-            // Commented execute - uncomment when ready
-            //$stmt_update->execute();
-            
-            $update_count++;
-        }
-        echo "<br>Total NetLog records found for this callsign: $update_count<br>";
         
-        return true;
-
-    } catch (Exception $e) {
-        throw new Exception($e->getMessage());
+        $stmt_update = $db_found->prepare($netlog_update);
+        $stmt_update->bindParam(':latitude', $latitude);
+        $stmt_update->bindParam(':longitude', $longitude);
+        $stmt_update->bindParam(':city', $city);
+        $stmt_update->bindParam(':county', $county);
+        $stmt_update->bindParam(':state', $state);
+        $stmt_update->bindParam(':district', $district);
+        $stmt_update->bindParam(':grid', $grid);
+        $stmt_update->bindParam(':recordID', $recordID);
+        $stmt_update->bindParam(':full_callsign', $full_callsign);
+        $stmt_update->bindParam(':netID', $netID);
+        
+        // Commented execute as requested
+         $stmt_update->execute();
+        
+        $update_count++;
+        
+        echo "<br>Ready to update NetLog record for callsign: " . htmlspecialchars($full_callsign) . 
+             " (Record ID: " . htmlspecialchars($recordID) . 
+             ", Net ID: " . htmlspecialchars($netID) . ")";
     }
+    echo "<br>Total NetLog records found for update: $update_count";
+} catch(PDOException $e) {
+    echo "<br>Error with NetLog operations: " . $e->getMessage();
 }
-
-// Process each callsign
-foreach ($callsigns as $callsign) {
-    $current++;
-    try {
-        processCallsign(strtoupper(trim($callsign)));
-        $successful++;
-        echo "<br>Successfully processed callsign #$current: $callsign";
-    } catch (Exception $e) {
-        $failed++;
-        echo "<br>Error processing callsign #$current ($callsign): " . htmlspecialchars($e->getMessage());
-    }
-    
-    echo "<br>Progress: $current of $total (Success: $successful, Failed: $failed)<br>";
-}
-
-// Final summary
-echo "<br><hr><br>";
-echo "Completed processing $total callsign(s)<br>";
-echo "Successful: $successful<br>";
-echo "Failed: $failed<br>";
-
 ?>
 
 <?php
