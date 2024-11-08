@@ -1,10 +1,14 @@
 <?php 
-    // The purpose of this page/program is to create a 7 day report of NCM activites.
-    // Written: 2023-06-21, first day of summer    
-    // Updated: 2024-06-15    
+// The purpose of this page/program is to create a 7 day report of NCM activites.
+// Written: 2023-06-21, first day of summer    
+// Updated: 2024-06-15  
+// Modified: 2024-11-08 // added browse option to dropdwon  
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once "NCMStats.php";        
+require_once "dbConnectDtls.php";
 
     $dropdownOptions = [
         "browse_net" => "Browse Net",
@@ -15,8 +19,7 @@
         "timeline" => ["TimeLine", "https://net-control.us/HzTimeline.php?NetID="]
     ];  // End $dropdownOptions array
 
-    require_once "NCMStats.php";        
-    require_once "dbConnectDtls.php";  
+      
 
     // Get the main data with all the necessary fields
     $sql = $db_found->prepare("
@@ -74,38 +77,40 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/NetManager.js"></script>
-    
+    <script src="js/browse_net_by_number.js"></script>
+     
     <style>
-    /* Base styles */
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    
-    /* Row colors */
-    .even-row { background-color: #ffffff; }
-    .odd-row { background-color: #f0f0f0; }
-    .blue-bg { background-color: #add8e6; }
-    .green-bg { background-color: #90EE90; }
-    .purple-bg { background-color: #DDA0DD; }
-    .red-bg { background-color: #FFB6C6; }
-    .yellow-bg { background-color: #FFFF99; }
-    .cayenne-bg { background-color: #E3735E; }
-    
-    /* Date row styling */
-    .date-row {
-        background-color: #f8f8f8;
-        font-weight: bold;
-        font-size: 1.1em;
-    }
-    
-    /* Center specific columns */
-    .centered { text-align: center; }
+        /* Base styles */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        
+        /* Row colors */
+        .even-row { background-color: #ffffff; }
+        .odd-row { background-color: #f0f0f0; }
+        .blue-bg { background-color: #add8e6; }
+        .green-bg { background-color: #90EE90; }
+        .purple-bg { background-color: #DDA0DD; }
+        .red-bg { background-color: #FFB6C6; }
+        .yellow-bg { background-color: #FFFF99; }
+        .cayenne-bg { background-color: #E3735E; }
+        
+        /* Date row styling */
+        .date-row {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* Center specific columns */
+        .centered { text-align: center; }
     </style>
+    
 </head>
 <body>
     <h1>7 Day NCM Activity Report</h1>
 
-    <?php
+<?php
     if (!empty($nets)) {
         echo "<table>";
         echo "<tr>";
@@ -156,7 +161,8 @@
     } else {
         echo "<p>No data found</p>";
     }  // End if(!empty($nets))
-    ?>
+
+?>
 
 </body>
 </html>
