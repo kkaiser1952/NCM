@@ -1,36 +1,33 @@
-	<?php 
-	//require_once "NCMStats.php";		
-	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";	
+<?php 
+	// The purpose of this page/program is to create a 7 day report of NCM activites.
+	
+    // Written: 2023-06-21, first day of summer	
+    // Updated: 2024-06-15	
 ?>		
 </DOCTYPE html>
 <html>
-    <head>
+<head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>7 Day NCM Activity Report</title>
         
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-          $(document).ready(function() {
-              $('tr td:first-child').click(function() {
-                var value = $(this).text(); // Get the text value of the clicked <td>
-                net_by_number(value); // Call your function with the retrieved value
-              });
-          });
-          
-          function net_by_number(value) {
-            //alert("You clicked the first table cell with value: " + value);
-            // Perform any other desired actions using the value
-          }
-        </script>
-        <script src="js/NetManager.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('tr td:first-child').click(function() {
+        var value = $(this).text(); // Get the text value of the clicked <td>
+        net_by_number(value); // Call your function with the retrieved value
+      });
+  });
+  
+  function net_by_number(value) {
+    //alert("You clicked the first table cell with value: " + value);
+    // Perform any other desired actions using the value
+  }
+</script>
+<script src="js/NetManager.js"></script>
 
 <script>
-    /*
-        It targets elements with the class dropdown-on-NetID and adds event handlers for the link with class dropdown-trigger and the dropdown select with class dropdown-list.
-        When the link is clicked, it prevents the default link behavior, displays the dropdown below the link, and calculates its position relative to the link.
-        When an option is selected from the dropdown, it opens the URL associated with the selected option in a new window/tab.
-    */
 
     $(document).ready(function() {
         $('.dropdown-on-NetID').each(function() {
@@ -77,287 +74,59 @@
     });
 </script>
 
-
-        
-        <style>
-            table {
-                border-collapse: collapse;
-            }
-            
-            th, td {
-                padding: 8px;
-                border: 1px solid #000000;
-            }
-            
-            .odd-row {
-                background-color: #FFFFFF;
-                color: black;
-            }
-            
-            .even-row {
-                background-color: #F0F0F0;
-                color: black;
-            }
-                        
-            /* Style for nets with 1 entry */
-            .red-bg {
-                background-color: red;
-                color: white;
-            }
-            
-            /* Style for Open nets */
-            .green-bg {
-                background-color: green;
-                color: white;
-            }
-            
-            /* Style for Pre-Built nets */
-            .blue-bg {
-                background-color: blue;
-                color: white;
-                font-weight: bold;
-            }
-                        
-            /* Style for Test nets */
-            .purple-bg {
-                background-color: purple;
-                color: white;
-                font-weight: bold;
-            }
-            
-            /* Style for Facility Nets */
-            .yellow-bg {
-              background-color: yellow;
-              color: blue;
-            }
-            
-            .cayenne-bg {
-                background-color: #941100;
-                color: white;
-                font-weight: bold;
-            }
-            
-            label {
-              font-weight: bold;
-            }
-            
-            .date-row {
-              font-weight: bold;
-              font-size: 18pt;
-              color: darkgreen;
-            }
-                  
-            /* Style for 1 record and pre-built net */
-            /* Style for the first two columns (red) */
-            .redblue-bg {
-              background-color: red;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .redblue-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, blue);
-              color: white;
-            }
-            
-            /* Style for the last three columns (blue) */
-            .redblue-bg td:nth-last-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            .bluegreen-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, green);
-              color: white;
-            }
-            
-            .bluegreen-bg td:nth-last-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            /* Style for 1 record and pre-built net */
-            /* Style for the first column (blue) */
-            .blueyellow-bg td:nth-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .blueyellow-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, yellow);
-              color: white;
-            }
-            
-            /* Style for the last three columns (green) */
-            .blueyellow-bg td:nth-last-child(-n + 5) {
-              background-color: yellow;
-              color: white;
-            }
-
-          
-             /* ---- */
-            
-           
-            /* Style for the first two columns (red) */
-            .redpurple-bg {
-              background-color: red;
-              color: white;
-            }
-            
-            /* If you add a new column to the report change all the 5's to 6 to extend the gradient */
-            
-            /* Style for the third column (gradient) */
-            .redpurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, purple);
-              color: white;
-            }
-            
-            /* Style for the last three columns (purple) */
-            .redpurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            /* END: Style for 1 record and test net */
-            
-            /* Style for an open test net */
-            .greenpurple-bg td:nth-child(-n + 5) {
-              background-color: green;
-              color: white;
-            }
-            
-            .greenpurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, green, purple);
-              color: white;
-            }
-            
-            .greenpurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            
-            /* Style for an pre-built test net */
-            .bluepurple-bg td:nth-child(-n + 5) {
-              background-color: blue;
-              color: white;
-            }
-            
-            .bluepurple-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, blue, purple);
-              color: white;
-            }
-            
-            .bluepurple-bg td:nth-last-child(-n + 5) {
-              background-color: purple;
-              color: white;
-            }
-            
-            /* ---- */
-           
-            /* Style for the first two columns (red) */
-            .redgreen-bg td:nth-child(-n + 5) {
-              background-color: red;
-              color: white;
-            }
-            
-            /* Style for the third column (gradient) */
-            .redgreen-bg td:nth-child(5) {
-              background-image: linear-gradient(to right, red, green);
-              color: white;
-            }
-            
-            /* Style for the last three columns (green) */
-            .redgreen-bg td:nth-last-child(-n + 5) {
-              background-color: green;
-              color: white;
-            }
-            
-            .reportTitle {
-                font-size: 18pt;
-                margin-left: 300px;
-            }
-            
-            /* ---- */
-            
-            /* Style for combination label */
-            .combo-bg {
-              background-image: linear-gradient(to right, red, yellow, green, purple, blue, #941100 );
-              width: 300px;
-              color: white;
-            }
-            
-            /* Apply some general styling to the form rows and columns */
-            .report-container {
-              max-width: 600px; /* Adjust the width as needed */
-              margin-left: 300px;
-            }
-            
-            /* Apply some general styling to the form rows and columns */
-            .form-row {
-              display: flex;
-              align-items: baseline; /* Vertically align based on the baseline */
-              justify-content: flex-start; /* Align form rows to the left */
-              margin-bottom: 10px;
-            }
-            
-            .form-column {
-              flex: 1;
-              margin-right: 20px;
-            }
-            
-            /* Set a fixed width for labels to make them the same length */
-            .form-row label {
-              flex-basis: 120px; /* Adjust the width as needed */
-            }
-            
-            /* Set a fixed width for the last input (field5) to make it the same length */
-            .form-row:last-child input {
-              max-width: calc(100% - 120px); /* 100% minus the label width */
-            }
-            
-            /* Define the CSS rules for centering the content */
-            .centered {
-                text-align: center;
-            }
-            
-            /* Style for the new sum row */
-            .sum-row {
-                background-color: lightgray;
-                color:blue;
-                font-weight: bold;
-                font-size: 16pt;
-                text-align: center;
-            }
-            
-            tr:first-child {
-              border-bottom: 2px solid red;
-            }
-            
-            /* Style the dropdown list for NetID */
-            /* CSS for the dropdown-trigger class */
-            .dropdown-list {
-                position: absolute;
-                background-color: white;
-                border: 1px solid #ccc;
-                padding: 5px;
-                font-size: 16pt;
-            }
-
-            
-
-        </style>
-    </head>
+<link rel="stylesheet" type="text/css" href="css/build7dayreport.css">
+  
+</head>
 <body>
 
 <?php
 require_once "NCMStats.php";		
 	//echo "$cscount Stations, $netCnt Nets, $records Logins, $volHours of Volunteer Time";
-// The purpose of this page/program is to send a daily report of NCM to my messages
-// Written: 2023-06-21, first day of summer	
+
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
-//require_once "dbConnectDtls.php";  // Access to MySQL is in the NCMStats.php 
+require_once "dbConnectDtls.php";  
+ 
+ 
+// Collect the daily totls of stations and first logins 
+$sql = $db_found->prepare("
+SELECT
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) AS log_date,
+    COUNT( callsign) AS total_stations,
+    SUM(firstLogin) AS total_first_logins,
+    sum(timeonduty) AS v_time
+FROM
+    NetLog
+WHERE
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR)) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+GROUP BY
+    DATE(DATE_SUB(logdate, INTERVAL 5 HOUR))
+ORDER BY
+    log_date DESC;
+");
+$sql->execute();
+$dailyTotals = $sql->fetchAll(PDO::FETCH_ASSOC);
+//$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+// Display the column headers
+//echo "Log Date, Total Stations, Total First Logins<br>";
+
+
+// Check if $result is an array and has elements
+if (is_array($result) && !empty($result)) {
+    // Loop through each row in the result set
+    foreach ($result as $row) {
+        $logDate = $row['log_date'];
+        $totalStations = $row['total_stations'];
+        $totalFirstLogins = $row['total_first_logins'];
+        $v_time = $row['v_time'];
+        // Display the row data
+        //echo "$logDate, $totalStations, $totalFirstLogins, $v_time<br>";
+    }
+} else {
+    //echo "No results found.";
+}
 
 // Grand totals SQL
 $sql = $db_found->prepare("
@@ -369,7 +138,7 @@ SELECT  count(callsign) as all_callsigns,
             LPAD(SUM(`timeonduty`) % 60, 2, '0')
         ) AS time_on_duty
   FROM NetLog
- WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
+ WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY));
 ");
 $sql->execute();
 $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -383,7 +152,7 @@ $sql = $db_found->prepare("
     SELECT
         CASE WHEN nl.subNetOfID <> 0 THEN CONCAT(nl.subNetOfID, '/', nl.netID)
             ELSE nl.netID END AS netID,
-        CASE WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(nl.logdate,'+00:00','-06:00')
+        CASE WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') <> '0000-00-00 00:00:00' THEN CONVERT_TZ(nl.logdate,'+00:00','-05:00')
             ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
         CONCAT(nl.netcall, '<br>', nl.activity) AS netcall_activity,
         nl.stations,
@@ -409,19 +178,19 @@ $sql = $db_found->prepare("
         subquery.First_Login,
     (SELECT COUNT(DISTINCT netID)
        FROM NetLog
-      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
       ) AS netID_count,
            SEC_TO_TIME(SUM(
         CASE
             WHEN nl.timeonduty IS NULL THEN 0
-            WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+            WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
                 ELSE TIME_TO_SEC(nl.timeonduty)
         END
     )) AS Volunteer_Time,
     SEC_TO_TIME(
         CASE
             WHEN subquery.total_timeonduty_sum IS NULL THEN 0
-            WHEN CONVERT_TZ(nl.logdate,'+00:00','-06:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
+            WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
                 ELSE subquery.total_timeonduty_sum
     END
     ) AS Total_Time,
@@ -448,14 +217,14 @@ $sql = $db_found->prepare("
             CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
                 ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
      FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS nl
     LEFT JOIN (
         SELECT netID,
     SUM(firstLogin) AS First_Login, IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-06:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS subquery ON nl.netID = subquery.netID
     LEFT JOIN TimeLog tl ON nl.netID = tl.netID
@@ -566,7 +335,7 @@ if (!empty($result)) {
 
     // Table rows
     $currentDate = null;
-    $dailyTotals = [];
+    //$dailyTotals = [];
     
     foreach ($result as $rowIndex => $row) {
         // Calculate the value of $THEcss for this specific row based on the conditions
@@ -624,38 +393,40 @@ if (!empty($result)) {
             $THEcss = $SNcss;
         }
         
-        
-        // The Test for a netID and its CSS settings
-      //  if ($row[netID] == 9685 ) { echo $row[netID] . ': LCTcss: ' . $LCTcss . ' CCss: ' . $CCss . ' FNcss: ' . $FNcss . ' THEcss: ' . $THEcss ;}        
-    
-        // Output the date and day of the week in a separate row for the start of a new day
-        $localLogDate = date('Y-m-d', strtotime($row['logdate']));
-        $dayOfWeek = date('l', strtotime($localLogDate));
-        
-        if (!isset($dailyTotals[$localLogDate])) {
-            $dailyTotals[$localLogDate] = [
-                'firstLogins' => 0,
-                'stations' => 0
-            ];
-        }
-        
-        $dailyTotals[$localLogDate]['firstLogins'] += $row['First_Login'];
-        $dailyTotals[$localLogDate]['stations'] += $row['stations'];        
-             
-            if ($currentDate !== $localLogDate) {
-                echo '<tr class="date-row">';
-                echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
-                echo '<td></td>'; // Empty cell for netcall_activity
-                echo '<td>' . $dailyTotals[$localLogDate]['stations'] . '</td>'; // Total stations
-                echo '<td></td>'; // Empty cell for frequency
-                echo '<td></td>'; // Empty cell for logclosedtime
-                echo '<td>' . $dailyTotals[$localLogDate]['firstLogins'] . '</td>'; // Total first logins
-                echo '<td></td>'; // Empty cell for Volunteer_Time
-                echo '<td></td>'; // Empty cell for Open
-                echo '<td></td>'; // Empty cell for Close
-                echo '</tr>';
-                $currentDate = $localLogDate;
+    // Output the date and day of the week in a separate row for the start of a new day
+    $localLogDate = date('Y-m-d', strtotime($row['logdate']));
+    $dayOfWeek = date('l', strtotime($localLogDate));
+
+    if ($currentDate !== $localLogDate) {
+        // Find the corresponding daily totals for the current date
+        $totalStations = 0;
+        $totalFirstLogins = 0;
+        $v_time = 0;
+
+        foreach ($dailyTotals as $dailyTotal) {
+            if ($dailyTotal['log_date'] === $localLogDate) {
+                $totalStations = $dailyTotal['total_stations'];
+                $totalFirstLogins = $dailyTotal['total_first_logins'];
+                $v_time = $dailyTotal['v_time'];
+                break;
             }
+        }
+
+        echo '<tr class="date-row">';
+        echo '<td colspan="2">' . $localLogDate . ' (' . $dayOfWeek . ')</td>';
+        echo '<td></td>'; // Empty cell for netcall_activity
+        echo '<td style="text-align: center;">' . $totalStations . '</td>'; // Total stations
+        echo '<td></td>'; // Empty cell for frequency
+        echo '<td></td>'; // Empty cell for logclosedtime
+        echo '<td style="text-align: center;">' . $totalFirstLogins . '</td>'; // Total first logins
+        
+        echo '<td style="text-align: center;">' . gmdate("H:i:s", $v_time) . '</td>'; // Total volunteer hours
+        echo '<td></td>'; // Empty cell for Volunteer_Time
+        echo '<td></td>'; // Empty cell for Open
+        echo '<td></td>'; // Empty cell for Close
+        echo '</tr>';
+        $currentDate = $localLogDate;
+    }
             
             // The row color if there is one
             echo '<tr class="' . $THEcss . '">'; 
