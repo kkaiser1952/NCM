@@ -26,6 +26,7 @@
   }
 </script>
 <script src="js/NetManager.js"></script>
+<!--<script src="js/NetManager-p2.js"></script>-->
 
 <script>
 
@@ -72,6 +73,41 @@
             });
         });
     });
+    
+    function net_by_number(s) {
+    var s = prompt("net ID?"); // get the net number
+      if(s) {
+            $.ajax({
+				type: "GET",
+				url: "getkind.php",  
+				data: {q: s},
+				success: function(html) {
+    				var remarks = 'Net No: '+s+', '+html;
+    				    $("#remarks").html(remarks);
+				},
+				error: function() {
+					alert('Last Query Failed, try again.');
+				}
+            });  // end ajax */
+                
+      } // end if(s)
+    
+    showActivities(s);
+    
+        // Hide some elements to prevent play
+        $(".ckin1").addClass("hidden");
+        $("#closelog").addClass("hidden");
+        $("#cs1").addClass("hidden");
+        $("#Fname").addClass("hidden");
+        $("#newbttn").addClass("hidden");
+        $(".tohide").addClass("hidden");
+        
+        $("#remarks").removeClass("hidden");
+        //$("#remarks").html('You are browsing Net No.: '+s+' ');
+                      
+        // Set this value before the MySQL get the data to prevent editing
+        $(".closenet").html('Net Closed');
+}
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/build7dayreport.css">
@@ -470,6 +506,7 @@ if (!empty($result)) {
                         echo '<option disabled selected>Choose</option>';
                         
                         // add new options here and in the $options above
+                        echo '<option value="browse_net">Browse Net</option>';
                         echo '<option value="https://net-control.us/map.php?NetID=' . $netID . '">Map Net</option>';
                         echo '<option value="https://net-control.us/ics214.php?NetID=' . $netID . '">ICS-214</option>';
                         echo '<option value="https://net-control.us/ics309.php?NetID=' . $netID . '">ICS-309</option>';
@@ -480,6 +517,19 @@ if (!empty($result)) {
                             
                         echo '</select>';
                         echo '</div>';
+                        
+                     echo '<script>
+                        function handleDropdownSelection(value, netID) {
+                            if (value === "browse_net") {
+                                // Call your existing net_by_number function
+                                net_by_number();
+                            } else if (value) {
+                                // Navigate to the URL for other options
+                                window.location.href = value;
+                            }
+                        }
+                        </script>';   
+                        
                                         
                     } else {
                         echo $columnValue;

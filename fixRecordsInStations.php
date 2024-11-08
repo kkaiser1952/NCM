@@ -11,6 +11,7 @@
 /////////////////////////////////////////////////////
 //////////////* CAREFUL THIS IS WORKING *////////////
 /////////////////////////////////////////////////////
+// NetLog update currently commented out //
 
 
 /*    Try this search to find empty data;  
@@ -307,7 +308,7 @@ $netlog_query = "SELECT n1.recordID, n1.callsign, n1.latitude, n1.longitude,
 try {
     $stmt_netlog = $db_found->prepare($netlog_query);
     $stmt_netlog->bindValue(':basecall_pattern', $callsign . '%');  // $callsign is already the base
-    $stmt_netlog->execute();
+    //$stmt_netlog->execute();
     
     $update_count = 0;
     while ($netlog_row = $stmt_netlog->fetch(PDO::FETCH_ASSOC)) {

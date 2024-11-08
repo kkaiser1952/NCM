@@ -1,5 +1,5 @@
 <?php
-    // fixRecordsInStations.php
+    // fixRecordsInStationsTEST.php
     // Written: 2024-11-05
     // This program updates records based on callsigns
     // Updates stations: lat/lng, Lname, grid, county, state, city, district, Home, dttm, comment, etc
