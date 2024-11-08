@@ -19,8 +19,6 @@ require_once "dbConnectDtls.php";
         "timeline" => ["TimeLine", "https://net-control.us/HzTimeline.php?NetID="]
     ];  // End $dropdownOptions array
 
-      
-
     // Get the main data with all the necessary fields
     $sql = $db_found->prepare("
         SELECT
@@ -78,6 +76,46 @@ require_once "dbConnectDtls.php";
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/NetManager.js"></script>
     <script src="js/browse_net_by_number.js"></script>
+    
+    <script>
+$(document).ready(function() {
+    $('.dropdown-on-NetID').each(function() {
+        var container = $(this);
+        var link = container.find('.dropdown-trigger');
+        var select = container.find('.dropdown-list');
+
+        // Show dropdown on mouseenter
+        link.on('mouseenter', function() {
+            var linkOffset = link.offset();
+            var linkHeight = link.outerHeight();
+            select.css({
+                'display': 'block',
+                'top': linkHeight + 'px',
+                'left': '0'
+            });
+        });
+
+        // Hide dropdown when mouse leaves container
+        container.on('mouseleave', function() {
+            select.css('display', 'none');
+        });
+
+        // Handle option selection
+        select.on('change', function() {
+            var selectedOption = select.find('option:selected');
+            var value = selectedOption.val();
+            var netID = link.text();
+
+            if (value === "browse_net") {
+                browse_net_by_number(netID);  // Using your renamed function
+            } else if (value) {
+                window.open(value, '_blank');
+            }
+            select.css('display', 'none');
+        });
+    });
+});
+</script>
      
     <style>
         /* Base styles */
@@ -104,13 +142,32 @@ require_once "dbConnectDtls.php";
         
         /* Center specific columns */
         .centered { text-align: center; }
+        
+        /* Add to your existing style section */
+        .dropdown-on-NetID {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-trigger {
+            text-decoration: none;
+            cursor: pointer;
+            color: blue;
+        }
+        
+        .dropdown-list {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            z-index: 1000;
+        }
     </style>
     
 </head>
 <body>
     <h1>7 Day NCM Activity Report</h1>
 
-<?php
+    <?php
     if (!empty($nets)) {
         echo "<table>";
         echo "<tr>";
@@ -130,10 +187,21 @@ require_once "dbConnectDtls.php";
             $localLogDate = date('Y-m-d', strtotime($row['logdate']));
             
             if ($currentDate !== $localLogDate) {
+                // Find totals for this date
+                $dayTotals = array_filter($dailyTotals, function($day) use ($localLogDate) {
+                    return $day['log_date'] === $localLogDate;
+                });
+                $dayTotals = reset($dayTotals);
+                
                 echo '<tr class="date-row">';
                 echo '<td colspan="2">' . $localLogDate . ' (' . date('l', strtotime($localLogDate)) . ')</td>';
-                echo '<td colspan="5"></td>';
+                echo '<td></td>';
+                echo '<td class="centered">' . ($dayTotals['total_stations'] ?? 0) . '</td>';
+                echo '<td></td>';
+                echo '<td></td>';
+                echo '<td class="centered">' . ($dayTotals['total_first_logins'] ?? 0) . '</td>';
                 echo '</tr>';
+                
                 $currentDate = $localLogDate;
             }  // End if($currentDate !== $localLogDate)
 
@@ -147,7 +215,21 @@ require_once "dbConnectDtls.php";
             if (!empty($row['SNcss'])) $rowClass = $row['SNcss'];
 
             echo '<tr class="' . $rowClass . '">';
-            echo '<td class="centered">' . $row['netID'] . '</td>';
+            echo '<td class="centered">';
+echo '<div class="dropdown-on-NetID">';
+echo '<a href="javascript:void(0);" class="dropdown-trigger">' . $row['netID'] . '</a>';
+echo '<select class="dropdown-list" style="display: none;">';
+echo '<option disabled selected>Choose</option>';
+foreach ($dropdownOptions as $key => $value) {
+    if ($key === "browse_net") {
+        echo '<option value="browse_net">' . $value . '</option>';
+    } else {
+        echo '<option value="' . $value[1] . $row['netID'] . '">' . $value[0] . '</option>';
+    }
+}  // End foreach($dropdownOptions)
+echo '</select>';
+echo '</div>';
+echo '</td>';
             echo '<td>' . date('Y-m-d H:i:s', strtotime($row['logdate'])) . '</td>';
             echo '<td>' . $row['netcall_activity'] . '</td>';
             echo '<td class="centered">' . $row['stations'] . '</td>';
@@ -161,8 +243,7 @@ require_once "dbConnectDtls.php";
     } else {
         echo "<p>No data found</p>";
     }  // End if(!empty($nets))
-
-?>
-
+    ?>
+<div id="remarks" class="hidden"></div>
 </body>
 </html>

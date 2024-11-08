@@ -1,8 +1,8 @@
 <?php 
-	// The purpose of this page/program is to create a 7 day report of NCM activites.
-	
-    // Written: 2023-06-21, first day of summer	
-    // Updated: 2024-06-15	
+// The purpose of this page/program is to create a 7 day report of NCM activites.
+// Written: 2023-06-21, first day of summer    
+// Updated: 2024-06-15  
+// Modified: 2024-11-08 // added browse option to dropdwon 		
 ?>		
 </DOCTYPE html>
 <html>
@@ -12,6 +12,8 @@
         <title>7 Day NCM Activity Report</title>
         
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/browse_net_by_number.js"></script>
+
 <script>
   $(document).ready(function() {
       $('tr td:first-child').click(function() {
