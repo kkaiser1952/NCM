@@ -17,11 +17,35 @@
     SELECT GROUP_CONCAT(callsign ORDER BY ID DESC SEPARATOR '  ') AS callsigns
 FROM `stations`
 WHERE id < 12622 AND grid = 'JJ00AA'
+
+localhost/ncm/stations/		https://net-control.us/mysql/tbl_sql.php?db=ncm&table=stations&token=29791c64ba83455b999ec3ba36bb527a
+
+    
+                
+        
+        
+        Your browser has phpMyAdmin configuration for this domain. Would you like to import it for current session?        
+        Yes
+        / No
+        / Delete settings 
+    
+
+
+ Current selection does not contain a unique column. Grid edit, checkbox, Edit, Copy and Delete features are not available. 
+
+ Showing rows 0 -  0 (1 total, Query took 0.0002 seconds.)
+
+SELECT GROUP_CONCAT(callsign ORDER BY ID DESC SEPARATOR '  ') AS callsigns
+FROM `stations`
+WHERE id < 12622 AND grid = 'JJ00AA'
+
+KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ	
+
 */
 
     
     // Step 1: Enter the base callsign only
-$callsign = "KE0TQ";
+$callsign = "wv6q";
 
 
 // First, create a function to get the base callsign
