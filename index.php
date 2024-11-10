@@ -36,10 +36,6 @@
  3) When that data is complete it is passed to the newNet() function in NetManager-p2.js 
  4) NetManager-p2.js runs newNet.php to create, and populate NetLog and TimeLog appropriatly
  
- 
- Reinforcement learning
- natural-language processing
- end-to-end learning
 *********************************************************************************************************/
 
     // phpinfo();
