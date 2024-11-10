@@ -3,44 +3,54 @@
 <?php
 /***********************************************************************************************************
  
- Net Control Manager is a Create, Read, Update, Delete (CRUD) application used by Amateur Radio operators to 
- document various net operations such as weather emergencies, club meetings, bike ride support and any other 
- logging and/or reporting intensive communications support and management needs. 
- A variety of reports can be created such as mapping stations locations and other DHS/FEMA needs. Including
- the ICS-214 and ICS-309 reports and access to all the many others.
- 
- No Guarantees or Warranties. EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, NO PARTY MAKES ANY GUARANTEES OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, WHETHER ARISING BY OPERATION OF LAW OR OTHERWISE. PROVIDER SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF MERCHANTABILITY AND/OR ANY IMPLIED WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE. 
- 
- Extensive help is available by clicking Help in the upper right corner of the opening page.
-
- First written some time in late 2015 and in continous enhancment and upgrade since.
- copyright 2015-2023 by: Keith Kaiser, WA0TJT 
- Written by: Keith Kaiser, WA0TJT, with the help of many others. See the help file for more details.
- I can be reached at wa0tjt at gmail.com
- 
- The version number. v7.03.04 for example means year 7 of use (2022), 03 means the month (March), 04 the day date.
- 
- How NCM works (for the most part, sorta, kinda):
- If a net is selected from the dropdown
- 1) The list of nets is selected from #select1, the past 10 days only. Nets highlighted in green are open, blue are pre-built nets, no color are closed nets.
- 2) The selected net information is passed to the showActivities() function in NetManager.js
- 3) If this net is for logging custom contacts, the code is in NetManager.js @ showActivities()
- 3a) This extra code change the Name field to a custom field for logging purposes
- 4) It runs buildUpperRightCorner.php and getactivities.php to build the page
- 4a) buildUpperRightCorner.php is used to retrieve data and populate #ourfreqs in #rightCorner
- 4b) getactivities.php is used to retrieve the data of the selcted net and populate #actLog
- 
- If a new net is created
- 1) Each of the dropdowns supplies part of the information needed to start the new net
- 2) The callsign of the person starting the net is also ented into the new net
- 3) When that data is complete it is passed to the newNet() function in NetManager-p2.js 
- 4) NetManager-p2.js runs newNet.php to create, and populate NetLog and TimeLog appropriatly
- 
-*********************************************************************************************************/
-
-    // phpinfo();
-    // PHP Version 5.6.33-0+deb8u1 on v1 as of 2022-12-05
-    // Will be PHP version: 7.4+76 soon
+ /**
+ * Net Control Manager (NCM) - Version 1
+ * Copyright 2015-2025 Keith Kaiser, WA0TJT
+ * Contact: wa0tjt@gmail.com
+ * 
+ * APPLICATION OVERVIEW
+ * -------------------
+ * NCM is a comprehensive CRUD application designed for Amateur Radio operators to manage
+ * and document various network operations including:
+ * - Weather emergencies
+ * - Club meetings
+ * - Bike ride support
+ * - General communications logging
+ * 
+ * KEY FEATURES
+ * ------------
+ * - Station location mapping
+ * - DHS/FEMA compliance
+ * - ICS-214 and ICS-309 reporting
+ * - Additional ICS report access
+ * - Extensive help documentation
+ * 
+ * CORE WORKFLOWS
+ * -------------
+ * 1. Existing Net Selection:
+ *    - Lists past 10 days of nets in dropdown (#select1)
+ *    - Color coding: Green (open), Blue (pre-built), None (closed)
+ *    - Processing: showActivities() in NetManager.js
+ *    - Data population via buildUpperRightCorner.php and getactivities.php
+ * 
+ * 2. New Net Creation:
+ *    - Data collection through dropdown selections
+ *    - Operator callsign logging
+ *    - Processing: newNet() in NetManager-p2.js
+ *    - Database updates via newNet.php
+ * 
+ * SYSTEM INFORMATION
+ * -----------------
+ * Current: PHP Version 5.6.33-0+deb8u1
+ * Planned Upgrade: PHP 7.4+76
+ * Development Status: Continuous enhancement since 2015
+ * 
+ * LEGAL NOTICE
+ * ------------
+ * This software is provided "as is" without warranty of any kind, either expressed
+ * or implied, including but not limited to the warranties of merchantability and
+ * fitness for a particular purpose.
+ */
 	
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
