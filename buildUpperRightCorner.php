@@ -1,12 +1,28 @@
 <!doctype html>
 
 <?php
+/**
+ * buildUpperRightCorner.php
+ * Purpose: Builds the frequency and details table that appears in the upper right corner of NCM
+ * 
+ * Process:
+ * 1. Gets a call sign from $_GET["call"]
+ * 2. Queries NetKind table for that call's configuration
+ * 3. Processes 6 rows of comma-separated data into a formatted table
+ * 4. Special handling for DMR calls
+ * 
+ * Table Structure:
+ * - Each row (row1-row6) in NetKind contains comma-separated values
+ * - Values are parsed into a 4-column table
+ * - Last row (row6) handles URLs differently for non-DMR calls
+ */
 
 	ini_set('display_errors',1); 
 	error_reporting (E_ALL ^ E_NOTICE);
 
     require_once "dbConnectDtls.php";
 
+    // Get call sign from query parameter
     $call = trim($_GET["call"]);   //$call = 'NR0AD'; 
    // $netid = $_GET["netid"];
 
@@ -18,6 +34,7 @@
 			  ORDER BY `call` LIMIT 1
 		   "); 
 			  
+			// Process each row of data   
 			foreach($db_found->query($sql) as $row) {
 				++$num_rows;
 				$rcols = explode(",","$row[row1]");
@@ -63,9 +80,10 @@
 		    		$r6c5 = $rcols[4];
 		}		
  
-	    		
+	    // Build the HTML table
 		echo(" <table id='ourfreqs'> ");
 		
+		// Output each row with appropriate classes and data
 		echo(" <tr> <th class='edit_r1c1 r1c1 nobg'>$r1c1</th> 
 					<th class='edit_r1c2 r1c2 nobg'>$r1c2</th>
 			   		<th class='edit_r1c3 r1c3 nobg'>$r1c3</th> 
@@ -90,19 +108,18 @@
 					<td class='edit_r5c2 r5c2 nobg2'>$r5c2</td>
 			   		<td class='edit_r5c3 r5c3 nobg2' nowrap >$r5c3</td> 
 			   		<td class='edit_r5c4 r5c4 nobg2'>$r5c4</td> </tr> ");
-		if ($call != 'DMR'){
-		echo(" <tr> <td class='edit_r6c1 r6c1 nobg1'>$r6c1</td> 
-					<td class='edit_r6c2 r6c2 nobg2' colspan=3> 
-					<a href=\"$r6c2\" target=\"_blank\"> $r6c2 </a><br>
-					<a href=\"$r6c3\" target=\"_blank\"> $r6c3 </a></td> ");
-					
-		} else if ($call == 'DMR'){
-		echo(" <tr> <td class='edit_r6c1 r6c1 nobg1'>$r6c1</td> 
-					<td class='edit_r6c2 r6c2 nobg2'>$r6c2</td>
-					<td class='edit_r6c3 r6c3 nobg2'>$r6c3</td> 
-					<td class='edit_r6c4 r6c4 nobg2'>$r6c4</td> </tr> ");
-		}   		
-
-		echo("</table>");
-	
-?>
+			   		
+        // Special handling for DMR vs non-DMR calls
+        if ($call != 'DMR') {
+            // Non-DMR: Show URLs as clickable links
+            echo("<tr><td class='edit_r6c1 r6c1 nobg1'>$r6c1</td>
+                  <td class='edit_r6c2 r6c2 nobg2' colspan=3>
+                  <a href=\"$r6c2\" target=\"_blank\">$r6c2</a><br>
+                  <a href=\"$r6c3\" target=\"_blank\">$r6c3</a></td>");
+        } else {
+            // DMR: Show regular table cells
+            echo("<tr><td class='edit_r6c1 r6c1 nobg1'>$r6c1</td>...");
+        }
+        
+        echo("</table>");
+?> <!-- End of buildUpperRightCorner.php -->

@@ -183,111 +183,12 @@
        <!-- each of the other divs within rightCorner -->
        <!-- The upper right corner information can NOT be edited  -->
        
-<div id="rightCorner">    
-<div id="upperRightCorner" class="upperRightCorner"> </div> <!-- Filled by buildUpperRightCorner.php -->
-   <div id="theMenu" class="theMenu">
-       <table id="ourfreqs"> <!-- This is a bad name for this id, fix it someday -->
-       <tbody>
-	     <tr class="trFREQS">
-	       <td class="nobg2" > <!-- The CSS: .nobg2 makes it 4 columns -->
-
-               <!-- Selections available below the table -->
-               <!-- Open the preamble for the current net -->
-               
-         
-               
-               <!-- Open the preamble for this net -->
-		       <a id="preambledev" onclick="openPreamblePopup();" title="Click for the preamble">Preamble &nbsp;||&nbsp;</a>
-		       					   
-		       <!-- Open the agenda and announcements for the current net -->
-			   <a id="agendadiv" onclick="openEventPopup()" title="Click for the agenda">Agenda &nbsp;||&nbsp;</a>
-			   
-			   <!-- Build a new preamble/closing or agenda items for the current net -->
-		       <a href="buildEvents.php" target="_blank" rel="noopener" title="Click to create a new preamble, agenda or announcment" class="colorRed" >New </a>&nbsp;||&nbsp;
-		  
-               <!-- Open the closing for the current net -->
-		  	   <a id="closingdev" onclick="openClosingPopup()"  title="Click for the closing script">Closing &nbsp;||&nbsp;</a>
-			       
-   <!-- Open reports Dropdown of the available reports -->
-   <span class="dropdown"> <!-- reports list dropdown -->
-		<span class="dropbtn">Reports &nbsp;||&nbsp;</span>
-        <span class="dropdown-content"> <!-- changed to span from div on 2017-12-23 -->
-	  
-	    <a href="#" id="buildCallHistoryByNetCall" onclick="buildCallHistoryByNetCall()" title="build a Call History By NetCall">The Usual Suspects</a>
-	  
-	    <a href="buildGroupList.php" target="_blank" rel="noopener" title="Group List">Groups Information</a>    
-	    <a href="groupScoreCard.php" target="_blank" rel="noopener" title="Group Scores">Group Score Card</a>
-	    <a href="listNets.php" target="_blank" rel="noopener" title="All the nets">List/Find ALL nets</a>
-
-	    <a href="#" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</a>
-		<a href="NCMreports.php" target="_blank" rel="noopener" title="Stats about NCM">Statistics</a>
-	        
-	<!--    <a href="#" onclick="AprsFiMap(); return false;" title="APRS FI Map of stations logged into the active net">Show APRS.fi presence</a> -->
-	    <a href="listAllPOIs.php" target="_blank" rel="noopener" id="PoiList" title="List all Pois">List all POIs</a>
-	    
-	    <a href="AddRF-HolePOI.php" target="_blank" rel="noopener" id="PoiList" title="Create New RF Hole POI">Add RF Hole POI</a>
-	    
-	    
-	    <a href="#" id="geoDist" onclick="geoDistance()" title="GeoDistance">GeoDistance</a>
-
-	    <a href="#" id="mapIDs" onclick="map2()" title="Map This Net">Map This Net</a>
-	    
-	    <a href="https://vhf.dxview.org" id="mapdxView" target="_blank">DXView Propagation Map</a>
-	    
-	    <a href="https://www.swpc.noaa.gov" id="noaaSWX" target="_blank">NOAA Space Weather</a>
-	    
-	    <a href="https://spaceweather.com" id="SpaceWX" target="_blank">Space Weather</a>
- 
-	    <a href="#" id="graphtimeline" onclick="graphtimeline()" title="Graphic Time Line of the active net">Graphic Time Line</a>
-		<a href="#" id="ics205Abutton" onclick="ics205Abutton()" title="ICS-205A Report of the active net">ICS-205A</a>
-		<a href="#" id="ics214button" onclick="ics214button()" title="ICS-214 Report of the active net">ICS-214</a>
-		<a href="#" id="ics309button" onclick="ics309button()" title="ICS-309 Report of the
-    		active net">ICS-309</a>
-		<a href="https://training.fema.gov/icsresource/icsforms.aspx" id="icsforms" target="_blank" rel="noopener">Addional ICS Forms</a>
-        <a href="https://docs.google.com/spreadsheets/d/1eFUfVLfHp8uo58ryFwxncbONJ9TZ1DKGLX8MZJIRZmM/edit#gid=0" target="_blank" rel="noopener" title="The MECC Communications Plan">MECC Comm Plan</a>
-		<a href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Timezones2008.png" target="_blank" rel="noopener" title="World Time Zone Map">World Time Zone Map</a>
-	  </span> <!-- End of class dropdown-content -->
-   </span> <!-- End of class dropdown -->
-	
-		  	   <!-- Open the NCM help/instructions document -->
-		  	   <a id="helpdev" href="https://net-control.us/help.php" target="_blank" rel="noopener" title="Click for the extended help document">Help</a>&nbsp;||&nbsp;
-				
-		  	   <!-- Alternate dropdown of the lesser needed reports -->
-		  	   <a href="#menu" id="bar-menu" class="gradient-menu"></a>
-						  	   		
-		  	   <!-- This select only shown if the three bar (hamburger-menu) is selected -->
-		  	   <!-- bardropdown is in NetManager-p2.js -->
-		  	   <select id="bardropdown" class="bardropdown hidden">
-			   		<option value="SelectOne" selected="selected" disabled >Select One</option>
-                    <option value="convertToPB" >Convert to a Pre-Built (Roll Call) net.</option>
-			   		<option value="CreateGroup">Create a Group Profile</option> 
-			   
-			   		<option value="HeardList">Create a Heard List</option>
-                    <option value="FSQList">Create FSQ Macro List</option>
-			   		<option value="findCall">Report by Call Sign</option>
-			   		
-			   		<option value="allCalls">List all User Call Signs</option>
-			   		<option value="DisplayHelp">NCM Documentation</option>
-			   		<option value="DisplayKCARES">KCNARES Deployment Manual</option>
-			   		
-			   		<option value="" disabled >ARES Resources</option>
-			   		<option value="ARESELetter" >ARES E-Letter</option>
-			   		
-			   		<option value="ARESManual">Download the ARES Manual(PDF)</option>
-			   		<option value="DisplayARES">Download ARES Field Resources Manual(PDF)</option>
-			   		<option value="ARESTaskBook"> ARES Standardized Training Plan Task Book [Fillable PDF]</option>
-			   		
-			   		<option value="ARESPlan">ARES Plan</option>
-			   		<option value="ARESGroup">ARES Group Registration</option>
-			   		<option value="ARESEComm">Emergency Communications Training</option>		
-		  	   </select>
-			       
-	       </td> <!-- End div-nobg2 -->
-	     </tr> <!-- This closes the only row in the ID: ourfreqs table -->
-       </tbody>
-       </table> <!-- End table-ourfreqs -->
-   </div> <!-- End id theMenu -->
-</div> <!-- End id rightCorner -->
+<?php
+    require_once "dbConnectDtls.php";  // Make sure this is before the menu include
+    require_once "NCMMenus.php";
+    $menus = new NCMMenus($db);
+    echo $menus->renderUpperRightCorner();
+?> <!-- End of menu inclusion -->
 	      
  	<div id="org" class="hidden"></div> <!-- Used by putInGroupInput() in NetManager-p2.js  -->
     <div id="netchoice">
@@ -587,64 +488,7 @@
 	
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
-     <!-- All the quotes go here -->
-<!--
-        <h3 class="preQuote">Click anywhere to stop animation</h3>
-    	<h2 class="quotes">
-        	<p style="font-size: larger ; color:blue;">https://net-control.us</p>
-        	<!- - https://www.developerdrive.com/responsive-image-gallery-flexbox/ - ->
-        	<div class="image-container">	
-           
-            <img class="myimg" src="images/mars.png" alt="mars" width="100" height="" >      	 
-            
-            <img class="myimg" src="images/skywarn.png" alt="skywarn" width="100" height="" >
-            
-            <img class="myimg" src="images/nts.png" alt="nts" width="100" height="" >
-           
-        	<img class="myimg" src="images/ARES.png" alt="ARES" width="100" height="" >
-        	
-        	<img class="myimg" src="images/RACES.png" alt="RACES" width="100" height="" >
-        	
-            <img class="myimg" src="images/satern.png" alt="satern" width="100" height="" >
-        	
-            <img class="myimg" src="images/QSOTodayEXPOSPEAKERBadge.png" alt="QSOTodayEXPOSPEAKERBadge" width="120" height="" >
-        	<br> 
-        	<img src="images/century21.png" alt="century21" width="225" height="" >
-           
-        	<img src="images/redcross.png" alt="redcross" width="225" height="" >
-        	
-        	<img src="images/cert.png" alt="cert" width="225" height="" >
-        	
-        	<img src="images/waefar.png" alt="waefar" width="225" height="" >
-        
-        	 <!- - Morse code source:  https://fontmeme.com/morse-code/. - ->
-        	</div>        
-        	 <u style="color:green;">Net Control Manager is NOT a QSO logger!</u>
-        <br> 
-
-    	    NCM was designed to make Amateur Radio Net check-ins, management of net resources and net 
-    	    reporting easier and more efficient than using pen and paper. 
-        <br>
-            <img src="https://fontmeme.com/permalink/210504/f0ecbecf17e599b921b90be7131d1d45.png" alt="morse" width="100%">
-                
-        </h2>  <!- - End of H2 - ->
-        
-        <h2 class="quotes"><b style="color:red">HINT:</b><br> Not Logging the Net: <b style="color:green"> Put yourself in 5sec Refresh Mode...</b><b style="color:blue"> Use The Blue 'Timed' Button</b><br>
-             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%"></h2>
-    	
-        <h2 class="quotes">NCM is not a replacement for pen and paper, which will always be your 
-            best backup should something go wrong.<br>
-             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%">
-        </h2>
-        <h2 class="quotes">NCM was designed to be easily usable by the Net Control Operator alone, however someone else keeping log while you control the net is always a good idea.<br>
-             <img src="https://fontmeme.com/permalink/210512/65b1605a04f69309d96103ced85f1754.png" alt="NCM" width="25%">
-        </h2>
-        <?php
-				echo "<h2 class='quotes'>
-				    As of Today: <br>  $netcall Groups, <br> $cscount Unique Stations, <br> $netCnt Nets, <br> $records Logins <br>
-				    <img src='https://fontmeme.com/permalink/210514/469ac0e73fe5e79d55c4c332c794fa07.png' alt='K'></h2>"?>
--->
-     <!-- All the quotes end here -->
+     
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
 	
@@ -711,27 +555,6 @@ $ ( function() {
     });
 }); // end click @ #q-mark-in-circle()
 
-
-
-(function() {
-
-    var quotes = $(".quotes"); //variables
-    var quoteIndex = -1;
-    
-    function showNextQuote() {
-        ++quoteIndex;  //increasing index
-        quotes.eq(quoteIndex % quotes.length) //items ito animate?
-            .fadeIn(6500) //fade in time
-            .delay(250) //time until fade out
-            .fadeOut(5800, showNextQuote); //fade out time, recall function
-    }
-    showNextQuote();  
-})();
-
-$("body").click(function(){
-    $(".quotes").addClass("hidden");
-    $(".preQuote").addClass("hidden");
-});
 
 
 // This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
