@@ -58,6 +58,7 @@
     require_once "dbConnectDtls.php";  // Access to MySQL
     require_once "wx.php";			   // Makes the weather information available
     require_once "NCMStats.php";       // Get some stats
+    require_once "CellRowHeaderDefinitions.php";
 ?>
 
 <html lang="en" >
@@ -111,7 +112,10 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
 	<link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- ============== My style sheets ============================================= -->
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
@@ -120,12 +124,31 @@
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
     
-<style>
-/* using this to prevent direct editiong to C24 the W3W column */
-  /*  .readonly {
-        pointer-events: none;
-    } */
-</style>
+<script>
+    // Get the PHP column definitions into JavaScript
+    window.columnDefinitions = {
+        'default': {    
+            'c1': 'Role',
+            'c2': 'Mode',
+            'c3': 'Status',
+            // ... rest of default columns
+        },
+        'optional': {
+            'c0': 'Row No.',
+            'c5': 'TT No.',
+            // ... rest of optional columns
+        },
+        'admin': {
+            'c25': 'recordID',
+            // ... rest of admin columns
+        }
+    };
+</script>    
+<script>
+    // Pass PHP definitions to JavaScript
+    window.columnDefinitions = <?php echo json_encode($columns); ?>;
+</script>
+<script src="js/columnManager.js"></script>
 
 </head>
 
@@ -406,7 +429,7 @@
 <!-- The job of showing and hiding the time line is done in the TimeLine() in NetManager.js -->
 		    <div class = "btn-group2">
     		    <button class="ckin1" onclick="checkIn()">Check In</button>
-    		    <button class="dropbtn2" id="columnPicker">Show/Hide Columns</button>
+    		    <button class="dropbtn2" id="columnPicker">Show/Hide Columns</button> 
     		 
     		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line</button>
     		    
