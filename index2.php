@@ -533,7 +533,6 @@
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
 	
-	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
@@ -554,8 +553,6 @@ $ ( function() {
         $( "#q-mark-in-circle" ).dialog( "open" );
     });
 }); // end click @ #q-mark-in-circle()
-
-
 
 // This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
 function checkCall() {
