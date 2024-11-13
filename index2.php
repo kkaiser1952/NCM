@@ -120,7 +120,7 @@
     <!-- ============== My style sheets ============================================= -->
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
     <link rel="stylesheet" type="text/css" href="css/tabs.css" >				<!-- 2018-1-17 -->
-    <link rel="sparkel-text" type="text/css" href="css/sparkel-text">
+    <link rel="stylesheet" type="text/css" href="css/sparkel-text.css">
     
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
@@ -220,22 +220,16 @@
     	
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	
-	<!--	<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p> -->
-	
-		<p class="sparkle-text">
-  Please report any issues to NCM@groups.io Thank you.
-  <!-- Additional spark elements for more sparkle -->
-  <span class="spark1"></span>
-  <span class="spark2"></span>
-  <span class="spark3"></span>
-  <span class="spark4"></span>
-  <span class="spark5"></span>
-  <span class="spark6"></span>
-  <span class="spark7"></span>
-  <span class="spark8"></span>
-</p>
-	
-	    
+		<p class="sparkle-text">Please report any issues to NCM@groups.io Thank you.
+          <span class="spark1"></span>
+          <span class="spark2"></span>
+          <span class="spark3"></span>
+          <span class="spark4"></span>
+          <span class="spark5"></span>
+          <span class="spark6"></span>
+          <span class="spark7"></span>
+          <span class="spark8"></span>
+        </p>
         
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->

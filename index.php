@@ -116,6 +116,7 @@
     <!-- ============== My style sheets ============================================= -->
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
     <link rel="stylesheet" type="text/css" href="css/tabs.css" >				<!-- 2018-1-17 -->
+    <link rel="stylesheet" type="text/css" href="css/sparkel-text.css">
     
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
@@ -299,7 +300,16 @@
     	
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	
-		<p style="margin-bottom:10px;">Please report any issues to NCM@groups.io Thank you.</p>
+		<p class="sparkle-text">Please report any issues to NCM@groups.io Thank you.
+          <span class="spark1"></span>
+          <span class="spark2"></span>
+          <span class="spark3"></span>
+          <span class="spark4"></span>
+          <span class="spark5"></span>
+          <span class="spark6"></span>
+          <span class="spark7"></span>
+          <span class="spark8"></span>
+        </p>
 	
 	    <p class="tb1 TipBubbles initiallyHidden" style="left: 100px; width: 450px;  margin-bottom: 50px;">
             <a class="tipimage" href="https://net-control.us/help.php#assumptions" target="_blank">Click to start a new net or display an active or closed net.</a>
