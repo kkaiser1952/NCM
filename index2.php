@@ -147,6 +147,13 @@
     window.columnDefinitions = <?php echo json_encode($columns); ?>;
     console.log('Column Definitions:', window.columnDefinitions);
 </script>
+<script>
+$(document).ready(function() {
+    // Remove modal plugin handler
+    $('#columnPicker').off('click.modal');
+    $('#columnPicker').removeData('modal');
+});
+</script>
 <script src="js/columnManager.js"></script>
 
 </head>
