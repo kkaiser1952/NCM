@@ -1,10 +1,8 @@
 <!doctype html>
 
 <?php
-/***********************************************************************************************************
- 
- /**
- * Net Control Manager (NCM) - Version 1
+/*  index2.php   ****************************************************************
+ * Net Control Manager (NCM) - Version 1, @2
  * Copyright 2015-2025 Keith Kaiser, WA0TJT
  * Contact: wa0tjt@gmail.com
  * 
@@ -146,8 +144,8 @@
     };
 </script>    
 <script>
-    // Pass PHP definitions to JavaScript
     window.columnDefinitions = <?php echo json_encode($columns); ?>;
+    console.log('Column Definitions:', window.columnDefinitions);
 </script>
 <script src="js/columnManager.js"></script>
 
