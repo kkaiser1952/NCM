@@ -107,69 +107,50 @@
     
     <!-- =============== All above this should not be editied ====================== -->
     
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
-	<link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
-
+    <!-- ======== -->
+    
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  media="screen">	<!-- v3.3.7 -->
+    <link rel="stylesheet" type="text/css" href="css/jquery.modal.min.css" >		<!-- v0.9.1 -->
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-select.min.css" > 	<!-- v1.12.4 -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- ============== My style sheets ============================================= -->
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
-    <link rel="stylesheet" type="text/css" href="css/tabs.css" >				<!-- 2018-1-17 -->
+    <link rel="stylesheet" type="text/css" href="css/tabs.css" >		<!-- 2018-1-17 -->
     <link rel="stylesheet" type="text/css" href="css/sparkel-text.css">
     
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
-    
-<script>
-    // Get the PHP column definitions into JavaScript
-    window.columnDefinitions = {
-        'default': {    
-            'c1': 'Role',
-            'c2': 'Mode',
-            'c3': 'Status',
-            // ... rest of default columns
-        },
-        'optional': {
-            'c0': 'Row No.',
-            'c5': 'TT No.',
-            // ... rest of optional columns
-        },
-        'admin': {
-            'c25': 'recordID',
-            // ... rest of admin columns
-        }
-    };
-</script>    
-<script>
-    window.columnDefinitions = <?php echo json_encode($columns); ?>;
-    console.log('Column Definitions:', window.columnDefinitions);
-</script>
-<script>
-$(document).ready(function() {
-    // Remove modal plugin handler
-    $('#columnPicker').off('click.modal');
-    $('#columnPicker').removeData('modal');
-});
-</script>
-<script>
-$(document).ready(function() {
-    // Remove ALL click handlers
-    $('#columnPicker').off();
-    
-    // Check what handlers exist
-    const events = $._data($('#columnPicker')[0], 'events');
-    console.log('Remaining event handlers:', events);
-    
-    // Disable jQuery Modal specifically
-    if($.fn.modal) {
-        $('#columnPicker').modal('destroy');
-    }
-});
-</script>
-<script src="js/columnManager.js"></script>
+
+    <!-- Core JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>              <!-- v3.3.2 -->
+    <script src="js/jquery.freezeheader.js"></script>                 <!-- v1.0.7 -->
+    <script src="js/jquery.simpleTab.min.js"></script>               <!-- v1.0.0 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+    <script src="bootstrap/js/bootstrap-select.min.js"></script>      <!-- v1.12.4 -->
+    <script src="bootstrap/js/bootstrap-multiselect.js"></script>     <!-- 2.0 -->
+    <script src="js/jquery.jeditable.js"></script>                    <!-- 1.8.1 -->
+    <script src="js/sortTable.js"></script>
+    <script src="js/hamgridsquare.js"></script>
+    <script src="js/jquery.countdownTimer.js"></script>
+    <script src="js/w3data.js"></script>
+
+    <!-- Column Manager Setup -->
+    <script>
+        window.columnDefinitions = <?php echo json_encode($columns); ?>;
+    </script>
+    <script src="js/columnManager.js"></script>
+
+    <!-- My JavaScript -->
+    <script src="js/NetManager-W3W-APRS.js"></script>
+    <script src="js/NetManager.js"></script>
+    <script src="js/NetManager-p2.js"></script>
+    <script src="js/CellEditFunction.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/gridtokoords.js"></script>
+    <script src="js/cookieManagement.js"></script>
 
 </head>
 
@@ -543,34 +524,9 @@ $(document).ready(function() {
 	
 <!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
 	
-    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
-    <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
- 
-	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
-	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
 	
 	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
-
-	<script src="bootstrap/js/bootstrap-select.min.js"></script>				<!-- v1.12.4 2018-1-18 -->
-	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
-
-    <!-- http://www.appelsiini.net/projects/jeditable -->
-    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
-
-	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
-	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
-	<script src="js/jquery.countdownTimer.js"></script>							<!-- 1.0.8 2018-1-18 -->
-	
-	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
-	
-	<!-- Updated from 1.12.1 on 3/21/22 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
 <!-- My javascript -->	
     <script src="js/NetManager-W3W-APRS.js"></script> <!-- Added on 2024-02-21 -->
