@@ -154,6 +154,21 @@ $(document).ready(function() {
     $('#columnPicker').removeData('modal');
 });
 </script>
+<script>
+$(document).ready(function() {
+    // Remove ALL click handlers
+    $('#columnPicker').off();
+    
+    // Check what handlers exist
+    const events = $._data($('#columnPicker')[0], 'events');
+    console.log('Remaining event handlers:', events);
+    
+    // Disable jQuery Modal specifically
+    if($.fn.modal) {
+        $('#columnPicker').modal('destroy');
+    }
+});
+</script>
 <script src="js/columnManager.js"></script>
 
 </head>
