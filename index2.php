@@ -478,20 +478,34 @@
 			<input id="timelinehide" type="submit" value="Hide TimeLine" class="timelinehide" onClick="HideTimeLine();" />
 			
 			<!-- When the time line shows this is a specific search or numbers -->
-			<input id="timelinesearch" type="text" name="timelinesearch" placeholder="Search TimeLog entries..."class="timelinesearch" style="border: 2px solid green;" />
-			
-			<button class="timelineBut3" type="button" id="runtls" 
-			style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black; "
-			onclick="timelinesearch();">Search</button>
-			
-			<img src="images/newMarkers/q-mark-in-circle.png" id="QmarkInCircle" class="timelineBut2" alt="q-mark-in-circle" width="15" style="padding-bottom: 25px; margin-left: 1px; background-color: #e0e1e3;" />
-			
-			<div id="q-mark-in-circle" class="timelineBut timelineBut2" style="font-size: 14pt; background-color: #f6dbdb; border: 2px solid red;  ">
-    			<p style="color:red;"><br>This search function is primarily to find numbers.</p><p style="color:blue;">It was written to help track marathon and bike events where bib numbers are used to track participants. </p><p style="color:blue;">Other searches may or may not return what you are looking for. If a more general search is needed, use your browser Find instead, or right-click the Comments field of the station in the NetLog.
-    			</p>
-			</div>
-			
-			<div id="timeline" class="timeline"></div>		
+			<!-- Replace the existing timelinesearch input with this -->
+<div id="timelineSearchControls" style="display: none;">
+    <input id="timelinesearch" type="text" 
+           name="timelinesearch"  
+           placeholder="Search TimeLog entries" 
+           class="timelinesearch" 
+           style="border: 2px solid green;">
+    <button class="timelineBut3" 
+            type="button" 
+            id="runtls" 
+            onclick="timelineSearch();"
+            style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black;">
+        Search
+    </button>
+    
+    <img src="images/newMarkers/q-mark-in-circle.png" id="QmarkInCircle" class="timelineBut2" 
+         alt="q-mark-in-circle" width="15" 
+         style="padding-bottom: 25px; margin-left: 1px; background-color: #e0e1e3;" />
+
+    <div id="q-mark-in-circle" class="timelineBut timelineBut2" 
+         style="font-size: 14pt; background-color: #f6dbdb; border: 2px solid red;">
+        <p style="color:red;"><br>This search function is primarily to find numbers.</p>
+        <p style="color:blue;">It was written to help track marathon and bike events where bib numbers are used to track participants. </p>
+        <p style="color:blue;">Other searches may or may not return what you are looking for. If a more general search is needed, use your browser Find instead, or right-click the Comments field of the station in the NetLog.</p>
+    </div>
+</div>
+
+<div id="timeline" class="timeline"></div>		
 			
 		</div>   
 	</div> <!-- end admin @466 -->		
