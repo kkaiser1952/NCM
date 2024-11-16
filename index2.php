@@ -437,15 +437,22 @@
 <!-- https://www.w3schools.com/css/css3_buttons.asp -->
 <!-- The job of showing and hiding the time line is done in the TimeLine() in NetManager.js -->
 		    <div class = "btn-group2">
-    		    <button class="ckin1" onclick="checkIn()">Check In</button>
-    		    <button class="dropbtn2" id="columnPicker">Show/Hide Columns</button> 
-    		 
-    		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line</button>
+    		    <button class="ckin1" onclick="checkIn()">Check In
+    		    </button>
     		    
-    		    <button class="timelineBut timelineBut2" onclick="RefreshTimeLine(); location.href='#timeHead';">Update</button>
+    		    <button class="dropbtn2" id="columnPicker" title="Manage visible columns">Show/Hide Columns
+    		    </button> 
+    		 
+    		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line
+    		    </button>
+    		    
+    		    <button class="timelineBut timelineBut2" onclick="RefreshTimeLine(); location.href='#timeHead';">Update
+    		    </button>
     		  
-    		    <button class="copyPB hidden" id="copyPB">Copy a Pre-Built</button>
-    		    <button class="closenet" id="closelog" oncontextmenu="rightclickundotimeout();return false;" >Close Net</button>
+    		    <button class="copyPB hidden" id="copyPB">Copy a Pre-Built
+    		    </button>
+    		    <button class="closenet" id="closelog" oncontextmenu="rightclickundotimeout();return false;" >Close Net
+    		    </button>
 		    </div> <!-- End btn-group2 -->
 
 			<!-- A normal left click and the log is closed, a right click resets the timeout to empty -->
@@ -471,7 +478,7 @@
 			<input id="timelinehide" type="submit" value="Hide TimeLine" class="timelinehide" onClick="HideTimeLine();" />
 			
 			<!-- When the time line shows this is a specific search or numbers -->
-			<input id="timelinesearch" type="text" name="timelinesearch"  placeholder="Search Comments: Search for numbers only" class="timelinesearch" style="border: 2px solid green;" />
+			<input id="timelinesearch" type="text" name="timelinesearch" placeholder="Search TimeLog entries..."class="timelinesearch" style="border: 2px solid green;" />
 			
 			<button class="timelineBut3" type="button" id="runtls" 
 			style="background-color: #f9e1e1; border-radius: 8px; border: 2px solid black; "
