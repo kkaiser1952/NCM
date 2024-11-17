@@ -68,16 +68,10 @@ $columns = [
     
 function getRowDefinitions($format = 'html') {
     $cells = [
-        // Row Number - Optional
         [
-            'class' => 'editable c0 cent',
-            'id' => "rowno:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'rowno',
-            'content' => h(safeGet($row, 'rowno')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c0">'
+            'class' => 'cent c0',
+            'content' => '',
         ],
-        // Role - Default
         [
             'class' => 'editable editable_selectNC cent c1',
             'id' => "netcontrol:" . safeGet($row, 'recordID'),
@@ -85,9 +79,7 @@ function getRowDefinitions($format = 'html') {
             'data-column' => 'netcontrol',
             'data-role' => safeGet($row, 'netcontrol', ''),
             'content' => h(safeGet($row, 'netcontrol')),
-            'checkbox' => ''
         ],
-        // Mode - Default
         [
             'class' => "editable editable_selectMode cent c2",
             'id' => "mode:" . safeGet($row, 'recordID'),
@@ -95,9 +87,7 @@ function getRowDefinitions($format = 'html') {
             'data-column' => 'mode',
             'data-mode' => safeGet($row, 'Mode', ''),
             'content' => h(safeGet($row, 'Mode')),
-            'checkbox' => ''
         ],
-        // Status - Default
         [
             'class' => "editable editable_selectACT cent c3",
             'id' => "active:" . safeGet($row, 'recordID'),
@@ -106,9 +96,7 @@ function getRowDefinitions($format = 'html') {
             'data-status' => safeGet($row, 'active', ''),
             'oncontextmenu' => "rightClickACT('" . safeGet($row, 'recordID') . "');return false;",
             'content' => h(safeGet($row, 'active')),
-            'checkbox' => ''
         ],
-        // Traffic - Default
         [
             'class' => "editable editable_selectTFC c4",
             'id' => "traffic:" . safeGet($row, 'recordID'),
@@ -117,9 +105,7 @@ function getRowDefinitions($format = 'html') {
             'data-traffic' => safeGet($row, 'traffic'),
             'oncontextmenu' => "rightClickTraffic('" . safeGet($row, 'recordID') . "');return false;",
             'content' => h(safeGet($row, 'traffic')),
-            'checkbox' => ''
         ],
-        // TT No. - Optional
         [
             'class' => 'editable editTT cent c5 TT',
             'id' => "tt:" . safeGet($row, 'recordID'),
@@ -127,9 +113,32 @@ function getRowDefinitions($format = 'html') {
             'data-column' => 'tt',
             'title' => "TT No. " . safeGet($row, 'tt') . " no edit",
             'content' => h(safeGet($row, 'tt')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c5">'
         ],
-        // Callsign - Default
+        [
+            'class' => 'editable editBand c23',
+            'id' => "band:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'band',
+            'title' => safeGet($row, 'band') . " Band",
+            'content' => h(safeGet($row, 'band')),   
+        ],
+        [
+            'class' => 'editable editfacility c33',
+            'id' => "facility:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'facility',
+            'onclick' => "empty('facility:" . safeGet($row, 'recordID') . "');",
+            'content' => h(safeGet($row, 'facility')),
+        ],
+        [
+            'class' => 'editable editonSite c34',
+            'id' => "onsite:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'onsite',
+            'data-onsite' => safeGet($row, 'onsite', ''),
+            'oncontextmenu' => "rightClickOnSite('" . safeGet($row, 'recordID') . "');return false;",
+            'content' => h(safeGet($row, 'onSite', '')),
+        ],
         [
             'class' => "editable cs1 " . safeGet($row, 'editCS1', '') . " c6",
             'id' => "callsign:" . safeGet($row, 'recordID'),
@@ -139,9 +148,7 @@ function getRowDefinitions($format = 'html') {
             'ondblclick' => "doubleClickCall('" . safeGet($row, 'recordID') . "', '" . h(safeGet($row, 'callsign')) . "', '" . safeGet($row, 'netID') . "');return false;",
             'title' => "Call Sign " . h(safeGet($row, 'callsign')) . " no edit",
             'content' => h(safeGet($row, 'callsign')),
-            'checkbox' => ''
         ],
-        // First Name - Default
         [
             'class' => 'editable editFnm c7',
             'id' => "Fname:" . safeGet($row, 'recordID'),
@@ -150,9 +157,7 @@ function getRowDefinitions($format = 'html') {
             'style' => 'text-transform:capitalize',
             'onclick' => "empty('Fname:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'Fname')) . '</div>',
-            'checkbox' => ''
         ],
-        // Last Name - Optional
         [
             'class' => 'editable editLnm c8',
             'id' => "Lname:" . safeGet($row, 'recordID'),
@@ -161,9 +166,7 @@ function getRowDefinitions($format = 'html') {
             'style' => 'text-transform:capitalize',
             'onclick' => "empty('Lname:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'Lname')) . '</div>',
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c8">'
         ],
-        // Tactical - Default
         [
             'class' => 'editable editTAC cent c9',
             'id' => "tactical:" . safeGet($row, 'recordID'),
@@ -172,18 +175,14 @@ function getRowDefinitions($format = 'html') {
             'onclick' => "empty('tactical:" . safeGet($row, 'recordID') . "');",
             'numsort' => safeGet($row, 'numsort', ''),
             'content' => "<div>" . h(safeGet($row, 'tactical')) . '</div>',
-            'checkbox' => ''
         ],
-        // Phone - Optional
         [
             'class' => 'editable editPhone c10 cent',
             'id' => "phone:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'phone',
             'content' => h(safeGet($row, 'phone')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c10">'
         ],
-        // Email - Optional
         [
             'class' => 'editable editEMAIL c11',
             'id' => "email:" . safeGet($row, 'recordID'),
@@ -191,78 +190,7 @@ function getRowDefinitions($format = 'html') {
             'data-column' => 'email',
             'oncontextmenu' => "sendEMAIL('" . h(safeGet($row, 'email')) . "','" . safeGet($row, 'netID') . "');return false;",
             'content' => h(safeGet($row, 'email')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c11">'
         ],
-        // Time In - Default
-        [
-            'class' => 'editable editTimeIn cent c12',
-            'id' => "logdate:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'logdate',
-            'content' => "<span class='tzld'>" . h(safeGet($row, 'logdate')) . "</span><span class='tzlld hidden'>" . h(safeGet($row, 'locallogdate', '')) . "</span>",
-            'checkbox' => ''
-        ],
-        // Time Out - Default
-        [
-            'class' => 'editable editTimeOut cent c13',
-            'id' => "timeout:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'timeout',
-            'content' => "<span class='tzto'>" . h(safeGet($row, 'timeout')) . "</span><span class='tzlto hidden'>" . h(safeGet($row, 'localtimeout', '')) . "</span>",
-            'checkbox' => ''
-        ],
-        // Comments - Default
-        [
-            'class' => 'editable editC c14',
-            'id' => "comments:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'comments',
-            'oncontextmenu' => "stationTimeLineList('" . h(safeGet($row, 'callsign')) . ":" . safeGet($row, 'netID') . "');return false;",
-            'onclick' => "empty('comments:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div>" . h(safeGet($row, 'comments')) . '</div>',
-            'checkbox' => ''
-        ],
-        // Credentials - Optional
-        [
-            'class' => 'editable editCREDS c15',
-            'id' => "creds:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'creds',
-            'content' => h(safeGet($row, 'creds')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c15">'
-        ],
-        // Time On Duty - Optional
-        [
-            'class' => 'editable c16 cent',
-            'id' => "timeonduty:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'timeonduty',
-            'content' => h(safeGet($row, 'time')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c16">'
-        ],
-        // County - Default
-        [
-            'class' => 'editable editcnty c17 cent',
-            'id' => "county:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'county',
-            'style' => 'text-transform:capitalize',
-            'oncontextmenu' => "MapCounty('" . h(safeGet($row, 'county')) . ":" . h(safeGet($row, 'state')) . "');return false;",
-            'onclick' => "empty('county:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div>" . h(safeGet($row, 'county')) . '</div>',
-            'checkbox' => ''
-        ],
-        // State - Default
-        [
-            'class' => 'editable editstate c18 cent',
-            'id' => "state:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'state',
-            'onclick' => "empty('state:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div>" . h(safeGet($row, 'state')) . '</div>',
-            'checkbox' => ''
-        ],
-        // Grid - Default
         [
             'class' => 'editable editGRID c20',
             'id' => "grid:" . safeGet($row, 'recordID'),
@@ -272,9 +200,7 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "MapGridsquare('" . h(safeGet($row, 'latitude')) . ":" . h(safeGet($row, 'longitude')) . ":" . h(safeGet($row, 'callsign')) . "');return false;",
             'onclick' => "empty('grid:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'grid')) . '</div>',
-            'checkbox' => ''
         ],
-        // Latitude - Optional
         [
             'class' => 'editable editLAT c21',
             'id' => "latitude:" . safeGet($row, 'recordID'),
@@ -283,9 +209,7 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "getCrossRoads('" . h(safeGet($row, 'latitude')) . "," . h(safeGet($row, 'longitude')) . "');return false;",
             'onclick' => "empty('latitude:" . safeGet($row, 'recordID') . "');",
             'content' => h(safeGet($row, 'latitude')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c21">'
         ],
-        // Longitude - Optional
         [
             'class' => 'editable editLON c22',
             'id' => "longitude:" . safeGet($row, 'recordID'),
@@ -294,121 +218,54 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "getCrossRoads('" . h(safeGet($row, 'latitude')) . "," . h(safeGet($row, 'longitude')) . "');return false;",
             'onclick' => "empty('longitude:" . safeGet($row, 'recordID') . "');",
             'content' => h(safeGet($row, 'longitude')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c22">'
         ],
-        // Band - Optional
-        // W3W - Optional (completing c24)
         [
-            'class' => 'readonly W3W c24 cent',
-            'id' => "w3w:" . safeGet($row, 'recordID'),
+            'class' => 'editable editTimeIn cent c12',
+            'id' => "logdate:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'w3w',
-            'oncontextmenu' => "mapWhat3Words('" . safeGet($row, 'w3w') . "');return false;",
-            'onclick' => "empty('w3w:" . safeGet($row, 'recordID') . "'); getAPRSLocations('NOTUSED, " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", W3W');",
-            'style' => 'cursor: pointer;',
-            'content' => "<div class='" . safeGet($row, 'class', '') . "' readonly>" . h(safeGet($row, 'w3w')) . "</div>",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c24">'
+            'data-column' => 'logdate',
+            'content' => "<span class='tzld'>" . h(safeGet($row, 'logdate')) . "</span><span class='tzlld hidden'>" . h(safeGet($row, 'locallogdate', '')) . "</span>",
         ],
-        // recordID - Admin
         [
-            'class' => 'editable c25 cent',
-            'id' => "recordID:" . safeGet($row, 'recordID'),
+            'class' => 'editable editTimeOut cent c13',
+            'id' => "timeout:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'recordID',
-            'content' => h(safeGet($row, 'recordID')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c25">'
+            'data-column' => 'timeout',
+            'content' => "<span class='tzto'>" . h(safeGet($row, 'timeout')) . "</span><span class='tzlto hidden'>" . h(safeGet($row, 'localtimeout', '')) . "</span>",
         ],
-        // ID - Admin
         [
-            'class' => 'editable c26 cent',
-            'id' => "id:" . safeGet($row, 'id'),
+            'class' => 'editable editC c14',
+            'id' => "comments:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'id',
-            'content' => h(safeGet($row, 'id')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c26">'
+            'data-column' => 'comments',
+            'oncontextmenu' => "stationTimeLineList('" . h(safeGet($row, 'callsign')) . ":" . safeGet($row, 'netID') . "');return false;",
+            'onclick' => "empty('comments:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div>" . h(safeGet($row, 'comments')) . '</div>',
         ],
-        // status - Admin
         [
-            'class' => 'editable c27 cent',
-            'id' => "status:" . safeGet($row, 'status'),
+            'class' => 'editable editCREDS c15',
+            'id' => "creds:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'status',
-            'content' => "'" . h(safeGet($row, 'status')) . "'",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c27">'
+            'data-column' => 'creds',
+            'content' => h(safeGet($row, 'creds')),
         ],
-        // home - Admin
         [
-            'class' => 'editable c28 cent',
-            'id' => "home:" . safeGet($row, 'home'),
+            'class' => 'editable c16 cent',
+            'id' => "timeonduty:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'home',
-            'content' => "'" . h(safeGet($row, 'home')) . "'",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c28">'
+            'data-column' => 'timeonduty',
+            'content' => h(safeGet($row, 'time')),
         ],
-        // ipaddress - Admin
         [
-            'class' => 'editable c29 cent',
-            'id' => "ipaddress:" . safeGet($row, 'ipaddress'),
+            'class' => 'editable editcnty c17 cent',
+            'id' => "county:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'ipaddress',
-            'content' => h(safeGet($row, 'ipaddress')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c29">'
-        ],
-        // Team - Optional
-        [
-            'class' => 'editable editteam c30 cent',
-            'id' => "team:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'team',
-            'onclick' => "empty('team:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'team')) . "</div>",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c30">'
-        ],
-        // APRS_CALL - Optional
-        [
-            'class' => 'editable editaprs_call c31 cent',
-            'id' => "aprs_call:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'aprs_call',
-            'style' => 'text-transform:uppercase',
-            'oncontextmenu' => "getAPRSLocations('" . safeGet($row, 'aprs_call') . ", " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", APRS');return false;",
-            'onclick' => "empty('aprs_call:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'aprs_call')) . "</div>",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c31">'
-        ],
-        // Country - Optional
-        [
-            'class' => 'editable editcntry c32 cent',
-            'id' => "country:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'country',
+            'data-column' => 'county',
             'style' => 'text-transform:capitalize',
-            'onclick' => "empty('country:" . safeGet($row, 'recordID') . "');",
-            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'country')) . "</div>",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c32">'
+            'oncontextmenu' => "MapCounty('" . h(safeGet($row, 'county')) . ":" . h(safeGet($row, 'state')) . "');return false;",
+            'onclick' => "empty('county:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div>" . h(safeGet($row, 'county')) . '</div>',
         ],
-        // Facility - Optional
-        [
-            'class' => 'editable editfacility c33',
-            'id' => "facility:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'facility',
-            'onclick' => "empty('facility:" . safeGet($row, 'recordID') . "');",
-            'content' => h(safeGet($row, 'facility')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c33">'
-        ],
-        // On Site - Optional
-        [
-            'class' => 'editable editonSite c34',
-            'id' => "onsite:" . safeGet($row, 'recordID'),
-            'data-record-id' => safeGet($row, 'recordID'),
-            'data-column' => 'onsite',
-            'data-onsite' => safeGet($row, 'onsite', ''),
-            'oncontextmenu' => "rightClickOnSite('" . safeGet($row, 'recordID') . "');return false;",
-            'content' => h(safeGet($row, 'onSite', '')),
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c34">'
-        ],
-        // City - Optional
         [
             'class' => 'editable editcity c35 cent',
             'id' => "city:" . safeGet($row, 'recordID'),
@@ -416,9 +273,15 @@ function getRowDefinitions($format = 'html') {
             'data-column' => 'city',
             'onclick' => "empty('city:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'city')) . '</div>',
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c35">'
         ],
-        // District - Optional
+        [
+            'class' => 'editable editstate c18 cent',
+            'id' => "state:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'city',
+            'onclick' => "empty('state:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div>" . h(safeGet($row, 'state')) . '</div>',
+        ],
         [
             'class' => 'editable editdist c59 cent',
             'id' => "district:" . safeGet($row, 'recordID'),
@@ -429,26 +292,97 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "rightClickDistrict('" . safeGet($row, 'recordID') . ", " . safeGet($row, 'state') . ", " . safeGet($row, 'county') . "');return false;",
             'onclick' => "empty('district:" . safeGet($row, 'recordID') . "');",
             'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'district')) . "</div>",
-            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c59">'
-        ]
+        ],
+        [
+            'class' => 'readonly W3W c24 cent',
+            'id' => "w3w:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'w3w',
+            'oncontextmenu' => "mapWhat3Words('" . safeGet($row, 'w3w') . "');return false;",
+            'onclick' => "empty('w3w:" . safeGet($row, 'recordID') . "'); getAPRSLocations('NOTUSED, " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", W3W');",
+            'style' => 'cursor: pointer;',
+            'content' => "<div class='" . safeGet($row, 'class', '') . "' readonly>" . h(safeGet($row, 'w3w')) . "</div>",
+        ],
+        [
+            'class' => 'editable editteam c30 cent',
+            'id' => "team:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'team',
+            'onclick' => "empty('team:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'team')) . "</div>",
+        ],
+        [
+            'class' => 'editable editaprs_call c31 cent',
+            'id' => "aprs_call:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'aprs_call',
+            'style' => 'text-transform:uppercase',
+            'oncontextmenu' => "getAPRSLocations('" . safeGet($row, 'aprs_call') . ", " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", APRS');return false;",
+            'onclick' => "empty('aprs_call:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'aprs_call')) . "</div>",
+        ],
+        [
+            'class' => 'editable editcntry c32 cent',
+            'id' => "country:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'country',
+            'style' => 'text-transform:capitalize',
+            'onclick' => "empty('country:" . safeGet($row, 'recordID') . "');",
+            'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'country')) . "</div>",
+        ],
+        [
+            'class' => 'editable c25 cent',
+            'id' => "recordID:" . safeGet($row, 'recordID'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'recordID',
+            'content' => h(safeGet($row, 'recordID')),
+        ],
+        [
+            'class' => 'editable c26 cent',
+            'id' => "id:" . safeGet($row, 'id'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'id',
+            'content' => h(safeGet($row, 'id')),
+        ],
+        [
+            'class' => 'editable c27 cent',
+            'id' => "status:" . safeGet($row, 'status'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'status',
+            'content' => "'" . h(safeGet($row, 'status')) . "'",
+        ],
+        [
+            'class' => 'editable c28 cent',
+            'id' => "home:" . safeGet($row, 'home'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'home',
+            'content' => "'" . h(safeGet($row, 'home')) . "'",
+        ],
+        [
+            'class' => 'editable c29 cent',
+            'id' => "ipaddress:" . safeGet($row, 'ipaddress'),
+            'data-record-id' => safeGet($row, 'recordID'),
+            'data-column' => 'ipaddress',
+            'content' => h(safeGet($row, 'ipaddress')),
+        ],
     ];
-
-    if ($format === 'raw') {
-        return $cells;
-    }
-
-    $output = '';
-    foreach ($cells as $cell) {
-        $output .= '<td';
-        foreach ($cell as $attribute => $value) {
-            if ($attribute !== 'content' && $attribute !== 'checkbox') {
-                $output .= ' ' . $attribute . '="' . htmlspecialchars($value) . '"';
-            }
+    
+     if ($format === 'raw') {
+            return $cells;
         }
-        $output .= '>' . $cell['content'] . $cell['checkbox'] . '</td>';
-    }
-
-    return $output;
+    
+        $output = '';
+        foreach ($cells as $cell) {
+            $output .= '<td';
+            foreach ($cell as $attribute => $value) {
+                if ($attribute !== 'content') {
+                    $output .= ' ' . $attribute . '="' . h($value) . '"';
+                }
+            }
+            $output .= '>' . $cell['content'] . '</td>';
+        }
+    
+        return $output;
 } // End getRowDefinitions()
  
 function getHeaderDefinitions() {
