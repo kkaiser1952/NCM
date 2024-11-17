@@ -163,20 +163,12 @@
     <img id="pgtitle2" src="images/NCM3.png" alt="NCM2" >
     
     <span id="version">
-        <!-- Years in service from 3/2015 . Month . day  of last update -->
-    	<!-- <a href="#cc" rel="modal:open" id="version2">v8.03.11 -->
     	<a href="https://groups.io/g/NCM" target="_blank">About</a> 
-    	<!--
-    	window.open("", "version2",  strWindowFeatures);
-    	var popupWindow = window.open("", "Preamble",  strWindowFeatures);
-        -->
     </span> <!-- End of id version -->
-</div> 
-
-<!-- From showDTTM() in NetManager-p2.js -->
+</div> <!-- End openingImages -->
 
 	
-<div id="dttm"> <!-- flex container -->
+<div id="dttm"> <!-- flex container for date & time -->
     <div id="dttm1">
         <input type="radio" name="tz" id="theLocal" value="theLocal" size = "60" onclick="goLocal()">
         <br>
@@ -185,8 +177,8 @@
 
     <!-- To comment this function: comment setInterval('showDTTM()', 1000); in netManager-p2.js -->
 	<div id="dttm2">
-	</div>  <!-- Friday, August 24, 2018 1:55:13 PM  -->
-</div> <!-- end flex container -->
+	</div>  
+</div> <!-- end flex container for date & time  -->
 		 
 
 <div class = "weather-place">
@@ -200,16 +192,9 @@
 <!-- End of upper-left-corner stuff -->
 		
     <br>
-    
-       <!-- The div below builds the Preamble, Agenda... menu --> 
-       <!-- The upperrightcorner.php code was changed 2018-07-10 to point to NetKind instead of meta -->
-       <!-- Be sure to look at the NetManager.js and ...-p2.js for upperrightcorner and edit as needed -->
-       <!-- The three divs work to allow its position in the upper right corner and proper position of -->
-       <!-- each of the other divs within rightCorner -->
-       <!-- The upper right corner information can NOT be edited  -->
        
 <?php
-    require_once "dbConnectDtls.php";  // Make sure this is before the menu include
+    // Upper right corner menus
     require_once "NCMMenus.php";
     $menus = new NCMMenus($db);
     echo $menus->renderUpperRightCorner();
@@ -222,6 +207,7 @@
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
 	
 		<p class="sparkle-text">Please report any issues to NCM@groups.io Thank you.
+          <!-- For the running spark effect on text above -->
           <span class="spark1"></span>
           <span class="spark2"></span>
           <span class="spark3"></span>
@@ -232,27 +218,24 @@
           <span class="spark8"></span>
         </p>
         
+        <!-- start a new net stuff -->
 		<div class="theBox">
     		<!-- showit() in NetManager.js -->
 			<button id="newbttn" class="newbttn left-cell tbb2" onclick="showit();" title="Click to start a new net">Start a new net</button>	
         
 			<button id="by_number" style="left:25px;" class="newbttn" onclick="net_by_number();" title="Net by the Number">Browse a Net by Number</button>
 			<br><br>	
-		</div>
+		</div> <!-- End start a new net stuff -->
 		
 		<div id="makeNewNet" class="hidden" >	
     		<div style="color: red;">* Required Field</div>
-    		<!--
-            <label class="Testcontainer" for="testnet">Click if making a test net? &nbsp;&nbsp;&nbsp;
-    		    <input id="testnet" type="checkbox" name="testnet" value="y" >
-    		   
-            </label>
-            -->
+    		
             <br>
             
     <div><b style="color:red">*</b>Enter Your Call Sign:</div>   
     	<input onblur="checkCall()" type="text" required id="callsign" maxlength="16" name="callsign" autocomplete="on" title="Enter Your Call Sign" >
 					
+<!-- Build code for thee dropdown lists -->					
 <?php  require_once "buildThreeDropdowns.php"; ?>
 			     
     <!-- ==== GROUP ======= -->
@@ -335,26 +318,20 @@
 		<div class="last3qs">Complete New Net Creation:</div>
 		
 		<br>
-		<!-- newNet() & hideit() createNetKindView() in NetManager-p2.js -->
-		<!-- I removed createNetKindView() on 2023-04-16 don't think we need it -->
+		
 		<input id="submit" type="submit" value="Submit" onClick="newNet();" title="Submit The New Net">
 		<input class="" type="button" value="Cancel" onclick="hideit();" title="Cancel">
 				   
 	    </div>	    <!-- End of makeNewNet -->
 	    
 	    <div id="remarks" class="remarks hidden"></div>
-	
-   	
-        
+	      
         <div class="btn-toolbar" >
         
-		    <div class="form-group" id="form-group-1" title="form-group" >
-    		
-    		<!-- switchClosed() in NetManager-p2.js -->
-    		<!-- The tohide class is used by net_by_num() -->
+        <div class="form-group" id="form-group-1" title="form-group" >
+
     		
     	<!--	<label for="select1">Or make a selection from this dropdown</label>  -->
-    	
         <select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
 	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
 	        	
@@ -399,7 +376,10 @@
     
 	<div id="forcb1" class="hidden">
     	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">
-        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">Hover/Click here to add General Comments</a></p>
+        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">
+            	Hover/Click here to add General Comments
+            </a>
+        </p>
         	
 		<div id="genComments" class=" editGComms"></div>
 
@@ -407,10 +387,10 @@
 	  <!-- End of besticky -->
 	  
 	  
-	<div id="admin" class=" admin ">   <!-- End is @645 -->
+	<div id="admin" class=" admin "> <!-- Ends@ End Admin -->
 		<div id="csnm" class="hidden">
 
-	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  <!-- changed to Div from  <nav id=" on 2019-05-02 -->
+	    <div id="primeNav" class="flashit" style="position:sticky; top:0; z-index:1;">  
 	    
 	    <!-- The cs1 entry or call sign can take the form of a call sign or a name, either will cause -->
 	    <!-- the system to filter existing entries on whats entered either fully or partially. -->
@@ -420,7 +400,6 @@
 		<input type="hidden" id="hints">
 		
 		<!-- Input first name add readonly to prevent editing -->
-		<!-- autocomplet="on" removed from below on 2018-08-12 -->
 		<input id="Fname" type="text" placeholder="Name" onblur="" autocomplete="off" tabindex=2>
 		
 		<input id="TrfkSwitch" type="text" onblur="checkIn(); this.value='' " autocomplete="off" tabindex=3 >
@@ -430,12 +409,12 @@
 		
 		<!-- DO NOT COMMENT THIS OUT, IT BREAKS THE DISPLAY -->
 		<input id="section" class="hidden brdrGreen" type="text" placeholder="" onblur=" this.value=''" maxlength="4" size="4"> 
-	
-		<!-- Check In button -->
-		<!-- checkIN() is in NetManager-p2.js -->
 
 <!-- https://www.w3schools.com/css/css3_buttons.asp -->
 <!-- The job of showing and hiding the time line is done in the TimeLine() in NetManager.js -->
+
+        <!-- Check In button -->
+		<!-- checkIN() is in NetManager-p2.js -->
 		    <div class = "btn-group2">
     		    <button class="ckin1" onclick="checkIn()">Check In
     		    </button>
