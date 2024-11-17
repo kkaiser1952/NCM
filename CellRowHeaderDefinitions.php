@@ -387,42 +387,269 @@ function getRowDefinitions($format = 'html') {
  
 function getHeaderDefinitions() {
     return [
-        ['title' => 'Row No.', 'class' => 'besticky c0', 'content' => '#'],
-        ['title' => 'Role', 'class' => 'besticky c1', 'content' => 'Role'],
-        ['title' => 'Mode', 'class' => 'besticky DfltMode cent c2', 'id' => 'dfltmode', 'oncontextmenu' => "setDfltMode();return false;", 'content' => 'Mode'],
-        ['title' => 'Status', 'class' => 'besticky c3', 'content' => 'Status'],
-        ['title' => 'Traffic', 'class' => 'besticky c4', 'content' => 'Traffic'],
-        ['title' => 'TT No. The assigned APRS TT number.', 'class' => 'besticky c5', 'width' => '5%', 'oncontextmenu' => "whatIstt();return false;", 'content' => 'tt#'],
-        ['title' => 'Band', 'class' => 'besticky c23', 'width' => '5%', 'content' => 'Band'],
-        ['title' => 'Facility', 'class' => 'besticky cent c33', 'oncontextmenu' => "clearFacilityCookie();return false;", 'content' => 'Facility'],
-        ['title' => 'onsite', 'class' => 'besticky c34', 'oncontextmenu' => "showFacilityColumn();return false;", 'content' => 'On Site'],
-        ['title' => 'Call Sign', 'class' => 'besticky c6', 'oncontextmenu' => "heardlist()", 'content' => 'Callsign'],
-        ['title' => 'First Name', 'class' => 'besticky c7', 'content' => 'First Name'],
-        ['title' => 'Last Name', 'class' => 'besticky c8', 'content' => 'Last Name'],
-        ['title' => 'Tactical Call, Click to change. Or type DELETE to delete entire row.', 'class' => 'besticky c9', 'oncontextmenu' => "Clear_All_Tactical()", 'content' => 'Tactical'],
-        ['title' => 'Phone, Enter phone number.', 'class' => 'besticky c10', 'content' => 'Phone'],
-        ['title' => 'email, Enter email address.', 'class' => 'besticky c11', 'oncontextmenu' => "sendGroupEMAIL()", 'content' => 'eMail'],
-        ['title' => 'Grid, Maidenhead grid square location.', 'class' => 'besticky c20', 'content' => 'Grid'],
-        ['title' => 'Latitude', 'class' => 'besticky c21', 'content' => 'Latitude'],
-        ['title' => 'Longitude', 'class' => 'besticky c22', 'content' => 'Longitude'],
-        ['title' => 'Time In, Not for edit.', 'class' => 'besticky c12', 'content' => 'Time In'],
-        ['title' => 'Time Out, Not for edit.', 'class' => 'besticky c13', 'content' => 'Time Out'],
-        ['title' => 'Comments, All comments are saved.', 'class' => 'besticky c14', 'content' => 'Time Line<br>Comments'],
-        ['title' => 'Credentials', 'class' => 'besticky c15', 'content' => 'Credentials'],
-        ['title' => 'Time On Duty', 'class' => 'besticky c16', 'content' => 'Time On Duty'],
-        ['title' => 'County', 'class' => 'besticky c17', 'content' => 'County'],
-        ['title' => 'City', 'class' => 'besticky c35', 'content' => 'City'],
-        ['title' => 'State', 'class' => 'besticky c18', 'content' => 'State'],
-        ['title' => 'District', 'class' => 'besticky c59', 'content' => 'Dist'],
-        ['title' => 'W3W, Enter a What 3 Words location.', 'class' => 'besticky c24', 'oncontextmenu' => "openW3W();", 'content' => 'W3W'],
-        ['title' => 'Team', 'class' => 'besticky c30', 'content' => 'Team'],
-        ['title' => 'APRS_CALL', 'class' => 'besticky c31', 'content' => 'APRS CALL'],
-        ['title' => 'Country', 'class' => 'besticky c32', 'content' => 'Country'],
-        ['title' => 'recordID', 'class' => 'besticky c25', 'content' => 'recordID'],
-        ['title' => 'ID', 'class' => 'besticky c26', 'content' => 'ID'],
-        ['title' => 'status', 'class' => 'besticky c27', 'content' => 'status'],
-        ['title' => 'home', 'class' => 'besticky c28', 'content' => 'home'],
-        ['title' => 'ipaddress', 'class' => 'besticky c29', 'content' => 'ipaddress']
+        // Row No. - Optional
+        [
+            'title' => 'Row No.', 
+            'class' => 'besticky c0', 
+            'content' => '#',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c0">'
+        ],
+        // Role - Default
+        [
+            'title' => 'Role', 
+            'class' => 'besticky c1', 
+            'content' => 'Role',
+            'checkbox' => ''
+        ],
+        // Mode - Default
+        [
+            'title' => 'Mode', 
+            'class' => 'besticky DfltMode cent c2', 
+            'id' => 'dfltmode', 
+            'oncontextmenu' => "setDfltMode();return false;", 
+            'content' => 'Mode',
+            'checkbox' => ''
+        ],
+        // Status - Default
+        [
+            'title' => 'Status', 
+            'class' => 'besticky c3', 
+            'content' => 'Status',
+            'checkbox' => ''
+        ],
+        // Traffic - Default
+        [
+            'title' => 'Traffic', 
+            'class' => 'besticky c4', 
+            'content' => 'Traffic',
+            'checkbox' => ''
+        ],
+        // TT No. - Optional
+        [
+            'title' => 'TT No. The assigned APRS TT number.', 
+            'class' => 'besticky c5', 
+            'width' => '5%', 
+            'oncontextmenu' => "whatIstt();return false;", 
+            'content' => 'tt#',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c5">'
+        ],
+        // Callsign - Default
+        [
+            'title' => 'Call Sign', 
+            'class' => 'besticky c6', 
+            'oncontextmenu' => "heardlist()", 
+            'content' => 'Callsign',
+            'checkbox' => ''
+        ],
+        // First Name - Default
+        [
+            'title' => 'First Name', 
+            'class' => 'besticky c7', 
+            'content' => 'First Name',
+            'checkbox' => ''
+        ],
+        // Last Name - Optional
+        [
+            'title' => 'Last Name', 
+            'class' => 'besticky c8', 
+            'content' => 'Last Name',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c8">'
+        ],
+        // Tactical - Default
+        [
+            'title' => 'Tactical Call, Click to change. Or type DELETE to delete entire row.', 
+            'class' => 'besticky c9', 
+            'oncontextmenu' => "Clear_All_Tactical()", 
+            'content' => 'Tactical',
+            'checkbox' => ''
+        ],
+        // Phone - Optional
+        [
+            'title' => 'Phone, Enter phone number.', 
+            'class' => 'besticky c10', 
+            'content' => 'Phone',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c10">'
+        ],
+        // Email - Optional
+        [
+            'title' => 'email, Enter email address.', 
+            'class' => 'besticky c11', 
+            'oncontextmenu' => "sendGroupEMAIL()", 
+            'content' => 'eMail',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c11">'
+        ],
+        // Time In - Default
+        [
+            'title' => 'Time In, Not for edit.', 
+            'class' => 'besticky c12', 
+            'content' => 'Time In',
+            'checkbox' => ''
+        ],
+        // Time Out - Default
+        [
+            'title' => 'Time Out, Not for edit.', 
+            'class' => 'besticky c13', 
+            'content' => 'Time Out',
+            'checkbox' => ''
+        ],
+        // Comments - Default
+        [
+            'title' => 'Comments, All comments are saved.', 
+            'class' => 'besticky c14', 
+            'content' => 'Time Line<br>Comments',
+            'checkbox' => ''
+        ],
+        // Credentials - Optional
+        [
+            'title' => 'Credentials', 
+            'class' => 'besticky c15', 
+            'content' => 'Credentials',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c15">'
+        ],
+        // Time On Duty - Optional
+        [
+            'title' => 'Time On Duty', 
+            'class' => 'besticky c16', 
+            'content' => 'Time On Duty',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c16">'
+        ],
+        // County - Default
+        [
+            'title' => 'County', 
+            'class' => 'besticky c17', 
+            'content' => 'County',
+            'checkbox' => ''
+        ],
+        // State - Default
+        [
+            'title' => 'State', 
+            'class' => 'besticky c18', 
+            'content' => 'State',
+            'checkbox' => ''
+        ],
+        // Grid - Default
+        [
+            'title' => 'Grid, Maidenhead grid square location.', 
+            'class' => 'besticky c20', 
+            'content' => 'Grid',
+            'checkbox' => ''
+        ],
+        // Latitude - Optional
+        [
+            'title' => 'Latitude', 
+            'class' => 'besticky c21', 
+            'content' => 'Latitude',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c21">'
+        ],
+        // Longitude - Optional
+        [
+            'title' => 'Longitude', 
+            'class' => 'besticky c22', 
+            'content' => 'Longitude',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c22">'
+        ],
+        // Band - Optional
+        [
+            'title' => 'Band', 
+            'class' => 'besticky c23', 
+            'width' => '5%', 
+            'content' => 'Band',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c23">'
+        ],
+        // W3W - Optional
+        [
+            'title' => 'W3W, Enter a What 3 Words location.', 
+            'class' => 'besticky c24', 
+            'oncontextmenu' => "openW3W();", 
+            'content' => 'W3W',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c24">'
+        ],
+        // recordID - Admin
+        [
+            'title' => 'recordID', 
+            'class' => 'besticky c25', 
+            'content' => 'recordID',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c25">'
+        ],
+        // ID - Admin
+        [
+            'title' => 'ID', 
+            'class' => 'besticky c26', 
+            'content' => 'ID',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c26">'
+        ],
+        // status - Admin
+        [
+            'title' => 'status', 
+            'class' => 'besticky c27', 
+            'content' => 'status',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c27">'
+        ],
+        // home - Admin
+        [
+            'title' => 'home', 
+            'class' => 'besticky c28', 
+            'content' => 'home',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c28">'
+        ],
+        // ipaddress - Admin
+        [
+            'title' => 'ipaddress', 
+            'class' => 'besticky c29', 
+            'content' => 'ipaddress',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c29">'
+        ],
+        // Team - Optional
+        [
+            'title' => 'Team', 
+            'class' => 'besticky c30', 
+            'content' => 'Team',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c30">'
+        ],
+        // APRS_CALL - Optional
+        [
+            'title' => 'APRS_CALL', 
+            'class' => 'besticky c31', 
+            'content' => 'APRS CALL',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c31">'
+        ],
+        // Country - Optional
+        [
+            'title' => 'Country', 
+            'class' => 'besticky c32', 
+            'content' => 'Country',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c32">'
+        ],
+        // Facility - Optional
+        [
+            'title' => 'Facility', 
+            'class' => 'besticky cent c33', 
+            'oncontextmenu' => "clearFacilityCookie();return false;", 
+            'content' => 'Facility',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c33">'
+        ],
+        // On Site - Optional
+        [
+            'title' => 'onsite', 
+            'class' => 'besticky c34', 
+            'oncontextmenu' => "showFacilityColumn();return false;", 
+            'content' => 'On Site',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c34">'
+        ],
+        // City - Optional
+        [
+            'title' => 'City', 
+            'class' => 'besticky c35', 
+            'content' => 'City',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c35">'
+        ],
+        // District - Optional
+        [
+            'title' => 'District', 
+            'class' => 'besticky c59', 
+            'content' => 'Dist',
+            'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c59">'
+        ]
     ];
 } // END getHeaderDefinitions()
 
