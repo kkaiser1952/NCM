@@ -385,6 +385,7 @@ function getRowDefinitions($format = 'html') {
         return $output;
 } // End getRowDefinitions()
  
+// Replaces headerdefinitions.php
 function getHeaderDefinitions() {
     return [
         // Row No. - Optional
