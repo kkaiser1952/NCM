@@ -392,6 +392,7 @@
     <!-- I don't belive class initiallyHidden is needed, its in bubbles.css -->
     <!-- I don't think we need class TipBubShort, also in bubbles.css -->
     <!-- I don't think we need class tb2, was once local in index.php -->
+    
 	<div id="forcb1" class="hidden">
     	<p class="" style="width:300px; left: 350px; ">
             Click here to add General Comments
