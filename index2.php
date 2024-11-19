@@ -128,6 +128,7 @@
 	left: 20px;
 	position: relative;
 	max-width: 90%; 
+	height: 40px
 }
 #forcb1:hover {
 	background-color: #f5f5a2;
@@ -390,11 +391,10 @@
     <!-- class hidden on forcb1 prevents the div from showing on page open, we want this -->
     <!-- I don't belive class initiallyHidden is needed, its in bubbles.css -->
     <!-- I don't think we need class TipBubShort, also in bubbles.css -->
+    <!-- I don't think we need class tb2, was once local in index.php -->
 	<div id="forcb1" class="hidden">
     	<p class="" style="width:300px; left: 350px; ">
-        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">
-            	Hover/Click here to add General Comments
-            </a>
+            Click here to add General Comments
         </p>
         	
 		<div id="genComments" class=" editGComms"></div>
@@ -645,6 +645,18 @@ function isTabletDevice() {
 
 </script>
 <script>
+document.getElementById('forcb1').addEventListener('click', function() {
+    const paragraph = this.querySelector('p');
+    paragraph.textContent = '';
+    
+    // Make the genComments div contenteditable
+    const genComments = document.getElementById('genComments');
+    genComments.contentEditable = true;
+    genComments.focus();
+    genComments.style.minHeight = '40px';
+    genComments.style.border = '1px solid #ccc';
+    genComments.style.padding = '5px';
+});
 </script>
     
 </body>
