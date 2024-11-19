@@ -59,6 +59,9 @@
     require_once "CellRowHeaderDefinitions.php";
     require_once "getGenCommentsReplacement.php";
     $existingComments = getExistingComments($netID);
+    
+    error_log("NetID: " . $netID);
+    error_log("Existing Comments: " . $existingComments);
 ?>
 
 <html lang="en" >
@@ -385,12 +388,23 @@
     <!-- genComments is reloded with getGenCommens.php -->
     <!-- editGComms  is handled in ?? -->
 	<div id="forcb1" class="hidden">
-    <p class="" style="width:300px; left: 350px; ">
-        <?php echo empty($existingComments) ? 'Click here to add General Comments' : 'Click to edit General Comments'; ?>
-    </p>
-    <div id="genComments" class="editGComms" data-existing="<?php echo htmlspecialchars($existingComments); ?>">
+    <?php 
+    if (empty($existingComments)) { 
+        error_log("No existing comments found");
+    ?>
+        <p class="" style="width:300px; left: 350px; ">
+            Click here to add General Comments
+        </p>
+    <?php } else {
+        error_log("Found existing comments");
+    } ?>
+    <div id="genComments" class="editGComms">
+        <?php if (!empty($existingComments)) { 
+            echo $existingComments;
+            error_log("Displaying existing comments");
+        } ?>
     </div>
-</div>   <!-- End ID: forcb1 -->
+</div>  <!-- End ID: forcb1 -->
 	  
 	  
 	<div id="admin" class=" admin "> <!-- Ends@ End Admin -->
@@ -635,35 +649,76 @@ function isTabletDevice() {
 
 </script>
 <!-- This script should eventually be moved to CellEditFunction.js replacing lines 20 to 28, and in NetManager.js deleting lines 418 to 421 -->
+<?php
+require_once "getGenCommentsReplacement.php";
+$existingComments = getExistingComments($netID);
+
+// Add this debugging
+error_log("NetID: " . $netID);
+error_log("Existing Comments: " . $existingComments);
+?>
+
+<!-- Then modify your div to include debugging -->
+<div id="forcb1" class="hidden">
+    <?php 
+    if (empty($existingComments)) { 
+        error_log("No existing comments found");
+    ?>
+        <p class="" style="width:300px; left: 350px; ">
+            Click here to add General Comments
+        </p>
+    <?php } else {
+        error_log("Found existing comments");
+    } ?>
+    <div id="genComments" class="editGComms">
+        <?php if (!empty($existingComments)) { 
+            echo $existingComments;
+            error_log("Displaying existing comments");
+        } ?>
+    </div>
+</div>
+
+<!-- And modify your script to include debugging -->
 <script>
 $(document).ready(function() {
-    // Get the existing comments on page load
-    const genCommentsDiv = $('#genComments');
-    const existingComments = genCommentsDiv.data('existing');
+    console.log("Document ready fired");
     
-    if (existingComments) {
-        // Clear default text and set existing comments
-        genCommentsDiv.empty().html(existingComments);
-    }
+    // Check for existing comments
+    var existingText = $(".editGComms").text().trim();
+    console.log("Existing text in editGComms:", existingText);
+    
+    // Initialize the editable functionality for this field
+    $(".editGComms").editable("SaveGenComm.php", {
+        indicator: "Saving...",
+        placeholder: "",
+        tooltip: "Click to add...",
+        style: "inherit",
+        submitdata: submitdata,
+        id: netid,
+        onsubmit: function(settings, value) {
+            console.log("Submitting value:", value);
+            return {
+                value: value,
+                id: netid
+            };
+        }
+    });
 
+    // Handle clicking in the field
     $('#forcb1').on('click', function() {
-        // Clear the placeholder text
+        console.log("forcb1 clicked");
+        // Hide the "Click here to add..." text if it exists
         $(this).find('p').hide();
         
-        // Clear and initialize editable
-        $(".editGComms").empty().editable("SaveGenComm.php", {
-            indicator: "Saving...",
-            placeholder: "",
-            tooltip: "Click to add...",
-            style: "inherit",
-            onsubmit: function(settings, value) {
-                return {
-                    value: value,
-                    id: netid
-                };
-            }
-        }).trigger('click');
+        // Clear and activate the editable area
+        $(".editGComms").empty().trigger('click');
     });
+
+    // If there are existing comments, ensure the default text is hidden
+    if (existingText.length > 0) {
+        console.log("Hiding default text due to existing content");
+        $('#forcb1 p').hide();
+    }
 });
 </script>
     

@@ -38,9 +38,4 @@ function getExistingComments($netID) {
         return ''; // Return empty on error
     }
 }
-
-// Use as API endpoint
-if (isset($_GET['q'])) {
-    echo getExistingComments(intval($_GET['q']));
-}
 ?>
