@@ -644,18 +644,26 @@ function isTabletDevice() {
 }
 
 </script>
+<!-- This script should eventually be moved to CellEditFunction.js replacing lines 20 to 28, and in NetManager.js lines 418 to 421 -->
 <script>
-document.getElementById('forcb1').addEventListener('click', function() {
-    const paragraph = this.querySelector('p');
-    paragraph.textContent = '';
-    
-    // Make the genComments div contenteditable
-    const genComments = document.getElementById('genComments');
-    genComments.contentEditable = true;
-    genComments.focus();
-    genComments.style.minHeight = '40px';
-    genComments.style.border = '1px solid #ccc';
-    genComments.style.padding = '5px';
+$(document).ready(function() {
+    $('#forcb1').on('click', function() {
+        // Clear both the placeholder text and the genComments div
+        $(this).find('p').hide();
+        
+        $(".editGComms").editable("SaveGenComm.php", {
+            indicator: "Saving...",
+            placeholder: "",
+            tooltip: "Click to add...",
+            style: "inherit",
+            onsubmit: function(settings, value) {
+                return {
+                    value: value,
+                    id: netid
+                };
+            }
+        }).trigger('click');  // Immediately trigger the editable state
+    });
 });
 </script>
     
