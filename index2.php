@@ -121,6 +121,47 @@
     
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
+    
+    <style>
+/* Container */
+#forcb1 {
+    display: flex; /* Enables Flexbox */
+    flex-direction: column; /* Align children vertically */
+    align-items: flex-start; /* Align children to the start of the container */
+    gap: 15px; /* Adds space between children */
+    padding: 10px; /* Optional padding for inner spacing */
+    border: 1px solid #ccc; /* Optional border for visibility */
+    width: 100%; /* Ensures it spans the full width of the document */
+    background-color: #f9f9f9; /* Light background color */
+    box-sizing: border-box; /* Includes padding and border in width */
+}
+
+/* Text Section */
+.tb2.TipBubShort {
+    width: auto; /* Auto width for flexibility */
+    margin-bottom: 0; /* Removes default margin for better alignment */
+}
+
+/* Tip Link */
+.tipimage {
+    text-decoration: none; /* No underline */
+    color: #007bff; /* Link color */
+    font-weight: bold; /* Makes the link bold */
+}
+
+.tipimage:hover {
+    color: #0056b3; /* Darker color on hover */
+}
+
+/* Comments Section */
+#genComments {
+    width: 100%; /* Full width */
+    min-height: 10px; /* Minimum height to ensure visibility */
+    border: 1px solid #ddd; /* Border for visibility */
+    background-color: #ffffff; /* White background for clarity */
+}
+
+</style>
 
     <!-- Core JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -198,14 +239,16 @@
     require_once "NCMMenus.php";
     $menus = new NCMMenus($db);
     echo $menus->renderUpperRightCorner();
+    //echo "<br>";
+    
 ?> <!-- End of menu inclusion -->
 	      
  	<div id="org" class="hidden"></div> <!-- Used by putInGroupInput() in NetManager-p2.js  -->
     <div id="netchoice">
 	<div id="netdata">
     	
-    <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
-	
+    <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file. The <br> adds a space after the upper right corner -->
+        <br>
 		<p class="sparkle-text">Please report any issues to NCM@groups.io Thank you.
           <!-- For the running spark effect on text above -->
           <span class="spark1"></span>
@@ -374,16 +417,14 @@
     <!-- A general pupose entry point for text, it's put into the time line table -->
     <!-- This is activated by a jquery on function in netManager.js at about line 391 -->
     
-	<div id="forcb1" class="hidden">
-    	<p class="tb2 TipBubShort initiallyHidden" style="width:300px; left: 350px; margin-bottom: 25px;">
-        	<a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">
-            	Hover/Click here to add General Comments
-            </a>
-        </p>
-        	
-		<div id="genComments" class=" editGComms"></div>
-
-	</div>   <!-- End ID: forcb1 -->
+	<div id="forcb1" class="hidden flex-container">
+    <p class="tb2 TipBubShort initiallyHidden">
+        <a class="tipimage" href="https://net-control.us/help.php#advanced" target="_blank">
+            Hover/Click here to add General Comments
+        </a>
+    </p>
+    <div id="genComments" class="editGComms"></div>
+</div> <!-- End ID: forcb1 -->
 	  <!-- End of besticky -->
 	  
 	  
