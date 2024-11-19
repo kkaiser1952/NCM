@@ -57,6 +57,8 @@
     require_once "wx.php";			   // Makes the weather information available
     require_once "NCMStats.php";       // Get some stats
     require_once "CellRowHeaderDefinitions.php";
+    require_once "getGenCommentsReplacement.php";
+    $existingComments = getExistingComments($netID);
 ?>
 
 <html lang="en" >
@@ -123,17 +125,7 @@
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
     
 <style>
-/* From: NetManager.css */
-#forcb1 {
-	left: 20px;
-	position: relative;
-	max-width: 90%; 
-	height: 40px
-}
-#forcb1:hover {
-	background-color: #f5f5a2;
-	border: 2px solid #7804fc;
-}
+
 </style>
 
     <!-- Core JavaScript Libraries -->
@@ -388,20 +380,17 @@
     <!-- A general pupose entry point for text, it's put into the time line table -->
     <!-- This is activated by a jquery on function in netManager.js at about line 391 -->
     
-    <!-- class hidden on forcb1 prevents the div from showing on page open, we want this -->
-    <!-- I don't belive class initiallyHidden is needed, its in bubbles.css -->
-    <!-- I don't think we need class TipBubShort, also in bubbles.css -->
-    <!-- I don't think we need class tb2, was once local in index.php -->
-    
+    <!-- This is where general comments are added and displayed -->
+    <!-- forcb1 JS is below -->
+    <!-- genComments is reloded with getGenCommens.php -->
+    <!-- editGComms  is handled in ?? -->
 	<div id="forcb1" class="hidden">
-    	<p class="" style="width:300px; left: 350px; ">
-            Click here to add General Comments
-        </p>
-        	
-		<div id="genComments" class=" editGComms"></div>
-
-	</div>   <!-- End ID: forcb1 -->
-	  <!-- End of besticky -->
+    <p class="" style="width:300px; left: 350px; ">
+        <?php echo empty($existingComments) ? 'Click here to add General Comments' : 'Click to edit General Comments'; ?>
+    </p>
+    <div id="genComments" class="editGComms" data-existing="<?php echo htmlspecialchars($existingComments); ?>">
+    </div>
+</div>   <!-- End ID: forcb1 -->
 	  
 	  
 	<div id="admin" class=" admin "> <!-- Ends@ End Admin -->
@@ -645,14 +634,24 @@ function isTabletDevice() {
 }
 
 </script>
-<!-- This script should eventually be moved to CellEditFunction.js replacing lines 20 to 28, and in NetManager.js lines 418 to 421 -->
+<!-- This script should eventually be moved to CellEditFunction.js replacing lines 20 to 28, and in NetManager.js deleting lines 418 to 421 -->
 <script>
 $(document).ready(function() {
+    // Get the existing comments on page load
+    const genCommentsDiv = $('#genComments');
+    const existingComments = genCommentsDiv.data('existing');
+    
+    if (existingComments) {
+        // Clear default text and set existing comments
+        genCommentsDiv.empty().html(existingComments);
+    }
+
     $('#forcb1').on('click', function() {
-        // Clear both the placeholder text and the genComments div
+        // Clear the placeholder text
         $(this).find('p').hide();
         
-        $(".editGComms").editable("SaveGenComm.php", {
+        // Clear and initialize editable
+        $(".editGComms").empty().editable("SaveGenComm.php", {
             indicator: "Saving...",
             placeholder: "",
             tooltip: "Click to add...",
@@ -663,7 +662,7 @@ $(document).ready(function() {
                     id: netid
                 };
             }
-        }).trigger('click');  // Immediately trigger the editable state
+        }).trigger('click');
     });
 });
 </script>
