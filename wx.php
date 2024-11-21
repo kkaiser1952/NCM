@@ -129,11 +129,14 @@ require('config.php');
 	
 	function getGeoIP( $ip=false )
 	{
-		if ( $ip === false )
-		{
-			if ( $_SERVER['HTTP_X_FORWARDED_FOR'] != '' ) $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			else $ip = $_SERVER['REMOTE_ADDR'];
-		}
+		if ($ip === false) {
+        // More robust way to check for forwarded IP
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+    }
 
 		if ( $ip == '108.61.195.124' ) return false;
 

@@ -1,8 +1,10 @@
 <?php
 // This PHP is called by NetManager-p2.js
 
-ini_set('display_errors', 1); 
-error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', '/path/to/error.log'); // Set to a writable path
+error_reporting(E_ALL);
 
 require_once "dbConnectDtls.php";
 require_once "WXdisplay.php";
@@ -86,6 +88,7 @@ if ($pb == 1) {
 }
 
 // Insert into NetLog
+// Insert into NetLog
 $stmt = $db_found->prepare("
     INSERT INTO NetLog (
         netcontrol, active, callsign, Fname, Lname, activity, tactical, 
@@ -93,20 +96,21 @@ $stmt = $db_found->prepare("
         frequency, subNetOfID, logdate, netcall, state, county, city,
         district, pb, tt, firstLogin, home, testnet, phone
     ) VALUES (
-        'PRM', :statusValue, :cs1, :Fname, :Lname, :activity, 'Net',
-        :id, :netID, :grid, :latitude, :longitude, :creds, :email,
-        'Opened NCM', :frequency, :subNetOfID, :timeLogIn, :netcall,
-        :state, :county, :city, :district, :pb, '00', :firstLogIn,
-        :home, :testnet, :phone
+        :netcontrol, :statusValue, :cs1, :Fname, :Lname, :activity, :tactical,
+        :id, :netID, :grid, :latitude, :longitude, :creds, :email, :comments,
+        :frequency, :subNetOfID, :timeLogIn, :netcall, :state, :county, :city,
+        :district, :pb, :tt, :firstLogIn, :home, :testnet, :phone
     )
 ");
 
-$stmt->execute([
+$params = [
+    'netcontrol' => 'PRM',
     'statusValue' => $statusValue,
     'cs1' => $cs1,
     'Fname' => $Fname,
     'Lname' => $Lname,
     'activity' => $activity,
+    'tactical' => 'Net',
     'id' => $id,
     'netID' => $newNetID,
     'grid' => $grid,
@@ -114,6 +118,7 @@ $stmt->execute([
     'longitude' => $longitude,
     'creds' => $creds,
     'email' => $email,
+    'comments' => 'Opened NCM',
     'frequency' => $frequency,
     'subNetOfID' => $subNetOfID,
     'timeLogIn' => $timeLogIn,
@@ -123,11 +128,21 @@ $stmt->execute([
     'city' => $city,
     'district' => $district,
     'pb' => $pb,
+    'tt' => '00',
     'firstLogIn' => $firstLogIn,
     'home' => $home,
     'testnet' => $testnet,
     'phone' => $phone
-]);
+];
+
+try {
+    $stmt->execute($params);
+} catch (PDOException $e) {
+    error_log("Error with callsign: " . $cs1);
+    error_log("SQL Error: " . $e->getMessage());
+    error_log("Parameters: " . print_r($params, true));
+    throw $e;
+}
 
 // Insert creation time and weather
 $wxNOW = currentWX();
