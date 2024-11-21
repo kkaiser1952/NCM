@@ -32,7 +32,7 @@ if ($pb == 1){$pbspot = 'PB';}
 $stmt = $db_found->prepare("SELECT max(netID) as maxID FROM NetLog limit 1");
 	$stmt->execute();
 	$result = $stmt->fetchColumn(); 
-		$newNetID = $result + '1';
+		$newNetID = $result + '1'; // the new net number
 	
         
 // Below was added 2020-12-15
