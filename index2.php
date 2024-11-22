@@ -152,14 +152,7 @@
     </script>
     <script src="js/columnManager.js"></script>
 
-    <!-- My JavaScript -->
-    <script src="js/NetManager-W3W-APRS.js"></script>
-    <script src="js/NetManager.js"></script>
-    <script src="js/NetManager-p2.js"></script>
-    <script src="js/CellEditFunction.js"></script>
-    <script src="js/grid.js"></script>
-    <script src="js/gridtokoords.js"></script>
-    <script src="js/cookieManagement.js"></script>
+    
 
 </head>
 
@@ -678,6 +671,15 @@ error_log("Existing Comments: " . $existingComments);
     </div>
 </div>
 
+<!-- My JavaScript -->
+    <script src="js/NetManager-W3W-APRS.js"></script>
+    <script src="js/NetManager.js"></script>
+    <script src="js/NetManager-p2.js"></script>
+    <script src="js/CellEditFunction.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/gridtokoords.js"></script>
+    <script src="js/cookieManagement.js"></script>
+    
 <!-- And modify your script to include debugging -->
 <script>
 $(document).ready(function() {
