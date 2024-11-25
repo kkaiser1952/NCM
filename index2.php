@@ -682,8 +682,13 @@ error_log("Existing Comments: " . $existingComments);
     
 <!-- And modify your script to include debugging -->
 <script>
+    /*
 $(document).ready(function() {
-    console.log("Document ready fired");
+    var submitdata = function() {
+        return {
+            id: netID  // Assuming netid is defined elsewhere
+        };
+    };
     
     // Check for existing comments
     var existingText = $(".editGComms").text().trim();
@@ -722,6 +727,7 @@ $(document).ready(function() {
         $('#forcb1 p').hide();
     }
 });
+*/
 </script>
     
 </body>
