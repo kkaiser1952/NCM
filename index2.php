@@ -48,6 +48,8 @@
  * This software is provided "as is" without warranty of any kind, either expressed
  * or implied, including but not limited to the warranties of merchantability and
  * fitness for a particular purpose.
+ 
+ // The div actLog contains the built UI (table) 
  */
 	
 	ini_set('display_errors',1); 

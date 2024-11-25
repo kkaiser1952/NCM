@@ -1,5 +1,6 @@
 <?php
 // CellRowHeaderDefinitions.php
+// The single source of truth for table structure and definitions
 // The ' c ' values in this file are used to place the correct data values in the cells in each row of data. The ' c ' values are also used to match the rowDefinitions correctly.
 // Written: 2019-04-04
 // Update: 2024-09-20
@@ -10,13 +11,13 @@ if (!function_exists('h')) {
     function h($string) {
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
-}
+} // End h()
 
 if (!function_exists('safeGet')) {
     function safeGet($array, $key, $default = '') {
         return isset($array[$key]) ? $array[$key] : $default;
     }
-}
+} // End safeGet()
 
 
 // Define arrays for each category of columns
