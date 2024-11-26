@@ -68,6 +68,7 @@ $columns = [
 
     
 function getRowDefinitions($format = 'html') {
+// This is our single source of truth for cell definitions   
     $cells = [
         [
             'class' => 'cent c0',
@@ -401,7 +402,7 @@ function getHeaderDefinitions() {
             'title' => 'Role', 
             'class' => 'besticky c1', 
             'content' => 'Role',
-            'checkbox' => ''
+            'checkbox' => '' // No checkbox means always visible
         ],
         // Mode - Default
         [
@@ -655,7 +656,7 @@ function getHeaderDefinitions() {
     ];
 } // END getHeaderDefinitions()
 
-// New function to create the entire table structure
+// Function to create the complete table structure
 function createTableStructure() {
     $headers = getHeaderDefinitions();
     
