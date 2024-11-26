@@ -332,8 +332,32 @@ echo '<tbody id="netBody">';
          
         } // end of If facility grouping for FACILITY loop
 				
-        // This PHP creates each row (<td>)
-		include "rowDefinitions.php";
+
+$rowOutput = '';
+foreach ($columns['default'] as $colKey => $colName) {
+    $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
+    $cellDef = getCellDefinition($colKey, $row, $colValue);
+    $rowOutput .= createCell($cellDef);
+}
+
+foreach ($columns['optional'] as $colKey => $colName) {
+    if (isColumnVisible($colKey)) {  // Function to check if column should be shown
+        $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
+        $cellDef = getCellDefinition($colKey, $row, $colValue);
+        $rowOutput .= createCell($cellDef);
+    }
+}
+
+// Only show admin columns if user has permission
+if (hasAdminAccess()) {  // Function to check admin access
+    foreach ($columns['admin'] as $colKey => $colName) {
+        $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
+        $cellDef = getCellDefinition($colKey, $row, $colValue);
+        $rowOutput .= createCell($cellDef);
+    }
+}
+
+echo $rowOutput;
 		
 		  	} // End of query run
 	 	
