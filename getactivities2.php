@@ -339,12 +339,14 @@ $result = $db_found->query($g_query);
 error_log("Query executed - Row count: " . $result->rowCount());
 
 // Create table structure
+// Create table and header ONCE at the start
 echo createTableStructure();
 
-// Process rows
+// Start tbody
+echo "<tbody id=\"netBody\">";
+
+// Process data rows
 foreach($result as $row) {
-    error_log("Processing row for " . $row['callsign']);
-    
     echo "<tr id=\"{$row['recordID']}\">";
     
     // Build each cell
@@ -354,7 +356,10 @@ foreach($result as $row) {
     }
     
     echo "</tr>";
-}
+} // End foreach
+
+// Close tbody and table
+echo "</tbody></table>";
 		
 		  	} // End of query run
 	 	

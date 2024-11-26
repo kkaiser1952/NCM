@@ -725,7 +725,6 @@ function createTableStructure() {
         }
         $tableHtml .= '>';
         $tableHtml .= $header['content'];
-        // Make sure checkbox is included if it exists
         if (isset($header['checkbox']) && !empty($header['checkbox'])) {
             $tableHtml .= $header['checkbox'];
         }
@@ -734,10 +733,6 @@ function createTableStructure() {
     
     $tableHtml .= '    </tr>' . "\n";
     $tableHtml .= '  </thead>' . "\n";
-    $tableHtml .= '  <tbody id="netBody">' . "\n";
-    $tableHtml .= '    <!-- Rows will be dynamically added here -->' . "\n";
-    $tableHtml .= '  </tbody>' . "\n";
-    $tableHtml .= '</table>' . "\n";
     
     return $tableHtml;
 } // End createTableStructure()
