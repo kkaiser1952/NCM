@@ -434,7 +434,7 @@
     		    <button class="ckin1" onclick="checkIn()">Check In
     		    </button>
     		    
-    		    <button class="dropbtn2" id="columnPicker" title="Manage visible columns">Show/Hide Columns
+    		    <button class="dropbtn2" id="columnPicker2" title="Manage visible columns">Show/Hide Columns
     		    </button> 
     		 
     		    <button class="timelineBut" onClick="TimeLine(); location.href='#timeHead';" >Time Line
@@ -682,6 +682,110 @@ error_log("Existing Comments: " . $existingComments);
     <script src="js/grid.js"></script>
     <script src="js/gridtokoords.js"></script>
     <script src="js/cookieManagement.js"></script>
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    /**
+     * Column Visibility Manager for NCM
+     * 
+     * Purpose: Provides direct column show/hide functionality in the net interface
+     * without using modal dialogs. Users can toggle column visibility by clicking
+     * checkboxes in the column headers.
+     * 
+     * Features:
+     * - Show/hide columns without interrupting net operations
+     * - Persists user preferences via cookies
+     * - Automatically restores user's previous column selections
+     * - Two-state button: "Show/Hide Columns" -> "Done"
+     * 
+     * Usage:
+     * 1. Click "Show/Hide Columns" button to reveal checkboxes
+     * 2. Toggle checkboxes to show/hide columns
+     * 3. Click "Done" to save preferences and hide checkboxes
+     * 
+     * Note: Uses columnPicker2 ID for testing alongside existing functionality
+     * 
+     * Created: 2024-11-26
+     */
+    // Ensure we only bind to columnPicker2 for testing
+    const columnPicker = document.getElementById('columnPicker2');
+    if (!columnPicker) return;
+
+    // Load saved preferences if they exist
+    const savedPrefs = getCookie('columnView');
+    if (savedPrefs) {
+        const prefs = JSON.parse(savedPrefs);
+        applyColumnPreferences(prefs);
+    }
+
+    columnPicker.addEventListener('click', function() {
+        // Toggle visibility of all checkboxes in column headers
+        document.querySelectorAll('.column-toggle').forEach(checkbox => {
+            checkbox.classList.toggle('hidden');
+        });
+        
+        // Show all columns temporarily while selecting
+        if (!this.hasAttribute('data-selecting')) {
+            // First click - show all columns
+            document.querySelectorAll('[class*="c"]').forEach(col => {
+                if (col.classList.toString().match(/c\d+/)) {
+                    col.style.display = '';
+                }
+            });
+            this.setAttribute('data-selecting', 'true');
+            this.textContent = 'Done';
+        } else {
+            // Second click - apply selections and hide unselected
+            document.querySelectorAll('.column-toggle').forEach(checkbox => {
+                const columnClass = checkbox.dataset.column;
+                const isVisible = checkbox.checked;
+                
+                document.querySelectorAll('.' + columnClass).forEach(col => {
+                    col.style.display = isVisible ? '' : 'none';
+                });
+            });
+            
+            // Save preferences
+            saveColumnPreferences();
+            
+            // Reset button state
+            this.removeAttribute('data-selecting');
+            this.textContent = 'Show/Hide Columns';
+            
+            // Hide checkboxes again
+            document.querySelectorAll('.column-toggle').forEach(checkbox => {
+                checkbox.classList.add('hidden');
+            });
+        }
+    });
+});
+
+function saveColumnPreferences() {
+    const prefs = {};
+    document.querySelectorAll('.column-toggle').forEach(checkbox => {
+        prefs[checkbox.dataset.column] = checkbox.checked;
+    });
+    document.cookie = 'columnView=' + JSON.stringify(prefs) + ';path=/';
+}
+
+function applyColumnPreferences(prefs) {
+    document.querySelectorAll('.column-toggle').forEach(checkbox => {
+        const columnClass = checkbox.dataset.column;
+        if (prefs.hasOwnProperty(columnClass)) {
+            checkbox.checked = prefs[columnClass];
+            document.querySelectorAll('.' + columnClass).forEach(col => {
+                col.style.display = prefs[columnClass] ? '' : 'none';
+            });
+        }
+    });
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+</script>
     
 <!-- And modify your script to include debugging -->
 <script>

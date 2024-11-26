@@ -67,7 +67,7 @@ function createCell($cellDef) {
             $output .= ' ' . $attr . '="' . h($value) . '"';
         }
     }
-    $output .= '>' . ($cellDef['content'] ?? '') . '</td>';
+    $output .= '>' . (isset($cellDef['content']) ? $cellDef['content'] : '') . '</td>';
     return $output;
 } // End createCell()
 
@@ -719,11 +719,17 @@ function createTableStructure() {
     foreach ($headers as $header) {
         $tableHtml .= '      <th';
         foreach ($header as $attr => $value) {
-            if ($attr !== 'content') {
+            if ($attr !== 'content' && $attr !== 'checkbox') {
                 $tableHtml .= ' ' . $attr . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
             }
         }
-        $tableHtml .= '>' . $header['content'] . '</th>' . "\n";
+        $tableHtml .= '>';
+        $tableHtml .= $header['content'];
+        // Make sure checkbox is included if it exists
+        if (isset($header['checkbox']) && !empty($header['checkbox'])) {
+            $tableHtml .= $header['checkbox'];
+        }
+        $tableHtml .= '</th>' . "\n";
     }
     
     $tableHtml .= '    </tr>' . "\n";
