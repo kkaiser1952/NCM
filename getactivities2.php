@@ -92,7 +92,34 @@ if ( $q <> 0 ){
     //echo "   @88 $orgType, $theCookies";
     
 } // end of q <> 0	
-		include "headerDefinitions.php"; 	
+
+ 	
+include "CellRowHeaderDefinitions.php";
+
+// Create table and header
+echo '<table id="thisNet">';
+echo '<thead id="thead" class="forNums" style="text-align: center;">';
+echo '<tr>';
+
+// Get header definitions
+$headers = getHeaderDefinitions();
+foreach ($headers as $header) {
+    echo '<th';
+    foreach ($header as $attr => $value) {
+        if ($attr !== 'content' && $attr !== 'checkbox') {
+            echo ' ' . $attr . '="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
+        }
+    }
+    echo '>';
+    echo $header['content'];
+    echo $header['checkbox']; // Include checkbox if present
+    echo '</th>';
+}
+
+echo '</tr>';
+echo '</thead>';
+echo '<tbody id="netBody">';
+		
 	 	
 	 	       $isopen = 0; // furture test to see if net is open or closed
 			 
