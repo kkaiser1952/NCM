@@ -2,6 +2,8 @@
 // getactivities2.php
 // Written: 2024-11-25
 
+error_log("getactivities2.php started - NetID: " . $q);
+
 error_reporting( 0 );
 	//date_default_timezone_set("America/Chicago");
 	require_once "dbConnectDtls.php";    
@@ -333,31 +335,26 @@ echo '<tbody id="netBody">';
         } // end of If facility grouping for FACILITY loop
 				
 
-$rowOutput = '';
-foreach ($columns['default'] as $colKey => $colName) {
-    $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
-    $cellDef = getCellDefinition($colKey, $row, $colValue);
-    $rowOutput .= createCell($cellDef);
-}
+$result = $db_found->query($g_query);
+error_log("Query executed - Row count: " . $result->rowCount());
 
-foreach ($columns['optional'] as $colKey => $colName) {
-    if (isColumnVisible($colKey)) {  // Function to check if column should be shown
-        $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
-        $cellDef = getCellDefinition($colKey, $row, $colValue);
-        $rowOutput .= createCell($cellDef);
+// Create table structure
+echo createTableStructure();
+
+// Process rows
+foreach($result as $row) {
+    error_log("Processing row for " . $row['callsign']);
+    
+    echo "<tr id=\"{$row['recordID']}\">";
+    
+    // Build each cell
+    foreach ($columns['default'] as $colKey => $colName) {
+        $cellDef = getCellDefinition($colKey, $row);
+        echo createCell($cellDef);
     }
+    
+    echo "</tr>";
 }
-
-// Only show admin columns if user has permission
-if (hasAdminAccess()) {  // Function to check admin access
-    foreach ($columns['admin'] as $colKey => $colName) {
-        $colValue = isset($row[$colName]) ? h($row[$colName]) : '';
-        $cellDef = getCellDefinition($colKey, $row, $colValue);
-        $rowOutput .= createCell($cellDef);
-    }
-}
-
-echo $rowOutput;
 		
 		  	} // End of query run
 	 	

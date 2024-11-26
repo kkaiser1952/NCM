@@ -337,7 +337,7 @@
     		
     	<!--	<label for="select1">Or make a selection from this dropdown</label>  -->
         <select id="select1" data-width='auto' class="tohide form-control selectpicker selectdd" name="activities" 
-	        onchange="showActivities(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
+	        onchange="showActivities2(this.value, this.options[this.selectedIndex].innerHTML.trim()); switchClosed();  ">
 	        	
 	        <option class="tohide pbWhite firstValue" value="a" selected disabled >Or Select From Past 10 Days Nets</option>
 	        
