@@ -2,6 +2,16 @@
 // getactivities2.php
 // Written: 2024-11-25
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_log', '/var/www/html/error_log');
+error_log("Starting getactivities2.php");
+
+// Test writing to log
+if (!error_log("Test message to error_log")) {
+    echo "Failed to write to error log";
+}
+
 error_log("getactivities2.php started - NetID: " . $q);
 
 error_reporting( 0 );
@@ -54,6 +64,8 @@ if ( $q <> 0 ){
 	$stmt = $db_found->prepare($sql);
 		$stmt -> execute();
 		$children = $stmt->fetchColumn(1);
+		
+error_log("About to execute query for netID: $q");
 		
     // Can't get netcall from here because of sum function
 	$sql2 = "select sec_to_time(sum(timeonduty)) as tottime 
@@ -340,23 +352,31 @@ error_log("Query executed - Row count: " . $result->rowCount());
 
 // Create table structure
 // Create table and header ONCE at the start
+error_log("Creating table structure");
+echo "<!-- Start table structure -->\n";
 echo createTableStructure();
+echo "<!-- Start tbody -->\n";
 
 // Start tbody
+error_log("Starting tbody");
 echo "<tbody id=\"netBody\">";
 
 // Process data rows
 foreach($result as $row) {
+    error_log("Processing row for " . $row['callsign']);
     echo "<tr id=\"{$row['recordID']}\">";
     
     // Build each cell
     foreach ($columns['default'] as $colKey => $colName) {
+error_log("Processing column: $colKey for row: " . $row['recordID']);
         $cellDef = getCellDefinition($colKey, $row);
         echo createCell($cellDef);
     }
     
     echo "</tr>";
 } // End foreach
+
+error_log("Table generation complete");
 
 // Close tbody and table
 echo "</tbody></table>";

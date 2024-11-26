@@ -1,0 +1,3 @@
+[26-Nov-2024 22:32:17 UTC] Starting getactivities2.php
+[26-Nov-2024 22:32:17 UTC] Test message to error_logKK
+[26-Nov-2024 22:32:17 UTC] PHP Fatal error:  Call to undefined function error_logKK() in /var/www/html/getactivities2.php on line 15
