@@ -1,11 +1,23 @@
 <?php
 // CellRowHeaderDefinitions.php
-// The single source of truth for table structure and definitions
-// The ' c ' values in this file are used to place the correct data values in the cells in each row of data. The ' c ' values are also used to match the rowDefinitions correctly.
-// Written: 2019-04-04
-// Update: 2024-09-20
-
-// You can now use these arrays to populate the sidebar options or manage column visibility
+/**
+ * Single source of truth for table structure and column definitions in NCM
+ * This file defines all possible columns, their attributes, visibility rules,
+ * and how they should be displayed in both headers and data rows.
+ * 
+ * Key Components:
+ * - Column categories (default, optional, admin)
+ * - Cell definitions with all attributes and event handlers
+ * - Header definitions with titles and toggle controls
+ * - Table structure creation
+ * 
+ * Usage:
+ * Required in getactivities2.php and other table-generating files
+ * 
+ * Written: 2019-04-04
+ * Updated: 2024-09-20
+ */
+ 
 // Helper functions
 if (!function_exists('h')) {
     function h($string) {
@@ -18,6 +30,46 @@ if (!function_exists('safeGet')) {
         return isset($array[$key]) ? $array[$key] : $default;
     }
 } // End safeGet()
+
+
+function isColumnVisible($colKey) {
+    // Check if column should be shown based on cookies or netcall settings
+    if (isset($_COOKIE['columnView'])) {
+        $columnView = json_decode($_COOKIE['columnView'], true);
+        return isset($columnView[$colKey]) ? $columnView[$colKey] : true;
+    }
+    return true;
+} // End isColumnVisible()
+
+function hasAdminAccess() {
+    // Implement your admin access logic here
+    // For now return true to maintain current behavior
+    return true;
+} // End hasAdminAccess()
+
+function getCellDefinition($colKey, $rowData) {
+    // Get cell template from the cells array in getRowDefinitions()
+    $cells = getRowDefinitions('raw');
+    foreach ($cells as $cell) {
+        if (strpos($cell['class'], $colKey) !== false) {
+            return $cell;
+        }
+    }
+    return null;
+} // End getCellDefinition()
+
+function createCell($cellDef) {
+    if (!$cellDef) return '';
+    
+    $output = '<td';
+    foreach ($cellDef as $attr => $value) {
+        if ($attr !== 'content') {
+            $output .= ' ' . $attr . '="' . h($value) . '"';
+        }
+    }
+    $output .= '>' . ($cellDef['content'] ?? '') . '</td>';
+    return $output;
+} // End createCell()
 
 
 // Define arrays for each category of columns
