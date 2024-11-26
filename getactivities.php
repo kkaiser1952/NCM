@@ -1,4 +1,7 @@
 <?php
+// getactivities.php
+// Written: 2015?
+
 error_reporting( 0 );
 	//date_default_timezone_set("America/Chicago");
 	require_once "dbConnectDtls.php";    
