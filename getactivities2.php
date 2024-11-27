@@ -46,6 +46,44 @@ if ($netID === false || $netID === null) {
 }
 
 /**
+ * Helper function to check admin access
+ * @return bool True if user has admin access
+ */
+function hasAdminAccess() {
+    // Implement your admin access logic here
+    // For now, return true to maintain existing behavior
+    return true;
+}
+
+/**
+ * Helper function to determine if a column should be visible
+ * @param string $colKey The column identifier
+ * @return bool True if column should be visible
+ */
+function isColumnVisible($colKey) {
+    global $vars, $columns;
+    
+    // Check user preferences
+    if (isset($_COOKIE['columnView'])) {
+        $prefs = json_decode($_COOKIE['columnView'], true);
+        if (isset($prefs[$colKey])) {
+            return $prefs[$colKey];
+        }
+    }
+    
+    // Check organization type settings
+    if (!empty($vars['columnViews'])) {
+        $orgPrefs = json_decode($vars['columnViews'], true);
+        if (isset($orgPrefs[$colKey])) {
+            return $orgPrefs[$colKey];
+        }
+    }
+    
+    // Use definition from CellRowHeaderDefinitions.php
+    return isset($columns['default'][$colKey]);
+}
+
+/**
  * Helper function: Safe string handling
  * Prevents XSS by encoding special characters
  */
@@ -114,6 +152,131 @@ $statusFlags = array(
     'cs1Key' => 0,
     'editCS1' => ''
 );
+
+/**
+ * Outputs facility grouping header
+ */
+function outputFacilityHeader($row, $facility) {
+    $color = ($row['active'] == 'OUT') ? 'red' : 
+             ($row['active'] == 'In') ? 'green' : 
+             'black';
+             
+    echo "</tbody><tbody id=\"netBody\">";
+    echo "<tr><td></td><td></td><td></td><td></td><td></td>";
+    echo "<td colspan=6 style='color:$color;font-weight:900;font-size:14pt;'>" . 
+         h($facility) . "</td></tr>";
+    echo "</tbody><tbody class=\"sortable\" id=\"netBody\">";
+}
+
+/**
+ * Outputs table footer with runtime and volunteer hours
+ */
+function outputTableFooter($nowtime, $startTime, $totalTime) {
+    echo "<tfoot><tr>";
+    echo "<td></td>";
+    echo "<td class='runtime' colspan='5' align='left'>Run Time: " . 
+         time_elapsed_A($nowtime - strtotime($startTime)) . "</td>";
+    echo "<td class='tvh' colspan='8' align='right'>Total Volunteer Hours = $totalTime</td>";
+    echo "</tr></tfoot></table>";
+}
+
+/**
+ * Outputs hidden variables needed by JavaScript
+ */
+function outputHiddenVariables($vars, $flags) {
+    $hiddenVars = array(
+        'freq2' => $vars['frequency'],
+        'freq' => '',
+        'cookies' => $vars['columnViews'],
+        'type' => "Type of Net: {$vars['activity']}",
+        'idofnet' => $vars['netID'],
+        'activity' => $vars['activity'],
+        'domain' => $vars['netcall'],
+        'thenetcallsign' => $vars['netcall'],
+        'isopen' => $vars['isOpen'],
+        'ispb' => $vars['prebuilt'],
+        'pbStat' => $flags['pbStat'],
+        'logstatus' => $vars['status']
+    );
+    
+    foreach ($hiddenVars as $id => $value) {
+        echo "<div hidden id='$id'>" . h($value) . "</div>";
+    }
+}
+
+/**
+ * Outputs status indicators and action buttons
+ */
+function outputStatusIndicators($vars, $flags, $subnetnum) {
+    echo "<span id='add2pgtitle'>";
+    echo "#{$vars['netID']}/{$vars['netcall']}/{$vars['frequency']}&nbsp;&nbsp;";
+    
+    // Output subnet information
+    if ($flags['subnetKey'] == 1) {
+        echo "<button class='subnetkey' value='$subnetnum'>Sub Net of: $subnetnum</button>&nbsp;&nbsp;";
+    }
+    if (!empty($vars['children'])) {
+        echo "<button class='subnetkey' value='{$vars['children']}'>Has Sub Net: {$vars['children']}</button>&nbsp;&nbsp;";
+    }
+    
+    // Output control indicator
+    echo "<span style='background-color: #befdfc'>Control</span>&nbsp;&nbsp;";
+    
+    // Output other status indicators
+    $indicators = array(
+        'digitalKey' => 'Digital',
+        'trafficKey' => 'Traffic',
+        'logoutKey' => 'Logged Out',
+        'brbKey' => 'BRB',
+        'ioKey' => 'In-Out',
+        'noCallKey' => 'Call Error',
+        'dupeCallKey' => 'Duplicate'
+    );
+    
+    foreach ($indicators as $key => $label) {
+        if ($flags[$key]) {
+            echo "<span class='{$key}'>{$label}</span>&nbsp;&nbsp;";
+        }
+    }
+    
+    // Output action buttons
+    outputActionButtons($vars['netID']);
+    
+    echo "</span>";
+}
+
+/**
+ * Outputs action buttons
+ */
+function outputActionButtons($netID) {
+    $buttons = array(
+        array(
+            'class' => 'export2CSV',
+            'onclick' => "window.open('netCSVdump.php?netID=$netID')",
+            'text' => 'Export CSV'
+        ),
+        array(
+            'id' => 'geoDist',
+            'onclick' => 'geoDistance()',
+            'text' => 'geoDistance'
+        ),
+        array(
+            'id' => 'mapIDs',
+            'onclick' => 'map2()',
+            'text' => 'Map This Net'
+        )
+    );
+    
+    foreach ($buttons as $button) {
+        echo "<span style='padding-left: 5pt;'>";
+        echo "<a href='#' " . 
+             (isset($button['id']) ? "id='{$button['id']}' " : "") .
+             "onclick='{$button['onclick']}' " .
+             "title='{$button['text']}'>" .
+             "<b style='color:green;'>{$button['text']}</b></a>";
+        echo "</span>";
+    }
+}
 
 /**
  * Database error handler
@@ -307,14 +470,8 @@ try {
         exit;
     }
 
-    // Create table structure using the function from CellRowHeaderDefinitions.php
-    $structure = createTableStructure();
-    error_log("Generated table structure: " . $structure);
-    echo $structure;
-} catch (Exception $e) {
-    error_log("Error in table structure creation: " . $e->getMessage());
-    die("Error creating table structure. Please check error log.");
-} // End try/catch
+    // Start table creation - get column definitions first
+    error_log("Beginning table structure creation");
     
     /**
      * Build the base table structure
@@ -323,7 +480,7 @@ try {
     echo '<thead id="thead" class="forNums" style="text-align: center;">';
     echo '<tr>';
 
-    // Get header definitions from our single source of truth
+    // Get header definitions
     $headers = getHeaderDefinitions();
     
     // Process default columns first
@@ -338,8 +495,6 @@ try {
         echo '>';
         echo $header['content'];
         echo isset($header['checkbox']) ? $header['checkbox'] : '';
-
-        //echo $header['checkbox'] ?? ''; // Add checkbox if it exists
         echo '</th>';
     }
     
@@ -355,9 +510,7 @@ try {
             }
             echo '>';
             echo $header['content'];
-            //echo $header['checkbox'] ?? '';
             echo isset($header['checkbox']) ? $header['checkbox'] : '';
-
             echo '</th>';
         }
     }
@@ -374,9 +527,7 @@ try {
             }
             echo '>';
             echo $header['content'];
-            //echo $header['checkbox'] ?? '';
             echo isset($header['checkbox']) ? $header['checkbox'] : '';
-
             echo '</th>';
         }
     }
@@ -403,44 +554,6 @@ try {
 } catch (Exception $e) {
     error_log("Error in table structure creation: " . $e->getMessage());
     die("Error creating table structure. Please check error log.");
-}
-
-/**
- * Helper function to determine if a column should be visible
- * @param string $colKey The column identifier
- * @return bool True if column should be visible
- */
-function isColumnVisible($colKey) {
-    global $vars, $columns;
-    
-    // Check user preferences
-    if (isset($_COOKIE['columnView'])) {
-        $prefs = json_decode($_COOKIE['columnView'], true);
-        if (isset($prefs[$colKey])) {
-            return $prefs[$colKey];
-        }
-    }
-    
-    // Check organization type settings
-    if (!empty($vars['columnViews'])) {
-        $orgPrefs = json_decode($vars['columnViews'], true);
-        if (isset($orgPrefs[$colKey])) {
-            return $orgPrefs[$colKey];
-        }
-    }
-    
-    // Use definition from CellRowHeaderDefinitions.php
-    return isset($columns['default'][$colKey]);
-} // End isColumnVisible()
-
-/**
- * Helper function to check admin access
- * @return bool True if user has admin access
- */
-function hasAdminAccess() {
-    // Implement your admin access logic here
-    // For now, return true to maintain existing behavior
-    return true;
 }
 
 
@@ -487,15 +600,11 @@ try {
         
         // Process facility grouping if needed
         $newFacility = trim($row['facility']);
-        if ($vars['orgType'] === 'FACILITY' && $newFacility !== (isset($usedFacility) ? $usedFacility : '') && !empty($newFacility)) {
-    outputFacilityHeader($row, $newFacility);
-    $usedFacility = $newFacility;
-}
-
-        //if ($vars['orgType'] === 'FACILITY' && $newFacility !== ($usedFacility ?? '') && !empty($newFacility)) {
-            //outputFacilityHeader($row, $newFacility);
-            //$usedFacility = $newFacility;
-        }
+        if ($vars['orgType'] === 'FACILITY' && $newFacility !== (isset($usedFacility) ?
+        $usedFacility : '') && !empty($newFacility)) {
+            outputFacilityHeader($row, $newFacility);
+            $usedFacility = $newFacility;
+        } // End $usedFacility 
         
         // Output default columns
         foreach ($columns['default'] as $colKey => $colName) {
@@ -531,139 +640,12 @@ try {
     // Output hidden variables
     outputHiddenVariables($vars, $statusFlags);
     
-    // Output status indicators
-    //outputStatusIndicators($vars, $statusFlags, $subnetnum ?? null);
-    
-    
 } catch (Exception $e) {
     error_log("Error in data processing: " . $e->getMessage());
     die("Error processing data. Please check error log.");
 }
 
-/**
- * Outputs facility grouping header
- */
-function outputFacilityHeader($row, $facility) {
-    $color = ($row['active'] == 'OUT') ? 'red' : 
-             ($row['active'] == 'In') ? 'green' : 
-             'black';
-             
-    echo "</tbody><tbody id=\"netBody\">";
-    echo "<tr><td></td><td></td><td></td><td></td><td></td>";
-    echo "<td colspan=6 style='color:$color;font-weight:900;font-size:14pt;'>" . 
-         h($facility) . "</td></tr>";
-    echo "</tbody><tbody class=\"sortable\" id=\"netBody\">";
-}
 
-/**
- * Outputs table footer with runtime and volunteer hours
- */
-function outputTableFooter($nowtime, $startTime, $totalTime) {
-    echo "<tfoot><tr>";
-    echo "<td></td>";
-    echo "<td class='runtime' colspan='5' align='left'>Run Time: " . 
-         time_elapsed_A($nowtime - strtotime($startTime)) . "</td>";
-    echo "<td class='tvh' colspan='8' align='right'>Total Volunteer Hours = $totalTime</td>";
-    echo "</tr></tfoot></table>";
-}
-
-/**
- * Outputs hidden variables needed by JavaScript
- */
-function outputHiddenVariables($vars, $flags) {
-    $hiddenVars = array(
-        'freq2' => $vars['frequency'],
-        'freq' => '',
-        'cookies' => $vars['columnViews'],
-        'type' => "Type of Net: {$vars['activity']}",
-        'idofnet' => $vars['netID'],
-        'activity' => $vars['activity'],
-        'domain' => $vars['netcall'],
-        'thenetcallsign' => $vars['netcall'],
-        'isopen' => $vars['isOpen'],
-        'ispb' => $vars['prebuilt'],
-        'pbStat' => $flags['pbStat'],
-        'logstatus' => $vars['status']
-    );
-    
-    foreach ($hiddenVars as $id => $value) {
-        echo "<div hidden id='$id'>" . h($value) . "</div>";
-    }
-}
-
-/**
- * Outputs status indicators and action buttons
- */
-function outputStatusIndicators($vars, $flags, $subnetnum) {
-    echo "<span id='add2pgtitle'>";
-    echo "#{$vars['netID']}/{$vars['netcall']}/{$vars['frequency']}&nbsp;&nbsp;";
-    
-    // Output subnet information
-    if ($flags['subnetKey'] == 1) {
-        echo "<button class='subnetkey' value='$subnetnum'>Sub Net of: $subnetnum</button>&nbsp;&nbsp;";
-    }
-    if (!empty($vars['children'])) {
-        echo "<button class='subnetkey' value='{$vars['children']}'>Has Sub Net: {$vars['children']}</button>&nbsp;&nbsp;";
-    }
-    
-    // Output control indicator
-    echo "<span style='background-color: #befdfc'>Control</span>&nbsp;&nbsp;";
-    
-    // Output other status indicators
-    $indicators = array(
-        'digitalKey' => 'Digital',
-        'trafficKey' => 'Traffic',
-        'logoutKey' => 'Logged Out',
-        'brbKey' => 'BRB',
-        'ioKey' => 'In-Out',
-        'noCallKey' => 'Call Error',
-        'dupeCallKey' => 'Duplicate'
-    );
-    
-    foreach ($indicators as $key => $label) {
-        if ($flags[$key]) {
-            echo "<span class='{$key}'>{$label}</span>&nbsp;&nbsp;";
-        }
-    }
-    
-    // Output action buttons
-    outputActionButtons($vars['netID']);
-    
-    echo "</span>";
-}
-
-/**
- * Outputs action buttons
- */
-function outputActionButtons($netID) {
-    $buttons = array(
-        array(
-            'class' => 'export2CSV',
-            'onclick' => "window.open('netCSVdump.php?netID=$netID')",
-            'text' => 'Export CSV'
-        ),
-        array(
-            'id' => 'geoDist',
-            'onclick' => 'geoDistance()',
-            'text' => 'geoDistance'
-        ),
-        array(
-            'id' => 'mapIDs',
-            'onclick' => 'map2()',
-            'text' => 'Map This Net'
-        )
-    );
-    
-    foreach ($buttons as $button) {
-        echo "<span style='padding-left: 5pt;'>";
-        echo "<a href='#' " . 
-             (isset($button['id']) ? "id='{$button['id']}' " : "") .
-             "onclick='{$button['onclick']}' " .
-             "title='{$button['text']}'>" .
-             "<b style='color:green;'>{$button['text']}</b></a>";
-        echo "</span>";
-    }
-}
 
 error_log("=== getactivities2.php execution completed ===");
 ?>
