@@ -152,7 +152,7 @@
     <script>
         window.columnDefinitions = <?php echo json_encode($columns); ?>;
     </script>
-    <script src="js/columnManager.js"></script>
+<!--<script src="js/columnManager.js"></script>-->
 
     
 
@@ -543,20 +543,6 @@
 	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
 	
-<!-- My javascript -->	
-    
-    <script src="js/NetManager-W3W-APRS.js"></script> <!-- Added on 2024-02-21 -->
-	<script src="js/NetManager.js"></script>          <!-- NCM Primary Javascrip 2018-1-18 -->
-	<script src="js/NetManager-p2.js"></script>	      <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
-	
-	
-	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
-	<script src="js/showActivities2.js"></script>
-	
-	<script src="js/grid.js"></script>
-	<script src="js/gridtokoords.js"></script>
-	<script src="js/cookieManagement.js"></script>
-	
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
@@ -578,44 +564,6 @@ $ ( function() {
     });
 }); // end click @ #q-mark-in-circle()
 
-// This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
-function checkCall() {
-    const cs = $("#callsign").val().trim().toUpperCase();
-    const listOfCalls = new Set( ['ah6ez' ]);
-    const isCallInSet = listOfCalls.has($("#callsign").val());
-    
-    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
-    
-    // If the callsign starting this net is in the above list then ask for his email to send him a message
-    if (!isCallInSet == '') {
-        var mail = prompt('Please enter your email address.');
-            if (mail == '' || mail == null) {
-                alert("Please be sure to close your net when finished. Thank you!");
-            } else {
-
-                var str = cs+":"+mail;  //alert(str);
-                console.log('@737 str= '+str);
-            
-                $.ajax({
-                    type: 'GET',
-                    url: 'addEmailToStations.php',
-                    data: {q: str},
-                    success: function(response) { 
-                        //alert(response);
-                } // end success
-                }) // end ajax
-                } // else 
-        // Possible ways to send an email
-        // Javascript:  https://smtpjs.com
-        // PHP:         https://www.w3schools.com/php/func_mail_mail.asp
-        // AJAX:        Put the collected email into his record in the stations table.
-    } // End if
-} // end checkCall function
-
-// This function is used in the DIV GroupDropdown by the input **** DO NOT DELETE ++++
-function removeSpaces(str) {
-  return str.replace(/\s+/g, '');
-}
 
 document.addEventListener('keydown', function(event) {
   if (isTabletDevice() && event.shiftKey && event.key === 'Shift') {
@@ -679,11 +627,13 @@ error_log("Existing Comments: " . $existingComments);
     <script src="js/NetManager-W3W-APRS.js"></script>
     <script src="js/NetManager.js"></script>
     <script src="js/NetManager-p2.js"></script>
-    <script src="js/CellEditFunction.js"></script>
+<!--<script src="js/CellEditFunction.js"></script>-->
     <script src="js/grid.js"></script>
     <script src="js/gridtokoords.js"></script>
     <script src="js/cookieManagement.js"></script>
-    
+    <script src="js/checkCall.js"></script>
+    <script src="js/showActivities2.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     /**
@@ -786,56 +736,6 @@ function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
-</script>
-    
-<!-- And modify your script to include debugging -->
-<script>
-    /*
-$(document).ready(function() {
-    var submitdata = function() {
-        return {
-            id: netID  // Assuming netid is defined elsewhere
-        };
-    };
-    
-    // Check for existing comments
-    var existingText = $(".editGComms").text().trim();
-    console.log("Existing text in editGComms:", existingText);
-    
-    // Initialize the editable functionality for this field
-    $(".editGComms").editable("SaveGenComm.php", {
-        indicator: "Saving...",
-        placeholder: "",
-        tooltip: "Click to add...",
-        style: "inherit",
-        submitdata: submitdata,
-        id: netid,
-        onsubmit: function(settings, value) {
-            console.log("Submitting value:", value);
-            return {
-                value: value,
-                id: netid
-            };
-        }
-    });
-
-    // Handle clicking in the field
-    $('#forcb1').on('click', function() {
-        console.log("forcb1 clicked");
-        // Hide the "Click here to add..." text if it exists
-        $(this).find('p').hide();
-        
-        // Clear and activate the editable area
-        $(".editGComms").empty().trigger('click');
-    });
-
-    // If there are existing comments, ensure the default text is hidden
-    if (existingText.length > 0) {
-        console.log("Hiding default text due to existing content");
-        $('#forcb1 p').hide();
-    }
-});
-*/
 </script>
     
 </body>
