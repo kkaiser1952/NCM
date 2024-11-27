@@ -29,7 +29,14 @@ function logError($message, $context = array()) {
 
 // Required files
 require_once "dbConnectDtls.php";    // Database connection
-require_once "CellRowHeaderDefinitions.php";  // Table structure definitions
+require_once "CellRowHeaderDefinitions.php";  
+error_log("CellRowHeaderDefinitions.php loaded");
+error_log("Columns array: " . print_r($columns, true));
+
+if (!function_exists('getCellDefinition')) {
+    error_log("getCellDefinition function missing");
+    die("Required function missing");
+}
 
 // Input validation
 $netID = filter_input(INPUT_GET, 'q', FILTER_VALIDATE_INT);
@@ -301,7 +308,9 @@ try {
     }
 
     // Create table structure using the function from CellRowHeaderDefinitions.php
-    echo createTableStructure();
+    $structure = createTableStructure();
+    error_log("Generated table structure: " . $structure);
+    echo $structure;
 } catch (Exception $e) {
     error_log("Error in table structure creation: " . $e->getMessage());
     die("Error creating table structure. Please check error log.");
