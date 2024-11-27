@@ -290,7 +290,7 @@ if ($netID > 0) {
 
 
 try {
-    // Execute main query to get our data
+    // Execute main query
     $mainStmt->execute();
     $rowCount = $mainStmt->rowCount();
     error_log("Main query executed - found $rowCount rows");
@@ -300,8 +300,12 @@ try {
         exit;
     }
 
-    // Start table creation - get column definitions first
-    error_log("Beginning table structure creation");
+    // Create table structure using the function from CellRowHeaderDefinitions.php
+    echo createTableStructure();
+} catch (Exception $e) {
+    error_log("Error in table structure creation: " . $e->getMessage());
+    die("Error creating table structure. Please check error log.");
+} // End try/catch
     
     /**
      * Build the base table structure
@@ -398,9 +402,9 @@ try {
  * @return bool True if column should be visible
  */
 function isColumnVisible($colKey) {
-    global $vars;
+    global $vars, $columns;
     
-    // Check user preferences from cookie
+    // Check user preferences
     if (isset($_COOKIE['columnView'])) {
         $prefs = json_decode($_COOKIE['columnView'], true);
         if (isset($prefs[$colKey])) {
@@ -416,12 +420,9 @@ function isColumnVisible($colKey) {
         }
     }
     
-    // Default visibility
-    return in_array($colKey, [
-        'c0', 'c5', 'c8', 'c10', 'c11', 'c15', 
-        'c16', 'c21', 'c22', 'c23', 'c24'
-    ]);
-}
+    // Use definition from CellRowHeaderDefinitions.php
+    return isset($columns['default'][$colKey]);
+} // End isColumnVisible()
 
 /**
  * Helper function to check admin access
@@ -480,7 +481,7 @@ try {
         if ($vars['orgType'] === 'FACILITY' && $newFacility !== (isset($usedFacility) ? $usedFacility : '') && !empty($newFacility)) {
     outputFacilityHeader($row, $newFacility);
     $usedFacility = $newFacility;
-
+}
 
         //if ($vars['orgType'] === 'FACILITY' && $newFacility !== ($usedFacility ?? '') && !empty($newFacility)) {
             //outputFacilityHeader($row, $newFacility);
@@ -523,8 +524,7 @@ try {
     
     // Output status indicators
     //outputStatusIndicators($vars, $statusFlags, $subnetnum ?? null);
-    outputStatusIndicators($vars, $statusFlags, isset($subnetnum) ? $subnetnum : null);
-
+    
     
 } catch (Exception $e) {
     error_log("Error in data processing: " . $e->getMessage());
