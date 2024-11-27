@@ -642,7 +642,7 @@ try {
     die("Error processing data. Please check error log.");
 }
 
-
+error_log("Part 4 complete - ");
 
 error_log("=== getactivities2.php execution completed ===");
 ?>

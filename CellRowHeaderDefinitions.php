@@ -64,7 +64,8 @@ function createCell($cellDef) {
 
 // Define arrays for each category of columns
 $columns = [
-    'default' => [    
+    'default' => [  
+          
         'c1' => 'Role',
         'c2' => 'Mode',
         'c3' => 'Status',
@@ -80,7 +81,6 @@ $columns = [
         'c18' => 'State'
     ],
     'optional' => [
-        'c0' => 'Row No.',
         'c5' => 'TT No.',
         'c8' => 'Last Name',
         'c10' => 'Phone',
