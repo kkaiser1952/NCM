@@ -31,34 +31,21 @@ if (!function_exists('safeGet')) {
     }
 } // End safeGet()
 
-/*
-function isColumnVisible($colKey) {
-    // Check if column should be shown based on cookies or netcall settings
-    if (isset($_COOKIE['columnView'])) {
-        $columnView = json_decode($_COOKIE['columnView'], true);
-        return isset($columnView[$colKey]) ? $columnView[$colKey] : true;
-    }
-    return true;
-} // End isColumnVisible()
-*/
 
-/*function hasAdminAccess() {
-    // Implement your admin access logic here
-    // For now return true to maintain current behavior
-    return true;
-} // End hasAdminAccess()
-*/
-
-function getCellDefinition($colKey, $rowData) {
-    // Get cell template from the cells array in getRowDefinitions()
-    $cells = getRowDefinitions('raw');
-    foreach ($cells as $cell) {
-        if (strpos($cell['class'], $colKey) !== false) {
-            return $cell;
-        }
+// Function that uses cell definitions to build complete rows
+function getRowDefinitions($format = 'html') {
+    if ($format === 'raw') {
+        return array_keys($columns['default']);
     }
-    return null;
-} // End getCellDefinition()
+    
+    $output = '';
+    foreach ($columns['default'] as $colKey => $colName) {
+        $cellDef = getCellDefinition($colKey, $rowData);
+        $output .= createCell($cellDef);
+    }
+    
+    return $output;
+} // End getRowDefinitions()
 
 function createCell($cellDef) {
     if (!$cellDef) return '';
@@ -121,30 +108,27 @@ $columns = [
 ];
 
     
-function getRowDefinitions($format = 'html') {
+function getCellDefinition($colKey, $rowData) {
 // This is our single source of truth for cell definitions   
-    $cells = [
-        [
-            'class' => 'cent c0',
-            'content' => '',
-        ],
-        [
+    $cells = array(
+        'c1' => array
+        (
             'class' => 'editable editable_selectNC cent c1',
             'id' => "netcontrol:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'netcontrol',
             'data-role' => safeGet($row, 'netcontrol', ''),
             'content' => h(safeGet($row, 'netcontrol')),
-        ],
-        [
+        ),
+        'c2' => array(
             'class' => "editable editable_selectMode cent c2",
             'id' => "mode:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'mode',
             'data-mode' => safeGet($row, 'Mode', ''),
             'content' => h(safeGet($row, 'Mode')),
-        ],
-        [
+        ),
+        'c3' => array(
             'class' => "editable editable_selectACT cent c3",
             'id' => "active:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -152,8 +136,8 @@ function getRowDefinitions($format = 'html') {
             'data-status' => safeGet($row, 'active', ''),
             'oncontextmenu' => "rightClickACT('" . safeGet($row, 'recordID') . "');return false;",
             'content' => h(safeGet($row, 'active')),
-        ],
-        [
+        ),
+        'c4' => array(
             'class' => "editable editable_selectTFC c4",
             'id' => "traffic:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -161,32 +145,32 @@ function getRowDefinitions($format = 'html') {
             'data-traffic' => safeGet($row, 'traffic'),
             'oncontextmenu' => "rightClickTraffic('" . safeGet($row, 'recordID') . "');return false;",
             'content' => h(safeGet($row, 'traffic')),
-        ],
-        [
+        ),
+        'c5' => array(
             'class' => 'editable editTT cent c5 TT',
             'id' => "tt:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'tt',
             'title' => "TT No. " . safeGet($row, 'tt') . " no edit",
             'content' => h(safeGet($row, 'tt')),
-        ],
-        [
+        ),
+        'c23' => array(
             'class' => 'editable editBand c23',
             'id' => "band:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'band',
             'title' => safeGet($row, 'band') . " Band",
             'content' => h(safeGet($row, 'band')),   
-        ],
-        [
+        ),
+        'c33' => array(
             'class' => 'editable editfacility c33',
             'id' => "facility:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'facility',
             'onclick' => "empty('facility:" . safeGet($row, 'recordID') . "');",
             'content' => h(safeGet($row, 'facility')),
-        ],
-        [
+        ),
+        'c34' => array(
             'class' => 'editable editonSite c34',
             'id' => "onsite:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -194,8 +178,8 @@ function getRowDefinitions($format = 'html') {
             'data-onsite' => safeGet($row, 'onsite', ''),
             'oncontextmenu' => "rightClickOnSite('" . safeGet($row, 'recordID') . "');return false;",
             'content' => h(safeGet($row, 'onSite', '')),
-        ],
-        [
+        ),
+        'c6' => array(
             'class' => "editable cs1 " . safeGet($row, 'editCS1', '') . " c6",
             'id' => "callsign:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -204,8 +188,8 @@ function getRowDefinitions($format = 'html') {
             'ondblclick' => "doubleClickCall('" . safeGet($row, 'recordID') . "', '" . h(safeGet($row, 'callsign')) . "', '" . safeGet($row, 'netID') . "');return false;",
             'title' => "Call Sign " . h(safeGet($row, 'callsign')) . " no edit",
             'content' => h(safeGet($row, 'callsign')),
-        ],
-        [
+        ),
+        'c7' => array(
             'class' => 'editable editFnm c7',
             'id' => "Fname:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -213,8 +197,8 @@ function getRowDefinitions($format = 'html') {
             'style' => 'text-transform:capitalize',
             'onclick' => "empty('Fname:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'Fname')) . '</div>',
-        ],
-        [
+        ),
+        'c8' => array(
             'class' => 'editable editLnm c8',
             'id' => "Lname:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -222,8 +206,8 @@ function getRowDefinitions($format = 'html') {
             'style' => 'text-transform:capitalize',
             'onclick' => "empty('Lname:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'Lname')) . '</div>',
-        ],
-        [
+        ),
+        'c9' => array(
             'class' => 'editable editTAC cent c9',
             'id' => "tactical:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -231,23 +215,23 @@ function getRowDefinitions($format = 'html') {
             'onclick' => "empty('tactical:" . safeGet($row, 'recordID') . "');",
             'numsort' => safeGet($row, 'numsort', ''),
             'content' => "<div>" . h(safeGet($row, 'tactical')) . '</div>',
-        ],
-        [
+        ),
+        'c10' => array(
             'class' => 'editable editPhone c10 cent',
             'id' => "phone:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'phone',
             'content' => h(safeGet($row, 'phone')),
-        ],
-        [
+        ),
+        'c11' => array(
             'class' => 'editable editEMAIL c11',
             'id' => "email:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'email',
             'oncontextmenu' => "sendEMAIL('" . h(safeGet($row, 'email')) . "','" . safeGet($row, 'netID') . "');return false;",
             'content' => h(safeGet($row, 'email')),
-        ],
-        [
+        ),
+        'c20' => array(
             'class' => 'editable editGRID c20',
             'id' => "grid:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -256,8 +240,8 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "MapGridsquare('" . h(safeGet($row, 'latitude')) . ":" . h(safeGet($row, 'longitude')) . ":" . h(safeGet($row, 'callsign')) . "');return false;",
             'onclick' => "empty('grid:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'grid')) . '</div>',
-        ],
-        [
+        ),
+        'c21' => array(
             'class' => 'editable editLAT c21',
             'id' => "latitude:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -265,8 +249,8 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "getCrossRoads('" . h(safeGet($row, 'latitude')) . "," . h(safeGet($row, 'longitude')) . "');return false;",
             'onclick' => "empty('latitude:" . safeGet($row, 'recordID') . "');",
             'content' => h(safeGet($row, 'latitude')),
-        ],
-        [
+        ),
+        'c22' => array(
             'class' => 'editable editLON c22',
             'id' => "longitude:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -274,22 +258,22 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "getCrossRoads('" . h(safeGet($row, 'latitude')) . "," . h(safeGet($row, 'longitude')) . "');return false;",
             'onclick' => "empty('longitude:" . safeGet($row, 'recordID') . "');",
             'content' => h(safeGet($row, 'longitude')),
-        ],
-        [
+        ),
+        'c12' => array(
             'class' => 'editable editTimeIn cent c12',
             'id' => "logdate:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'logdate',
             'content' => "<span class='tzld'>" . h(safeGet($row, 'logdate')) . "</span><span class='tzlld hidden'>" . h(safeGet($row, 'locallogdate', '')) . "</span>",
-        ],
-        [
+        ),
+        'c13' => array(
             'class' => 'editable editTimeOut cent c13',
             'id' => "timeout:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'timeout',
             'content' => "<span class='tzto'>" . h(safeGet($row, 'timeout')) . "</span><span class='tzlto hidden'>" . h(safeGet($row, 'localtimeout', '')) . "</span>",
-        ],
-        [
+        ),
+        'c14' => array(
             'class' => 'editable editC c14',
             'id' => "comments:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -297,22 +281,22 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "stationTimeLineList('" . h(safeGet($row, 'callsign')) . ":" . safeGet($row, 'netID') . "');return false;",
             'onclick' => "empty('comments:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'comments')) . '</div>',
-        ],
-        [
+        ),
+        'c15' => array(
             'class' => 'editable editCREDS c15',
             'id' => "creds:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'creds',
             'content' => h(safeGet($row, 'creds')),
-        ],
-        [
+        ),
+        'c16' => array(
             'class' => 'editable c16 cent',
             'id' => "timeonduty:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'timeonduty',
             'content' => h(safeGet($row, 'time')),
-        ],
-        [
+        ),
+        'c17' => array(
             'class' => 'editable editcnty c17 cent',
             'id' => "county:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -321,24 +305,24 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "MapCounty('" . h(safeGet($row, 'county')) . ":" . h(safeGet($row, 'state')) . "');return false;",
             'onclick' => "empty('county:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'county')) . '</div>',
-        ],
-        [
+        ),
+        'c35' => array(
             'class' => 'editable editcity c35 cent',
             'id' => "city:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'city',
             'onclick' => "empty('city:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'city')) . '</div>',
-        ],
-        [
+        ),
+        'c18' => array(
             'class' => 'editable editstate c18 cent',
             'id' => "state:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'city',
             'onclick' => "empty('state:" . safeGet($row, 'recordID') . "');",
             'content' => "<div>" . h(safeGet($row, 'state')) . '</div>',
-        ],
-        [
+        ),
+        'c59' => array(
             'class' => 'editable editdist c59 cent',
             'id' => "district:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -348,8 +332,8 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "rightClickDistrict('" . safeGet($row, 'recordID') . ", " . safeGet($row, 'state') . ", " . safeGet($row, 'county') . "');return false;",
             'onclick' => "empty('district:" . safeGet($row, 'recordID') . "');",
             'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'district')) . "</div>",
-        ],
-        [
+        ),
+        'c24' => array(
             'class' => 'readonly W3W c24 cent',
             'id' => "w3w:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -358,16 +342,16 @@ function getRowDefinitions($format = 'html') {
             'onclick' => "empty('w3w:" . safeGet($row, 'recordID') . "'); getAPRSLocations('NOTUSED, " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", W3W');",
             'style' => 'cursor: pointer;',
             'content' => "<div class='" . safeGet($row, 'class', '') . "' readonly>" . h(safeGet($row, 'w3w')) . "</div>",
-        ],
-        [
+        ),
+        'c30' => array(
             'class' => 'editable editteam c30 cent',
             'id' => "team:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'team',
             'onclick' => "empty('team:" . safeGet($row, 'recordID') . "');",
             'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'team')) . "</div>",
-        ],
-        [
+        ),
+        'c31' => array(
             'class' => 'editable editaprs_call c31 cent',
             'id' => "aprs_call:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -376,8 +360,8 @@ function getRowDefinitions($format = 'html') {
             'oncontextmenu' => "getAPRSLocations('" . safeGet($row, 'aprs_call') . ", " . safeGet($row, 'recordID') . ", " . safeGet($row, 'latitude') . "," . safeGet($row, 'longitude') . "," . safeGet($row, 'callsign') . "," . safeGet($row, 'netID') . ", APRS');return false;",
             'onclick' => "empty('aprs_call:" . safeGet($row, 'recordID') . "');",
             'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'aprs_call')) . "</div>",
-        ],
-        [
+        ),
+        'c32' => array(
             'class' => 'editable editcntry c32 cent',
             'id' => "country:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
@@ -385,45 +369,48 @@ function getRowDefinitions($format = 'html') {
             'style' => 'text-transform:capitalize',
             'onclick' => "empty('country:" . safeGet($row, 'recordID') . "');",
             'content' => "<div class='" . safeGet($row, 'class', '') . "'>" . h(safeGet($row, 'country')) . "</div>",
-        ],
-        [
+        ),
+        'c25' => array(
             'class' => 'editable c25 cent',
             'id' => "recordID:" . safeGet($row, 'recordID'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'recordID',
             'content' => h(safeGet($row, 'recordID')),
-        ],
-        [
+        ),
+        'c26' => array(
             'class' => 'editable c26 cent',
             'id' => "id:" . safeGet($row, 'id'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'id',
             'content' => h(safeGet($row, 'id')),
-        ],
-        [
+        ),
+        'c27' => array(
             'class' => 'editable c27 cent',
             'id' => "status:" . safeGet($row, 'status'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'status',
             'content' => "'" . h(safeGet($row, 'status')) . "'",
-        ],
-        [
+        ),
+        'c28' => array(
             'class' => 'editable c28 cent',
             'id' => "home:" . safeGet($row, 'home'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'home',
             'content' => "'" . h(safeGet($row, 'home')) . "'",
-        ],
-        [
+        ),
+        'c29' => array(
             'class' => 'editable c29 cent',
             'id' => "ipaddress:" . safeGet($row, 'ipaddress'),
             'data-record-id' => safeGet($row, 'recordID'),
             'data-column' => 'ipaddress',
             'content' => h(safeGet($row, 'ipaddress')),
-        ],
-    ];
+        
+    ) // End $cells arry
     
-     if ($format === 'raw') {
+    return isset($cells[$colKey]) ? $cells[$colKey] : array();
+} // End getCellDefinition()
+    
+ /*    if ($format === 'raw') {
             return $cells;
         }
     
@@ -440,6 +427,7 @@ function getRowDefinitions($format = 'html') {
     
         return $output;
 } // End getRowDefinitions()
+*/
  
 // Replaces headerdefinitions.php
 function getHeaderDefinitions() {
