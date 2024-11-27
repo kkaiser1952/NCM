@@ -600,7 +600,7 @@ error_log("Existing Comments: " . $existingComments);
     <script src="js/NetManager-W3W-APRS.js"></script>
     <script src="js/NetManager.js"></script>
     <script src="js/NetManager-p2.js"></script>
-<!--<script src="js/CellEditFunction.js"></script>-->
+    <script src="js/CellEditFunction.js"></script>
     <script src="js/grid.js"></script>
     <script src="js/gridtokoords.js"></script>
     <script src="js/cookieManagement.js"></script>

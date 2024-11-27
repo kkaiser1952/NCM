@@ -185,18 +185,21 @@ function outputTableFooter($nowtime, $startTime, $totalTime) {
  */
 function outputHiddenVariables($vars, $flags) {
     $hiddenVars = array(
+        'columnViews' => isset($vars['columnViews']) ? $vars['columnViews'] : '',
+        'netID' => isset($vars['netID']) ? $vars['netID'] : '',
+        'status' => isset($vars['status']) ? $vars['status'] : '',
         'freq2' => $vars['frequency'],
         'freq' => '',
         'cookies' => $vars['columnViews'],
         'type' => "Type of Net: {$vars['activity']}",
-        'idofnet' => $vars['netID'],
+      /*  'idofnet' => $vars['netID'], */
         'activity' => $vars['activity'],
         'domain' => $vars['netcall'],
         'thenetcallsign' => $vars['netcall'],
         'isopen' => $vars['isOpen'],
         'ispb' => $vars['prebuilt'],
         'pbStat' => $flags['pbStat'],
-        'logstatus' => $vars['status']
+      /*  'logstatus' => $vars['status'] */
     );
     
     foreach ($hiddenVars as $id => $value) {
@@ -485,18 +488,10 @@ try {
     
     // Process default columns first
     foreach ($columns['default'] as $colKey => $colName) {
-        $header = $headers[array_search($colKey, array_column($headers, 'class'))];
-        echo '<th';
-        foreach ($header as $attr => $value) {
-            if ($attr !== 'content' && $attr !== 'checkbox') {
-                echo ' ' . $attr . '="' . h($value) . '"';
-            }
-        }
-        echo '>';
-        echo $header['content'];
-        echo isset($header['checkbox']) ? $header['checkbox'] : '';
-        echo '</th>';
+        echo '<th class="besticky ' . $colKey . '">' . $colName . '</th>';
     }
+        //echo '<th';
+         
     
     // Process optional columns based on settings
     foreach ($columns['optional'] as $colKey => $colName) {
@@ -512,8 +507,8 @@ try {
             echo $header['content'];
             echo isset($header['checkbox']) ? $header['checkbox'] : '';
             echo '</th>';
-        }
-    }
+        } // End if
+    } // End foreach 
     
     // Process admin columns if user has permission
     if (hasAdminAccess()) {
@@ -529,8 +524,8 @@ try {
             echo $header['content'];
             echo isset($header['checkbox']) ? $header['checkbox'] : '';
             echo '</th>';
-        }
-    }
+        } // End foreach
+    } // End if
 
     echo '</tr>';
     echo '</thead>';
@@ -607,10 +602,12 @@ try {
         } // End $usedFacility 
         
         // Output default columns
+        
         foreach ($columns['default'] as $colKey => $colName) {
             $cellDef = getCellDefinition($colKey, $row);
             echo createCell($cellDef);
         }
+        
         
         // Output optional columns if visible
         foreach ($columns['optional'] as $colKey => $colName) {
