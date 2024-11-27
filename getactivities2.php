@@ -24,7 +24,7 @@ function logError($message, $context = array()) {
     error_log("DEBUG: " . $message . " Context: " . print_r($context, true));
 }
 
-logError("Starting getactivities2.php");
+//logError("Starting getactivities2.php");
 
 
 // Required files
@@ -324,7 +324,9 @@ try {
         }
         echo '>';
         echo $header['content'];
-        echo $header['checkbox'] ?? ''; // Add checkbox if it exists
+        echo isset($header['checkbox']) ? $header['checkbox'] : '';
+
+        //echo $header['checkbox'] ?? ''; // Add checkbox if it exists
         echo '</th>';
     }
     
@@ -340,7 +342,9 @@ try {
             }
             echo '>';
             echo $header['content'];
-            echo $header['checkbox'] ?? '';
+            //echo $header['checkbox'] ?? '';
+            echo isset($header['checkbox']) ? $header['checkbox'] : '';
+
             echo '</th>';
         }
     }
@@ -357,7 +361,9 @@ try {
             }
             echo '>';
             echo $header['content'];
-            echo $header['checkbox'] ?? '';
+            //echo $header['checkbox'] ?? '';
+            echo isset($header['checkbox']) ? $header['checkbox'] : '';
+
             echo '</th>';
         }
     }
@@ -471,9 +477,14 @@ try {
         
         // Process facility grouping if needed
         $newFacility = trim($row['facility']);
-        if ($vars['orgType'] === 'FACILITY' && $newFacility !== ($usedFacility ?? '') && !empty($newFacility)) {
-            outputFacilityHeader($row, $newFacility);
-            $usedFacility = $newFacility;
+        if ($vars['orgType'] === 'FACILITY' && $newFacility !== (isset($usedFacility) ? $usedFacility : '') && !empty($newFacility)) {
+    outputFacilityHeader($row, $newFacility);
+    $usedFacility = $newFacility;
+
+
+        //if ($vars['orgType'] === 'FACILITY' && $newFacility !== ($usedFacility ?? '') && !empty($newFacility)) {
+            //outputFacilityHeader($row, $newFacility);
+            //$usedFacility = $newFacility;
         }
         
         // Output default columns
@@ -511,7 +522,9 @@ try {
     outputHiddenVariables($vars, $statusFlags);
     
     // Output status indicators
-    outputStatusIndicators($vars, $statusFlags, $subnetnum ?? null);
+    //outputStatusIndicators($vars, $statusFlags, $subnetnum ?? null);
+    outputStatusIndicators($vars, $statusFlags, isset($subnetnum) ? $subnetnum : null);
+
     
 } catch (Exception $e) {
     error_log("Error in data processing: " . $e->getMessage());

@@ -31,7 +31,7 @@ if (!function_exists('safeGet')) {
     }
 } // End safeGet()
 
-
+/*
 function isColumnVisible($colKey) {
     // Check if column should be shown based on cookies or netcall settings
     if (isset($_COOKIE['columnView'])) {
@@ -40,12 +40,14 @@ function isColumnVisible($colKey) {
     }
     return true;
 } // End isColumnVisible()
+*/
 
-function hasAdminAccess() {
+/*function hasAdminAccess() {
     // Implement your admin access logic here
     // For now return true to maintain current behavior
     return true;
 } // End hasAdminAccess()
+*/
 
 function getCellDefinition($colKey, $rowData) {
     // Get cell template from the cells array in getRowDefinitions()
