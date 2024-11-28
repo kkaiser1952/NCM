@@ -64,8 +64,8 @@ function createCell($cellDef) {
 
 // Define arrays for each category of columns
 $columns = [
-    'default' => [  
-          
+    'default' => [    
+        'c0' => 'Ro',
         'c1' => 'Role',
         'c2' => 'Mode',
         'c3' => 'Status',
@@ -112,8 +112,7 @@ $columns = [
 function getCellDefinition($colKey, $rowData) {
 // This is our single source of truth for cell definitions   
     $cells = array(
-        'c1' => array
-        (
+        'c1' => array(
             'class' => 'editable editable_selectNC cent c1',
             'id' => "netcontrol:" . safeGet($rowData, 'recordID'),
             'data-record-id' => safeGet($rowData, 'recordID'),
@@ -435,12 +434,12 @@ function getCellDefinition($colKey, $rowData) {
 function getHeaderDefinitions() {
     return [
         // Row No. - Optional
-        [
+     /*   [
             'title' => 'Row No.', 
             'class' => 'besticky c0', 
             'content' => '#',
             'checkbox' => '<input type="checkbox" class="hidden column-toggle" data-column="c0">'
-        ],
+        ], */
         // Role - Default
         [
             'title' => 'Role', 
