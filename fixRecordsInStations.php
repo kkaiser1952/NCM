@@ -46,7 +46,7 @@ KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 
     
     // Step 1: Enter the base callsign only
-$callsign = "W0RL";
+$callsign = "KS0IQV";
 
 
 // First, create a function to get the base callsign
@@ -344,7 +344,7 @@ try {
         $stmt_update->bindParam(':netID', $netID);
         
         // Commented execute as requested
-         $stmt_update->execute();
+        // $stmt_update->execute();
         
         $update_count++;
         
