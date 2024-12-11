@@ -194,43 +194,7 @@ $totalStations = count($markers);
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
         
-        // Initialize the grid layer
-        var gridLayer = L.maidenheadgrid({
-            color: '#ff4444',
-            weight: 1.5,
-            opacity: 0.7,
-            precision: 4,
-            labelFontSize: '12px',
-            labelColor: '#333',
-            showLabels: true
-        }).addTo(map);
-
-        // Add custom control for toggling grid
-        var GridControl = L.Control.extend({
-            options: {
-                position: 'topright'
-            },
-
-            onAdd: function(map) {
-                var container = L.DomUtil.create('div', 'grid-control');
-                container.innerHTML = 'Toggle Grid';
-                
-                container.addEventListener('click', function() {
-                    if (map.hasLayer(gridLayer)) {
-                        map.removeLayer(gridLayer);
-                        container.style.backgroundColor = '#f4f4f4';
-                    } else {
-                        map.addLayer(gridLayer);
-                        container.style.backgroundColor = 'white';
-                    }
-                });
-
-                return container;
-            }
-        });
-
-        // Add the grid control to the map
-        map.addControl(new GridControl());
+        
 
         // Parse PHP data
         var markers = <?php echo json_encode($markers); ?>;
