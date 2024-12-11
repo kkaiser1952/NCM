@@ -108,6 +108,78 @@ $totalStations = count($markers);
             cursor:pointer;
         }
         .station-item:hover { background:#f8f9fa; }
+        
+        .custom-marker {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #3388ff;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        
+        /* Style Option 1: Pill Style */
+.marker-pill {
+    background: #3388ff;
+    color: white;
+    border-radius: 15px;
+    padding: 4px 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Style Option 2: Square with Triangle */
+.marker-square {
+    background: white;
+    border: 2px solid #3388ff;
+    padding: 4px 8px;
+    font-weight: bold;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.marker-square:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #3388ff;
+}
+
+/* Style Option 3: Transparent with Outline */
+.marker-outline {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid #333;
+    padding: 3px 6px;
+    font-weight: bold;
+    text-shadow: 0 0 2px white;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Style Option 4: Radio Style */
+.marker-radio {
+    background:  #1565C0;
+    color: white;
+    border-radius: 50%;
+    padding: 8px;
+    font-weight: bold;
+    box-shadow: 0 0 0 2px white, 0 2px 4px rgba(0,0,0,0.3);
+    text-align: center;
+    min-width: 20px;
+    line-height: 1.2;
+}
+
+/* Style Option 5: Tag Style */
+.marker-tag {
+    background: #4CAF50;
+    color: white;
+    padding: 4px 8px;
+    font-weight: bold;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
 </style>
 </head>
 <body>
@@ -170,12 +242,31 @@ $totalStations = count($markers);
         }
 
         // Add markers
+        /* Original markers
         markers.forEach(function(station) {
             var marker = L.marker([station.lat, station.lng])
                 .bindPopup(createPopupContent(station))
                 .addTo(map);
             markersByCallsign[station.callsign] = marker;
         });
+        */
+        
+         markers.forEach(function(station) {
+        var customIcon = L.divIcon({
+            className: 'marker-radio',
+            html: station.callsign,
+            iconSize: null,
+            iconAnchor: [25, 12]  // Adjust based on your marker size
+        });
+
+        var marker = L.marker([station.lat, station.lng], {
+            icon: customIcon
+        })
+        .bindPopup(createPopupContent(station))
+        .addTo(map);
+        
+        markersByCallsign[station.callsign] = marker;
+    });
 
         // Fit map to bounds
         if (bounds.length > 0) {
