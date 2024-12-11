@@ -70,6 +70,8 @@ foreach ($results as $row) {
 
 // Sort states alphabetically
 ksort($stateData);
+
+// Calculate totals for header
 $totalStates = count($stateData);
 $totalStations = count($markers);
 ?>
@@ -81,12 +83,21 @@ $totalStations = count($markers);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Station Location Map</title>
     
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+    <!-- MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    
+    <!-- Maidenhead Grid CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.maidenheadgrid/dist/L.MaidenheadGrid.css" />
+    
     <style>
         body { margin:0; padding:0; }
         #container { display:flex; height:100vh; }
         #sidebar {
-            width:6%;
+            width:5%;
             height:100%;
             overflow-y:auto;
             background:#f8f9fa;
@@ -101,91 +112,54 @@ $totalStations = count($markers);
         .state-header { background:#e9ecef; padding:10px; cursor:pointer; font-weight:bold; }
         .state-header:hover { background:#dee2e6; }
         .station-list { display:none; padding:10px; background:white; }
-        .station-item { 
-            margin-bottom:5px; 
-            padding:5px; 
-            border-bottom:1px solid #eee;
-            cursor:pointer;
-        }
+        .station-item { margin-bottom:5px; padding:5px; border-bottom:1px solid #eee; cursor:pointer; }
         .station-item:hover { background:#f8f9fa; }
-        
-        .custom-marker {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #3388ff;
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-weight: bold;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        .station-count { float:right; color:#666; }
+        .info-box { padding:6px 8px; background:white; background:rgba(255,255,255,0.8); box-shadow:0 0 15px rgba(0,0,0,0.2); border-radius:5px; }
+        .info-box h4 { margin:0 0 5px; color:#777; }
+        .leaflet-popup-content { margin:13px; line-height:1.5; }
+        .station-popup { min-width:200px; }
+        .station-popup h3 { margin:0 0 10px 0; color:#333; border-bottom:1px solid #ccc; padding-bottom:5px; }
+        .station-popup p { margin:5px 0; }
+        .station-popup .label { font-weight:bold; color:#666; }
+        .active-state { background:#007bff !important; color:white; }
+        .marker-radio {
+            background:#3388ff;
+            color:white;
+            border-radius:50%;
+            padding:8px;
+            font-weight:bold;
+            box-shadow:0 0 0 2px white, 0 2px 4px rgba(0,0,0,0.3);
+            text-align:center;
+            min-width:20px;
+            line-height:1.2;
         }
-        
-        /* Style Option 1: Pill Style */
-.marker-pill {
-    background: #3388ff;
-    color: white;
-    border-radius: 15px;
-    padding: 4px 10px;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-/* Style Option 2: Square with Triangle */
-.marker-square {
-    background: white;
-    border: 2px solid #3388ff;
-    padding: 4px 8px;
-    font-weight: bold;
-    position: relative;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
-.marker-square:after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    margin-left: -8px;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #3388ff;
-}
-
-/* Style Option 3: Transparent with Outline */
-.marker-outline {
-    background: rgba(255,255,255,0.7);
-    border: 2px solid #333;
-    padding: 3px 6px;
-    font-weight: bold;
-    text-shadow: 0 0 2px white;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2);
-}
-
-/* Style Option 4: Radio Style */
-.marker-radio {
-    background:  #1565C0;
-    color: white;
-    border-radius: 50%;
-    padding: 8px;
-    font-weight: bold;
-    box-shadow: 0 0 0 2px white, 0 2px 4px rgba(0,0,0,0.3);
-    text-align: center;
-    min-width: 20px;
-    line-height: 1.2;
-}
-
-/* Style Option 5: Tag Style */
-.marker-tag {
-    background: #4CAF50;
-    color: white;
-    padding: 4px 8px;
-    font-weight: bold;
-    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-}
-</style>
+        .grid-control {
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            border: 2px solid rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .grid-control:hover { background: #f4f4f4; }
+        /* Style for grid squares */
+        .maiden-grid-label {
+            color: #666;
+            font-weight: bold;
+            text-shadow: -1px -1px 0 #fff, 
+                         1px -1px 0 #fff,
+                         -1px 1px 0 #fff,
+                         1px 1px 0 #fff;
+        }
+    </style>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.maidenheadgrid/dist/L.MaidenheadGrid.min.js"></script>
 </head>
 <body>
     <div id="container">
         <div id="sidebar">
-           
             <h3>States (<?php echo $totalStations; ?>/<?php echo $totalStates; ?>)</h3>
             <?php foreach ($stateData as $state => $stations): ?>
             <div class="state-item">
@@ -209,6 +183,8 @@ $totalStations = count($markers);
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    
     <script>
         // Initialize map
         var map = L.map('map');
@@ -217,11 +193,61 @@ $totalStations = count($markers);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
+        
+        // Initialize the grid layer
+        var gridLayer = L.maidenheadgrid({
+            color: '#ff4444',
+            weight: 1.5,
+            opacity: 0.7,
+            precision: 4,
+            labelFontSize: '12px',
+            labelColor: '#333',
+            showLabels: true
+        }).addTo(map);
+
+        // Add custom control for toggling grid
+        var GridControl = L.Control.extend({
+            options: {
+                position: 'topright'
+            },
+
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div', 'grid-control');
+                container.innerHTML = 'Toggle Grid';
+                
+                container.addEventListener('click', function() {
+                    if (map.hasLayer(gridLayer)) {
+                        map.removeLayer(gridLayer);
+                        container.style.backgroundColor = '#f4f4f4';
+                    } else {
+                        map.addLayer(gridLayer);
+                        container.style.backgroundColor = 'white';
+                    }
+                });
+
+                return container;
+            }
+        });
+
+        // Add the grid control to the map
+        map.addControl(new GridControl());
 
         // Parse PHP data
         var markers = <?php echo json_encode($markers); ?>;
         var bounds = <?php echo json_encode($bounds); ?>;
         var totalOpens = <?php echo $totalOpens; ?>;
+
+        // Initialize marker cluster group
+        var markerClusterGroup = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0.5 },
+            spiderfyDistanceMultiplier: 1.5,
+            singleMarkerMode: false,
+            disableClusteringAtZoom: 19,
+            maxClusterRadius: 1
+        });
 
         // Store markers by callsign for easy access
         var markersByCallsign = {};
@@ -241,32 +267,26 @@ $totalStations = count($markers);
                 '</div>';
         }
 
-        // Add markers
-        /* Original markers
+        // Create and add markers
         markers.forEach(function(station) {
-            var marker = L.marker([station.lat, station.lng])
-                .bindPopup(createPopupContent(station))
-                .addTo(map);
+            var customIcon = L.divIcon({
+                className: 'marker-radio',
+                html: station.callsign,
+                iconSize: null,
+                iconAnchor: [25, 12]
+            });
+
+            var marker = L.marker([station.lat, station.lng], {
+                icon: customIcon
+            })
+            .bindPopup(createPopupContent(station));
+            
+            markerClusterGroup.addLayer(marker);
             markersByCallsign[station.callsign] = marker;
         });
-        */
-        
-         markers.forEach(function(station) {
-        var customIcon = L.divIcon({
-            className: 'marker-radio',
-            html: station.callsign,
-            iconSize: null,
-            iconAnchor: [25, 12]  // Adjust based on your marker size
-        });
 
-        var marker = L.marker([station.lat, station.lng], {
-            icon: customIcon
-        })
-        .bindPopup(createPopupContent(station))
-        .addTo(map);
-        
-        markersByCallsign[station.callsign] = marker;
-    });
+        // Add the marker cluster group to the map
+        map.addLayer(markerClusterGroup);
 
         // Fit map to bounds
         if (bounds.length > 0) {
@@ -298,126 +318,94 @@ $totalStations = count($markers);
                 '<div><b>Total Net Opens:</b> ' + totalOpens.toLocaleString() + '</div>';
         };
         info.addTo(map);
-        
-        //
-        // Add this after the markers are created but before the click handlers
-// Group markers by state
-var markersByState = {};
-markers.forEach(function(station) {
-    if (!markersByState[station.state]) {
-        markersByState[station.state] = [];
-    }
-    markersByState[station.state].push([station.lat, station.lng]);
-});
 
-// Modify the state header click handler
-document.querySelectorAll('.state-header').forEach(function(header) {
-    header.addEventListener('click', function() {
-        var sidebar = document.getElementById('sidebar');
-        var stateList = this.nextElementSibling;
-        var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
-        var state = this.dataset.state;
-        
-        // Hide all station lists first
-        document.querySelectorAll('.station-list').forEach(function(list) {
-            list.style.display = 'none';
-        });
-        
-        // Remove active class from all headers
-        document.querySelectorAll('.state-header').forEach(function(h) {
-            h.classList.remove('active-state');
-        });
-
-        // Remove expanded classes from sidebar
-        sidebar.classList.remove('expanded', 'show-stations');
-
-        if (wasHidden) {
-            // Show this state's list and mark as active
-            stateList.style.display = 'block';
-            this.classList.add('active-state');
-            sidebar.classList.add('show-stations');
-
-            // Center map on state
-            if (markersByState[state] && markersByState[state].length > 0) {
-                var stateBounds = L.latLngBounds(markersByState[state]);
-                map.fitBounds(stateBounds, {
-                    padding: [50, 50],
-                    maxZoom: 12
-                });
+        // Group markers by state
+        var markersByState = {};
+        markers.forEach(function(station) {
+            if (!markersByState[station.state]) {
+                markersByState[station.state] = [];
             }
-        }
-
-        // Update map size after sidebar change
-        if (map) {
-            setTimeout(function() {
-                map.invalidateSize();
-            }, 300);
-        }
-    });
-});
-        //
+            markersByState[station.state].push([station.lat, station.lng]);
+        });
 
         // Add click handlers for state headers
-        // Modified click handlers for state headers
-    document.querySelectorAll('.state-header').forEach(function(header) {
-        header.addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var stateList = this.nextElementSibling;
-            var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
-            
-            // Hide all station lists first
-            document.querySelectorAll('.station-list').forEach(function(list) {
-                list.style.display = 'none';
+        document.querySelectorAll('.state-header').forEach(function(header) {
+            header.addEventListener('click', function() {
+                var sidebar = document.getElementById('sidebar');
+                var stateList = this.nextElementSibling;
+                var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
+                var state = this.dataset.state;
+                
+                // Hide all station lists
+                document.querySelectorAll('.station-list').forEach(function(list) {
+                    list.style.display = 'none';
+                });
+                
+                // Remove active class from all headers
+                document.querySelectorAll('.state-header').forEach(function(h) {
+                    h.classList.remove('active-state');
+                });
+
+                // Remove expanded classes from sidebar
+                sidebar.classList.remove('expanded', 'show-stations');
+
+                if (wasHidden) {
+                    // Show this state's list and mark as active
+                    stateList.style.display = 'block';
+                    this.classList.add('active-state');
+                    sidebar.classList.add('show-stations');
+
+                    // Center map on state
+                    if (markersByState[state] && markersByState[state].length > 0) {
+                        var stateBounds = L.latLngBounds(markersByState[state]);
+                        map.fitBounds(stateBounds, {
+                            padding: [50, 50],
+                            maxZoom: 12
+                        });
+                    }
+                }
+
+                // Update map size after sidebar change
+                if (map) {
+                    setTimeout(function() {
+                        map.invalidateSize();
+                    }, 300);
+                }
             });
-            
-            // Remove active class from all headers
-            document.querySelectorAll('.state-header').forEach(function(h) {
-                h.classList.remove('active-state');
+        });
+
+        // Add click handlers for station items
+        document.querySelectorAll('.station-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                var sidebar = document.getElementById('sidebar');
+                var callsign = this.dataset.callsign;
+                var marker = markersByCallsign[callsign];
+
+                // Reduce sidebar width when station is selected
+                sidebar.classList.remove('show-stations');
+                sidebar.classList.add('expanded');
+
+                if (marker) {
+                    var cluster = markerClusterGroup.getVisibleParent(marker);
+                    if (cluster) {
+                        // If marker is in a cluster, spiderfy it
+                        markerClusterGroup.zoomToShowLayer(marker, function() {
+                            marker.openPopup();
+                        });
+                    } else {
+                        map.setView(marker.getLatLng(), 12);
+                        marker.openPopup();
+                    }
+                }
+
+                // Update map size after sidebar change
+                if (map) {
+                    setTimeout(function() {
+                        map.invalidateSize();
+                    }, 300);
+                }
             });
-
-            // Remove expanded classes from sidebar
-            sidebar.classList.remove('expanded', 'show-stations');
-
-            if (wasHidden) {
-                // Show this state's list and mark as active
-                stateList.style.display = 'block';
-                this.classList.add('active-state');
-                sidebar.classList.add('show-stations');
-            }
-
-            // Update map size after sidebar change
-            if (map) {
-                setTimeout(function() {
-                    map.invalidateSize();
-                }, 300);
-            }
         });
-    });
-
-    // Modified click handlers for station items
-    document.querySelectorAll('.station-item').forEach(function(item) {
-        item.addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var callsign = this.dataset.callsign;
-            var marker = markersByCallsign[callsign];
-
-            // Reduce sidebar width when station is selected
-            sidebar.classList.remove('show-stations');
-            sidebar.classList.add('expanded');
-
-            if (marker) {
-                map.setView(marker.getLatLng(), 12);
-                marker.openPopup();
-            }
-
-            // Update map size after sidebar change
-            if (map) {
-                setTimeout(function() {
-                    map.invalidateSize();
-                }, 300);
-            }
-        });
-    });
     </script>
 </body>
 </html>
