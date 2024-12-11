@@ -70,6 +70,8 @@ foreach ($results as $row) {
 
 // Sort states alphabetically
 ksort($stateData);
+$totalStates = count($stateData);
+$totalStations = count($markers);
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +86,7 @@ ksort($stateData);
         body { margin:0; padding:0; }
         #container { display:flex; height:100vh; }
         #sidebar {
-            width:5%;
+            width:6%;
             height:100%;
             overflow-y:auto;
             background:#f8f9fa;
@@ -111,7 +113,8 @@ ksort($stateData);
 <body>
     <div id="container">
         <div id="sidebar">
-            <h3>States</h3>
+           
+            <h3>States (<?php echo $totalStations; ?>/<?php echo $totalStates; ?>)</h3>
             <?php foreach ($stateData as $state => $stations): ?>
             <div class="state-item">
                 <div class="state-header" data-state="<?php echo $state; ?>">
