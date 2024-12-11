@@ -1,12 +1,13 @@
 <?php
+// map_YTD.php 
 ini_set('display_errors', 1); 
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
-require_once "GridSquare.php";
-require_once "config.php";
-require_once "config2.php";
+//require_once "GridSquare.php";
+//require_once "config.php";
+//require_once "config2.php";
 
 $sql = "SELECT 
     n.callsign, 
@@ -91,7 +92,9 @@ $totalStations = count($markers);
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="css/L.Grid_YY.css" />
     
     <style>
         body { margin:0; padding:0; }
@@ -172,9 +175,7 @@ $totalStations = count($markers);
     <!-- JavaScript Libraries -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <script src="js/L.Grid_YY.js"></script>
-    
-    <script src="https://unpkg.com/leaflet.grid@1.0.0/dist/L.Grid_YY.js"></script>
+    <script src="/js/L.Grid_YY.js"></script>
 <!-- PART 3 -->
 
 <script>
