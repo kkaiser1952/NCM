@@ -10,6 +10,8 @@ require_once "config2.php";
 
 $sql = "SELECT 
     n.callsign, 
+    n.activity,
+    n.netcall,
     CONCAT(s.Fname, ' ', s.Lname) as name,
     s.latitude, 
     s.longitude, 
@@ -90,8 +92,7 @@ $totalStations = count($markers);
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     
-    <!-- Maidenhead Grid CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.maidenheadgrid/dist/L.MaidenheadGrid.css" />
+   
     
     <style>
         body { margin:0; padding:0; }
@@ -155,7 +156,7 @@ $totalStations = count($markers);
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.maidenheadgrid/dist/L.MaidenheadGrid.min.js"></script>
+    
 </head>
 <body>
     <div id="container">
@@ -218,18 +219,20 @@ $totalStations = count($markers);
         
         // Function to create popup content
         function createPopupContent(station) {
-            return '<div class="station-popup">' +
-                '<h3>' + station.callsign + '</h3>' +
-                '<p><span class="label">Operator:</span> ' + station.name + '</p>' +
-                '<p><span class="label">Location:</span> ' + station.cityState + '</p>' +
-                '<p><span class="label">County:</span> ' + station.county + '</p>' +
-                '<p><span class="label">Coordinates:</span> ' + 
-                    station.lat.toFixed(6) + ', ' + station.lng.toFixed(6) + '</p>' +
-                '<p><span class="label">what3words:</span> ' + 
-                    (station.w3w ? station.w3w : 'Not available') + '</p>' +
-                '<p><span class="label">Net Opens:</span> ' + station.count + '</p>' +
-                '</div>';
-        }
+    var grid = gridLayer.latLngToMaiden(station.lat, station.lng, 6);
+    
+    return '<div class="station-popup">' +
+        '<h3>' + station.callsign + (station.name ? ' - ' + station.name : '') + '</h3>' +
+        '<p><span class="label">Location:</span> ' + station.cityState + '</p>' +
+        '<p><span class="label">County:</span> ' + station.county + '</p>' +
+        '<p><span class="label">Grid Square:</span> ' + grid + '</p>' +
+        '<p><span class="label">Coordinates:</span> ' + 
+            station.lat.toFixed(6) + ', ' + station.lng.toFixed(6) + '</p>' +
+        '<p><span class="label">what3words:</span> ' + 
+            (station.w3w ? station.w3w : 'Not available') + '</p>' +
+        '<p><span class="label">Net Opens:</span> ' + station.count + '</p>' +
+        '</div>';
+}
 
         // Create and add markers
         markers.forEach(function(station) {
