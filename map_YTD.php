@@ -185,45 +185,44 @@ $totalStations = count($markers);
     <!-- JavaScript Libraries -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <script src="https://unpkg.com/leaflet.grid@1.0.0/dist/L.Grid.js"></script>
+
     <script src="js/L.Grid_YY.js"></script>
 <!-- PART 3 -->
 
 <script>
     // Initialize map
     var map = L.map('map');
-    var maidenheadLayer = L.maidenheadGrid().addTo(map);
     
     // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
     
-    // Create grid layer
-var grid = L.maidenheadGrid().addTo(map);
+    // Initialize single grid layer
+    var grid = L.maidenheadGrid().addTo(map);
 
-// Add grid control button
-var gridControl = L.Control.extend({
-    options: {
-        position: 'topright'
-    },
-    onAdd: function (map) {
-        var container = L.DomUtil.create('div', 'grid-control');
-        container.innerHTML = 'Toggle Grid';
-        container.onclick = function(){
-            if (map.hasLayer(grid)) {
-                map.removeLayer(grid);
-                container.style.backgroundColor = '#f4f4f4';
-            } else {
-                map.addLayer(grid);
-                container.style.backgroundColor = 'white';
+    // Add grid control button
+    var gridControl = L.Control.extend({
+        options: {
+            position: 'topright'
+        },
+        onAdd: function (map) {
+            var container = L.DomUtil.create('div', 'grid-control');
+            container.innerHTML = 'Toggle Grid';
+            container.onclick = function(){
+                if (map.hasLayer(grid)) {
+                    map.removeLayer(grid);
+                    container.style.backgroundColor = '#f4f4f4';
+                } else {
+                    map.addLayer(grid);
+                    container.style.backgroundColor = 'white';
+                }
             }
+            return container;
         }
-        return container;
-    }
-});
+    });
 
-map.addControl(new gridControl());
+    map.addControl(new gridControl());
 
     // Parse PHP data
     var markers = <?php echo json_encode($markers); ?>;
@@ -321,7 +320,7 @@ map.addControl(new gridControl());
         markersByState[station.state].push([station.lat, station.lng]);
     });
 
-    // Add click handlers for state headers
+    // Single state header click handler
     document.querySelectorAll('.state-header').forEach(function(header) {
         header.addEventListener('click', function() {
             var sidebar = document.getElementById('sidebar');
@@ -329,28 +328,24 @@ map.addControl(new gridControl());
             var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
             var state = this.dataset.state;
             
-            // Hide all station lists
             document.querySelectorAll('.station-list').forEach(function(list) {
                 list.style.display = 'none';
             });
             
-            // Remove active class from all headers
             document.querySelectorAll('.state-header').forEach(function(h) {
                 h.classList.remove('active-state');
             });
 
-            // Remove expanded classes from sidebar
             sidebar.classList.remove('expanded', 'show-stations');
 
             if (wasHidden) {
-                // Show this state's list and mark as active
                 stateList.style.display = 'block';
                 this.classList.add('active-state');
                 sidebar.classList.add('show-stations');
 
-                // Center map on state
                 if (markersByState[state] && markersByState[state].length > 0) {
                     var stateBounds = L.latLngBounds(markersByState[state]);
+                    grid.options.isStateSelected = true;
                     map.fitBounds(stateBounds, {
                         padding: [50, 50],
                         maxZoom: 12
@@ -358,7 +353,6 @@ map.addControl(new gridControl());
                 }
             }
 
-            // Update map size after sidebar change
             if (map) {
                 setTimeout(function() {
                     map.invalidateSize();
@@ -367,21 +361,27 @@ map.addControl(new gridControl());
         });
     });
 
-    // Add click handlers for station items
+    // Zoom handler
+    map.on('zoomend', function() {
+        if (grid.options.isStateSelected && map.getZoom() > 12) {
+            grid.options.isStateSelected = false;
+            grid._draw();
+        }
+    });
+
+    // Station items click handler
     document.querySelectorAll('.station-item').forEach(function(item) {
         item.addEventListener('click', function() {
             var sidebar = document.getElementById('sidebar');
             var callsign = this.dataset.callsign;
             var marker = markersByCallsign[callsign];
 
-            // Reduce sidebar width when station is selected
             sidebar.classList.remove('show-stations');
             sidebar.classList.add('expanded');
 
             if (marker) {
                 var cluster = markerClusterGroup.getVisibleParent(marker);
                 if (cluster) {
-                    // If marker is in a cluster, spiderfy it
                     markerClusterGroup.zoomToShowLayer(marker, function() {
                         marker.openPopup();
                     });
@@ -391,7 +391,6 @@ map.addControl(new gridControl());
                 }
             }
 
-            // Update map size after sidebar change
             if (map) {
                 setTimeout(function() {
                     map.invalidateSize();
