@@ -1,9 +1,16 @@
 <?php
+// map_YTD.php 
+// Purpose: Map every station that has started a NCM net.
+// Written: 2024-12-11
+
 ini_set('display_errors', 1); 
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
+//require_once "GridSquare.php";
+//require_once "config.php";
+//require_once "config2.php";
 
 $sql = "SELECT 
     n.callsign, 
@@ -75,8 +82,7 @@ $totalStates = count($stateData);
 $totalStations = count($markers);
 ?>
 
-/* PART 2 */
-
+<!-- PART 2 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,6 +96,7 @@ $totalStations = count($markers);
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="css/L.Grid_YY.css" />
     
     <style>
         body { margin:0; padding:0; }
@@ -140,15 +147,12 @@ $totalStations = count($markers);
             cursor:pointer;
         }
         .grid-control:hover { background:#f4f4f4; }
-        .grid-label {
+        .maidenhead-label {
             background: transparent;
-            border: none;
-            color: #ff0000 !important;
-            font-weight: bold;
-            text-shadow: -1px -1px 0 #fff, 
-                         1px -1px 0 #fff,
-                         -1px 1px 0 #fff,
-                         1px 1px 0 #fff;
+            color: #ff7d78;
+            font-size: 12px;
+            text-align: center;
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff;
             white-space: nowrap;
         }
     </style>
@@ -181,50 +185,50 @@ $totalStations = count($markers);
     <!-- JavaScript Libraries -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    
-/* PART 3 */
+    <script src="https://unpkg.com/leaflet.grid@1.0.0/dist/L.Grid.js"></script>
+    <script src="js/L.Grid_YY.js"></script>
+<!-- PART 3 -->
 
 <script>
-    // Grid calculation function
-    function calcMaidenhead(lat, lng, precision = 3) {
-        // Field calculation (first pair)
-        var fieldLng = String.fromCharCode(65 + Math.floor((lng + 180) / 20));
-        var fieldLat = String.fromCharCode(65 + Math.floor((lat + 90) / 10));
-        
-        // Square calculation (second pair)
-        var sqLng = Math.floor(((lng + 180) % 20) / 2);
-        var sqLat = Math.floor((lat + 90) % 10);
-        
-        // Return if only want field or field+square
-        if (precision === 1) return fieldLng + fieldLat;
-        if (precision === 2) return fieldLng + fieldLat + sqLng + sqLat;
-        
-        // Subsquare calculation (third pair)
-        var baseLat = Math.floor(lat);
-        var baseLng = Math.floor(lng/2) * 2;
-        
-        var latPos = (lat - baseLat);
-        var lngPos = (lng - baseLng);
-        
-        var latMin = latPos * 60;
-        var lngMin = lngPos * 60;
-        
-        var latIndex = Math.floor(latMin/2.5);
-        var lngIndex = Math.floor(lngMin/5);
-        
-        var subsquareLng = String.fromCharCode(97 + lngIndex);
-        var subsquareLat = String.fromCharCode(97 + latIndex);
-        
-        return fieldLng + fieldLat + sqLng + sqLat + subsquareLng + subsquareLat;
-    }
-
     // Initialize map
     var map = L.map('map');
+    var maidenheadLayer = L.maidenheadGrid().addTo(map);
     
     // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+    
+    // Create grid layer
+var grid = L.maidenheadGrid().addTo(map);
+
+// Add grid control button
+var gridControl = L.Control.extend({
+    options: {
+        position: 'topright'
+    },
+    onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'grid-control');
+        container.innerHTML = 'Toggle Grid';
+        container.onclick = function(){
+            if (map.hasLayer(grid)) {
+                map.removeLayer(grid);
+                container.style.backgroundColor = '#f4f4f4';
+            } else {
+                map.addLayer(grid);
+                container.style.backgroundColor = 'white';
+            }
+        }
+        return container;
+    }
+});
+
+map.addControl(new gridControl());
+
+    // Parse PHP data
+    var markers = <?php echo json_encode($markers); ?>;
+    var bounds = <?php echo json_encode($bounds); ?>;
+    var totalOpens = <?php echo $totalOpens; ?>;
 
     // Initialize marker cluster group
     var markerClusterGroup = L.markerClusterGroup({
@@ -237,116 +241,6 @@ $totalStations = count($markers);
         disableClusteringAtZoom: 19,
         maxClusterRadius: 1
     });
-
-    // Grid Layer definition
-    L.Grid = L.LayerGroup.extend({
-        options: {
-            lineColor: '#444',
-            lineWidth: 1,
-            lineOpacity: 0.6
-        },
-
-        initialize: function(options) {
-            L.LayerGroup.prototype.initialize.call(this);
-            L.Util.setOptions(this, options);
-        },
-
-        onAdd: function(map) {
-            this._map = map;
-            this._draw();
-            this._map.on('moveend', this._draw, this);
-        },
-
-        onRemove: function(map) {
-            this._map.off('moveend', this._draw, this);
-            this.clearLayers();
-        },
-
-        _getGridSquares: function(bounds) {
-            var zoom = this._map.getZoom();
-            var squares = [];
-            
-            // Calculate grid boundaries
-            var startLat = Math.floor(bounds.getSouth());
-            var endLat = Math.ceil(bounds.getNorth());
-            var startLng = Math.floor(bounds.getWest());
-            var endLng = Math.ceil(bounds.getEast());
-            
-            // Step size based on zoom
-            var latStep = zoom < 6 ? 10 : 1;
-            var lngStep = zoom < 6 ? 20 : 2;
-            
-            for (var lat = startLat; lat <= endLat; lat += latStep) {
-                for (var lng = startLng; lng <= endLng; lng += lngStep) {
-                    squares.push({
-                        bounds: L.latLngBounds(
-                            [lat, lng],
-                            [lat + latStep, lng + lngStep]
-                        ),
-                        center: L.latLng(lat + latStep/2, lng + lngStep/2)
-                    });
-                }
-            }
-            return squares;
-        },
-
-        _draw: function() {
-            this.clearLayers();
-            var bounds = this._map.getBounds();
-            var squares = this._getGridSquares(bounds);
-            
-            squares.forEach(square => {
-                // Draw grid square
-                var rect = L.rectangle(square.bounds, {
-                    color: this.options.lineColor,
-                    weight: this.options.lineWidth,
-                    opacity: this.options.lineOpacity,
-                    fill: false
-                }).addTo(this);
-                
-                // Add label using our calcMaidenhead function
-                var center = square.bounds.getCenter();
-                var zoom = this._map.getZoom();
-                var precision = zoom < 6 ? 1 : (zoom < 8 ? 2 : 3);
-                var gridRef = calcMaidenhead(center.lat, center.lng, precision);
-                
-                var label = L.divIcon({
-                    className: 'grid-label',
-                    html: gridRef,
-                    iconSize: [100, 20],
-                    iconAnchor: [50, 10]
-                });
-                
-                L.marker(center, {
-                    icon: label,
-                    interactive: false
-                }).addTo(this);
-            });
-        }
-    });
-
-    // Create and add grid layer
-    var grid = new L.Grid().addTo(map);
-
-    // Add grid control button
-    var GridControl = L.Control.extend({
-        options: { position: 'topright' },
-        onAdd: function(map) {
-            var container = L.DomUtil.create('div', 'grid-control');
-            container.innerHTML = 'Toggle Grid';
-            container.onclick = function() {
-                if (map.hasLayer(grid)) {
-                    map.removeLayer(grid);
-                    container.style.backgroundColor = '#f4f4f4';
-                } else {
-                    map.addLayer(grid);
-                    container.style.backgroundColor = 'white';
-                }
-            }
-            return container;
-        }
-    });
-    map.addControl(new GridControl());
 
     // Store markers by callsign for easy access
     var markersByCallsign = {};
@@ -367,10 +261,6 @@ $totalStations = count($markers);
     }
 
     // Create and add markers
-    var markers = <?php echo json_encode($markers); ?>;
-    var bounds = <?php echo json_encode($bounds); ?>;
-    var totalOpens = <?php echo $totalOpens; ?>;
-
     markers.forEach(function(station) {
         var customIcon = L.divIcon({
             className: 'marker-radio',
@@ -422,7 +312,16 @@ $totalStations = count($markers);
     };
     info.addTo(map);
 
-    // Add click handlers for state headers and station items
+    // Group markers by state
+    var markersByState = {};
+    markers.forEach(function(station) {
+        if (!markersByState[station.state]) {
+            markersByState[station.state] = [];
+        }
+        markersByState[station.state].push([station.lat, station.lng]);
+    });
+
+    // Add click handlers for state headers
     document.querySelectorAll('.state-header').forEach(function(header) {
         header.addEventListener('click', function() {
             var sidebar = document.getElementById('sidebar');
@@ -430,21 +329,26 @@ $totalStations = count($markers);
             var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
             var state = this.dataset.state;
             
+            // Hide all station lists
             document.querySelectorAll('.station-list').forEach(function(list) {
                 list.style.display = 'none';
             });
             
+            // Remove active class from all headers
             document.querySelectorAll('.state-header').forEach(function(h) {
                 h.classList.remove('active-state');
             });
 
+            // Remove expanded classes from sidebar
             sidebar.classList.remove('expanded', 'show-stations');
 
             if (wasHidden) {
+                // Show this state's list and mark as active
                 stateList.style.display = 'block';
                 this.classList.add('active-state');
                 sidebar.classList.add('show-stations');
 
+                // Center map on state
                 if (markersByState[state] && markersByState[state].length > 0) {
                     var stateBounds = L.latLngBounds(markersByState[state]);
                     map.fitBounds(stateBounds, {
@@ -454,6 +358,7 @@ $totalStations = count($markers);
                 }
             }
 
+            // Update map size after sidebar change
             if (map) {
                 setTimeout(function() {
                     map.invalidateSize();
@@ -462,18 +367,21 @@ $totalStations = count($markers);
         });
     });
 
+    // Add click handlers for station items
     document.querySelectorAll('.station-item').forEach(function(item) {
         item.addEventListener('click', function() {
             var sidebar = document.getElementById('sidebar');
             var callsign = this.dataset.callsign;
             var marker = markersByCallsign[callsign];
 
+            // Reduce sidebar width when station is selected
             sidebar.classList.remove('show-stations');
             sidebar.classList.add('expanded');
 
             if (marker) {
                 var cluster = markerClusterGroup.getVisibleParent(marker);
                 if (cluster) {
+                    // If marker is in a cluster, spiderfy it
                     markerClusterGroup.zoomToShowLayer(marker, function() {
                         marker.openPopup();
                     });
@@ -483,6 +391,7 @@ $totalStations = count($markers);
                 }
             }
 
+            // Update map size after sidebar change
             if (map) {
                 setTimeout(function() {
                     map.invalidateSize();
