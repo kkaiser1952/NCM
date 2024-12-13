@@ -8,9 +8,6 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 require_once "dbConnectDtls.php";
 require_once "ENV_SETUP.php";
-//require_once "GridSquare.php";
-//require_once "config.php";
-//require_once "config2.php";
 
 $sql = "SELECT 
     n.callsign, 
@@ -168,12 +165,16 @@ $totalStations = count($markers);
                 </div>
                 <div class="station-list" id="state-<?php echo $state; ?>">
                     <?php foreach ($stations as $station): ?>
-                    <div class="station-item" data-callsign="<?php echo $station['callsign']; ?>">
-                        <span class="station-count"><?php echo $station['count']; ?></span>
-                        <strong><?php echo $station['callsign']; ?></strong><br>
-                        <?php echo $station['name']; ?><br>
-                        <?php echo $station['city']; ?>
-                    </div>
+                    
+                    <!-- Station list items -->
+<div class="station-item" data-callsign="<?php echo $station['callsign']; ?>" data-grid="<?php echo $station['grid']; ?>">
+    <span class="station-count"><?php echo $station['count']; ?></span>
+    <strong><?php echo $station['callsign']; ?></strong><br>
+    <?php echo $station['name']; ?><br>
+    <?php echo $station['city']; ?><br>
+    Grid: <?php echo $station['grid']; ?>
+</div>
+                    
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -191,7 +192,16 @@ $totalStations = count($markers);
 
 <script>
     // Initialize map
-    var map = L.map('map');
+    //var map = L.map('map');
+    // Initialize map
+    
+    var map = L.map('map', {
+        wheelDebounceTime: 150,
+        wheelPxPerZoomLevel: 120,
+        zoomSnap: 1,        // Changed back to 1 for discrete zoom levels
+        zoomDelta: 1        // Changed back to 1
+    });
+    
     
     // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -321,45 +331,45 @@ $totalStations = count($markers);
     });
 
     // Single state header click handler
-    document.querySelectorAll('.state-header').forEach(function(header) {
-        header.addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var stateList = this.nextElementSibling;
-            var wasHidden = stateList.style.display === 'none' || stateList.style.display === '';
-            var state = this.dataset.state;
+    document.querySelectorAll('.station-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+        var sidebar = document.getElementById('sidebar');
+        var callsign = this.dataset.callsign;
+        var gridSquare = this.dataset.grid;
+        var marker = markersByCallsign[callsign];
+
+        sidebar.classList.remove('show-stations');
+        sidebar.classList.add('expanded');
+
+        if (marker) {
+            // Calculate surrounding grid square bounds
+            var pos = marker.getLatLng();
+            var baseGrid = gridSquare.substring(0, 4); // Get 4-char grid square
+            var gridBounds = getGridSquareBounds(baseGrid);
             
-            document.querySelectorAll('.station-list').forEach(function(list) {
-                list.style.display = 'none';
+            // Zoom to show grid square and surroundings
+            map.fitBounds(gridBounds, {
+                padding: [50, 50],
+                maxZoom: 12
             });
-            
-            document.querySelectorAll('.state-header').forEach(function(h) {
-                h.classList.remove('active-state');
-            });
-
-            sidebar.classList.remove('expanded', 'show-stations');
-
-            if (wasHidden) {
-                stateList.style.display = 'block';
-                this.classList.add('active-state');
-                sidebar.classList.add('show-stations');
-
-                if (markersByState[state] && markersByState[state].length > 0) {
-                    var stateBounds = L.latLngBounds(markersByState[state]);
-                    grid.options.isStateSelected = true;
-                    map.fitBounds(stateBounds, {
-                        padding: [50, 50],
-                        maxZoom: 12
-                    });
-                }
-            }
-
-            if (map) {
-                setTimeout(function() {
-                    map.invalidateSize();
-                }, 300);
-            }
-        });
+            marker.openPopup();
+        }
     });
+});
+
+function getGridSquareBounds(grid4) {
+    // Convert 4-char grid to lat/lon bounds
+    var lon = (grid4.charCodeAt(0) - 65) * 20 - 180 + 
+              (parseInt(grid4[2]) * 2);
+    var lat = (grid4.charCodeAt(1) - 65) * 10 - 90 + 
+              parseInt(grid4[3]);
+    
+    // Add padding for surrounding squares
+    return L.latLngBounds(
+        [lat - 1, lon - 2],  // SW corner with padding
+        [lat + 2, lon + 4]   // NE corner with padding
+    );
+}
 
     // Zoom handler
     map.on('zoomend', function() {
