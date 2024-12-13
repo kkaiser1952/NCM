@@ -65,7 +65,8 @@ foreach ($results as $row) {
         'callsign' => $row['callsign'],
         'name' => $row['name'],
         'city' => explode(',', $row['CityState'])[0],
-        'count' => $row['call_count']
+        'count' => $row['call_count'],
+        'grid' => $row['grid']
     );
     
     $bounds[] = array($row['latitude'], $row['longitude']);
@@ -330,9 +331,13 @@ $totalStations = count($markers);
         markersByState[station.state].push([station.lat, station.lng]);
     });
 
-    // Single state header click handler
-    document.querySelectorAll('.station-item').forEach(function(item) {
+    // Single station items click handler
+console.log('Found station items:', document.querySelectorAll('.station-item').length);
+
+document.querySelectorAll('.station-item').forEach(function(item) {
     item.addEventListener('click', function() {
+        console.log('Station clicked:', this.dataset.callsign, this.dataset.grid);
+        
         var sidebar = document.getElementById('sidebar');
         var callsign = this.dataset.callsign;
         var gridSquare = this.dataset.grid;
@@ -342,18 +347,30 @@ $totalStations = count($markers);
         sidebar.classList.add('expanded');
 
         if (marker) {
-            // Calculate surrounding grid square bounds
-            var pos = marker.getLatLng();
-            var baseGrid = gridSquare.substring(0, 4); // Get 4-char grid square
+            var baseGrid = gridSquare.substring(0, 4);
             var gridBounds = getGridSquareBounds(baseGrid);
             
-            // Zoom to show grid square and surroundings
-            map.fitBounds(gridBounds, {
-                padding: [50, 50],
-                maxZoom: 12
-            });
-            marker.openPopup();
+            var cluster = markerClusterGroup.getVisibleParent(marker);
+            if (cluster) {
+                markerClusterGroup.zoomToShowLayer(marker, function() {
+                    marker.openPopup();
+                    map.fitBounds(gridBounds, {
+                        padding: [50, 50],
+                        maxZoom: 12
+                    });
+                });
+            } else {
+                map.fitBounds(gridBounds, {
+                    padding: [50, 50],
+                    maxZoom: 12
+                });
+                marker.openPopup();
+            }
         }
+
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 300);
     });
 });
 
@@ -379,35 +396,6 @@ function getGridSquareBounds(grid4) {
         }
     });
 
-    // Station items click handler
-    document.querySelectorAll('.station-item').forEach(function(item) {
-        item.addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var callsign = this.dataset.callsign;
-            var marker = markersByCallsign[callsign];
-
-            sidebar.classList.remove('show-stations');
-            sidebar.classList.add('expanded');
-
-            if (marker) {
-                var cluster = markerClusterGroup.getVisibleParent(marker);
-                if (cluster) {
-                    markerClusterGroup.zoomToShowLayer(marker, function() {
-                        marker.openPopup();
-                    });
-                } else {
-                    map.setView(marker.getLatLng(), 12);
-                    marker.openPopup();
-                }
-            }
-
-            if (map) {
-                setTimeout(function() {
-                    map.invalidateSize();
-                }, 300);
-            }
-        });
-    });
 </script>
 </body>
 </html>
