@@ -344,7 +344,7 @@ try {
         $stmt_update->bindParam(':netID', $netID);
         
         // Commented execute as requested
-        // $stmt_update->execute();
+         $stmt_update->execute();
         
         $update_count++;
         
