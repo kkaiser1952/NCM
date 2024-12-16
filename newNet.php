@@ -10,23 +10,17 @@ require_once "dbConnectDtls.php";
 require_once "WXdisplay.php";
 require_once "wx.php";
 
-$q = strip_tags(substr($_POST["q"], 0, 100));      
-echo "<br><br> Raw q value: " . htmlspecialchars($q);       
+$q = strip_tags(substr($_POST["q"], 0, 100));             
 $parts = explode(":", $q);
-var_dump($parts);
-var_dump(count($parts));
 $cs1 = strtoupper($parts[0]);
 $netcall = strtoupper($parts[1]);
 $newnetnm = $parts[2];
-echo "<br><br>newnetnm: $newnetnm";
 $frequency = $parts[3];
 $subNetOfID = $parts[4];
 $netKind = $parts[5];
 $pb = $parts[6];
 $testEmail = $parts[7];
-echo "<br><br>testEmail: $testEmail";
 $testnet = $parts[8];
-
 $activity = ltrim($newnetnm) . " " . ltrim($netKind);
 
 $pbspot = ($pb == 1) ? 'PB' : '';
