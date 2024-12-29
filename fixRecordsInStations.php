@@ -46,7 +46,7 @@ KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 
     
     // Step 1: Enter the base callsign only
-$callsign = "W0RKX";
+$callsign = "W0RL";
 
 
 // First, create a function to get the base callsign
@@ -307,8 +307,8 @@ $netlog_query = "SELECT n1.recordID, n1.callsign, n1.latitude, n1.longitude,
 
 try {
     $stmt_netlog = $db_found->prepare($netlog_query);
-    $stmt_netlog->bindValue(':basecall_pattern', $callsign . '%');  // $callsign is already the base
-    //$stmt_netlog->execute();
+    $stmt_netlog->bindValue(':basecall_pattern', $callsign);  // $callsign is already the base
+    $stmt_netlog->execute();
     
     $update_count = 0;
     while ($netlog_row = $stmt_netlog->fetch(PDO::FETCH_ASSOC)) {
@@ -344,7 +344,8 @@ try {
         $stmt_update->bindParam(':netID', $netID);
         
         // Commented execute as requested
-         $stmt_update->execute();
+         
+         //$stmt_update->execute();
         
         $update_count++;
         
