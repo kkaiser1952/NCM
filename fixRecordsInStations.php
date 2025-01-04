@@ -46,7 +46,7 @@ KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 
     
     // Step 1: Enter the base callsign only
-$callsign = "kQ4EOQ";
+$callsign = "KN6YFD";
 
 
 // First, create a function to get the base callsign
@@ -241,7 +241,6 @@ try {
     echo "<br>Error looking up district: " . $e->getMessage();
 } // End try or district look-up
 
-
     // Step 8: Create SQL to update stations
 // Format variables before binding
 $last = properCase($last);          // Handles O'Neil correctly
@@ -250,6 +249,7 @@ $county = properCase($county);      // Makes "san diego" into "San Diego"
 $state = strtoupper($state);        // Makes "new york" into "New York"
 $callsign = strtoupper($callsign);  // Ensures callsign is uppercase
 
+echo "<br>2nd district: $district";
 
 $sql = "UPDATE stations SET
             `latitude` = :latitude,
@@ -269,7 +269,6 @@ $sql = "UPDATE stations SET
             `comment` = 'updated by fixRecordsInStations.php',
             `active_call` = 'y'
         WHERE `callsign` = :callsign";
-
 try {
     $stmt = $db_found->prepare($sql);
     $stmt->bindParam(':latitude', $latitude);
@@ -286,6 +285,27 @@ try {
     $stmt->bindParam(':country', $country);
     $stmt->bindParam(':w3w', $neww3w);  
     $stmt->bindParam(':callsign', $callsign);
+
+    // Method 1: Manual parameter replacement for debugging
+    $debug_sql = $sql;
+    $debug_sql = str_replace(':latitude', "'" . $latitude . "'", $debug_sql);
+    $debug_sql = str_replace(':longitude', "'" . $longitude . "'", $debug_sql);
+    $debug_sql = str_replace(':last', "'" . $last . "'", $debug_sql);
+    $debug_sql = str_replace(':city', "'" . $city . "'", $debug_sql);
+    $debug_sql = str_replace(':county', "'" . $county . "'", $debug_sql);
+    $debug_sql = str_replace(':state', "'" . $state . "'", $debug_sql);
+    $debug_sql = str_replace(':district', "'" . $district . "'", $debug_sql);
+    $debug_sql = str_replace(':grid', "'" . $grid . "'", $debug_sql);
+    $debug_sql = str_replace(':home', "'" . $home . "'", $debug_sql);
+    $debug_sql = str_replace(':zip', "'" . $zip . "'", $debug_sql);
+    $debug_sql = str_replace(':fccid', "'" . $fccid . "'", $debug_sql);
+    $debug_sql = str_replace(':country', "'" . $country . "'", $debug_sql);
+    $debug_sql = str_replace(':w3w', "'" . $neww3w . "'", $debug_sql);
+    $debug_sql = str_replace(':callsign', "'" . $callsign . "'", $debug_sql);
+    echo "<br>Debug SQL: " . $debug_sql . "<br>";
+
+    // Method 2: Using PDO's built-in debug
+    $stmt->debugDumpParams();
     
     $stmt->execute();
     
@@ -294,8 +314,7 @@ try {
     echo "<br>Error updating record: " . $e->getMessage();
 }
        
-    // test
-        //echo "<br>$sql<br>";     
+echo "<br><br>";     
         
 // ==================================================================== //        
        
@@ -351,7 +370,7 @@ try {
         
         // Commented execute as requested
          
-         //$stmt_update->execute();
+         $stmt_update->execute();
         
         $update_count++;
         
