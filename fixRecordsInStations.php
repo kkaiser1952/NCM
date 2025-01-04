@@ -46,7 +46,7 @@ KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 
     
     // Step 1: Enter the base callsign only
-$callsign = "W0RL";
+$callsign = "kQ4EOQ";
 
 
 // First, create a function to get the base callsign
@@ -131,7 +131,7 @@ if($koords) {
    echo "Could not geocode address";
 }
 
-echo "<br>$county";
+echo "<br>County: $county";
 
     // Step 5: Get grid square
 $grid = gridsquare($latitude, $longitude);
@@ -220,11 +220,17 @@ $district_sql = "SELECT `District`
                   WHERE county = :county 
                     AND state = :state 
                   LIMIT 1";
-
 try {
     $stmt_district = $db_found->prepare($district_sql);
     $stmt_district->bindParam(':county', $county);
     $stmt_district->bindParam(':state', $state);
+
+    // Debug: Echo the SQL with replaced parameters
+    $debug_sql = $district_sql;
+    $debug_sql = str_replace(':county', "'" . $county . "'", $debug_sql);
+    $debug_sql = str_replace(':state', "'" . $state . "'", $debug_sql);
+    echo "Debug SQL: " . $debug_sql . "<br>";
+
     $stmt_district->execute();
     
     if ($row = $stmt_district->fetch(PDO::FETCH_ASSOC)) {
