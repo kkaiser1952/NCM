@@ -180,7 +180,8 @@ $sql = $db_found->prepare("
         subquery.First_Login,
     (SELECT COUNT(DISTINCT netID)
        FROM NetLog
-      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+      WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+             OR DATE(dttm) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
       ) AS netID_count,
            SEC_TO_TIME(SUM(
         CASE
@@ -194,7 +195,7 @@ $sql = $db_found->prepare("
             WHEN subquery.total_timeonduty_sum IS NULL THEN 0
             WHEN CONVERT_TZ(nl.logdate,'+00:00','-05:00') = '0000-00-00 00:00:00' THEN TIME_TO_SEC((SELECT max(dttm) FROM NetLog))
                 ELSE subquery.total_timeonduty_sum
-    END
+        END
     ) AS Total_Time,
         MAX(CASE
             WHEN tl.comment LIKE '%Opened the%' THEN tl.callsign
@@ -217,21 +218,29 @@ $sql = $db_found->prepare("
             facility,
             frequency,
             CASE WHEN logdate <> '0000-00-00 00:00:00' THEN logdate
-                ELSE (SELECT max(dttm) FROM NetLog) END AS logdate
+                ELSE (SELECT max(dttm) FROM NetLog) END AS logdate,
+            dttm
      FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+           OR DATE(dttm) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS nl
     LEFT JOIN (
         SELECT netID,
     SUM(firstLogin) AS First_Login, IFNULL(SUM(timeonduty), 0) AS total_timeonduty_sum
     FROM NetLog
-    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    WHERE (DATE(CONVERT_TZ(logdate,'+00:00','-05:00')) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+           OR DATE(dttm) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
     GROUP BY netID
     ) AS subquery ON nl.netID = subquery.netID
     LEFT JOIN TimeLog tl ON nl.netID = tl.netID
     GROUP BY netID
-    ORDER BY CAST(nl.netID AS SIGNED) DESC;
+    ORDER BY 
+    CASE 
+        WHEN pb = '1' THEN DATE(dttm)
+        ELSE DATE(CONVERT_TZ(nl.logdate,'+00:00','-05:00'))
+    END DESC,
+    CAST(nl.netID AS SIGNED) DESC
     ");
 
 // Execute the SQL query and store the result in $result variable
