@@ -52,11 +52,12 @@
 		
 		/* ==== KIND ======= */
         foreach($db_found->query("
-            SELECT  CONCAT(t2.id,';',t2.kindofnet) 	as id3,
-                    kindofnet           
-              FROM NetKind t2  
-             WHERE t2.kindofnet <> ''
-            ORDER BY kindofnet
+            SELECT CONCAT(MIN(t2.id),';',t2.kindofnet) as id3,
+       kindofnet           
+FROM NetKind t2  
+WHERE t2.kindofnet <> ''
+GROUP BY kindofnet  
+
             
         ") as $net ) {
 		    $kindList = "$kindList<a href='#$net[id3]' onclick='putInKindInput(this);'>$net[kindofnet]</a>\n";
