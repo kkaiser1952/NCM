@@ -52,11 +52,23 @@
 		
 		/* ==== KIND ======= */
         foreach($db_found->query("
-            SELECT CONCAT(MIN(t2.id),';',t2.kindofnet) as id3,
-       kindofnet           
-FROM NetKind t2  
-WHERE t2.kindofnet <> ''
-GROUP BY kindofnet  
+            SELECT CONCAT(MIN(t2.id),';',t2.kindofnet) as id3, kindofnet           
+            FROM NetKind t2  
+            WHERE t2.kindofnet <> ''
+            GROUP BY kindofnet
+            
+            UNION
+            
+            SELECT '0;Monthly Meeting' as id3,
+                   'Monthly Meeting' as kindofnet
+            
+            UNION
+            
+            SELECT '0;C4FM' as id3,
+                   'C4FM' as kindofnet
+            
+            ORDER BY kindofnet 
+
 
             
         ") as $net ) {
@@ -69,6 +81,13 @@ GROUP BY kindofnet
                     freq            
               FROM NetKind t1  
              WHERE t1.freq <> ''
+            GROUP BY freq
+            
+            UNION
+            
+            SELECT '0;7.263Mhz LSB' as id3,
+                   '7.263Mhz LSB' as freq
+                 
             ORDER BY freq
            
         ") as $net2 ) {
