@@ -1747,23 +1747,17 @@ The information is propagated to the other location fields of NCM. They are inte
 <ol style="list-style-type: decimal; column-count: 1;">
 	<li>Select <b style="color:red">'Start a new net'</b></li>
 	<li>Enter your call sign</li>
-	<li>Select "Event" from the 'Select Group by Name' dropdown</li>
+	<li>Select from 'Select Group by Name' dropdown</li
+	<li>After filling the rest of the dropdowns</li>
 	<li>Click the "Check to create a Pre-Build Event" checkbox</li>
 	<li>Click <b style="color:red">"OK"</b> on the dialog box</li>
 	<li>Click <b style="color:red">"Submit"</b></li>
-	<li>Name the Event... i.e. 2019 Liberty Half-Marathon</li>
-	<li>Click <b style="color:red">"OK"</b></li>
-	<li>At this point a new net matrix should appear</li>
-	<li>Click the <b style="color:red">"Copy a Pre-Built"</b> net to clone an older pre-built net. Or start to build your new one.</li>
-	<li>
-		<ol style="list-style-type: decimal; column-count: 1;">
-			<li>After clicking <b style="color:red">"Copy a Pre-Built"</b> select the net you wish to clone.</li>
-			<li>The cloning will be automatic, you can then edit like usual.</li>
-		</ol>
-	</li>
-	<li>When you are ready to start the check-in operation, click the "Out" under 'Status' and change it to 'In'.</li>
-	<li><b>TOD begins when the 'Out' is changed to 'In', so don't forget this important part.</b></li>
-	<li>When the net is over, I recommend you delete any stations that did not check-in. But thats your call and not required.</li>
+	<li>Click the 'Copy a Pre-Built' button</li>
+	<li>Select a previous pre-built from the Select List</li>
+	<li>Click <b> "Clone Selection"</b></li>
+
+	<li>Or start to build your new one.</li>
+	
 </ol>
 <a class="gotoindex" href="#index">Back to the Index</a>
 </div> <!-- End prebuild -->
