@@ -46,7 +46,7 @@ KB9UFJ  KC0YR  KD5CFV  KC0UH  KE6SYW  KD7BML  KE0TQ
 
     
     // Step 1: Enter the base callsign only
-$callsign = "KN6YFD";
+$callsign = "W0RL";
 
 
 // First, create a function to get the base callsign
