@@ -4,7 +4,7 @@
 /***********************************************************************************************************
  
  /**
- * Net Control Manager (NCM) - Version 1
+ * Net Control Manager (NCM) - Version 1 on VSC
  * Copyright 2015-2025 Keith Kaiser, WA0TJT
  * Contact: wa0tjt@gmail.com
  * 
