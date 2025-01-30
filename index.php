@@ -127,10 +127,7 @@
   /*  .readonly {
         pointer-events: none;
     } */
-
-    .hidden {
-    display: none;
-}
+    /* Put buy me a coffee here */
 </style>
 
 </head>
@@ -290,12 +287,12 @@
 			   		<option value="ARESGroup">ARES Group Registration</option>
 			   		<option value="ARESEComm">Emergency Communications Training</option>		
 		  	   </select>
-               <class id="donate" >
+               <class = "hidden">
                <form action="https://www.paypal.com/donate" method="post" target="_blank" class="hidden">
                 <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL">
                 <input type="hidden" name="no_recurring" value="0">
                 <input type="hidden" name="currency_code" value="USD">
-                <input type="submit" value="Buy Me a Coffee" style="background-color:rgb(123, 202, 165); padding: 10px 20px; border: none; cursor: pointer;">
+                <input type="submit" value="Buy Me a Coffee" style="background-color: #ffdd57; padding: 10px 20px; border: none; cursor: pointer;">
             </form>
                </class>
 			       
