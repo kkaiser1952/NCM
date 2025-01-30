@@ -298,7 +298,13 @@
                 <input type="hidden" name="business" value="">
                 <input type="hidden" name="no_recurring" value="0">
                 <input type="hidden" name="currency_code" value="USD">
-                <input type="submit" value="  Buy Me a Coffee  " style="background-color: #ffdd57; padding: 10px 20px; border: none; cursor: pointer;">
+                <input type="submit" value="  Buy Me a Coffee  " style="background-color: #ffdd57; 
+       padding: 7px 18px; 
+       border: 1; 
+       cursor: pointer; 
+       color: #654321;  /* Dark Brown */
+       border-radius: 999px; /* Capsule Shape */
+       font-weight: bold;" >
             </form>
                </class>
                
