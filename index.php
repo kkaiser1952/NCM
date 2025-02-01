@@ -117,6 +117,7 @@
     <link rel="stylesheet" type="text/css" href="css/NetManager.css" >   <!-- Primary style sheet for NCM  -->
     <link rel="stylesheet" type="text/css" href="css/tabs.css" >				<!-- 2018-1-17 -->
     <link rel="stylesheet" type="text/css" href="css/sparkel-text.css">
+    <link rel="stylesheet" type="text/css" href="css/coffee.css">
     
     <!-- ============== All the @media stuff ======================================== -->
     <link rel="stylesheet" type="text/css" href="css/NetManager-media.css">	
@@ -286,28 +287,42 @@
 			   		<option value="ARESGroup">ARES Group Registration</option>
 			   		<option value="ARESEComm">Emergency Communications Training</option>		
 		  	   </select>
-               <!--
-               <br>
-                 <a href="https://www.paypal.me/KeithKaiser" target="_blank">
-           <button>Buy Me a Coffee</button> -->
        </a>
-               
-               <class = "hidden">
-               
-               <form action="https://paypal.me/KeithKaiser" method="post" target="_blank" class="">
-                <input type="hidden" name="business" value="">
-                <input type="hidden" name="no_recurring" value="0">
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="submit" value="  Buy Me a Coffee  " style="background-color: #ffdd57; 
-       padding: 7px 18px; 
-       border: 1; 
-       cursor: pointer; 
-       color: #654321;  /* Dark Brown */
-       border-radius: 999px; /* Capsule Shape */
-       font-weight: bold;" >
-            </form>
-               </class>
-               
+<!--          
+    <class = "hidden">     
+        <form action="https://paypal.me/KeithKaiser" method="post" target="_blank" class="">
+        <input type="hidden" name="business" value="">
+        <input type="hidden" name="no_recurring" value="0">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="submit" value="  Buy Me a Coffee  " style="background-color: #ffdd57; 
+padding: 7px 18px; 
+border: 1; 
+cursor: pointer; 
+color: #654321;  /* Dark Brown */
+border-radius: 999px; /* Capsule Shape */
+font-weight: bold;" >
+    </form>
+        </class>
+        -->             
+         
+        <div class="donation-container">
+    <button class="coffee-button" onclick="toggleExpand()">Buy Me a Coffee</button>
+    
+    <div class="donation-content">
+        <div class="amount-buttons">
+            <button class="amount-btn" data-amount="3">$3</button>
+            <button class="amount-btn selected" data-amount="5">$5</button>
+            <button class="amount-btn" data-amount="10">$10</button>
+        </div>
+
+        <div class="payment-methods">
+            <button class="payment-btn" data-method="paypal" data-link="https://paypal.me/KeithKaiser/">PayPal</button>
+            <button class="payment-btn" data-method="venmo" data-link="https://venmo.com/KeithKaiser">Venmo</button>
+        </div>
+
+        <button class="donate-btn" onclick="handleDonate()">Donate $5</button>
+    </div>
+</div>
 			       
 	       </td> <!-- End div-nobg2 -->
 	     </tr> <!-- This closes the only row in the ID: ourfreqs table -->
@@ -744,7 +759,7 @@
 	<script src="js/gridtokoords.js"></script>
 	<script src="js/cookieManagement.js"></script>
 	
-	
+	<script src="js/coffee.js"></script>
     <script>
 // function to handled dialog modal for the question mark in circle at time line & other places
 // https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
