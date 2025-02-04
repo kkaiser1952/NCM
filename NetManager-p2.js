@@ -133,7 +133,7 @@ function newNet(str) {   //alert('in newNet() str= '+str); // undefined
 	var str = callsign+":"+netcall+":"+newnetnm+":"+newnetfreq+":"+satNet+":"+newnetkind+":"+pb;  //alert(str);
 			//WA0TJT:	   W0KCN:      KCNARES :   146.790MHz, T 107.2Hz:0:   Weekly 2 Meter Voice Net:0  
 	        //WA0TJT:      EVENT:      Event   :   146.940MHz:           0:   Liberty Bi-Marathon:1
-
+console.log('str');
       if (window.XMLHttpRequest) {
 	  	var xmlhttp = new XMLHttpRequest();
 	  } else {
