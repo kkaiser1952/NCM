@@ -37,7 +37,7 @@ $timelogSql = "SELECT callsign,
     GROUP_CONCAT(
         CONCAT(TIME(timestamp), ' ', comment)
         ORDER BY timestamp 
-        SEPARATOR '<br>'
+        SEPARATOR '\n'
     ) AS details
     FROM TimeLog
     WHERE NetID = $q
@@ -128,24 +128,26 @@ foreach($db_found->query($sql) as $logrow) {
         
         $div1 = "<div class='cc' style='text-transform:uppercase;'>" . $rowno . "<br>" . 
                 $logrow['mrkrfill'] . "<br>" .
-                "<a href='https://what3words.com/" . $w3w . "?maptype=osm' target='_blank'>///" . $w3w . "</a></div>";
+                "<br><a href='https://what3words.com/" . $w3w . "?maptype=osm' target='_blank'>///" . $w3w . "</a></div>";
         
         $div2 = "<div class='cc'>Show Cross Roads</div>";
         
         // Add timelog details if available
+		// An idea by Glen Briggs, KB0RPJ in Feb. 2025
         $timelogDiv = "";
-        // Add timelog details if available
+        
         $timelogDiv = "";
-        $timelogDiv = "<div class='cc'><h4>Time Log:</h4>";
         if (isset($timelogDetails[$logrow['callsign2']])) {
-            $timelogDiv .= str_replace('<br>', '<br>', htmlspecialchars($timelogDetails[$logrow['callsign2']], ENT_QUOTES));
+            $timelogDiv = "<div class='cc'><br><span style='font-weight:bold'>Time Log:</span><br>";
+            $details = str_replace('<br>', '\n', $timelogDetails[$logrow['callsign2']]);
+            $timelogDiv .= nl2br($details);
+            $timelogDiv .= "</div>";
         } else {
-            $timelogDiv .= "No Comments";
+            $timelogDiv = "<div class='cc'><span style='font-weight:bold'>Time Log:</span><br>No Comments</div>";
         }
-        $timelogDiv .= "</div><br>";
         }
         
-        $div5 = "<div class='cc'><a href='http://www.findu.com/cgi-bin/map-near.cgi?" .
+        $div5 = "<div class='cc'><br><a href='http://www.findu.com/cgi-bin/map-near.cgi?" .
                 "lat=" . $logrow['latitude'] . "&lon=" . $logrow['longitude'] . "&cnt=10' " .
                 "target='_blank'>Nearby APRS stations</a><br><br>stationMarkers.php</div>";
         
@@ -161,11 +163,13 @@ foreach($db_found->query($sql) as $logrow) {
                 }],
                 icon: new L." . $logrow['iconColor'] . "({number: '" . $rowno . "' }),
                 title: 'marker_" . $rowno . "'
-            }).addTo(fg).bindPopup('" . 
-                addslashes($div1) . "<br><br>" . 
-                addslashes($timelogDiv) . 
-                addslashes($div5) . "<br><br>" . 
-            "').openPopup();
+            }).addTo(fg).bindPopup(" . 
+                json_encode(
+                    $div1 . "<br>" . 
+                    $timelogDiv . 
+                    $div5
+                ) . 
+            ").openPopup();
             
             $('" . $callsign . "._icon').addClass('" . $logrow['classColor'] . "');
             if (typeof stationMarkers !== 'undefined') {
@@ -176,6 +180,7 @@ foreach($db_found->query($sql) as $logrow) {
         $fitBounds .= "[" . $logrow['koords'] . "],";
         $stationList .= "<a class='rowno' id='marker_$rowno' href='#'>" . $rowno . " " . $original_callsign . "</a><br>";
     }
+
 
 $fitBounds = substr($fitBounds, 0, -1) . "]";
 $stationMarkers = substr($stationMarkers, 0, -1) . ";\n";
