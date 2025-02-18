@@ -58,9 +58,22 @@
             $callsList = $callrow[callsList];
         };
         
-        
+		// Collect comments by each station to put on the map marker
+        $commentsQuery = $db_found->prepare("
+    SELECT REPLACE(SUBSTRING_INDEX(callsign, '/', 1), '-', '') AS callsign,
+           GROUP_CONCAT(CONCAT(TIME(timestamp), ' ', comment) 
+                        ORDER BY timestamp SEPARATOR '<br>') AS details
+    FROM TimeLog
+    WHERE netID = :netID
+      AND callsign NOT IN ('WEATHER')
+    GROUP BY callsign
+    ORDER BY callsign
+");
+$commentsQuery->bindParam(':netID', $q, PDO::PARAM_INT);
+$commentsQuery->execute();
+$commentsResults = $commentsQuery->fetchAll(PDO::FETCH_ASSOC);
+
 		
-    // Pulls the complete list of all station by the netID being requested
     // It also sets up the number to appear on each marker and the color of that marker
     $sql = ("SELECT netID ,ID 
                     ,REPLACE(CONCAT('_',callsign),'/','') as callsign     
@@ -146,9 +159,8 @@
     		  //echo($api->convertTo3wa(51.520847, -0.195521));
     		  $div1 = "<div class='cc' style='text-transform:uppercase;'>$rowno<br>$logrow[mrkrfill]<br><a href='https://what3words.com/$w3w?maptype=osm' target='_blank'>///$w3w</a></div>";
     		  $div2 = "<div class='cc'>Show Cross Roads</div>";
-    		  //$div3 = "<a class='cc' href='#' onclick=\"jeoquery.getGeoNames('findNearestIntersectionOSM',{lat: $logrow[latitude], lng: $logrow[longitude] }, dbg); return false;\">Cross Roads</a>";
     		  
-    		//  $div4 = "<div class='cc' >$cr</div>";
+			  $div4 = "<div class='cc'>" . (isset($commentsArray[$callsign]) ? $commentsArray[$callsign] : "No comments") . "</div>";
     		  
     		  $div5 = "<div class='cc'> <a href='http://www.findu.com/cgi-bin/map-near.cgi?lat=$logrow[latitude]&lon=$logrow[longitude]&cnt=10' target='_blank'>Nearby APRS stations</a><br><br>stationMarkers.php</div>";
     		  
@@ -165,6 +177,13 @@
 				icon: new L.{$logrow[iconColor]}({number: '$rowno' }),
 				title:`marker_$rowno` }).addTo(fg).bindPopup(`
 				$div1<br><br>
+
+				$commentText = (isset($commentsArray[$callsign]) ? $commentsArray[$callsign] : "No comments");
+$div4 = "<div class='cc'>" . $commentText . "</div>";
+
+
+
+
 				$div5<br><br>
                 `).openPopup();
 				
