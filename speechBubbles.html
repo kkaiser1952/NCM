@@ -1,279 +1,186 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Speech Bubbles</title>
+<?php
+// stationMarkers.php
+// Written: 2017
+// Updated: 2024-09-??
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+require_once "Geocoder.php";
+require "getCrossRoads.php";
+
+use What3words\Geocoder\Geocoder;
+
+$api = new Geocoder("5WHIM4GD");
+
+// Get stations with duplicate coordinates for marker tilt
+$dupCalls = "";
+$sql = "SELECT
+            GROUP_CONCAT(CONCAT('_',callsign)) AS callsignX,
+            CONCAT('_',callsign) AS callsign,
+            latitude,
+            COUNT(latitude) as dupCount
+        FROM NetLog
+        WHERE netID = $q
+            AND latitude <> ''
+            AND callsign NOT IN('NONHAM','EMCOMM')
+        GROUP BY latitude
+        HAVING COUNT(latitude) > 1";
+
+foreach($db_found->query($sql) as $duperow) {
+    $dupCalls .= $duperow['callsign'] . ",";
+    $callsignX = $duperow['callsignX'];
+}
+
+// Get time log details for each callsign
+$timelogSql = "SELECT callsign,
+    GROUP_CONCAT(
+        CONCAT(TIME(timestamp), ' ', comment)
+        ORDER BY timestamp 
+        SEPARATOR '<br>'
+    ) AS details
+    FROM TimeLog
+    WHERE NetID = $q
+        AND callsign NOT IN ('WEATHER')
+    GROUP BY callsign
+    ORDER BY callsign";
+
+$timelogDetails = array();
+foreach($db_found->query($timelogSql) as $row) {
+    $timelogDetails[$row['callsign']] = $row['details'];
+}
+
+// Create callsign layer group
+$sql = "SELECT 
+    CONCAT('var callsList = L.layerGroup([', 
+           GROUP_CONCAT(REPLACE(CONCAT('_',callsign),'/','') SEPARATOR ', '), 
+           '])') as callsList
+    FROM NetLog
+    WHERE netID = $q
+        AND latitude <> ''
+        AND callsign NOT IN('NONHAM','EMCOMM')";
+
+foreach($db_found->query($sql) as $callrow) {
+    $callsList = $callrow['callsList'];
+}
+
+// Get station markers data
+$sql = "SELECT 
+    netID, ID,
+    REPLACE(CONCAT('_',callsign),'/','') as callsign,
+    callsign as callsign2,
+    grid, netcall, activity, netcontrol,
+    CASE
+        WHEN netcontrol IN ('Log','PRM','2nd','LSN','EM','3rd','PIO','SEC') 
+        THEN 'NumberedDivIcon'
+        ELSE 'NumberedGreenDivIcon'
+    END as iconColor,
+    CASE
+        WHEN netcontrol IN ('Log','PRM','2nd','LSN','EM','3rd','PIO','SEC') 
+        THEN 'bluemrkr'
+        ELSE 'greenmrkr'
+    END as classColor,
+    CONCAT(latitude, ',', longitude) as koords,
+    CONCAT(Fname, ' ', Lname) AS name,
+    CONCAT('<b>Tactical: ',tactical,'<br>',UPPER(callsign),
+           '</b><br> ID: #',ID, '<br>',Fname, ' ', Lname,
+           '<br>',county,' Co., ',state,' Dist: ',district,
+           '<br>',latitude, ', ', longitude, '<br>',grid) as mrkrfill,
+    latitude, longitude
+FROM NetLog
+WHERE netID = $q
+    AND latitude IS NOT NULL
+    AND longitude IS NOT NULL
+    AND latitude <> ''
+    AND longitude <> ''
+    AND callsign NOT IN('NONHAM','EMCOMM')
+    AND callsign NOT LIKE '%CAMP%'
+    AND callsign NOT LIKE '%CREW%'
+    AND callsign <> ' '
+ORDER BY logdate";
+
+$rowno = 0;
+$fitBounds = "[";
+$stationMarkers = "";
+$callsignList = "";
+$stationList = "";
+$dup = -45;
+
+foreach($db_found->query($sql) as $logrow) {
+    $rowno++;
     
-    <style>
-        [speech-bubble], [speech-bubble] * { box-sizing: border-box }
-
-[speech-bubble]{
-  --bbColor: grey;
-  --bbArrowSize: 1.5rem;
-  --bbBorderRadius: 0.25rem;
-  --bbPadding: 1rem;
-  background: var(--bbColor);
-  border-radius: var(--bbBorderRadius);
-  padding: var(--bbPadding);
-  position: relative;
-}
-
-[speech-bubble]::before{
-  content: ''; 
-  position: absolute;
-  background: var(--bbColor);
-}
-
-[speech-bubble][pbottom]{ margin-bottom: var(--bbArrowSize) }
-[speech-bubble][ptop]   { margin-top: var(--bbArrowSize); }
-[speech-bubble][pleft]  { margin-left: var(--bbArrowSize); }
-[speech-bubble][pright] { margin-right: var(--bbArrowSize); }
-
-
-/* bottom and top  */
-[speech-bubble][pbottom]::before,
-[speech-bubble][ptop]::before{
-  --width: calc(var(--bbArrowSize) / 2 * 3);
-  height: var(--bbArrowSize);
-  width: var(--width);
-}
-
-/* bottom */
-[speech-bubble][pbottom]::before{
-  top: calc(100% - 2px);
-}
-[speech-bubble][pbottom][aleft]::before{
-  left: 1rem;
-  clip-path: polygon(25% 0, 100% 0, 0% 100%)
-}
-[speech-bubble][pbottom][acenter]::before{
-  left: calc(50% - var(--width) / 2);
-  clip-path: polygon(12.5% 0, 87.5% 0, 50% 100%)
-}
-[speech-bubble][pbottom][aright]::before{
-  right: 1rem;
-  clip-path: polygon(0 0, 75% 0, 100% 100%)
-}
-
-/* top */
-[speech-bubble][ptop]::before{
-  bottom: calc(100% - 2px);
-}
-[speech-bubble][ptop][aleft]::before{
-  left: var(--bbPadding);
-  clip-path: polygon(0 0, 100% 100%, 25% 100%)
-}
-[speech-bubble][ptop][acenter]::before{
-  left: calc(50% - var(--width) / 2);
-  clip-path: polygon(12.5% 100%, 50% 0, 87.5% 100%)
-}
-[speech-bubble][ptop][aright]::before{
-  right: var(--bbPadding);
-  clip-path: polygon(0 100%, 100% 0, 75% 100%)
-}
-
-/* left and right  */
-[speech-bubble][pleft]::before,
-[speech-bubble][pright]::before{
-  --height: calc(var(--bbArrowSize) / 2 * 3);
-  width: var(--bbArrowSize);
-  height: var(--height);
-}
-
-/* right */
-[speech-bubble][pright]::before{
-  left: calc(100% - 2px);
-}
-[speech-bubble][pright][atop]::before{
-  top: var(--bbPadding);
-  clip-path: polygon(100% 0, 0 100%, 0 25%)
-}
-[speech-bubble][pright][acenter]::before{
-  top: calc(50% - var(--height) / 2);
-  clip-path: polygon(0 12.5%, 100% 50%, 0 87.5%)
-}
-[speech-bubble][pright][abottom]::before{
-  bottom: var(--bbPadding);
-  clip-path: polygon(0 0, 100% 100%, 0 75%)
-}
-
-/* left */
-[speech-bubble][pleft]::before{
-  right: calc(100% - 2px);
-}
-[speech-bubble][pleft][atop]::before{
-  top: var(--bbPadding);
-  clip-path: polygon(0 0, 100% 25%, 100% 100%)
-}
-[speech-bubble][pleft][acenter]::before{
-  top: calc(50% - var(--height) / 2);
-  clip-path: polygon(0 50%, 100% 12.5%, 100% 87.5%);
-}
-[speech-bubble][pleft][abottom]::before{
-  bottom: var(--bbPadding);
-  clip-path: polygon(0 100%, 100% 0, 100% 75%)
-}
-
-/* flip */
-[speech-bubble][pbottom][flip]::before,
-[speech-bubble][ptop][flip]::before{
-  transform: scaleX(-1)
-}
-[speech-bubble][pleft][flip]::before,
-[speech-bubble][pright][flip]::before{
-  transform: scaleY(-1)
-}
+    $callsign = $logrow['callsign'];
+    $callsignList .= "$callsign,";
+    $original_callsign = $callsign;
+    
+    if (strpos($callsign,'/')) {
+        $callsign = substr($callsign, 0, strpos($callsign,'/'));
+    }
+    if (strpos($callsign,'-')) {
+        $callsign = substr($callsign, 0, strpos($callsign,'-'));
+    }
+    
+    $dup = (strpos($callsignX, $callsign) !== false) ? $dup + 45 : 0;
+    
+    if ($logrow['koords']) {
+        $w3w = $api->convertTo3wa($logrow['latitude'], $logrow['longitude']);
+        $w3w = $w3w['words']; // Adjusted array access for PHP 5 compatibility
+        
+        $div1 = "<div class='cc' style='text-transform:uppercase;'>" . $rowno . "<br>" . 
+                $logrow['mrkrfill'] . "<br>" .
+                "<a href='https://what3words.com/" . $w3w . "?maptype=osm' target='_blank'>///" . $w3w . "</a></div>";
+        
+        $div2 = "<div class='cc'>Show Cross Roads</div>";
+        
+        // Add timelog details if available
+        $timelogDiv = "";
+        // Add timelog details if available
+        $timelogDiv = "";
+        $timelogDiv = "<div class='cc'><h4>Time Log:</h4>";
+        if (isset($timelogDetails[$logrow['callsign2']])) {
+            $details = htmlspecialchars_decode(htmlspecialchars($timelogDetails[$logrow['callsign2']], ENT_QUOTES));
+            $timelogDiv .= $details;
+        } else {
+            $timelogDiv .= "No Comments";
+        }
+        $timelogDiv .= "</div><br>";
+        }
+        
+        $div5 = "<div class='cc'><a href='http://www.findu.com/cgi-bin/map-near.cgi?" .
+                "lat=" . $logrow['latitude'] . "&lon=" . $logrow['longitude'] . "&cnt=10' " .
+                "target='_blank'>Nearby APRS stations</a><br><br>stationMarkers.php</div>";
+        
+        $stationMarkers .= "
+            var " . $callsign . " = new L.marker(new L.latLng(" . $logrow['koords'] . "),{ 
+                rotationAngle: " . $dup . ",
+                rotationOrigin: 'bottom',
+                contextmenu: true,
+                contextmenuWidth: 140,
+                contextmenuItems: [{ 
+                    text: 'Click here to add mileage circles', 
+                    callback: circleKoords
+                }],
+                icon: new L." . $logrow['iconColor'] . "({number: '" . $rowno . "' }),
+                title: 'marker_" . $rowno . "'
+            }).addTo(fg).bindPopup(\"" . 
+                addslashes($div1) . "<br><br>" . 
+                str_replace(array('\n', '\r'), '', addslashes($timelogDiv)) . 
+                addslashes($div5) . "<br><br>" . 
+            "\").openPopup();
+            
+            $('" . $callsign . "._icon').addClass('" . $logrow['classColor'] . "');
+            if (typeof stationMarkers !== 'undefined') {
+                stationMarkers.push(" . $callsign . ");
+            }
+        ";
+        
+        $fitBounds .= "[" . $logrow['koords'] . "],";
+        $stationList .= "<a class='rowno' id='marker_$rowno' href='#'>" . $rowno . " " . $original_callsign . "</a><br>";
+    }
 
 
-
-
-
-/* for demo */
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  cursor: default
-}
-body{
-  max-width: 60rem;
-  margin-inline: auto;
-  font-family: sans-serif;
-  display:grid;
-  grid-template-areas:
-    'br bc bl'
-    'rb cc lb'
-    'rc cc lc'
-    'rt cc lt'
-    'tr tc tl';
-  padding: 2rem;
-  gap: 2rem;
-  background: #141518;
-}
-
-.middle{
-  grid-area: cc;
-  align-self: center;
-  justify-self: center;
-  text-align:center;
-  color: white;
-}
-
-[speech-bubble][pbottom][aleft]   {grid-area: bl}
-[speech-bubble][pbottom][acenter] {grid-area: bc}
-[speech-bubble][pbottom][aright]  {grid-area: br}
-
-[speech-bubble][pright][atop]     {grid-area: rt}
-[speech-bubble][pright][acenter]  {grid-area: rc}
-[speech-bubble][pright][abottom]  {grid-area: rb}
-
-[speech-bubble][pleft][atop]      {grid-area: lt}
-[speech-bubble][pleft][acenter]   {grid-area: lc}
-[speech-bubble][pleft][abottom]   {grid-area: lb}
-
-[speech-bubble][ptop][aleft]      {grid-area: tl}
-[speech-bubble][ptop][acenter]    {grid-area: tc}
-[speech-bubble][ptop][aright]     {grid-area: tr}
-
-[speech-bubble][pbottom],
-[speech-bubble][ptop]{margin: 0}
-
-[speech-bubble]{ 
-  filter: drop-shadow(0px 0px 0.2rem black);
-  transition: transform 0.25s ease
-}
-[speech-bubble]:hover{
-  transform: scale(1.05);
-  filter: 
-    drop-shadow(0px 0px 0.2rem black)
-    drop-shadow(0px 0px 1rem var(--bbColor));
-}
-
-[speech-bubble] .title{
-  font-weight: 600;
-  color: white; 
-  text-shadow: 1px 1px 2px black;
-  margin-bottom: 0.5rem
-}
-[speech-bubble] code {
-  background: white;
-  margin: 0.125rem;
-  box-shadow: 0px 0px 5px rgba(0,0,0,.5);
-  white-space: nowrap;
-  font-size: .9rem
-}
-
-.middle code{
-  font-size: 1rem;
-}
-
-
-        </style>
-   
-</head>
-<body>
-      <div speech-bubble pbottom aright style="--bbColor:#af2d58">
-  <div class="title">Bottom Right</div>
-  <code>[pbottom]</code><code>[aright]</code>
-</div>
-
-<div speech-bubble pbottom acenter style="--bbColor:#a9528d">
-  <div class="title">Bottom Center</div>
-  <code>[pbottom]</code><code>[acenter]</code>
-</div>
-
-<div speech-bubble pbottom aleft style="--bbColor:#744b9f">
-  <div class="title">Bottom Left</div>
-  <code>[pbottom]</code><code>[aright]</code>
-</div>
-
-<div speech-bubble pleft abottom style="--bbColor:#484a9b">
-  <div class="title">Left Bottom</div>
-  <code>[pleft]</code><code>[abottom]</code>
-</div>
-
-<div speech-bubble pleft acenter style="--bbColor:#086899">
-  <div class="title">Left Center</div>
-  <code>[pleft]</code><code>[acenter]</code>
-</div>
-
-<div speech-bubble pleft atop style="--bbColor:#45c5e0">
- <div class="title">Left Top</div>
-  <code>[pleft]</code><code>[atop]</code>
-</div>
-
-<div speech-bubble ptop aleft flip style="--bbColor:#51bfae">
-  <div class="title">Top Left</div>
-  <code>[ptop]</code><code>[aleft]</code><code>[flip]</code>
-</div>
-
-<div speech-bubble ptop acenter style="--bbColor:#63c08c">
-  <div class="title">Top Center</div>
-  <code>[ptop]</code><code>[acenter]</code>
-</div>
-
-<div speech-bubble ptop aright flip style="--bbColor:#c5d863">
-  <div class="title">Top Right</div>
-  <code>[ptop]</code><code>[aright]</code><code>[flip]</code>
-</div>
-
-<div speech-bubble pright atop style="--bbColor:#fdbb3c">
- <div class="title">Right Top</div>
-  <code>[pright]</code><code>[atop]</code>
-</div>
-
-<div speech-bubble pright acenter style="--bbColor:#f5882f">
- <div class="title">Right Center</div>
-  <code>[pright]</code><code>[acenter]</code>
-</div>
-
-<div speech-bubble pright abottom style="--bbColor:#f05142"> 
- <div class="title">Right Bottom</div>
-  <code>[pright]</code><code>[abottom]</code>
-</div>
-
-<div class="middle">
-  <h1>Speech<br>Bubbles</h1>
-  <code>&#60div speech-bubble>
-</div>
-</body>
-</html>
+$fitBounds = substr($fitBounds, 0, -1) . "]";
+$stationMarkers = substr($stationMarkers, 0, -1) . ";\n";
+$callsignList = substr($callsignList, 0, -1);
+$callsList = substr($callsList, 0, -1) . ");\n";
+?>
