@@ -26,13 +26,13 @@ ini_set('display_errors',1);
 		SELECT DISTINCT netID, activity, netcall
 		  FROM NetLog
 		 WHERE pb = 1
-		   AND netcall = $netID
+		   -- AND netcall = '$thisnetcall'
 		   AND netID <> $netID
 		   AND row_number = 1
 		   AND logdate >= CURRENT_TIMESTAMP - INTERVAL '35' DAY
 		 ORDER BY netID DESC 
 	") as $net ) {
-		echo "<option value='$net[netID]'>$net[netID] $net[activity] $net[netcall]</option>";
+		echo "<option value='$net[netcall]':' $net[netID]'>$net[netID] $net[activity] </option>";
 	}	  
 	    
 	echo '
