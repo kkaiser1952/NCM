@@ -5,8 +5,10 @@ ini_set('display_errors',1);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     
-    $netID = strip_tags($_POST["newPB"]); // The one we are coping rows to
-    
+	// Get values from the net we just created.
+    $netID = strip_tags($_POST["newPB"]); 
+	$thisnetcall = ' ';
+
    echo '
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -19,14 +21,18 @@ ini_set('display_errors',1);
 						<option value="0" selected="selected">Select One</option>
    ';
    
+   // Changes made 2025/02/19
    foreach($db_found->query("
 		SELECT DISTINCT netID, activity, netcall
 		  FROM NetLog
 		 WHERE pb = 1
+		   AND netcall = $netID
 		   AND netID <> $netID
+		   AND row_number = 1
+		   AND logdate >= CURRENT_TIMESTAMP - INTERVAL '35' DAY
 		 ORDER BY netID DESC 
 	") as $net ) {
-		echo "<option value='$net[netID]'>$net[netID] $net[activity] </option>";
+		echo "<option value='$net[netID]'>$net[netID] $net[activity] $net[netcall]</option>";
 	}	  
 	    
 	echo '
