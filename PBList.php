@@ -5,24 +5,8 @@ ini_set('display_errors',1);
 
     require_once "dbConnectDtls.php";  // Access to MySQL
     
-	// Get values from the net we just created.
-    $netID = strip_tags($_POST["newPB"]); 
-	//$thisnetcall = '';
-	$html = file_get_contents('php://input');
-// If that doesn't work, you might need:
-// $html = file_get_contents($_SERVER['PHP_SELF']);
-
-$dom = new DOMDocument();
-libxml_use_internal_errors(true); // Suppress HTML5 warnings
-$dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-$div = $dom->getElementById('thenetcallsign');
-if ($div) {
-    $thisnetcall = trim($div->textContent);
-} else {
-    $thisnetcall = "Not found";
-}
-libxml_clear_errors();
-
+    $netID = strip_tags($_POST["newPB"]); // The one we are coping rows to
+    
    echo '
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -35,18 +19,20 @@ libxml_clear_errors();
 						<option value="0" selected="selected">Select One</option>
    ';
    
-   // Changes made 2025/02/19
+   // n1 is the new net
+   // n2 is the old net
    foreach($db_found->query("
-		SELECT DISTINCT netID, activity, netcall
-		  FROM NetLog
-		 WHERE pb = 1
-		   AND netcall = '$thisnetcall'
-		   AND netID <> $netID
-		   AND row_number = 1
-		   AND logdate >= CURRENT_TIMESTAMP - INTERVAL '35' DAY
-		 ORDER BY netID DESC 
+		SELECT DISTINCT n1.netID, n1.activity, n1.netcall, n2.netcall as originalNetcall
+			FROM NetLog n1
+			LEFT JOIN NetLog n2 ON n2.netID = $netID AND n2.row_number = 1
+			WHERE n1.pb = 1
+			AND n1.netID <> $netID
+			AND n1.netcall = n2.netcall
+			AND n1.row_number = 1
+			AND n1.logdate >= CURRENT_TIMESTAMP - INTERVAL '35' DAY
+			ORDER BY n1.netID DESC
 	") as $net ) {
-		echo "<option value='$net[netcall]':' $net[netID]'>$net[netID] $net[activity] </option>";
+		echo "<option value='$net[netID]'>$net[netID] $net[activity] </option>";
 	}	  
 	    
 	echo '
