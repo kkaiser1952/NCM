@@ -187,6 +187,7 @@
        <!-- The three divs work to allow its position in the upper right corner and proper position of -->
        <!-- each of the other divs within rightCorner -->
        <!-- The upper right corner information can NOT be edited  -->
+       <!-- Added buy me a coffee button -->
        
 <div id="rightCorner">    
 <div id="upperRightCorner" class="upperRightCorner"> </div> <!-- Filled by buildUpperRightCorner.php -->
