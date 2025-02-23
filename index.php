@@ -288,24 +288,9 @@
 			   		<option value="ARESEComm">Emergency Communications Training</option>		
 		  	   </select>
        </a>
-<!--          
-    <class = "hidden">     
-        <form action="https://paypal.me/KeithKaiser" method="post" target="_blank" class="">
-        <input type="hidden" name="business" value="">
-        <input type="hidden" name="no_recurring" value="0">
-        <input type="hidden" name="currency_code" value="USD">
-        <input type="submit" value="  Buy Me a Coffee  " style="background-color: #ffdd57; 
-padding: 7px 18px; 
-border: 1; 
-cursor: pointer; 
-color: #654321;  /* Dark Brown */
-border-radius: 999px; /* Capsule Shape */
-font-weight: bold;" >
-    </form>
-        </class>
-        -->             
+            
          
-        <div class="donation-container">
+<div class="donation-container">
     <button class="coffee-button" onclick="toggleExpand()">Buy Me a Coffee</button>
     
     <div class="donation-content">
@@ -322,7 +307,7 @@ font-weight: bold;" >
 
         <button class="donate-btn" onclick="handleDonate()">Donate $5</button>
     </div>
-</div>
+</div> <!-- End of class: donation-container -->
 			       
 	       </td> <!-- End div-nobg2 -->
 	     </tr> <!-- This closes the only row in the ID: ourfreqs table -->
