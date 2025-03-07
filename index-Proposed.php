@@ -43,20 +43,6 @@
     // MySQL v5.5 starting 06/15/2015
 	
 
-/**
- * index.php - Main entry point for Net Control Manager
- * Refactored version with modular components
- * 
- * Development History:
- * First written in 2015, Net Control Manager has been continuously enhanced and upgraded.
- * Copyright: © 2015-2025 Keith Kaiser, WA0TJT
- * Author: Keith Kaiser, WA0TJT, with contributions from many others. See the Help file for details.
- * Contact: wa0tjt@gmail.com
- * 
- * Current Version: v2 - utilizing updated PHP & MySQL
- */
-?>
-
 // Error settings
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
@@ -66,8 +52,18 @@ error_reporting(E_ALL);
 header('Content-Type: text/html; charset=UTF-8');
 //header('Content-Type: text/event-stream');header('Cache-Control: no-cache');
 
-// Include files
-require_once "dbConnectDtls.php"; // Access to MySQL
+// Define any potentially missing constants used in included files
+if (!defined('otl')) {
+    define('otl', 'online'); // Replace with the appropriate value
+}
+
+if (!defined('otl')) {
+    define('otl', 'online'); 
+}
+
+// Then proceed with your regular requires/includes
+require_once "dbConnectDtls.php";
+
 require_once "wx.php"; // Weather info
 require_once "NCMStats.php"; // Get some stats
 include "sidebar.php"; // What columns will show in the UI

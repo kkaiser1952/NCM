@@ -45,7 +45,7 @@
  
             <option class="tohide newAfterHere" data-divider="true">&nbsp;</option>
             
-<?= $selectOptions ?> <!-- Last 10 Days only -->
+            <?php echo $selectOptions ?> <!-- Last 10 Days only -->
         	
         </select>  	<!-- End of ID: select1 -->
 		

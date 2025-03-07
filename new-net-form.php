@@ -34,7 +34,7 @@
                class="netGroup"  onkeyup="this.value = removeSpaces(this.value); filterFunction(0);" required />
         <div class='GroupDropdown-content hidden'>
             
-<?= $groupList; ?>    <!-- Created in buildThreeDropdowns.php -->
+        <?php echo $groupList; ?>    <!-- Created in buildThreeDropdowns.php -->
             
     </div> <!-- End GroupDropdown -->
         </div> <!-- End GroupDropdown-content -->
@@ -58,7 +58,7 @@
            class="netGroup" onkeyup="filterFunction(1)"/>
     <div class='KindDropdown-content hidden'>
         
-<?= $kindList; ?>    <!-- Created in buildThreeDropdowns.php -->
+    <?php echo $kindList; ?>    <!-- Created in buildThreeDropdowns.php -->
        
     </div> <!-- End KindDropdown -->
     </div> <!-- End KindDropdown-content -->
@@ -71,7 +71,7 @@
                class="netGroup" onkeyup="filterFunction(2)"/>
         <div class='FreqDropdown-content hidden'>
             
-<?= $freqList; ?>    <!-- Created in buildThreeDropdowns.php -->
+        <?php echo $freqList; ?>    <!-- Created in buildThreeDropdowns.php -->
            
         </div> <!-- End FreqDropdown -->
     </div> <!-- End FreqDropdown-content -->
@@ -82,7 +82,7 @@
      <select class="last3qs" id="satNet" title="Sub Net Selections" onfocus="blurFreqChoices(); ">
     	<option value="0" selected>None</option>
 
-<?= $subNets ?>     <!-- Created in getactivities.php  I think -->
+        <?php echo $subNets ?>     <!-- Created in getactivities.php  I think -->
 
      </select>
      		
