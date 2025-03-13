@@ -26,19 +26,31 @@ function secondsToDHMS($seconds) {
 	$s = (int)$seconds;
 		return sprintf('%d:%02d:%02d:%02d', $s/86400, $s/3600%24, $s/60%60, $s%60);
 }
+/* ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC */
+$sq// Define your base query with all non-aggregated columns in GROUP BY
+$sql = "
+    SELECT callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
+        COUNT(callsign) as cnt_call,
+        district
+    FROM NetLog 
+    WHERE netcall = '$netcall'  
+      AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
+    GROUP BY callsign, Fname, Lname, district";
 
-    $sql = "
-        SELECT  callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
-            COUNT(callsign) as cnt_call,
-            district
-          FROM NetLog 
-         WHERE netcall = '$netcall'  
-           AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
-       /*    $and1 */
-           
-        GROUP BY callsign
-        ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC
-         ";
+// Add different ORDER BY clauses based on $netcall value
+if ($netcall == 'MODES') {
+    $sql .= " ORDER BY callsign ASC, cnt_call DESC";
+} else {
+    $sql .= " ORDER BY 
+        CASE 
+            WHEN district IS NULL OR district = '' THEN 2
+            WHEN district REGEXP '^[0-9]+$' THEN 1
+            ELSE 0 
+        END,
+        district,
+        cnt_call DESC,
+        callsign ASC";
+}
          
 //echo "$sql<br>";
     
