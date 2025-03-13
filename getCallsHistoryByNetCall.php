@@ -53,16 +53,11 @@ function secondsToDHMS($seconds) {
     
     foreach($db_found->query($sql) as $row) {
         
-       // $listing = '<tr>';
-        
         if($lastDist != $row[district]) {
             $liteItUp = "style=\"background-color:lightblue\"";
             $lastDist = $row[district];
         } else $liteItUp = "";
       
-        //echo "dist=$row[district]), ld=$lastDist, lu=$liteItUp<br>";
-    
-
             $rowno = $rowno + 1;  
     	    
     	    $netcallsign = '$row[callsign]';
@@ -70,6 +65,7 @@ function secondsToDHMS($seconds) {
     	    $Lname    = '$row[Lname]';
     	    
     	    $listing .= "<tr $liteItUp>
+    	                 <td><input type='checkbox' class='station-checkbox' id='check_$rowno' /></td>
     	                 <td>$rowno</td>  
     	                 <td>$row[callsign]</td>  
     	                 <td>$row[Fname]</td>   
@@ -78,8 +74,6 @@ function secondsToDHMS($seconds) {
     	                 <td>$row[cnt_call]</td>
     	                 </tr>";
     } 
-    
-    //echo $listing;
     
 ?>
 
@@ -93,7 +87,50 @@ function secondsToDHMS($seconds) {
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     
     <script>
-	
+	    // Function to refresh the page
+        function refreshPage() {
+            saveCheckboxStates();
+            location.reload();
+        }
+        
+        // Save checkbox states when refreshing
+        function saveCheckboxStates() {
+            const checkboxes = document.querySelectorAll('.station-checkbox');
+            const checkboxStates = {};
+            
+            checkboxes.forEach(checkbox => {
+                checkboxStates[checkbox.id] = checkbox.checked;
+            });
+            
+            localStorage.setItem('suspectCheckboxStates_<?php echo $netcall ?>', JSON.stringify(checkboxStates));
+        }
+        
+        // Restore checkbox states after page loads
+        function restoreCheckboxStates() {
+            const savedStates = localStorage.getItem('suspectCheckboxStates_<?php echo $netcall ?>');
+            
+            if (savedStates) {
+                const checkboxStates = JSON.parse(savedStates);
+                
+                Object.keys(checkboxStates).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = checkboxStates[id];
+                    }
+                });
+            }
+        }
+        
+        // Add keyboard shortcut for refresh (F5 or Ctrl+R)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
+                event.preventDefault();
+                refreshPage();
+            }
+        });
+        
+        // Load the saved checkbox states when the page finishes loading
+        window.addEventListener('load', restoreCheckboxStates);
 	</script>
 	
 	<style>
@@ -108,21 +145,82 @@ function secondsToDHMS($seconds) {
     		column-gap: 10px; 
 		}
 		
+		/* Checkbox styles */
+        .station-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        /* Highlight row when checkbox is checked */
+        .station-checkbox:checked ~ td {
+            font-weight: bold;
+            background-color: #e6ffe6 !important;
+        }
+        
+        /* Refresh button styles */
+        #refreshBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        #refreshBtn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Table styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9em;
+            line-height: 1.0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 1px 1px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        /* Make the callsign column (3rd column) bold */
+        td:nth-child(3) {
+            font-weight: bold;
+        }
 	</style>
 	
 </head>
 
 <body>
     <h1>The Usual Suspects</h1>
-        <h2>This is a list of the stations that have checked into the <?php echo $netcall ?> net in the past <?php  echo $nomo ?> months</h2>
-        
-            <div class="prime">
-                <table>
-                    <tr>
-                        <th class="<?php $liteItUp ?>"></th>  <th>CALL</th>  <th>First</th>   <th>Last</th> <th>St, CO, Dist</th>  <th>Count</th>
-                    </tr>
-                        <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
-                </table>
-            </div>
+    <h2>This is a list of the stations that have checked into the <?php echo $netcall ?> net in the past <?php echo $nomo ?> months</h2>
+    
+    <button id="refreshBtn" onclick="refreshPage()" title="Refresh data">Refresh</button>
+    
+    <div class="prime">
+        <table>
+            <tr>
+                <th></th><th class="<?php $liteItUp ?>"></th><th>CALL</th><th>First</th><th>Last</th><th>St, CO, Dist</th><th>Count</th>
+            </tr>
+            <?php echo "$listing</table></div><div><br><br>getCallsHistoryByNetCall.php"; ?>
+        </table>
+    </div>
 </body>
 </html>
