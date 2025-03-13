@@ -27,9 +27,10 @@ function secondsToDHMS($seconds) {
 		return sprintf('%d:%02d:%02d:%02d', $s/86400, $s/3600%24, $s/60%60, $s%60);
 }
 /* ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC */
-$sq// Define your base query with all non-aggregated columns in GROUP BY
+// Define your base query
 $sql = "
-    SELECT callsign, Fname, Lname, CONCAT(state,' ',county,' ',district) as place,
+    SELECT callsign, Fname, Lname, 
+        CONCAT(state,' ',county,' ',district) as place,
         COUNT(callsign) as cnt_call,
         district
     FROM NetLog 
@@ -37,56 +38,76 @@ $sql = "
       AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
     GROUP BY callsign, Fname, Lname, district";
 
-// Add different ORDER BY clauses based on $netcall value
-if ($netcall == 'MODES') {
-    $sql .= " ORDER BY callsign ASC, cnt_call DESC";
+    // Add conditional ORDER BY based on netcall value
+if (strtoupper($netcall) == 'MESN') {
+    $sql .= " ORDER BY (district IS NOT NULL AND district != '') DESC, 
+              district ASC, 
+              cnt_call DESC, 
+              callsign ASC";
+} else if (strtoupper($netcall) == 'MODES') {
+    $sql .= " ORDER BY cnt_call DESC";
 } else {
-    $sql .= " ORDER BY 
-        CASE 
-            WHEN district IS NULL OR district = '' THEN 2
-            WHEN district REGEXP '^[0-9]+$' THEN 1
-            ELSE 0 
-        END,
-        district,
-        cnt_call DESC,
-        callsign ASC";
+    // Default: Sort alphabetically by name
+    $sql .= " ORDER BY Lname ASC, Fname ASC, callsign ASC";
 }
-         
-//echo "$sql<br>";
-    
-    //$listing = '<tr>';
+
     $rowno = 0;
     $firstrow = 0;
 
-    //$firstdist = '';
-    $liteItUp = '';
+    // Define a variable to track what we're grouping/highlighting by
+$groupByField = 'district'; // Default grouping field
+$highlightColor = 'lightblue'; // Default highlight color
+
+// Conditionally change the grouping field and color based on netcall
+if (strtoupper($netcall) == 'MODES') {
+    $groupByField = 'county'; // Group by first letter of county
+    $highlightColor = 'lightgreen';
+} else if (strtoupper($netcall) == 'ARES') {
+    $groupByField = 'county'; // Group by county
+    $highlightColor = 'lightyellow';
+}
+
+$lastGroupValue = null;
+$liteItUp = '';
+
+foreach($db_found->query($sql) as $row) {
     
-    $lastDist = null;
+    // Get the value to group by based on our conditional setting
+    $currentGroupValue = '';
     
-    foreach($db_found->query($sql) as $row) {
-        
-        if($lastDist != $row[district]) {
-            $liteItUp = "style=\"background-color:lightblue\"";
-            $lastDist = $row[district];
-        } else $liteItUp = "";
-      
-            $rowno = $rowno + 1;  
-    	    
-    	    $netcallsign = '$row[callsign]';
-    	    $Fname    = ucfirst(strtolower('$row[Fname]'));
-    	    $Lname    = '$row[Lname]';
-    	    
-    	    $listing .= "<tr $liteItUp>
-    	                 <td><input type='checkbox' class='station-checkbox' id='check_$rowno' /></td>
-    	                 <td>$rowno</td>  
-    	                 <td>$row[callsign]</td>  
-    	                 <td>$row[Fname]</td>   
-    	                 <td>$row[Lname]</td> 
-    	                 <td>$row[place]</td>  
-    	                 <td>$row[cnt_call]</td>
-    	                 </tr>";
-    } 
+    if ($groupByField == 'district') {
+        $currentGroupValue = $row[district];
+    } else if ($groupByField == 'callsign') {
+        // Group by first letter of callsign
+        $currentGroupValue = substr($row[callsign], 0, 1);
+    } else if ($groupByField == 'county') {
+        $currentGroupValue = $row[county];
+    }
     
+    // Check if we're starting a new group
+    if($lastGroupValue != $currentGroupValue) {
+        $liteItUp = "style=\"background-color:$highlightColor\"";
+        $lastGroupValue = $currentGroupValue;
+    } else {
+        $liteItUp = "";
+    }
+  
+    $rowno = $rowno + 1;  
+    
+    $netcallsign = '$row[callsign]';
+    $Fname = ucfirst(strtolower('$row[Fname]'));
+    $Lname = '$row[Lname]';
+    
+    $listing .= "<tr $liteItUp>
+                 <td><input type='checkbox' class='station-checkbox' id='check_$rowno' /></td>
+                 <td>$rowno</td>  
+                 <td>$row[callsign]</td>  
+                 <td>$row[Fname]</td>   
+                 <td>$row[Lname]</td> 
+                 <td>$row[place]</td>  
+                 <td>$row[cnt_call]</td>
+                 </tr>";
+}   
 ?>
 
 <html lang="en">
