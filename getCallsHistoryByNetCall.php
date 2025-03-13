@@ -28,75 +28,61 @@ function secondsToDHMS($seconds) {
 }
 /* ORDER BY `NetLog`.`district`, cnt_call DESC, callsign ASC */
 // Define your base query
+// Define your base query
 $sql = "
     SELECT callsign, Fname, Lname, 
         CONCAT(state,' ',county,' ',district) as place,
+        county,
         COUNT(callsign) as cnt_call,
         district
     FROM NetLog 
     WHERE netcall = '$netcall'  
       AND logdate > DATE_SUB(now(), INTERVAL $nomo MONTH)
-    GROUP BY callsign, Fname, Lname, district";
+    GROUP BY callsign, Fname, Lname, county, district";
 
-    // Add conditional ORDER BY based on netcall value
+// Add conditional ORDER BY based on netcall value
 if (strtoupper($netcall) == 'MESN') {
     $sql .= " ORDER BY (district IS NOT NULL AND district != '') DESC, 
               district ASC, 
               cnt_call DESC, 
               callsign ASC";
 } else if (strtoupper($netcall) == 'MODES') {
-    $sql .= " ORDER BY cnt_call DESC";
+    $sql .= " ORDER BY county ASC, cnt_call DESC"; // Sort by county, then by count descending
+} else if (strtoupper($netcall) == 'NR0AD') {
+    $sql .= " ORDER BY county ASC, cnt_call DESC"; // Sort by county, then by count descending
 } else {
     // Default: Sort alphabetically by name
-    $sql .= " ORDER BY Lname ASC, Fname ASC, callsign ASC";
+    $sql .= " ORDER BY county ASC, callsign ASC, cnt_call, Lname ASC, Fname ASC";
 }
 
-    $rowno = 0;
-    $firstrow = 0;
-
-    // Define a variable to track what we're grouping/highlighting by
-$groupByField = 'district'; // Default grouping field
-$highlightColor = 'lightblue'; // Default highlight color
-
-// Conditionally change the grouping field and color based on netcall
-if (strtoupper($netcall) == 'MODES') {
-    $groupByField = 'county'; // Group by first letter of county
-    $highlightColor = 'lightgreen';
-} else if (strtoupper($netcall) == 'ARES') {
-    $groupByField = 'county'; // Group by county
-    $highlightColor = 'lightyellow';
-}
-
-$lastGroupValue = null;
-$liteItUp = '';
+$previousCounty = null;
+$firstInCounty = true;
+$rowno = 0;
 
 foreach($db_found->query($sql) as $row) {
+    $rowno = $rowno + 1;
+
+    // MESN uses the defaults 
     
-    // Get the value to group by based on our conditional setting
-    $currentGroupValue = '';
-    
-    if ($groupByField == 'district') {
-        $currentGroupValue = $row[district];
-    } else if ($groupByField == 'callsign') {
-        // Group by first letter of callsign
-        $currentGroupValue = substr($row[callsign], 0, 1);
-    } else if ($groupByField == 'county') {
-        $currentGroupValue = $row[county];
-    }
-    
-    // Check if we're starting a new group
-    if($lastGroupValue != $currentGroupValue) {
-        $liteItUp = "style=\"background-color:$highlightColor\"";
-        $lastGroupValue = $currentGroupValue;
+    if (strtoupper($netcall) == 'MODES' || strtoupper($netcall) == 'NR0AD') {
+        // For MODES, highlight only the first row of each county
+        if ($previousCounty != $row['county']) {
+            $liteItUp = "style=\"background-color:lightgreen\"";
+            $previousCounty = $row['county'];
+            $firstInCounty = true;
+        } else {
+            $liteItUp = "";
+            $firstInCounty = false;
+        }
     } else {
-        $liteItUp = "";
+        // Regular district-based highlighting for other nets
+        if ($lastDist != $row['district']) {
+            $liteItUp = "style=\"background-color:lightblue\"";
+            $lastDist = $row['district'];
+        } else {
+            $liteItUp = "";
+        }
     }
-  
-    $rowno = $rowno + 1;  
-    
-    $netcallsign = '$row[callsign]';
-    $Fname = ucfirst(strtolower('$row[Fname]'));
-    $Lname = '$row[Lname]';
     
     $listing .= "<tr $liteItUp>
                  <td><input type='checkbox' class='station-checkbox' id='check_$rowno' /></td>
