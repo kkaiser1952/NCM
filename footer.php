@@ -152,4 +152,13 @@ function isTabletDevice() {
   console.log('User Agent:', userAgent); // Log the user agent string
   return /ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(userAgent);
 }
+
+function toggleExpand() {
+    var content = document.querySelector('.donation-content');
+    if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+    } else {
+        content.style.display = 'none';
+    }
+}
 </script>
