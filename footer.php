@@ -1,147 +1,155 @@
-<?php
-/**
- * footer.php - Page footer, modals, and JavaScript includes
- */
-?>
-	</div> <!-- End id netchoice -->
+<!-- ************************  JAVASCRIPT LIBRARIES  ******************************************** -->	
 	
-	<!-- https://jquerymodal.com -->
-	<div id="#cc" class="modal" style="display:none;">	
-		<p>&copy; Copyright 2015-2025, by Keith D. Kaiser, WA0TJT <br> Last Update: <span id="lastup">2024-11-09</span></p>
-		<p>Questions, problems, concerns? ....send them to: 
-			<a href="mailto:wa0tjt@gmail.com?subject=NCM">Keith D. Kaiser</a><br>
-			Or click <a href="help.php" target="_blank" rel="noopener">here for a detailed Help page. </a></p>
-			
-	    <p> In order to succeed, you must know what you are doing, like what you are doing, and believe in what you are doing. -- Will Rogers
-		</p>
-		<p><a href="#" rel="modal:close">Close</a></p>
-	</div> <!-- End id cc -->
+    <!-- jquery updated from 3.4.1 to 3.5.1 on 2020-09-10 3.5.1 to 3.6.0 on 2022-06-04-->
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<script src="bootstrap/js/bootstrap.min.js"></script>		    <!-- v3.3.2 --> 
+ 
+	<script src="js/jquery.freezeheader.js"></script>				<!-- v1.0.7 -->
+	<script src="js/jquery.simpleTab.min.js"></script>				<!-- v1.0.0 2018-1-18 -->
 	
-	<!-- End of id lli -->
-	<div id="lli" class="modal-dialog" style="display:none; "></div> 	
-	<div id="pbl" class=" modal hidden"></div> <!-- End of id ppl, Holds the list of pre-built nets created in PBList.php -->
+	<!-- jquery-modal updated from 0.9.1 to 0.9.2 on 2019-11-14 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script> 
+
+	<script src="bootstrap/js/bootstrap-select.min.js"></script>				<!-- v1.12.4 2018-1-18 -->
+	<script src="bootstrap/js/bootstrap-multiselect.js"></script>				<!-- 2.0 2018-1-18 -->
+
+    <!-- http://www.appelsiini.net/projects/jeditable -->
+    <script src="js/jquery.jeditable.js"></script>							    <!-- 1.8.1 2018-04-05 -->
+
+	<script src="js/sortTable.js"></script>										<!-- 2 2018-1-18 -->
+	<script src="js/hamgridsquare.js"></script>									<!-- Paul Brewer KI6CQ 2014 -->
+	<script src="js/jquery.countdownTimer.js"></script>							<!-- 1.0.8 2018-1-18 -->
 	
-	<div id="gcomm" class="gcomm hidden">gcomm</div>
+	<script src="js/w3data.js"></script>										<!-- 1.31 2018-1-18 -->
 	
-	<div id="testEmail" class="testEmail hidden"></div>
+	<!-- Updated from 1.12.1 on 3/21/22 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
 	
-	<div id="hideme" class="hidden stuff"></div>
+<!-- My javascript -->	
+<!--    <script src="js/showActivities.js"></script> -->
+    <script src="js/NetManager-W3W-APRS.js"></script> <!-- Added on 2024-02-21 -->
+	<script src="js/NetManager.js"></script>          <!-- NCM Primary Javascrip 2018-1-18 -->
+	<script src="js/NetManager-p2.js"></script>	      <!-- Part 2 of NCM Primary Javascript 2018-1-18 -->
 	
-	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
-<!-- *********************  JAVASCRIPT LIBRARIES ********************** -->    
-    <!-- UPDATED: 2024-04-27 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- UPDATED: 2024-04-27 -->
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-
-    <!-- Updated: 2024-04-27 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js"></script>
-
-    <!-- v1.0.7 -->
-    <script src="js/jquery.freezeheader.js"></script>    
-
-    <!-- v3.3.2 -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>    
-    
-    <!-- v1.12.4 2024-11-09 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>    
-                
-    <!-- Bootstrap multiselect -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.0/js/bootstrap-multiselect.min.js"></script>
-        
-    <!-- Jeditable for inline editing -->
-    <script src="js/jquery.jeditable.js"></script>
-
-    <!-- Sortable.js for column reordering -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-
-    <!-- Other utility scripts -->
-    <script src="js/sortTable.js"></script>                                     
-    <script src="js/hamgridsquare.js"></script>                            
-    <script src="js/jquery.countdownTimer.js"></script>
-    <script src="js/w3data.js"></script>
-    
-    <!-- Your application scripts -->
-    <script src="js/NetManager.js"></script>     
-    <script src="js/NetManager-p2.js"></script>    
-    <script src="js/NetManager-p3.js"></script>
-    <script src="js/NetManager-W3W-APRS.js"></script>    
-    
-    <script src="js/cookieManagement.js"></script>      
-    <script src="js/newNet.js"></script>
-    <script src="js/checkIn.js"></script> 
-    
-    <script src="generateJsWithDefinitions.php"></script>
+	
+	<script src="js/CellEditFunction.js"></script>	 <!-- Added 2018-02-12 -->
+	
+	<script src="js/grid.js"></script>
+	<script src="js/gridtokoords.js"></script>
+	<script src="js/cookieManagement.js"></script>
+	
+	<script src="js/coffee.js"></script>
     <script>
-    window.tableStructure = <?php echo isset($tableStructure) ? $tableStructure : 'null'; ?>;
-    </script>
-    
-    <!-- Column management scripts -->
-    <script src="js/showActivities.js"></script>
-    <script src="js/CellEditFunctions.js"></script>     
-    <script src="js/grid.js"></script>
-    <script src="js/gridtokoords.js"></script>
-    
-    <script src="js/addNewCallsignRow.js"></script>
-    <script src="js/handleSSE.js"></script>
-    <script src="js/sendSseMessage.js"></script>
-    <script src="js/addToNet.js"></script>
-
-    <!-- Error handling -->
-    <script>
-    window.onerror = function(message, source, lineno, colno, error) {
-        console.error('Caught error:', message, 'at', source, lineno, colno);
-        console.error('Error object:', error);
-        return true;
-    };
-    </script>
-    
-    <!-- MutationObserver for table changes -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                    const addedTable = Array.from(mutation.addedNodes).find(node => node.tagName === 'TABLE');
-                    if (addedTable) {
-                        console.log('Table added to DOM. Applying column management.');
-                        if (typeof initializeSortable === 'function') {
-                            initializeSortable(addedTable);
-                        } else {
-                            console.error('initializeSortable function not found when table was added.');
-                        }
-                    }
-                }
-            });
-        });
-        // Start observing the actLog div
-        const actLog = document.getElementById('actLog');
-        if (actLog) {
-            observer.observe(actLog, { childList: true, subtree: true });
-        } else {
-            console.error('actLog div not found');
-        }
+// function to handled dialog modal for the question mark in circle at time line & other places
+// https://www.tutorialspoint.com/jqueryui/jqueryui_dialog.htm
+$ ( function() {
+    $( "#q-mark-in-circle" ).dialog({
+        autoOpen:false, 
+               buttons: {
+                  OK: function() {$(this).dialog("close");}
+               },
+               title: "Search Advisory:",
+               position: {
+                  my: "center",
+                  at: "center"
+               }
     });
-    </script>
+                                     
+    $( "#QmarkInCircle" ).click(function() {
+        $( "#q-mark-in-circle" ).dialog( "open" );
+    });
+}); // end click @ #q-mark-in-circle()
 
-    <!-- Column management CSS and JS -->
-    <link rel="stylesheet" type="text/css" href="css/column-management.css">
-    <script src="js/column-management.js"></script>
-    <script src="js/column-reordering.js"></script>
 
-    <!-- New column management scripts -->
-    <script src="js/storage-management.js"></script>
-    <script src="js/column-sidebar.js"></script>
-    <script src="js/profile-management.js"></script>
-    <script src="js/profile-ui.js"></script>
-    <script src="js/column-integration.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/profile-css.css">
 
-    <?php
-    // Uncomment the following line to log included files
-     require_once "log_included_files.php";
-    ?>
-</body>
-</html>
+(function() {
+
+    var quotes = $(".quotes"); //variables
+    var quoteIndex = -1;
+    
+    function showNextQuote() {
+        ++quoteIndex;  //increasing index
+        quotes.eq(quoteIndex % quotes.length) //items ito animate?
+            .fadeIn(6500) //fade in time
+            .delay(250) //time until fade out
+            .fadeOut(5800, showNextQuote); //fade out time, recall function
+    }
+    showNextQuote();  
+})();
+
+$("body").click(function(){
+    $(".quotes").addClass("hidden");
+    $(".preQuote").addClass("hidden");
+});
+
+
+// This javascript function tests the callsign being used to start a new net as to being in a list of callsigns that did not close a previous net.
+function checkCall() {
+    const cs = $("#callsign").val().trim().toUpperCase();
+    const listOfCalls = new Set( ['ah6ez' ]);
+    const isCallInSet = listOfCalls.has($("#callsign").val());
+    
+    console.log('@755 in index.php cs: '+cs+'  listOfCalls: '+listOfCalls+'  isCallInSet:  '+isCallInSet);
+    
+    // If the callsign starting this net is in the above list then ask for his email to send him a message
+    if (!isCallInSet == '') {
+        var mail = prompt('Please enter your email address.');
+            if (mail == '' || mail == null) {
+                alert("Please be sure to close your net when finished. Thank you!");
+            } else {
+
+                var str = cs+":"+mail;  //alert(str);
+                console.log('@737 str= '+str);
+            
+                $.ajax({
+                    type: 'GET',
+                    url: 'addEmailToStations.php',
+                    data: {q: str},
+                    success: function(response) { 
+                        //alert(response);
+                } // end success
+                }) // end ajax
+                } // else 
+        // Possible ways to send an email
+        // Javascript:  https://smtpjs.com
+        // PHP:         https://www.w3schools.com/php/func_mail_mail.asp
+        // AJAX:        Put the collected email into his record in the stations table.
+    } // End if
+} // end checkCall function
+
+// This function is used in the DIV GroupDropdown by the input **** DO NOT DELETE ++++
+function removeSpaces(str) {
+  return str.replace(/\s+/g, '');
+}
+
+document.addEventListener('keydown', function(event) {
+  if (isTabletDevice() && event.shiftKey && event.key === 'Shift') {
+    // Right shift key is being held down on a tablet device
+    // Perform the desired action or trigger the right-click event
+    event.preventDefault(); // Prevent the default shift key behavior if needed
+    
+    // Example: Trigger a custom right-click event on the target element
+    var targetElement = event.target;
+    var customRightClickEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      button: 2,
+      buttons: 2,
+      clientX: targetElement.getBoundingClientRect().left,
+      clientY: targetElement.getBoundingClientRect().top
+    });
+    targetElement.dispatchEvent(customRightClickEvent);
+  }
+});
+
+function isTabletDevice() {
+  var userAgent = navigator.userAgent.toLowerCase();
+  console.log('User Agent:', userAgent); // Log the user agent string
+  return /ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(userAgent);
+}
+</script>
