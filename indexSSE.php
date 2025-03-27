@@ -38,18 +38,31 @@ require_once "footer.php";
 <!-- Initialize SSE functionality -->
 <script>
 $(document).ready(function() {
-    // Override the showActivities function to initialize SSE
-    const originalShowActivities = window.showActivities;
+    console.log("Setting up SSE override");
     
-    window.showActivities = function(value, name) {
-        // Call the original function first
-        originalShowActivities(value, name);
+    // Properly handle the showActivities override
+    if (typeof showActivities === 'function') {
+        const originalShowActivities = showActivities;
         
-        // Then initialize SSE if this is a valid net
-        if (value && value !== 'a' && value !== 'z') {
-            initializeSSEForNet(value, name);
-        }
-    };
+        showActivities = function(value, name) {
+            console.log("SSE-enhanced showActivities called:", value, name);
+            // Call the original function first
+            originalShowActivities(value, name);
+            
+            // Then initialize SSE if this is a valid net
+            if (value && value !== 'a' && value !== 'z') {
+                // Check if the function exists before calling it
+                if (typeof initializeSSEForNet === 'function') {
+                    initializeSSEForNet(value, name);
+                } else {
+                    console.error("initializeSSEForNet function not found");
+                }
+            }
+        };
+        console.log("showActivities function overridden for SSE");
+    } else {
+        console.error("Original showActivities function not found");
+    }
 });
 </script>
 
