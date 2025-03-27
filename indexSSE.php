@@ -44,14 +44,13 @@ $(document).ready(function() {
     if (typeof showActivities === 'function') {
         const originalShowActivities = showActivities;
         
-        showActivities = function(value, name) {
+        window.showActivities = function(value, name) {
             console.log("SSE-enhanced showActivities called:", value, name);
             // Call the original function first
             originalShowActivities(value, name);
             
             // Then initialize SSE if this is a valid net
             if (value && value !== 'a' && value !== 'z') {
-                // Check if the function exists before calling it
                 if (typeof initializeSSEForNet === 'function') {
                     initializeSSEForNet(value, name);
                 } else {
@@ -63,6 +62,37 @@ $(document).ready(function() {
     } else {
         console.error("Original showActivities function not found");
     }
+});
+</script>
+
+<!-- Add debug button -->
+<div style="position: fixed; bottom: 10px; left: 10px; z-index: 9999; background: #f0f0f0; padding: 10px; border: 1px solid #ccc;">
+    <button id="sse-debug-btn" style="padding: 5px;">Trigger SSE Test Update</button>
+    <div id="sse-debug-log" style="font-family: monospace; margin-top: 5px;"></div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#sse-debug-btn').on('click', function() {
+        const netID = currentNetID || '14266'; // Use the current net ID or default
+        const debugLog = document.getElementById('sse-debug-log');
+        
+        debugLog.innerHTML = 'Sending test update request...';
+        
+        // Make an AJAX call to trigger a test update
+        $.ajax({
+            url: 'sse_test_update.php',
+            data: { netID: netID },
+            success: function(response) {
+                debugLog.innerHTML = 'Test update sent: ' + response;
+                console.log('SSE test update response:', response);
+            },
+            error: function(xhr, status, error) {
+                debugLog.innerHTML = 'Error: ' + error;
+                console.error('SSE test update error:', error);
+            }
+        });
+    });
 });
 </script>
 
