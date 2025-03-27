@@ -96,5 +96,15 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+$(document).ready(function() {
+    // Override the default jeditable save URL
+    $.editable.defaults.url = 'save_sse.php';
+    
+    // Log the override
+    console.log("Save URL overridden to use save_sse.php");
+});
+</script>
+
 </body>
 </html>

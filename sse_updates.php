@@ -77,12 +77,12 @@ sendEvent('connected', [
     'time' => date('Y-m-d H:i:s')
 ]);
 
-// Variables to track state - IMPORTANT: Using 'dttm' instead of 'timestamp'
+// Variables to track state - Now using sse_timestamp instead of dttm
 $lastModified = '';
 $lastCount = 0;
 
-// Get initial state - IMPORTANT: Using 'dttm' instead of 'timestamp'
-$query = "SELECT MAX(dttm) as last_modified, COUNT(*) as record_count 
+// Get initial state
+$query = "SELECT MAX(sse_timestamp) as last_modified, COUNT(*) as record_count 
           FROM NetLog WHERE netID = {$netID}";
 logMessage("Initial query: $query");
 
@@ -103,34 +103,14 @@ while (true) {
         flush();
     }
     
-    // Every 10 iterations, force a timestamp update on a test record
-    // This is a diagnostic test to see if our monitoring is working
-    if ($counter % 10 === 0) {
-        $testQuery = "UPDATE NetLog SET dttm = NOW() WHERE netID = {$netID} LIMIT 1";
-        $testResult = mysqli_query($conn, $testQuery);
-        
-        if ($testResult) {
-            logMessage("Test update performed on netID: $netID");
-            
-            // Send a debug event to the client
-            sendEvent('debug', [
-                'message' => 'Test update performed',
-                'time' => date('Y-m-d H:i:s'),
-                'counter' => $counter
-            ]);
-        } else {
-            logMessage("Test update failed: " . mysqli_error($conn));
-        }
-    }
-    
     // Check if client disconnected
     if (connection_aborted()) {
         logMessage('Client disconnected');
         break;
     }
     
-    // Check for changes - IMPORTANT: Using 'dttm' instead of 'timestamp'
-    $query = "SELECT MAX(dttm) as last_modified, COUNT(*) as record_count 
+    // Check for changes - Using sse_timestamp now
+    $query = "SELECT MAX(sse_timestamp) as last_modified, COUNT(*) as record_count 
               FROM NetLog WHERE netID = {$netID}";
     $result = mysqli_query($conn, $query);
     
