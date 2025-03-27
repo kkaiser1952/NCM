@@ -9,15 +9,25 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Create a log file for debugging - use an absolute path to ensure we know where it goes
-$logDir = dirname(__FILE__); // This gives us the directory where this script is located
-$logPath = $logDir . '/sse_log.txt';
+// Try to use system temp directory for logging to avoid permission issues
+$logPath = sys_get_temp_dir() . '/sse_log.txt';
 $logFile = fopen($logPath, 'a');
+
+if (!$logFile) {
+    // If we can't open the log file, log to PHP error log instead
+    error_log("Could not open log file at $logPath");
+} else {
+    error_log("SSE log file opened at $logPath");
+}
 
 function logMessage($message) {
     global $logFile;
-    fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
-    fflush($logFile); // Ensure it's written immediately
+    if ($logFile) {
+        fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
+        fflush($logFile);
+    }
+    // Also log to PHP error log for redundancy
+    error_log($message);
 }
 
 logMessage('SSE connection started. Log path: ' . $logPath);
@@ -45,7 +55,7 @@ if (!$netID) {
     echo "event: error\n";
     echo "data: {\"message\":\"No valid net ID provided\"}\n\n";
     flush();
-    fclose($logFile);
+    if ($logFile) fclose($logFile);
     exit();
 }
 
@@ -67,12 +77,12 @@ sendEvent('connected', [
     'time' => date('Y-m-d H:i:s')
 ]);
 
-// Variables to track state
+// Variables to track state - IMPORTANT: Using 'dttm' instead of 'timestamp'
 $lastModified = '';
 $lastCount = 0;
 
-// Get initial state
-$query = "SELECT MAX(timestamp) as last_modified, COUNT(*) as record_count 
+// Get initial state - IMPORTANT: Using 'dttm' instead of 'timestamp'
+$query = "SELECT MAX(dttm) as last_modified, COUNT(*) as record_count 
           FROM NetLog WHERE netID = {$netID}";
 logMessage("Initial query: $query");
 
@@ -93,14 +103,34 @@ while (true) {
         flush();
     }
     
+    // Every 10 iterations, force a timestamp update on a test record
+    // This is a diagnostic test to see if our monitoring is working
+    if ($counter % 10 === 0) {
+        $testQuery = "UPDATE NetLog SET dttm = NOW() WHERE netID = {$netID} LIMIT 1";
+        $testResult = mysqli_query($conn, $testQuery);
+        
+        if ($testResult) {
+            logMessage("Test update performed on netID: $netID");
+            
+            // Send a debug event to the client
+            sendEvent('debug', [
+                'message' => 'Test update performed',
+                'time' => date('Y-m-d H:i:s'),
+                'counter' => $counter
+            ]);
+        } else {
+            logMessage("Test update failed: " . mysqli_error($conn));
+        }
+    }
+    
     // Check if client disconnected
     if (connection_aborted()) {
         logMessage('Client disconnected');
         break;
     }
     
-    // Check for changes
-    $query = "SELECT MAX(timestamp) as last_modified, COUNT(*) as record_count 
+    // Check for changes - IMPORTANT: Using 'dttm' instead of 'timestamp'
+    $query = "SELECT MAX(dttm) as last_modified, COUNT(*) as record_count 
               FROM NetLog WHERE netID = {$netID}";
     $result = mysqli_query($conn, $query);
     
@@ -108,8 +138,10 @@ while (true) {
         $row = mysqli_fetch_assoc($result);
         
         // Debug output
-        logMessage("Current - Last modified: {$row['last_modified']}, Count: {$row['record_count']}");
-        logMessage("Previous - Last modified: $lastModified, Count: $lastCount");
+        if ($counter % 5 === 0) {
+            logMessage("Current - Last modified: {$row['last_modified']}, Count: {$row['record_count']}");
+            logMessage("Previous - Last modified: $lastModified, Count: $lastCount");
+        }
         
         // Check if there are changes
         if ($row['last_modified'] != $lastModified || $row['record_count'] != $lastCount) {
@@ -144,6 +176,6 @@ while (true) {
 
 // Cleanup
 logMessage('SSE connection ended');
-fclose($logFile);
+if ($logFile) fclose($logFile);
 mysqli_close($conn);
 ?>
