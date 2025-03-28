@@ -34,7 +34,7 @@ require_once "footer.php";
 
 <script>
 // Simple SSE implementation
-// Add to indexSSE.php
+// Add this to indexSSE.php
 $(document).ready(function() {
     let currentNetID = null;
     let lastUpdate = '';
@@ -58,11 +58,14 @@ $(document).ready(function() {
     // Override showActivities
     const originalShowActivities = window.showActivities;
     window.showActivities = function(value, name) {
+        console.log("Enhanced showActivities called:", value, name);
         originalShowActivities(value, name);
         
         if (value && value !== 'a' && value !== 'z') {
+            console.log("Starting to watch net:", value);
             startWatching(value);
         } else {
+            console.log("Not watching net:", value);
             stopWatching();
         }
     };
@@ -72,6 +75,7 @@ $(document).ready(function() {
         
         currentNetID = netID;
         lastUpdate = ''; // Reset
+        console.log("Started watching net ID:", netID);
         
         // Show indicator
         $("#update-status").fadeIn();
@@ -79,14 +83,15 @@ $(document).ready(function() {
         // First check
         checkForUpdates();
         
-        // Start checking every 3 seconds
-        checkInterval = setInterval(checkForUpdates, 3000);
+        // Start checking every 5 seconds
+        checkInterval = setInterval(checkForUpdates, 5000);
     }
     
     function stopWatching() {
         if (checkInterval) {
             clearInterval(checkInterval);
             checkInterval = null;
+            console.log("Stopped watching net");
         }
         
         $("#update-status").fadeOut();
@@ -95,6 +100,8 @@ $(document).ready(function() {
     function checkForUpdates() {
         if (!currentNetID) return;
         
+        console.log("Checking for updates on net ID:", currentNetID);
+        
         $.ajax({
             url: 'check_net_updates.php',
             data: {
@@ -102,14 +109,19 @@ $(document).ready(function() {
                 lastUpdate: lastUpdate
             },
             success: function(data) {
+                console.log("Update check response:", data);
+                
                 // First time, just store the update time
                 if (lastUpdate === '') {
-                    lastUpdate = data.lastUpdate;
+                    lastUpdate = data.last_update;
+                    console.log("First check, stored timestamp:", lastUpdate);
                     return;
                 }
                 
                 // If changes detected
                 if (data.hasChanges) {
+                    console.log("Changes detected! Old:", lastUpdate, "New:", data.last_update);
+                    
                     // Flash indicator
                     $("#update-status")
                         .css('background-color', '#d9534f')
@@ -123,6 +135,8 @@ $(document).ready(function() {
                             url: 'getactivities.php',
                             data: { q: currentNetID },
                             success: function(html) {
+                                console.log("Activity log refreshed");
+                                
                                 // Extract activity log
                                 const tempDiv = document.createElement('div');
                                 tempDiv.innerHTML = html;
@@ -130,18 +144,37 @@ $(document).ready(function() {
                                 const actLog = tempDiv.querySelector('#actLog');
                                 if (actLog) {
                                     $("#actLog").html(actLog.innerHTML);
+                                    console.log("Activity log updated");
                                     
                                     // Update timestamp
-                                    lastUpdate = data.lastUpdate;
+                                    lastUpdate = data.last_update;
                                     
                                     // Show success message
                                     $("#update-status")
                                         .css('background-color', '#5cb85c')
                                         .text("Updated successfully!");
+                                } else {
+                                    console.error("Could not find activity log in response");
                                 }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error refreshing activity log:", error);
                             }
                         });
                     }, 500);
+                } else {
+                    console.log("No changes detected");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error checking for updates:", error, xhr.responseText);
+                
+                // Try to parse the error response
+                try {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    console.error("Server error details:", errorResponse);
+                } catch (e) {
+                    console.error("Could not parse error response");
                 }
             }
         });

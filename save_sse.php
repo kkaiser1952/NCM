@@ -9,9 +9,14 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
-    // Create a log file for debugging
-    $logPath = sys_get_temp_dir() . '/save_sse_log.txt';
-    $logFile = fopen($logPath, 'a');
+    // Debug logging
+$logFile = fopen('/tmp/save_sse_log.txt', 'a');
+function logSave($message) {
+    global $logFile;
+    fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
+    fflush($logFile);
+}
+logSave('save_sse.php called with rawdata: ' . $rawdata);
 
     function logMessage($message) {
         global $logFile;
@@ -499,22 +504,26 @@
         $stmt->execute();
     } // End of adding name and email changes to the stations table	
     
-    // Update the NetLog with the new information (including sse_timestamp)
-    // Only do this if we haven't already updated the timestamp in a special case
-    if (!isset($skipFinalUpdate) || $skipFinalUpdate !== true) {
-        $sql = "UPDATE NetLog SET $column = :val, sse_timestamp = NOW() WHERE recordID = :rec_id";
-        
-        $stmt = $db_found->prepare($sql);
-        $stmt->bindParam(':val', $value, PDO::PARAM_STR);
-        $stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        logMessage("Final update with sse_timestamp performed");
-    } else {
-        logMessage("Skipped final update (already handled in special case)");
-    }
-    
-    if ($logFile) {
-        fclose($logFile);
-    }
+    // Debug logging
+$logFile = fopen('/tmp/save_sse_log.txt', 'a');
+function logSave($message) {
+    global $logFile;
+    fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
+    fflush($logFile);
+}
+logSave('save_sse.php processing update. Column: ' . $column . ', Value: ' . $value . ', RecordID: ' . $recordID);
+
+// Update the NetLog with the new information
+$sql = "UPDATE NetLog SET $column = :val, sse_timestamp = NOW() WHERE recordID = :rec_id";
+
+$stmt = $db_found->prepare($sql);
+$stmt->bindParam(':val', $value, PDO::PARAM_STR);
+$stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
+$stmt->execute();
+
+logSave('Update completed with sse_timestamp');
+
+if ($logFile) {
+    fclose($logFile);
+}
 ?>
