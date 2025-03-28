@@ -1,10 +1,4 @@
 <?php
-/**
- * Net Control Manager (NCM) - SSE Updates Endpoint
- * Copyright 2015-2025 Keith Kaiser, WA0TJT
- * Contact: wa0tjt@gmail.com
- */
-
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -13,21 +7,14 @@ ini_set('display_errors', 1);
 $logPath = sys_get_temp_dir() . '/sse_log.txt';
 $logFile = fopen($logPath, 'a');
 
-if (!$logFile) {
-    // If we can't open the log file, log to PHP error log instead
-    error_log("Could not open log file at $logPath");
-} else {
-    error_log("SSE log file opened at $logPath");
-}
-
 function logMessage($message) {
     global $logFile;
     if ($logFile) {
         fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
         fflush($logFile);
     }
-    // Also log to PHP error log for redundancy
-    error_log($message);
+    // Also log to PHP error log
+    error_log("SSE: " . $message);
 }
 
 logMessage('SSE connection started. Log path: ' . $logPath);
@@ -39,9 +26,6 @@ header('Connection: keep-alive');
 
 // Flush headers immediately
 flush();
-
-// For large files/updates, we don't want PHP to timeout
-set_time_limit(0);
 
 // Get database connection
 require_once "dbConnectDtls.php";
@@ -77,14 +61,7 @@ sendEvent('connected', [
     'time' => date('Y-m-d H:i:s')
 ]);
 
-// Add the test update here
-sleep(5);
-sendEvent('debug', [
-    'message' => 'Test update event',
-    'time' => date('Y-m-d H:i:s')
-]);
-
-// Variables to track state - Now using sse_timestamp instead of dttm
+// Variables to track state
 $lastModified = '';
 $lastCount = 0;
 
@@ -94,10 +71,11 @@ $query = "SELECT MAX(sse_timestamp) as last_modified, COUNT(*) as record_count
 logMessage("Initial query: $query");
 
 $result = mysqli_query($conn, $query);
-if ($result && $row = mysqli_fetch_assoc($result)) {
-    $lastModified = $row['last_modified'];
-    $lastCount = $row['record_count'];
-    logMessage("Initial state - Last modified: $lastModified, Count: $lastCount");
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $lastModified = $row['last_modified'] ?? '';
+    $lastCount = $row['record_count'] ?? 0;
+    logMessage("Initial state - Last modified: " . (empty($lastModified) ? 'NULL' : $lastModified) . ", Count: $lastCount");
     mysqli_free_result($result);
 }
 
@@ -116,37 +94,57 @@ while (true) {
         break;
     }
     
-    // Check for changes - Using sse_timestamp now
+    // Debug check to see what values we're comparing
+    if ($counter % 10 === 0) {
+        logMessage("Current check iteration: $counter");
+        
+        // Send a debug event to client
+        echo ": debug - Checking for changes at " . date('Y-m-d H:i:s') . "\n\n";
+        flush();
+    }
+    
+    // Check for changes
     $query = "SELECT MAX(sse_timestamp) as last_modified, COUNT(*) as record_count 
               FROM NetLog WHERE netID = {$netID}";
     $result = mysqli_query($conn, $query);
     
     if ($result) {
         $row = mysqli_fetch_assoc($result);
+        $currentModified = $row['last_modified'] ?? '';
+        $currentCount = $row['record_count'] ?? 0;
         
-        // Debug output
-        if ($counter % 5 === 0) {
-            logMessage("Current - Last modified: {$row['last_modified']}, Count: {$row['record_count']}");
-            logMessage("Previous - Last modified: $lastModified, Count: $lastCount");
+        // Debug output every 10 iterations
+        if ($counter % 10 === 0) {
+            logMessage("Current state - Last modified: " . (empty($currentModified) ? 'NULL' : $currentModified) . ", Count: $currentCount");
+            logMessage("Previous - Last modified: " . (empty($lastModified) ? 'NULL' : $lastModified) . ", Count: $lastCount");
+        }
+        
+        // Debug output if values are different
+        if ($currentModified != $lastModified) {
+            logMessage("DIFFERENCE DETECTED in timestamp: '$lastModified' vs '$currentModified'");
+        }
+        
+        if ($currentCount != $lastCount) {
+            logMessage("DIFFERENCE DETECTED in count: $lastCount vs $currentCount");
         }
         
         // Check if there are changes
-        if ($row['last_modified'] != $lastModified || $row['record_count'] != $lastCount) {
-            logMessage("Change detected!");
+        if ($currentModified != $lastModified || $currentCount != $lastCount) {
+            logMessage("Change detected! Sending update event");
             
             // Send update event
             sendEvent('update', [
                 'netID' => $netID,
-                'lastModified' => $row['last_modified'],
+                'lastModified' => $currentModified,
                 'previousModified' => $lastModified,
-                'recordCount' => $row['record_count'],
+                'recordCount' => $currentCount,
                 'previousCount' => $lastCount,
                 'time' => date('Y-m-d H:i:s')
             ]);
             
             // Update tracking variables
-            $lastModified = $row['last_modified'];
-            $lastCount = $row['record_count'];
+            $lastModified = $currentModified;
+            $lastCount = $currentCount;
         }
         
         mysqli_free_result($result);
