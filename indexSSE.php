@@ -32,24 +32,24 @@ require_once "modals.php";
 require_once "footer.php";
 ?>
 
-<!-- Add the SSE-specific JavaScript after the main scripts -->
-<script src="js/NetManagerSSE.js"></script>
+<!-- Add the AJAX polling JavaScript -->
+<script src="js/NetManagerPolling.js"></script>
 
-<!-- Initialize SSE functionality -->
+<!-- Initialize polling functionality -->
 <script>
 $(document).ready(function() {
-    console.log("Setting up SSE override");
+    console.log("Setting up polling override");
     
     // Properly handle the showActivities override
     if (typeof showActivities === 'function') {
         const originalShowActivities = showActivities;
         
         window.showActivities = function(value, name) {
-            console.log("SSE-enhanced showActivities called:", value, name);
+            console.log("Polling-enhanced showActivities called:", value, name);
             // Call the original function first
             originalShowActivities(value, name);
             
-            // Then initialize SSE if this is a valid net
+            // Then initialize polling if this is a valid net
             if (value && value !== 'a' && value !== 'z') {
                 if (typeof initializeSSEForNet === 'function') {
                     initializeSSEForNet(value, name);
@@ -58,7 +58,7 @@ $(document).ready(function() {
                 }
             }
         };
-        console.log("showActivities function overridden for SSE");
+        console.log("showActivities function overridden for real-time updates");
     } else {
         console.error("Original showActivities function not found");
     }
@@ -67,29 +67,34 @@ $(document).ready(function() {
 
 <!-- Add debug button -->
 <div style="position: fixed; bottom: 10px; left: 10px; z-index: 9999; background: #f0f0f0; padding: 10px; border: 1px solid #ccc;">
-    <button id="sse-debug-btn" style="padding: 5px;">Trigger SSE Test Update</button>
-    <div id="sse-debug-log" style="font-family: monospace; margin-top: 5px;"></div>
+    <button id="polling-debug-btn" style="padding: 5px;">Force Update Check</button>
+    <div id="polling-debug-log" style="font-family: monospace; margin-top: 5px;"></div>
 </div>
 
 <script>
 $(document).ready(function() {
-    $('#sse-debug-btn').on('click', function() {
+    $('#polling-debug-btn').on('click', function() {
         const netID = currentNetID || '14266'; // Use the current net ID or default
-        const debugLog = document.getElementById('sse-debug-log');
+        const debugLog = document.getElementById('polling-debug-log');
         
-        debugLog.innerHTML = 'Sending test update request...';
+        debugLog.innerHTML = 'Forcing update...';
         
         // Make an AJAX call to trigger a test update
         $.ajax({
-            url: 'sse_test_update.php',
+            url: 'force_update.php',
             data: { netID: netID },
             success: function(response) {
-                debugLog.innerHTML = 'Test update sent: ' + response;
-                console.log('SSE test update response:', response);
+                debugLog.innerHTML = 'Update forced: ' + response;
+                console.log('Update force response:', response);
+                
+                // Manually trigger an update check
+                if (typeof checkForUpdates === 'function') {
+                    setTimeout(checkForUpdates, 500);
+                }
             },
             error: function(xhr, status, error) {
                 debugLog.innerHTML = 'Error: ' + error;
-                console.error('SSE test update error:', error);
+                console.error('Update force error:', error);
             }
         });
     });
@@ -98,10 +103,7 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function() {
-    // Override the default jeditable save URL
-    //$.editable.defaults.url = 'save_sse.php';
-    
-    // Log the override
+    // Log the save_sse.php override
     console.log("Save URL overridden to use save_sse.php");
 });
 </script>
@@ -120,7 +122,7 @@ $(document).ready(function() {
         };
     })(XMLHttpRequest.prototype.open);
     
-    console.log('XMLHttpRequest.open method overridden for SSE');
+    console.log('XMLHttpRequest.open method overridden for real-time updates');
 });
 </script>
 

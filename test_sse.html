@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Test</title>
+</head>
+<body>
+    <h1>SSE Test</h1>
+    <div id="messages" style="border: 1px solid black; padding: 10px; height: 300px; overflow: auto;"></div>
+    
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        
+        // Log a message
+        function logMessage(text) {
+            const div = document.createElement('div');
+            div.textContent = new Date().toLocaleTimeString() + ': ' + text;
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        // Create SSE connection
+        logMessage('Connecting...');
+        
+        const evtSource = new EventSource('test_sse.php');
+        
+        // Connection open
+        evtSource.onopen = function() {
+            logMessage('Connection opened');
+        };
+        
+        // Message received
+        evtSource.onmessage = function(event) {
+            logMessage('Received: ' + event.data);
+        };
+        
+        // Error
+        evtSource.onerror = function(event) {
+            logMessage('Error occurred');
+            console.error('SSE Error:', event);
+        };
+    </script>
+</body>
+</html>
