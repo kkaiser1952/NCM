@@ -99,10 +99,28 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     // Override the default jeditable save URL
-    $.editable.defaults.url = 'save_sse.php';
+    //$.editable.defaults.url = 'save_sse.php';
     
     // Log the override
     console.log("Save URL overridden to use save_sse.php");
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    // Override AJAX calls to save.php
+    (function(origOpen) {
+        XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+            // Substitute save_sse.php for save.php
+            if (url === 'save.php') {
+                console.log('Intercepted request to save.php, redirecting to save_sse.php');
+                url = 'save_sse.php';
+            }
+            origOpen.call(this, method, url, async, user, pass);
+        };
+    })(XMLHttpRequest.prototype.open);
+    
+    console.log('XMLHttpRequest.open method overridden for SSE');
 });
 </script>
 

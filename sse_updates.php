@@ -77,6 +77,13 @@ sendEvent('connected', [
     'time' => date('Y-m-d H:i:s')
 ]);
 
+// Add the test update here
+sleep(5);
+sendEvent('debug', [
+    'message' => 'Test update event',
+    'time' => date('Y-m-d H:i:s')
+]);
+
 // Variables to track state - Now using sse_timestamp instead of dttm
 $lastModified = '';
 $lastCount = 0;
