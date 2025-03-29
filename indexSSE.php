@@ -33,8 +33,6 @@ require_once "footer.php";
 ?>
 
 <script>
-// Simple SSE implementation
-// Add this to indexSSE.php
 $(document).ready(function() {
     let currentNetID = null;
     let lastUpdate = '';
@@ -101,6 +99,7 @@ $(document).ready(function() {
         if (!currentNetID) return;
         
         console.log("Checking for updates on net ID:", currentNetID);
+        console.log("Last update timestamp:", lastUpdate);
         
         $.ajax({
             url: 'check_net_updates.php',
@@ -118,9 +117,14 @@ $(document).ready(function() {
                     return;
                 }
                 
-                // If changes detected
-                if (data.hasChanges) {
-                    console.log("Changes detected! Old:", lastUpdate, "New:", data.last_update);
+                // Debug the comparison
+                console.log("Comparing timestamps - Last:", lastUpdate, "Current:", data.last_update);
+                console.log("Direct comparison result:", lastUpdate !== data.last_update);
+                console.log("hasChanges from server:", data.hasChanges);
+                
+                // If changes detected by server
+                if (data.hasChanges === true) {
+                    console.log("Changes detected by server! Will refresh");
                     
                     // Flash indicator
                     $("#update-status")
@@ -168,14 +172,6 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("Error checking for updates:", error, xhr.responseText);
-                
-                // Try to parse the error response
-                try {
-                    const errorResponse = JSON.parse(xhr.responseText);
-                    console.error("Server error details:", errorResponse);
-                } catch (e) {
-                    console.error("Could not parse error response");
-                }
             }
         });
     }

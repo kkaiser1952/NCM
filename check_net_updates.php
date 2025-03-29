@@ -32,8 +32,11 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $currentUpdate = $row['last_update'];
     
-    $response['last_update'] = $currentUpdate;
-    $response['hasChanges'] = ($lastUpdate != $currentUpdate);
+$response['last_update'] = $currentUpdate;
+$response['submitted_timestamp'] = $lastUpdate;
+$response['comparison'] = $lastUpdate . ' vs ' . $currentUpdate;
+$response['timestamps_equal'] = ($lastUpdate === $currentUpdate);
+$response['hasChanges'] = ($lastUpdate !== $currentUpdate);
     
 } catch (Exception $e) {
     $response['error'] = $e->getMessage();
