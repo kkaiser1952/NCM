@@ -511,20 +511,48 @@ function logSave($message) {
     fwrite($logFile, date('Y-m-d H:i:s') . ' - ' . $message . "\n");
     fflush($logFile);
 }
-logSave('save_sse.php processing update. Column: ' . $column . ', Value: ' . $value . ', RecordID: ' . $recordID);
+
+// Enhanced logging for debugging
+logSave('==== SAVE OPERATION ====');
+logSave('Column: ' . $column . ' | Value: ' . $value . ' | RecordID: ' . $recordID . ' | NetID: ' . (isset($netID) ? $netID : 'N/A'));
 
 // Only perform the final update if not already done
 if (!isset($skipFinalUpdate) || $skipFinalUpdate !== true) {
     // Update the NetLog with the new information
     $sql = "UPDATE NetLog SET $column = :val, sse_timestamp = NOW() WHERE recordID = :rec_id";
     
+    logSave('Executing SQL: ' . $sql . ' with value: ' . $value . ' and recordID: ' . $recordID);
+    
     $stmt = $db_found->prepare($sql);
     $stmt->bindParam(':val', $value, PDO::PARAM_STR);
-    $stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
-    $stmt->execute();
+    $stmt->bindParam(':rec_id', $recordID, PDO::PARAM_INT);
+    $result = $stmt->execute();
     
-    logSave('Update completed with sse_timestamp');
+    logSave('Update result: ' . ($result ? 'SUCCESS' : 'FAILED'));
+    
+    // Verify the update happened
+    $verifyStmt = $db_found->prepare("SELECT sse_timestamp, $column FROM NetLog WHERE recordID = :rec_id");
+    $verifyStmt->bindParam(':rec_id', $recordID, PDO::PARAM_INT);
+    $verifyStmt->execute();
+    $verifyRow = $verifyStmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($verifyRow) {
+        logSave('VERIFICATION - Column "' . $column . '" now = "' . $verifyRow[$column] . '" | New timestamp: ' . $verifyRow['sse_timestamp']);
+    } else {
+        logSave('VERIFICATION FAILED - Record not found after update!');
+    }
+    
+    // Also log to console from JS by echoing back a script
+    echo "<script>
+    console.log('UPDATE DETECTED: Cell \"$column\" in row $recordID updated to \"$value\"');
+    console.log('Timestamp updated to: " . ($verifyRow ? $verifyRow['sse_timestamp'] : 'UNKNOWN') . "');
+    </script>";
 } else {
     logSave('Final update skipped as sse_timestamp was already updated');
+    
+    // Log the skip to console
+    echo "<script>
+    console.log('UPDATE SKIPPED: Cell \"$column\" in row $recordID - timestamp already updated');
+    </script>";
 }
 ?>

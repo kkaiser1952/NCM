@@ -1,10 +1,5 @@
 <?php
-// check_net_updates.php - Fixed for PDO connection
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Basic headers
+// check_net_updates.php - Enhanced for better timestamp handling
 header('Content-Type: application/json');
 
 // Get parameters
@@ -23,20 +18,26 @@ try {
     require_once "dbConnectDtls.php";
     $response['db_connected'] = true;
     
-    // Use PDO with prepare/execute and sse_timestamp
-    $query = "SELECT MAX(sse_timestamp) as last_update FROM NetLog WHERE netID = :netID";
-    $stmt = $db_found->prepare($query);
-    $stmt->bindParam(':netID', $netID, PDO::PARAM_INT);
-    $stmt->execute();
+    // Get current timestamp (newest in this net)
+    $timestampQuery = "SELECT MAX(sse_timestamp) as last_update 
+                       FROM NetLog WHERE netID = :netID";
+    $tsStmt = $db_found->prepare($timestampQuery);
+    $tsStmt->bindParam(':netID', $netID, PDO::PARAM_INT);
+    $tsStmt->execute();
     
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentUpdate = $row['last_update'];
+    $tsRow = $tsStmt->fetch(PDO::FETCH_ASSOC);
+    $currentUpdate = $tsRow['last_update'];
     
-$response['last_update'] = $currentUpdate;
-$response['submitted_timestamp'] = $lastUpdate;
-$response['comparison'] = $lastUpdate . ' vs ' . $currentUpdate;
-$response['timestamps_equal'] = ($lastUpdate === $currentUpdate);
-$response['hasChanges'] = ($lastUpdate !== $currentUpdate);
+    // If this is a new net or timestamps aren't initialized, use current time
+    if (!$currentUpdate || $currentUpdate == '0000-00-00 00:00:00') {
+        $currentUpdate = date('Y-m-d H:i:s');
+    }
+    
+    $response['last_update'] = $currentUpdate;
+    $response['submitted_timestamp'] = $lastUpdate;
+    $response['comparison'] = $lastUpdate . ' vs ' . $currentUpdate;
+    $response['timestamps_equal'] = ($lastUpdate === $currentUpdate);
+    $response['hasChanges'] = (!empty($lastUpdate) && $lastUpdate !== $currentUpdate);
     
 } catch (Exception $e) {
     $response['error'] = $e->getMessage();
