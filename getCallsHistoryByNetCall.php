@@ -42,11 +42,17 @@ $sql = "
 
 // Add conditional ORDER BY based on netcall value
 if (strtoupper($netcall) == 'MESN') {
-    $sql .= " ORDER BY (district IS NOT NULL AND district != '') DESC, 
+    $sql .= " ORDER BY 
+              CASE 
+                  WHEN district REGEXP '^[A-Z]$' THEN 1 
+                  ELSE 2 
+              END, 
+              state ASC,
               district ASC, 
               cnt_call DESC, 
               callsign ASC";
-} else if (strtoupper($netcall) == 'MODES') {
+}
+ else if (strtoupper($netcall) == 'MODES') {
     $sql .= " ORDER BY county ASC, cnt_call DESC"; // Sort by county, then by count descending
 } else if (strtoupper($netcall) == 'NR0AD') {
     $sql .= " ORDER BY county ASC, cnt_call DESC"; // Sort by county, then by count descending

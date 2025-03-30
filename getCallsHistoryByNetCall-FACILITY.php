@@ -8,8 +8,8 @@
 
     require_once "dbConnectDtls.php";
     
-    $netcall = $_POST['netcall']; 
-        //$netcall = 'kcheart';
+    //$netcall = $_POST['netcall']; 
+        $netcall = 'kcheart';
     $nomo = $_POST[nomo];
         //$nomo = 5;
     $and1 = '';

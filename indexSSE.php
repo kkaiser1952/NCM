@@ -108,29 +108,71 @@ $(document).ready(function() {
                 lastUpdate: lastUpdate
             },
             success: function(data) {
-    console.log("%c=== UPDATE CHECK ===", "background-color: #3498db; color: white; padding: 5px;");
-    console.log("Net ID:", currentNetID);
-    console.log("Client timestamp:", lastUpdate);
-    console.log("Server timestamp:", data.last_update);
-    console.log("Comparison:", data.comparison);
-    console.log("Changes detected:", data.hasChanges ? "YES" : "NO");
-    
-    // First time, just store the update time
-    if (lastUpdate === '') {
-        lastUpdate = data.last_update;
-        console.log("%cFirst check, stored timestamp:", "color: green;", lastUpdate);
-        return;
-    }
-    
-    // If changes detected by server
-    if (data.hasChanges === true) {
-        console.log("%cCHANGES DETECTED! Will refresh activity log", "background-color: #e74c3c; color: white; padding: 5px;");
-        
-        // Rest of your existing code...
-    } else {
-        console.log("%cNo changes detected", "color: gray;");
-    }
-}
+                console.log("Update check response:", data);
+                
+                // First time, just store the update time
+                if (lastUpdate === '') {
+                    lastUpdate = data.last_update;
+                    console.log("First check, stored timestamp:", lastUpdate);
+                    return;
+                }
+                
+                // Debug the comparison
+                console.log("Comparing timestamps - Last:", lastUpdate, "Current:", data.last_update);
+                console.log("Direct comparison result:", lastUpdate !== data.last_update);
+                console.log("hasChanges from server:", data.hasChanges);
+                
+                // If changes detected by server
+                if (data.hasChanges === true) {
+                    console.log("Changes detected by server! Will refresh");
+                    
+                    // Flash indicator
+                    $("#update-status")
+                        .css('background-color', '#d9534f')
+                        .text("Changes detected! Refreshing...")
+                        .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                    
+                    // Refresh after a short delay
+                    setTimeout(function() {
+                        // Refresh just the activity log
+                        $.ajax({
+                            url: 'getactivities.php',
+                            data: { q: currentNetID },
+                            success: function(html) {
+                                console.log("Activity log refreshed");
+                                
+                                // Extract activity log
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = html;
+                                
+                                const actLog = tempDiv.querySelector('#actLog');
+                                if (actLog) {
+                                    $("#actLog").html(actLog.innerHTML);
+                                    console.log("Activity log updated");
+                                    
+                                    // Update timestamp
+                                    lastUpdate = data.last_update;
+                                    
+                                    // Show success message
+                                    $("#update-status")
+                                        .css('background-color', '#5cb85c')
+                                        .text("Updated successfully!");
+                                } else {
+                                    console.error("Could not find activity log in response");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error refreshing activity log:", error);
+                            }
+                        });
+                    }, 500);
+                } else {
+                    console.log("No changes detected");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error checking for updates:", error, xhr.responseText);
+            }
         });
     }
 });
