@@ -165,8 +165,10 @@ foreach($db_found->query($sql) as $row) {
 		h2 {
 			column-span: all;
 		}
+
+        /* How many columns? */
 		.prime {
-    		columns: 20px 2; 
+    		columns: 20px 1; 
     		column-gap: 10px; 
 		}
 		
@@ -237,7 +239,9 @@ foreach($db_found->query($sql) as $row) {
     <h1>The Usual Suspects</h1>
     <h2>This is a list of the stations that have checked into the <?php echo $netcall ?> net in the past <?php echo $nomo ?> months</h2>
     
+    <!--
     <button id="refreshBtn" onclick="refreshPage()" title="Refresh data">Refresh</button>
+    -->
     
     <div class="prime">
         <table>
