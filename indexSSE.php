@@ -96,85 +96,106 @@ $(document).ready(function() {
     }
     
     function checkForUpdates() {
-        if (!currentNetID) return;
-        
-        console.log("Checking for updates on net ID:", currentNetID);
-        console.log("Last update timestamp:", lastUpdate);
-        
-        $.ajax({
-            url: 'check_net_updates.php',
-            data: {
-                netID: currentNetID,
-                lastUpdate: lastUpdate
-            },
-            success: function(data) {
-                console.log("Update check response:", data);
-                
-                // First time, just store the update time
-                if (lastUpdate === '') {
-                    lastUpdate = data.last_update;
-                    console.log("First check, stored timestamp:", lastUpdate);
-                    return;
-                }
-                
-                // Debug the comparison
-                console.log("Comparing timestamps - Last:", lastUpdate, "Current:", data.last_update);
-                console.log("Direct comparison result:", lastUpdate !== data.last_update);
-                console.log("hasChanges from server:", data.hasChanges);
-                
-                // If changes detected by server
-                if (data.hasChanges === true) {
-                    console.log("Changes detected by server! Will refresh");
-                    
-                    // Flash indicator
-                    $("#update-status")
-                        .css('background-color', '#d9534f')
-                        .text("Changes detected! Refreshing...")
-                        .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-                    
-                    // Refresh after a short delay
-                    setTimeout(function() {
-                        // Refresh just the activity log
-                        $.ajax({
-                            url: 'getactivities.php',
-                            data: { q: currentNetID },
-                            success: function(html) {
-                                console.log("Activity log refreshed");
-                                
-                                // Extract activity log
-                                const tempDiv = document.createElement('div');
-                                tempDiv.innerHTML = html;
-                                
-                                const actLog = tempDiv.querySelector('#actLog');
-                                if (actLog) {
-                                    $("#actLog").html(actLog.innerHTML);
-                                    console.log("Activity log updated");
-                                    
-                                    // Update timestamp
-                                    lastUpdate = data.last_update;
-                                    
-                                    // Show success message
-                                    $("#update-status")
-                                        .css('background-color', '#5cb85c')
-                                        .text("Updated successfully!");
-                                } else {
-                                    console.error("Could not find activity log in response");
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("Error refreshing activity log:", error);
-                            }
-                        });
-                    }, 500);
-                } else {
-                    console.log("No changes detected");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error checking for updates:", error, xhr.responseText);
+    if (!currentNetID) return;
+    let refreshCounter = 0;
+    console.log("%c=== UPDATE CHECK ===", "background-color: #3498db; color: white; padding: 5px;");
+    console.log("Checking for updates on net ID:", currentNetID);
+    console.log("Last update timestamp:", lastUpdate);
+    
+    $.ajax({
+        url: 'check_net_updates.php',
+        data: {
+            netID: currentNetID,
+            lastUpdate: lastUpdate
+        },
+        success: function(data) {
+            console.log("Net ID:", currentNetID);
+            console.log("Client timestamp:", lastUpdate);
+            console.log("Server timestamp:", data.last_update);
+            console.log("Comparison:", data.comparison);
+            console.log("Changes detected:", data.hasChanges ? "YES" : "NO");
+            
+            // First time, just store the update time
+            if (lastUpdate === '') {
+                lastUpdate = data.last_update;
+                console.log("%cFirst check, stored timestamp:", "color: green;", lastUpdate);
+                return;
             }
-        });
-    }
+            
+            // If changes detected by server
+            if (data.hasChanges === true) {
+                console.log("%cCHANGES DETECTED! Will refresh activity log", "background-color: #e74c3c; color: white; padding: 5px;");
+                
+                // Flash indicator
+                $("#update-status")
+                    .css('background-color', '#d9534f')
+                    .text("Changes detected! Refreshing...")
+                    .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                
+                // Refresh after a short delay
+                setTimeout(function() {
+                    // Use the SSE-specific version of getactivities
+                    $.ajax({
+                        url: 'getactivities_sse.php',
+                        data: { q: currentNetID },
+                        success: function(html) {
+                            console.log("Activity log refresh requested");
+                            
+                            // Find the main content area
+                            const actLog = document.getElementById('actLog');
+                            
+                            if (actLog) {
+                                // Try to parse the HTML properly
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                
+                                // Find the updated table
+                                const newTable = doc.querySelector('#actLog');
+                                
+                                if (newTable) {
+                                    // Replace the table content
+                                    actLog.innerHTML = newTable.innerHTML;
+                                    console.log("Table content replaced successfully");
+                                } else {
+                                    // Fallback: just use the entire response
+                                    console.log("Fallback: using entire response");
+                                    actLog.innerHTML = html;
+                                }
+                                
+                                // Update timestamp
+                                lastUpdate = data.last_update;
+                                
+                                // Show success message
+                                $("#update-status")
+                                    .css('background-color', '#5cb85c')
+                                    .text("Updated successfully!");
+                                    
+                                // Log successful update
+                                console.log("%cTable updated successfully!", "background-color: #2ecc71; color: white; padding: 5px;");
+                            } else {
+                                console.error("Could not find activity log table in DOM");
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error refreshing activity log:", error);
+                            console.error("Response text:", xhr.responseText);
+                            
+                            // Show error to user
+                            $("#update-status")
+                                .css('background-color', '#f39c12')
+                                .text("Update failed - check console");
+                        }
+                    });
+                }, 500);
+            } else {
+                console.log("%cNo changes detected", "color: gray;");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error checking for updates:", error, xhr.responseText);
+        }
+    });
+}
 });
 </script>
 </body>
