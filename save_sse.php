@@ -513,17 +513,18 @@ function logSave($message) {
 }
 logSave('save_sse.php processing update. Column: ' . $column . ', Value: ' . $value . ', RecordID: ' . $recordID);
 
-// Update the NetLog with the new information
-$sql = "UPDATE NetLog SET $column = :val, sse_timestamp = NOW() WHERE recordID = :rec_id";
-
-$stmt = $db_found->prepare($sql);
-$stmt->bindParam(':val', $value, PDO::PARAM_STR);
-$stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
-$stmt->execute();
-
-logSave('Update completed with sse_timestamp');
-
-if ($logFile) {
-    fclose($logFile);
+// Only perform the final update if not already done
+if (!isset($skipFinalUpdate) || $skipFinalUpdate !== true) {
+    // Update the NetLog with the new information
+    $sql = "UPDATE NetLog SET $column = :val, sse_timestamp = NOW() WHERE recordID = :rec_id";
+    
+    $stmt = $db_found->prepare($sql);
+    $stmt->bindParam(':val', $value, PDO::PARAM_STR);
+    $stmt->bindParam(':rec_id', $recordID, PDO::PARAM_STR);
+    $stmt->execute();
+    
+    logSave('Update completed with sse_timestamp');
+} else {
+    logSave('Final update skipped as sse_timestamp was already updated');
 }
 ?>
