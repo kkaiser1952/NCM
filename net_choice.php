@@ -11,7 +11,7 @@
         
     <!-- Use the <p> below to add a short message at the top of NCM. This span is hidden in NetManager.js , It's unhidden in the newnet() current in this file -->
     
-        <p class="sparkle-text">Please report any issues to NCM@groups.io Thank you.
+        <p class="sparkle-text">***Please report any issues to NCM@groups.io Thank you.
           <span class="spark1"></span>
           <span class="spark2"></span>
           <span class="spark3"></span>

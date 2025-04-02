@@ -34,12 +34,11 @@ require_once "footer.php";
 
 <script>
 $(document).ready(function() {
-    let checkCounter = 0;
     let currentNetID = null;
-    let lastUpdate = '';
-    let checkInterval = null;
+    let eventSource = null;
+    let lastLocalUpdate = 0;
     
-    // Add indicator
+    // Add update indicator
     $("<div id='update-status'>")
         .css({
             position: 'fixed',
@@ -49,7 +48,8 @@ $(document).ready(function() {
             color: 'white',
             padding: '5px 10px',
             borderRadius: '5px',
-            display: 'none'
+            display: 'none',
+            zIndex: 9999
         })
         .text("Watching for updates...")
         .appendTo("body");
@@ -70,133 +70,90 @@ $(document).ready(function() {
     };
     
     function startWatching(netID) {
-        stopWatching(); // Clear any existing interval
+        stopWatching(); // Clear any existing connection
         
         currentNetID = netID;
-        lastUpdate = ''; // Reset
         console.log("Started watching net ID:", netID);
         
         // Show indicator
         $("#update-status").fadeIn();
         
-        // First check
-        checkForUpdates();
+        // Create SSE connection
+        eventSource = new EventSource(`sse_stream.php?netID=${netID}`);
         
-        // Start checking every 5 seconds
-        checkInterval = setInterval(checkForUpdates, 5000);
+        // Handle updates
+        eventSource.addEventListener('update', function(e) {
+            const data = JSON.parse(e.data);
+            console.log("SSE Update received:", data);
+            
+            // Only refresh if this is a new update (and not one we just made)
+            const updateTime = data.timestamp * 1000; // Convert to milliseconds
+            const now = Date.now();
+            const timeSinceUpdate = now - updateTime;
+            
+            // If the update is more than 2 seconds old, it's probably not one we just made
+            if (timeSinceUpdate > 2000 && updateTime > lastLocalUpdate) {
+                console.log("Update from another user, refreshing activity view...");
+                $("#update-status")
+                    .css('background-color', '#d9534f')
+                    .text("Changes detected! Refreshing...")
+                    .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                
+                // Simply call the original showActivities function again with the same netID
+                // This will refresh the entire activity view without reloading the page
+                originalShowActivities(currentNetID, null);
+                
+                // Update the timestamp
+                lastUpdate = data.timestamp;
+                
+                // Show success message after a delay
+                setTimeout(function() {
+                    $("#update-status")
+                        .css('background-color', '#5cb85c')
+                        .text("Updated successfully!");
+                }, 2000);
+            } else {
+                console.log("Ignoring update (likely our own or too recent)");
+            }
+        });
+        
+        // Handle errors
+        eventSource.onerror = function(e) {
+            console.error("SSE connection error:", e);
+            $("#update-status")
+                .css('background-color', '#d9534f')
+                .text("Connection lost, reconnecting...");
+            
+            // Try to reconnect after a delay
+            setTimeout(function() {
+                if (currentNetID) {
+                    startWatching(currentNetID);
+                }
+            }, 5000);
+        };
     }
     
     function stopWatching() {
-        if (checkInterval) {
-            clearInterval(checkInterval);
-            checkInterval = null;
+        if (eventSource) {
+            eventSource.close();
+            eventSource = null;
             console.log("Stopped watching net");
         }
         
         $("#update-status").fadeOut();
     }
     
-    function checkForUpdates() {
-    if (!currentNetID) return;
-    
-    console.log("%c=== UPDATE CHECK ===", "background-color: #3498db; color: white; padding: 5px;");
-    console.log("Checking for updates on net ID:", currentNetID);
-    console.log("Last update timestamp:", lastUpdate);
-    
-    // Count how many checks we've done
-    checkCounter = (checkCounter || 0) + 1;
-    
-    // Force a refresh every 5 checks (roughly 25 seconds)
-    const forceRefresh = (checkCounter % 5 === 0);
-    
-    $.ajax({
-        url: 'check_net_updates.php',
-        data: {
-            netID: currentNetID,
-            lastUpdate: lastUpdate
-        },
-        success: function(data) {
-            console.log("Net ID:", currentNetID);
-            console.log("Client timestamp:", lastUpdate);
-            console.log("Server timestamp:", data.last_update);
-            console.log("Comparison:", data.comparison);
-            console.log("Changes detected:", data.hasChanges ? "YES" : "NO");
-            console.log("Force refresh:", forceRefresh ? "YES" : "NO");
-            
-            // First time, just store the update time
-            if (lastUpdate === '') {
-                lastUpdate = data.last_update;
-                console.log("%cFirst check, stored timestamp:", "color: green;", lastUpdate);
-                return;
-            }
-            
-            // If changes detected by server OR we need to force a refresh
-            if (data.hasChanges === true || forceRefresh) {
-                if (forceRefresh) {
-                    console.log("%cFORCING REFRESH after 5 checks", "background-color: #9b59b6; color: white; padding: 5px;");
-                } else {
-                    console.log("%cCHANGES DETECTED! Will refresh activity log", "background-color: #e74c3c; color: white; padding: 5px;");
-                }
-                
-                // Flash indicator
-                $("#update-status")
-                    .css('background-color', '#d9534f')
-                    .text(forceRefresh ? "Routine refresh..." : "Changes detected! Refreshing...")
-                    .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-                
-                // Refresh after a short delay
-                setTimeout(function() {
-                    // Instead of whole page reload, just refresh the activity log
-                    $.ajax({
-                        url: 'getactivities.php',
-                        data: { q: currentNetID },
-                        success: function(html) {
-                            console.log("Activity log refresh requested");
-                            
-                            // Create a temporary container for the HTML
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = html;
-                            
-                            // Find the table in the current page
-                            const activityTable = document.querySelector('table');
-                            if (activityTable) {
-                                // Look for the table in the response
-                                const newTable = tempDiv.querySelector('table');
-                                if (newTable) {
-                                    // Replace just the table content
-                                    activityTable.innerHTML = newTable.innerHTML;
-                                    console.log("Table content updated successfully");
-                                } else {
-                                    console.error("Could not find table in response");
-                                }
-                                
-                                // Update timestamp
-                                lastUpdate = data.last_update;
-                                
-                                // Show success message
-                                $("#update-status")
-                                    .css('background-color', '#5cb85c')
-                                    .text("Updated successfully!");
-                            } else {
-                                console.error("Could not find activity table in current page");
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error refreshing activity log:", error);
-                            console.error("Response:", xhr.responseText);
-                        }
-                    });
-                }, 500);
-            } else {
-                console.log("%cNo changes detected", "color: gray;");
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error checking for updates:", error, xhr.responseText);
+    // Track when we make our own updates
+    $(document).ajaxSend(function(event, jqxhr, settings) {
+        if (settings.url && (
+            settings.url.includes('save_sse.php') || 
+            settings.url.includes('save.php')
+        )) {
+            // Record the time of our own update
+            lastLocalUpdate = Date.now();
+            console.log("Tracking local update at:", lastLocalUpdate);
         }
     });
-}
-
 });
 </script>
 </body>
