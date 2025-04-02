@@ -37,6 +37,9 @@ $(document).ready(function() {
     let currentNetID = null;
     let eventSource = null;
     let lastLocalUpdate = 0;
+    let isEditing = false;
+    let updatePending = false;
+    let reconnectAttempts = 0;
     
     // Add update indicator
     $("<div id='update-status'>")
@@ -78,59 +81,104 @@ $(document).ready(function() {
         // Show indicator
         $("#update-status").fadeIn();
         
-        // Create SSE connection
-        eventSource = new EventSource(`sse_stream.php?netID=${netID}`);
-        
-        // Handle updates
-        eventSource.addEventListener('update', function(e) {
-            const data = JSON.parse(e.data);
-            console.log("SSE Update received:", data);
+        try {
+            // Create SSE connection
+            eventSource = new EventSource(`sse_stream.php?netID=${netID}&t=${Date.now()}`);
             
-            // Only refresh if this is a new update (and not one we just made)
-            const updateTime = data.timestamp * 1000; // Convert to milliseconds
-            const now = Date.now();
-            const timeSinceUpdate = now - updateTime;
-            
-            // If the update is more than 2 seconds old, it's probably not one we just made
-            if (timeSinceUpdate > 2000 && updateTime > lastLocalUpdate) {
-                console.log("Update from another user, refreshing activity view...");
+            // Connection opened
+            eventSource.onopen = function() {
+                console.log("SSE connection opened successfully");
                 $("#update-status")
-                    .css('background-color', '#d9534f')
-                    .text("Changes detected! Refreshing...")
-                    .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                    .css('background-color', '#5cb85c')
+                    .text("Watching for updates...");
+                reconnectAttempts = 0;
+            };
+            
+            // Handle updates
+            eventSource.addEventListener('update', function(e) {
+                const data = JSON.parse(e.data);
+                console.log("SSE Update received:", data);
                 
-                // Simply call the original showActivities function again with the same netID
-                // This will refresh the entire activity view without reloading the page
-                originalShowActivities(currentNetID, null);
+                // Check if this is likely our own update
+                const updateTime = data.timestamp * 1000; // Convert to milliseconds
+                const now = Date.now();
+                const timeSinceUpdate = now - updateTime;
+                const isOurUpdate = timeSinceUpdate <= 2000 || updateTime <= lastLocalUpdate;
                 
-                // Update the timestamp
-                lastUpdate = data.timestamp;
+                if (isOurUpdate) {
+                    console.log("Ignoring our own update");
+                    return;
+                }
                 
-                // Show success message after a delay
-                setTimeout(function() {
+                // If user is currently editing, mark update as pending
+                if (isEditing) {
+                    updatePending = true;
                     $("#update-status")
-                        .css('background-color', '#5cb85c')
-                        .text("Updated successfully!");
-                }, 2000);
-            } else {
-                console.log("Ignoring update (likely our own or too recent)");
-            }
-        });
+                        .css('background-color', '#f39c12')
+                        .text("Update pending - finish editing first");
+                    console.log("Update pending - waiting for editing to complete");
+                } else {
+                    // Otherwise, perform the update immediately
+                    performUpdate();
+                }
+            });
+            
+            // Handle errors
+            // Modify the onerror handler for the EventSource
+eventSource.onerror = function(e) {
+    console.error("SSE connection error:", e);
+    
+    // Only attempt reconnection if the connection is closed
+    if (this.readyState === EventSource.CLOSED) {
+        $("#update-status")
+            .css('background-color', '#d9534f')
+            .text("Connection lost, reconnecting...");
         
-        // Handle errors
-        eventSource.onerror = function(e) {
-            console.error("SSE connection error:", e);
+        // Close the connection
+        eventSource.close();
+        
+        // Attempt to reconnect after a delay
+        setTimeout(function() {
+            if (currentNetID) {
+                console.log("Attempting to reconnect...");
+                startWatching(currentNetID);
+            }
+        }, 2000);
+    }
+};
+        } catch (e) {
+            console.error("Error creating EventSource:", e);
             $("#update-status")
                 .css('background-color', '#d9534f')
-                .text("Connection lost, reconnecting...");
-            
-            // Try to reconnect after a delay
-            setTimeout(function() {
-                if (currentNetID) {
-                    startWatching(currentNetID);
-                }
-            }, 5000);
-        };
+                .text("Connection error - check console");
+        }
+    }
+    
+    function performUpdate() {
+        console.log("Performing update");
+        $("#update-status")
+            .css('background-color', '#d9534f')
+            .text("Changes detected! Refreshing...")
+            .fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+        
+        // Refresh the activity view
+        if (typeof originalShowActivities === 'function') {
+            originalShowActivities(currentNetID, null);
+        } else {
+            console.error("originalShowActivities is not a function", originalShowActivities);
+            // Fallback - reload the page
+            window.location.reload();
+        }
+        
+        // Reset pending flag
+        updatePending = false;
+        
+        // Show success message after a delay
+        setTimeout(function() {
+            $("#update-status")
+                .css('background-color', '#5cb85c')
+                .text("Updated successfully!");
+        }, 2000);
     }
     
     function stopWatching() {
@@ -143,6 +191,43 @@ $(document).ready(function() {
         $("#update-status").fadeOut();
     }
     
+    // Track when editing starts
+    $(document).on('mouseenter focus', '.editable', function() {
+        isEditing = true;
+        console.log("Editing active - pausing updates");
+        
+        if (updatePending) {
+            $("#update-status")
+                .css('background-color', '#f39c12')
+                .text("Update pending - finish editing first");
+        } else {
+            $("#update-status")
+                .css('background-color', '#f39c12')
+                .text("Editing active - updates paused");
+        }
+    });
+    
+    // Track when editing ends (mouse leaves or focus lost)
+    $(document).on('mouseleave blur', '.editable', function() {
+        // Short delay before marking editing as complete
+        setTimeout(function() {
+            // Only mark as not editing if no other element has focus
+            if (!$('.editable:focus').length) {
+                isEditing = false;
+                console.log("Editing complete - resuming updates");
+                
+                // If an update is pending, perform it now
+                if (updatePending) {
+                    performUpdate();
+                } else {
+                    $("#update-status")
+                        .css('background-color', '#5cb85c')
+                        .text("Watching for updates...");
+                }
+            }
+        }, 1000);
+    });
+    
     // Track when we make our own updates
     $(document).ajaxSend(function(event, jqxhr, settings) {
         if (settings.url && (
@@ -154,6 +239,16 @@ $(document).ready(function() {
             console.log("Tracking local update at:", lastLocalUpdate);
         }
     });
+    
+    // Setup heartbeat to keep the connection alive
+    setInterval(function() {
+        if (!eventSource || eventSource.readyState !== 1) {
+            console.log("Connection not open, attempting to reconnect");
+            if (currentNetID) {
+                startWatching(currentNetID);
+            }
+        }
+    }, 60000); // Check connection every minute
 });
 </script>
 </body>
