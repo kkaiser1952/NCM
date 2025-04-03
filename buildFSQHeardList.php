@@ -147,10 +147,10 @@ $netID = intval($_POST["q"]);
         	       allcall is there any message traffic for the net? If so please call now.<br><br>
         	       
         	       
-        	       allcall Thank you $LOG for logging and to our relay stations today. <br>
+        	       allcall Thank you $LOG for logging and to our relay station $relaystation today. <br>
         	       The MODES Net #$netID with $stationcount checkins is now closed, <br>$PRM is clear 73. <br><br>
         	       
-        	       $allrelaystation Thank you $LOG for logging and to our relay stations today. <br>
+        	       $allrelaystation Thank you $LOG for logging and to our relay station $relaystation today. <br>
         	       The MODES Net #$netID with $stationcount checkins is now closed, <br>$PRM is clear 73. 
         	    </p>
             </div>

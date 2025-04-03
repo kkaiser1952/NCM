@@ -81,6 +81,6 @@ while (true) {
     }
     
     // Use 5-second interval to match existing app's behavior
-    sleep(5);
+    sleep(4);
 }
 ?>
