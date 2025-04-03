@@ -73,13 +73,13 @@
         
         <div class="btn-group">
             <button id="refbutton" class="btn btn-info btn-small hidden" >Refresh</button>
-        <!--
+        
             <button id="refrate" class="btn btn-small btn-info dropdown-toggle hidden" 
                     data-toggle="dropdown" type="button">
                 Timed
                 <span class="caret"></span>
             </button>
--->   
+  
             <!-- Refresh timer selection -->
             <ul id="refMenu" class="dropdown-menu">
               <li><a href="#" data-sec="M" >Manual</a></li>
